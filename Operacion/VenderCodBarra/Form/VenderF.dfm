@@ -682,6 +682,15 @@ object VenderForm: TVenderForm
       ParentBiDiMode = False
       ScrollBars = ssNone
       TabOrder = 0
+      ColWidths = (
+        100
+        100)
+      RowHeights = (
+        24
+        24
+        24
+        24
+        24)
     end
     object GroupBox5: TGroupBox
       Left = 6

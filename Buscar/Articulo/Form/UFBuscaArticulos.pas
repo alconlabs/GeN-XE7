@@ -267,8 +267,8 @@ procedure TFBuscaArticulo.FormKeyUp(Sender: TObject; var Key: Word;
 begin
   if (not DBGrid1.Focused = True) then
     buscar;
-  if Key = VK_Escape then
-    Close;
+  //if Key = VK_Escape then
+  //  Close;
 end;
 
 end.

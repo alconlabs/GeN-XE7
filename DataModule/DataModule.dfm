@@ -4,6 +4,7 @@ object DM: TDM
   Height = 120
   Width = 282
   object BaseDatos: TIBDatabase
+    DatabaseName = 'C:\Program Files\Civeloo\GeN\GeN.FDB'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'

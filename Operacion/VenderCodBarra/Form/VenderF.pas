@@ -152,7 +152,6 @@ begin
   SGTotal.Cells[1, 3] := '0.00';
   SGTotal.Cells[1, 4] := '0.00';
   SGTotal.Cells[1, 5] := '0.00';
-  Cuenta := 1;
   FormatSettings.ShortDateFormat := 'dd/mm/yyyy';
   FechaDateTimePicker.DateTime := Date;
   subtotal := 0;
@@ -170,13 +169,11 @@ begin
   reparaciones := 0;
   ClienteEdit.Text := '0';
   ClienteLabel.Caption := 'Consumidor Final';
-
   FEContado.Text := '0';
   FECheque.Text := '0';
   FETarjeta.Text := '0';
   FEOtro.Text := '0';
-  while Cuenta > 1 do
-    QuitarBitBtn.Click; // vaciar articulos
+  Cuenta := 1;
   // si es venta
   if TipoRadioGroup.ItemIndex = 0 then
     AgregarBitBtn.Click
@@ -199,7 +196,7 @@ begin
   begin
     // Label13.Visible := True;
     // Label14.Visible := True;
-    Cuenta := 1;
+    //Cuenta := 1;
   end;
 end;
 
@@ -534,6 +531,7 @@ end;
 
 procedure TVenderForm.QuitarBitBtnClick(Sender: TObject);
 begin
+  SGFact.SetFocus;
   GridRemoveRow(SGFact, SGFact.Row);
   If Cuenta > 1 then
     Cuenta := Cuenta - 1;
@@ -575,6 +573,8 @@ begin
       Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);
   end;
   OperacionDataModule.Free;
+  while Cuenta > 1 do
+    QuitarBitBtn.Click; // vaciar articulos
   Nuevo;
 end;
 
@@ -585,7 +585,7 @@ end;
 
 procedure TVenderForm.FormShow(Sender: TObject);
 begin
-  if (DM.ConfigQuery.FieldByName('IVA').AsString = 'RI') then
+  if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') then
     cbTipo.ItemIndex := 1
   else
     cbTipo.ItemIndex := 2;
@@ -650,7 +650,7 @@ end;
 
 procedure TVenderForm.FormCreate(Sender: TObject);
 begin
-  DM.ConfigQuery.Open;
+  dm.ConfigQuery.Open;
 end;
 
 procedure TVenderForm.FormKeyPress(Sender: TObject; var Key: Char);

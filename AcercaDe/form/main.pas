@@ -8,7 +8,6 @@ uses Windows, Classes, Graphics, Forms, Controls, StdCtrls,
 type
   TmainForm = class(TForm)
     Panel1: TPanel;
-    FondoImage: TImage;
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
