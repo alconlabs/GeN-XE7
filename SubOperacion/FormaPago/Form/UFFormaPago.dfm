@@ -459,6 +459,9 @@ object FFormaPago: TFFormaPago
       64
       64
       64)
+    RowHeights = (
+      24
+      24)
   end
   object Query: TIBQuery
     Database = DM.BaseDatos

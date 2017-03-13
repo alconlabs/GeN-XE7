@@ -242,7 +242,7 @@ begin
       LoginOk := True;
     end;
   end;
-  WebBrowser1.Navigate(path + 'ayuda\index.htm');
+  WebBrowser1.Navigate(path + 'hlp\index.htm');
   if LoginOk <> True then
   begin
     ShowMessage('el usuario no coincide con la clave...');
@@ -271,7 +271,7 @@ begin
       CrearPedido1.Visible := False;
     end;
   end;
-  FullMainForm.caption := 'DeGsoft GeN - ERP - [' + Empresa + '] - ' + Licencia
+  FullMainForm.caption := 'Civeloo GeN - [' + Empresa + '] - ' + Licencia
     + ' - [USUARIO: ' + Usuario + '] MODULO COMPLETO';
 end;
 

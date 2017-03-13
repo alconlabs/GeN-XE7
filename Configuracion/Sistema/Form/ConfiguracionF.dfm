@@ -26,6 +26,8 @@ object ConfiguracionForm: TConfiguracionForm
     Height = 491
     Align = alRight
     Caption = 'Panel1'
+    Color = clBlack
+    ParentBackground = False
     TabOrder = 0
     object Label38: TLabel
       Left = 6
@@ -115,16 +117,12 @@ object ConfiguracionForm: TConfiguracionForm
     Top = 0
     Width = 960
     Height = 491
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 1
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label43: TLabel
         Left = 3
         Top = 3
@@ -132,7 +130,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = 'Cuenta Contable Asociada a'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
@@ -144,6 +142,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 150
         Height = 13
         Caption = 'Costo de Mercaderias Vendidas'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label46: TLabel
         Left = 5
@@ -151,6 +155,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 21
         Height = 13
         Caption = 'Caja'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label47: TLabel
         Left = 5
@@ -158,6 +168,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 91
         Height = 13
         Caption = 'Comisi'#243'n Vendedor'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label48: TLabel
         Left = 5
@@ -165,6 +181,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 131
         Height = 13
         Caption = 'Comisi'#243'n Vendedor a Pagar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label45: TLabel
         Left = 5
@@ -172,6 +194,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 130
         Height = 13
         Caption = 'Banco XX Cuenta Corriente'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label19: TLabel
         Left = 5
@@ -179,6 +207,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 110
         Height = 13
         Caption = 'Anticipo a Proveedores'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label20: TLabel
         Left = 3
@@ -186,6 +220,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 138
         Height = 13
         Caption = 'Deudores en Gesti'#243'n Judicial'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label21: TLabel
         Left = 242
@@ -193,6 +233,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 95
         Height = 13
         Caption = 'Deudores por Venta'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label22: TLabel
         Left = 242
@@ -200,6 +246,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 103
         Height = 13
         Caption = 'Documentos a Cobrar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label23: TLabel
         Left = 242
@@ -207,6 +259,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 91
         Height = 13
         Caption = 'Honorarios Legales'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label24: TLabel
         Left = 242
@@ -214,6 +272,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 131
         Height = 13
         Caption = 'Honorarios Legales a Pagar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label25: TLabel
         Left = 3
@@ -221,6 +285,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 89
         Height = 13
         Caption = 'Deudores Morosos'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label26: TLabel
         Left = 3
@@ -228,6 +298,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 104
         Height = 13
         Caption = 'Deudores Incobrables'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label27: TLabel
         Left = 242
@@ -235,6 +311,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 57
         Height = 13
         Caption = 'IVA a Pagar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label28: TLabel
         Left = 242
@@ -242,6 +324,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 184
         Height = 13
         Caption = 'Mercader'#237'a Recuperada Judicialmente'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label29: TLabel
         Left = 242
@@ -249,6 +337,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 119
         Height = 13
         Caption = 'Mercader'#237'as de Reventa'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label30: TLabel
         Left = 474
@@ -256,6 +350,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 101
         Height = 13
         Caption = 'Obligaciones a Pagar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label31: TLabel
         Left = 474
@@ -263,6 +363,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 94
         Height = 13
         Caption = 'Pago de Honorarios'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label32: TLabel
         Left = 242
@@ -270,6 +376,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 81
         Height = 13
         Caption = 'IVA Debito Fiscal'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label33: TLabel
         Left = 242
@@ -277,6 +389,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 83
         Height = 13
         Caption = 'IVA Credito Fiscal'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label35: TLabel
         Left = 474
@@ -284,6 +402,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 38
         Height = 13
         Caption = 'Servicio'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label36: TLabel
         Left = 475
@@ -291,6 +415,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 78
         Height = 13
         Caption = 'Servicio a Pagar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label37: TLabel
         Left = 474
@@ -298,6 +428,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 77
         Height = 13
         Caption = 'Valores al Cobro'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label39: TLabel
         Left = 474
@@ -305,6 +441,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 85
         Height = 13
         Caption = 'Recupero Judicial'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label40: TLabel
         Left = 474
@@ -312,6 +454,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 60
         Height = 13
         Caption = 'Proveedores'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label41: TLabel
         Left = 474
@@ -319,6 +467,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 33
         Height = 13
         Caption = 'Ventas'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label42: TLabel
         Left = 474
@@ -326,6 +480,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 92
         Height = 13
         Caption = 'Valores a Depositar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label34: TLabel
         Left = 474
@@ -333,6 +493,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 84
         Height = 13
         Caption = 'Tarjeta de Credito'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object CuentaDBLookupComboBox: TDBLookupComboBox
         Left = 5
@@ -673,21 +839,21 @@ object ConfiguracionForm: TConfiguracionForm
     end
     object TabSheet1: TTabSheet
       Caption = 'Parametros'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitLeft = 8
+      ExplicitTop = 56
       object Label1: TLabel
         Left = 16
         Top = 24
         Width = 113
         Height = 13
         Caption = 'N'#250'mero de Factura:'
+        Color = clBlack
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
+        ParentColor = False
         ParentFont = False
       end
       object Label17: TLabel
@@ -696,11 +862,13 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 102
         Height = 13
         Caption = 'Codigo de Barras:'
+        Color = clBlack
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
+        ParentColor = False
         ParentFont = False
       end
       object Label49: TLabel
@@ -709,11 +877,13 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 79
         Height = 13
         Caption = 'Comprobante:'
+        Color = clBlack
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
+        ParentColor = False
         ParentFont = False
       end
       object Label50: TLabel
@@ -722,24 +892,28 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 48
         Height = 13
         Caption = 'Imprimir:'
+        Color = clBlack
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
+        ParentColor = False
         ParentFont = False
       end
       object Label51: TLabel
         Left = 16
-        Top = 184
+        Top = 187
         Width = 73
         Height = 13
         Caption = 'Vista Previa:'
+        Color = clBlack
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
+        ParentColor = False
         ParentFont = False
       end
       object DBEdit1: TDBEdit
@@ -803,16 +977,18 @@ object ConfiguracionForm: TConfiguracionForm
     object TabSheet2: TTabSheet
       Caption = 'Lista de Precios'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label2: TLabel
         Left = 47
         Top = 56
         Width = 42
         Height = 13
         Caption = 'Precio 1:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label3: TLabel
         Left = 47
@@ -820,6 +996,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 42
         Height = 13
         Caption = 'Precio 2:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label4: TLabel
         Left = 47
@@ -827,6 +1009,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 42
         Height = 13
         Caption = 'Precio 3:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label5: TLabel
         Left = 50
@@ -834,6 +1022,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 39
         Height = 13
         Caption = 'Precio4:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label6: TLabel
         Left = 47
@@ -841,6 +1035,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 42
         Height = 13
         Caption = 'Precio 5:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label7: TLabel
         Left = 47
@@ -848,6 +1048,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 42
         Height = 13
         Caption = 'Precio 6:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label8: TLabel
         Left = 64
@@ -855,6 +1061,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 25
         Height = 13
         Caption = 'Lista:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label9: TLabel
         Left = 96
@@ -863,7 +1075,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = 'Porcentaje'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
@@ -875,6 +1087,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 8
         Height = 13
         Caption = '%'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label11: TLabel
         Left = 164
@@ -882,6 +1100,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 8
         Height = 13
         Caption = '%'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label12: TLabel
         Left = 164
@@ -889,6 +1113,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 8
         Height = 13
         Caption = '%'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label13: TLabel
         Left = 164
@@ -896,6 +1126,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 8
         Height = 13
         Caption = '%'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label14: TLabel
         Left = 164
@@ -903,6 +1139,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 8
         Height = 13
         Caption = '%'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label15: TLabel
         Left = 164
@@ -910,6 +1152,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 8
         Height = 13
         Caption = '%'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object Label16: TLabel
         Left = 164
@@ -917,6 +1165,12 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 8
         Height = 13
         Caption = '%'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
       end
       object DBEdit2: TDBEdit
         Left = 96

@@ -2,9 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GeN"
-#define MyAppVersion "140204"
-#define MyAppPublisher "DeGsoft"
-#define MyAppURL "http://www.degsoft.com.ar/"
+#define MyAppVersion "170312"
+#define MyAppPublisher "Civeloo"
+#define MyAppURL "http://www.civeloo.com/"
 #define MyAppExeName "ServidorGeN.exe"
 
 [Setup]
@@ -22,8 +22,8 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppPublisher}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Civeloo\GeN-Update\GPLv3-spanish.txt
-OutputDir=C:\Users\diego_000\Google Drive\GeN
+LicenseFile=C:\Civeloo\GeN\LICENSE-2.0.txt
+OutputDir=C:\Users\Usuario\Desktop
 OutputBaseFilename=Update{#MyAppName}v{#MyAppVersion}
 SetupIconFile=C:\Civeloo\GeN-Update\DeGsoft.ico
 Compression=lzma

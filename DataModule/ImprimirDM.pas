@@ -54,7 +54,7 @@ begin
   Query.Open;
   with frxReport1 do
   begin
-    LoadFromFile(Path + 'Report\' + reporte + '.fr3');
+    LoadFromFile(Path + 'rpt\' + reporte + '.fr3');
     try
       ShowReport(True);
     finally
@@ -125,7 +125,7 @@ begin
   Query.Open;
   with frxReport1 do
   begin
-    LoadFromFile(Path + 'Report\' + reporte + '.fr3');
+    LoadFromFile(Path + 'rpt\' + reporte + '.fr3');
     try
       ShowReport(True);
     finally

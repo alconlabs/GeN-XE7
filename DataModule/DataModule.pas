@@ -215,10 +215,15 @@ begin
   U := ExtractFileDrive(Application.ExeName);
   Path := IniFile.ReadString('BD', 'Path', '');
   if Path = '' then
-    Path := ExtractFilePath(Application.ExeName);
+    begin
+      Path := ExtractFilePath(Application.ExeName);
+      Path := StringReplace(Path,'bin\','',[rfReplaceAll]);
+    end;
   BasedeDatos := IniFile.ReadString('BD', 'DBase', '');
   if BasedeDatos = '' then
-    BasedeDatos := Path + 'GeN.FDB';
+    begin
+      BasedeDatos := Path + 'db\GeN.FDB';
+    end;
   If BasedeDatos = '' then
     ShowMessage('Error al cargar Base de Datos');
   BaseDatos.DatabaseName := BasedeDatos;

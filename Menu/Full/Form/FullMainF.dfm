@@ -4,7 +4,7 @@ object FullMainForm: TFullMainForm
   Align = alTop
   BiDiMode = bdLeftToRight
   BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
-  Caption = 'DeGsoft GeN - ERP - Menu Principal'
+  Caption = 'Civeloo GeN - Menu Principal'
   ClientHeight = 46
   ClientWidth = 748
   Color = clBtnFace

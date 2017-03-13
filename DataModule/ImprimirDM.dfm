@@ -23,7 +23,7 @@ object ImprimirDataModule: TImprimirDataModule
     Top = 8
   end
   object frxReport1: TfrxReport
-    Version = '5.1.5'
+    Version = '5.3.14'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -33,7 +33,7 @@ object ImprimirDataModule: TImprimirDataModule
     ReportOptions.CreateDate = 37871.995957488400000000
     ReportOptions.Description.Strings = (
       'This report shows how to use multiple groups.')
-    ReportOptions.LastChange = 40515.545472361100000000
+    ReportOptions.LastChange = 40515.545472361090000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -255,6 +255,7 @@ object ImprimirDataModule: TImprimirDataModule
     Background = False
     HTMLTags = True
     Quality = 95
+    Transparency = False
     Author = 'FastReport'
     Subject = 'FastReport PDF export'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -264,6 +265,7 @@ object ImprimirDataModule: TImprimirDataModule
     FitWindow = False
     CenterWindow = False
     PrintScaling = False
+    PdfA = False
     Left = 272
     Top = 88
   end
