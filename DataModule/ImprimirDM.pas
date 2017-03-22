@@ -6,7 +6,11 @@ uses
   SysUtils, Classes, DataModule, Dialogs, frxClass, frxCrypt, frxGZip,
   frxGradient, frxChBox, frxRich, frxOLE, frxChart, frxExportCSV, frxExportHTML,
   frxExportPDF, frxDMPExport, frxBarcode, frxDBSet, Data.DB,
-  IBX.IBCustomDataSet, IBX.IBQuery;
+  IBX.IBCustomDataSet, IBX.IBQuery, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
   TImprimirDataModule = class(TDataModule)
@@ -26,6 +30,8 @@ type
     frxDotMatrixExport2: TfrxDotMatrixExport;
     frxGZipCompressor1: TfrxGZipCompressor;
     frxCrypt1: TfrxCrypt;
+    FirebirdConnection: TFDConnection;
+    VentasFDQuery1: TFDQuery;
     Function VTA(nro, let: string): string;
     Function OPER(nro, let: string): string;
     Function PRE(nro, let: string): string;
@@ -35,6 +41,7 @@ type
     Procedure CSV(sql, n: string);
     Procedure SImpr(vsql, reporte: string);
     procedure DataModuleCreate(Sender: TObject);
+    procedure frxReport1BeforePrint(Sender: TfrxReportComponent);
   private
     { Private declarations }
   public
@@ -116,20 +123,38 @@ begin
   DM.ConfigQuery.Open;
 end;
 
-Procedure TImprimirDataModule.Impr;
+procedure TImprimirDataModule.frxReport1BeforePrint(
+  Sender: TfrxReportComponent);
+begin
+  //if Sender.Name = 'LOGO' then
+   // begin
+//       TfrxPictureView(Sender).Visible := True;
+//       TfrxPictureView(Sender).Picture.LoadFromFile(path + 'img\empresa.BMP');
+    //end;
+end;
+
+procedure TImprimirDataModule.Impr;
+var
+   Pict: TfrxPictureView;
 begin
   if reporte = '' then
     reporte := dm.ConfigQuery.FieldByName('Reporte').AsString;
-  Query.sql.Text := 'SELECT ' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE')
-    .AsString) + ' As Empresa,' + vsql;
+  Query.sql.Text := 'SELECT ' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE').AsString) + ' As Empresa,' + vsql;
   Query.Open;
   with frxReport1 do
   begin
     LoadFromFile(Path + 'rpt\' + reporte + '.fr3');
+    if reporte = 'COriginal' then
+    begin
+      pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
+      if Assigned(pict) then
+       Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
+    end;
     try
       ShowReport(True);
     finally
       Free;
+//      FreeAndNil(pict);
     end;
   end;
 end;

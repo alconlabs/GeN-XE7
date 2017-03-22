@@ -1,8 +1,8 @@
 object DM: TDM
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 120
-  Width = 282
+  Height = 176
+  Width = 369
   object BaseDatos: TIBDatabase
     Params.Strings = (
       'user_name=SYSDBA'

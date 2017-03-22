@@ -117,7 +117,7 @@ object ConfiguracionForm: TConfiguracionForm
     Top = 0
     Width = 960
     Height = 491
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 1
     object TabSheet3: TTabSheet
@@ -839,8 +839,6 @@ object ConfiguracionForm: TConfiguracionForm
     end
     object TabSheet1: TTabSheet
       Caption = 'Parametros'
-      ExplicitLeft = 8
-      ExplicitTop = 56
       object Label1: TLabel
         Left = 16
         Top = 24
