@@ -6,8 +6,11 @@ LO QUE USTED NECESITA PARA SU PYME O COMERCIO MAYORISTA/MINORISTA.
 
 Stock. Ventas. Facturación. Clientes. Vendedores. Proveedores. Cobradores. Servicios. Financiación (diaria, semanal y mensual). Cuentas Corrientes. Cheques. Contratos. Pagares. Remitos. Presupuestos. Libros contables (IVA vtas./compras, Bancos, etc.). Ingresos Brutos. IVA. Backups. Ganancias.
 
-Adaptación del sistema a su negocio e instalación con curso (opcional).
-CONTAMOS CON SU COLABORACIÓN PARA PODER SEGUIR TRABAJANDO. USTED PUEDE DESCARGAR Y UTILIZAR ESTE SOFTWARE TOTALMENTE GRATIS!!!
+Instalación
+https://github.com/DeGsoft/GeN-XE7/raw/master/Instalador/InstalarGeN.exe
+
+Actualización
+https://github.com/DeGsoft/GeN-XE7/raw/master/Instalador/ActualizarGeN.exe
 
 * Authors and Contributors
 @degsoft
