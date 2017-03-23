@@ -16,7 +16,6 @@ object FullMainForm: TFullMainForm
   Position = poScreenCenter
   WindowState = wsMaximized
   OnClose = FormClose
-  OnCreate = FormCreate
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   PixelsPerInch = 96

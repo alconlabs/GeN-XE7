@@ -138,6 +138,8 @@ implementation
 procedure TConfiguracionForm.BitBtn1Click(Sender: TObject);
 begin
   Tabla.Post;
+  dm.ConfigQuery.Close;
+  dm.ConfigQuery.Open;
   Close;
 end;
 

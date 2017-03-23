@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GeN"
-#define MyAppVersion "170312"
+#define MyAppVersion "170322"
 #define MyAppPublisher "Civeloo"
 #define MyAppURL "http://www.civeloo.com/"
-#define MyAppExeName "ServidorGeN.exe"
+#define MyAppExeName "GeN.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -20,34 +20,53 @@ AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppPublisher}\{#MyAppName}
-DefaultGroupName={#MyAppName}
+DefaultGroupName={#MyAppPublisher}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Civeloo\GeN\LICENSE-2.0.txt
+LicenseFile=C:\Civeloo\GeN\bin\LICENSE-2.0.txt
 OutputDir=C:\Users\Usuario\Desktop
-OutputBaseFilename=Update{#MyAppName}v{#MyAppVersion}
-SetupIconFile=C:\Civeloo\GeN-Update\DeGsoft.ico
+OutputBaseFilename=Actualizar{#MyAppName}
+SetupIconFile=C:\Civeloo\GeN\bin\DeGsoft.ico
 Compression=lzma
-SolidCompression=yes
+SolidCompression=true
 
 [Languages]
-Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
+Name: spanish; MessagesFile: compiler:Languages\Spanish.isl
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked;
-Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
+Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}
+Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "C:\Civeloo\GeN-Update\ServidorGeN.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Civeloo\GeN-Update\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: C:\Civeloo\GeN\bin\GeN.exe; DestDir: {app}; Flags: ignoreversion
+Source: C:\Civeloo\GeN\bin\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: C:\Civeloo\GeN\db\*; DestDir: {app}\db\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: C:\Civeloo\GeN\hlp\*; DestDir: {app}\hlp\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: C:\Civeloo\GeN\img\*; DestDir: {app}\img\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: C:\Civeloo\GeN\rpt\*; DestDir: {app}\rpt\; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
-Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
+Name: {group}\{#MyAppName}; Filename: {app}\bin\{#MyAppExeName}
+Name: {group}\{cm:ProgramOnTheWeb,{#MyAppName}}; Filename: {#MyAppURL}
+Name: {group}\{cm:UninstallProgram,{#MyAppName}}; Filename: {uninstallexe}
+Name: {commondesktop}\{#MyAppName}; Filename: {app}\bin\{#MyAppExeName}; Tasks: desktopicon
+Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}; Filename: {app}\bin\{#MyAppExeName}; Tasks: quicklaunchicon
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+;Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}; Flags: nowait postinstall skipifsilent
 
+[Registry]
+; keys for 32-bit systems
+Root: HKCU32; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
+    ValueType: String; ValueName: {app}\bin\{#MyAppExeName}; ValueData: "RUNASADMIN"; \
+    Flags: uninsdeletekeyifempty uninsdeletevalue; Check: not IsWin64
+Root: HKLM32; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
+    ValueType: String; ValueName: {app}\bin\{#MyAppExeName}; ValueData: "RUNASADMIN"; \
+    Flags: uninsdeletekeyifempty uninsdeletevalue; Check: not IsWin64
+; keys for 64-bit systems
+Root: HKCU64; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
+    ValueType: String; ValueName: {app}\bin\{#MyAppExeName}; ValueData: "RUNASADMIN"; \
+    Flags: uninsdeletekeyifempty uninsdeletevalue; Check: IsWin64
+Root: HKLM64; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
+    ValueType: String; ValueName: {app}\bin\{#MyAppExeName}; ValueData: "RUNASADMIN"; \
+    Flags: uninsdeletekeyifempty uninsdeletevalue; Check: IsWin64

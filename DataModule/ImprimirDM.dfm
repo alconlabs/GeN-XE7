@@ -31,7 +31,7 @@ object ImprimirDataModule: TImprimirDataModule
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 39416.849051458300000000
-    ReportOptions.LastChange = 42814.942104861100000000
+    ReportOptions.LastChange = 42816.891107314810000000
     ReportOptions.Picture.Data = {
       0954474946496D61676547494638396150003200F70000FDFDFDFCFCFCFBFBFB
       F9F9F9030303FAFAFA010101F8F8F8020202040404F7F7F70606060505050707
@@ -504,8 +504,8 @@ object ImprimirDataModule: TImprimirDataModule
           ParentFont = False
         end
         object Picture1: TfrxPictureView
-          Left = 3.779530000000000000
-          Top = 3.779529999999994000
+          Left = 2.779530000000000000
+          Top = 2.779529999999994000
           Width = 260.787570000000000000
           Height = 68.031540000000010000
           HightQuality = False

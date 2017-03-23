@@ -135,7 +135,7 @@ end;
 
 procedure TImprimirDataModule.Impr;
 var
-   Pict: TfrxPictureView;
+   Pict,Pict2,Pict3,Pict4: TfrxPictureView;
 begin
   if reporte = '' then
     reporte := dm.ConfigQuery.FieldByName('Reporte').AsString;
@@ -146,9 +146,33 @@ begin
     LoadFromFile(Path + 'rpt\' + reporte + '.fr3');
     if reporte = 'COriginal' then
     begin
+    //Pict:= frReport1.FindObject('MyImage') as TfrxPictureView;
+      Pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
+      if Assigned(pict) then Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
+    end else if reporte = 'CDuplicado' then
+    begin
       pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
-      if Assigned(pict) then
-       Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      if Assigned(pict) then Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      pict2 := TfrxPictureView(frxReport1.FindObject('Picture2'));
+      if Assigned(pict2) then Pict2.Picture.LoadFromFile(path + 'img\empresa.BMP');
+    end else if reporte = 'CTriplicado' then
+    begin
+      pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
+      if Assigned(pict) then Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      pict2 := TfrxPictureView(frxReport1.FindObject('Picture2'));
+      if Assigned(pict2) then Pict2.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      pict3 := TfrxPictureView(frxReport1.FindObject('Picture3'));
+      if Assigned(pict3) then Pict3.Picture.LoadFromFile(path + 'img\empresa.BMP');
+    end else if reporte = 'CCuadriplicado' then
+    begin
+      pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
+      if Assigned(pict) then Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      pict2 := TfrxPictureView(frxReport1.FindObject('Picture2'));
+      if Assigned(pict2) then Pict2.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      pict3 := TfrxPictureView(frxReport1.FindObject('Picture3'));
+      if Assigned(pict3) then Pict3.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      pict4 := TfrxPictureView(frxReport1.FindObject('Picture4'));
+      if Assigned(pict4) then Pict4.Picture.LoadFromFile(path + 'img\empresa.BMP');
     end;
     try
       ShowReport(True);

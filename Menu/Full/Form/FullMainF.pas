@@ -176,7 +176,6 @@ type
     procedure VENTAS1Click(Sender: TObject);
     procedure SubCategoriasClick(Sender: TObject);
     procedure CargarFactura1Click(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
@@ -206,11 +205,6 @@ uses LoginF, VenderF, CrearCreditoF, ComprarF, CtaCteF, BuscaFactura,
 procedure TFullMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   DM.DejarUsuario;
-end;
-
-procedure TFullMainForm.FormCreate(Sender: TObject);
-begin
-  // DM := TDM.Create(self);
 end;
 
 procedure TFullMainForm.FormShow(Sender: TObject);
