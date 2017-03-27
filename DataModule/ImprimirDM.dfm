@@ -31,7 +31,7 @@ object ImprimirDataModule: TImprimirDataModule
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 39416.849051458300000000
-    ReportOptions.LastChange = 42816.891107314810000000
+    ReportOptions.LastChange = 42820.833085173600000000
     ReportOptions.Picture.Data = {
       0954474946496D61676547494638396150003200F70000FDFDFDFCFCFCFBFBFB
       F9F9F9030303FAFAFA010101F8F8F8020202040404F7F7F70606060505050707
@@ -195,7 +195,8 @@ object ImprimirDataModule: TImprimirDataModule
         RowCount = 1
         object Memo10: TfrxMemoView
           Left = 113.385900000000000000
-          Width = 454.425480000000000000
+          Top = 0.000000000000008479
+          Width = 302.362400000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -204,11 +205,12 @@ object ImprimirDataModule: TImprimirDataModule
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            'Descripci'#243'n')
+            'DESCRIPCION')
           ParentFont = False
         end
         object Memo11: TfrxMemoView
           Left = 567.709030000000000000
+          Top = 0.000000000000008479
           Width = 75.370130000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -219,11 +221,12 @@ object ImprimirDataModule: TImprimirDataModule
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'CANT')
+            'CANT.')
           ParentFont = False
         end
         object Memo2: TfrxMemoView
           Left = 642.520100000000000000
+          Top = 0.000000000000008479
           Width = 75.370130000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -238,6 +241,7 @@ object ImprimirDataModule: TImprimirDataModule
           ParentFont = False
         end
         object Memo9: TfrxMemoView
+          Top = 0.000000000000008479
           Width = 113.165430000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -248,7 +252,39 @@ object ImprimirDataModule: TImprimirDataModule
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'ARTICULO')
+            'CODIGO')
+          ParentFont = False
+        end
+        object Memo14: TfrxMemoView
+          Left = 491.338900000000000000
+          Top = 0.000000000000008479
+          Width = 75.370130000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'P.UNIT.')
+          ParentFont = False
+        end
+        object Memo17: TfrxMemoView
+          Left = 415.748300000000000000
+          Top = 0.000000000000008479
+          Width = 75.370130000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'UNIDAD')
           ParentFont = False
         end
       end
@@ -262,15 +298,17 @@ object ImprimirDataModule: TImprimirDataModule
         RowCount = 0
         object Memo15: TfrxMemoView
           Left = 113.385900000000000000
-          Width = 453.543600000000000000
+          Top = -0.000000000000000014
+          Width = 302.362400000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
           Memo.UTF8W = (
             '[frxDBDataset1."DESCRIPCION"]')
         end
         object Memo16: TfrxMemoView
-          Left = 566.929500000000000000
-          Width = 80.929190000000000000
+          Left = 567.709030000000000000
+          Top = -0.000000000000000014
+          Width = 75.370130000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
           HAlign = haCenter
@@ -278,22 +316,44 @@ object ImprimirDataModule: TImprimirDataModule
             '[frxDBDataset1."CANTIDAD"]')
         end
         object Memo8: TfrxMemoView
-          Left = 645.520100000000000000
-          Width = 73.370130000000000000
+          Left = 642.520100000000000000
+          Top = -0.000000000000000014
+          Width = 75.370130000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDataset1."PRECIO"]')
+            '[(<frxDBDataset1."CANTIDAD">*<frxDBDataset1."PRECIO">)]')
         end
         object Memo12: TfrxMemoView
           Left = 3.000000000000000000
+          Top = -0.000000000000000014
           Width = 111.165430000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
           HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDataset1."ARTICULO"]')
+        end
+        object Memo1: TfrxMemoView
+          Left = 491.338900000000000000
+          Top = -0.000000000000000014
+          Width = 75.370130000000000000
+          Height = 18.897650000000000000
+          DataSetName = 'FacturafrxDBDataset'
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[frxDBDataset1."PRECIO"]')
+        end
+        object Memo18: TfrxMemoView
+          Left = 415.748300000000000000
+          Top = -0.000000000000000014
+          Width = 75.370130000000000000
+          Height = 18.897650000000000000
+          DataSetName = 'FacturafrxDBDataset'
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[(<frxDBDataset1."UNIDAD">)]')
         end
       end
       object GroupFooter1: TfrxGroupFooter
@@ -302,12 +362,13 @@ object ImprimirDataModule: TImprimirDataModule
         Top = 294.803340000000000000
         Width = 718.110700000000000000
         object Shape3: TfrxShapeView
+          Top = -0.000000000000008493
           Width = 716.890230000000000000
           Height = 52.913420000000000000
         end
         object Memo13: TfrxMemoView
           Left = 455.543600000000000000
-          Top = 11.338590000000010000
+          Top = 11.338590000000000000
           Width = 260.787570000000000000
           Height = 30.236240000000000000
           DataSetName = 'FacturafrxDBDataset'
@@ -323,6 +384,7 @@ object ImprimirDataModule: TImprimirDataModule
           ParentFont = False
         end
         object frxDBDataset1PAGADO: TfrxMemoView
+          Top = -0.000000000000008493
           Width = 188.976500000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
@@ -337,7 +399,7 @@ object ImprimirDataModule: TImprimirDataModule
           ParentFont = False
         end
         object frxDBDataset1SALDO: TfrxMemoView
-          Top = 34.015769999999980000
+          Top = 34.015769999999970000
           Width = 188.976500000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
@@ -353,6 +415,7 @@ object ImprimirDataModule: TImprimirDataModule
         end
         object frxDBDataset1IVA1: TfrxMemoView
           Left = 188.976500000000000000
+          Top = -0.000000000000008493
           Width = 151.181200000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
@@ -368,7 +431,7 @@ object ImprimirDataModule: TImprimirDataModule
         end
         object frxDBDataset1IVA2: TfrxMemoView
           Left = 188.976500000000000000
-          Top = 34.015769999999980000
+          Top = 34.015769999999970000
           Width = 151.181200000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
@@ -390,11 +453,13 @@ object ImprimirDataModule: TImprimirDataModule
         Width = 718.110700000000000000
         Condition = 'frxDBDataset1."OPERACION"'
         object Shape1: TfrxShapeView
+          Top = 0.000000000000003178
           Width = 718.110700000000000000
           Height = 109.606370000000000000
         end
         object Memo4: TfrxMemoView
           Left = 302.362400000000000000
+          Top = 0.000000000000003178
           Width = 75.590600000000000000
           Height = 56.692950000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -410,7 +475,7 @@ object ImprimirDataModule: TImprimirDataModule
         end
         object Memo5: TfrxMemoView
           Left = 531.268090000000000000
-          Top = 30.118120000000000000
+          Top = 30.118120000000010000
           Width = 184.622140000000000000
           Height = 25.574830000000000000
           DataSetName = 'FacturafrxDBDataset'
@@ -490,7 +555,7 @@ object ImprimirDataModule: TImprimirDataModule
         end
         object Memo43: TfrxMemoView
           Left = 530.693260000000000000
-          Top = 1.000000000000000000
+          Top = 1.000000000000003000
           Width = 185.196970000000000000
           Height = 26.456710000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -505,9 +570,9 @@ object ImprimirDataModule: TImprimirDataModule
         end
         object Picture1: TfrxPictureView
           Left = 2.779530000000000000
-          Top = 2.779529999999994000
+          Top = 2.779529999999997000
           Width = 260.787570000000000000
-          Height = 68.031540000000010000
+          Height = 68.031540000000000000
           HightQuality = False
           Transparent = False
           TransparentColor = clWhite
@@ -636,9 +701,9 @@ object ImprimirDataModule: TImprimirDataModule
         '     SELECT '#39'CIVELOO'#39' as Empresa, "Cliente".NOMBRE,  "Cliente".T' +
         'ITULAR,'
       '      "Cliente".DIRECCION,   "Cliente".DIRECCIONCOMERCIAL,'
-      '      "Articulo".DESCRIPCION,   "VentaItem".OPERACION,'
+      '      "Articulo".DESCRIPCION, "Articulo".UNIDAD,'
       '      "VentaItem".ARTICULO,   "VentaItem".CANTIDAD,'
-      '      "VentaItem".PRECIO,'
+      '      "VentaItem".PRECIO,    "VentaItem".OPERACION,'
       '      ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT,'
       '      "VentaItem".SERVICIO,   "VentaItem".DESCRIPCION AS DESCR,'
       '      "Venta".CODIGO,   "Venta".LETRA,   "Venta".FECHA,'
@@ -655,8 +720,25 @@ object ImprimirDataModule: TImprimirDataModule
         '".CODIGO)'
       
         '      INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIG' +
-        'O)')
+        'O)'
+      'WHERE'
+      '    ("Venta".CODIGO = 2 ) ')
     Left = 824
     Top = 8
+  end
+  object FDQuery1: TFDQuery
+    Connection = FirebirdConnection
+    SQL.Strings = (
+      'SELECT '
+      '  CODIGO,'
+      '  DESCRIPCION,'
+      '  CODIGOBARRA,'
+      '  5 AS Cantidad  '
+      'FROM '
+      '  "Articulo" '
+      'WHERE'
+      '  Codigo = 1;')
+    Left = 824
+    Top = 64
   end
 end

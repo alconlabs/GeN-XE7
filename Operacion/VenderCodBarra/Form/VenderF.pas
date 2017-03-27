@@ -565,7 +565,16 @@ begin
       begin
         mat[c, r] := SGFact.Cells[c, r];
       end;
-    ProcVTA(cbTipo.Text, ClienteEdit.Text, FormatDateTime('mm/dd/yyyy hh:mm:ss',
+
+    if Presupuesto.Checked then
+     ProcPresup(cbTipo.Text, ClienteEdit.Text, FormatDateTime('mm/dd/yyyy hh:mm:ss',
+      FechaDateTimePicker.DateTime), VendedorEdit.Text, '', CtaNombre,
+      Presupuesto.Checked, PagareCheckBox.Checked, costo, Comision, Impuesto,
+      StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total, subtotal,
+      desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text), Saldo, Pagado,
+      Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
+    else
+     ProcVTA(cbTipo.Text, ClienteEdit.Text, FormatDateTime('mm/dd/yyyy hh:mm:ss',
       FechaDateTimePicker.DateTime), VendedorEdit.Text, '', CtaNombre,
       Presupuesto.Checked, PagareCheckBox.Checked, costo, Comision, Impuesto,
       StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total, subtotal,

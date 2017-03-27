@@ -132,6 +132,8 @@ type
     CodigoBarraEdit: TDBEdit;
     CodigoBarraBitBtn: TBitBtn;
     PaintBox1: TImage;
+    DBEdit2: TDBEdit;
+    Label35: TLabel;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -156,6 +158,7 @@ type
     procedure CategoriaDBLookupComboBoxEnter(Sender: TObject);
     procedure RubroDBLookupComboBoxEnter(Sender: TObject);
     procedure MarcaDBLookupComboBoxEnter(Sender: TObject);
+    procedure PaintBox1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -176,7 +179,7 @@ var
 
 implementation
 
-uses UFBuscaArticulos, Color;
+uses UFBuscaArticulos, Color, OperacionDM;
 
 {$R *.dfm}
 
@@ -275,7 +278,7 @@ begin
     Canvas.Brush.Color := clWhite;
     Canvas.FillRect(Rect(0, 0, PaintBox1.Width, PaintBox1.Height));
     Canvas.Pen.Color := clBlack;
-  END;
+  end;
   for i := 1 to Length(matrix) do
     if matrix[i] = '1' then
       PaintBox1.Canvas.PolyLine([Point(10 + i, 10), Point(10 + i, 50)])
@@ -350,6 +353,7 @@ begin
     FBuscaArticulo.Free;
   end;
   Tabla.Edit;
+  Codifica(CodigoBarraEdit.Text);
 end;
 
 procedure TFProductos.FormKeyPress(Sender: TObject; var Key: Char);
@@ -457,16 +461,16 @@ begin
     QTemp.Close;
     QTemp.SQL.Text := 'SELECT max(CODIGO) FROM "Articulo"';
     QTemp.Open;
-    i := 100000 + (QTemp.Fields.Fields[0].AsInteger + 1); // agrego el codigo
+    i := 1000000000 + (QTemp.Fields.Fields[0].AsInteger + 1); // agrego el codigo
   end
   else
   begin
-    i := 100000 + StrToInt(CodigoDBEdit.Text);
+    i := 1000000000 + StrToInt(CodigoDBEdit.Text);
     IF (Tabla.State <> dsEdit) then
       Tabla.Edit;
   end;
   // codigo de barras
-  CodigoBarraEdit.Text := '1' + IntToStr(i) + '2';
+  CodigoBarraEdit.Text := '10' + IntToStr(i) + '2';
   // lo incluyo en el codigo de barra
   Codifica(CodigoBarraEdit.Text);
   CodigoBarraEdit.SelStart := 0;
@@ -487,6 +491,16 @@ begin
     BitBtn4.Click;
   IF Key = VK_F6 then
     CodigoBarraBitBtn.Click;
+end;
+
+procedure TFProductos.PaintBox1Click(Sender: TObject);
+begin
+ OperacionDataModule := TOperacionDataModule.Create(self);
+  with OperacionDataModule do
+  begin
+   CodigoBarra(CodigoBarraEdit.Text);
+  end;
+  OperacionDataModule.Free;
 end;
 
 procedure TFProductos.Precio6DBEditExit(Sender: TObject);

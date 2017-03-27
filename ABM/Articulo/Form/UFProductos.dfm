@@ -191,15 +191,15 @@ object FProductos: TFProductos
         Caption = 'Codigo de Barra'
       end
       object PaintBox1: TImage
-        Left = 258
-        Top = 8
-        Width = 89
+        Left = 228
+        Top = 6
+        Width = 119
         Height = 73
         AutoSize = True
         Center = True
         ParentShowHint = False
         ShowHint = False
-        Visible = False
+        OnClick = PaintBox1Click
       end
       object DescripcionDBEdit: TDBEdit
         Left = 15
@@ -297,17 +297,17 @@ object FProductos: TFProductos
         OnExit = GanaciaDBEditExit
       end
       object CodigoBarraEdit: TDBEdit
-        Left = 97
-        Top = 60
-        Width = 136
+        Left = 96
+        Top = 58
+        Width = 100
         Height = 21
         DataField = 'CodigoBarra'
         DataSource = DataSource
         TabOrder = 0
       end
       object CodigoBarraBitBtn: TBitBtn
-        Left = 232
-        Top = 60
+        Left = 195
+        Top = 58
         Width = 27
         Height = 21
         Caption = '+'
@@ -324,10 +324,6 @@ object FProductos: TFProductos
     object TabSheet3: TTabSheet
       Caption = 'Notas'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -342,10 +338,6 @@ object FProductos: TFProductos
     object TabSheet2: TTabSheet
       Caption = 'Informaci'#243'n Adicional'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label6: TLabel
         Left = 351
         Top = 116
@@ -428,6 +420,15 @@ object FProductos: TFProductos
         Height = 13
         Caption = 'Categor'#237'a'
       end
+      object Label35: TLabel
+        Left = 12
+        Top = 145
+        Width = 47
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Cod.Prov.'
+        FocusControl = DBEdit2
+      end
       object DBEdit6: TDBEdit
         Left = 406
         Top = 115
@@ -435,7 +436,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'Ubicacion'
         DataSource = DataSource
-        TabOrder = 4
+        TabOrder = 5
       end
       object DBEdit5: TDBEdit
         Left = 406
@@ -444,7 +445,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'StockMinimo'
         DataSource = DataSource
-        TabOrder = 6
+        TabOrder = 7
         Visible = False
       end
       object DBEdit7: TDBEdit
@@ -454,7 +455,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'StockMaximo'
         DataSource = DataSource
-        TabOrder = 7
+        TabOrder = 8
         Visible = False
       end
       object DBEdit8: TDBEdit
@@ -464,7 +465,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'StockVendido'
         DataSource = DataSource
-        TabOrder = 8
+        TabOrder = 9
         Visible = False
       end
       object DBEdit17: TDBEdit
@@ -474,7 +475,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'FechaCompUlt'
         DataSource = DataSource
-        TabOrder = 9
+        TabOrder = 10
       end
       object DBEdit9: TDBEdit
         Left = 406
@@ -483,7 +484,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'Unidad'
         DataSource = DataSource
-        TabOrder = 3
+        TabOrder = 4
       end
       object DBEdit21: TDBEdit
         Left = 406
@@ -492,7 +493,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'Procedencia'
         DataSource = DataSource
-        TabOrder = 5
+        TabOrder = 6
       end
       object RubroDBLookupComboBox: TDBLookupComboBox
         Left = 66
@@ -519,7 +520,7 @@ object FProductos: TFProductos
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 10
+        TabOrder = 11
         OnClick = RubroBitBtnClick
       end
       object MarcaDBLookupComboBox: TDBLookupComboBox
@@ -548,7 +549,7 @@ object FProductos: TFProductos
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 11
+        TabOrder = 12
         OnClick = MarcaBitBtnClick
       end
       object CategoriaDBLookupComboBox: TDBLookupComboBox
@@ -576,17 +577,22 @@ object FProductos: TFProductos
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 12
+        TabOrder = 13
         OnClick = CategoriaBitBtnClick
+      end
+      object DBEdit2: TDBEdit
+        Left = 65
+        Top = 143
+        Width = 197
+        Height = 21
+        DataField = 'STOCK'
+        DataSource = DataSource
+        TabOrder = 3
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'Precios'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label11: TLabel
         Left = 185
         Top = 221
@@ -707,10 +713,6 @@ object FProductos: TFProductos
     object TabSheet5: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label50: TLabel
         Left = 185
         Top = 51

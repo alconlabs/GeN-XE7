@@ -32,11 +32,13 @@ type
     frxCrypt1: TfrxCrypt;
     FirebirdConnection: TFDConnection;
     VentasFDQuery1: TFDQuery;
+    FDQuery1: TFDQuery;
     Function VTA(nro, let: string): string;
     Function OPER(nro, let: string): string;
     Function PRE(nro, let: string): string;
     Function PlanillaCobrador(nro, let: string): string;
     Function Contrato(nro, let: string): string;
+    Function EAN(nro: string): string;
     Procedure Impr(vsql, reporte: string);
     Procedure CSV(sql, n: string);
     Procedure SImpr(vsql, reporte: string);
@@ -144,7 +146,7 @@ begin
   with frxReport1 do
   begin
     LoadFromFile(Path + 'rpt\' + reporte + '.fr3');
-    if reporte = 'COriginal' then
+    if (reporte = 'COriginal') or (reporte = 'CPOriginal' ) then
     begin
     //Pict:= frReport1.FindObject('MyImage') as TfrxPictureView;
       Pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
@@ -187,9 +189,9 @@ Function TImprimirDataModule.PRE;
 begin
   Result := '  "Cliente".NOMBRE,' + '  "Cliente".TITULAR,' +
     '  "Cliente".DIRECCION,' + '  "Cliente".DIRECCIONCOMERCIAL,' +
-    '  "Articulo".DESCRIPCION,' + '  "PresupuestoItem".OPERACION,' +
+    '  "Articulo".DESCRIPCION,' + '  "Articulo".UNIDAD,' +
     '  "PresupuestoItem".ARTICULO,' + '  "PresupuestoItem".CANTIDAD,' +
-    '  "PresupuestoItem".PRECIO,' +
+    '  "PresupuestoItem".PRECIO,' + '  "PresupuestoItem".OPERACION,' +
     '  ("PresupuestoItem".PRECIO * "PresupuestoItem".CANTIDAD ) as PREXCANT,' +
     '  "PresupuestoItem".SERVICIO,' +
     '  "PresupuestoItem".DESCRIPCION AS DESCR,' + '  "Presupuesto".CODIGO,' +
@@ -212,9 +214,9 @@ Function TImprimirDataModule.VTA;
 begin
   Result := '  "Cliente".NOMBRE,' + '  "Cliente".TITULAR,' +
     '  "Cliente".DIRECCION,' + '  "Cliente".DIRECCIONCOMERCIAL,' +
-    '  "Articulo".DESCRIPCION,' + '  "VentaItem".OPERACION,' +
+    '  "Articulo".DESCRIPCION,' +  '  "Articulo".UNIDAD,' +
     '  "VentaItem".ARTICULO,' + '  "VentaItem".CANTIDAD,' +
-    '  "VentaItem".PRECIO,' +
+    '  "VentaItem".PRECIO,' + '  "VentaItem".OPERACION,' +
     '  ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT,' +
     '  "VentaItem".SERVICIO,' + '  "VentaItem".DESCRIPCION AS DESCR,' +
     '  "Venta".CODIGO,' + '  "Venta".LETRA,' + '  "Venta".FECHA,' +
@@ -234,9 +236,9 @@ Function TImprimirDataModule.OPER;
 begin
   Result := '  "Cliente".NOMBRE,' + '  "Cliente".TITULAR,' +
     '  "Cliente".DIRECCION,' + '  "Cliente".DIRECCIONCOMERCIAL,' +
-    '  "Articulo".DESCRIPCION,' + '  "OperacionItem".OPERACION,' +
+    '  "Articulo".DESCRIPCION,' + '  "Articulo".UNIDAD,' +
     '  "OperacionItem".ARTICULO,' + '  "OperacionItem".CANTIDAD,' +
-    '  "OperacionItem".PRECIO,' +
+    '  "OperacionItem".PRECIO,' + '  "OperacionItem".OPERACION,' +
     '  ("OperacionItem".PRECIO * "OperacionItem".CANTIDAD ) as PREXCANT,' +
     '  "OperacionItem".SERVICIO,' + '  "OperacionItem".DESCRIPCION AS DESCR,' +
     '  "Operacion".CODIGO,' + '  "Operacion".LETRA,' + '  "Operacion".FECHA,' +
@@ -275,6 +277,12 @@ begin
     + 'DCIUDAD, DPROVINCIA, DPAIS, TOMADOR, TTIPO, TNOMBRE, TAPELLIDO, TDOCUMENTO, '
     + 'TDTIPO, TDOMICILIO, TDTRABAJO, TCIUDAD, TPROVINCIA, TPAIS ' +
     'FROM "Contrato" WHERE NUMERO=' + nro;
+end;
+
+Function TImprimirDataModule.EAN;
+begin
+  Result := 'CODIGOBARRA '
+   + 'FROM "Articulo" WHERE CODIGOBARRA=' + nro;
 end;
 
 end.

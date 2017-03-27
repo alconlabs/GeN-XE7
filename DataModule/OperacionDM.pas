@@ -42,6 +42,7 @@ type
     procedure ExpCSV(sql:string);
     Procedure MovCaja(tipo,soc,imp,desc:string)                     ;
     procedure DataModuleCreate(Sender: TObject);
+    Procedure CodigoBarra(cb:string);
   private
     { Private declarations }
   public
@@ -578,7 +579,7 @@ Q.Transaction.CommitRetaining;
 if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
  begin
   ImprimirDataModule := TImprimirDataModule.Create(self);
-  ImprimirDataModule.Impr( ImprimirDataModule.PRE(nro,let),'' );
+  ImprimirDataModule.Impr( ImprimirDataModule.PRE(nro,let),'Presupuesto' );
   ImprimirDataModule.Free;
  end;
 
@@ -993,6 +994,13 @@ begin
  ' ('+QuotedStr(desc)+','+vta+','+comp+','+ctac+','+pago+','+cont+','+cheq+','+chei+','+QuotedStr(chen)+','+QuotedStr(ched)+','+QuotedStr(chedi)+','+tarj+','+QuotedStr(tarn)+','+tarimp+','+otri+','+mone+','+meim+','+metc+','+sald+','+paga+','+ch3q+','+ch3i+','+QuotedStr(ch3n)+','+QuotedStr(ch3d)+','+ch3di+') '+
  '';
  Q.ExecSQL;
+end;
+
+Procedure TOperacionDataModule.CodigoBarra;
+begin
+ ImprimirDataModule := TImprimirDataModule.Create(self);
+ with ImprimirDataModule do Impr( EAN(cb),'codebar' );
+ ImprimirDataModule.Free;
 end;
 
 end.
