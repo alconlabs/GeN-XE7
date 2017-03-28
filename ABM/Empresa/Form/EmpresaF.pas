@@ -107,6 +107,8 @@ begin
   //
   If (Tabla.State = dsEdit) or (Tabla.State = dsInsert) then
     Tabla.Post;
+  dm.ConfigQuery.Close;
+  dm.ConfigQuery.Open;
   Close;
 end;
 

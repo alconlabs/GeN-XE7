@@ -141,7 +141,15 @@ var
 begin
   if reporte = '' then
     reporte := dm.ConfigQuery.FieldByName('Reporte').AsString;
-  Query.sql.Text := 'SELECT ' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE').AsString) + ' As Empresa,' + vsql;
+  Query.sql.Text := 'SELECT '
+  + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE').AsString)+ ' As Empresa,'
+  + QuotedStr(dm.ConfigQuery.FieldByName('CODIGOAREA').AsString)+ ' As ECODIGOAREA,'
+  + QuotedStr(dm.ConfigQuery.FieldByName('TELEFONO').AsString)+ ' As ETELEFONO,'
+  + QuotedStr(dm.ConfigQuery.FieldByName('DIRECCIONCOMERCIAL').AsString)+ ' As EDIRECCIONCOMERCIAL,'
+  + QuotedStr(dm.ConfigQuery.FieldByName('CP').AsString)+ ' As ECP,'
+  + QuotedStr(dm.ConfigQuery.FieldByName('DEPARTAMENTO').AsString)+ ' As EDEPARTAMENTO,'
+  + QuotedStr(dm.ConfigQuery.FieldByName('PROVINCIA').AsString)+ ' As EPROVINCIA,'
+  + vsql;
   Query.Open;
   with frxReport1 do
   begin
