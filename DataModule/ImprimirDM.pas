@@ -289,8 +289,7 @@ end;
 
 Function TImprimirDataModule.EAN;
 begin
-  Result := 'CODIGOBARRA '
-   + 'FROM "Articulo" WHERE CODIGOBARRA=' + nro;
+  Result := nro + 'as CODIGOBARRA FROM "Empresa"';
 end;
 
 end.
