@@ -184,7 +184,7 @@ begin
     + '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
     '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +
     ' WHERE ' + '(CODIGOBARRA like ' + QuotedStr(CodigoEdit.Text + '%') + ')' +
-    'AND ("Articulo".DESCRIPCION like ' + QuotedStr(DescripcionEdit.Text + '%')
+    'AND ("Articulo".DESCRIPCION Containing ' + QuotedStr(DescripcionEdit.Text)
     + ')' + 'AND ("Marca".DESCRIPCION like ' + QuotedStr(MarcaEdit.Text + '%') +
     ')' + 'AND ("Rubro".DESCRIPCION like ' + QuotedStr(RubroEdit.Text + '%') +
     ')' + 'AND ("Categoria".DESCRIPCION like ' +
