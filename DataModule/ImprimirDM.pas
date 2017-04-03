@@ -46,6 +46,7 @@ type
     procedure frxReport1BeforePrint(Sender: TfrxReportComponent);
   private
     { Private declarations }
+    clienteSql:string;
   public
     { Public declarations }
   end;
@@ -123,6 +124,7 @@ end;
 procedure TImprimirDataModule.DataModuleCreate(Sender: TObject);
 begin
   DM.ConfigQuery.Open;
+  clienteSql := ' "Cliente".NOMBRE,  "Cliente".TITULAR, "Cliente".DIRECCION, "Cliente".DIRECCIONCOMERCIAL, "Cliente".IVA as CIVA, "Cliente".CUIT as CCUIT';
 end;
 
 procedure TImprimirDataModule.frxReport1BeforePrint(
@@ -141,14 +143,21 @@ var
 begin
   if reporte = '' then
     reporte := dm.ConfigQuery.FieldByName('Reporte').AsString;
+//'CIVELOO' as Empresa, 'Diego E. Guillen' as ETITULAR, 'Monotributo' as EIVA, '2804' as ECODIGOAREA, '029814' as ETELEFONO, 'V.Autiero 1255' as EDIRECCIONCOMERCIAL, '9120' as ECP, 'Puerto Maryn' as EDEPARTAMENTO, 'Chubut' as EPROVINCIA, '20314661967' as ECUIT, '45789827' as EIIBB, '27/03/1985' as EFECHA,
   Query.sql.Text := 'SELECT '
   + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE').AsString)+ ' As Empresa,'
+  + QuotedStr(dm.ConfigQuery.FieldByName('TITULAR').AsString)+ ' As ETITULAR,'
+  + QuotedStr(dm.ConfigQuery.FieldByName('IVA').AsString)+ ' As EIVA,'
   + QuotedStr(dm.ConfigQuery.FieldByName('CODIGOAREA').AsString)+ ' As ECODIGOAREA,'
   + QuotedStr(dm.ConfigQuery.FieldByName('TELEFONO').AsString)+ ' As ETELEFONO,'
   + QuotedStr(dm.ConfigQuery.FieldByName('DIRECCIONCOMERCIAL').AsString)+ ' As EDIRECCIONCOMERCIAL,'
   + QuotedStr(dm.ConfigQuery.FieldByName('CP').AsString)+ ' As ECP,'
+  + QuotedStr(dm.ConfigQuery.FieldByName('CIUDAD').AsString)+ ' As ECIUDAD,'
   + QuotedStr(dm.ConfigQuery.FieldByName('DEPARTAMENTO').AsString)+ ' As EDEPARTAMENTO,'
   + QuotedStr(dm.ConfigQuery.FieldByName('PROVINCIA').AsString)+ ' As EPROVINCIA,'
+  + QuotedStr(dm.ConfigQuery.FieldByName('CUIT').AsString)+ ' As ECUIT,'
+  + QuotedStr(FormatDateTime('dd/mm/yyyy',dm.ConfigQuery.FieldByName('FECHA').AsDateTime))+ ' As EFECHA,'
+  + QuotedStr(dm.ConfigQuery.FieldByName('IIBB').AsString)+ ' As EIIBB,'
   + vsql;
   Query.Open;
   with frxReport1 do
@@ -195,8 +204,7 @@ end;
 
 Function TImprimirDataModule.PRE;
 begin
-  Result := '  "Cliente".NOMBRE,' + '  "Cliente".TITULAR,' +
-    '  "Cliente".DIRECCION,' + '  "Cliente".DIRECCIONCOMERCIAL,' +
+  Result := clienteSql+',' +
     '  "Articulo".DESCRIPCION,' + '  "Articulo".UNIDAD,' +
     '  "PresupuestoItem".ARTICULO,' + '  "PresupuestoItem".CANTIDAD,' +
     '  "PresupuestoItem".PRECIO,' + '  "PresupuestoItem".OPERACION,' +

@@ -322,22 +322,9 @@ object EmpresaForm: TEmpresaForm
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object IVALabel: TLabel
-        Left = 535
-        Top = 116
-        Width = 9
-        Height = 13
-        Caption = '...'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        ParentFont = False
-      end
       object Image1: TImage
-        Left = 472
-        Top = 214
+        Left = 473
+        Top = 241
         Width = 202
         Height = 135
         Hint = 'CLICK PARA CAMBIAR'
@@ -409,12 +396,25 @@ object EmpresaForm: TEmpresaForm
         OnClick = Image1Click
       end
       object Label1: TLabel
-        Left = 437
-        Top = 214
+        Left = 438
+        Top = 241
         Width = 29
         Height = 13
         Caption = 'Logo'
         FocusControl = DBEdit19
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label10: TLabel
+        Left = 407
+        Top = 214
+        Width = 59
+        Height = 13
+        Caption = 'Inic.Activ.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -11
@@ -587,16 +587,18 @@ object EmpresaForm: TEmpresaForm
       object IVADBComboBox: TDBComboBox
         Left = 473
         Top = 112
-        Width = 57
+        Width = 201
         Height = 21
         DataField = 'IVA'
         DataSource = DataSource
         Items.Strings = (
-          'CF'
-          'MT'
-          'RI'
-          'EX'
-          'NR')
+          'Responsable Monotributo'
+          'Responsable Inscripto'
+          'Exento'
+          'No Responsable'
+          'S.R.L.'
+          'S.A.'
+          'Cooperativa')
         TabOrder = 19
         OnChange = IVADBComboBoxChange
       end
@@ -608,6 +610,15 @@ object EmpresaForm: TEmpresaForm
         DataField = 'DOCUMENTO'
         DataSource = DataSource
         TabOrder = 15
+      end
+      object DateTimePicker1: TDateTimePicker
+        Left = 472
+        Top = 214
+        Width = 202
+        Height = 21
+        Date = 42827.892104178240000000
+        Time = 42827.892104178240000000
+        TabOrder = 20
       end
     end
     object TabSheet2: TTabSheet

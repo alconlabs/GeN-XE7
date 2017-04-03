@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GeN"
-#define MyAppVersion "170329.2008"
+#define MyAppVersion "1700402.2216"
 #define MyAppPublisher "Civeloo"
 #define MyAppURL "http://www.civeloo.com/"
 #define MyAppExeName "GeN.exe"
@@ -41,7 +41,7 @@ Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription
 Source: C:\Civeloo\GeN\bin\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
 ;Source: C:\Civeloo\GeN\db\*; DestDir: {app}\db\; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: C:\Civeloo\GeN\hlp\*; DestDir: {app}\hlp\; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: C:\Civeloo\GeN\img\*; DestDir: {app}\img\; Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: C:\Civeloo\GeN\img\*; DestDir: {app}\img\; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: C:\Civeloo\GeN\rpt\*; DestDir: {app}\rpt\; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

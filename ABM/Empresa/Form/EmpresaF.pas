@@ -65,7 +65,6 @@ type
     DBLookupComboBox1: TDBLookupComboBox;
     CuentaDBLookupComboBox: TDBLookupComboBox;
     Label50: TLabel;
-    IVALabel: TLabel;
     Panel1: TPanel;
     Label33: TLabel;
     SiBitBtn: TBitBtn;
@@ -76,6 +75,8 @@ type
     Image1: TImage;
     Label1: TLabel;
     OpenPictureDialog1: TOpenPictureDialog;
+    Label10: TLabel;
+    DateTimePicker1: TDateTimePicker;
     procedure NoBitBtnClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
@@ -105,8 +106,12 @@ begin
   // guardar imagen
   Image1.Picture.SaveToFile(path + 'img\empresa.bmp');
   //
+
   If (Tabla.State = dsEdit) or (Tabla.State = dsInsert) then
+  begin
+    Tabla.FieldByName('Fecha').AsDateTime := DateTimePicker1.Date;
     Tabla.Post;
+  end;
   dm.ConfigQuery.Close;
   dm.ConfigQuery.Open;
   Close;
@@ -138,6 +143,7 @@ begin
   CuentaT.Open;
   Tabla.Open;
   Image1.Picture.LoadFromFile(path + 'img\empresa.bmp');
+  DateTimePicker1.Date := Tabla.FieldByName('Fecha').AsDateTime;
 end;
 
 procedure TEmpresaForm.FormKeyPress(Sender: TObject; var Key: Char);
@@ -159,6 +165,7 @@ end;
 
 procedure TEmpresaForm.IVADBComboBoxChange(Sender: TObject);
 begin
+{
   if IVADBComboBox.Text = 'CF' then
     IVALabel.Caption := 'Consumidor Final'
   else if IVADBComboBox.Text = 'MT' then
@@ -169,6 +176,7 @@ begin
     IVALabel.Caption := 'Exento'
   else
     IVALabel.Caption := 'No Responsable';
+}
 end;
 
 procedure TEmpresaForm.Image1Click(Sender: TObject);
