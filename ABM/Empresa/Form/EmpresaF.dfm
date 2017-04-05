@@ -738,6 +738,19 @@ object EmpresaForm: TEmpresaForm
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object Label14: TLabel
+      Left = 7
+      Top = 4
+      Width = 83
+      Height = 18
+      Caption = 'Pto.Vta. Nro'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
     object SiBitBtn: TBitBtn
       Left = 6
       Top = 283
@@ -790,8 +803,8 @@ object EmpresaForm: TEmpresaForm
       OnClick = NoBitBtnClick
     end
     object ImprimirBitBtn: TBitBtn
-      Left = 7
-      Top = 6
+      Left = 6
+      Top = 95
       Width = 80
       Height = 50
       Caption = 'Imprimir'
@@ -804,6 +817,21 @@ object EmpresaForm: TEmpresaForm
       TabOrder = 2
       Visible = False
       OnClick = ImprimirBitBtnClick
+    end
+    object DBEdit11: TDBEdit
+      Left = 6
+      Top = 24
+      Width = 83
+      Height = 24
+      DataField = 'Codigo'
+      DataSource = DataSource
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 3
     end
   end
   object DataSource: TDataSource

@@ -31,7 +31,7 @@ object ImprimirDataModule: TImprimirDataModule
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 39416.849051458300000000
-    ReportOptions.LastChange = 42827.926956782400000000
+    ReportOptions.LastChange = 42829.926228182900000000
     ReportOptions.Picture.Data = {
       0954474946496D61676547494638396150003200F70000FDFDFDFCFCFCFBFBFB
       F9F9F9030303FAFAFA010101F8F8F8020202040404F7F7F70606060505050707
@@ -187,28 +187,26 @@ object ImprimirDataModule: TImprimirDataModule
       end
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
-        Top = 423.307360000000000000
+        Top = 472.441250000000000000
         Width = 718.110700000000000000
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
         Height = 18.897650000000000000
-        Top = 211.653680000000000000
+        Top = 275.905690000000000000
         Width = 718.110700000000000000
         DataSet = frxDBDataset1
         DataSetName = 'frxDBDataset1'
         RowCount = 1
         Stretched = True
         object Shape2: TfrxShapeView
-          Top = 0.000000000000008479
           Width = 718.110700000000000000
           Height = 18.897650000000000000
           Shape = skRoundRectangle
         end
         object Memo10: TfrxMemoView
           Left = 56.692950000000000000
-          Top = 0.000000000000008479
-          Width = 442.205010000000000000
+          Width = 404.409710000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -221,13 +219,12 @@ object ImprimirDataModule: TImprimirDataModule
           ParentFont = False
         end
         object Memo11: TfrxMemoView
-          Left = 499.677490000000000000
-          Top = 0.000000000000008479
-          Width = 67.811070000000000000
+          Left = 461.882190000000000000
+          Width = 30.015770000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -7
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
@@ -235,10 +232,10 @@ object ImprimirDataModule: TImprimirDataModule
           Memo.UTF8W = (
             'UNIDAD')
           ParentFont = False
+          VAlign = vaCenter
         end
         object Memo2: TfrxMemoView
           Left = 642.520100000000000000
-          Top = 0.000000000000008479
           Width = 75.370130000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -252,9 +249,8 @@ object ImprimirDataModule: TImprimirDataModule
           ParentFont = False
         end
         object Memo9: TfrxMemoView
-          Top = 0.000000000000008479
           Width = 56.472480000000000000
-          Height = 15.118120000000000000
+          Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -266,8 +262,7 @@ object ImprimirDataModule: TImprimirDataModule
           ParentFont = False
         end
         object Memo14: TfrxMemoView
-          Left = 566.929500000000000000
-          Top = 0.000000000000008479
+          Left = 491.338900000000000000
           Width = 75.370130000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -281,18 +276,50 @@ object ImprimirDataModule: TImprimirDataModule
             'P.UNIT.')
           ParentFont = False
         end
+        object Memo17: TfrxMemoView
+          Left = 589.606680000000000000
+          Width = 52.692950000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '$ IVA')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo22: TfrxMemoView
+          Left = 566.929500000000000000
+          Width = 22.456710000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '% IVA')
+          ParentFont = False
+          VAlign = vaCenter
+        end
       end
       object DetailData1: TfrxDetailData
         FillType = ftBrush
         Height = 18.897650000000000000
-        Top = 253.228510000000000000
+        Top = 317.480520000000000000
         Width = 718.110700000000000000
         DataSet = frxDBDataset1
         DataSetName = 'frxDBDataset1'
         RowCount = 0
         Stretched = True
         object Shape4: TfrxShapeView
-          Top = -0.000000000000000014
+          Top = -0.000000000000000028
           Width = 718.110700000000000000
           Height = 18.897650000000000000
           Frame.Typ = [ftBottom]
@@ -300,17 +327,15 @@ object ImprimirDataModule: TImprimirDataModule
         end
         object Memo15: TfrxMemoView
           Left = 56.692950000000000000
-          Top = -0.000000000000000014
-          Width = 442.205010000000000000
+          Width = 404.409710000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
           Memo.UTF8W = (
             '[frxDBDataset1."DESCRIPCION"]')
         end
         object Memo16: TfrxMemoView
-          Left = 499.677490000000000000
-          Top = -0.000000000000000014
-          Width = 67.811070000000000000
+          Left = 461.882190000000000000
+          Width = 30.015770000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
           HAlign = haCenter
@@ -319,7 +344,7 @@ object ImprimirDataModule: TImprimirDataModule
         end
         object Memo8: TfrxMemoView
           Left = 642.520100000000000000
-          Top = -0.000000000000000014
+          Top = -0.000000000000000028
           Width = 75.370130000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
@@ -329,7 +354,7 @@ object ImprimirDataModule: TImprimirDataModule
         end
         object Memo12: TfrxMemoView
           Left = 3.000000000000000000
-          Top = -0.000000000000000014
+          Top = -0.000000000000000028
           Width = 54.472480000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
@@ -338,8 +363,7 @@ object ImprimirDataModule: TImprimirDataModule
             '[frxDBDataset1."CANTIDAD"]')
         end
         object Memo1: TfrxMemoView
-          Left = 566.929500000000000000
-          Top = -0.000000000000000014
+          Left = 491.338900000000000000
           Width = 75.370130000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
@@ -347,11 +371,35 @@ object ImprimirDataModule: TImprimirDataModule
           Memo.UTF8W = (
             '[frxDBDataset1."PRECIO"]')
         end
+        object Memo18: TfrxMemoView
+          Left = 589.606680000000000000
+          Width = 52.692950000000000000
+          Height = 18.897650000000000000
+          DataSetName = 'FacturafrxDBDataset'
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[frxDBDataset1."VIIMPUESTO"]')
+        end
+        object Memo23: TfrxMemoView
+          Left = 566.929500000000000000
+          Width = 22.456710000000000000
+          Height = 18.897650000000000000
+          DataSetName = 'FacturafrxDBDataset'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[frxDBDataset1."AIVA"]')
+          ParentFont = False
+        end
       end
       object GroupFooter1: TfrxGroupFooter
         FillType = ftBrush
         Height = 52.913420000000000000
-        Top = 294.803340000000000000
+        Top = 359.055350000000000000
         Width = 718.110700000000000000
         Stretched = True
         object Shape3: TfrxShapeView
@@ -377,7 +425,8 @@ object ImprimirDataModule: TImprimirDataModule
           ParentFont = False
         end
         object frxDBDataset1IVA1: TfrxMemoView
-          Top = -0.000000000000008493
+          Left = 3.779530000000000000
+          Top = 3.779530000000000000
           Width = 151.181200000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
@@ -392,7 +441,8 @@ object ImprimirDataModule: TImprimirDataModule
           ParentFont = False
         end
         object frxDBDataset1IVA2: TfrxMemoView
-          Top = 34.015769999999970000
+          Left = 3.779530000000000000
+          Top = 30.236240000000000000
           Width = 151.181200000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
@@ -429,20 +479,19 @@ object ImprimirDataModule: TImprimirDataModule
       object GroupHeader2: TfrxGroupHeader
         FillType = ftBrush
         Height = 173.858380000000000000
-        Top = 18.897650000000000000
+        Top = 79.370130000000000000
         Width = 718.110700000000000000
         Condition = 'frxDBDataset1."OPERACION"'
         Stretched = True
         object Shape1: TfrxShapeView
-          Top = -0.000000000000001273
+          Top = -0.000000000000001277
           Width = 718.110700000000000000
           Height = 173.858380000000000000
         end
         object Memo4: TfrxMemoView
-          Left = 306.141930000000000000
-          Top = -0.000000000000001273
-          Width = 68.031540000000000000
-          Height = 34.015770000000000000
+          Left = 321.260050000000000000
+          Width = 75.590600000000000000
+          Height = 49.133890000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -48
@@ -451,14 +500,14 @@ object ImprimirDataModule: TImprimirDataModule
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'x')
+            '[frxDBDataset1."LETRA"]')
           ParentFont = False
           VAlign = vaBottom
         end
         object Memo5: TfrxMemoView
-          Left = 386.512060000000000000
+          Left = 397.850650000000000000
           Top = 24.788992000000000000
-          Width = 325.039580000000000000
+          Width = 313.700990000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
           Font.Charset = DEFAULT_CHARSET
@@ -468,16 +517,25 @@ object ImprimirDataModule: TImprimirDataModule
           Font.Style = []
           HAlign = haRight
           Memo.UTF8W = (
-            'N'#186' [frxDBDataset1."CODIGO"]')
+            'Pto.Vta. / Nro [frxDBDataset1."PTOVTA"]-[frxDBDataset1."CODIGO"]')
           ParentFont = False
+          Formats = <
+            item
+              FormatStr = '000'
+              Kind = fkNumeric
+            end
+            item
+              FormatStr = '00000000'
+              Kind = fkNumeric
+            end>
         end
         object Memo7: TfrxMemoView
-          Left = 386.512060000000000000
+          Left = 397.850650000000000000
           Top = 48.577984000000000000
-          Width = 325.039580000000000000
+          Width = 313.700990000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
-          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.FormatStr = 'dd mmm yyyy'
           DisplayFormat.Kind = fkDateTime
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -486,12 +544,12 @@ object ImprimirDataModule: TImprimirDataModule
           Font.Style = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."FECHA"]')
+            'Fecha: [frxDBDataset1."FECHA"]')
           ParentFont = False
         end
         object Memo19: TfrxMemoView
-          Left = 298.582870000000000000
-          Top = 34.015770000000010000
+          Left = 317.480520000000000000
+          Top = 49.133890000000000000
           Width = 83.149660000000000000
           Height = 37.795300000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -521,10 +579,10 @@ object ImprimirDataModule: TImprimirDataModule
           VAlign = vaBottom
         end
         object Memo43: TfrxMemoView
-          Left = 386.512060000000000000
-          Top = 0.999999999999998700
-          Width = 325.039580000000000000
-          Height = 18.897650000000000000
+          Left = 397.850650000000000000
+          Top = 1.000000000000000000
+          Width = 313.700990000000000000
+          Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clSilver
           Font.Height = -21
@@ -532,13 +590,13 @@ object ImprimirDataModule: TImprimirDataModule
           Font.Style = [fsBold]
           HAlign = haRight
           Memo.UTF8W = (
-            'PRESUPUESTO')
+            'ORIGINAL')
           ParentFont = False
         end
         object Picture1: TfrxPictureView
           Left = 3.779530000000000000
-          Top = 6.559059999999997000
-          Width = 294.803340000000000000
+          Top = 6.559060000000000000
+          Width = 313.700990000000000000
           Height = 71.811070000000000000
           Picture.Data = {
             07544269746D6170162F0000424D162F00000000000036000000280000005000
@@ -926,7 +984,7 @@ object ImprimirDataModule: TImprimirDataModule
         object frxDBDataset1ECODIGOAREA: TfrxMemoView
           Left = 3.779530000000000000
           Top = 79.370130000000000000
-          Width = 294.803340000000000000
+          Width = 313.700990000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -950,7 +1008,7 @@ object ImprimirDataModule: TImprimirDataModule
         object frxDBDataset1ECP: TfrxMemoView
           Left = 3.779530000000000000
           Top = 98.267780000000000000
-          Width = 381.732530000000000000
+          Width = 393.071120000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -1023,9 +1081,9 @@ object ImprimirDataModule: TImprimirDataModule
           VAlign = vaBottom
         end
         object frxDBDataset1ECUIT: TfrxMemoView
-          Left = 386.512060000000000000
+          Left = 397.850650000000000000
           Top = 72.366976000000000000
-          Width = 325.039580000000000000
+          Width = 313.700990000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -1040,9 +1098,9 @@ object ImprimirDataModule: TImprimirDataModule
           ParentFont = False
         end
         object frxDBDataset1EIIBB: TfrxMemoView
-          Left = 386.512060000000000000
+          Left = 397.850650000000000000
           Top = 96.155968000000000000
-          Width = 325.039580000000000000
+          Width = 313.700990000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -1057,9 +1115,9 @@ object ImprimirDataModule: TImprimirDataModule
           ParentFont = False
         end
         object frxDBDataset1EFECHA: TfrxMemoView
-          Left = 386.512060000000000000
+          Left = 397.850650000000000000
           Top = 119.944960000000000000
-          Width = 325.039580000000000000
+          Width = 313.700990000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -1114,7 +1172,7 @@ object ImprimirDataModule: TImprimirDataModule
           ParentFont = False
         end
         object frxDBDataset1ETITULAR: TfrxMemoView
-          Left = 117.165430000000000000
+          Left = 136.063080000000000000
           Top = 60.472480000000000000
           Width = 181.417440000000000000
           Height = 18.897650000000000000
@@ -1256,38 +1314,40 @@ object ImprimirDataModule: TImprimirDataModule
     Left = 272
     Top = 8
   end
-  object FirebirdConnection: TFDConnection
-    Params.Strings = (
-      'ConnectionDef=Firebird')
-    LoginPrompt = False
-    Left = 823
-    Top = 403
-  end
   object VentasFDQuery1: TFDQuery
     Connection = FirebirdConnection
     SQL.Strings = (
+      'SELECT '
       
-        'SELECT '#39'CIVELOO'#39' as Empresa, '#39'Diego E. Guillen'#39' as ETITULAR, '#39'Mo' +
-        'notributo'#39' as EIVA, '#39'2804'#39' as ECODIGOAREA, '#39'029814'#39' as ETELEFONO' +
-        ', '#39'V.Autiero 1255'#39' as EDIRECCIONCOMERCIAL, '#39'9120'#39' as ECP, '#39'Puert' +
-        'o Maryn'#39' as ECIUDAD, '#39'Biedma'#39' as EDEPARTAMENTO, '#39'Chubut'#39' as EPRO' +
-        'VINCIA, '#39'20314661967'#39' as ECUIT, '#39'45789827'#39' as EIIBB, '#39'27/03/1985' +
-        #39' as EFECHA,'
+        '  '#9'  '#39'1'#39' as PtoVta, '#39'CIVELOO'#39' as Empresa, '#39'Diego E. Guillen'#39' as ' +
+        'ETITULAR, '#39'Monotributo'#39' as EIVA, '#39'2804'#39' as ECODIGOAREA, '#39'029814'#39 +
+        ' as ETELEFONO, '#39'V.Autiero 1255'#39' as EDIRECCIONCOMERCIAL, '#39'9120'#39' a' +
+        's ECP, '#39'Puerto Maryn'#39' as ECIUDAD, '#39'Biedma'#39' as EDEPARTAMENTO, '#39'Ch' +
+        'ubut'#39' as EPROVINCIA, '#39'20314661967'#39' as ECUIT, '#39'45789827'#39' as EIIBB' +
+        ', '#39'27/03/1985'#39' as EFECHA,'
       
         '      "Cliente".NOMBRE,  "Cliente".TITULAR, "Cliente".DIRECCION,' +
         ' "Cliente".DIRECCIONCOMERCIAL, "Cliente".IVA as CIVA, "Cliente".' +
         'CUIT as CCUIT,'
-      '      "Articulo".DESCRIPCION, "Articulo".UNIDAD,'
-      '      "VentaItem".ARTICULO,   "VentaItem".CANTIDAD,'
-      '      "VentaItem".PRECIO,    "VentaItem".OPERACION,'
-      '      ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT,'
-      '      "VentaItem".SERVICIO,   "VentaItem".DESCRIPCION AS DESCR,'
+      '      '
+      
+        '      "Articulo".DESCRIPCION, "Articulo".UNIDAD, "Articulo".IVA ' +
+        'as AIVA,'
+      '      '
+      
+        '      "VentaItem".ARTICULO, "VentaItem".CANTIDAD, "VentaItem".PR' +
+        'ECIO,    "VentaItem".OPERACION, ("VentaItem".PRECIO * "VentaItem' +
+        '".CANTIDAD ) as PREXCANT, "VentaItem".SERVICIO, "VentaItem".DESC' +
+        'RIPCION AS DESCR, "VentaItem".IMPUESTO as VIIMPUESTO,'
+      '      '
       '      "Venta".CODIGO,   "Venta".LETRA,   "Venta".FECHA,'
       '      "Venta".COMPROBANTE,   "Venta".IVA3,   "Venta".TOTAL,'
       '      "Venta".CONTADO,   "Venta".CLIENTE,   "Venta".SUBTOTAL,'
       '      "Venta".DESCUENTO,   "Venta".IMPUESTO,   "Venta".IVA2,'
       '      "Venta".IVA1,   "Venta".EXCENTO,   "Venta".SALDO,'
-      '      "Venta".PAGADO  FROM   "Venta"'
+      '      "Venta".PAGADO  '
+      'FROM   '
+      #9'"Venta"'
       
         '      INNER JOIN "VentaItem" ON ("Venta".CODIGO = "VentaItem".OP' +
         'ERACION)'
@@ -1298,15 +1358,21 @@ object ImprimirDataModule: TImprimirDataModule
         '      INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIG' +
         'O)'
       'WHERE'
-      '    ("Venta".CODIGO = 2 ) ')
+      '    ("Venta".CODIGO = 2 )')
     Left = 824
     Top = 8
   end
   object FDQuery1: TFDQuery
-    Connection = FirebirdConnection
     SQL.Strings = (
       'SELECT '#39'1234567890123'#39' as CODIGOBARRA FROM "Empresa"')
     Left = 824
     Top = 72
+  end
+  object FirebirdConnection: TFDConnection
+    Params.Strings = (
+      'ConnectionDef=GeN')
+    LoginPrompt = False
+    Left = 823
+    Top = 403
   end
 end

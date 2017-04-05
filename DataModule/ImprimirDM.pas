@@ -30,9 +30,9 @@ type
     frxDotMatrixExport2: TfrxDotMatrixExport;
     frxGZipCompressor1: TfrxGZipCompressor;
     frxCrypt1: TfrxCrypt;
-    FirebirdConnection: TFDConnection;
     VentasFDQuery1: TFDQuery;
     FDQuery1: TFDQuery;
+    FirebirdConnection: TFDConnection;
     Function VTA(nro, let: string): string;
     Function OPER(nro, let: string): string;
     Function PRE(nro, let: string): string;
@@ -46,7 +46,7 @@ type
     procedure frxReport1BeforePrint(Sender: TfrxReportComponent);
   private
     { Private declarations }
-    clienteSql:string;
+    clienteSql, articuloSql, ventaItemSql:string;
   public
     { Public declarations }
   end;
@@ -125,6 +125,8 @@ procedure TImprimirDataModule.DataModuleCreate(Sender: TObject);
 begin
   DM.ConfigQuery.Open;
   clienteSql := ' "Cliente".NOMBRE,  "Cliente".TITULAR, "Cliente".DIRECCION, "Cliente".DIRECCIONCOMERCIAL, "Cliente".IVA as CIVA, "Cliente".CUIT as CCUIT';
+  articuloSql := ' "Articulo".DESCRIPCION, "Articulo".UNIDAD, "Articulo".IVA as AIVA';
+  ventaItemSql := ' "VentaItem".ARTICULO, "VentaItem".CANTIDAD, "VentaItem".PRECIO,    "VentaItem".OPERACION, ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT, "VentaItem".SERVICIO, "VentaItem".DESCRIPCION AS DESCR, "VentaItem".IMPUESTO as VIIMPUESTO';
 end;
 
 procedure TImprimirDataModule.frxReport1BeforePrint(
@@ -143,8 +145,8 @@ var
 begin
   if reporte = '' then
     reporte := dm.ConfigQuery.FieldByName('Reporte').AsString;
-//'CIVELOO' as Empresa, 'Diego E. Guillen' as ETITULAR, 'Monotributo' as EIVA, '2804' as ECODIGOAREA, '029814' as ETELEFONO, 'V.Autiero 1255' as EDIRECCIONCOMERCIAL, '9120' as ECP, 'Puerto Maryn' as EDEPARTAMENTO, 'Chubut' as EPROVINCIA, '20314661967' as ECUIT, '45789827' as EIIBB, '27/03/1985' as EFECHA,
   Query.sql.Text := 'SELECT '
+  + QuotedStr(dm.ConfigQuery.FieldByName('CODIGO').AsString)+ ' As PtoVta,'
   + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE').AsString)+ ' As Empresa,'
   + QuotedStr(dm.ConfigQuery.FieldByName('TITULAR').AsString)+ ' As ETITULAR,'
   + QuotedStr(dm.ConfigQuery.FieldByName('IVA').AsString)+ ' As EIVA,'
@@ -204,12 +206,11 @@ end;
 
 Function TImprimirDataModule.PRE;
 begin
-  Result := clienteSql+',' +
-    '  "Articulo".DESCRIPCION,' + '  "Articulo".UNIDAD,' +
+  Result := clienteSql+',' + articuloSql+',' +
     '  "PresupuestoItem".ARTICULO,' + '  "PresupuestoItem".CANTIDAD,' +
     '  "PresupuestoItem".PRECIO,' + '  "PresupuestoItem".OPERACION,' +
     '  ("PresupuestoItem".PRECIO * "PresupuestoItem".CANTIDAD ) as PREXCANT,' +
-    '  "PresupuestoItem".SERVICIO,' +
+    '  "PresupuestoItem".SERVICIO,' +  '"PresupuestoItem".IMPUESTO as VIIMPUESTO, ' +
     '  "PresupuestoItem".DESCRIPCION AS DESCR,' + '  "Presupuesto".CODIGO,' +
     '  "Presupuesto".LETRA,' + '  "Presupuesto".FECHA,' +
     '  "Presupuesto".COMPROBANTE,' + '  "Presupuesto".IVA3,' +
@@ -228,13 +229,7 @@ end;
 
 Function TImprimirDataModule.VTA;
 begin
-  Result := '  "Cliente".NOMBRE,' + '  "Cliente".TITULAR,' +
-    '  "Cliente".DIRECCION,' + '  "Cliente".DIRECCIONCOMERCIAL,' +
-    '  "Articulo".DESCRIPCION,' +  '  "Articulo".UNIDAD,' +
-    '  "VentaItem".ARTICULO,' + '  "VentaItem".CANTIDAD,' +
-    '  "VentaItem".PRECIO,' + '  "VentaItem".OPERACION,' +
-    '  ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT,' +
-    '  "VentaItem".SERVICIO,' + '  "VentaItem".DESCRIPCION AS DESCR,' +
+  Result := clienteSql+',' + articuloSql+',' + ventaItemSql+',' +
     '  "Venta".CODIGO,' + '  "Venta".LETRA,' + '  "Venta".FECHA,' +
     '  "Venta".COMPROBANTE,' + '  "Venta".IVA3,' + '  "Venta".TOTAL,' +
     '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' + '  "Venta".SUBTOTAL,' +

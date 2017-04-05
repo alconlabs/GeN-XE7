@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Buttons, IniFiles, IBX.IBScript;
+  Dialogs, StdCtrls, Buttons, IniFiles, IBX.IBScript, DataModule;
 
 type
   TVaciarBaseForm = class(TForm)
@@ -34,15 +34,19 @@ implementation
 procedure TVaciarBaseForm.BitBtn1Click(Sender: TObject);
 Var
   IniFile: TIniFile;
-  Path, BaseDeDatos: string;
+ // Path, BaseDeDatos: string;
 begin
   FormatSettings.ShortDateFormat := 'mm/dd/yyyy';
   // Obtiene la ruta y el nombre de la base de datos
-  IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'DeG');
-  Path := IniFile.ReadString('BD', 'Path', '');
+  if Path = '' then
+   begin
+    IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'DeG');
+    Path := IniFile.ReadString('BD', 'Path', '');
+   end;
   if Path = '' then
     Path := ExtractFilePath(Application.ExeName);
-  BaseDeDatos := IniFile.ReadString('BD', 'DBase', '');
+  if BaseDeDatos = '' then
+    BaseDeDatos := IniFile.ReadString('BD', 'DBase', '');
   if BaseDeDatos = '' then
     BaseDeDatos := Path + 'GeN.FDB';
   if BaseDeDatos = '' then
@@ -54,8 +58,8 @@ begin
     Borrar.ExecuteScript;
     ShowMessage('Base de Datos Restaurada con éxito!!!');
   end;
-  IniFile.WriteString('Licencia', 'Dia', inttostr(1));
-  IniFile.WriteString('Licencia', 'Fecha', datetostr(date));
+//  IniFile.WriteString('Licencia', 'Dia', inttostr(1));
+//  IniFile.WriteString('Licencia', 'Fecha', datetostr(date));
 end;
 
 procedure TVaciarBaseForm.FormCreate(Sender: TObject);

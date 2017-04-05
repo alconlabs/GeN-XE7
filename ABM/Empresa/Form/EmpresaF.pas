@@ -77,6 +77,8 @@ type
     OpenPictureDialog1: TOpenPictureDialog;
     Label10: TLabel;
     DateTimePicker1: TDateTimePicker;
+    DBEdit11: TDBEdit;
+    Label14: TLabel;
     procedure NoBitBtnClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
