@@ -77,7 +77,7 @@ type
     OpenPictureDialog1: TOpenPictureDialog;
     Label10: TLabel;
     DateTimePicker1: TDateTimePicker;
-    DBEdit11: TDBEdit;
+    CodigoDBEdit: TDBEdit;
     Label14: TLabel;
     procedure NoBitBtnClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
@@ -104,6 +104,7 @@ implementation
 {$R *.dfm}
 
 procedure TEmpresaForm.SiBitBtnClick(Sender: TObject);
+//var e:string;
 begin
   // guardar imagen
   Image1.Picture.SaveToFile(path + 'img\empresa.bmp');
@@ -113,6 +114,9 @@ begin
   begin
     Tabla.FieldByName('Fecha').AsDateTime := DateTimePicker1.Date;
     Tabla.Post;
+    //e:=CodigoDBEdit.Text;
+    dm.Query.SQL.Text:='Update "Config" Set "Empresa" = ('+QuotedStr(CodigoDBEdit.Text)+')';
+    dm.Query.ExecSQL;
   end;
   dm.ConfigQuery.Close;
   dm.ConfigQuery.Open;

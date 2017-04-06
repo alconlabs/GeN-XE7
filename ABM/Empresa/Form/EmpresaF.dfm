@@ -741,8 +741,8 @@ object EmpresaForm: TEmpresaForm
     object Label14: TLabel
       Left = 7
       Top = 4
-      Width = 83
-      Height = 18
+      Width = 71
+      Height = 13
       Caption = 'Pto.Vta. Nro'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -818,7 +818,7 @@ object EmpresaForm: TEmpresaForm
       Visible = False
       OnClick = ImprimirBitBtnClick
     end
-    object DBEdit11: TDBEdit
+    object CodigoDBEdit: TDBEdit
       Left = 6
       Top = 24
       Width = 83
