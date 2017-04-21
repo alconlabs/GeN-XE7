@@ -40,7 +40,7 @@ implementation
 
 procedure TFCategorias.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
+  // DM := TDM.Create(Self);
   Tabla.Active := true;
 end;
 

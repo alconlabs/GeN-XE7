@@ -316,6 +316,9 @@ object RendicionClienteForm: TRendicionClienteForm
       64
       422
       64)
+    RowHeights = (
+      24
+      24)
   end
   object Q: TIBQuery
     Database = DM.BaseDatos

@@ -167,7 +167,7 @@ end;
 
 procedure TCobradorForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(self);
+  // DM := TDM.Create(self);
   EmpresaQuery.Open;
   UsuarioT.Open;
   CuentaT.Open;

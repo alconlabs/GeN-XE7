@@ -34,15 +34,15 @@ implementation
 procedure TVaciarBaseForm.BitBtn1Click(Sender: TObject);
 Var
   IniFile: TIniFile;
- // Path, BaseDeDatos: string;
+  // Path, BaseDeDatos: string;
 begin
   FormatSettings.ShortDateFormat := 'mm/dd/yyyy';
   // Obtiene la ruta y el nombre de la base de datos
   if Path = '' then
-   begin
+  begin
     IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'DeG');
     Path := IniFile.ReadString('BD', 'Path', '');
-   end;
+  end;
   if Path = '' then
     Path := ExtractFilePath(Application.ExeName);
   if BaseDeDatos = '' then
@@ -58,13 +58,13 @@ begin
     Borrar.ExecuteScript;
     ShowMessage('Base de Datos Restaurada con éxito!!!');
   end;
-//  IniFile.WriteString('Licencia', 'Dia', inttostr(1));
-//  IniFile.WriteString('Licencia', 'Fecha', datetostr(date));
+  // IniFile.WriteString('Licencia', 'Dia', inttostr(1));
+  // IniFile.WriteString('Licencia', 'Fecha', datetostr(date));
 end;
 
 procedure TVaciarBaseForm.FormCreate(Sender: TObject);
 begin
-//DM := TDM.Create(self);
+  // DM := TDM.Create(self);
 end;
 
 end.

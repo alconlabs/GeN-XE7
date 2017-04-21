@@ -70,8 +70,8 @@ end;
 
 procedure TRendicionCobradorLForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
-    DM.ConfigQuery.Open;
+  // DM := TDM.Create(Self);
+  DM.ConfigQuery.Open;
   DTP2.DateTime := Now;
 end;
 

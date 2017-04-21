@@ -694,7 +694,9 @@ object VaciarBaseForm: TVaciarBaseForm
       
         'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (10' +
         ', '#39'Preimpresa Cuadruplicado'#39', '#39'CPCuadruplicado'#39');'
-      ''
+      
+        'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (11' +
+        ', '#39'Factura Electronica'#39', '#39'FElectronica'#39');'
       ''
       ''
       'INSERT INTO "Marca" (CODIGO, DESCRIPCION) VALUES (0, '#39'VARIOS'#39');'

@@ -111,7 +111,7 @@ end;
 
 procedure TPedidoLForm.FormShow(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
+  // DM := TDM.Create(Self);
   DateTimePicker2.Date := Date + 1;
   StringGrid1.Cells[0, 0] := 'CODIGO';
   StringGrid1.Cells[1, 0] := 'CANTIDAD';

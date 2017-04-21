@@ -5,8 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DB, DataModule, StdCtrls, Mask, DBCtrls, Buttons, ExtCtrls,
-  IBX.IBCustomDataSet, IBX.IBTable
-  ;
+  IBX.IBCustomDataSet, IBX.IBTable;
 
 type
   TIngresosBrutosForm = class(TForm)
@@ -67,7 +66,7 @@ end;
 
 procedure TIngresosBrutosForm.FormShow(Sender: TObject);
 begin
-  //dm := tdm.create(self);
+  // dm := tdm.create(self);
   Tabla.Active := true;
   Tabla.Insert;
   DBEdit2.SetFocus;

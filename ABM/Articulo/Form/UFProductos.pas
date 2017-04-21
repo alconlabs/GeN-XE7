@@ -461,7 +461,8 @@ begin
     QTemp.Close;
     QTemp.SQL.Text := 'SELECT max(CODIGO) FROM "Articulo"';
     QTemp.Open;
-    i := 1000000000 + (QTemp.Fields.Fields[0].AsInteger + 1); // agrego el codigo
+    i := 1000000000 + (QTemp.Fields.Fields[0].AsInteger + 1);
+    // agrego el codigo
   end
   else
   begin
@@ -495,10 +496,10 @@ end;
 
 procedure TFProductos.PaintBox1Click(Sender: TObject);
 begin
- OperacionDataModule := TOperacionDataModule.Create(self);
+  OperacionDataModule := TOperacionDataModule.Create(Self);
   with OperacionDataModule do
   begin
-   CodigoBarra(CodigoBarraEdit.Text);
+    CodigoBarra(CodigoBarraEdit.Text);
   end;
   OperacionDataModule.Free;
 end;

@@ -299,7 +299,7 @@ object EmpresaForm: TEmpresaForm
         Top = 112
         Width = 99
         Height = 13
-        Caption = 'Condicion de IVA'
+        Caption = 'Condici'#243'n de IVA'
         FocusControl = DBEdit20
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
@@ -591,14 +591,6 @@ object EmpresaForm: TEmpresaForm
         Height = 21
         DataField = 'IVA'
         DataSource = DataSource
-        Items.Strings = (
-          'Responsable Monotributo'
-          'Responsable Inscripto'
-          'Exento'
-          'No Responsable'
-          'S.R.L.'
-          'S.A.'
-          'Cooperativa')
         TabOrder = 19
         OnChange = IVADBComboBoxChange
       end

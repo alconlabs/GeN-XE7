@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, ExtCtrls, DB, ADODB, DataModule, Grids,
-  DBGrids, ValEdit, DateUtils, ComCtrls, Printers, ImprimirDM, OleCtrls, SHDocVw, OperacionDM,
+  DBGrids, ValEdit, DateUtils, ComCtrls, Printers, ImprimirDM, OleCtrls,
+  SHDocVw, OperacionDM,
   IBX.IBCustomDataSet, IBX.IBQuery;
 
 type
@@ -870,7 +871,7 @@ end;
 
 procedure TCrearPedidoForm.FormShow(Sender: TObject);
 begin
-  DM.ConfigQuery.Open;
+  dm.ConfigQuery.Open;
   if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') then
     cbTipo.ItemIndex := 1
   else
@@ -991,7 +992,7 @@ end;
 
 procedure TCrearPedidoForm.FormCreate(Sender: TObject);
 begin
-  //dm := TDM.Create(self);
+  // dm := TDM.Create(self);
 end;
 
 procedure TCrearPedidoForm.BitBtn10Click(Sender: TObject);

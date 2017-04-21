@@ -86,7 +86,7 @@ end;
 
 procedure TCobranzaJudicialForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
+  // DM := TDM.Create(Self);
   DM.ConfigQuery.Open;
 end;
 

@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, DB, StdCtrls, Buttons, Grids, DBGrids, DataModule, ExtCtrls, jpeg, ImprimirDM,
+  Dialogs, DB, StdCtrls, Buttons, Grids, DBGrids, DataModule, ExtCtrls, jpeg,
+  ImprimirDM,
   IBX.IBCustomDataSet, IBX.IBQuery;
 
 type

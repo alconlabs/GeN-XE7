@@ -362,7 +362,7 @@ end;
 
 procedure TPagosForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(self);
+  // DM := TDM.Create(self);
   DM.ConfigQuery.Open;
   EmpresaQuery.Open;
 end;

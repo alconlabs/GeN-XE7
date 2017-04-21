@@ -75,7 +75,7 @@ end;
 
 procedure TRendicionClienteLForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
+  // DM := TDM.Create(Self);
   DTP2.DateTime := Now;
 end;
 

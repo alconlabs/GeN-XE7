@@ -42,7 +42,7 @@ end;
 
 procedure TMigrarForm.FormShow(Sender: TObject);
 begin
-  //DM := TDM.Create(self);
+  // DM := TDM.Create(self);
   OperacionDataModule := TOperacionDataModule.Create(self);
 end;
 

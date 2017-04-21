@@ -26,15 +26,11 @@ object FClientes: TFClientes
     Top = 0
     Width = 648
     Height = 468
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label2: TLabel
         Left = 229
         Top = 67
@@ -342,10 +338,6 @@ object FClientes: TFClientes
     object TabSheet2: TTabSheet
       Caption = 'Notas'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 864
-      ExplicitHeight = 540
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -355,17 +347,11 @@ object FClientes: TFClientes
         DataField = 'Notas'
         DataSource = DataSource
         TabOrder = 0
-        ExplicitWidth = 864
-        ExplicitHeight = 540
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 864
-      ExplicitHeight = 540
       object Label15: TLabel
         Left = 129
         Top = 163
@@ -407,13 +393,6 @@ object FClientes: TFClientes
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-      end
-      object IVALabel: TLabel
-        Left = 202
-        Top = 124
-        Width = 105
-        Height = 13
-        Caption = 'Responsable Inscripto'
       end
       object Label54: TLabel
         Left = 46
@@ -457,16 +436,10 @@ object FClientes: TFClientes
       object IVADBComboBox: TDBComboBox
         Left = 129
         Top = 121
-        Width = 67
+        Width = 201
         Height = 21
         DataField = 'IVA'
         DataSource = DataSource
-        Items.Strings = (
-          'CF'
-          'MT'
-          'RI'
-          'EX'
-          'NR')
         TabOrder = 2
         OnChange = IVADBComboBoxChange
       end
@@ -510,10 +483,6 @@ object FClientes: TFClientes
     object TabSheet4: TTabSheet
       Caption = 'Datos Secundarios'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 864
-      ExplicitHeight = 540
       object Label19: TLabel
         Left = 43
         Top = 50
@@ -686,10 +655,6 @@ object FClientes: TFClientes
     object TabSheet5: TTabSheet
       Caption = 'Parametros'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 864
-      ExplicitHeight = 540
       object Label13: TLabel
         Left = 20
         Top = 29

@@ -222,7 +222,7 @@ end;
 
 procedure TABMCajaForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(self);
+  // DM := TDM.Create(self);
   EmpresaQuery.Open;
   CalculaTotales;
   Query.Open;

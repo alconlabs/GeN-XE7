@@ -104,7 +104,7 @@ end;
 
 procedure TCuentasContablesForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
+  // DM := TDM.Create(Self);
   GrillaQ.Open;
   RubroT.Open;
   CapituloT.Open;
@@ -133,7 +133,8 @@ end;
 
 procedure TCuentasContablesForm.GrabarBitBtnClick(Sender: TObject);
 begin
-  IF ((CuentaDBEdit.Text <> '') and ((Tabla.State = dsEdit) or (Tabla.State = dsInsert))) THEN
+  IF ((CuentaDBEdit.Text <> '') and ((Tabla.State = dsEdit) or
+    (Tabla.State = dsInsert))) THEN
   BEGIN
     Tabla.Post;
     Tabla.Insert;

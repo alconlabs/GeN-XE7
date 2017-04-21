@@ -43,7 +43,7 @@ end;
 
 procedure TIncrementoForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
+  // DM := TDM.Create(Self);
 end;
 
 procedure TIncrementoForm.FormShow(Sender: TObject);
@@ -54,7 +54,7 @@ begin
   try
     FBuscaArticulo.ShowModal;
   finally
-    SetLength(art, FBuscaArticulo.Tabla.RecordCount+1);
+    SetLength(art, FBuscaArticulo.Tabla.RecordCount + 1);
     For i := 1 to FBuscaArticulo.Tabla.RecordCount do
     begin
       art[i] := (FBuscaArticulo.Tabla.FieldByName('CODIGO').AsInteger);

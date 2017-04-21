@@ -181,7 +181,7 @@ end;
 
 procedure TGestionCobranzaForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(self);
+  // DM := TDM.Create(self);
   Tabla.Open;
   ClienteT.Open;
   CobranzaT.Open;

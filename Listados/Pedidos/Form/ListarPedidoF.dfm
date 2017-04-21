@@ -181,6 +181,9 @@ object ListarPedidoForm: TListarPedidoForm
       54
       59
       651)
+    RowHeights = (
+      24
+      24)
   end
   object Tabla: TIBQuery
     Database = DM.BaseDatos

@@ -59,7 +59,7 @@ end;
 
 procedure TRubroContableForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
+  // DM := TDM.Create(Self);
   Tabla.Open;
   Tabla.Insert;
 end;

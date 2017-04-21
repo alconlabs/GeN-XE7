@@ -266,8 +266,8 @@ object VenderForm: TVenderForm
       Top = 18
       Width = 82
       Height = 21
-      Date = 40148.506836111110000000
-      Time = 40148.506836111110000000
+      Date = 43100.506836111110000000
+      Time = 43100.506836111110000000
       TabOrder = 8
     end
     object FEContado: TEdit
@@ -475,8 +475,8 @@ object VenderForm: TVenderForm
       Top = 2
       Width = 103
       Height = 21
-      Date = 40179.475039594910000000
-      Time = 40179.475039594910000000
+      Date = 42736.475039594910000000
+      Time = 42736.475039594910000000
       TabOrder = 2
     end
     object FLEPorcDesc: TEdit
@@ -725,7 +725,7 @@ object VenderForm: TVenderForm
       end
       object GroupBox4: TGroupBox
         Left = 0
-        Top = 104
+        Top = 101
         Width = 66
         Height = 62
         Caption = 'Tipo'
@@ -738,9 +738,10 @@ object VenderForm: TVenderForm
         TabOrder = 0
         object cbTipo: TComboBox
           Left = 6
-          Top = 16
+          Top = 15
           Width = 54
           Height = 37
+          Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -24
@@ -750,13 +751,6 @@ object VenderForm: TVenderForm
           TabOrder = 0
           Text = 'C'
           OnChange = cbTipoChange
-          Items.Strings = (
-            'A'
-            'B'
-            'C'
-            'R'
-            'X'
-            'P')
         end
       end
     end

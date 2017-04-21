@@ -30,7 +30,7 @@ type
     procedure TraerUsuario;
     procedure DejarUsuario;
     function ExecuteProcess(ProcessName, Path: String): Cardinal;
-    {function Gratis(arch: String): boolean;}
+    { function Gratis(arch: String): boolean; }
     { Public declarations }
   end;
 
@@ -61,23 +61,22 @@ var
 implementation
 
 {$R *.dfm}
-
-{function TDM.Gratis;
-var
+{ function TDM.Gratis;
+  var
   i: Integer;
   a: string;
-begin
+  begin
   for i := 0 to High(v) do
   begin
-    a := v[i] + '.exe';
-    if arch = a then
-    begin
-      Result := True;
-      Exit;
-    end;
+  a := v[i] + '.exe';
+  if arch = a then
+  begin
+  Result := True;
+  Exit;
+  end;
   end;
   Result := False; // ?
-end;}
+  end; }
 
 function TDM.ExecuteProcess;
 var
@@ -111,15 +110,16 @@ end;
 
 procedure TDM.DejarUsuario;
 begin
-  if (Transaccion.Params.Text <> 'read') and (Transaccion.Params.Text <> '') then
+  if (Transaccion.Params.Text <> 'read') and (Transaccion.Params.Text <> '')
+  then
   begin
     TraerUsuario;
     if Control <> '' then
     begin
-    Query.SQL.Text := 'update "Control" set MAQUINA=' + QuotedStr(Maquina)
-      + ' where CODIGO=' + Control;
-    Query.ExecSQL;
-    Query.Transaction.Commit;
+      Query.SQL.Text := 'update "Control" set MAQUINA=' + QuotedStr(Maquina) +
+        ' where CODIGO=' + Control;
+      Query.ExecSQL;
+      Query.Transaction.Commit;
     end;
   end;
 end;
@@ -135,8 +135,7 @@ begin
     Query.SQL.Text := 'select * from "Control" where CODIGO=' + Control;
     Query.Open;
     Usuario := Query.FieldByName('USUARIO').AsString;
-    Query.SQL.Text := 'select PERMISO from "Usuario" where Codigo='
-      + Usuario;
+    Query.SQL.Text := 'select PERMISO from "Usuario" where Codigo=' + Usuario;
     Query.Open;
     Permiso := Query.FieldByName('PERMISO').AsInteger;;
   end;
@@ -220,15 +219,15 @@ begin
   U := ExtractFileDrive(Application.ExeName);
   Path := IniFile.ReadString('BD', 'Path', '');
   if Path = '' then
-    begin
-      Path := ExtractFilePath(Application.ExeName);
-      Path := StringReplace(Path,'bin\','',[rfReplaceAll]);
-    end;
+  begin
+    Path := ExtractFilePath(Application.ExeName);
+    Path := StringReplace(Path, 'bin\', '', [rfReplaceAll]);
+  end;
   BasedeDatos := IniFile.ReadString('BD', 'DBase', '');
   if BasedeDatos = '' then
-    begin
-      BasedeDatos := Path + 'db\GeN.FDB';
-    end;
+  begin
+    BasedeDatos := Path + 'db\GeN.FDB';
+  end;
   If BasedeDatos = '' then
     ShowMessage('Error al cargar Base de Datos');
   BaseDatos.DatabaseName := BasedeDatos;

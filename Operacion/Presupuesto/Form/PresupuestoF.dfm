@@ -302,6 +302,15 @@ object PresupuestoForm: TPresupuestoForm
       ParentBiDiMode = False
       ScrollBars = ssNone
       TabOrder = 11
+      ColWidths = (
+        100
+        100)
+      RowHeights = (
+        24
+        24
+        24
+        24
+        24)
     end
     object GroupBox2: TGroupBox
       Left = 379

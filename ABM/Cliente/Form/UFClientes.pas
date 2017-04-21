@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DataModule, ExtCtrls, StdCtrls, Mask, DBCtrls, ComCtrls, DB, ADODB,
-  Buttons, ImprimirDM, OleCtrls, SHDocVw, IBX.IBCustomDataSet, IBX.IBTable;
+  Buttons, ImprimirDM, OleCtrls, SHDocVw, IBX.IBCustomDataSet, IBX.IBTable, OperacionDM;
 
 type
   TFClientes = class(TForm)
@@ -69,7 +69,6 @@ type
     Label25: TLabel;
     DBEdit22: TDBEdit;
     Label38: TLabel;
-    IVALabel: TLabel;
     IVADBComboBox: TDBComboBox;
     CuentaDBLookupComboBox: TDBLookupComboBox;
     Label54: TLabel;
@@ -163,12 +162,14 @@ begin
 end;
 
 procedure TFClientes.FormCreate(Sender: TObject);
+var i : Integer;
 begin
-//  DM := TDM.Create(self);
+  // DM := TDM.Create(self);
   UsuarioT.Open;
   CuentaT.Open;
   Tabla.Open;
   Tabla.Insert;
+  for i := 1 to 7 do IVADBComboBox.Items.Add(OperacionDM.tipoIVA[i]);
 end;
 
 procedure TFClientes.FormKeyPress(Sender: TObject; var Key: Char);
@@ -196,16 +197,16 @@ end;
 
 procedure TFClientes.IVADBComboBoxChange(Sender: TObject);
 begin
-  if IVADBComboBox.ItemIndex = 0 then
-    IVALabel.Caption := 'Consumidor Final'
-  else if IVADBComboBox.ItemIndex = 1 then
-    IVALabel.Caption := 'Responsable Monotributo'
-  else if IVADBComboBox.ItemIndex = 2 then
-    IVALabel.Caption := 'Responsable Inscripto'
-  else if IVADBComboBox.ItemIndex = 3 then
-    IVALabel.Caption := 'Exento'
-  else
-    IVALabel.Caption := 'No Responsable';
+//  if IVADBComboBox.ItemIndex = 0 then
+//    IVALabel.Caption := 'Consumidor Final'
+//  else if IVADBComboBox.ItemIndex = 1 then
+//    IVALabel.Caption := 'Responsable Monotributo'
+//  else if IVADBComboBox.ItemIndex = 2 then
+//    IVALabel.Caption := 'Responsable Inscripto'
+//  else if IVADBComboBox.ItemIndex = 3 then
+//    IVALabel.Caption := 'Exento'
+//  else
+//    IVALabel.Caption := 'No Responsable';
 end;
 
 procedure TFClientes.NoBitBtnClick(Sender: TObject);

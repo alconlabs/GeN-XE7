@@ -1,4 +1,4 @@
-unit VenderF;
+ï»¿unit VenderF;
 
 interface
 
@@ -130,8 +130,8 @@ uses UFBuscaCliente, BuscarCheques, UFBuscaArticulos,
 
 procedure TVenderForm.Nuevo;
 begin
-  SGFact.Cells[0, 0] := 'Código';
-  SGFact.Cells[1, 0] := 'Descripción';
+  SGFact.Cells[0, 0] := 'Cï¿½digo';
+  SGFact.Cells[1, 0] := 'Descripciï¿½n';
   SGFact.Cells[2, 0] := '# Pieza';
   SGFact.Cells[3, 0] := 'Cantidad';
   SGFact.Cells[4, 0] := 'Precio';
@@ -185,7 +185,7 @@ begin
       AgregarBitBtn.Click;
     end
     else
-      // si es Financiación
+      // si es Financiaciï¿½n
       if TipoRadioGroup.ItemIndex = 2 then
       begin
         ClienteBitBtn.Click;
@@ -196,7 +196,7 @@ begin
   begin
     // Label13.Visible := True;
     // Label14.Visible := True;
-    //Cuenta := 1;
+    // Cuenta := 1;
   end;
 end;
 
@@ -386,7 +386,7 @@ begin
     Tabla.Active := True;
     If Tabla.RecordCount < 1 then
     begin
-      MessageDlg('¡Código de cliente no existe!', mtError, [mbOK], 0);
+      MessageDlg('ï¿½Cï¿½digo de cliente no existe!', mtError, [mbOK], 0);
       ClienteEdit.SetFocus;
     end;
   end;
@@ -422,55 +422,62 @@ begin
       IF Tabla.FieldByName('PAGARE').AsString = 'SI' THEN
         PagareCheckBox.Checked := True;
       // IVA
-      if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') and
-        (Tabla.FieldByName('IVA').AsString = 'RI') then
-        cbTipo.ItemIndex := 0
-      else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') and
-        (Tabla.FieldByName('IVA').AsString <> 'RI') then
-        cbTipo.ItemIndex := 1
-      else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'NR') then
-        cbTipo.ItemIndex := 4
-      else
-        cbTipo.ItemIndex := 2;
-    end;
+      // if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') and
+      // (Tabla.FieldByName('IVA').AsString = 'RI') then
+      // cbTipo.ItemIndex := 0
+      // else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') and
+      // (Tabla.FieldByName('IVA').AsString <> 'RI') then
+      // cbTipo.ItemIndex := 1
+      // else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'NR') then
+      // cbTipo.ItemIndex := 4
+      // else
+      // cbTipo.ItemIndex := 2;
+      // if ((Tabla.FieldByName('IVA').AsString = 'Responsable Inscripto') or (Tabla.FieldByName('IVA').AsString = 'S.R.L.') or (Tabla.FieldByName('IVA').AsString = 'S.A.') or (Tabla.FieldByName('IVA').AsString = 'Cooperativa')) and (cbTipo.ItemIndex = 1) then cbTipo.ItemIndex := 1;
+      if (((Tabla.FieldByName('IVA').AsString = 'Responsable Monotributo') or
+        (Tabla.FieldByName('IVA').AsString = 'Exento') or
+        (Tabla.FieldByName('IVA').AsString = 'S.A.') or
+        (Tabla.FieldByName('IVA').AsString = 'No Responsable')) and
+        (cbTipo.ItemIndex = 1)) then
+        cbTipo.ItemIndex := 6;
 
-    if TipoRadioGroup.ItemIndex = 0 then
-    begin
-      Tabla.Close;
-      Tabla.SQL.Text := 'SELECT * FROM "CtaCte" WHERE CLIENTE=' +
-        ClienteEdit.Text;
-      Tabla.Open;
-      if Abs(Tabla.FieldByName('SALDO').AsFloat) > 0.4 then
+      if TipoRadioGroup.ItemIndex = 0 then
       begin
-        If Cuenta > 1 then
-          SGFact.RowCount := SGFact.RowCount + 1;
-        SGFact.Cells[0, Cuenta] := '0'; // código
-        Deuda := Tabla.FieldByName('SALDO').AsFloat;
-        if Deuda > 0 then
-          SGFact.Cells[1, Cuenta] := 'Deuda CtaCte'
-        else
-          SGFact.Cells[1, Cuenta] := 'Saldo a Favor'; // descripción
-        SGFact.Cells[2, Cuenta] := '0'; // serie
-        SGFact.Cells[3, Cuenta] := '1'; // cantidad
-        SGFact.Cells[4, Cuenta] := Format('%8.2f', [Deuda]); // precio
-        SGFact.Cells[5, Cuenta] :=
-          Format('%8.2f', [StrToFloat(SGFact.Cells[4, Cuenta]) *
-          StrToFloat(SGFact.Cells[3, Cuenta])]); // total
-        SGFact.Cells[6, Cuenta] := '0'; // IVA
-        SGFact.Cells[9, Cuenta] := '0'; // ACTIVIDAD DE MONOTRIBUTO
-        SGFact.Cells[10, Cuenta] := '0'; // PORCENTAJE DE INGRESOS BRUTOS
-        Cuenta := Cuenta + 1;
         Tabla.Close;
-        FEContado.Text := FloatToStr(Total);
+        Tabla.SQL.Text := 'SELECT * FROM "CtaCte" WHERE CLIENTE=' +
+          ClienteEdit.Text;
+        Tabla.Open;
+        if Abs(Tabla.FieldByName('SALDO').AsFloat) > 0.4 then
+        begin
+          If Cuenta > 1 then
+            SGFact.RowCount := SGFact.RowCount + 1;
+          SGFact.Cells[0, Cuenta] := '0'; // cï¿½digo
+          Deuda := Tabla.FieldByName('SALDO').AsFloat;
+          if Deuda > 0 then
+            SGFact.Cells[1, Cuenta] := 'Deuda CtaCte'
+          else
+            SGFact.Cells[1, Cuenta] := 'Saldo a Favor'; // descripciï¿½n
+          SGFact.Cells[2, Cuenta] := '0'; // serie
+          SGFact.Cells[3, Cuenta] := '1'; // cantidad
+          SGFact.Cells[4, Cuenta] := Format('%8.2f', [Deuda]); // precio
+          SGFact.Cells[5, Cuenta] :=
+            Format('%8.2f', [StrToFloat(SGFact.Cells[4, Cuenta]) *
+            StrToFloat(SGFact.Cells[3, Cuenta])]); // total
+          SGFact.Cells[6, Cuenta] := '0'; // IVA
+          SGFact.Cells[9, Cuenta] := '0'; // ACTIVIDAD DE MONOTRIBUTO
+          SGFact.Cells[10, Cuenta] := '0'; // PORCENTAJE DE INGRESOS BRUTOS
+          Cuenta := Cuenta + 1;
+          Tabla.Close;
+          FEContado.Text := FloatToStr(Total);
+        end;
+        Tabla.Active := False;
       end;
-      Tabla.Active := False;
+      FBuscaCliente.Free;
     end;
-    FBuscaCliente.Free;
+    TraeNombreCliente;
+    CalculaTotales;
+    FEContado.Text := FloatToStr(Total);
+    FEContado.SetFocus;
   end;
-  TraeNombreCliente;
-  CalculaTotales;
-  FEContado.Text := FloatToStr(Total);
-  FEContado.SetFocus;
 end;
 
 procedure TVenderForm.AgregarBitBtnClick(Sender: TObject);
@@ -567,19 +574,21 @@ begin
       end;
 
     if Presupuesto.Checked then
-     ProcPresup(cbTipo.Text, ClienteEdit.Text, FormatDateTime('mm/dd/yyyy hh:mm:ss',
-      FechaDateTimePicker.DateTime), VendedorEdit.Text, '', CtaNombre,
-      Presupuesto.Checked, PagareCheckBox.Checked, costo, Comision, Impuesto,
-      StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total, subtotal,
-      desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text), Saldo, Pagado,
-      Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
+      ProcPresup(cbTipo.Text, ClienteEdit.Text,
+        FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
+        VendedorEdit.Text, '', CtaNombre, Presupuesto.Checked,
+        PagareCheckBox.Checked, costo, Comision, Impuesto,
+        StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
+        subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
+        Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
     else
-     ProcVTA(cbTipo.Text, ClienteEdit.Text, FormatDateTime('mm/dd/yyyy hh:mm:ss',
-      FechaDateTimePicker.DateTime), VendedorEdit.Text, '', CtaNombre,
-      Presupuesto.Checked, PagareCheckBox.Checked, costo, Comision, Impuesto,
-      StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total, subtotal,
-      desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text), Saldo, Pagado,
-      Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);
+      ProcVTA(cbTipo.Text, ClienteEdit.Text,
+        FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
+        VendedorEdit.Text, '', CtaNombre, Presupuesto.Checked,
+        PagareCheckBox.Checked, costo, Comision, Impuesto,
+        StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
+        subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
+        Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);
   end;
   OperacionDataModule.Free;
   while Cuenta > 1 do
@@ -594,10 +603,22 @@ end;
 
 procedure TVenderForm.FormShow(Sender: TObject);
 begin
-  if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') then
-    cbTipo.ItemIndex := 1
-  else
-    cbTipo.ItemIndex := 2;
+  if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Monotributo')
+  then
+    cbTipo.ItemIndex := 11
+  else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Inscripto')
+  then
+    cbTipo.ItemIndex := 6
+  else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Exento') then
+    cbTipo.ItemIndex := 11
+  else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'No Responsable') then
+    cbTipo.ItemIndex := 14
+  else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'S.R.L.') then
+    cbTipo.ItemIndex := 6
+  else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'S.A.') then
+    cbTipo.ItemIndex := 6
+  else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Cooperativa') then
+    cbTipo.ItemIndex := 6;
   Nuevo;
 end;
 
@@ -659,6 +680,40 @@ end;
 
 procedure TVenderForm.FormCreate(Sender: TObject);
 begin
+  cbTipo.Items.Add('A'); // 1	Factura A	20100917	NULL
+  cbTipo.Items.Add('A'); // 2	Nota de DÃ©bito A	20100917	NULL
+  cbTipo.Items.Add('A'); // 3	Nota de CrÃ©dito A	20100917	NULL
+  cbTipo.Items.Add('A'); // 4	Recibos A	20100917	NULL
+  cbTipo.Items.Add('A'); // 5	Notas de Venta al contado A	20100917	NULL
+  cbTipo.Items.Add('B'); // 6	Factura B	20100917	NULL
+  cbTipo.Items.Add('B'); // 7	Nota de DÃ©bito B	20100917	NULL
+  cbTipo.Items.Add('B'); // 8	Nota de CrÃ©dito B	20100917	NULL
+  cbTipo.Items.Add('B'); // 9	Recibos B	20100917	NULL
+  cbTipo.Items.Add('B'); // 10	Notas de Venta al contado B	20100917	NULL
+  cbTipo.Items.Add('C'); // 11	Factura C	20110330	NULL
+  cbTipo.Items.Add('C'); // 12	Nota de DÃ©bito C	20110330	NULL
+  cbTipo.Items.Add('C'); // 13	Nota de CrÃ©dito C	20110330	NULL
+  cbTipo.Items.Add('X'); // 14	REMITO
+  cbTipo.Items.Add('P'); // 14	PRESUPUESTO
+  cbTipo.Items.Add('A'); // 63	Liquidacion A	20100917	NULL
+  cbTipo.Items.Add('B'); // 64	Liquidacion B	20100917	NULL
+  cbTipo.Items.Add('A');
+  // 34	Cbtes. A del Anexo I, Apartado A,inc.f),R.G.Nro. 1415	20100917	NULL
+  cbTipo.Items.Add('B');
+  // 35	Cbtes. B del Anexo I,Apartado A,inc. f),R.G. Nro. 1415	20100917	NULL
+  cbTipo.Items.Add('A');
+  // 39	Otros comprobantes A que cumplan con R.G.Nro. 1415	20100917	NULL
+  cbTipo.Items.Add('B');
+  // 40	Otros comprobantes B que cumplan con R.G.Nro. 1415	20100917	NULL
+  cbTipo.Items.Add('A'); // 60	Cta de Vta y Liquido prod. A	20100917	NULL
+  cbTipo.Items.Add('B'); // 61	Cta de Vta y Liquido prod. B	20100917	NULL
+  cbTipo.Items.Add('C'); // 15	Recibo C	20110330	NULL
+  cbTipo.Items.Add('C');
+  // 49	Comprobante de Compra de Bienes Usados a Consumidor Final	20130904	NULL
+  cbTipo.Items.Add('M'); // 51	Factura M	20150522	NULL
+  cbTipo.Items.Add('M'); // 52	Nota de DÃ©bito M	20150522	NULL
+  cbTipo.Items.Add('M'); // 53	Nota de CrÃ©dito M	20150522	NULL
+  cbTipo.Items.Add('M'); // 54	Recibo M
   dm.ConfigQuery.Open;
 end;
 

@@ -145,7 +145,7 @@ end;
 
 procedure TSocioForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(self);
+  // DM := TDM.Create(self);
   UsuarioT.Open;
   CuentaT.Open;
   Tabla.Open;

@@ -31,7 +31,7 @@ object ImprimirDataModule: TImprimirDataModule
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 39416.849051458300000000
-    ReportOptions.LastChange = 42829.926228182900000000
+    ReportOptions.LastChange = 42842.932359687500000000
     ReportOptions.Picture.Data = {
       0954474946496D61676547494638396150003200F70000FDFDFDFCFCFCFBFBFB
       F9F9F9030303FAFAFA010101F8F8F8020202040404F7F7F70606060505050707
@@ -545,21 +545,6 @@ object ImprimirDataModule: TImprimirDataModule
           HAlign = haRight
           Memo.UTF8W = (
             'Fecha: [frxDBDataset1."FECHA"]')
-          ParentFont = False
-        end
-        object Memo19: TfrxMemoView
-          Left = 317.480520000000000000
-          Top = 49.133890000000000000
-          Width = 83.149660000000000000
-          Height = 37.795300000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = 14211288
-          Font.Height = -8
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'DOCUMENTO NO VALIDO COMO FACTURA')
           ParentFont = False
         end
         object Memo3: TfrxMemoView

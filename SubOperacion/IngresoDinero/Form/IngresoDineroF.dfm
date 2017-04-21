@@ -237,6 +237,9 @@ object IngresoDineroForm: TIngresoDineroForm
       64
       64
       64)
+    RowHeights = (
+      24
+      24)
   end
   object Panel2: TPanel
     Left = 0

@@ -254,7 +254,7 @@ end;
 procedure TMenu1.FormCreate(Sender: TObject);
 begin
   SaveDialog1.InitialDir := ExtractFilePath(Application.ExeName);
-  //dm := tdm.Create(self);
+  // dm := tdm.Create(self);
 end;
 
 end.

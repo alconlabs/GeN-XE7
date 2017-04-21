@@ -65,7 +65,7 @@ end;
 
 procedure TActivacionesLForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(self);
+  // DM := TDM.Create(self);
   EmpresaTabla.Open;
   DTP2.DateTime := Now;
 end;

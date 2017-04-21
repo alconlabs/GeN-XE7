@@ -40,7 +40,7 @@ implementation
 
 procedure TMarcaForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
+  // DM := TDM.Create(Self);
   Tabla.Active := true;
 end;
 

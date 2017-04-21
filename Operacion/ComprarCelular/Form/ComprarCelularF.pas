@@ -1005,7 +1005,7 @@ end;
 
 procedure TComprarCelularForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(self);
+  // DM := TDM.Create(self);
   EmpresaQuery.Open;
   ConfigQuery.Open;
 end;

@@ -59,18 +59,17 @@ object FullMainForm: TFullMainForm
         OnClick = CuentaCorriente1Click
       end
       object CargarFactura1: TMenuItem
-        Caption = 'TRAER VENTA'
-        Visible = False
+        Caption = 'RE-IMPRIMIR'
         OnClick = CargarFactura1Click
       end
       object Aumentarporporcentaje1: TMenuItem
         Caption = 'AUMENTAR POR PORCENTAJE'
         OnClick = Aumentarporporcentaje1Click
       end
-      object ReimprimirVenta1: TMenuItem
-        Caption = 'RE IMPRIMIR VENTA'
+      object AnularVenta1: TMenuItem
+        Caption = 'ANULAR VENTA'
         Visible = False
-        OnClick = ReimprimirVenta1Click
+        OnClick = AnularVenta1Click
       end
     end
     object CREDITOS1: TMenuItem

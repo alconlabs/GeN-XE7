@@ -1,4 +1,4 @@
-unit ImprimirDM;
+﻿unit ImprimirDM;
 
 interface
 
@@ -10,7 +10,8 @@ uses
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
-  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  ComObj, Windows, System.Variants;
 
 type
   TImprimirDataModule = class(TDataModule)
@@ -44,11 +45,18 @@ type
     Procedure SImpr(vsql, reporte: string);
     procedure DataModuleCreate(Sender: TObject);
     procedure frxReport1BeforePrint(Sender: TfrxReportComponent);
+    Procedure AfipWsaa(path, Certificado, ClavePrivada: string);
+    Procedure AfipWsfev1(fecha, nro_doc, imp_total, imp_tot_conc, imp_neto,
+      impto_liq, impto_liq_rni, imp_op_ex, fecha_cbte, fecha_venc_pago,
+      fecha_serv_desde, fecha_serv_hasta, venc, moneda_id, moneda_ctz: String;
+      tipo_cbte, punto_vta, tipo_doc, presta_serv, id, cbt_desde, cbt_hasta,
+      bi21, i21, bi105, i105: Double);
   private
     { Private declarations }
-    clienteSql, articuloSql, ventaItemSql:string;
   public
     { Public declarations }
+    clienteSql, articuloSql, ventaItemSql, ivaVtaSql, presupuestoSql: string;
+    WSAA: Variant;
   end;
 
 var
@@ -58,13 +66,159 @@ implementation
 
 {$R *.dfm}
 
+uses OperacionDM;
+
+Procedure TImprimirDataModule.AfipWsaa;
+{ Ejemplo de Uso de Interface COM con Web Services AFIP (PyAfipWs)
+  2009 (C) Mariano Reingart <mariano@nsis.com.ar> }
+// program Project1;
+// {$APPTYPE CONSOLE}
+// uses
+// ActiveX,
+// ComObj,
+// FMX.Dialogs,
+// SysUtils;
+var
+  tra, cms, ta: String;
+begin
+  // CoInitialize(nil);
+  // Crear objeto interface Web Service Autenticaci�n y Autorizaci�n
+  WSAA := CreateOleObject('WSAA');
+  // Generar un Ticket de Requerimiento de Acceso (TRA)
+  tra := WSAA.CreateTRA;
+OutputDebugString(PChar(VarToStr(tra)));// WriteLn(tra);
+  // Especificar la ubicacion de los archivos certificado y clave privada
+  // path := GetCurrentDir + '';
+  // Certificado: certificado es el firmado por la AFIP
+  // ClavePrivada: la clave privada usada para crear el certificado
+  // Certificado := '\ghf.crt'; // certificado de prueba
+  // ClavePrivada := '\ghf.key'; // clave privada de prueba' +
+  // Generar el mensaje firmado (CMS)
+  cms := WSAA.SignTRA(tra, path + Certificado, path + ClavePrivada);
+OutputDebugString(PChar(VarToStr(cms)));// WriteLn(cms);
+  // Llamar al web service para autenticar:
+  ta := WSAA.CallWSAA(cms, 'https://wsaahomo.afip.gov.ar/ws/services/LoginCms');
+  // Homologaci�n
+  // ta = WSAA.CallWSAA(cms, 'https://wsaa.afip.gov.ar/ws/services/LoginCms'); // Producci�n
+  // Imprimir el ticket de acceso, ToKen y Sign de autorizaci�n
+OutputDebugString(PChar(VarToStr(ta)));// WriteLn(ta);
+OutputDebugString(PChar(VarToStr('Token:' + WSAA.Token)));// WriteLn
+OutputDebugString(PChar(VarToStr('Sign:' + WSAA.Sign)));// WriteLn
+  // Una vez obtenido, se puede usar el mismo token y sign por 6 horas
+  // (este per�odo se puede cambiar)
+  // Crear objeto interface Web Service de Factura Electr�nica
+end;
+
+Procedure TImprimirDataModule.AfipWsfev1;
+var
+  WSFEv1: Variant;
+  // tra, path, Certificado, ClavePrivada, cms, ta: String;
+  qty, LastId, LastCBTE, cae, ok, OkUlt: Variant;
+  cache, url_wsdl, proxy: String;
+begin
+  AfipWsaa(path, 'crt\certificado.crt', 'crt\privada.key');
+  WSFEv1 := CreateOleObject('WSFEv1');
+  // Setear tocken y sing de autorizaci�n (pasos previos)
+  WSFEv1.Token := WSAA.Token;
+  WSFEv1.Sign := WSAA.Sign;
+  // CUIT del emisor (debe estar registrado en la AFIP)
+  WSFEv1.Cuit := dm.ConfigQuery.FieldByName('CUIT').AsString;
+  WSFEv1.LanzarExcepciones := False;
+  // Conectar al Servicio Web de Facturaci�n
+  ok := WSFEv1.Conectar(cache, url_wsdl, proxy); // homologaci�n
+  // ok := WSFE.Conectar('https://wsw.afip.gov.ar/wsfe/service.asmx'); // producci�n
+  // Llamo a un servicio nulo, para obtener el estado del servidor (opcional)
+  WSFEv1.Dummy;
+OutputDebugString(PChar(VarToStr('appserver status ' + WSFEv1.AppServerStatus)));
+OutputDebugString(PChar(VarToStr('dbserver status ' + WSFEv1.DbServerStatus)));//WriteLn
+OutputDebugString(PChar(VarToStr('authserver status ' + WSFEv1.AuthServerStatus)));
+  // Recupera cantidad m�xima de registros (opcional)
+  // qty := WSFE.RecuperarQty;
+  // Recupera �ltimo n�mero de secuencia ID
+  // LastId := WSFEv1.RecuperaLastCMP();
+  // Recupero �ltimo n�mero de comprobante para un punto de venta y tipo (opcional)
+  // tipo_cbte := 1; punto_vta := 1;
+  LastCBTE := LastCBTE + WSFEv1.CompUltimoAutorizado(punto_vta, tipo_cbte)+1;
+  // + 1
+//  if (LastCBTE.IsNull) then
+  if VarIsNull(LastCBTE) then
+    LastCBTE := 1
+  else
+    LastCBTE := WSFEv1.CompUltimoAutorizado(punto_vta, tipo_cbte) + 1;
+//OutputDebugString(PChar(VarToStr(WSFEv1.FECompUltimoAutorizado)));
+  // Establezco los valores de la factura o lote a autorizar:
+  // DateTimeToString(fecha, 'yyyymmdd', Date);
+  // id := LastId + 1; presta_serv := 3;
+  // tipo_doc := 80; nro_doc := '27341273329';
+  cbt_desde := LastCBTE;
+  cbt_hasta := LastCBTE;
+  // imp_total := '121.00'; imp_tot_conc := '0.00'; imp_neto := '100.00';
+  // impto_liq := '21.00'; impto_liq_rni := '0.00'; imp_op_ex := '0.00';
+  // fecha_cbte := Fecha; fecha_venc_pago := Fecha;
+  // moneda_id := 'PES';
+  // moneda_ctz := '1.000';
+  // Fechas del per�odo del servicio facturado (solo si presta_serv = 1)
+  // fecha_serv_desde := Fecha; fecha_serv_hasta := Fecha;
+  // Llamo al WebService de Autorizaci�n para obtener el CAE
+  ok := WSFEv1.CrearFactura(presta_serv, tipo_doc, nro_doc, tipo_cbte,
+    punto_vta, cbt_desde, cbt_hasta, imp_total, imp_tot_conc, imp_neto,
+    impto_liq, impto_liq_rni, imp_op_ex, fecha_cbte, fecha_venc_pago,
+    fecha_serv_desde, fecha_serv_hasta, moneda_id, moneda_ctz);
+  // si presta_serv = 0 no pasar estas fechas
+  // Agrego tasas de IVA
+  // id := 5 ; // 21%
+  // base_imp := '100.00';
+  // importe := '21.00';
+  if ((i21 <> 0) or (i105 <> 0)) then
+  begin
+    if (i21 > 0) then
+      ok := WSFEv1.AgregarIva(5, bi21, i21);
+    if (i105 > 0) then
+      ok := WSFEv1.AgregarIva(6, bi105, i105);
+  end;
+  { If tipo_cbte = 1 Then // solo para facturas A
+    begin
+    ok := WSFEv1.AgregarOpcional(5, '02'); // IVA Excepciones (01: Locador/Prestador, 02: Conferencias, 03: RG 74, 04: Bienes de cambio, 05: Ropa de trabajo, 06: Intermediario).
+    ok := WSFEv1.AgregarOpcional(61, '80'); // Firmante Doc Tipo (80: CUIT, 96: DNI, etc.)
+    ok := WSFEv1.AgregarOpcional(62, '20267565393'); // Firmante Doc Nro
+    ok := WSFEv1.AgregarOpcional(7, '01'); // Car?er del Firmante (01: Titular, 02: Director/Presidente, 03: Apoderado, 04: Empleado)
+    End; }
+  WSFEv1.Reprocesar := True;
+  // cae :=
+  cae := WSFEv1.CAESolicitar;
+  If WSFEv1.Excepcion <> '' Then
+  begin
+//    showmessage(WSFEv1.Excepcion);
+OutputDebugString(PChar(VarToStr(WSFEv1.Excepcion)));
+OutputDebugString(PChar(VarToStr(WSFEv1.Traceback)));//    showmessage(WSFEv1.Traceback);
+OutputDebugString(PChar(VarToStr(WSFEv1.XmlRequest)));//    showmessage(WSFEv1.XmlRequest);
+OutputDebugString(PChar(VarToStr(WSFEv1.XmlResponse)));//    showmessage(WSFEv1.XmlResponse);
+  end;
+OutputDebugString(PChar(VarToStr('Resultado ' + WSFEv1.Resultado)));
+OutputDebugString(PChar(VarToStr('CAE' + WSFEv1.cae)));
+  // ' Imprimo pedido y respuesta XML para depuraci�n (errores de formato)
+OutputDebugString(PChar(VarToStr(WSFEv1.XmlRequest)));
+OutputDebugString(PChar(VarToStr(WSFEv1.XmlResponse)));
+OutputDebugString(PChar(VarToStr(WSFEv1.XmlResponse)));
+  If WSFEv1.errmsg <> '' Then
+OutputDebugString(PChar(VarToStr(WSFEv1.errmsg)));
+OutputDebugString(PChar(VarToStr('Obs ' + WSFEv1.obs)));
+OutputDebugString(PChar(VarToStr('Resultado: ' + WSFEv1.Resultado)));
+OutputDebugString(PChar(VarToStr('cae: ' + WSFEv1.cae)));
+  // cae := WSFEv1.CAE() ;
+OutputDebugString(PChar(VarToStr('CAE: ' + cae)));
+//  showmessage('Presione Enter para terminar');
+  // ReadLn;
+  // CoUninitialize;
+end;
+
 Procedure TImprimirDataModule.SImpr;
 begin
   Query.sql.Text := vsql;
   Query.Open;
   with frxReport1 do
   begin
-    LoadFromFile(Path + 'rpt\' + reporte + '.fr3');
+    LoadFromFile(path + 'rpt\' + reporte + '.fr3');
     try
       ShowReport(True);
     finally
@@ -80,7 +234,7 @@ var
   CSV: TextFile;
   col: string;
   // ? f,c :integer;
-  c: integer;
+  c: Integer;
 begin
   Query.sql.Text := sql;
   Query.Open;
@@ -123,121 +277,177 @@ end;
 
 procedure TImprimirDataModule.DataModuleCreate(Sender: TObject);
 begin
-  DM.ConfigQuery.Open;
-  clienteSql := ' "Cliente".NOMBRE,  "Cliente".TITULAR, "Cliente".DIRECCION, "Cliente".DIRECCIONCOMERCIAL, "Cliente".IVA as CIVA, "Cliente".CUIT as CCUIT';
-  articuloSql := ' "Articulo".DESCRIPCION, "Articulo".UNIDAD, "Articulo".IVA as AIVA';
-  ventaItemSql := ' "VentaItem".ARTICULO, "VentaItem".CANTIDAD, "VentaItem".PRECIO,    "VentaItem".OPERACION, ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT, "VentaItem".SERVICIO, "VentaItem".DESCRIPCION AS DESCR, "VentaItem".IMPUESTO as VIIMPUESTO';
+  dm.ConfigQuery.Open;
+  clienteSql :=
+    ' "Cliente".NOMBRE,  "Cliente".TITULAR, "Cliente".DIRECCION, "Cliente".DIRECCIONCOMERCIAL, "Cliente".IVA as CIVA, "Cliente".CUIT as CCUIT';
+  articuloSql :=
+    ' "Articulo".DESCRIPCION, "Articulo".UNIDAD, "Articulo".IVA as AIVA';
+  ventaItemSql :=
+    ' "VentaItem".ARTICULO, "VentaItem".CANTIDAD, "VentaItem".PRECIO, "VentaItem".OPERACION, ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT, "VentaItem".SERVICIO, "VentaItem".DESCRIPCION AS DESCR, "VentaItem".IMPUESTO as VIIMPUESTO';
+  ivaVtaSql := ' "LibroIVAventa".NG1, "LibroIVAventa".NG2, "LibroIVAventa".NG3';
+  presupuestoSql := clienteSql + ',' + articuloSql + ',' +
+    ' "PresupuestoItem".ARTICULO, "PresupuestoItem".CANTIDAD, "PresupuestoItem".PRECIO,'
+    + ' "PresupuestoItem".OPERACION, ("PresupuestoItem".PRECIO * "PresupuestoItem".CANTIDAD ) as PREXCANT,'
+    + ' "PresupuestoItem".SERVICIO, "PresupuestoItem".IMPUESTO as VIIMPUESTO, "PresupuestoItem".DESCRIPCION AS DESCR,'
+    + ' "Presupuesto".CODIGO, "Presupuesto".LETRA, "Presupuesto".FECHA, "Presupuesto".COMPROBANTE,'
+    + ' "Presupuesto".IVA3, "Presupuesto".TOTAL, "Presupuesto".CONTADO, "Presupuesto".CLIENTE,'
+    + ' "Presupuesto".SUBTOTAL, "Presupuesto".DESCUENTO, "Presupuesto".IMPUESTO,'
+    + ' "Presupuesto".IVA2, "Presupuesto".IVA1, "Presupuesto".EXCENTO, "Presupuesto".SALDO,'
+    + ' "Presupuesto".PAGADO' + ' FROM "Presupuesto"' +
+    ' INNER JOIN "PresupuestoItem" ON ("Presupuesto".CODIGO = "PresupuestoItem".OPERACION)'
+    + ' INNER JOIN "Articulo" ON ("PresupuestoItem".ARTICULO = "Articulo".CODIGO)'
+    + ' INNER JOIN "Cliente" ON ("Presupuesto".CLIENTE = "Cliente".CODIGO)';
 end;
 
-procedure TImprimirDataModule.frxReport1BeforePrint(
-  Sender: TfrxReportComponent);
+procedure TImprimirDataModule.frxReport1BeforePrint
+  (Sender: TfrxReportComponent);
 begin
-  //if Sender.Name = 'LOGO' then
-   // begin
-//       TfrxPictureView(Sender).Visible := True;
-//       TfrxPictureView(Sender).Picture.LoadFromFile(path + 'img\empresa.BMP');
-    //end;
+  // if Sender.Name = 'LOGO' then
+  // begin
+  // TfrxPictureView(Sender).Visible := True;
+  // TfrxPictureView(Sender).Picture.LoadFromFile(path + 'img\empresa.BMP');
+  // end;
 end;
 
 procedure TImprimirDataModule.Impr;
 var
-   Pict,Pict2,Pict3,Pict4: TfrxPictureView;
+  Pict, Pict2, Pict3, Pict4: TfrxPictureView;
+  tipo_cbte: Integer;
 begin
   if reporte = '' then
     reporte := dm.ConfigQuery.FieldByName('Reporte').AsString;
-  Query.sql.Text := 'SELECT '
-  + QuotedStr(dm.ConfigQuery.FieldByName('CODIGO').AsString)+ ' As PtoVta,'
-  + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE').AsString)+ ' As Empresa,'
-  + QuotedStr(dm.ConfigQuery.FieldByName('TITULAR').AsString)+ ' As ETITULAR,'
-  + QuotedStr(dm.ConfigQuery.FieldByName('IVA').AsString)+ ' As EIVA,'
-  + QuotedStr(dm.ConfigQuery.FieldByName('CODIGOAREA').AsString)+ ' As ECODIGOAREA,'
-  + QuotedStr(dm.ConfigQuery.FieldByName('TELEFONO').AsString)+ ' As ETELEFONO,'
-  + QuotedStr(dm.ConfigQuery.FieldByName('DIRECCIONCOMERCIAL').AsString)+ ' As EDIRECCIONCOMERCIAL,'
-  + QuotedStr(dm.ConfigQuery.FieldByName('CP').AsString)+ ' As ECP,'
-  + QuotedStr(dm.ConfigQuery.FieldByName('CIUDAD').AsString)+ ' As ECIUDAD,'
-  + QuotedStr(dm.ConfigQuery.FieldByName('DEPARTAMENTO').AsString)+ ' As EDEPARTAMENTO,'
-  + QuotedStr(dm.ConfigQuery.FieldByName('PROVINCIA').AsString)+ ' As EPROVINCIA,'
-  + QuotedStr(dm.ConfigQuery.FieldByName('CUIT').AsString)+ ' As ECUIT,'
-  + QuotedStr(FormatDateTime('dd/mm/yyyy',dm.ConfigQuery.FieldByName('FECHA').AsDateTime))+ ' As EFECHA,'
-  + QuotedStr(dm.ConfigQuery.FieldByName('IIBB').AsString)+ ' As EIIBB,'
-  + vsql;
+  Query.sql.Text := 'SELECT ' + QuotedStr(dm.ConfigQuery.FieldByName('CODIGO')
+    .AsString) + ' As PtoVta,' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE')
+    .AsString) + ' As Empresa,' +
+    QuotedStr(dm.ConfigQuery.FieldByName('TITULAR').AsString) + ' As ETITULAR,'
+    + QuotedStr(dm.ConfigQuery.FieldByName('IVA').AsString) + ' As EIVA,' +
+    QuotedStr(dm.ConfigQuery.FieldByName('CODIGOAREA').AsString) +
+    ' As ECODIGOAREA,' + QuotedStr(dm.ConfigQuery.FieldByName('TELEFONO')
+    .AsString) + ' As ETELEFONO,' +
+    QuotedStr(dm.ConfigQuery.FieldByName('DIRECCIONCOMERCIAL').AsString) +
+    ' As EDIRECCIONCOMERCIAL,' + QuotedStr(dm.ConfigQuery.FieldByName('CP')
+    .AsString) + ' As ECP,' + QuotedStr(dm.ConfigQuery.FieldByName('CIUDAD')
+    .AsString) + ' As ECIUDAD,' +
+    QuotedStr(dm.ConfigQuery.FieldByName('DEPARTAMENTO').AsString) +
+    ' As EDEPARTAMENTO,' + QuotedStr(dm.ConfigQuery.FieldByName('PROVINCIA')
+    .AsString) + ' As EPROVINCIA,' +
+    QuotedStr(dm.ConfigQuery.FieldByName('CUIT').AsString) + ' As ECUIT,' +
+    QuotedStr(FormatDateTime('dd/mm/yyyy', dm.ConfigQuery.FieldByName('FECHA')
+    .AsDateTime)) + ' As EFECHA,' + QuotedStr(dm.ConfigQuery.FieldByName('IIBB')
+    .AsString) + ' As EIIBB,' + vsql;
   Query.Open;
   with frxReport1 do
   begin
-    LoadFromFile(Path + 'rpt\' + reporte + '.fr3');
-    if (reporte = 'COriginal') or (reporte = 'Presupuesto' ) then
+    LoadFromFile(path + 'rpt\' + reporte + '.fr3');
+    if (reporte = 'COriginal') or (reporte = 'Presupuesto') or
+      (reporte = 'FElectronica') then
     begin
-    //Pict:= frReport1.FindObject('MyImage') as TfrxPictureView;
+      // Pict:= frReport1.FindObject('MyImage') as TfrxPictureView;
       Pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
-      if Assigned(pict) then Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
-    end else if reporte = 'CDuplicado' then
+      if Assigned(Pict) then
+        Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      if (reporte = 'FElectronica') then // wsfev1
+      begin
+
+        if (Query.FieldByName('COMPROBANTE').AsString = 'A') then
+          tipo_cbte := 1
+        else
+          tipo_cbte := 0;
+
+        AfipWsfev1(Query.FieldByName('FECHA').AsString,
+          // DateTimeToString(fecha, 'yyyymmdd', Date), //fecha
+          Query.FieldByName('CCUIT').AsString, // nro_doc
+          Query.FieldByName('TOTAL').AsString, // imp_total
+          '0.00', // imp_tot_conc,
+          Query.FieldByName('SUBTOTAL').AsString, // imp_neto
+          Query.FieldByName('IMPUESTO').AsString, // impto_liq
+          '0.00', // impto_liq_rni
+          '0.00', // imp_op_ex
+          Query.FieldByName('FECHA').AsString, // fecha_cbte
+          Query.FieldByName('FECHA').AsString, // fecha_venc_pago
+          Query.FieldByName('FECHA').AsString, // fecha_serv_desde
+          Query.FieldByName('FECHA').AsString, // fecha_serv_hasta
+          Query.FieldByName('FECHA').AsString, // venc
+          'PES', // moneda_id
+          '1.000', // moneda_ctz
+          tipo_cbte, // tipo_cbte
+          Query.FieldByName('PtoVta').AsInteger, // punto_vta
+          80, // tipo_doc
+          3, // ?presta_serv
+          Query.FieldByName('CODIGO').AsInteger, // id
+          0, // cbt_desde
+          0, // cbt_hasta
+          Query.FieldByName('NG2').AsFloat, // bi21
+          Query.FieldByName('IVA2').AsFloat, // i21
+          Query.FieldByName('NG1').AsFloat, // bi105
+          Query.FieldByName('IVA1').AsFloat // i105
+          );
+      end
+    end
+    else if reporte = 'CDuplicado' then
     begin
-      pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
-      if Assigned(pict) then Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
-      pict2 := TfrxPictureView(frxReport1.FindObject('Picture2'));
-      if Assigned(pict2) then Pict2.Picture.LoadFromFile(path + 'img\empresa.BMP');
-    end else if reporte = 'CTriplicado' then
+      Pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
+      if Assigned(Pict) then
+        Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      Pict2 := TfrxPictureView(frxReport1.FindObject('Picture2'));
+      if Assigned(Pict2) then
+        Pict2.Picture.LoadFromFile(path + 'img\empresa.BMP');
+    end
+    else if reporte = 'CTriplicado' then
     begin
-      pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
-      if Assigned(pict) then Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
-      pict2 := TfrxPictureView(frxReport1.FindObject('Picture2'));
-      if Assigned(pict2) then Pict2.Picture.LoadFromFile(path + 'img\empresa.BMP');
-      pict3 := TfrxPictureView(frxReport1.FindObject('Picture3'));
-      if Assigned(pict3) then Pict3.Picture.LoadFromFile(path + 'img\empresa.BMP');
-    end else if reporte = 'CCuadriplicado' then
+      Pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
+      if Assigned(Pict) then
+        Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      Pict2 := TfrxPictureView(frxReport1.FindObject('Picture2'));
+      if Assigned(Pict2) then
+        Pict2.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      Pict3 := TfrxPictureView(frxReport1.FindObject('Picture3'));
+      if Assigned(Pict3) then
+        Pict3.Picture.LoadFromFile(path + 'img\empresa.BMP');
+    end
+    else if reporte = 'CCuadriplicado' then
     begin
-      pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
-      if Assigned(pict) then Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
-      pict2 := TfrxPictureView(frxReport1.FindObject('Picture2'));
-      if Assigned(pict2) then Pict2.Picture.LoadFromFile(path + 'img\empresa.BMP');
-      pict3 := TfrxPictureView(frxReport1.FindObject('Picture3'));
-      if Assigned(pict3) then Pict3.Picture.LoadFromFile(path + 'img\empresa.BMP');
-      pict4 := TfrxPictureView(frxReport1.FindObject('Picture4'));
-      if Assigned(pict4) then Pict4.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      Pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
+      if Assigned(Pict) then
+        Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      Pict2 := TfrxPictureView(frxReport1.FindObject('Picture2'));
+      if Assigned(Pict2) then
+        Pict2.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      Pict3 := TfrxPictureView(frxReport1.FindObject('Picture3'));
+      if Assigned(Pict3) then
+        Pict3.Picture.LoadFromFile(path + 'img\empresa.BMP');
+      Pict4 := TfrxPictureView(frxReport1.FindObject('Picture4'));
+      if Assigned(Pict4) then
+        Pict4.Picture.LoadFromFile(path + 'img\empresa.BMP');
     end;
     try
       ShowReport(True);
     finally
       Free;
-//      FreeAndNil(pict);
+      // FreeAndNil(pict);
     end;
   end;
 end;
 
 Function TImprimirDataModule.PRE;
 begin
-  Result := clienteSql+',' + articuloSql+',' +
-    '  "PresupuestoItem".ARTICULO,' + '  "PresupuestoItem".CANTIDAD,' +
-    '  "PresupuestoItem".PRECIO,' + '  "PresupuestoItem".OPERACION,' +
-    '  ("PresupuestoItem".PRECIO * "PresupuestoItem".CANTIDAD ) as PREXCANT,' +
-    '  "PresupuestoItem".SERVICIO,' +  '"PresupuestoItem".IMPUESTO as VIIMPUESTO, ' +
-    '  "PresupuestoItem".DESCRIPCION AS DESCR,' + '  "Presupuesto".CODIGO,' +
-    '  "Presupuesto".LETRA,' + '  "Presupuesto".FECHA,' +
-    '  "Presupuesto".COMPROBANTE,' + '  "Presupuesto".IVA3,' +
-    '  "Presupuesto".TOTAL,' + '  "Presupuesto".CONTADO,' +
-    '  "Presupuesto".CLIENTE,' + '  "Presupuesto".SUBTOTAL,' +
-    '  "Presupuesto".DESCUENTO,' + '  "Presupuesto".IMPUESTO,' +
-    '  "Presupuesto".IVA2,' + '  "Presupuesto".IVA1,' +
-    '  "Presupuesto".EXCENTO,' + '  "Presupuesto".SALDO,' +
-    '  "Presupuesto".PAGADO' + ' FROM' + '  "Presupuesto"' +
-    '  INNER JOIN "PresupuestoItem" ON ("Presupuesto".CODIGO = "PresupuestoItem".OPERACION)'
-    + '  INNER JOIN "Articulo" ON ("PresupuestoItem".ARTICULO = "Articulo".CODIGO)'
-    + '  INNER JOIN "Cliente" ON ("Presupuesto".CLIENTE = "Cliente".CODIGO)' +
-    '  WHERE' + '  ("Presupuesto".CODIGO = ' + nro + '  ) AND' +
-    '  ("Presupuesto".LETRA = ' + QuotedStr(let) + '  )' + '';
+  Result := presupuestoSql + '  WHERE' + '  ("Presupuesto".CODIGO = ' + nro +
+    '  ) AND' + '  ("Presupuesto".LETRA = ' + QuotedStr(let) + '  )' + '';
 end;
 
 Function TImprimirDataModule.VTA;
 begin
-  Result := clienteSql+',' + articuloSql+',' + ventaItemSql+',' +
-    '  "Venta".CODIGO,' + '  "Venta".LETRA,' + '  "Venta".FECHA,' +
-    '  "Venta".COMPROBANTE,' + '  "Venta".IVA3,' + '  "Venta".TOTAL,' +
-    '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' + '  "Venta".SUBTOTAL,' +
-    '  "Venta".DESCUENTO,' + '  "Venta".IMPUESTO,' + '  "Venta".IVA2,' +
-    '  "Venta".IVA1,' + '  "Venta".EXCENTO,' + '  "Venta".SALDO,' +
-    '  "Venta".PAGADO' + ' FROM' + '  "Venta"' +
-    '  INNER JOIN "VentaItem" ON ("Venta".CODIGO = "VentaItem".OPERACION)' +
-    '  INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CODIGO)' +
+  Result := clienteSql + ',' + articuloSql + ',' + ventaItemSql + ',' +
+    ivaVtaSql + ',' + '  "Venta".CODIGO,' + '  "Venta".LETRA,' +
+    '  "Venta".FECHA,' + '  "Venta".COMPROBANTE,' + '  "Venta".IVA3,' +
+    '  "Venta".TOTAL,' + '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' +
+    '  "Venta".SUBTOTAL,' + '  "Venta".DESCUENTO,' + '  "Venta".IMPUESTO,' +
+    ' "Venta".IVA2,' + ' "Venta".IVA3,' + '  "Venta".IVA1,' +
+    '  "Venta".EXCENTO,' + '  "Venta".SALDO,' + '  "Venta".PAGADO' + ' FROM' +
+    '  "Venta"' +
+    '  INNER JOIN "LibroIVAventa" ON ("Venta".CODIGO = "LibroIVAventa".FACTURA)'
+    + '  INNER JOIN "VentaItem" ON ("LibroIVAventa".FACTURA = "VentaItem".OPERACION)'
+    + '  INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CODIGO)' +
     '  INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)' + ' WHERE'
     + '  ("Venta".CODIGO = ' + nro + ' ) AND' + '  ("Venta".LETRA = ' +
     QuotedStr(let) + ' )' + '';
@@ -268,16 +478,15 @@ end;
 
 Function TImprimirDataModule.PlanillaCobrador;
 begin
-  Result := '"Cobrador".NOMBRE AS COBRADOR, "Cliente".ZONA,'
-    +' "CtaCte".FECHA, "CtaCte".SALDO, "Cliente".NOMBRE AS CLIENTE,'
-    +' "CtaCteItem".IMPORTE, "CtaCte".ARTICULO as CB, "CtaCteItem".VENCE,'
-    +' "CtaCteItem".CUOTA, "CtaCte".OPERACION'
-    +' FROM "CtaCte"'
-    +' INNER JOIN "CtaCteItem" ON ("CtaCte".CLIENTE = "CtaCteItem".CLIENTE) AND ("CtaCte".OPERACION = "CtaCteItem".OPERACION)'
-    +' INNER JOIN "Cliente" ON ("CtaCteItem".CLIENTE = "Cliente".CODIGO)'
-    +' INNER JOIN "Cobrador" ON ("CtaCte".COBRADOR = "Cobrador".CODIGO)'
-    +' WHERE ("CtaCte".OPERACION = '+nro+')'
-    +' ORDER BY "CtaCteItem".CUOTA';
+  Result := '"Cobrador".NOMBRE AS COBRADOR, "Cliente".ZONA,' +
+    ' "CtaCte".FECHA, "CtaCte".SALDO, "Cliente".NOMBRE AS CLIENTE,' +
+    ' "CtaCteItem".IMPORTE, "CtaCte".ARTICULO as CB, "CtaCteItem".VENCE,' +
+    ' "CtaCteItem".CUOTA, "CtaCte".OPERACION' + ' FROM "CtaCte"' +
+    ' INNER JOIN "CtaCteItem" ON ("CtaCte".CLIENTE = "CtaCteItem".CLIENTE) AND ("CtaCte".OPERACION = "CtaCteItem".OPERACION)'
+    + ' INNER JOIN "Cliente" ON ("CtaCteItem".CLIENTE = "Cliente".CODIGO)' +
+    ' INNER JOIN "Cobrador" ON ("CtaCte".COBRADOR = "Cobrador".CODIGO)' +
+    ' WHERE ("CtaCte".OPERACION = ' + nro + ')' +
+    ' ORDER BY "CtaCteItem".CUOTA';
 end;
 
 Function TImprimirDataModule.Contrato;

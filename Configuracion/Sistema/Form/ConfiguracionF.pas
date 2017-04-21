@@ -177,12 +177,27 @@ end;
 
 procedure TConfiguracionForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
-  Tabla.Open;
+  // DM := TDM.Create(Self);
+
   CuentaQuery.Open;
   CuentaQuery.Last;
+
+  ImprimirQuery.SQL.Text :=
+    'Select * from "Imprimir" where "Imprimir".REPORTE = ''FElectronica''';
+  ImprimirQuery.Open;
+  if ImprimirQuery.RecordCount = 0 then
+  begin
+    ImprimirQuery.SQL.Text :=
+      'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (11, ''Factura Electronica'', ''FElectronica'')';
+    ImprimirQuery.ExecSQL;
+    ImprimirQuery.Transaction.Commit;
+  end;
+  ImprimirQuery.Close;
+  ImprimirQuery.SQL.Text := 'Select * from "Imprimir"';
   ImprimirQuery.Open;
   ImprimirQuery.Last;
+
+  Tabla.Open;
   Tabla.Edit;
 end;
 

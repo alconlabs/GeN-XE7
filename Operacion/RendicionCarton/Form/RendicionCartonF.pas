@@ -276,8 +276,8 @@ end;
 
 procedure TRendicionCartonForm.FormCreate(Sender: TObject);
 begin
-  //dm := TDM.Create(self);
-  DM.ConfigQuery.Open;
+  // dm := TDM.Create(self);
+  dm.ConfigQuery.Open;
 end;
 
 procedure TRendicionCartonForm.FormKeyPress(Sender: TObject; var Key: Char);

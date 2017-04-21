@@ -75,7 +75,7 @@ end;
 
 procedure TPlanForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
+  // DM := TDM.Create(Self);
   Tabla.Open;
   Tabla.Insert;
 end;

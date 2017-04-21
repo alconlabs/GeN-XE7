@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DataModule, ExtCtrls, StdCtrls, Mask, DBCtrls, ComCtrls, DB, ADODB,
   Buttons, OleCtrls, SHDocVw, ExtDlgs, jpeg, IBX.IBQuery, IBX.IBCustomDataSet,
-  IBX.IBTable;
+  IBX.IBTable, OperacionDM;
 
 type
   TEmpresaForm = class(TForm)
@@ -104,7 +104,7 @@ implementation
 {$R *.dfm}
 
 procedure TEmpresaForm.SiBitBtnClick(Sender: TObject);
-//var e:string;
+// var e:string;
 begin
   // guardar imagen
   Image1.Picture.SaveToFile(path + 'img\empresa.bmp');
@@ -114,8 +114,9 @@ begin
   begin
     Tabla.FieldByName('Fecha').AsDateTime := DateTimePicker1.Date;
     Tabla.Post;
-    //e:=CodigoDBEdit.Text;
-    dm.Query.SQL.Text:='Update "Config" Set "Empresa" = ('+QuotedStr(CodigoDBEdit.Text)+')';
+    // e:=CodigoDBEdit.Text;
+    dm.Query.SQL.Text := 'Update "Config" Set "Empresa" = (' +
+      QuotedStr(CodigoDBEdit.Text) + ')';
     dm.Query.ExecSQL;
   end;
   dm.ConfigQuery.Close;
@@ -144,12 +145,14 @@ begin
 end;
 
 procedure TEmpresaForm.FormCreate(Sender: TObject);
+var i:integer;
 begin
-  //DM := TDM.Create(Self);
+  // DM := TDM.Create(Self);
   CuentaT.Open;
   Tabla.Open;
   Image1.Picture.LoadFromFile(path + 'img\empresa.bmp');
   DateTimePicker1.Date := Tabla.FieldByName('Fecha').AsDateTime;
+  for i := 1 to 7 do IVADBComboBox.Items.Add(OperacionDM.tipoIVA[i]);
 end;
 
 procedure TEmpresaForm.FormKeyPress(Sender: TObject; var Key: Char);
@@ -171,18 +174,18 @@ end;
 
 procedure TEmpresaForm.IVADBComboBoxChange(Sender: TObject);
 begin
-{
-  if IVADBComboBox.Text = 'CF' then
+  {
+    if IVADBComboBox.Text = 'CF' then
     IVALabel.Caption := 'Consumidor Final'
-  else if IVADBComboBox.Text = 'MT' then
+    else if IVADBComboBox.Text = 'MT' then
     IVALabel.Caption := 'Responsable Monotributo'
-  else if IVADBComboBox.Text = 'RI' then
+    else if IVADBComboBox.Text = 'RI' then
     IVALabel.Caption := 'Responsable Inscripto'
-  else if IVADBComboBox.Text = 'EX' then
+    else if IVADBComboBox.Text = 'EX' then
     IVALabel.Caption := 'Exento'
-  else
+    else
     IVALabel.Caption := 'No Responsable';
-}
+  }
 end;
 
 procedure TEmpresaForm.Image1Click(Sender: TObject);

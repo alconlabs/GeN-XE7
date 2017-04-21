@@ -32,7 +32,7 @@ type
     Listados1: TMenuItem;
     Cheques2: TMenuItem;
     Productos1: TMenuItem;
-    ReimprimirVenta1: TMenuItem;
+    AnularVenta1: TMenuItem;
     ListadePrecios1: TMenuItem;
     Configuracion1: TMenuItem;
     Clientes1: TMenuItem;
@@ -129,7 +129,7 @@ type
     procedure CrearPedido1Click(Sender: TObject);
     procedure PagosaProveedores1Click(Sender: TObject);
     procedure CuentaCorriente1Click(Sender: TObject);
-    procedure ReimprimirVenta1Click(Sender: TObject);
+    procedure AnularVenta1Click(Sender: TObject);
     procedure Cuentas1Click(Sender: TObject);
     procedure LibroIVAVentas1Click(Sender: TObject);
     procedure LibroIVACompras1Click(Sender: TObject);
@@ -232,7 +232,7 @@ begin
       Query.SQL.Text := 'insert into "Control" (USUARIO, MAQUINA) values (' +
         Usuario + ', ' + QuotedStr(Maquina) + ')';
       Query.ExecSQL;
-//      Query.Transaction.Commit;
+      // Query.Transaction.Commit;
       Query.Transaction.Commit;
       LoginOk := True;
     end;
@@ -258,7 +258,7 @@ begin
       CuentaCorriente1.Visible := False;
       Aumentarporporcentaje1.Visible := False;
       // AnularVenta1.Visible := False;
-      ReimprimirVenta1.Visible := False;
+      AnularVenta1.Visible := False;
       // DevolverMercadera1.Visible := False;
       // Retenciones1.Visible := False;
       CargarFactura1.Visible := False;
@@ -266,8 +266,8 @@ begin
       CrearPedido1.Visible := False;
     end;
   end;
-  FullMainForm.caption := 'Civeloo GeN - [' + Empresa + '] - ' + Licencia
-    + ' - [USUARIO: ' + Usuario + '] MODULO COMPLETO';
+  FullMainForm.caption := 'Civeloo GeN - [' + Empresa + '] - ' + Licencia +
+    ' - [USUARIO: ' + Usuario + '] MODULO COMPLETO';
 end;
 
 procedure TFullMainForm.Cuentas1Click(Sender: TObject);
@@ -994,7 +994,7 @@ begin
   end;
 end;
 
-procedure TFullMainForm.ReimprimirVenta1Click(Sender: TObject);
+procedure TFullMainForm.AnularVenta1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'AnularVenta.exe')), SW_SHOWNORMAL);
   FAnulaReimp := TFAnulaReimp.Create(self);

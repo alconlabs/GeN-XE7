@@ -85,7 +85,7 @@ uses AgregarCantidad;
 
 procedure TStockForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(self);
+  // DM := TDM.Create(self);
 end;
 
 procedure TStockForm.FormKeyDown(Sender: TObject; var Key: Word;

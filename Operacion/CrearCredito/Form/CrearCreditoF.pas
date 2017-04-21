@@ -856,7 +856,7 @@ begin
     end;
     end; }
 
-  //Nuevo;
+  // Nuevo;
   Close;
 end;
 

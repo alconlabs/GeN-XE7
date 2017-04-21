@@ -40,7 +40,7 @@ implementation
 
 procedure TRubroForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
+  // DM := TDM.Create(Self);
   Tabla.Active := true;
 end;
 

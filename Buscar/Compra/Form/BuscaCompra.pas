@@ -83,7 +83,7 @@ end;
 
 procedure TBuscaCompraForm.FormShow(Sender: TObject);
 begin
-  //dm := tdm.Create(self);
+  // dm := tdm.Create(self);
   SqL := 'SELECT ' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE').AsString) +
     ' As Empresa,' + '  "Proveedor".NOMBRE,' + '  "Proveedor".TITULAR,' +
     '  "Proveedor".DIRECCION,' + '  "Proveedor".DIRECCIONCOMERCIAL,' +
@@ -146,7 +146,7 @@ end;
 
 procedure TBuscaCompraForm.FormCreate(Sender: TObject);
 begin
-  DM.ConfigQuery.Open;
+  dm.ConfigQuery.Open;
 end;
 
 procedure TBuscaCompraForm.FormDestroy(Sender: TObject);

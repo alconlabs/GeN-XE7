@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Mask, DBCtrls, DB, Buttons, ExtCtrls, DataModule, OleCtrls, SHDocVw,
+  Dialogs, StdCtrls, Mask, DBCtrls, DB, Buttons, ExtCtrls, DataModule, OleCtrls,
+  SHDocVw,
   IBX.IBCustomDataSet, IBX.IBTable;
 
 type
@@ -59,7 +60,7 @@ end;
 
 procedure TTipoGastoForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(Self);
+  // DM := TDM.Create(Self);
   Tabla.Open;
   Tabla.Insert;
 end;

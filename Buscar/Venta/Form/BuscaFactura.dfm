@@ -1,7 +1,7 @@
 object BuscaFacturaForm: TBuscaFacturaForm
   Left = 192
   Top = 128
-  Caption = 'Buscar Venta'
+  Caption = 'Re-Imprimir Operaci'#243'n'
   ClientHeight = 466
   ClientWidth = 792
   Color = clBtnFace
@@ -31,9 +31,9 @@ object BuscaFacturaForm: TBuscaFacturaForm
     object Label2: TLabel
       Left = 11
       Top = 4
-      Width = 65
+      Width = 112
       Height = 24
-      Caption = 'VENTA'
+      Caption = 'OPERACION'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -19
@@ -52,6 +52,19 @@ object BuscaFacturaForm: TBuscaFacturaForm
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = []
+      ParentFont = False
+    end
+    object Label4: TLabel
+      Left = 682
+      Top = 28
+      Width = 78
+      Height = 13
+      Caption = 'Presupuesto?'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
       ParentFont = False
     end
     object ventaEdit: TEdit
@@ -79,6 +92,13 @@ object BuscaFacturaForm: TBuscaFacturaForm
       Font.Style = []
       ParentFont = False
       TabOrder = 1
+    end
+    object Presupuesto: TCheckBox
+      Left = 766
+      Top = 26
+      Width = 17
+      Height = 17
+      TabOrder = 2
     end
   end
   object Panel2: TPanel
@@ -175,7 +195,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
       Top = 321
       Width = 80
       Height = 50
-      Caption = 'procesar'
+      Caption = 'Imprimir'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11

@@ -71,7 +71,7 @@ end;
 
 procedure TGanaciaxVtaLForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(self);
+  // DM := TDM.Create(self);
   CuentaTabla.Open;
   DTP2.DateTime := Now + 1;
   DM.ConfigQuery.Open;

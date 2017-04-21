@@ -429,6 +429,9 @@ object NotaCreditoPlanForm: TNotaCreditoPlanForm
       64
       302
       64)
+    RowHeights = (
+      24
+      24)
   end
   object QTemp: TIBQuery
     Database = DM.BaseDatos

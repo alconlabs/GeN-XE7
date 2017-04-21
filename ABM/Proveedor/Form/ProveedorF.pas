@@ -146,7 +146,7 @@ end;
 
 procedure TProveedorForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(self);
+  // DM := TDM.Create(self);
   If (Tabla.Active = True) then
     Tabla.Close;
   UsuarioT.Open;

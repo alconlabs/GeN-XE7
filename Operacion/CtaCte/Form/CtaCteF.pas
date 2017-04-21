@@ -128,7 +128,7 @@ end;
 
 procedure TCtaCteForm.FormCreate(Sender: TObject);
 begin
-  //DM := TDM.Create(self);
+  // DM := TDM.Create(self);
 end;
 
 procedure TCtaCteForm.FormKeyUp(Sender: TObject; var Key: Word;

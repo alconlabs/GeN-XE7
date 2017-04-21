@@ -52,7 +52,7 @@ type
     { Private declarations }
   public
     CtaNombre, fecha: string;
-    Oculto : integer;
+    Oculto: integer;
     procedure DetalleCtaCte;
     { Public declarations }
   end;
@@ -403,7 +403,7 @@ begin
       QuotedStr('Rendicion Cliente ' + ClienteLabel.Caption + '') + ', ' +
       QuotedStr(Q.FieldByName('Jerarquia').AsString) + ', ' +
       QuotedStr(Q.FieldByName('DESCRIPCION').AsString) + ', ' +
-      TotalAplicadoEdit.Text + ', 0, ' + IntToStr(Oculto) + ' )';
+      TotalAplicadoEdit.Text + ', 0, ' + inttostr(Oculto) + ' )';
     Query.ExecSQL;
 
     // renglon  - DEUDORES POR VENTA
@@ -415,7 +415,7 @@ begin
       QuotedStr('Rendicion Cliente ' + ClienteLabel.Caption + '') + ', ' +
       QuotedStr(Q.FieldByName('Jerarquia').AsString) + ', ' +
       QuotedStr(Q.FieldByName('DESCRIPCION').AsString) + ', 0, ' +
-      TotalAplicadoEdit.Text + ', ' + IntToStr(Oculto) + ' )';
+      TotalAplicadoEdit.Text + ', ' + inttostr(Oculto) + ' )';
     Query.ExecSQL;
   end;
 
@@ -437,8 +437,8 @@ end;
 
 procedure TRendicionClienteForm.FormCreate(Sender: TObject);
 begin
-  //dm := TDM.create(self);
-  DM.ConfigQuery.Open;
+  // dm := TDM.create(self);
+  dm.ConfigQuery.Open;
 end;
 
 procedure TRendicionClienteForm.FormKeyPress(Sender: TObject; var Key: Char);

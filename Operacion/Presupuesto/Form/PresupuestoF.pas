@@ -1015,8 +1015,8 @@ end;
 
 procedure TPresupuestoForm.FormCreate(Sender: TObject);
 begin
-  //dm := TDM.Create(self);
-    DM.ConfigQuery.Open;
+  // dm := TDM.Create(self);
+  dm.ConfigQuery.Open;
 end;
 
 procedure TPresupuestoForm.BitBtn10Click(Sender: TObject);
