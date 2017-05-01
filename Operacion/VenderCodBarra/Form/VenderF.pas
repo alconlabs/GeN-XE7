@@ -246,6 +246,9 @@ begin
   IVA105 := 0;
   IVAO := 0;
   UltCosto := 0;
+  NG21 := 0;
+  NG105 := 0;
+  NGO := 0;
 
   // Calcula el SubTotal
   For i := 1 to SGFact.RowCount - 1 do
@@ -280,9 +283,10 @@ begin
       SGFact.Cells[6, i] := '0';
     If (SGFact.Cells[6, i] = '21') then
     begin
-      NG21 := NG21 + StrToFloat(SGFact.Cells[5, i]); // NETO GRABADO 21%
+
       IVA21 := (IVA21 + Abs((StrToFloat(SGFact.Cells[5, i]) * 1.21) -
         StrToFloat(SGFact.Cells[5, i])));
+      NG21 := NG21 + StrToFloat(SGFact.Cells[5, i]) - IVA21; // NETO GRABADO 21%
     end; // IVA 21% 100 * 1.21 - 100 = 21
     IF (SGFact.Cells[6, i] = '10.5') then
     begin

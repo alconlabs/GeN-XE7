@@ -11,7 +11,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  ComObj, Windows, System.Variants;
+  ComObj, Windows, System.Variants, System.StrUtils;
 
 type
   TImprimirDataModule = class(TDataModule)
@@ -506,40 +506,25 @@ begin
         Pict.Picture.LoadFromFile(path + 'img\empresa.BMP');
       if (reporte = 'FElectronica') then // wsfev1
       begin
+         {
+         Campo CbteTipo sea:
+          - 01, 02, 03, 04, 05,34,39,60, 63 para los clase A
+          - 06, 07, 08, 09, 10, 35, 40,64, 61 para los clase B.
+          - 11, 12, 13, 15 para los clase C.
+          - 51, 52, 53, 54 para los clase M.
+          - 49 para los Bienes Usados
+          Consultar método FEParamGetTiposCbte.
+         }
+         Case IndexStr(Query.FieldByName('LETRA').AsString, ['A', 'B', 'C']) of
+          0: tipo_cbte := 1;//A
+          1: tipo_cbte := 6;//B
+          2: tipo_cbte := 11;//C
+          end;
+//        if (Query.FieldByName('COMPROBANTE').AsString = 'A') then
+//          tipo_cbte := 1
+//        else
+//          tipo_cbte := 11;
 
-        if (Query.FieldByName('COMPROBANTE').AsString = 'A') then
-          tipo_cbte := 1
-        else
-          tipo_cbte := 0;
-
-//        AfipWsfev1(Query.FieldByName('FECHA').AsString
-//          // DateTimeToString(fecha, 'yyyymmdd', Date), //fecha
-//          ,Query.FieldByName('CCUIT').AsString // nro_doc
-//          ,Query.FieldByName('TOTAL').AsString // imp_total
-//          ,'0'//'0.00', // imp_tot_conc,
-//          ,Query.FieldByName('SUBTOTAL').AsString // imp_neto
-//          ,Query.FieldByName('IMPUESTO').AsString // impto_liq
-//          ,'0'//'0.00', // impto_liq_rni
-//          ,'0'//'0.00', // imp_op_ex
-//          ,Query.FieldByName('FECHA').AsString // fecha_cbte
-//          ,Query.FieldByName('FECHA').AsString // fecha_venc_pago
-//          ,Query.FieldByName('FECHA').AsString // fecha_serv_desde
-//          ,Query.FieldByName('FECHA').AsString // fecha_serv_hasta
-//          ,Query.FieldByName('FECHA').AsString // venc
-//          ,'PES' // moneda_id
-//          ,'1.000' // moneda_ctz
-//          ,Query.FieldByName('NG2').AsString // bi21
-//          ,Query.FieldByName('IVA2').AsString // i21
-//          ,Query.FieldByName('NG1').AsString // bi105
-//          ,Query.FieldByName('IVA1').AsString // i105
-//          ,tipo_cbte // tipo_cbte
-//          ,Query.FieldByName('PtoVta').AsInteger // punto_vta
-//          ,80 // tipo_doc
-//          ,3 // ?presta_serv
-//          ,Query.FieldByName('CODIGO').AsInteger // id
-//          ,0 // cbt_desde
-//          ,0 // cbt_hasta
-//          );
           AfipWsfev1(
           tipo_cbte// tipo_cbte
           ,Query.FieldByName('PtoVta').AsInteger// punto_vta
