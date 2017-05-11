@@ -385,6 +385,7 @@ begin
     GanaciaDBEdit.Text := '0';
   costo := StrToFloat(CostoDBEdit.Text);
   flete := costo * (StrToFloat(FleteDBEdit.Text) / 100);
+  costo := costo + flete;
 
   if GanaciaDBEdit.Text = '0' then
         PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA((costo * PrecioCtaCte),StrToFloat(IVADBEdit.Text) + flete))
@@ -393,21 +394,21 @@ begin
   PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA( (costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),StrToFloat(IVADBEdit.Text)) + flete);
 
 //Precio1DBEdit.Text := FloatToStr((costo * Precio1) + iva);
-Precio1DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio1),StrToFloat(IVADBEdit.Text)) + flete );
+Precio1DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio1),StrToFloat(IVADBEdit.Text)) );
 //  Precio2DBEdit.Text := FloatToStr((costo * Precio2) + iva);
-Precio2DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio2),StrToFloat(IVADBEdit.Text)) + flete );
+Precio2DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio2),StrToFloat(IVADBEdit.Text)) );
 //  Precio3DBEdit.Text := FloatToStr((costo * Precio3) + iva);
-Precio3DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio3),StrToFloat(IVADBEdit.Text)) + flete );
+Precio3DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio3),StrToFloat(IVADBEdit.Text)) );
 //  Precio4DBEdit.Text := FloatToStr((costo * Precio4) + iva);
-Precio4DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio4),StrToFloat(IVADBEdit.Text)) + flete );
+Precio4DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio4),StrToFloat(IVADBEdit.Text)) );
 //  Precio5DBEdit.Text := FloatToStr((costo * Precio5) + iva);
-Precio5DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio5),StrToFloat(IVADBEdit.Text)) + flete );
+Precio5DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio5),StrToFloat(IVADBEdit.Text)) );
 //  Precio6DBEdit.Text := FloatToStr((costo * Precio6) + iva);
-Precio6DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio6),StrToFloat(IVADBEdit.Text)) + flete );
+Precio6DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio6),StrToFloat(IVADBEdit.Text)) );
 
 //  Label21.Caption := '= ' + FloatToStr(iva);
-  DBText1.Caption := FloatToStr(costo + flete);
-  DBText2.Caption := FloatToStr( costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1) + flete );
+  DBText1.Caption := FloatToStr( costo );
+  DBText2.Caption := FloatToStr( costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1) );
   BitBtn1.SetFocus;
 end;
 

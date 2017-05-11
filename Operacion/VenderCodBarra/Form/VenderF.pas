@@ -265,7 +265,7 @@ begin
       SGFact.Cells[11, i] := '0';
     subtotal := subtotal + StrToFloat(SGFact.Cells[5, i]); // SUBTOTAL
     IF SGFact.Cells[8, i] <> '' then
-      costo := costo + StrToFloat(SGFact.Cells[8, i]); // Calcula el Costo
+      costo := costo + StrToFloat(SGFact.Cells[8, i]); // Calcula el Neto
     IF SGFact.Cells[11, i] <> '' then
       UltCosto := UltCosto + StrToFloat(SGFact.Cells[11, i]);
     // Calcula el Ultimo Costo
@@ -283,29 +283,30 @@ begin
       SGFact.Cells[6, i] := '0';
     If (SGFact.Cells[6, i] = '21') then
     begin
-
-      IVA21 := (IVA21 + Abs((StrToFloat(SGFact.Cells[5, i]) * 1.21) -
-        StrToFloat(SGFact.Cells[5, i])));
-      NG21 := NG21 + StrToFloat(SGFact.Cells[5, i]) - IVA21; // NETO GRABADO 21%
+//      IVA21 := (IVA21 + Abs((StrToFloat(SGFact.Cells[5, i]) * 1.21) - StrToFloat(SGFact.Cells[5, i])));
+      IVA21 := (IVA21 + ( StrToFloat(SGFact.Cells[5, i]) - StrToFloat(SGFact.Cells[8, i]) ) );
+//      NG21 := NG21 + StrToFloat(SGFact.Cells[5, i]) - IVA21; // NETO GRABADO 21%
+      NG21 := NG21 + StrToFloat(SGFact.Cells[8, i]);
     end; // IVA 21% 100 * 1.21 - 100 = 21
     IF (SGFact.Cells[6, i] = '10.5') then
     begin
-      NG105 := NG105 + StrToFloat(SGFact.Cells[5, i]); // NETO GRABADO 10.5%
-      IVA105 := (IVA105 + Abs((StrToFloat(SGFact.Cells[5, i]) * 1.105) -
-        StrToFloat(SGFact.Cells[5, i])));
+//      NG105 := NG105 + StrToFloat(SGFact.Cells[5, i]); // NETO GRABADO 10.5%
+      NG105 := NG105 + StrToFloat(SGFact.Cells[5, i]);
+//      IVA105 := (IVA105 + Abs((StrToFloat(SGFact.Cells[5, i]) * 1.105) - StrToFloat(SGFact.Cells[5, i])));
+      IVA105 := IVA105 + ( StrToFloat(SGFact.Cells[5, i]) - StrToFloat(SGFact.Cells[8, i]) ) ;
     end; // IVA 10.5% 100 * 1.105 - 100 = 10.5
     IF (SGFact.Cells[6, i] <> '21') and (SGFact.Cells[6, i] <> '10.5') and
       (SGFact.Cells[6, i] <> '0') and (SGFact.Cells[6, i] <> '') then
     begin
       NGO := NGO + StrToFloat(SGFact.Cells[5, i]); // NETO GRABADO
-      IVAO := (IVAO + Abs((StrToFloat(SGFact.Cells[5, i]) /
-        (StrToFloat(SGFact.Cells[6, i]) * 100 + 1)) -
-        StrToFloat(SGFact.Cells[5, i])));
-    end; // IVA
+//      IVAO := (IVAO + Abs((StrToFloat(SGFact.Cells[5, i]) / (StrToFloat(SGFact.Cells[6, i]) * 100 + 1)) - StrToFloat(SGFact.Cells[5, i])));
+      IVAO := (IVAO + ((StrToFloat(SGFact.Cells[5, i]) / (StrToFloat(SGFact.Cells[6, i]) * 100 + 1)) - StrToFloat(SGFact.Cells[8, i])));
+    end;
   end;
 
   Impuesto := IVA21 + IVA105 + IVAO;
-  subtotal := (subtotal - Impuesto);
+  //subtotal := (subtotal - Impuesto);
+  subtotal:= NG21 + NG105 + NGO;
   desc := (subtotal * StrToFloat(FLEPorcDesc.Text) / 100);
   Total := (subtotal + Impuesto - desc + Interes);
 
@@ -484,8 +485,14 @@ begin
   end;
 end;
 
+function NetoGravado(costo,ganancia,flete:double):double;
+begin
+  Result := costo + (costo * (flete/100)) + (costo * (ganancia/100));
+end;
+
 procedure TVenderForm.AgregarBitBtnClick(Sender: TObject);
 begin
+
   FBuscaArticulo := TFBuscaArticulo.Create(self);
   FBuscaArticulo.Precio := Precio;
   if (TipoRadioGroup.ItemIndex = 0) and
@@ -510,27 +517,38 @@ begin
       // nombre
       SGFact.Cells[2, Cuenta] := '0';
       SGFact.Cells[3, Cuenta] := '1'; // cantidad
-      SGFact.Cells[4, Cuenta] :=
-        Tabla.FieldByName('PRECIO' + PrecioLabel.Caption).AsString;
+      SGFact.Cells[4, Cuenta] := Tabla.FieldByName('PRECIO' + PrecioLabel.Caption).AsString;
       // Format('%8.2f',[StrToFloat(Tabla.FieldByName('Precio'+PrecioLabel.Caption).AsString)]);//precio
+
+      // IVA
       SGFact.Cells[5, Cuenta] := FloatToStr(StrToFloat(SGFact.Cells[4, Cuenta])
         * StrToFloat(SGFact.Cells[3, Cuenta])); // total
       SGFact.Cells[6, Cuenta] := FloatToStr(Tabla.FieldByName('TASA').AsFloat);
-      // IVA
-      SGFact.Cells[8, Cuenta] := FloatToStr(Tabla.FieldByName('COSTO').AsFloat *
-        StrToFloat(SGFact.Cells[3, SGFact.Row])); // PRECIO DE COSTO
-      SGFact.Cells[9, Cuenta] := Tabla.FieldByName('IIBB').AsString;
+
+      //NETO
+      SGFact.Cells[8, Cuenta] := FloatToStr(
+       NetoGravado(
+       Tabla.FieldByName('COSTO').AsFloat,Tabla.FieldByName('PORCENTAJE').AsFloat,Tabla.FieldByName('IMPOTROS').AsFloat
+       ) *
+       StrToFloat(SGFact.Cells[3, SGFact.Row])
+       );
+
       // INGRESOS BRUTOS
+      SGFact.Cells[9, Cuenta] := Tabla.FieldByName('IIBB').AsString;
       Q.SQL.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' +
         QuotedStr(SGFact.Cells[9, Cuenta]);
       Q.Open;
+
+      // PORCENTAJE DE INGRESOS BRUTOS
       SGFact.Cells[10, Cuenta] :=
         Format('%8.2f', [Q.FieldByName('PORCENTAJE').AsFloat]);
-      // PORCENTAJE DE INGRESOS BRUTOS
+
+      //ULTIMO NETO
       SGFact.Cells[11, Cuenta] :=
         FloatToStr(Tabla.FieldByName('ULTCOSTO').AsFloat *
         StrToFloat(SGFact.Cells[3, SGFact.Row])); // PRECIO DE COSTO
       Cuenta := Cuenta + 1;
+
     end;
     FBuscaArticulo.Free;
     Tabla.Close;

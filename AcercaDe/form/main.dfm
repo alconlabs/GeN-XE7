@@ -22,7 +22,9 @@ object mainForm: TmainForm
     Width = 247
     Height = 232
     Align = alClient
+    Color = clWhite
     DragCursor = crHelp
+    ParentBackground = False
     TabOrder = 0
     object Label5: TLabel
       Left = 9
@@ -39,13 +41,13 @@ object mainForm: TmainForm
       IsControl = True
     end
     object Label6: TLabel
-      Left = 154
+      Left = 134
       Top = 8
-      Width = 75
+      Width = 85
       Height = 13
-      Caption = 'Versi'#243'n 2017'
+      Caption = '201705112031'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
+      Font.Color = clSilver
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
