@@ -391,7 +391,7 @@ begin
         PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA((costo * PrecioCtaCte),StrToFloat(IVADBEdit.Text) + flete))
    else
    //     PrecioCtaCteDBEdit.Text := FloatToStr((neto + iva));
-  PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA( (costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),StrToFloat(IVADBEdit.Text)) + flete);
+  PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA( (costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),StrToFloat(IVADBEdit.Text)));
 
 //Precio1DBEdit.Text := FloatToStr((costo * Precio1) + iva);
 Precio1DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio1),StrToFloat(IVADBEdit.Text)) );

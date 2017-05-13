@@ -45,7 +45,7 @@ object mainForm: TmainForm
       Top = 8
       Width = 85
       Height = 13
-      Caption = '201705112031'
+      Caption = '201705131421'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clSilver
       Font.Height = -11
