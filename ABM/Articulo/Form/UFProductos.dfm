@@ -65,7 +65,6 @@ object FProductos: TFProductos
         Width = 59
         Height = 13
         Caption = 'Tasa de IVA'
-        FocusControl = IVADBEdit
       end
       object Label19: TLabel
         Left = 490
@@ -250,15 +249,6 @@ object FProductos: TFProductos
         TabOrder = 9
         OnClick = BitBtn13Click
       end
-      object IVADBEdit: TDBEdit
-        Left = 519
-        Top = 85
-        Width = 65
-        Height = 21
-        DataField = 'Tasa'
-        DataSource = DataSource
-        TabOrder = 6
-      end
       object FleteDBEdit: TDBEdit
         Left = 519
         Top = 59
@@ -319,6 +309,19 @@ object FProductos: TFProductos
         ParentFont = False
         TabOrder = 10
         OnClick = CodigoBarraBitBtnClick
+      end
+      object IVADBComboBox: TDBComboBox
+        Left = 519
+        Top = 85
+        Width = 67
+        Height = 21
+        DataField = 'Tasa'
+        DataSource = DataSource
+        Items.Strings = (
+          '21'
+          '105'
+          '0')
+        TabOrder = 6
       end
     end
     object TabSheet3: TTabSheet

@@ -52,7 +52,6 @@ type
     Label16: TLabel;
     Label28: TLabel;
     Label21: TLabel;
-    IVADBEdit: TDBEdit;
     FleteDBEdit: TDBEdit;
     CostoDBEdit: TDBEdit;
     Label4: TLabel;
@@ -134,6 +133,7 @@ type
     PaintBox1: TImage;
     DBEdit2: TDBEdit;
     Label35: TLabel;
+    IVADBComboBox: TDBComboBox;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -373,38 +373,40 @@ end;
 
 procedure TFProductos.GanaciaDBEditExit(Sender: TObject);
 var
-  costo, flete: Double;
+  costo, flete,tasa: Double;
 begin
   if CostoDBEdit.Text = '' then
     CostoDBEdit.Text := '0';
   if FleteDBEdit.Text = '' then
     FleteDBEdit.Text := '0';
-  if IVADBEdit.Text = '' then
-    IVADBEdit.Text := '0';
+//  if IVADBEdit.Text = '' then
+//    IVADBEdit.Text := '0';
   if GanaciaDBEdit.Text = '' then
     GanaciaDBEdit.Text := '0';
   costo := StrToFloat(CostoDBEdit.Text);
   flete := costo * (StrToFloat(FleteDBEdit.Text) / 100);
   costo := costo + flete;
+  if IVADBComboBox.Text = '21' then tasa:=StrToFloat(IVADBComboBox.Text)
+  else tasa:=StrToFloat(IVADBComboBox.Text)/100;
 
   if GanaciaDBEdit.Text = '0' then
-        PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA((costo * PrecioCtaCte),StrToFloat(IVADBEdit.Text) + flete))
+        PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA((costo * PrecioCtaCte),tasa + flete))
    else
    //     PrecioCtaCteDBEdit.Text := FloatToStr((neto + iva));
-  PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA( (costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),StrToFloat(IVADBEdit.Text)));
+  PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA( (costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),tasa));
 
 //Precio1DBEdit.Text := FloatToStr((costo * Precio1) + iva);
-Precio1DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio1),StrToFloat(IVADBEdit.Text)) );
+Precio1DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio1),tasa) );
 //  Precio2DBEdit.Text := FloatToStr((costo * Precio2) + iva);
-Precio2DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio2),StrToFloat(IVADBEdit.Text)) );
+Precio2DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio2),tasa) );
 //  Precio3DBEdit.Text := FloatToStr((costo * Precio3) + iva);
-Precio3DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio3),StrToFloat(IVADBEdit.Text)) );
+Precio3DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio3),tasa) );
 //  Precio4DBEdit.Text := FloatToStr((costo * Precio4) + iva);
-Precio4DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio4),StrToFloat(IVADBEdit.Text)) );
+Precio4DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio4),tasa) );
 //  Precio5DBEdit.Text := FloatToStr((costo * Precio5) + iva);
-Precio5DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio5),StrToFloat(IVADBEdit.Text)) );
+Precio5DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio5),tasa) );
 //  Precio6DBEdit.Text := FloatToStr((costo * Precio6) + iva);
-Precio6DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio6),StrToFloat(IVADBEdit.Text)) );
+Precio6DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio6),tasa) );
 
 //  Label21.Caption := '= ' + FloatToStr(iva);
   DBText1.Caption := FloatToStr( costo );
@@ -433,7 +435,7 @@ begin
   Tabla.FieldByName('ImpOtros').AsInteger := 0;
   FleteDBEdit.Field.AsFloat := 0;
   Tabla.FieldByName('Tasa').AsInteger := 0;
-  IVADBEdit.Field.AsFloat := 0;
+//  IVADBEdit.Field.AsFloat := 0;
   Tabla.FieldByName('Precio').AsInteger := 0;
   PrecioCtaCteDBEdit.Field.AsFloat := 0;
   Tabla.FieldByName('IIBB').AsInteger := 0;
@@ -519,7 +521,7 @@ end;
 
 procedure TFProductos.Precio6DBEditExit(Sender: TObject);
 begin
-  IVADBEdit.SetFocus;
+//  IVADBEdit.SetFocus;
 end;
 
 procedure TFProductos.CategoriaBitBtnClick(Sender: TObject);

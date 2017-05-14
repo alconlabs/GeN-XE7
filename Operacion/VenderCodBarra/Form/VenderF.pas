@@ -288,14 +288,14 @@ begin
 //      NG21 := NG21 + StrToFloat(SGFact.Cells[5, i]) - IVA21; // NETO GRABADO 21%
       NG21 := NG21 + StrToFloat(SGFact.Cells[8, i]);
     end; // IVA 21% 100 * 1.21 - 100 = 21
-    IF (SGFact.Cells[6, i] = '10.5') then
+    IF (SGFact.Cells[6, i] = '105') then
     begin
 //      NG105 := NG105 + StrToFloat(SGFact.Cells[5, i]); // NETO GRABADO 10.5%
-      NG105 := NG105 + StrToFloat(SGFact.Cells[5, i]);
+      NG105 := NG105 + StrToFloat(SGFact.Cells[8, i]);
 //      IVA105 := (IVA105 + Abs((StrToFloat(SGFact.Cells[5, i]) * 1.105) - StrToFloat(SGFact.Cells[5, i])));
       IVA105 := IVA105 + ( StrToFloat(SGFact.Cells[5, i]) - StrToFloat(SGFact.Cells[8, i]) ) ;
     end; // IVA 10.5% 100 * 1.105 - 100 = 10.5
-    IF (SGFact.Cells[6, i] <> '21') and (SGFact.Cells[6, i] <> '10.5') and
+    IF (SGFact.Cells[6, i] <> '21') and (SGFact.Cells[6, i] <> '105') and
       (SGFact.Cells[6, i] <> '0') and (SGFact.Cells[6, i] <> '') then
     begin
       NGO := NGO + StrToFloat(SGFact.Cells[5, i]); // NETO GRABADO
