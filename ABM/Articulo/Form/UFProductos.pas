@@ -386,13 +386,15 @@ begin
   costo := StrToFloat(CostoDBEdit.Text);
   flete := costo * (StrToFloat(FleteDBEdit.Text) / 100);
   costo := costo + flete;
-  if IVADBComboBox.Text = '21' then tasa:=StrToFloat(IVADBComboBox.Text)
-  else tasa:=StrToFloat(IVADBComboBox.Text)/100;
+  if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
+  else tasa:=StrToFloat(IVADBComboBox.Text);
 
   if GanaciaDBEdit.Text = '0' then
-        PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA((costo * PrecioCtaCte),tasa + flete))
+        PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA( (costo * PrecioCtaCte) , tasa) )
    else
    //     PrecioCtaCteDBEdit.Text := FloatToStr((neto + iva));
+
+   //((COSTO+(COSTO*(IMPOTROS/100)))*(PORCENTAJE/100+1))+(((COSTO+(COSTO*(IMPOTROS/100)))*(PORCENTAJE/100+1))*(TASA/100));
   PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA( (costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),tasa));
 
 //Precio1DBEdit.Text := FloatToStr((costo * Precio1) + iva);
