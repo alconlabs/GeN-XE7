@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GeN"
-#define MyAppVersion "201705152000"
+#define MyAppVersion "201705211954"
 #define MyAppPublisher "Civeloo"
 #define MyAppURL "http://www.civeloo.com/"
 #define MyAppExeName "GeN.exe"
@@ -22,10 +22,10 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppPublisher}\{#MyAppName}
 DefaultGroupName={#MyAppPublisher}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Civeloo\GeN\bin\LICENSE-2.0.txt
-OutputDir=C:\Users\Usuario\Desktop
+LicenseFile=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\bin\LICENSE-2.0.txt
+OutputDir=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Instalador
 OutputBaseFilename=Actualizar{#MyAppName}
-SetupIconFile=C:\Civeloo\GeN\bin\DeGsoft.ico
+SetupIconFile=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\bin\DeGsoft.ico
 Compression=lzma
 SolidCompression=true
 
@@ -38,11 +38,11 @@ Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription
 
 [Files]
 ;Source: C:\Civeloo\GeN\bin\GeN.exe; DestDir: {app}; Flags: ignoreversion
-Source: C:\Civeloo\GeN\bin\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\bin\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
 ;Source: C:\Civeloo\GeN\db\*; DestDir: {app}\db\; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: C:\Civeloo\GeN\hlp\*; DestDir: {app}\hlp\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\hlp\*; DestDir: {app}\hlp\; Flags: ignoreversion recursesubdirs createallsubdirs
 ;Source: C:\Civeloo\GeN\img\*; DestDir: {app}\img\; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: C:\Civeloo\GeN\rpt\*; DestDir: {app}\rpt\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\rpt\*; DestDir: {app}\rpt\; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

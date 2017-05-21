@@ -59,21 +59,21 @@ object ImprimirDataModule: TImprimirDataModule
         'O)'
       'WHERE'
       '    ("Venta".CODIGO = 2 )')
-    Left = 824
+    Left = 744
     Top = 8
   end
   object FDQuery1: TFDQuery
     SQL.Strings = (
       'SELECT '#39'1234567890123'#39' as CODIGOBARRA FROM "Empresa"')
-    Left = 824
+    Left = 744
     Top = 72
   end
   object FirebirdConnection: TFDConnection
     Params.Strings = (
       'ConnectionDef=GeN')
     LoginPrompt = False
-    Left = 823
-    Top = 403
+    Left = 743
+    Top = 387
   end
   object frxDBDataset1: TfrxDBDataset
     UserName = 'frxDBDataset1'
@@ -107,5 +107,110 @@ object ImprimirDataModule: TImprimirDataModule
   object frxBarCodeObject1: TfrxBarCodeObject
     Left = 128
     Top = 8
+  end
+  object frxPDFExport1: TfrxPDFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    PrintOptimized = False
+    Outline = False
+    Background = False
+    HTMLTags = True
+    Quality = 95
+    Transparency = False
+    Author = 'FastReport'
+    Subject = 'FastReport PDF export'
+    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
+    HideToolbar = False
+    HideMenubar = False
+    HideWindowUI = False
+    FitWindow = False
+    CenterWindow = False
+    PrintScaling = False
+    PdfA = False
+    Left = 56
+    Top = 376
+  end
+  object frxHTMLExport1: TfrxHTMLExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    FixedWidth = True
+    Background = False
+    Centered = False
+    EmptyLines = True
+    Print = False
+    PictureType = gpPNG
+    Left = 120
+    Top = 376
+  end
+  object frxRTFExport1: TfrxRTFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    PictureType = gpPNG
+    Wysiwyg = True
+    Creator = 'FastReport'
+    SuppressPageHeadersFooters = False
+    HeaderFooterMode = hfText
+    AutoSize = False
+    Left = 184
+    Top = 376
+  end
+  object frxJPEGExport1: TfrxJPEGExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    Left = 248
+    Top = 376
+  end
+  object frxCSVExport1: TfrxCSVExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    Separator = ';'
+    OEMCodepage = False
+    UTF8 = False
+    NoSysSymbols = True
+    ForcedQuotes = False
+    Left = 312
+    Top = 376
+  end
+  object frxOLEObject1: TfrxOLEObject
+    Left = 56
+    Top = 325
+  end
+  object frxRichObject1: TfrxRichObject
+    Left = 120
+    Top = 325
+  end
+  object frxCheckBoxObject1: TfrxCheckBoxObject
+    Left = 184
+    Top = 325
+  end
+  object frxGradientObject1: TfrxGradientObject
+    Left = 248
+    Top = 325
+  end
+  object frxDotMatrixExport1: TfrxDotMatrixExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    EscModel = 0
+    GraphicFrames = False
+    SaveToFile = False
+    UseIniSettings = True
+    Left = 312
+    Top = 325
+  end
+  object frxGZipCompressor1: TfrxGZipCompressor
+    Left = 376
+    Top = 325
   end
 end

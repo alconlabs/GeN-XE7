@@ -235,6 +235,7 @@ procedure TVenderForm.CalculaTotales;
 var
   i: Integer;
 begin
+
   // Calcula los totales de la factura
   subtotal := 0;
   Impuesto := 0;
@@ -253,55 +254,55 @@ begin
   // Calcula el SubTotal
   For i := 1 to SGFact.RowCount - 1 do
   begin
-    IF (SGFact.Cells[5, i] = '') then
-      SGFact.Cells[5, i] := '0';
-    IF (SGFact.Cells[6, i] = '') then
-      SGFact.Cells[6, i] := '0';
-    IF (SGFact.Cells[8, i] = '') then
-      SGFact.Cells[8, i] := '0';
-    IF (SGFact.Cells[9, i] = '') then
-      SGFact.Cells[9, i] := '0';
-    IF (SGFact.Cells[11, i] = '') then
-      SGFact.Cells[11, i] := '0';
-    subtotal := subtotal + StrToFloat(SGFact.Cells[5, i]); // SUBTOTAL
-    IF SGFact.Cells[8, i] <> '' then
-      costo := costo + StrToFloat(SGFact.Cells[8, i]); // Calcula el Neto
-    IF SGFact.Cells[11, i] <> '' then
-      UltCosto := UltCosto + StrToFloat(SGFact.Cells[11, i]);
+    //total
+    IF (SGFact.Cells[5, i] = '') then SGFact.Cells[5, i] := '0';
+    //IVA
+    IF (SGFact.Cells[6, i] = '') then SGFact.Cells[6, i] := '0';
+    //NG
+    IF (SGFact.Cells[8, i] = '') then SGFact.Cells[8, i] := '0';
+    //
+    IF (SGFact.Cells[9, i] = '') then SGFact.Cells[9, i] := '0';
+    //
+    IF (SGFact.Cells[11, i] = '') then SGFact.Cells[11, i] := '0';
+    // SUBTOTAL
+    subtotal := subtotal + StrToFloat(SGFact.Cells[5, i]);
+    // Calcula el Neto
+    IF SGFact.Cells[8, i] <> '0' then costo := costo + StrToFloat(SGFact.Cells[8, i]);
+    //
+    IF SGFact.Cells[11, i] <> '0' then UltCosto := UltCosto + StrToFloat(SGFact.Cells[11, i]);
     // Calcula el Ultimo Costo
-    IF SGFact.Cells[9, i] <> '' then
-      reparaciones := reparaciones + StrToFloat(SGFact.Cells[9, i]);
+    IF SGFact.Cells[9, i] <> '0' then reparaciones := reparaciones + StrToFloat(SGFact.Cells[9, i]);
+
     // Calcula las reparaciones
   end;
 
   // Calcula el monto para cobrar el impuesto de ventas
   For i := 1 to SGFact.RowCount - 1 do
   begin
-    IF (SGFact.Cells[5, i] = '') then
-      SGFact.Cells[5, i] := '0';
-    IF (SGFact.Cells[6, i] = '') then
-      SGFact.Cells[6, i] := '0';
+
     If (SGFact.Cells[6, i] = '21') then
     begin
 //      IVA21 := (IVA21 + Abs((StrToFloat(SGFact.Cells[5, i]) * 1.21) - StrToFloat(SGFact.Cells[5, i])));
-      IVA21 := (IVA21 + ( StrToFloat(SGFact.Cells[5, i]) - StrToFloat(SGFact.Cells[8, i]) ) );
+      IVA21 := IVA21 + ( StrToFloat(SGFact.Cells[5, i]) - StrToFloat(SGFact.Cells[8, i]) ) ;
 //      NG21 := NG21 + StrToFloat(SGFact.Cells[5, i]) - IVA21; // NETO GRABADO 21%
       NG21 := NG21 + StrToFloat(SGFact.Cells[8, i]);
-    end; // IVA 21% 100 * 1.21 - 100 = 21
-    IF (SGFact.Cells[6, i] = '105') then
+    end // IVA 21% 100 * 1.21 - 100 = 21
+    else
+    if (SGFact.Cells[6, i] = '105') then
     begin
 //      NG105 := NG105 + StrToFloat(SGFact.Cells[5, i]); // NETO GRABADO 10.5%
       NG105 := NG105 + StrToFloat(SGFact.Cells[8, i]);
 //      IVA105 := (IVA105 + Abs((StrToFloat(SGFact.Cells[5, i]) * 1.105) - StrToFloat(SGFact.Cells[5, i])));
       IVA105 := IVA105 + ( StrToFloat(SGFact.Cells[5, i]) - StrToFloat(SGFact.Cells[8, i]) ) ;
-    end; // IVA 10.5% 100 * 1.105 - 100 = 10.5
-    IF (SGFact.Cells[6, i] <> '21') and (SGFact.Cells[6, i] <> '105') and
-      (SGFact.Cells[6, i] <> '0') and (SGFact.Cells[6, i] <> '') then
-    begin
+    end // IVA 10.5% 100 * 1.105 - 100 = 10.5
+    else
+     begin
       NGO := NGO + StrToFloat(SGFact.Cells[5, i]); // NETO GRABADO
-//      IVAO := (IVAO + Abs((StrToFloat(SGFact.Cells[5, i]) / (StrToFloat(SGFact.Cells[6, i]) * 100 + 1)) - StrToFloat(SGFact.Cells[5, i])));
-      IVAO := (IVAO + ((StrToFloat(SGFact.Cells[5, i]) / (StrToFloat(SGFact.Cells[6, i]) * 100 + 1)) - StrToFloat(SGFact.Cells[8, i])));
+      //IVAO := (IVAO + Abs((StrToFloat(SGFact.Cells[5, i]) / (StrToFloat(SGFact.Cells[6, i]) * 100 + 1)) - StrToFloat(SGFact.Cells[5, i])));
+      //IVAO := IVAO + ((StrToFloat(SGFact.Cells[5, i]) / (StrToFloat(SGFact.Cells[6, i]) * 100 + 1)) - StrToFloat(SGFact.Cells[8, i]));
+      IVAO := IVAO + ( StrToFloat(SGFact.Cells[5, i]) - StrToFloat(SGFact.Cells[8, i]) ) ;
     end;
+
   end;
 
   Impuesto := IVA21 + IVA105 + IVAO;
@@ -317,14 +318,11 @@ begin
   SGTotal.Cells[1, 3] := Format('%8.2n', [Interes]);
   SGTotal.Cells[1, 4] := Format('%8.2n', [Total]);
 
-  if FEContado.Text = '' then
-    FEContado.Text := '0';
-  if FECheque.Text = '' then
-    FECheque.Text := '0';
-  if FETarjeta.Text = '' then
-    FETarjeta.Text := '0';
-  if FEOtro.Text = '' then
-    FEOtro.Text := '0';
+  if FEContado.Text = '' then FEContado.Text := '0';
+  if FECheque.Text = '' then FECheque.Text := '0';
+  if FETarjeta.Text = '' then FETarjeta.Text := '0';
+  if FEOtro.Text = '' then FEOtro.Text := '0';
+
   Pagado := StrToFloat(FEContado.Text) + StrToFloat(FECheque.Text) +
     StrToFloat(FETarjeta.Text) + StrToFloat(FEOtro.Text);
   Saldo := Total - Pagado;
@@ -521,8 +519,7 @@ begin
       // Format('%8.2f',[StrToFloat(Tabla.FieldByName('Precio'+PrecioLabel.Caption).AsString)]);//precio
 
       // IVA
-      SGFact.Cells[5, Cuenta] := FloatToStr(StrToFloat(SGFact.Cells[4, Cuenta])
-        * StrToFloat(SGFact.Cells[3, Cuenta])); // total
+      SGFact.Cells[5, Cuenta] := Tabla.FieldByName('PRECIO' + PrecioLabel.Caption).AsString;// SGFact.Cells[5, Cuenta] := FloatToStr(StrToFloat(SGFact.Cells[4, Cuenta]) * StrToFloat(SGFact.Cells[3, Cuenta])); // total
       SGFact.Cells[6, Cuenta] := FloatToStr(Tabla.FieldByName('TASA').AsFloat);
 
       //NETO
@@ -530,7 +527,7 @@ begin
        NetoGravado(
        Tabla.FieldByName('COSTO').AsFloat,Tabla.FieldByName('PORCENTAJE').AsFloat,Tabla.FieldByName('IMPOTROS').AsFloat
        ) *
-       StrToFloat(SGFact.Cells[3, SGFact.Row])
+       StrToFloat(SGFact.Cells[3, Cuenta])
        );
 
       // INGRESOS BRUTOS
@@ -556,6 +553,9 @@ begin
     FEContado.Text := FloatToStr(Total);
     FEContado.SetFocus;
   end;
+
+  //bajar el foco
+  PostMessage(SGFact.Handle,WM_KEYDOWN,VK_END,0);
 end;
 
 procedure TVenderForm.QuitarBitBtnClick(Sender: TObject);
@@ -756,14 +756,19 @@ begin
   finally
     if AgregarCantidadForm.CantidadEdit.Text <> '' then
     begin
-      SGFact.Cells[3, SGFact.Row] := AgregarCantidadForm.CantidadEdit.Text;
+
       // cantidad
+      SGFact.Cells[3, SGFact.Row] := AgregarCantidadForm.CantidadEdit.Text;
+
+      // total
       SGFact.Cells[5, SGFact.Row] :=
-        Format('%8.2f', [StrToFloat(SGFact.Cells[4, SGFact.Row]) *
-        StrToFloat(SGFact.Cells[3, SGFact.Row])]); // total
+      Format('%8.2f', [StrToFloat(SGFact.Cells[4, SGFact.Row]) * StrToFloat(SGFact.Cells[3, SGFact.Row])]);
+
+      // PRECIO DE COSTO
       SGFact.Cells[8, SGFact.Row] :=
         FloatToStr(StrToFloat(SGFact.Cells[8, SGFact.Row]) *
-        StrToFloat(SGFact.Cells[3, SGFact.Row])); // PRECIO DE COSTO
+        StrToFloat(SGFact.Cells[3, SGFact.Row]));
+
       CalculaTotales;
       FEContado.Text := FloatToStr(Total);
     end;

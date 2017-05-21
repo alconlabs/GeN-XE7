@@ -40,7 +40,7 @@ type
     Caja2: TMenuItem;
     EnCartera1: TMenuItem;
     Entregados1: TMenuItem;
-    CargarFactura1: TMenuItem;
+    ReImprimir: TMenuItem;
     Pagos1: TMenuItem;
     PagosaProveedores1: TMenuItem;
     PagoaCobradores1: TMenuItem;
@@ -175,7 +175,7 @@ type
     procedure COMPRAS1Click(Sender: TObject);
     procedure VENTAS1Click(Sender: TObject);
     procedure SubCategoriasClick(Sender: TObject);
-    procedure CargarFactura1Click(Sender: TObject);
+    procedure ReImprimirClick(Sender: TObject);
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
@@ -261,7 +261,7 @@ begin
       AnularVenta1.Visible := False;
       // DevolverMercadera1.Visible := False;
       // Retenciones1.Visible := False;
-      CargarFactura1.Visible := False;
+      ReImprimir.Visible := False;
       // AsignarCobrador1.Visible := False;
       CrearPedido1.Visible := False;
     end;
@@ -392,7 +392,7 @@ begin
   end;
 end;
 
-procedure TFullMainForm.CargarFactura1Click(Sender: TObject);
+procedure TFullMainForm.ReImprimirClick(Sender: TObject);
 begin
   BuscaFacturaForm := TBuscaFacturaForm.Create(self);
   try

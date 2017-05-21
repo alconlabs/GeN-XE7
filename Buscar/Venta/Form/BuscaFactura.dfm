@@ -16,7 +16,6 @@ object BuscaFacturaForm: TBuscaFacturaForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyUp = FormKeyUp
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -261,7 +260,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
     Columns = <
       item
         Expanded = False
-        FieldName = 'OPERACION'
+        FieldName = 'CODIGO'
         Title.Caption = 'NRO'
         Width = 45
         Visible = True
@@ -311,6 +310,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
       end>
   end
   object DS: TDataSource
+    AutoEdit = False
     DataSet = Tabla
     Left = 110
     Top = 384

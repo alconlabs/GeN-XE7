@@ -9,7 +9,9 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  frxClass, frxDBSet, frxBarcode
+  frxClass, frxDBSet, frxBarcode, frxExportCSV, frxExportImage, frxExportRTF,
+  frxExportHTML, frxExportPDF, frxGZip, frxDMPExport, frxGradient, frxChBox,
+  frxRich, frxOLE
 //  , System.Variants, System.StrUtils;
  ;
 type
@@ -21,6 +23,17 @@ type
     frxDBDataset1: TfrxDBDataset;
     frxReport1: TfrxReport;
     frxBarCodeObject1: TfrxBarCodeObject;
+    frxPDFExport1: TfrxPDFExport;
+    frxHTMLExport1: TfrxHTMLExport;
+    frxRTFExport1: TfrxRTFExport;
+    frxJPEGExport1: TfrxJPEGExport;
+    frxCSVExport1: TfrxCSVExport;
+    frxOLEObject1: TfrxOLEObject;
+    frxRichObject1: TfrxRichObject;
+    frxCheckBoxObject1: TfrxCheckBoxObject;
+    frxGradientObject1: TfrxGradientObject;
+    frxDotMatrixExport1: TfrxDotMatrixExport;
+    frxGZipCompressor1: TfrxGZipCompressor;
     Function VTA(nro, let: string): string;
     Function OPER(nro, let: string): string;
     Function PRE(nro, let: string): string;
@@ -36,7 +49,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    clienteSql, articuloSql, ventaItemSql, ivaVtaSql, presupuestoSql: string;
+    clienteSql, articuloSql, ventaItemSql, ivaVtaSql, presupuestoSql, presupuestoTSql, vtaSql, ventaTSql: string;
   end;
 
 var
@@ -121,18 +134,36 @@ begin
   ventaItemSql :=
     ' "VentaItem".ARTICULO, "VentaItem".CANTIDAD, "VentaItem".PRECIO, "VentaItem".OPERACION, ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT, "VentaItem".SERVICIO, "VentaItem".DESCRIPCION AS DESCR, "VentaItem".IMPUESTO as VIIMPUESTO';
   ivaVtaSql := ' "LibroIVAventa".NG1, "LibroIVAventa".IVA1, "LibroIVAventa".NG2, "LibroIVAventa".IVA2, "LibroIVAventa".NG3';
+  presupuestoTSql:= ' "Presupuesto".CODIGO, "Presupuesto".LETRA, "Presupuesto".FECHA, "Presupuesto".COMPROBANTE,'
+    + ' "Presupuesto".IVA3, "Presupuesto".TOTAL, "Presupuesto".CONTADO, "Presupuesto".CLIENTE,'
+    + ' "Presupuesto".SUBTOTAL, "Presupuesto".DESCUENTO, "Presupuesto".IMPUESTO,'
+    + ' "Presupuesto".IVA2, "Presupuesto".IVA1, "Presupuesto".EXCENTO, "Presupuesto".SALDO,'
+    + ' "Presupuesto".PAGADO' + ' FROM "Presupuesto"';
   presupuestoSql := clienteSql + ',' + articuloSql + ',' +
     ' "PresupuestoItem".ARTICULO, "PresupuestoItem".CANTIDAD, "PresupuestoItem".PRECIO,'
     + ' "PresupuestoItem".OPERACION, ("PresupuestoItem".PRECIO * "PresupuestoItem".CANTIDAD ) as PREXCANT,'
     + ' "PresupuestoItem".SERVICIO, "PresupuestoItem".IMPUESTO as VIIMPUESTO, "PresupuestoItem".DESCRIPCION AS DESCR,'
-    + ' "Presupuesto".CODIGO, "Presupuesto".LETRA, "Presupuesto".FECHA, "Presupuesto".COMPROBANTE,'
-    + ' "Presupuesto".IVA3, "Presupuesto".TOTAL, "Presupuesto".CONTADO, "Presupuesto".CLIENTE,'
-    + ' "Presupuesto".SUBTOTAL, "Presupuesto".DESCUENTO, "Presupuesto".IMPUESTO,'
-    + ' "Presupuesto".IVA2, "Presupuesto".IVA1, "Presupuesto".EXCENTO, "Presupuesto".SALDO,'
-    + ' "Presupuesto".PAGADO' + ' FROM "Presupuesto"' +
+    + presupuestoTSql +
     ' INNER JOIN "PresupuestoItem" ON ("Presupuesto".CODIGO = "PresupuestoItem".OPERACION)'
     + ' INNER JOIN "Articulo" ON ("PresupuestoItem".ARTICULO = "Articulo".CODIGO)'
     + ' INNER JOIN "Cliente" ON ("Presupuesto".CLIENTE = "Cliente".CODIGO)';
+  ventaTSql:=' "Venta".CODIGO,' + '  "Venta".LETRA,' +
+    '  "Venta".FECHA,' + '  "Venta".COMPROBANTE,' +
+    '  "Venta".TOTAL,' + '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' +
+    '  "Venta".SUBTOTAL,' + '  "Venta".DESCUENTO,' + '  "Venta".IMPUESTO,' +
+    '  "Venta".EXCENTO,' + '  "Venta".SALDO,' + '  "Venta".PAGADO'
+    + ' FROM'
+    + ' "Venta"';
+    vtaSql:=
+    clienteSql
+    +','+ articuloSql
+    +','+ ventaItemSql
+    +','+ ivaVtaSql
+    +','+ ventaTSql
+    + ' INNER JOIN "LibroIVAventa" ON ("Venta".CODIGO = "LibroIVAventa".FACTURA)'
+    + ' INNER JOIN "VentaItem" ON ("LibroIVAventa".FACTURA = "VentaItem".OPERACION)'
+    + ' INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CODIGO)'
+    + ' INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)' ;
 end;
 
 procedure TImprimirDataModule.Impr;
@@ -273,17 +304,8 @@ end;
 
 Function TImprimirDataModule.VTA;
 begin
-  Result := clienteSql + ',' + articuloSql + ',' + ventaItemSql + ',' +
-    ivaVtaSql + ',' + '  "Venta".CODIGO,' + '  "Venta".LETRA,' +
-    '  "Venta".FECHA,' + '  "Venta".COMPROBANTE,' +
-    '  "Venta".TOTAL,' + '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' +
-    '  "Venta".SUBTOTAL,' + '  "Venta".DESCUENTO,' + '  "Venta".IMPUESTO,' +
-    '  "Venta".EXCENTO,' + '  "Venta".SALDO,' + '  "Venta".PAGADO' + ' FROM' +
-    '  "Venta"' +
-    '  INNER JOIN "LibroIVAventa" ON ("Venta".CODIGO = "LibroIVAventa".FACTURA)'
-    + '  INNER JOIN "VentaItem" ON ("LibroIVAventa".FACTURA = "VentaItem".OPERACION)'
-    + '  INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CODIGO)' +
-    '  INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)' + ' WHERE'
+  Result := vtaSql
+    + ' WHERE'
     + '  ("Venta".CODIGO = ' + nro + ' ) AND' + '  ("Venta".LETRA = ' +
     QuotedStr(let) + ' )' + '';
 end;

@@ -4,6 +4,7 @@ object DM: TDM
   Height = 176
   Width = 369
   object BaseDatos: TIBDatabase
+    DatabaseName = 'C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\db\GeN.FDB'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'
@@ -12,6 +13,7 @@ object DM: TDM
     LoginPrompt = False
     DefaultTransaction = Transaccion
     ServerType = 'IBServer'
+    AllowStreamedConnected = False
     Left = 80
     Top = 16
   end

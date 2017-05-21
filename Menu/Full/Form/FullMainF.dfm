@@ -58,9 +58,9 @@ object FullMainForm: TFullMainForm
         Caption = 'CUENTA CORRIENTE'
         OnClick = CuentaCorriente1Click
       end
-      object CargarFactura1: TMenuItem
+      object ReImprimir: TMenuItem
         Caption = 'RE-IMPRIMIR'
-        OnClick = CargarFactura1Click
+        OnClick = ReImprimirClick
       end
       object Aumentarporporcentaje1: TMenuItem
         Caption = 'AUMENTAR POR PORCENTAJE'

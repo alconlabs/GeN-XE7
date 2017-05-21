@@ -32,8 +32,8 @@ type
     procedure SiBitBtnClick(Sender: TObject);
     procedure todoBitBtnClick(Sender: TObject);
     procedure Image1Click(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure ActualizarGrilla(nro,letra:string);
   private
     { Private declarations }
   public
@@ -49,51 +49,31 @@ implementation
 
 {$R *.dfm}
 
+procedure TBuscaFacturaForm.ActualizarGrilla;
+var sql, where:string;
+begin
+  if ((nro <> '') or (letra <> '')) then
+    where := ' WHERE' + '  (CODIGO like ' + QuotedStr(nro + '%') + '  ) AND'
+    + ' (LETRA like ' + QuotedStr(letra + '%') + ' )';
+  ImprimirDataModule := TImprimirDataModule.Create(self);
+  if Presupuesto.Checked then
+    sql := 'SELECT ' + ImprimirDataModule.presupuestoTSql
+    else
+      sql := 'SELECT ' + ImprimirDataModule.ventaTSql;
+  ImprimirDataModule.Free;
+  Tabla.SQL.Text := sql + where;
+  Tabla.Open;
+end;
+
 procedure TBuscaFacturaForm.FormKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
-var
-  nro, let: string;
 begin
   if not DBGrid1.Focused = True then
   begin
-    nro := ventaEdit.Text;
-    let := LetraEdit.Text;
-    if Presupuesto.Checked then
-    begin
-      ImprimirDataModule := TImprimirDataModule.Create(self);
-      Tabla.SQL.Text := 'SELECT ' + ImprimirDataModule.PRE(nro, let);
-      ImprimirDataModule.Free;
-    end
-    else
-      Tabla.SQL.Text := 'SELECT ' +
-        QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE').AsString) +
-        ' As Empresa,' + '  "Cliente".NOMBRE,' + '  "Cliente".TITULAR,' +
-        '  "Cliente".DIRECCION,' + '  "Cliente".DIRECCIONCOMERCIAL,' +
-        '  "Articulo".DESCRIPCION,' + '  "VentaItem".OPERACION,' +
-        '  "VentaItem".ARTICULO,' + '  "VentaItem".CANTIDAD,' +
-        '  "VentaItem".PRECIO,' +
-        '  ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT,' +
-        '  "VentaItem".SERVICIO,' + '  "VentaItem".DESCRIPCION AS DESCR,' +
-        '  "Venta".CODIGO,' + '  "Venta".LETRA,' + '  "Venta".FECHA,' +
-        '  "Venta".COMPROBANTE,' + '  "Venta".IVA3,' + '  "Venta".TOTAL,' +
-        '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' + '  "Venta".SUBTOTAL,' +
-        '  "Venta".DESCUENTO,' + '  "Venta".IMPUESTO,' + '  "Venta".IVA2,' +
-        '  "Venta".IVA1,' + '  "Venta".EXCENTO,' + '  "Venta".SALDO,' +
-        '  "Venta".PAGADO' + ' FROM' + '  "Venta"' +
-        '  INNER JOIN "VentaItem" ON ("Venta".CODIGO = "VentaItem".OPERACION)' +
-        '  INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CODIGO)'
-        + '  INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)' +
-        '  WHERE' + '  ("Venta".CODIGO like ' + QuotedStr(nro + '%') + '  ) AND'
-        + '  ("Venta".LETRA like ' + QuotedStr(let + '%') + '  )';
-    Tabla.Open;
+    ActualizarGrilla(ventaEdit.Text,LetraEdit.Text);
   end;
   if Key = VK_Escape then
     Close;
-end;
-
-procedure TBuscaFacturaForm.FormShow(Sender: TObject);
-begin
-  // dm := tdm.Create(self);
 end;
 
 procedure TBuscaFacturaForm.Image1Click(Sender: TObject);
@@ -112,53 +92,31 @@ end;
 
 procedure TBuscaFacturaForm.SiBitBtnClick(Sender: TObject);
 var
-  nro, let: string;
+  nro, letra: string;
 begin
   // IMPRIMIR
   if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
   begin
     nro := Tabla.FieldByName('CODIGO').AsString;
-    let := Tabla.FieldByName('LETRA').AsString;
+    letra := Tabla.FieldByName('LETRA').AsString;
     ImprimirDataModule := TImprimirDataModule.Create(self);
     if Presupuesto.Checked then
       with ImprimirDataModule do
-        Impr(ImprimirDataModule.PRE(nro, let), 'Presupuesto')
+        Impr(ImprimirDataModule.PRE(nro, letra), 'Presupuesto')
     else
       with ImprimirDataModule do
-        Impr(ImprimirDataModule.VTA(nro, let), '');
+        Impr(ImprimirDataModule.VTA(nro, letra), '');
     ImprimirDataModule.Free;
   end;
   Close;
 end;
 
 procedure TBuscaFacturaForm.todoBitBtnClick(Sender: TObject);
+var sql:string;
 begin
-  if Presupuesto.Checked then
-  begin
-    ImprimirDataModule := TImprimirDataModule.Create(self);
-    Tabla.SQL.Text := 'SELECT ' + ImprimirDataModule.presupuestoSql;
-    ImprimirDataModule.Free;
-  end
-  else
-    Tabla.SQL.Text := 'SELECT ' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE')
-      .AsString) + ' As Empresa,' + '  "Cliente".NOMBRE,' +
-      '  "Cliente".TITULAR,' + '  "Cliente".DIRECCION,' +
-      '  "Cliente".DIRECCIONCOMERCIAL,' + '  "Articulo".DESCRIPCION,' +
-      '  "VentaItem".OPERACION,' + '  "VentaItem".ARTICULO,' +
-      '  "VentaItem".CANTIDAD,' + '  "VentaItem".PRECIO,' +
-      '  ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT,' +
-      '  "VentaItem".SERVICIO,' + '  "VentaItem".DESCRIPCION AS DESCR,' +
-      '  "Venta".CODIGO,' + '  "Venta".LETRA,' + '  "Venta".FECHA,' +
-      '  "Venta".COMPROBANTE,' + '  "Venta".IVA3,' + '  "Venta".TOTAL,' +
-      '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' + '  "Venta".SUBTOTAL,' +
-      '  "Venta".DESCUENTO,' + '  "Venta".IMPUESTO,' + '  "Venta".IVA2,' +
-      '  "Venta".IVA1,' + '  "Venta".EXCENTO,' + '  "Venta".SALDO,' +
-      '  "Venta".PAGADO' + ' FROM' + '  "Venta"' +
-      '  INNER JOIN "VentaItem" ON ("Venta".CODIGO = "VentaItem".OPERACION)' +
-      '  INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CODIGO)' +
-      '  INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)' + '';
-  Tabla.Open;
+  ActualizarGrilla('','');
 end;
+
 
 procedure TBuscaFacturaForm.DBGrid1DblClick(Sender: TObject);
 begin
