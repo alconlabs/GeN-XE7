@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DataModule, Grids, DBGrids, DB, ExtCtrls, StdCtrls, Mask,
   DBCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw, IBX.IBQuery,
-  IBX.IBCustomDataSet, IBX.IBTable;
+  IBX.IBCustomDataSet, IBX.IBTable, Vcl.Imaging.jpeg;
 
 const
   EAN_izqA: array [0 .. 9] of PChar = ('0001101', '0011001', '0010011',
@@ -251,7 +251,8 @@ begin
         matrix := matrix + EAN_dcha[StrToInt(num[12])];
         matrix := matrix + EAN_dcha[StrToInt(num[13])];
         matrix := matrix + 'x0x'; // barra final
-        Dibujar(matrix);
+//        Dibujar(matrix);
+        PaintBox1.Visible:=True;
       end;
     8:
       begin
@@ -268,7 +269,8 @@ begin
         matrix := matrix + EAN_dcha[StrToInt(num[7])];
         matrix := matrix + EAN_dcha[StrToInt(num[8])];
         matrix := matrix + 'x0x';
-        Dibujar(matrix);
+//        Dibujar(matrix);
+        PaintBox1.Visible:=True;
       end
   else
     ShowMessage('LONGITUD DE CODIGO NO VALIDA');
