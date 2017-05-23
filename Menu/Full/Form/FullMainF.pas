@@ -186,6 +186,9 @@ type
 var
   FullMainForm: TFullMainForm;
 
+const
+version='201705222231';
+
 implementation
 
 uses LoginF, VenderF, CrearCreditoF, ComprarF, CtaCteF, BuscaFactura,
@@ -266,7 +269,7 @@ begin
       CrearPedido1.Visible := False;
     end;
   end;
-  FullMainForm.caption := 'Civeloo GeN - [' + Empresa + '] - ' + Licencia +
+  FullMainForm.caption := 'Civeloo GeN v'+version+' - [' + Empresa + '] - ' + Licencia +
     ' - [USUARIO: ' + Usuario + '] MODULO COMPLETO';
 end;
 

@@ -70,21 +70,23 @@ var
   i: integer;
 begin
   porc := FloatToStr((StrToFloat(Edit1.Text) / 100) + 1);
-//  ((COSTO+(COSTO*(IMPOTROS/100)))*(PORCENTAJE/100+1))+(((COSTO+(COSTO*(IMPOTROS/100)))*(PORCENTAJE/100+1))*(TASA/100))
-//(
- //(
-  //(COSTO*'+porc+')+((COSTO*'+porc+')*(IMPOTROS/100)))*(PORCENTAJE/100+1))+((((COSTO*'+porc+')+((COSTO*'+porc+')*(IMPOTROS/100)))*(PORCENTAJE/100+1))*(TASA/100))
-
   for i := 1 to High(art) + 1 do
   begin
     Q.SQL.Text := 'UPDATE "Articulo" SET ULTPRECIO = PRECIO' +
       ', PRECIO1 = PRECIO1 * ' + porc + ', PRECIO2 = PRECIO2 * ' + porc +
       ', PRECIO3 = PRECIO3 * ' + porc + ', PRECIO4 = PRECIO4 * ' + porc +
       ', PRECIO5 = PRECIO5 * ' + porc + ', PRECIO6 = PRECIO6 * ' + porc +
-     // ', PRECIO = PRECIO * ' + porc +
-      ', PRECIO = ( ( (COSTO*'+porc+')+( (COSTO*'+porc+')*(IMPOTROS/100) ) )*(PORCENTAJE/100+1) )*(1.21)'+
-      ', COSTO = COSTO * ' + porc +
-      ' WHERE CODIGO =' + IntToStr(art[i]);
+      ', PRECIO = ( ( (COSTO*'+porc+')*(("Articulo".IMPOTROS)*0.01+1) )*("Articulo".PORCENTAJE*0.01+1) )*("Articulo".TASA*0.01+1)'
+      +', COSTO = COSTO * ' + porc +
+      ' WHERE TASA <> 105 AND CODIGO =' + IntToStr(art[i]);
+    Q.ExecSQL;
+    Q.SQL.Text := 'UPDATE "Articulo" SET ULTPRECIO = PRECIO' +
+      ', PRECIO1 = PRECIO1 * ' + porc + ', PRECIO2 = PRECIO2 * ' + porc +
+      ', PRECIO3 = PRECIO3 * ' + porc + ', PRECIO4 = PRECIO4 * ' + porc +
+      ', PRECIO5 = PRECIO5 * ' + porc + ', PRECIO6 = PRECIO6 * ' + porc +
+      ', PRECIO = ( ( (COSTO*'+porc+')*(("Articulo".IMPOTROS)*0.01+1) )*("Articulo".PORCENTAJE*0.01+1) )*("Articulo".TASA*0.001+1)'
+      +', COSTO = COSTO * ' + porc +
+      ' WHERE TASA = 105 AND CODIGO =' + IntToStr(art[i]);
     Q.ExecSQL;
   end;
   Q.Transaction.CommitRetaining;

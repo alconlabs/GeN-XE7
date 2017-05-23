@@ -43,9 +43,8 @@ object mainForm: TmainForm
     object Label6: TLabel
       Left = 134
       Top = 8
-      Width = 85
+      Width = 5
       Height = 13
-      Caption = '201705212200'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clSilver
       Font.Height = -11
