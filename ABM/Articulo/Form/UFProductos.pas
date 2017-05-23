@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DataModule, Grids, DBGrids, DB, ExtCtrls, StdCtrls, Mask,
   DBCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw, IBX.IBQuery,
-  IBX.IBCustomDataSet, IBX.IBTable, Vcl.Imaging.jpeg;
+  IBX.IBCustomDataSet, IBX.IBTable, Vcl.Imaging.jpeg,Math;
 
 const
   EAN_izqA: array [0 .. 9] of PChar = ('0001101', '0011001', '0010011',
@@ -186,7 +186,7 @@ uses UFBuscaArticulos, Color, OperacionDM;
 
 function  TFProductos.CalcularIVA;
 begin
-  Result := neto + (neto * (porcentaje / 100));
+  Result := RoundTo( ( neto + (neto * (porcentaje / 100)) ) ,-2);
 end;
 
 procedure TFProductos.EANCorrecto(var num: string);

@@ -66,27 +66,26 @@ end;
 
 procedure TIncrementoForm.SiBitBtnClick(Sender: TObject);
 var
-  porc: string;
+  porc,sql,where: string;
   i: integer;
 begin
   porc := FloatToStr((StrToFloat(Edit1.Text) / 100) + 1);
   for i := 1 to High(art) + 1 do
   begin
-    Q.SQL.Text := 'UPDATE "Articulo" SET ULTPRECIO = PRECIO' +
+    sql:='UPDATE "Articulo" SET ULTPRECIO = PRECIO' +
       ', PRECIO1 = PRECIO1 * ' + porc + ', PRECIO2 = PRECIO2 * ' + porc +
       ', PRECIO3 = PRECIO3 * ' + porc + ', PRECIO4 = PRECIO4 * ' + porc +
       ', PRECIO5 = PRECIO5 * ' + porc + ', PRECIO6 = PRECIO6 * ' + porc +
-      ', PRECIO = ( ( (COSTO*'+porc+')*(("Articulo".IMPOTROS)*0.01+1) )*("Articulo".PORCENTAJE*0.01+1) )*("Articulo".TASA*0.01+1)'
-      +', COSTO = COSTO * ' + porc +
-      ' WHERE TASA <> 105 AND CODIGO =' + IntToStr(art[i]);
+      ', COSTO = COSTO * ' + porc +
+      ', PRECIO = ROUND( ( ( (COSTO*'+porc+')*(("Articulo".IMPOTROS)*0.01+1) )*("Articulo".PORCENTAJE*0.01+1) )*("Articulo".TASA*';
+    where:= '+1) , 2) WHERE CODIGO =' + IntToStr(art[i])+ ' AND TASA';
+    Q.SQL.Text := sql
+      + '0.01'
+      + where + ' <> 105';
     Q.ExecSQL;
-    Q.SQL.Text := 'UPDATE "Articulo" SET ULTPRECIO = PRECIO' +
-      ', PRECIO1 = PRECIO1 * ' + porc + ', PRECIO2 = PRECIO2 * ' + porc +
-      ', PRECIO3 = PRECIO3 * ' + porc + ', PRECIO4 = PRECIO4 * ' + porc +
-      ', PRECIO5 = PRECIO5 * ' + porc + ', PRECIO6 = PRECIO6 * ' + porc +
-      ', PRECIO = ( ( (COSTO*'+porc+')*(("Articulo".IMPOTROS)*0.01+1) )*("Articulo".PORCENTAJE*0.01+1) )*("Articulo".TASA*0.001+1)'
-      +', COSTO = COSTO * ' + porc +
-      ' WHERE TASA = 105 AND CODIGO =' + IntToStr(art[i]);
+    Q.SQL.Text := sql
+      +'0.001'
+      + where +' = 105 ';
     Q.ExecSQL;
   end;
   Q.Transaction.CommitRetaining;
