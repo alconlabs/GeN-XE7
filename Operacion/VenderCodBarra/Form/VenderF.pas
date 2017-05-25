@@ -282,10 +282,10 @@ begin
 
     If (SGFact.Cells[6, i] = '21') then
     begin
-//      IVA21 := (IVA21 + Abs((StrToFloat(SGFact.Cells[5, i]) * 1.21) - StrToFloat(SGFact.Cells[5, i])));
-      IVA21 := IVA21 + ( StrToFloat(SGFact.Cells[5, i]) - StrToFloat(SGFact.Cells[8, i]) ) ;
 //      NG21 := NG21 + StrToFloat(SGFact.Cells[5, i]) - IVA21; // NETO GRABADO 21%
       NG21 := NG21 + StrToFloat(SGFact.Cells[8, i]);
+//      IVA21 := (IVA21 + Abs((StrToFloat(SGFact.Cells[5, i]) * 1.21) - StrToFloat(SGFact.Cells[5, i])));
+      IVA21 := IVA21 + ( StrToFloat(SGFact.Cells[5, i]) - StrToFloat(SGFact.Cells[8, i]) ) ;
     end // IVA 21% 100 * 1.21 - 100 = 21
     else
     if (SGFact.Cells[6, i] = '105') then
@@ -297,7 +297,7 @@ begin
     end // IVA 10.5% 100 * 1.105 - 100 = 10.5
     else
      begin
-      NGO := NGO + StrToFloat(SGFact.Cells[5, i]); // NETO GRABADO
+      NGO := NGO + StrToFloat(SGFact.Cells[8, i]); // NETO GRABADO
       //IVAO := (IVAO + Abs((StrToFloat(SGFact.Cells[5, i]) / (StrToFloat(SGFact.Cells[6, i]) * 100 + 1)) - StrToFloat(SGFact.Cells[5, i])));
       //IVAO := IVAO + ((StrToFloat(SGFact.Cells[5, i]) / (StrToFloat(SGFact.Cells[6, i]) * 100 + 1)) - StrToFloat(SGFact.Cells[8, i]));
       IVAO := IVAO + ( StrToFloat(SGFact.Cells[5, i]) - StrToFloat(SGFact.Cells[8, i]) ) ;
