@@ -210,6 +210,12 @@ end;
 
 procedure TFBuscaArticulo.VerTodosBitBtnClick(Sender: TObject);
 begin
+  DescripcionEdit.Text := '';
+  MarcaEdit.Text := '';
+  CategoriaEdit.Text := '';
+  RubroEdit.Text := '';
+  ProveedorEdit.Text := '';
+  CodigoEdit.Text := '';
   Tabla.SQL.Text := 'SELECT' +
     '  ("Articulo".Precio/("Articulo".Tasa/100+1)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
     + '  "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'

@@ -54,11 +54,19 @@ begin
   try
     FBuscaArticulo.ShowModal;
   finally
-    SetLength(art, FBuscaArticulo.Tabla.RecordCount + 1);
-    For i := 1 to FBuscaArticulo.Tabla.RecordCount do
+    if not (FBuscaArticulo.DescripcionEdit.Text = FBuscaArticulo.MarcaEdit.Text)
+     =
+    (FBuscaArticulo.CategoriaEdit.Text = FBuscaArticulo.RubroEdit.Text)
+     =
+    (FBuscaArticulo.ProveedorEdit.Text = FBuscaArticulo.CodigoEdit.Text)
+    then
     begin
-      art[i] := (FBuscaArticulo.Tabla.FieldByName('CODIGO').AsInteger);
-      FBuscaArticulo.Tabla.Next;
+      SetLength(art, FBuscaArticulo.Tabla.RecordCount + 1);
+      For i := 1 to FBuscaArticulo.Tabla.RecordCount do
+      begin
+        art[i] := (FBuscaArticulo.Tabla.FieldByName('CODIGO').AsInteger);
+        FBuscaArticulo.Tabla.Next;
+      end;
     end;
     FBuscaArticulo.Free;
   end;
@@ -66,28 +74,44 @@ end;
 
 procedure TIncrementoForm.SiBitBtnClick(Sender: TObject);
 var
-  porc,sql,where: string;
+  porc,sql,where,codigo: string;
   i: integer;
 begin
   porc := FloatToStr((StrToFloat(Edit1.Text) / 100) + 1);
-  for i := 1 to High(art) + 1 do
+  sql:='UPDATE "Articulo" SET ULTPRECIO = PRECIO' +
+        ', PRECIO1 = PRECIO1 * ' + porc + ', PRECIO2 = PRECIO2 * ' + porc +
+        ', PRECIO3 = PRECIO3 * ' + porc + ', PRECIO4 = PRECIO4 * ' + porc +
+        ', PRECIO5 = PRECIO5 * ' + porc + ', PRECIO6 = PRECIO6 * ' + porc +
+        ', COSTO = COSTO * ' + porc +
+        ', PRECIO = ROUND( ( ( (COSTO*'+porc+')*(("Articulo".IMPOTROS)*0.01+1) )*("Articulo".PORCENTAJE*0.01+1) )*("Articulo".TASA*';
+  if High(art) > 0 then
   begin
-    sql:='UPDATE "Articulo" SET ULTPRECIO = PRECIO' +
-      ', PRECIO1 = PRECIO1 * ' + porc + ', PRECIO2 = PRECIO2 * ' + porc +
-      ', PRECIO3 = PRECIO3 * ' + porc + ', PRECIO4 = PRECIO4 * ' + porc +
-      ', PRECIO5 = PRECIO5 * ' + porc + ', PRECIO6 = PRECIO6 * ' + porc +
-      ', COSTO = COSTO * ' + porc +
-      ', PRECIO = ROUND( ( ( (COSTO*'+porc+')*(("Articulo".IMPOTROS)*0.01+1) )*("Articulo".PORCENTAJE*0.01+1) )*("Articulo".TASA*';
-    where:= '+1) , 2) WHERE CODIGO =' + IntToStr(art[i])+ ' AND TASA';
-    Q.SQL.Text := sql
-      + '0.01'
-      + where + ' <> 105';
-    Q.ExecSQL;
-    Q.SQL.Text := sql
-      +'0.001'
-      + where +' = 105 ';
-    Q.ExecSQL;
-  end;
+    for i := 1 to High(art) + 1 do
+    begin
+      where:= '+1) , 2) WHERE CODIGO =' + IntToStr(art[i])+ ' AND TASA';
+      Q.SQL.Text := sql
+        + '0.01'
+        + where + ' <> 105';
+      Q.ExecSQL;
+      Q.SQL.Text := sql
+        +'0.001'
+        + where +' = 105 ';
+      Q.ExecSQL;
+    end;
+  end
+    else
+      begin
+        where:= '+1) , 2) WHERE TASA';
+        Q.SQL.Text := sql
+          + '0.01'
+          + where + ' <> 105';
+        Q.ExecSQL;
+        Q.SQL.Text := sql
+          +'0.001'
+          + where +' = 105 ';
+        Q.ExecSQL;
+      end;
+
   Q.Transaction.CommitRetaining;
   Close;
 end;
