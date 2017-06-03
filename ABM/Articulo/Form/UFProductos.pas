@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DataModule, Grids, DBGrids, DB, ExtCtrls, StdCtrls, Mask,
   DBCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw, IBX.IBQuery,
-  IBX.IBCustomDataSet, IBX.IBTable, Vcl.Imaging.jpeg,Math;
+  IBX.IBCustomDataSet, IBX.IBTable, Vcl.Imaging.jpeg, OperacionDM;
 
 const
   EAN_izqA: array [0 .. 9] of PChar = ('0001101', '0011001', '0010011',
@@ -172,7 +172,7 @@ type
     // procedimiento para validar-corregir los códigos
     procedure EANCorrecto(var num: string);
     Procedure nuevo;
-    function CalcularIVA(neto,porcentaje:Double):Double;
+
   end;
 
 var
@@ -180,14 +180,9 @@ var
 
 implementation
 
-uses UFBuscaArticulos, Color, OperacionDM;
+uses UFBuscaArticulos, Color;
 
 {$R *.dfm}
-
-function  TFProductos.CalcularIVA;
-begin
-  Result := RoundTo( ( neto + (neto * (porcentaje / 100)) ) ,-2);
-end;
 
 procedure TFProductos.EANCorrecto(var num: string);
 var
@@ -390,28 +385,29 @@ begin
   costo := costo + flete;
   if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
   else tasa:=StrToFloat(IVADBComboBox.Text);
-
+ with OperacionDataModule do
+ begin
   if GanaciaDBEdit.Text = '0' then
-        PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA( (costo * PrecioCtaCte) , tasa) )
+        PrecioCtaCteDBEdit.Text := FloatToStr(  CalcularIVA( (costo * PrecioCtaCte) , tasa) )
    else
    //     PrecioCtaCteDBEdit.Text := FloatToStr((neto + iva));
 
    //((COSTO+(COSTO*(IMPOTROS/100)))*(PORCENTAJE/100+1))+(((COSTO+(COSTO*(IMPOTROS/100)))*(PORCENTAJE/100+1))*(TASA/100));
   PrecioCtaCteDBEdit.Text := FloatToStr( CalcularIVA( (costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),tasa));
 
-//Precio1DBEdit.Text := FloatToStr((costo * Precio1) + iva);
-Precio1DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio1),tasa) );
-//  Precio2DBEdit.Text := FloatToStr((costo * Precio2) + iva);
-Precio2DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio2),tasa) );
-//  Precio3DBEdit.Text := FloatToStr((costo * Precio3) + iva);
-Precio3DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio3),tasa) );
-//  Precio4DBEdit.Text := FloatToStr((costo * Precio4) + iva);
-Precio4DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio4),tasa) );
-//  Precio5DBEdit.Text := FloatToStr((costo * Precio5) + iva);
-Precio5DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio5),tasa) );
-//  Precio6DBEdit.Text := FloatToStr((costo * Precio6) + iva);
-Precio6DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio6),tasa) );
-
+  //Precio1DBEdit.Text := FloatToStr((costo * Precio1) + iva);
+  Precio1DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio1),tasa) );
+  //  Precio2DBEdit.Text := FloatToStr((costo * Precio2) + iva);
+  Precio2DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio2),tasa) );
+  //  Precio3DBEdit.Text := FloatToStr((costo * Precio3) + iva);
+  Precio3DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio3),tasa) );
+  //  Precio4DBEdit.Text := FloatToStr((costo * Precio4) + iva);
+  Precio4DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio4),tasa) );
+  //  Precio5DBEdit.Text := FloatToStr((costo * Precio5) + iva);
+  Precio5DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio5),tasa) );
+  //  Precio6DBEdit.Text := FloatToStr((costo * Precio6) + iva);
+  Precio6DBEdit.Text := FloatToStr( CalcularIVA( (costo * Precio6),tasa) );
+end;
 //  Label21.Caption := '= ' + FloatToStr(iva);
   DBText1.Caption := FloatToStr( costo );
   DBText2.Caption := FloatToStr( costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1) );

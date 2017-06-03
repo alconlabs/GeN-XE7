@@ -80,8 +80,8 @@ object ImprimirDataModule: TImprimirDataModule
     CloseDataSource = False
     DataSet = Query
     BCDToCurrency = False
-    Left = 40
-    Top = 136
+    Left = 48
+    Top = 72
   end
   object frxReport1: TfrxReport
     Version = '5.3.14'
@@ -91,21 +91,21 @@ object ImprimirDataModule: TImprimirDataModule
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 42866.848401504630000000
-    ReportOptions.LastChange = 42866.848401504630000000
+    ReportOptions.CreateDate = 42888.930329652780000000
+    ReportOptions.LastChange = 42888.930329652780000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
       ''
       'end.')
-    Left = 40
-    Top = 72
+    Left = 48
+    Top = 128
     Datasets = <>
     Variables = <>
     Style = <>
   end
   object frxBarCodeObject1: TfrxBarCodeObject
-    Left = 128
+    Left = 152
     Top = 8
   end
   object frxPDFExport1: TfrxPDFExport
@@ -129,44 +129,8 @@ object ImprimirDataModule: TImprimirDataModule
     CenterWindow = False
     PrintScaling = False
     PdfA = False
-    Left = 56
-    Top = 376
-  end
-  object frxHTMLExport1: TfrxHTMLExport
-    UseFileCache = True
-    ShowProgress = True
-    OverwritePrompt = False
-    DataOnly = False
-    FixedWidth = True
-    Background = False
-    Centered = False
-    EmptyLines = True
-    Print = False
-    PictureType = gpPNG
-    Left = 120
-    Top = 376
-  end
-  object frxRTFExport1: TfrxRTFExport
-    UseFileCache = True
-    ShowProgress = True
-    OverwritePrompt = False
-    DataOnly = False
-    PictureType = gpPNG
-    Wysiwyg = True
-    Creator = 'FastReport'
-    SuppressPageHeadersFooters = False
-    HeaderFooterMode = hfText
-    AutoSize = False
-    Left = 184
-    Top = 376
-  end
-  object frxJPEGExport1: TfrxJPEGExport
-    UseFileCache = True
-    ShowProgress = True
-    OverwritePrompt = False
-    DataOnly = False
-    Left = 248
-    Top = 376
+    Left = 48
+    Top = 336
   end
   object frxCSVExport1: TfrxCSVExport
     UseFileCache = True
@@ -178,39 +142,7 @@ object ImprimirDataModule: TImprimirDataModule
     UTF8 = False
     NoSysSymbols = True
     ForcedQuotes = False
-    Left = 312
-    Top = 376
-  end
-  object frxOLEObject1: TfrxOLEObject
-    Left = 56
-    Top = 325
-  end
-  object frxRichObject1: TfrxRichObject
-    Left = 120
-    Top = 325
-  end
-  object frxCheckBoxObject1: TfrxCheckBoxObject
-    Left = 184
-    Top = 325
-  end
-  object frxGradientObject1: TfrxGradientObject
-    Left = 248
-    Top = 325
-  end
-  object frxDotMatrixExport1: TfrxDotMatrixExport
-    UseFileCache = True
-    ShowProgress = True
-    OverwritePrompt = False
-    DataOnly = False
-    EscModel = 0
-    GraphicFrames = False
-    SaveToFile = False
-    UseIniSettings = True
-    Left = 312
-    Top = 325
-  end
-  object frxGZipCompressor1: TfrxGZipCompressor
-    Left = 376
-    Top = 325
+    Left = 128
+    Top = 336
   end
 end

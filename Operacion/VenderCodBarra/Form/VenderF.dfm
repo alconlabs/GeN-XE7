@@ -29,7 +29,7 @@ object VenderForm: TVenderForm
     BevelOuter = bvLowered
     Color = clBlack
     ParentBackground = False
-    TabOrder = 0
+    TabOrder = 1
     object Label40: TLabel
       Left = 28
       Top = 126
@@ -321,7 +321,7 @@ object VenderForm: TVenderForm
     BevelOuter = bvLowered
     Color = clBlack
     ParentBackground = False
-    TabOrder = 1
+    TabOrder = 2
     object Label1: TLabel
       Left = 4
       Top = 6
@@ -486,7 +486,7 @@ object VenderForm: TVenderForm
       Height = 21
       TabOrder = 3
       Text = '0'
-      OnEnter = FLEPorcDescEnter
+      OnExit = FLEPorcDescExit
     end
   end
   object SGFact: TStringGrid
@@ -500,7 +500,7 @@ object VenderForm: TVenderForm
     RowCount = 2
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect]
     ScrollBars = ssVertical
-    TabOrder = 2
+    TabOrder = 3
     ColWidths = (
       45
       274
@@ -525,7 +525,7 @@ object VenderForm: TVenderForm
     Align = alBottom
     Color = clBlack
     ParentBackground = False
-    TabOrder = 3
+    TabOrder = 0
     object ProcesarBitBtn: TBitBtn
       Left = 709
       Top = 5
@@ -543,7 +543,7 @@ object VenderForm: TVenderForm
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 0
+      TabOrder = 1
       OnClick = ProcesarBitBtnClick
     end
     object ClienteBitBtn: TBitBtn
@@ -561,7 +561,7 @@ object VenderForm: TVenderForm
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 1
+      TabOrder = 2
       OnClick = ClienteBitBtnClick
     end
     object VendedorBitBtn: TBitBtn
@@ -579,7 +579,7 @@ object VenderForm: TVenderForm
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 2
+      TabOrder = 3
       OnClick = VendedorBitBtnClick
     end
     object AgregarBitBtn: TBitBtn
@@ -597,7 +597,7 @@ object VenderForm: TVenderForm
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 3
+      TabOrder = 0
       OnClick = AgregarBitBtnClick
     end
     object NuevoBitBtn: TBitBtn

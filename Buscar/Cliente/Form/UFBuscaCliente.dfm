@@ -124,6 +124,12 @@ object FBuscaCliente: TFBuscaCliente
       Alignment = taRightJustify
       DataField = 'Direccion'
       DataSource = DataSource
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
     end
     object DBText2: TDBText
       Left = 11
@@ -133,6 +139,12 @@ object FBuscaCliente: TFBuscaCliente
       Alignment = taRightJustify
       DataField = 'DIRECCIONCOMERCIAL'
       DataSource = DataSource
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
     end
     object DBText3: TDBText
       Left = 11
@@ -142,6 +154,12 @@ object FBuscaCliente: TFBuscaCliente
       Alignment = taRightJustify
       DataField = 'Provincia'
       DataSource = DataSource
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
     end
     object DBText4: TDBText
       Left = 11
@@ -151,6 +169,12 @@ object FBuscaCliente: TFBuscaCliente
       Alignment = taRightJustify
       DataField = 'Departamento'
       DataSource = DataSource
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
     end
     object DBText5: TDBText
       Left = 11
@@ -160,6 +184,12 @@ object FBuscaCliente: TFBuscaCliente
       Alignment = taRightJustify
       DataField = 'Ciudad'
       DataSource = DataSource
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
     end
     object Label4: TLabel
       Left = 11

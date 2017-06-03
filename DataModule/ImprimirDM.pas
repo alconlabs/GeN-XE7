@@ -9,10 +9,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  frxClass, frxDBSet, frxBarcode, frxExportCSV, frxExportImage, frxExportRTF,
-  frxExportHTML, frxExportPDF, frxGZip, frxDMPExport, frxGradient, frxChBox,
-  frxRich, frxOLE
-//  , System.Variants, System.StrUtils;
+  frxExportCSV, frxClass, frxExportPDF, frxBarcode, frxDBSet
  ;
 type
   TImprimirDataModule = class(TDataModule)
@@ -24,16 +21,7 @@ type
     frxReport1: TfrxReport;
     frxBarCodeObject1: TfrxBarCodeObject;
     frxPDFExport1: TfrxPDFExport;
-    frxHTMLExport1: TfrxHTMLExport;
-    frxRTFExport1: TfrxRTFExport;
-    frxJPEGExport1: TfrxJPEGExport;
     frxCSVExport1: TfrxCSVExport;
-    frxOLEObject1: TfrxOLEObject;
-    frxRichObject1: TfrxRichObject;
-    frxCheckBoxObject1: TfrxCheckBoxObject;
-    frxGradientObject1: TfrxGradientObject;
-    frxDotMatrixExport1: TfrxDotMatrixExport;
-    frxGZipCompressor1: TfrxGZipCompressor;
     Function VTA(nro, let: string): string;
     Function OPER(nro, let: string): string;
     Function PRE(nro, let: string): string;

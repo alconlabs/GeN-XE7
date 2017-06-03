@@ -15,7 +15,7 @@ interface
 
 uses
   SysUtils, Classes, DB, DataModule, ImprimirDM, Dialogs, Controls, DateUtils,
-  IBX.IBCustomDataSet, IBX.IBQuery;
+  IBX.IBCustomDataSet, IBX.IBQuery, Math;
 
 type
   matriz = array of array of string;
@@ -60,6 +60,7 @@ type
     Procedure MovCaja(tipo, soc, imp, desc: string);
     procedure DataModuleCreate(Sender: TObject);
     Procedure CodigoBarra(cb: string);
+    function CalcularIVA(neto,porcentaje:Double):Double;
 //    Procedure FillCbIva;
   private
     { Private declarations }
@@ -78,10 +79,10 @@ implementation
 
 {$R *.dfm}
 
-//Procedure TOperacionDataModule.FillCbIva;
-//begin
-//
-//end;
+function  TOperacionDataModule.CalcularIVA;
+begin
+  Result := RoundTo( ( neto + (neto * (porcentaje / 100)) ) ,-2);
+end;
 
 Procedure TOperacionDataModule.MovCaja;
 begin
