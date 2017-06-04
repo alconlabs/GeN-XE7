@@ -2,15 +2,15 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2015/04/24 21:08:47.000.136,=C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2015/04/24 21:11:51.000.276,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.dfm=C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>2015/04/24 21:11:51.000.276,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.pas=C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2015/04/24 21:12:41.000.031,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeNF.pas=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.pas</Transaction>
-    <Transaction>2015/04/24 21:12:41.000.031,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeNF.dfm=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.dfm</Transaction>
-    <Transaction>2015/04/24 21:12:55.000.874,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.dproj=C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2015/04/24 21:11:51.000.276,C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.dfm</Transaction>
+    <Transaction>2015/04/24 21:11:51.000.276,C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.pas</Transaction>
+    <Transaction>2015/04/24 21:12:41.000.031,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.dfm=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeNF.dfm</Transaction>
+    <Transaction>2015/04/24 21:12:41.000.031,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.pas=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeNF.pas</Transaction>
+    <Transaction>2015/04/24 21:12:55.000.874,C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.dproj</Transaction>
     <Transaction>2015/04/24 21:17:35.000.916,=C:\Users\diego_000\Documents\GitHub\GeN-XE7\DataModule\DataModule.pas</Transaction>
     <Transaction>2017/05/11 19:36:40.000.038,=E:\Documents\GeN-XE7\Unit2.pas</Transaction>
-    <Transaction>2017/05/11 19:37:05.000.940,E:\Documents\GeN-XE7\Unit2.pas=E:\Documents\GeN-XE7\DataModule\AfipDM.pas</Transaction>
-    <Transaction>2017/05/11 19:37:05.000.940,E:\Documents\GeN-XE7\Unit2.dfm=E:\Documents\GeN-XE7\DataModule\AfipDM.dfm</Transaction>
+    <Transaction>2017/05/11 19:37:05.000.940,E:\Documents\GeN-XE7\DataModule\AfipDM.pas=E:\Documents\GeN-XE7\Unit2.pas</Transaction>
+    <Transaction>2017/05/11 19:37:05.000.940,E:\Documents\GeN-XE7\DataModule\AfipDM.dfm=E:\Documents\GeN-XE7\Unit2.dfm</Transaction>
   </Transactions>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>

@@ -264,6 +264,7 @@ begin
 //    // Label14.Visible := True;
 //    // Cuenta := 1;
 //  end;
+  AgregarBitBtn.SetFocus;
 end;
 
 procedure TVenderForm.NuevoBitBtnClick(Sender: TObject);
@@ -685,8 +686,9 @@ begin
         NuevoBitBtn.Click
       else if Key = VK_F12 then
         ProcesarBitBtn.Click
-      else if Key = VK_Escape then
-        Close;
+//      else if Key = VK_Escape then
+//        Close
+        ;
 end;
 
 procedure TVenderForm.FEContadoChange(Sender: TObject);
