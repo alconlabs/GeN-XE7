@@ -1,9 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2010/11/13 12:39:13.500.pas,F:\Projects\DeGsoft\GeN\Operacion\Migrar\form\MigrarF.pas=C:\Documents and Settings\Cive\Mis documentos\RAD Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2010/11/13 12:39:13.515.dfm,F:\Projects\DeGsoft\GeN\Operacion\Migrar\form\MigrarF.dfm=C:\Documents and Settings\Cive\Mis documentos\RAD Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>2010/11/13 12:39:33.968.dproj,F:\Projects\DeGsoft\GeN\Operacion\Migrar\project\Migrar.dproj=C:\Documents and Settings\Cive\Mis documentos\RAD Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2010/11/13 12:39:13.500.pas,C:\Documents and Settings\Cive\Mis documentos\RAD Studio\Projects\Unit1.pas=F:\Projects\DeGsoft\GeN\Operacion\Migrar\form\MigrarF.pas</Transaction>
+    <Transaction>2010/11/13 12:39:13.515.dfm,C:\Documents and Settings\Cive\Mis documentos\RAD Studio\Projects\Unit1.dfm=F:\Projects\DeGsoft\GeN\Operacion\Migrar\form\MigrarF.dfm</Transaction>
+    <Transaction>2010/11/13 12:39:33.968.dproj,C:\Documents and Settings\Cive\Mis documentos\RAD Studio\Projects\Project1.dproj=F:\Projects\DeGsoft\GeN\Operacion\Migrar\project\Migrar.dproj</Transaction>
+    <Transaction>2018/03/28 12:15:11.000.648,C:\Users\Usuario\Documents\GitHub\GeN-XE7\DataModule\DataModule.pas=</Transaction>
+    <Transaction>2018/03/28 12:15:15.000.125,C:\Users\Usuario\Documents\GitHub\GeN-XE7\DataModule\ImprimirDM.pas=</Transaction>
+    <Transaction>2018/03/28 12:15:17.000.622,C:\Users\Usuario\Documents\GitHub\GeN-XE7\DataModule\OperacionDM.pas=</Transaction>
+    <Transaction>2018/03/29 11:10:28.000.862,=C:\Users\Usuario\Documents\GitHub\GeN-XE7\DataModule\DataModule.pas</Transaction>
+    <Transaction>2018/03/29 11:27:06.000.067,=C:\Users\Usuario\Documents\GitHub\GeN-XE7\DataModule\OperacionDM.pas</Transaction>
+    <Transaction>2018/03/29 11:47:19.000.691,C:\Users\Usuario\Documents\GitHub\GeN-XE7\DataModule\OperacionDM.pas=</Transaction>
+    <Transaction>2018/03/29 11:51:23.000.933,C:\Users\Usuario\Documents\GitHub\GeN-XE7\DataModule\DataModule.pas=</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="-1" SortType="1"/>
 </BorlandProject>

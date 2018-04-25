@@ -18,6 +18,7 @@ type
     Transaccion: TIBTransaction;
     ConfigQuery: TIBQuery;
     Query: TIBQuery;
+    FDConnection1: TFDConnection;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -53,7 +54,7 @@ var
   DM: TDM;
   Compartido: PCompartido;
   FicheroM: THandle;
-  Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa, CUIT: string;
+  Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa, CUIT, reporte: string;
   Permiso: Integer;
   LoginOK, Cancelar: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
@@ -199,6 +200,7 @@ begin
   Empresa := ConfigQuery.FieldByName('NOMBRE').AsString;
   Fecha := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
   CUIT := ConfigQuery.FieldByName('CUIT').AsString;
+  reporte := ConfigQuery.FieldByName('Reporte').AsString;
 end;
 
 procedure TDM.connection;

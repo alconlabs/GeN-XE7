@@ -717,7 +717,7 @@ var
   i: integer;
   IIBB, cmv: Double;
 begin
-  pagare := '0';
+    pagare := '0';
   nro := inttostr(UltimoRegistro('"Venta"', 'CODIGO'));
   if nro = '1' then
     nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
@@ -815,7 +815,7 @@ begin
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
-      Impr(vta(nro, let), '');
+      Impr(vta(nro, let), reporte);
     ImprimirDataModule.Free;
   end;
 end;
