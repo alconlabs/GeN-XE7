@@ -18,7 +18,6 @@ type
     Transaccion: TIBTransaction;
     ConfigQuery: TIBQuery;
     Query: TIBQuery;
-    FDConnection1: TFDConnection;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

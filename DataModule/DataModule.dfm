@@ -45,11 +45,4 @@ object DM: TDM
     Left = 152
     Top = 64
   end
-  object FDConnection1: TFDConnection
-    Params.Strings = (
-      'ConnectionDef=GeN')
-    Connected = True
-    Left = 312
-    Top = 16
-  end
 end

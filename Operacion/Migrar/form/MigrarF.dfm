@@ -12,6 +12,7 @@ object MigrarForm: TMigrarForm
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -73,7 +74,7 @@ object MigrarForm: TMigrarForm
     Width = 178
     Height = 21
     TabOrder = 5
-    Text = 'products/2340?'
+    Text = 'products/?'
   end
   object EditUser: TEdit
     Left = 40
@@ -165,27 +166,6 @@ object MigrarForm: TMigrarForm
     DataSet = O
     Top = 168
   end
-  object FDConnection1: TFDConnection
-    Params.Strings = (
-      'ConnectionDef=GeN')
-    Left = 376
-    Top = 8
-  end
-  object T: TFDQuery
-    Connection = FDConnection1
-    Left = 376
-    Top = 56
-  end
-  object D: TFDQuery
-    Connection = FDConnection1
-    Left = 376
-    Top = 104
-  end
-  object Q: TFDQuery
-    Connection = FDConnection1
-    Left = 320
-    Top = 56
-  end
   object FDMemTable1: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -244,5 +224,29 @@ object MigrarForm: TMigrarForm
     Response = RESTResponseCategories
     Left = 8
     Top = 560
+  end
+  object Q: TIBQuery
+    Database = DM.BaseDatos
+    Transaction = DM.Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    Left = 328
+  end
+  object T: TIBQuery
+    Database = DM.BaseDatos
+    Transaction = DM.Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    Left = 360
+  end
+  object D: TIBQuery
+    Database = DM.BaseDatos
+    Transaction = DM.Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    Left = 392
   end
 end

@@ -15,7 +15,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.FB, FireDAC.Phys.FBDef,
   FireDAC.VCLUI.Wait
   ,System.JSON
-  ;
+  ,DataModule;
 
 type
   TMigrarForm = class(TForm)
@@ -34,11 +34,7 @@ type
     O: TFDMemTable;
     DBGrid1: TDBGrid;
     DataSource1: TDataSource;
-    FDConnection1: TFDConnection;
-    T: TFDQuery;
-    D: TFDQuery;
     Button1: TButton;
-    Q: TFDQuery;
     FDMemTable1: TFDMemTable;
     Memo1: TMemo;
     RESTClientCategories: TRESTClient;
@@ -46,11 +42,15 @@ type
     RESTResponseCategories: TRESTResponse;
     FDMemTableCategories: TFDMemTable;
     RESTResponseDataSetAdapterCategories: TRESTResponseDataSetAdapter;
+    Q: TIBQuery;
+    T: TIBQuery;
+    D: TIBQuery;
     procedure ProcesarButtonClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure RESTResponseDataSetAdapter1BeforeOpenDataSet(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     RubroId, CategoriaId, SubCategoriaId : string;
@@ -105,6 +105,16 @@ ShowMessage(LJsonArr.ToString);
 
 end;
 
+procedure TMigrarForm.FormCreate(Sender: TObject);
+begin
+with FormatSettings do
+  begin
+    DecimalSeparator := '.';
+    ThousandSeparator := '.';
+    ShortDateFormat := 'mm/dd/yyyy';
+  end;
+end;
+
 procedure TMigrarForm.FormShow(Sender: TObject);
 begin
   // DM := TDM.Create(self);
@@ -113,9 +123,10 @@ end;
 
 procedure TMigrarForm.ProcesarButtonClick(Sender: TObject);
 var
-  i,p: integer;
-  mar, col, cat, subcat, rub, s, disponible: string;
+  i,p : integer;
+  mar, col, cat, subcat, rub, s, disponible, costo, fecha : string;
   categories: TJSONArray;
+  precio, iva, ganancia: Double;
     function ConvertToDateTimeStr(DateStr: String): String;
     var
       s: string;
@@ -131,62 +142,50 @@ var
 
 begin
   importCategories;
+  ShowMessage('IMPORTACION DE CATEGORIAS FINALIZADA');
   p:=0;
   repeat
     Inc(p);
     GetREST(EditUrl.text, EditResource.text+'status=publish&per_page=100&page='+IntToStr(p)+'&', EditUser.text, EditPassword.text);
-    ProgressBar1.Max := O.RecordCount;
-    if (O.RecordCount>0) and (not existeEnTabla('Articulo',O.FieldByName('id').AsString)) then
-      for i := 0 to O.RecordCount - 1 do
-      begin
-        categories := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(O.FieldByName('categories').AsString),0) as TJSONArray;
-        rub := existeEnTJSONArray('Rubro',categories);
-        cat := existeEnTJSONArray('Categoria',categories);
-        subcat := existeEnTJSONArray('SubCategoria',categories);
-        disponible:=O.FieldByName('stock_quantity').AsString;
-        if disponible='' then disponible:='0';
-        D.SQL.Text := 'INSERT INTO "Articulo" ( CODIGO, DESCRIPCION, PRECIO '
-        + ', PRECIO1, PRECIO2, DISPONIBLE'
-        + ', FECHA, CODIGOBARRA'
-        + ', CATEGORIA, COLOR, MARCA, PROVEEDOR, RUBRO, SUBCATEGORIA'
-        //    ', COSTO, ULTCOSTO, PRECIO1, PRECIO2, ' + ' PRECIO3, PRECIO4, PRECIO5, ' +
-        //    ' PRECIO6, ' + ' ULTPRECIO, ' +
-        //    '  UBICACION, ' +
-        //    ' UNIDAD, ENPRODUCCION, ' + ' NOTAS, IVA, TASA, ' +
-        //    ' IMPOTROS, IIBB, STOCKMINIMO, ' +
-        //    ' STOCKMAXIMO, STOCKVENDIDO, FECHACOMPULT, ' +
-        //    ' LISTA, PROCEDENCIA, ' + ' GARANTIA, ' +
-        //    '  PEDIDO, STOCK' + ' EXISTENTE, ACTUAL, MARCADOCONTADO, ' +
-        //    ' MARCADOLISTA, MARCADOFINAL, PREPARADO, ' +
-        //    ' CTANOMBRE, CTATIPO, CTAANTICIPO, ' + ' CTAIIBB, ESTADO, VENCE, VENCIMIENTO' +
-        + ' ) VALUES ( '
-        + IntToStr(O.FieldByName('id').AsInteger) + ', ' + QuotedStr(O.FieldByName('name').AsString) + ', ' + O.FieldByName('price').AsString+'0'
-        + ', ' + O.FieldByName('regular_price').AsString+'0' + ', ' + O.FieldByName('sale_price').AsString+'0' + ', ' + disponible
-        + ', ' + QuotedStr(ConvertToDateTimeStr(O.FieldByName('date_modified').AsString)) + ', ' + QuotedStr(O.FieldByName('sku').AsString)
-        //    ', ' + ' ' + O.FieldByName('Costo').AsString + ', ' + O.FieldByName('Precio1').AsString
-        //    + ', ' + O.FieldByName('Precio2').AsString + ', ' + ' ' +
-        //    O.FieldByName('Precio3').AsString + ', ' + O.FieldByName('Precio4')
-        //    .AsString + ', ' + O.FieldByName('Precio5').AsString + ', ' + ' ' +
-        //    O.FieldByName('Precio6').AsString + ', ' + O.FieldByName('PrecioCtaCte')
-        //    .AsString + ', ' + ' ' + O.FieldByName('UltPrecioCtaCte').AsString + ', '
-        //    + mar + ', ' + col + ', ' + ' ' + cat + ', ' + subcat + ', NULL, ' +
-        //    ' ''c/u'', ' + O.FieldByName('Disponible').AsString + ', NULL, ' +
-        //    ' NULL, ' + O.FieldByName('IVA').AsString + ', ' + O.FieldByName('Tasa')
-        //    .AsString + ', ' + ' ' + O.FieldByName('ImpOtros').AsString + ', ' +
-        //    O.FieldByName('ImpOtros').AsString + ', ' + O.FieldByName('StockMinimo')
-        //    .AsString + ', ' + ' ' + O.FieldByName('StockMaximo').AsString +
-        //    ', 0, ''07/07/2010'', ' + ' NULL, NULL, ''11000259'', ' + ' ' + rub +
-        //    ', 1, NULL, ' + ' ''07/22/2010 11:46:07'', NULL, NULL, ' +
-        //    ' NULL, NULL, NULL, ' + ' NULL, NULL, NULL, ' + ' 13, 13, 13, ' +
-        //    ' 66, NULL, NULL, ' + ' NULL
-        + ', '+cat+', 0, 0, 1, '+rub+', '+subcat+' )';
-        D.ExecSQL;
-        ProgressBar1.Position := i;
-        O.Next;
-      end;
-  until ((O.RecordCount=0) or (O.RecordCount=1));
-  //    D.Transaction.CommitRetaining;
-  ShowMessage('llora pepelui');
+    if (O<>nil) then
+    begin
+      ProgressBar1.Max := O.RecordCount;
+      if  (O.RecordCount>0) then
+        for i := 0 to O.RecordCount - 1 do
+        begin
+          if not existeEnTabla('Articulo',O.FieldByName('id').AsString) then
+          begin
+            categories := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(O.FieldByName('categories').AsString),0) as TJSONArray;
+            rub := existeEnTJSONArray('Rubro',categories);
+            cat := existeEnTJSONArray('Categoria',categories);
+            subcat := existeEnTJSONArray('SubCategoria',categories);
+            disponible:=O.FieldByName('stock_quantity').AsString;
+            if O.FieldByName('price').AsString='' then precio:=0 else precio:=O.FieldByName('price').AsFloat;
+            iva := 21;
+            ganancia := precio/(iva/100+1);
+            costo := FloatToStrF( ( ganancia/(30/100+1) ), ffFixed, 16, 2 );
+            fecha := ConvertToDateTimeStr(O.FieldByName('date_modified').AsString);
+            if disponible='' then disponible:='0';
+            D.SQL.Text := 'INSERT INTO "Articulo" ( CODIGO, DESCRIPCION '
+            + ', ULTCOSTO, COSTO, PRECIO, PRECIO1, PRECIO2, DISPONIBLE'
+            + ', PORCENTAJE, UNIDAD, TASA, IIBB, CTANOMBRE, CTATIPO, CTAANTICIPO, CTAIIBB '
+            + ', FECHA, FECHACOMPULT, CODIGOBARRA'
+            + ', CATEGORIA, COLOR, MARCA, PROVEEDOR, RUBRO, SUBCATEGORIA'
+            + ' ) VALUES ( '
+            + IntToStr(O.FieldByName('id').AsInteger) + ', ' + QuotedStr(O.FieldByName('name').AsString)
+            + ', ' + costo + ', ' + costo + ', ' + FloatToStr(precio) + ', ' + O.FieldByName('regular_price').AsString+'0' + ', ' + O.FieldByName('sale_price').AsString+'0' + ', ' + disponible
+            + ', 30, ''c/u'', 21, 1, 13, 13, 13, 66'
+            + ', ' + QuotedStr(fecha) + ', ' + QuotedStr(fecha) + ', ' + QuotedStr(O.FieldByName('sku').AsString)
+            + ', '+cat+', 0, 0, 1, '+rub+', '+subcat+' )';
+            D.ExecSQL;
+          end;
+          ProgressBar1.Position := i;
+          O.Next;
+        end;
+    end;
+  until (O.RecordCount<2); //  until ((O.RecordCount=0) or (O.RecordCount=1));
+  D.Transaction.CommitRetaining;
+  ShowMessage('IMPORTACION DE PRODUCTOS FINALIZADA');
 end;
 
 procedure TMigrarForm.ResetRESTComponentsToDefaults;
@@ -259,13 +258,14 @@ begin
       D.ExecSQL;
     end;
     FDMemTableCategories.Next;
+    ProgressBar1.Position := i;
   end;
   p:=0;
   repeat
     Inc(p);
     FDMemTableCategories.Close;
     GetRESTCategories(EditUrl.text, 'products/categories/?per_page=100&page='+IntToStr(p)+'&', EditUser.text, EditPassword.text);
-
+    ProgressBar1.Max := FDMemTableCategories.RecordCount;
     FDMemTableCategories.Filtered := False;
     FDMemTableCategories.Filter := 'parent <> 0';//  O.Filter := 'parent LIKE ' + QuotedStr('%' + IntToStr( category ) + '%');
     FDMemTableCategories.Filtered := True;
@@ -301,6 +301,7 @@ begin
           end;
         end;
     FDMemTableCategories.Next;
+    ProgressBar1.Position := i;
     end;
 
   until FDMemTableCategories.RecordCount=0;
@@ -315,6 +316,7 @@ var
 begin
 //  i:=0;
 //  repeat
+  if streams<>nil then
   for i := 0 to streams.Size - 1 do
   begin
     stream := streams.Get(i) as TJSONObject;
