@@ -89,7 +89,7 @@ type
     procedure cbTipoChange(Sender: TObject);
     procedure NuevoBitBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure TraerArticulo(codigoArticulo:string; PR:Double);
+    procedure TraerArticulo(codigoArticulo:string; PR,CAN:Double);
     function NetoGravado(costo,ganancia,flete:double):double;
   private
     { Private declarations }
@@ -154,7 +154,8 @@ begin
       SGFact.Cells[1, Cuenta] := Tabla.FieldByName('DESCRIPCION').AsString;
       // nombre
       SGFact.Cells[2, Cuenta] := '0';
-      if  SGFact.Cells[3, Cuenta] ='0' then SGFact.Cells[3, Cuenta] := '1'; // cantidad
+//      if  SGFact.Cells[3, Cuenta] ='0'  then SGFact.Cells[3, Cuenta] := '1'; // cantidad
+      SGFact.Cells[3, Cuenta] := FloatToStr(CAN);
       if PR=0 then PR := Tabla.FieldByName('PRECIO' + PrecioLabel.Caption).AsFloat;
       SGFact.Cells[4, Cuenta] := FloatToStr(PR);
 
@@ -163,15 +164,16 @@ begin
       SGFact.Cells[6, Cuenta] := FloatToStr(IVA);
 
       //NETO
-        if Compra then NG:=PR else
+      if Compra then NG:=PR else
         if IVA = 105 then NG:=RoundTo((100*PR)/110.5,-2) else NG:=RoundTo((100*PR)/(100+IVA),-2);
-        SGFact.Cells[8, Cuenta] := FloatToStr(NG);
+      SGFact.Cells[8, Cuenta] := FloatToStr(NG);
 
 //      if FLEPorcDesc.Text<>'0' then  SGFact.Cells[7, Cuenta] :=  FloatToStr( StrToFloat(SGFact.Cells[8, Cuenta]) * (StrToFloat(FLEPorcDesc.Text)/100) )
 //      else  SGFact.Cells[7, Cuenta] := '0';
 
       //Total
-       SGFact.Cells[5, Cuenta] := FloatToStr(StrToFloat(SGFact.Cells[4, Cuenta]) * StrToFloat(SGFact.Cells[3, Cuenta]));
+//       SGFact.Cells[5, Cuenta] := FloatToStr(StrToFloat(SGFact.Cells[4, Cuenta]) * StrToFloat(SGFact.Cells[3, Cuenta]));
+      SGFact.Cells[5, Cuenta] := FloatToStr(PR * CAN);
 
 
       // INGRESOS BRUTOS
@@ -622,7 +624,7 @@ begin
       FSelProdFact.ShowModal;
     finally
       If FSelProdFact.Cancela = False then
-      TraerArticulo(FSelProdFact.Edit1.Text,StrToFloat(FSelProdFact.FloatEdit1.Text));
+      TraerArticulo(FSelProdFact.Edit1.Text,StrToFloat(FSelProdFact.FloatEdit1.Text),StrToFloat(FSelProdFact.CantidadEdit.Text));
     end;
   end
   else
@@ -637,7 +639,7 @@ begin
     finally
       If FBuscaArticulo.Tabla.Active = True then
       begin
-        TraerArticulo(FBuscaArticulo.Tabla.FieldByName('CODIGO').AsString,0);
+        TraerArticulo(FBuscaArticulo.Tabla.FieldByName('CODIGO').AsString,0,1);
       end;
       FBuscaArticulo.Free;
       Tabla.Close;

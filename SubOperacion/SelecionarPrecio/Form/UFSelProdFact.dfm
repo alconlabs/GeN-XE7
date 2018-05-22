@@ -30,7 +30,7 @@ object FSelProdFact: TFSelProdFact
     TabOrder = 0
     object Label1: TLabel
       Left = 16
-      Top = 16
+      Top = 19
       Width = 40
       Height = 13
       Caption = 'C'#243'digo'
@@ -48,8 +48,8 @@ object FSelProdFact: TFSelProdFact
       Height = 13
     end
     object Label5: TLabel
-      Left = 15
-      Top = 51
+      Left = 16
+      Top = 54
       Width = 51
       Height = 13
       Caption = 'Cantidad'
@@ -62,7 +62,7 @@ object FSelProdFact: TFSelProdFact
     end
     object Label2: TLabel
       Left = 16
-      Top = 88
+      Top = 87
       Width = 46
       Height = 16
       Caption = 'Precio'
