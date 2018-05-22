@@ -37,7 +37,6 @@ uses
   CrearCreditoF in 'Operacion\CrearCredito\Form\CrearCreditoF.pas' {CrearCreditoForm},
   ConfigurarF in 'SubOperacion\BackUp\Form\ConfigurarF.pas' {ConfigurarForm},
   ConfiguracionF in 'Configuracion\Sistema\Form\ConfiguracionF.pas' {ConfiguracionForm},
-  ComprarF in 'Operacion\Comprar\Form\ComprarF.pas' {ComprarForm},
   ComprarCelularF in 'Operacion\ComprarCelular\Form\ComprarCelularF.pas' {ComprarCelularForm},
   Color in 'ABM\Color\Form\Color.pas' {ColorForm},
   CobranzaJudicialF in 'Operacion\GestionCobranzaJudicial\Form\CobranzaJudicialF.pas' {CobranzaJudicialForm},

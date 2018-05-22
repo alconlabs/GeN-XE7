@@ -67,6 +67,9 @@ type
     Presupuesto: TCheckBox;
     CUITLabel: TLabel;
     ComprobanteEdit: TEdit;
+    Label5: TLabel;
+    PercEdit: TEdit;
+    Label6: TLabel;
     procedure ClienteBitBtnClick(Sender: TObject);
     procedure RJustifyEdit(var ThisEdit: TEdit);
     procedure TraeNombreCliente;
@@ -91,13 +94,14 @@ type
     procedure FormCreate(Sender: TObject);
     procedure TraerArticulo(codigoArticulo:string; PR,CAN:Double);
     function NetoGravado(costo,ganancia,flete:double):double;
+    procedure PercEditExit(Sender: TObject);
   private
     { Private declarations }
   public
     OK, Proveedor, FPagoOK, Compra: Boolean;
     Cuenta, DiasCalculo, CuotasTotal, d, numfact, OrdTrans: Integer;
     CMV, UltCosto, subtotal, Impuesto, NG21, IVA21, NG105, IVA105, NGO, IVAO,
-      desc, costo, reparaciones, Total, IIBB, NGIIBB, Exento,
+      desc, perc, costo, reparaciones, Total, IIBB, NGIIBB, Exento,
       ComisionVendedor: Double;
     CtaNombre, CtaTipo, CtaAnticipo, CtaIIBB, code, Dia, Mes, Ano, TDocumento,
       Tiempo, T2, Precio, ChequeCodCheque, ChequeNumero, ChequeDetalle,
@@ -227,6 +231,7 @@ begin
   subtotal := 0;
   Impuesto := 0;
   desc := 0;
+  perc := 0;
   Total := 0;
   NG21 := 0;
   IVA21 := 0;
@@ -235,6 +240,7 @@ begin
   // CUITLabel.Caption := 'C.F.';
   // Label21.Caption := '0';
   FLEPorcDesc.Text := '0';
+  PercEdit.Text := '0';
   costo := 0;
   reparaciones := 0;
   ClienteEdit.Text := '0';
@@ -308,11 +314,11 @@ var
   i: Integer;
   NG,DSC,NGD,IVA: Double;
 begin
-
   // Calcula los totales de la factura
-//  subtotal := 0;
-//  Impuesto := 0;
+  //  subtotal := 0;
+  //  Impuesto := 0;
   desc := 0;
+  perc := 0;
   Total := 0;
   costo := 0;
   reparaciones := 0;
@@ -384,9 +390,13 @@ begin
     end;
   end;
 
-  Impuesto := IVA21 + IVA105 + IVAO;
-  //subtotal := (subtotal - Impuesto);
   subtotal:= NG21 + NG105 + NGO;
+
+  perc := (subtotal * StrToFloat(PercEdit.Text) / 100);
+
+  Impuesto := IVA21 + IVA105 + IVAO + perc;
+  //subtotal := (subtotal - Impuesto);
+
   desc:=RoundTo(desc,-2);
   Total := (subtotal + Impuesto - desc + Interes);
 
@@ -666,6 +676,12 @@ begin
   FEContado.SetFocus;
 end;
 
+procedure TOperacionForm.PercEditExit(Sender: TObject);
+begin
+  CalculaTotales;
+  FEContado.SetFocus;
+end;
+
 procedure TOperacionForm.ProcesarBitBtnClick(Sender: TObject);
 var
   r, c: Integer;
@@ -689,7 +705,7 @@ begin
       costo, Impuesto, StrToFloat(FECheque.Text),
       StrToFloat(FECheque.Text), StrToFloat(FEContado.Text), Total,
       subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
-      Saldo, Pagado, NG105, NG21, IVA105, IVA21, Total - Saldo)
+      Saldo, Pagado, NG105, NG21, IVA105, IVA21, perc, Total - Saldo)
     else
     if Presupuesto.Checked then
       ProcPresup(cbTipo.Text, ClienteEdit.Text,

@@ -349,7 +349,7 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label9: TLabel
-      Left = 644
+      Left = 647
       Top = 6
       Width = 40
       Height = 13
@@ -362,7 +362,7 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label16: TLabel
-      Left = 317
+      Left = 319
       Top = 6
       Width = 59
       Height = 13
@@ -375,7 +375,7 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object VendedorLabel: TLabel
-      Left = 406
+      Left = 404
       Top = 6
       Width = 9
       Height = 13
@@ -388,11 +388,11 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label24: TLabel
-      Left = 483
+      Left = 558
       Top = 6
-      Width = 66
+      Width = 38
       Height = 13
-      Caption = 'Descuento:'
+      Caption = 'DESC:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -401,16 +401,16 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label10: TLabel
-      Left = 612
+      Left = 634
       Top = 6
-      Width = 10
+      Width = 8
       Height = 13
       Caption = '%'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
+      Font.Style = []
       ParentFont = False
     end
     object Label3: TLabel
@@ -445,6 +445,32 @@ object OperacionForm: TOperacionForm
       Width = 9
       Height = 13
       Caption = '...'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label5: TLabel
+      Left = 466
+      Top = 6
+      Width = 38
+      Height = 13
+      Caption = 'PERC:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label6: TLabel
+      Left = 543
+      Top = 6
+      Width = 8
+      Height = 13
+      Caption = '%'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -493,13 +519,22 @@ object OperacionForm: TOperacionForm
       TabOrder = 2
     end
     object FLEPorcDesc: TEdit
-      Left = 551
+      Left = 596
       Top = 2
-      Width = 56
+      Width = 37
       Height = 21
       TabOrder = 3
       Text = '0'
       OnExit = FLEPorcDescExit
+    end
+    object PercEdit: TEdit
+      Left = 505
+      Top = 2
+      Width = 37
+      Height = 21
+      TabOrder = 4
+      Text = '0'
+      OnExit = PercEditExit
     end
   end
   object SGFact: TStringGrid

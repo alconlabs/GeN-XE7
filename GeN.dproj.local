@@ -11,11 +11,12 @@
     <Transaction>2017/05/11 19:36:40.000.038,=E:\Documents\GeN-XE7\Unit2.pas</Transaction>
     <Transaction>2017/05/11 19:37:05.000.940,E:\Documents\GeN-XE7\DataModule\AfipDM.pas=E:\Documents\GeN-XE7\Unit2.pas</Transaction>
     <Transaction>2017/05/11 19:37:05.000.940,E:\Documents\GeN-XE7\DataModule\AfipDM.dfm=E:\Documents\GeN-XE7\Unit2.dfm</Transaction>
-    <Transaction>2018/05/12 12:32:28.000.515,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\VenderCodBarra\Form\VenderF.dfm=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.dfm</Transaction>
     <Transaction>2018/05/12 12:32:28.000.514,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\VenderCodBarra\Form\VenderF.pas=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.pas</Transaction>
+    <Transaction>2018/05/12 12:32:28.000.515,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\VenderCodBarra\Form\VenderF.dfm=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.dfm</Transaction>
     <Transaction>2018/05/12 12:34:04.000.604,=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\VenderCodBarra\Form\VenderF.pas</Transaction>
     <Transaction>2018/05/12 12:40:08.000.468,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\OperacionF.dfm=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.dfm</Transaction>
     <Transaction>2018/05/12 12:40:08.000.468,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\OperacionF.pas=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.pas</Transaction>
+    <Transaction>2018/05/22 20:41:41.467,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Comprar\Form\ComprarF.pas=</Transaction>
   </Transactions>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>

@@ -32,7 +32,7 @@ type
       tarj, otr, sal, pag, int, n10, n21, i10, i21, deud, ulc: Double);
     Procedure ProcCompra(let, cod, fech, ven, com, ctan,cui: string; pgr: Boolean;
       cost, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag, n10,
-      n21, i10, i21, deud: Double);
+      n21, i10, i21, perc, deud: Double);
     Procedure ProcPlan(let, cod, ven, cui, ctan, cuoimp, cuocant, cob: string;
       fecha: TDateTime; pre, pgr: Boolean; cost, comv, impu, cheq, ch3q, cont,
       tot, sbt, des, tarj, otr, sal, pag, inte, n10, n21, i10, i21, deud,
@@ -47,8 +47,7 @@ type
     Procedure LibroDiario(oper, nro, let, cod, fech: string; pgr: Boolean;
       tot, pag, cheq, ch3q, cont, tarj, impu, deud, cmv, comv: Double);
     Procedure LibroIVAvta(fec, nro, cod, cui, n10, n21, i10, i21, tot: string);
-    Procedure LibroIVACompra(fec, nro, cod, com, n10, n21, i10, i21,
-      tot: string);
+    Procedure LibroIVACompra(fec, nro, cod, com, n10, n21, i10, i21, perc, tot: string);
     Procedure FormaPago(desc, vta, comp, ctac, pago, cont, cheq, chei, chen,
       ched, chedi, tarj, tarn, tarimp, otri, mone, meim, metc, sald, paga, fech,
       ch3q, ch3i, ch3n, ch3d, ch3di: string);
@@ -484,9 +483,9 @@ Procedure TOperacionDataModule.LibroIVACompra;
 // Insertar en el Libro IVA COMPRAS
 begin
   Q.sql.Text :=
-    'Insert Into "LibroIVAcompra" (FECHA, FACTURA, PROVEEDOR, CUIT, NG1, NG2, IVA1, IVA2, ITF) Values ( '
+    'Insert Into "LibroIVAcompra" (FECHA, FACTURA, PROVEEDOR, CUIT, NG1, NG2, IVA1, IVA2, IDERPYPAC, ITF) Values ( '
     + quotedstr(fec) + ', ' + quotedstr(nro) + ', ' + quotedstr(cod) + ', ' +
-    quotedstr(com) + ', ' + n10 + ', ' + n21 + ', ' + (i10) + ', ' + (i21) +
+    quotedstr(com) + ', ' + n10 + ', ' + n21 + ', ' + (i10) + ', ' + (i21) + ', ' + (perc) +
     ', ' + (tot) + ')';
   Q.ExecSQL;
 end;
@@ -999,7 +998,7 @@ begin
   // LIBRO IVA COMPRAS
   if let <> 'X' then
     LibroIVACompra(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
-      floattostr(i10), floattostr(i21), floattostr(tot)); // en blanco
+      floattostr(i10), floattostr(i21), floattostr(perc), floattostr(tot)); // en blanco
   // Insertar en la tabla LibroDiario
   a := inttostr(UltimoRegistro('"LibroDiario"', 'ASIENTO')); // GENERAR INDICE
   LibroDiario('COMPRA', nro, let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
