@@ -75,9 +75,9 @@ begin
         Edit1.Text := Tabla.FieldByName('CODIGO').AsString;
         if Precio = 'Costo' then
           Edit9.Text := Format('%8.2f',
-            [((Tabla.FieldByName('Costo').AsFloat) +
+            [((Tabla.FieldByName('Costo').AsFloat) {+
             (Tabla.FieldByName('ImpOtros').AsFloat)) *
-            ((Tabla.FieldByName('Tasa').AsFloat) / 100 + 1)])
+            ((Tabla.FieldByName('Tasa').AsFloat) / 100 + 1})])
         else
         begin
           Edit6.Text := Tabla.FieldByName('Precio1').AsString;

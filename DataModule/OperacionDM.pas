@@ -30,7 +30,7 @@ type
     Procedure ProcOPER(tipo, let, cod, fech, ven, cui, ctan: string;
       pre, pgr: Boolean; cost, comv, impu, cheq, ch3q, cont, tot, sbt, des,
       tarj, otr, sal, pag, int, n10, n21, i10, i21, deud, ulc: Double);
-    Procedure ProcCompra(let, cod, fech, ven, cui, ctan: string; pgr: Boolean;
+    Procedure ProcCompra(let, cod, fech, ven, com, ctan,cui: string; pgr: Boolean;
       cost, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag, n10,
       n21, i10, i21, deud: Double);
     Procedure ProcPlan(let, cod, ven, cui, ctan, cuoimp, cuocant, cob: string;
@@ -47,7 +47,7 @@ type
     Procedure LibroDiario(oper, nro, let, cod, fech: string; pgr: Boolean;
       tot, pag, cheq, ch3q, cont, tarj, impu, deud, cmv, comv: Double);
     Procedure LibroIVAvta(fec, nro, cod, cui, n10, n21, i10, i21, tot: string);
-    Procedure LibroIVACompra(fec, nro, cod, cui, n10, n21, i10, i21,
+    Procedure LibroIVACompra(fec, nro, cod, com, n10, n21, i10, i21,
       tot: string);
     Procedure FormaPago(desc, vta, comp, ctac, pago, cont, cheq, chei, chen,
       ched, chedi, tarj, tarn, tarimp, otri, mone, meim, metc, sald, paga, fech,
@@ -486,7 +486,7 @@ begin
   Q.sql.Text :=
     'Insert Into "LibroIVAcompra" (FECHA, FACTURA, PROVEEDOR, CUIT, NG1, NG2, IVA1, IVA2, ITF) Values ( '
     + quotedstr(fec) + ', ' + quotedstr(nro) + ', ' + quotedstr(cod) + ', ' +
-    quotedstr(cui) + ', ' + n10 + ', ' + n21 + ', ' + (i10) + ', ' + (i21) +
+    quotedstr(com) + ', ' + n10 + ', ' + n21 + ', ' + (i10) + ', ' + (i21) +
     ', ' + (tot) + ')';
   Q.ExecSQL;
 end;
@@ -947,7 +947,7 @@ begin
     floattostr(des) + ', ' + quotedstr(fech) + ', ' + floattostr(impu) + ', ' +
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
-    floattostr(pag) + ', ' + quotedstr(cui) + ')';
+    floattostr(pag) + ', ' + quotedstr(com) + ')';
   Q.ExecSQL;
   // Insertar en la tabla de COMPRAITEM
   for i := 1 to High(mat[0]) do

@@ -58,7 +58,7 @@ object mainForm: TmainForm
       Top = 102
       Width = 109
       Height = 13
-      Caption = 'Copyright Civeloo 2017'
+      Caption = 'Copyright Civeloo 2018'
       IsControl = True
     end
     object Label3: TLabel

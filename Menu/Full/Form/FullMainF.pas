@@ -187,7 +187,7 @@ var
   FullMainForm: TFullMainForm;
 
 const
-version='201706032223';
+version='201805221210';
 
 implementation
 
@@ -201,7 +201,7 @@ uses LoginF, VenderF, CrearCreditoF, ComprarF, CtaCteF, BuscaFactura,
   UFProductos, ProveedorF, UFClientes, PlanF, VendedorF, CobradorF, RubroF,
   UFCategorias, UFSubCategorias, IngresosBrutosF, UFBuscaArticulos, CajaLF,
   GananciasL, PedidoLF, Precios, ListadoClientes, EstadoCuentaLF, BuscaCompra,
-  EmpresaF, UsuariosF, ConfiguracionF, VaciarBaseF, BackUpF, MigrarF, main;
+  EmpresaF, UsuariosF, ConfiguracionF, VaciarBaseF, BackUpF, MigrarF, main, OperacionF;
 
 {$R *.dfm}
 
@@ -462,11 +462,18 @@ end;
 procedure TFullMainForm.Comprar1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'Comprar.exe')), SW_SHOWNORMAL);
-  ComprarForm := TComprarForm.Create(self);
+//  ComprarForm := TComprarForm.Create(self);
+//  try
+//    ComprarForm.ShowModal;
+//  finally
+//    ComprarForm.Free;
+//  end;
+OperacionForm := TOperacionForm.Create(self);
+  OperacionForm.Compra := True;
   try
-    ComprarForm.ShowModal;
+    OperacionForm.ShowModal;
   finally
-    ComprarForm.Free;
+    OperacionForm.Free;
   end;
 end;
 
@@ -484,11 +491,17 @@ end;
 procedure TFullMainForm.Vender1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(Path+'Vender.exe')),SW_SHOWNORMAL);
-  VenderForm := TVenderForm.Create(self);
+//  VenderForm := TVenderForm.Create(self);
+//  try
+//    VenderForm.ShowModal;
+//  finally
+//    VenderForm.Free;
+//  end;
+OperacionForm := TOperacionForm.Create(self);
   try
-    VenderForm.ShowModal;
+    OperacionForm.ShowModal;
   finally
-    VenderForm.Free;
+    OperacionForm.Free;
   end;
 end;
 

@@ -21,8 +21,6 @@ type
   TMigrarForm = class(TForm)
     ProcesarButton: TButton;
     ProgressBar1: TProgressBar;
-    Edit1: TEdit;
-    BitBtn1: TBitBtn;
     EditUrl: TEdit;
     EditResource: TEdit;
     EditUser: TEdit;
@@ -32,11 +30,6 @@ type
     RESTResponse1: TRESTResponse;
     RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter;
     O: TFDMemTable;
-    DBGrid1: TDBGrid;
-    DataSource1: TDataSource;
-    Button1: TButton;
-    FDMemTable1: TFDMemTable;
-    Memo1: TMemo;
     RESTClientCategories: TRESTClient;
     RESTRequestCategories: TRESTRequest;
     RESTResponseCategories: TRESTResponse;
@@ -46,10 +39,6 @@ type
     T: TIBQuery;
     D: TIBQuery;
     procedure ProcesarButtonClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure BitBtn1Click(Sender: TObject);
-    procedure RESTResponseDataSetAdapter1BeforeOpenDataSet(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -71,40 +60,6 @@ implementation
 
 {$R *.dfm}
 
-procedure TMigrarForm.BitBtn1Click(Sender: TObject);
-begin
-  { OpenDialog1.Execute();
-    Edit1.Text := OpenDialog1.FileName; }
-end;
-
-procedure TMigrarForm.Button1Click(Sender: TObject);
-var
-  LJsonArr    : TJSONArray;
-  LJsonValue  : TJSONValue;
-  LItem       : TJSONValue;
-  StrJson     : String;
-begin
-
-StrJson :=
-  '['+
-  '{"EventType":49,"Code":"234","EventDate":"20050202", "Result":1},'+
-  '{"EventType":48,"Code":"0120","EventDate":"20130201", "Group":"g1"}'+
-  ']';
-
-
-StrJson := '[{"id":110,"name":"Gabinetes de Pc","slug":"gabinetes-de-pc"},{"id":25,"name":"Pc","slug":"pc"}]';
-
-   LJsonArr    := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(StrJson),0) as TJSONArray;
-//   categories := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(StrJson),0) as TJSONArray;
-//   LItem:=1;
-//   showmessage( [TJSONPair(LItem).JsonString.Value, TJSONPair(LItem+1).JsonValue.Value] );
-
-ShowMessage(LJsonArr.ToString);
-
-
-
-end;
-
 procedure TMigrarForm.FormCreate(Sender: TObject);
 begin
 with FormatSettings do
@@ -113,12 +68,6 @@ with FormatSettings do
     ThousandSeparator := '.';
     ShortDateFormat := 'mm/dd/yyyy';
   end;
-end;
-
-procedure TMigrarForm.FormShow(Sender: TObject);
-begin
-  // DM := TDM.Create(self);
-  { OperacionDataModule := TOperacionDataModule.Create(self); }
 end;
 
 procedure TMigrarForm.ProcesarButtonClick(Sender: TObject);
@@ -141,9 +90,11 @@ var
     end;
 
 begin
+  ProgressBar1.Position := 1;
   importCategories;
   ShowMessage('IMPORTACION DE CATEGORIAS FINALIZADA');
   p:=0;
+  ProgressBar1.Position := 2;
   repeat
     Inc(p);
     GetREST(EditUrl.text, EditResource.text+'status=publish&per_page=100&page='+IntToStr(p)+'&', EditUser.text, EditPassword.text);
@@ -161,7 +112,10 @@ begin
             subcat := existeEnTJSONArray('SubCategoria',categories);
             disponible:=O.FieldByName('stock_quantity').AsString;
             if O.FieldByName('price').AsString='' then precio:=0 else precio:=O.FieldByName('price').AsFloat;
-            iva := 21;
+            if (O.FieldByName('tax_class').AsString = 'tasa-reducida') then
+              iva := 10.5
+              else
+                iva := 21;
             ganancia := precio/(iva/100+1);
             costo := FloatToStrF( ( ganancia/(30/100+1) ), ffFixed, 16, 2 );
             fecha := ConvertToDateTimeStr(O.FieldByName('date_modified').AsString);
@@ -203,13 +157,6 @@ begin
   RESTResponseDataSetAdapter1.ResetToDefaults;
 end;
 
-procedure TMigrarForm.RESTResponseDataSetAdapter1BeforeOpenDataSet
-  (Sender: TObject);
-begin
-//  if ClientDataSet1.FieldCount = 0 then
-//    ClientDataSet1.CreateDataSet;
-end;
-
 procedure TMigrarForm.GetREST;
 begin
   ResetRESTComponentsToDefaults;
@@ -241,14 +188,12 @@ var
   i,p: integer;
 begin
   GetRESTCategories(EditUrl.text, 'products/categories/?per_page=100&page=1&parent=0&', EditUser.text, EditPassword.text);
-
   ProgressBar1.Max := FDMemTableCategories.RecordCount;
   for i := 0 to FDMemTableCategories.RecordCount - 1 do
   begin
     id := FDMemTableCategories.FieldByName('id').AsString;
     name := FDMemTableCategories.FieldByName('name').AsString;
     parent := FDMemTableCategories.FieldByName('parent').AsString;
-
 //    T.SQL.Text := 'SELECT * FROM "Rubro" WHERE CODIGO = ' + id;
 //    T.Open;
     if not existeEnTabla('Rubro',id) then //    if T.RecordCount = 0 then

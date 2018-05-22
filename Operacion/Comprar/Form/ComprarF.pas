@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, ExtCtrls, DB, Grids, OperacionDM,
   DBGrids, ValEdit, DateUtils, DataModule, ComCtrls,
-  OleCtrls, SHDocVw, IBX.IBCustomDataSet, IBX.IBQuery;
+  OleCtrls, SHDocVw, IBX.IBCustomDataSet, IBX.IBQuery, Math;
 
 type
   TComprarForm = class(TForm)
@@ -58,6 +58,7 @@ type
     procedure CUITEditExit(Sender: TObject);
   private
     { Private declarations }
+    procedure AgregarProducto;
   public
     Oculto: string;
     { Public declarations }
@@ -124,6 +125,110 @@ end;
 
 procedure TComprarForm.CalculaTotales;
 var
+  i: Integer;
+  NG,DSC,NGD,IVA: Double;
+begin
+
+  // Calcula los totales de la factura
+//  subtotal := 0;
+//  Impuesto := 0;
+  desc := 0;
+  Total := 0;
+  costo := 0;
+  reparaciones := 0;
+  IVA21 := 0;
+  IVA105 := 0;
+  IVAO := 0;
+//  UltCosto := 0;
+  NG21 := 0;
+  NG105 := 0;
+  NGO := 0;
+  NG := 0;
+  DSC := 0;
+  NGD :=0;
+  IVA :=0;
+
+  // Calcula el SubTotal
+  For i := 1 to SGFact.RowCount - 1 do
+  begin
+    //total
+    IF (SGFact.Cells[5, i] = '') then SGFact.Cells[5, i] := '0';
+    //IVA
+    IF (SGFact.Cells[6, i] = '') then SGFact.Cells[6, i] := '0';
+    //NG
+    IF (SGFact.Cells[8, i] = '') then SGFact.Cells[8, i] := '0';
+    //
+    IF (SGFact.Cells[9, i] = '') then SGFact.Cells[9, i] := '0';
+    //
+    IF (SGFact.Cells[11, i] = '') then SGFact.Cells[11, i] := '0';
+    // SUBTOTAL
+    subtotal := subtotal + StrToFloat(SGFact.Cells[5, i]);
+    // Calcula el Neto
+    IF SGFact.Cells[8, i] <> '0' then costo := costo + StrToFloat(SGFact.Cells[8, i]);
+    //
+//    IF SGFact.Cells[11, i] <> '0' then UltCosto := UltCosto + StrToFloat(SGFact.Cells[11, i]);
+    // Calcula el Ultimo Costo
+    IF SGFact.Cells[9, i] <> '0' then reparaciones := reparaciones + StrToFloat(SGFact.Cells[9, i]);
+
+    // Calcula las reparaciones
+  end;
+
+  // Calcula el monto para cobrar el impuesto de ventas
+  For i := 1 to SGFact.RowCount - 1 do
+  begin
+   NG := StrToFloat(SGFact.Cells[8, i]);
+   DSC := (NG * StrToFloat(FLEPorcDesc.Text) / 100);
+   NGD:= NG-DSC;
+   with OperacionDataModule do
+    begin
+    If (SGFact.Cells[6, i] = '21') then
+    begin
+      NG21 := NG21 + NG;
+      IVA := CalcularIVA((NGD),21)-NGD;
+      IVA21 := IVA21 + IVA;
+    end // IVA 21% 100 * 1.21 - 100 = 21
+    else
+    if (SGFact.Cells[6, i] = '105') then
+      begin
+        NG105 := NG105 + NG;
+        IVA := CalcularIVA((NGD),10.5)-NGD;
+        IVA105 := IVA105 + IVA;
+      end // IVA 10.5% 100 * 1.105 - 100 = 10.5
+      else
+       begin
+        NGO := NGO + NG; // NETO GRABADO
+        IVA := CalcularIVA((NGD),StrToFloat(SGFact.Cells[6, i]))-NGD;
+        IVAO := IVAO + IVA;
+      end;
+      desc:=  desc + DSC;
+    end;
+  end;
+
+  Impuesto := IVA21 + IVA105 + IVAO;
+  //subtotal := (subtotal - Impuesto);
+  subtotal:= NG21 + NG105 + NGO;
+  desc:=RoundTo(desc,-2);
+  Total := ( subtotal + Impuesto - desc ); //+ Interes );
+
+  // escribe los valores en las celdas
+  SGTotal.Cells[1, 0] := Format('%8.2n', [subtotal]);
+  SGTotal.Cells[1, 1] := Format('%8.2n', [desc]);
+  SGTotal.Cells[1, 2] := Format('%8.2n', [Impuesto]);
+//  SGTotal.Cells[1, 3] := Format('%8.2n', [Interes]);
+  SGTotal.Cells[1, 4] := Format('%8.2n', [Total]);
+
+//  if FEContado.Text = '' then FEContado.Text := '0';
+//  if FECheque.Text = '' then FECheque.Text := '0';
+//  if FETarjeta.Text = '' then FETarjeta.Text := '0';
+//  if FEOtro.Text = '' then FEOtro.Text := '0';
+
+//  Pagado := StrToFloat(FEContado.Text) + StrToFloat(FECheque.Text) +
+//    StrToFloat(FETarjeta.Text) + StrToFloat(FEOtro.Text);
+//  Saldo := Total - Pagado;
+//  LbSaldo.Caption := FloatToStr(Saldo);
+
+//  FEContado.Text := FloatToStr(Total);
+{var
   i: integer;
 begin
   // Calcula los totales de la factura
@@ -166,26 +271,22 @@ begin
       SGFact.Cells[5, i] := '0';
     IF (SGFact.Cells[6, i] = '') then
       SGFact.Cells[6, i] := '0';
-    If (SGFact.Cells[6, i] = '21') then
+    If (StrToFloat(SGFact.Cells[6, i]) = 21) then
     begin
       NG21 := NG21 + StrToFloat(SGFact.Cells[5, i]); // NETO GRABADO 21%
-      IVA21 := (IVA21 + Abs((StrToFloat(SGFact.Cells[5, i]) * 1.21) -
-        StrToFloat(SGFact.Cells[5, i])));
-    end; // IVA 21% 100 * 1.21 - 100 = 21
-    IF (SGFact.Cells[6, i] = '10.5') then
+      IVA21 := IVA21 + Abs(StrToFloat(SGFact.Cells[5, i]) * 0.21);//(StrToFloat(SGFact.Cells[5, i]) * 1.21) - StrToFloat(SGFact.Cells[5, i])));
+    end // IVA 21% 100 * 1.21 - 100 = 21
+    else
+    IF (StrToFloat(SGFact.Cells[6, i]) = 10.50) then
     begin
       NG105 := NG105 + StrToFloat(SGFact.Cells[5, i]); // NETO GRABADO 10.5%
-      IVA105 := (IVA105 + Abs((StrToFloat(SGFact.Cells[5, i]) * 1.105) -
-        StrToFloat(SGFact.Cells[5, i])));
-    end; // IVA 10.5% 100 * 1.105 - 100 = 10.5
-    IF (SGFact.Cells[6, i] <> '21') and (SGFact.Cells[6, i] <> '10.5') and
-      (SGFact.Cells[6, i] <> '0') and (SGFact.Cells[6, i] <> '') then
+      IVA105 := IVA105 + Abs(StrToFloat(SGFact.Cells[5, i]) * 0.105);//StrToFloat((StrToFloat(SGFact.Cells[5, i]) * 1.105) - StrToFloat(SGFact.Cells[5, i])));
+    end // IVA 10.5% 100 * 1.105 - 100 = 10.5
+    else//IF (SGFact.Cells[6, i] <> '21') and (SGFact.Cells[6, i] <> '10.5') and (SGFact.Cells[6, i] <> '0') and (SGFact.Cells[6, i] <> '') then
     begin
       NGO := NGO + StrToFloat(SGFact.Cells[5, i]); // NETO GRABADO
-      IVAO := (IVAO + Abs((StrToFloat(SGFact.Cells[5, i]) /
-        (StrToFloat(SGFact.Cells[6, i]) * 100 + 1)) -
-        StrToFloat(SGFact.Cells[5, i])));
-    end; // IVA
+      IVAO := IVAO + Abs(StrToFloat(SGFact.Cells[5, i]) * (StrToFloat(SGFact.Cells[6, i]) / 100));//(StrToFloat(SGFact.Cells[5, i]) / (StrToFloat(SGFact.Cells[6, i]) * 100 + 1)) - StrToFloat(SGFact.Cells[5, i]));
+    end;
   end;
 
   Impuesto := IVA21 + IVA105 + IVAO;
@@ -200,7 +301,7 @@ begin
   SGTotal.Cells[1, 1] := Format('%8.2n', [desc]);
   SGTotal.Cells[1, 2] := Format('%8.2n', [Impuesto]);
   SGTotal.Cells[1, 3] := Format('%8.2n', [StrToFloat('0.00')]);
-  SGTotal.Cells[1, 4] := Format('%8.2n', [Total]);
+  SGTotal.Cells[1, 4] := Format('%8.2n', [Total]);}
 end;
 
 procedure TComprarForm.cbTipoChange(Sender: TObject);
@@ -365,7 +466,7 @@ begin
       SGFact.Cells[4, Cuenta] := ServForm.PrecioEdit.Text;
       SGFact.Cells[5, Cuenta] := FloatToStr(StrToFloat(SGFact.Cells[4, Cuenta])
         * StrToFloat(SGFact.Cells[3, Cuenta])); // total
-      SGFact.Cells[6, Cuenta] := '0';
+      SGFact.Cells[6, Cuenta] := '21';
       SGFact.Cells[8, Cuenta] := ServForm.PrecioEdit.Text; // PRECIO DE COSTO
       SGFact.Cells[9, Cuenta] := '0';
       SGFact.Cells[10, Cuenta] := '0';
@@ -404,9 +505,8 @@ begin
       CtaAnticipo := Tabla.FieldByName('CtaAnticipo').AsString;
 
       PagareCheckBox.Checked := Tabla.FieldByName('PAGARE').AsBoolean;
-      if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') and
-        (Tabla.FieldByName('IVA').AsString = 'RI') then
-        cbTipo.ItemIndex := 0
+      if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Inscripto') and
+        (Tabla.FieldByName('IVA').AsString = 'RI') then cbTipo.ItemIndex := 0
       else if (Tabla.FieldByName('IVA').AsString = 'RI') then
         cbTipo.ItemIndex := 1
       else
@@ -418,10 +518,10 @@ begin
 end;
 
 procedure TComprarForm.AgregarBitBtnClick(Sender: TObject);
-var
-  i: integer;
+{var
+  i: integer;  }
 begin
-  // ************ Boton de Agregar **************
+  {// ************ Boton de Agregar **************
   FSelProdFact := TFSelProdFact.Create(self);
   FSelProdFact.Precio := 'Costo';
   FSelProdFact.Proveedor := ProveedorLabel.Caption;
@@ -450,30 +550,40 @@ begin
       QTemp.SQL.Text := 'SELECT * FROM "Articulo" ' + 'WHERE CODIGO = ' +
         (FSelProdFact.Edit1.Text);
       QTemp.Open;
-      SGFact.Cells[0, Cuenta] := FSelProdFact.Edit1.Text;
-      SGFact.Cells[1, Cuenta] := QTemp.FieldByName('DESCRIPCION').AsString;
-      SGFact.Cells[2, Cuenta] := QTemp.Fields.FieldByName('ImpOtros').AsString;
-      SGFact.Cells[3, Cuenta] := FSelProdFact.CantidadEdit.Text;
-      SGFact.Cells[6, Cuenta] := FloatToStr(QTemp.FieldByName('Tasa').AsFloat);
+
+
+//      SGFact.Cells[0, Cuenta]
+      codigo:= FSelProdFact.Edit1.Text; //CODIGO
+      //SGFact.Cells[1, Cuenta]
+      descr := QTemp.FieldByName('DESCRIPCION').AsString; //DESCRIPCION
+//      SGFact.Cells[2, Cuenta] := QTemp.Fields.FieldByName('ImpOtros').AsString; //FLETE
+//      SGFact.Cells[3, Cuenta]
+      cantidad := FSelProdFact.CantidadEdit.Text;    //CANTIDAD
+//      SGFact.Cells[6, Cuenta]
+      iva := QTemp.FieldByName('Tasa').AsFloat; //IVA
       // IVA
-      SGFact.Cells[4, Cuenta] :=
-        Format('%8.2f', [StrToFloat(FSelProdFact.FloatEdit1.Text) /
-        (StrToFloat(SGFact.Cells[6, Cuenta]) / 100 + 1) -
-        StrToFloat(SGFact.Cells[2, Cuenta])]);
-      SGFact.Cells[5, Cuenta] :=
-        Format('%8.2f', [StrToFloat(SGFact.Cells[4, Cuenta]) *
-        StrToFloat(SGFact.Cells[3, Cuenta])]);
-      SGFact.Cells[8, Cuenta] :=
-        Format('%8.2f', [QTemp.FieldByName('Costo').AsFloat]);
-      // PRECIO DE COSTO
-      SGFact.Cells[9, Cuenta] := QTemp.FieldByName('IIBB').AsString;
-      // ACTIVIDAD DE MONOTRIBUTO
+//      SGFact.Cells[4, Cuenta] := Format('%8.2f', [StrToFloat(FSelProdFact.FloatEdit1.Text) * (StrToFloat(SGFact.Cells[6, Cuenta]) / 100 + 1) - StrToFloat(SGFact.Cells[2, Cuenta]) ]);  //NG
+      precio := FSelProdFact.FloatEdit1.Text;
+//      SGFact.Cells[5, Cuenta] := Format('%8.2f', [StrToFloat(SGFact.Cells[4, Cuenta]) * StrToFloat(SGFact.Cells[3, Cuenta])]); //SUBTOTAL
+      subtotal := precio * cantidad;
+//      SGFact.Cells[8, Cuenta] := Format('%8.2f', //[QTemp.FieldByName('Costo').AsFloat]); //COSTO
+//      [StrToFloat(FSelProdFact.FloatEdit1.Text) *
+//        (StrToFloat(SGFact.Cells[6, Cuenta]) / 100 + 1)
+//        ]);
+      costo := QTemp.FieldByName('Costo').AsFloat;
+//      SGFact.Cells[9, Cuenta] := QTemp.FieldByName('IIBB').AsString;// ACTIVIDAD DE MONOTRIBUTO
+      iibb := QTemp.FieldByName('IIBB').AsString;
+
       Q.SQL.Text := 'SELECT * FROM IIBB WHERE CODIGO=' +
-        QuotedStr(SGFact.Cells[9, Cuenta]);
+//        QuotedStr(SGFact.Cells[9, Cuenta]);
+      QuotedStr(iibb);
       Q.Open;
-      SGFact.Cells[10, Cuenta] :=
-        Format('%8.2f', [Q.FieldByName('Porcentaje').AsFloat]);
-      // PORCENTAJE DE INGRESOS BRUTOS
+//      SGFact.Cells[10, Cuenta] :=
+//        Format('%8.2f', [Q.FieldByName('Porcentaje').AsFloat]);
+// PORCENTAJE DE INGRESOS BRUTOS
+      ibb_porcentaje := Q.FieldByName('Porcentaje').AsFloat;
+
+
       Cuenta := Cuenta + 1;
       QTemp.Close;
       Sortgrid(SGFact, 0, 0);
@@ -481,7 +591,8 @@ begin
     end;
     FSelProdFact.Free;
   end;
-  SiBitBtn.SetFocus;
+  SiBitBtn.SetFocus;  }
+  AgregarProducto;
 end;
 
 procedure TComprarForm.QuitarBitBtnClick(Sender: TObject);
@@ -572,12 +683,12 @@ begin
     with FFormaPago do
     begin
       OperacionDataModule.ProcCompra(cbTipo.Text, CodigoEdit.Text,
-        FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-        VendedorEdit.Text, CUITEdit.Text, CtaNombre, PagareCheckBox.Checked,
-        costo, Impuesto, StrToFloat(FECheque.Text),
-        StrToFloat(ChequeTerceroEdit.Text), StrToFloat(FEContado.Text), Total,
-        subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
-        Saldo, Pagado, NG105, NG21, IVA105, IVA21, Total - Saldo);
+      FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
+      VendedorEdit.Text, CUITEdit.Text, CtaNombre, CUITEdit.Text, PagareCheckBox.Checked,
+      costo, Impuesto, StrToFloat(FECheque.Text),
+      StrToFloat(ChequeTerceroEdit.Text), StrToFloat(FEContado.Text), Total,
+      subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
+      Saldo, Pagado, NG105, NG21, IVA105, IVA21, Total - Saldo);
     end;
     FFormaPago.Free;
   end;
@@ -627,7 +738,7 @@ procedure TComprarForm.FormShow(Sender: TObject);
 begin
   SGFact.Cells[0, 0] := 'Código';
   SGFact.Cells[1, 0] := 'Descripción';
-  SGFact.Cells[2, 0] := 'Flete';
+//  SGFact.Cells[2, 0] := 'Flete';
   SGFact.Cells[3, 0] := 'Cantidad';
   SGFact.Cells[4, 0] := 'Precio';
   SGFact.Cells[5, 0] := 'Total';
@@ -662,6 +773,88 @@ begin
   ProveedorBitBtn.Click;
   AgregarBitBtn.Click;
   CUITEdit.SetFocus;
+end;
+
+procedure TComprarForm.AgregarProducto;
+var
+      codigo, descr, iibb :string;
+      cantidad, i : integer;
+      precio, subtotal, iva, costo, iibb_porcentaje, NG : Double;
+begin
+  // ************ Boton de Agregar **************
+  FSelProdFact := TFSelProdFact.Create(self);
+  FSelProdFact.Precio := 'Costo';
+  FSelProdFact.Proveedor := ProveedorLabel.Caption;
+  // Filtra las series que ya estan en la factura
+  If (SGFact.RowCount = 2) AND (SGFact.Cells[2, 1] = '') then
+    FSelProdFact.Filtro := ''
+  else
+  begin
+    FSelProdFact.Filtro := 'NumSerie <> ' + SGFact.Cells[2, 1];
+    i := 2;
+    While i < SGFact.RowCount do
+    begin
+      FSelProdFact.Filtro := FSelProdFact.Filtro + ' AND NumSerie <> ' +
+        SGFact.Cells[2, i];
+      i := i + 1;
+    end;
+  end;
+  try
+    FSelProdFact.ShowModal;
+  finally
+    If FSelProdFact.Cancela = False then
+    Begin
+      If Cuenta > 1 then
+        SGFact.RowCount := SGFact.RowCount + 1;
+      QTemp.Close;
+      QTemp.SQL.Text := 'SELECT * FROM "Articulo" ' + 'WHERE CODIGO = ' +
+        (FSelProdFact.Edit1.Text);
+      QTemp.Open;
+
+      codigo:= FSelProdFact.Edit1.Text; //CODIGO
+      descr := QTemp.FieldByName('DESCRIPCION').AsString; //DESCRIPCION
+//      SGFact.Cells[2, Cuenta] := QTemp.Fields.FieldByName('ImpOtros').AsString; //FLETE
+      cantidad := strtoint(FSelProdFact.CantidadEdit.Text);    //CANTIDAD
+      iva := QTemp.FieldByName('Tasa').AsFloat;
+//      SGFact.Cells[4, Cuenta] := Format('%8.2f', [StrToFloat(FSelProdFact.FloatEdit1.Text) {* (StrToFloat(SGFact.Cells[6, Cuenta]) / 100 + 1) - StrToFloat(SGFact.Cells[2, Cuenta]) }]);  //NG
+      precio := StrToFloat(FSelProdFact.FloatEdit1.Text);
+//      SGFact.Cells[5, Cuenta] := Format('%8.2f', [StrToFloat(SGFact.Cells[4, Cuenta]) * StrToFloat(SGFact.Cells[3, Cuenta])]); //SUBTOTAL
+      subtotal := precio * cantidad;
+//      SGFact.Cells[8, Cuenta] := Format('%8.2f', //[QTemp.FieldByName('Costo').AsFloat]); //COSTO
+//      [StrToFloat(FSelProdFact.FloatEdit1.Text) *
+//        (StrToFloat(SGFact.Cells[6, Cuenta]) / 100 + 1)
+//        ]);
+      costo := QTemp.FieldByName('Costo').AsFloat;
+//      SGFact.Cells[9, Cuenta] := QTemp.FieldByName('IIBB').AsString;// ACTIVIDAD DE MONOTRIBUTO
+      iibb := QTemp.FieldByName('IIBB').AsString;
+
+      Q.SQL.Text := 'SELECT * FROM IIBB WHERE CODIGO=' +
+//        QuotedStr(SGFact.Cells[9, Cuenta]);
+      QuotedStr(iibb);
+      Q.Open;
+//      SGFact.Cells[10, Cuenta] :=
+//        Format('%8.2f', [Q.FieldByName('Porcentaje').AsFloat]);
+// PORCENTAJE DE INGRESOS BRUTOS
+      iibb_porcentaje := Q.FieldByName('Porcentaje').AsFloat;
+
+      SGFact.Cells[0, Cuenta] := codigo;
+      SGFact.Cells[1, Cuenta] := descr;
+      SGFact.Cells[3, Cuenta] := IntToStr(cantidad);
+      SGFact.Cells[4, Cuenta] := Format('%8.2f', [precio]);
+      SGFact.Cells[5, Cuenta] := Format('%8.2f', [subtotal]);
+      SGFact.Cells[6, Cuenta] := Format('%8.2f', [iva]);
+      SGFact.Cells[8, Cuenta] := Format('%8.2f', [precio]);
+      SGFact.Cells[9, Cuenta] := iibb;
+      SGFact.Cells[10, Cuenta] := Format('%8.2f', [iibb_porcentaje]);
+
+      Cuenta := Cuenta + 1;
+      QTemp.Close;
+      Sortgrid(SGFact, 0, 0);
+      CalculaTotales;
+    end;
+    FSelProdFact.Free;
+  end;
+  SiBitBtn.SetFocus;
 end;
 
 end.

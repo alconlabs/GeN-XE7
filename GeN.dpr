@@ -98,7 +98,7 @@ uses
   UFSelOrden in 'Buscar\Orden\Form\UFSelOrden.pas' {FSelOrden},
   UFProductos in 'ABM\Articulo\Form\UFProductos.pas' {FProductos},
   VerCobranza in 'Buscar\Cobranza\Form\VerCobranza.pas' {VerCobranzaForm},
-  VenderF in 'Operacion\VenderCodBarra\Form\VenderF.pas' {VenderForm},
+  OperacionF in 'Operacion\Operacion\Form\OperacionF.pas' {OperacionForm},
   ExportarExcelF in 'Exportar\Excel\Form\ExportarExcelF.pas' {Menu1},
   main in 'AcercaDe\form\main.pas' {mainForm},
   LoginF in 'SubOperacion\Login\Form\LoginF.pas' {FLogin},
@@ -109,7 +109,8 @@ uses
   BuscarArticulosCelularF in 'buscar\articulocelular\form\BuscarArticulosCelularF.pas' {BuscaArticuloCelularForm},
   MarcaF in 'ABM\Marca\Form\MarcaF.pas' {MarcaForm},
   IngresosBrutosF in 'abm\ingresosbrutos\form\IngresosBrutosF.pas' {IngresosBrutosForm},
-  AfipDM in 'DataModule\AfipDM.pas' {AfipDataModule: TDataModule};
+  AfipDM in 'DataModule\AfipDM.pas' {AfipDataModule: TDataModule},
+  VenderF in 'Operacion\VenderCodBarra\Form\VenderF.pas' {VenderForm};
 
 {$R *.res}
 
@@ -120,6 +121,7 @@ begin
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFullMainForm, FullMainForm);
   Application.CreateForm(TAfipDataModule, AfipDataModule);
+  Application.CreateForm(TVenderForm, VenderForm);
   Application.Run;
 
 end.

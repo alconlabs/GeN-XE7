@@ -396,8 +396,8 @@
         <DCCReference Include="Buscar\Cobranza\Form\VerCobranza.pas">
             <Form>VerCobranzaForm</Form>
         </DCCReference>
-        <DCCReference Include="Operacion\VenderCodBarra\Form\VenderF.pas">
-            <Form>VenderForm</Form>
+        <DCCReference Include="Operacion\Operacion\Form\OperacionF.pas">
+            <Form>OperacionForm</Form>
         </DCCReference>
         <DCCReference Include="Exportar\Excel\Form\ExportarExcelF.pas">
             <Form>Menu1</Form>
@@ -434,6 +434,10 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="Operacion\VenderCodBarra\Form\VenderF.pas">
+            <Form>VenderForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -462,7 +466,7 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="C:\Civeloo\GeN\bin\GeN.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Bin\GeN\bin\GeN.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>GeN.exe</RemoteName>
                         <Overwrite>true</Overwrite>
