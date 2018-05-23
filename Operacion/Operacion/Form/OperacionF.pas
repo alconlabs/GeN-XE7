@@ -170,7 +170,7 @@ begin
       //NETO
       if Compra then NG:=PR else
         if IVA = 105 then NG:=RoundTo((100*PR)/110.5,-2) else NG:=RoundTo((100*PR)/(100+IVA),-2);
-      SGFact.Cells[8, Cuenta] := FloatToStr(NG);
+      SGFact.Cells[8, Cuenta] := FloatToStr(NG * CAN);
 
 //      if FLEPorcDesc.Text<>'0' then  SGFact.Cells[7, Cuenta] :=  FloatToStr( StrToFloat(SGFact.Cells[8, Cuenta]) * (StrToFloat(FLEPorcDesc.Text)/100) )
 //      else  SGFact.Cells[7, Cuenta] := '0';
@@ -337,11 +337,11 @@ begin
   // Calcula el SubTotal
   For i := 1 to SGFact.RowCount - 1 do
   begin
-    //total
+    // total
     IF (SGFact.Cells[5, i] = '') then SGFact.Cells[5, i] := '0';
-    //IVA
+    // IVA
     IF (SGFact.Cells[6, i] = '') then SGFact.Cells[6, i] := '0';
-    //NG
+    // NG
     IF (SGFact.Cells[8, i] = '') then SGFact.Cells[8, i] := '0';
     //
     IF (SGFact.Cells[9, i] = '') then SGFact.Cells[9, i] := '0';
