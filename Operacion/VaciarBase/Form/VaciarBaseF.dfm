@@ -634,8 +634,8 @@ object VaciarBaseForm: TVaciarBaseForm
         ' RUBRO, IVA, MSN, WEB, ZONA, CTA, CTANOMBRE, CTATIPO, CTAANTICIP' +
         'O, PAGARE) VALUES (1, '#39'Mi Empresa'#39', '#39'Yo'#39', NULL, '#39'Lejos'#39', NULL, N' +
         'ULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,' +
-        ' NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '#39'4'#39', NULL, NULL' +
-        ', NULL, NULL, NULL, NULL, NULL, NULL);'
+        ' NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '#39'Responsable Inscr' +
+        'ipto'#39', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);'
       ''
       ''
       ''
@@ -647,7 +647,8 @@ object VaciarBaseForm: TVaciarBaseForm
       ''
       
         'INSERT INTO IIBB (CODIGO, DESCRIPCION, PORCENTAJE, COEF1, COEF2,' +
-        ' COEF3, MONTO) VALUES (0, '#39'VARIOS'#39', 3, NULL, NULL, NULL, 2000);'
+        ' COEF3, MONTO) VALUES (0, '#39'VARIOS'#39', 2.5, NULL, NULL, NULL, 2000)' +
+        ';'
       
         'INSERT INTO IIBB (CODIGO, DESCRIPCION, PORCENTAJE, COEF1, COEF2,' +
         ' COEF3, MONTO) VALUES (1, '#39'REGIMEN LABORAL PARA COMPRA Y VENTA D' +

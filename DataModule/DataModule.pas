@@ -53,7 +53,7 @@ var
   DM: TDM;
   Compartido: PCompartido;
   FicheroM: THandle;
-  Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa, CUIT, reporte: string;
+  Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa, CUIT, IngresosBrutos, reporte: string;
   Permiso: Integer;
   LoginOK, Cancelar: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
@@ -200,6 +200,7 @@ begin
   Fecha := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
   CUIT := ConfigQuery.FieldByName('CUIT').AsString;
   reporte := ConfigQuery.FieldByName('Reporte').AsString;
+  IngresosBrutos := ConfigQuery.FieldByName('IIBB').AsString;
 end;
 
 procedure TDM.connection;

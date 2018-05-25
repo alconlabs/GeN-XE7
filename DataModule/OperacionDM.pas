@@ -723,13 +723,20 @@ begin
   if pgr then
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
+ // CALCULAR IIBB
+  Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + IngresosBrutos;
+  Q.Open;
+//  if tot - impu > Q.FieldByName('MONTO').AsFloat then
+//    IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
+//      Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
+IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
   // INSERTA EN LA TABLA VENTA
   Q.sql.Text := 'Insert Into "Venta" (CODIGO, LETRA, CLIENTE, ' +
-    ' SUBTOTAL, DESCUENTO, FECHA,' + ' IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
+    ' SUBTOTAL, DESCUENTO, FECHA, IMPUESTO, IIBB, TOTAL, CONTADO, CHEQUE,' +
     ' TARJETA, OTROS, SALDO, PAGADO' + ', PAGARE, COSTO, DEUDA, COMISION' +
     ') Values ' + '(' + (nro) + ', ' + quotedstr(let) + ', ' + cod + ', ' + ' '
     + floattostr(sbt) + ', ' + floattostr(des) + ', ' + quotedstr(fech) + ', ' +
-    floattostr(impu) + ', ' + floattostr(tot) + ', ' + floattostr(cont) + ', ' +
+    floattostr(impu) + ',' + floattostr(IIBB) + ', ' + floattostr(tot) + ', ' +floattostr(cont) + ', ' +
     floattostr(cheq) + ', ' + floattostr(tarj) + ', ' + floattostr(otr) + ', ' +
     floattostr(sal) + ', ' + floattostr(pag) + ',' + quotedstr(pagare) + ',' +
     floattostr(cmv) + ',' + floattostr(deud) + ',' + floattostr(comv) + ')';
