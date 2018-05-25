@@ -74,7 +74,7 @@ object EmpresaForm: TEmpresaForm
       end
       object Label12: TLabel
         Left = 435
-        Top = 139
+        Top = 118
         Width = 31
         Height = 13
         Caption = 'Email'
@@ -102,7 +102,7 @@ object EmpresaForm: TEmpresaForm
       end
       object Label28: TLabel
         Left = 404
-        Top = 163
+        Top = 142
         Width = 62
         Height = 13
         Caption = 'Messenger'
@@ -253,12 +253,11 @@ object EmpresaForm: TEmpresaForm
         ParentFont = False
       end
       object Label24: TLabel
-        Left = 377
-        Top = 64
+        Left = 45
+        Top = 353
         Width = 89
         Height = 13
         Caption = 'Ingresos Brutos'
-        FocusControl = DBEdit20
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -11
@@ -282,11 +281,10 @@ object EmpresaForm: TEmpresaForm
       end
       object Label26: TLabel
         Left = 431
-        Top = 88
+        Top = 67
         Width = 35
         Height = 13
         Caption = 'Rubro'
-        FocusControl = DBEdit20
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -11
@@ -296,11 +294,10 @@ object EmpresaForm: TEmpresaForm
       end
       object Label27: TLabel
         Left = 367
-        Top = 112
+        Top = 91
         Width = 99
         Height = 13
         Caption = 'Condici'#243'n de IVA'
-        FocusControl = DBEdit20
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -11
@@ -310,7 +307,7 @@ object EmpresaForm: TEmpresaForm
       end
       object Label23: TLabel
         Left = 443
-        Top = 187
+        Top = 166
         Width = 23
         Height = 13
         Caption = 'DNI'
@@ -324,7 +321,7 @@ object EmpresaForm: TEmpresaForm
       end
       object Image1: TImage
         Left = 473
-        Top = 241
+        Top = 220
         Width = 202
         Height = 135
         Hint = 'CLICK PARA CAMBIAR'
@@ -397,7 +394,7 @@ object EmpresaForm: TEmpresaForm
       end
       object Label1: TLabel
         Left = 438
-        Top = 241
+        Top = 220
         Width = 29
         Height = 13
         Caption = 'Logo'
@@ -411,7 +408,7 @@ object EmpresaForm: TEmpresaForm
       end
       object Label10: TLabel
         Left = 407
-        Top = 214
+        Top = 193
         Width = 59
         Height = 13
         Caption = 'Inic.Activ.'
@@ -451,7 +448,7 @@ object EmpresaForm: TEmpresaForm
       end
       object DBEdit13: TDBEdit
         Left = 473
-        Top = 139
+        Top = 118
         Width = 201
         Height = 21
         DataField = 'Email'
@@ -469,7 +466,7 @@ object EmpresaForm: TEmpresaForm
       end
       object DBEdit23: TDBEdit
         Left = 473
-        Top = 163
+        Top = 142
         Width = 201
         Height = 21
         DataField = 'MSN'
@@ -557,23 +554,14 @@ object EmpresaForm: TEmpresaForm
         DataSource = DataSource
         TabOrder = 1
       end
-      object DBEdit20: TDBEdit
-        Left = 473
-        Top = 64
-        Width = 201
-        Height = 21
-        DataField = 'IIBB'
-        DataSource = DataSource
-        TabOrder = 17
-      end
       object DBEdit21: TDBEdit
         Left = 473
-        Top = 88
+        Top = 67
         Width = 201
         Height = 21
         DataField = 'Rubro'
         DataSource = DataSource
-        TabOrder = 18
+        TabOrder = 17
       end
       object DBEdit22: TDBEdit
         Left = 473
@@ -586,17 +574,17 @@ object EmpresaForm: TEmpresaForm
       end
       object IVADBComboBox: TDBComboBox
         Left = 473
-        Top = 112
+        Top = 91
         Width = 201
         Height = 21
         DataField = 'IVA'
         DataSource = DataSource
-        TabOrder = 19
+        TabOrder = 18
         OnChange = IVADBComboBoxChange
       end
       object DBEdit19: TDBEdit
         Left = 472
-        Top = 187
+        Top = 166
         Width = 202
         Height = 21
         DataField = 'DOCUMENTO'
@@ -605,11 +593,23 @@ object EmpresaForm: TEmpresaForm
       end
       object DateTimePicker1: TDateTimePicker
         Left = 472
-        Top = 214
+        Top = 193
         Width = 202
         Height = 21
         Date = 42827.892104178240000000
         Time = 42827.892104178240000000
+        TabOrder = 19
+      end
+      object DBLookupComboBox2: TDBLookupComboBox
+        Left = 140
+        Top = 353
+        Width = 534
+        Height = 21
+        DataField = 'IIBB'
+        DataSource = DataSource
+        KeyField = 'CODIGO'
+        ListField = 'DESCRIPCION'
+        ListSource = IIBBDataSource
         TabOrder = 20
       end
     end
@@ -1041,6 +1041,22 @@ object EmpresaForm: TEmpresaForm
   object OpenPictureDialog1: TOpenPictureDialog
     Filter = 'Bitmaps (*.bmp)|*.bmp'
     Left = 440
+    Top = 396
+  end
+  object IIBBQuery: TIBQuery
+    Database = DM.BaseDatos
+    Transaction = DM.Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'Select * from "IIBB"')
+    Left = 363
+    Top = 396
+  end
+  object IIBBDataSource: TDataSource
+    DataSet = IIBBQuery
+    Left = 335
     Top = 396
   end
 end

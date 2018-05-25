@@ -167,7 +167,7 @@ begin
   QTemp.Open;
   while QTemp.Eof = False do
   begin
-    DebitoEdit.Text := FloatToStr(StrToFloat(DebitoEdit.Text) +
+    CreditoEdit.Text := FloatToStr(StrToFloat(CreditoEdit.Text) +
       QTemp.FieldByName('IVA1').AsFloat + QTemp.FieldByName('IVA2').AsFloat);
     QTemp.Next;
   end;
@@ -182,13 +182,14 @@ begin
   QTemp.Open;
   while QTemp.Eof = False do
   begin
-    CreditoEdit.Text := FloatToStr(StrToFloat(DebitoEdit.Text) +
+    DebitoEdit.Text := FloatToStr(StrToFloat(DebitoEdit.Text) +
       QTemp.FieldByName('IVA1').AsFloat + QTemp.FieldByName('IVA2').AsFloat);
     QTemp.Next;
   end;
 
-  SaldoEdit.Text := FloatToStr(StrToFloat(DebitoEdit.Text) -
-    StrToFloat(CreditoEdit.Text));
+
+  SaldoEdit.Text := FloatToStr(StrToFloat(CreditoEdit.Text) -
+    StrToFloat(DebitoEdit.Text));
 end;
 
 procedure TPagoIVAForm.FormCreate(Sender: TObject);

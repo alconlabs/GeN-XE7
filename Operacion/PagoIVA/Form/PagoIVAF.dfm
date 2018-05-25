@@ -24,7 +24,6 @@ object PagoIVAForm: TPagoIVAForm
     Color = clBlack
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 546
     object Label1: TLabel
       Left = 19
       Top = 8
@@ -102,8 +101,8 @@ object PagoIVAForm: TPagoIVAForm
       Top = 24
       Width = 81
       Height = 21
-      Date = 42005.914764351850000000
-      Time = 42005.914764351850000000
+      Date = 43101.914764351850000000
+      Time = 43101.914764351850000000
       TabOrder = 1
     end
     object HastaDateTimePicker: TDateTimePicker
@@ -111,8 +110,8 @@ object PagoIVAForm: TPagoIVAForm
       Top = 24
       Width = 82
       Height = 21
-      Date = 42156.914837233790000000
-      Time = 42156.914837233790000000
+      Date = 43252.914837233790000000
+      Time = 43252.914837233790000000
       TabOrder = 2
     end
   end
@@ -125,7 +124,6 @@ object PagoIVAForm: TPagoIVAForm
     Color = clBlack
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 546
     object AceptarBitBtn: TBitBtn
       Left = 233
       Top = 12
@@ -169,7 +167,6 @@ object PagoIVAForm: TPagoIVAForm
     Color = clBlack
     ParentBackground = False
     TabOrder = 2
-    ExplicitWidth = 546
     object Label4: TLabel
       Left = 139
       Top = 41

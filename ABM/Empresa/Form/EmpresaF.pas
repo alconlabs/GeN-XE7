@@ -50,7 +50,6 @@ type
     Label25: TLabel;
     Label26: TLabel;
     Label27: TLabel;
-    DBEdit20: TDBEdit;
     DBEdit21: TDBEdit;
     DBEdit22: TDBEdit;
     IVADBComboBox: TDBComboBox;
@@ -79,6 +78,9 @@ type
     DateTimePicker1: TDateTimePicker;
     CodigoDBEdit: TDBEdit;
     Label14: TLabel;
+    IIBBQuery: TIBQuery;
+    IIBBDataSource: TDataSource;
+    DBLookupComboBox2: TDBLookupComboBox;
     procedure NoBitBtnClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
@@ -150,6 +152,7 @@ begin
   // DM := TDM.Create(Self);
   CuentaT.Open;
   Tabla.Open;
+  IIBBQuery.Open;
   Image1.Picture.LoadFromFile(path + 'img\empresa.bmp');
   DateTimePicker1.Date := Tabla.FieldByName('Fecha').AsDateTime;
   for i := 1 to 7 do IVADBComboBox.Items.Add(OperacionDM.tipoIVA[i]);
