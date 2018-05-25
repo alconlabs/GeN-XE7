@@ -81,7 +81,7 @@ uses
   PedidoLF in 'Listados\Pedidos\Form\PedidoLF.pas' {PedidoLForm},
   PagoVendedorF in 'Operacion\PagoVendedor\Form\PagoVendedorF.pas' {PagoVendedorForm},
   Pagos in 'Operacion\PagoServicio\Form\Pagos.pas' {PagosForm},
-  PagoIVAF in 'Operacion\PagoIVA\Form\PagoIVAF.pas' {PagoIVAForm},
+  PagoF in 'Operacion\Pago\Form\PagoF.pas' {PagoForm},
   PagoComisionCobrador in 'Operacion\PagoCobrador\Form\PagoComisionCobrador.pas' {PagoComisionCobradorForm},
   OperacionDM in 'DataModule\OperacionDM.pas' {OperacionDataModule: TDataModule},
   NotaCreditoPlanF in 'Operacion\NotaCreditoPlan\Form\NotaCreditoPlanF.pas' {NotaCreditoPlanForm},
@@ -109,7 +109,8 @@ uses
   MarcaF in 'ABM\Marca\Form\MarcaF.pas' {MarcaForm},
   IngresosBrutosF in 'abm\ingresosbrutos\form\IngresosBrutosF.pas' {IngresosBrutosForm},
   AfipDM in 'DataModule\AfipDM.pas' {AfipDataModule: TDataModule},
-  VenderF in 'Operacion\VenderCodBarra\Form\VenderF.pas' {VenderForm};
+  VenderF in 'Operacion\VenderCodBarra\Form\VenderF.pas' {VenderForm},
+  PagoIVAF in 'Operacion\PagoIVA\Form\PagoIVAF.pas' {PagoIVAForm};
 
 {$R *.res}
 
@@ -121,6 +122,7 @@ begin
   Application.CreateForm(TFullMainForm, FullMainForm);
   Application.CreateForm(TAfipDataModule, AfipDataModule);
   Application.CreateForm(TVenderForm, VenderForm);
+  Application.CreateForm(TPagoIVAForm, PagoIVAForm);
   Application.Run;
 
 end.

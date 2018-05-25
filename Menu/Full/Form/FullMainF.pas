@@ -96,6 +96,7 @@ type
     MIGRAR1: TMenuItem;
     COMPRAS1: TMenuItem;
     VENTAS1: TMenuItem;
+    PAGODEIIBB1: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ProveedoresClick(Sender: TObject);
@@ -176,6 +177,7 @@ type
     procedure VENTAS1Click(Sender: TObject);
     procedure SubCategoriasClick(Sender: TObject);
     procedure ReImprimirClick(Sender: TObject);
+    procedure PAGODEIIBB1Click(Sender: TObject);
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
@@ -187,7 +189,7 @@ var
   FullMainForm: TFullMainForm;
 
 const
-version='201805230913';
+version='201805252040';
 
 implementation
 
@@ -201,7 +203,8 @@ uses LoginF, VenderF, CrearCreditoF, CtaCteF, BuscaFactura,
   UFProductos, ProveedorF, UFClientes, PlanF, VendedorF, CobradorF, RubroF,
   UFCategorias, UFSubCategorias, IngresosBrutosF, UFBuscaArticulos, CajaLF,
   GananciasL, PedidoLF, Precios, ListadoClientes, EstadoCuentaLF, BuscaCompra,
-  EmpresaF, UsuariosF, ConfiguracionF, VaciarBaseF, BackUpF, MigrarF, main, OperacionF;
+  EmpresaF, UsuariosF, ConfiguracionF, VaciarBaseF, BackUpF, MigrarF, main, OperacionF,
+  PagoF;
 
 {$R *.dfm}
 
@@ -756,6 +759,16 @@ begin
     PagoVendedorForm.ShowModal;
   finally
     PagoVendedorForm.Free;
+  end;
+end;
+
+procedure TFullMainForm.PAGODEIIBB1Click(Sender: TObject);
+begin
+  PagoForm := TPagoForm.Create(self);
+  try
+    PagoForm.ShowModal;
+  finally
+    PagoForm.Free;
   end;
 end;
 

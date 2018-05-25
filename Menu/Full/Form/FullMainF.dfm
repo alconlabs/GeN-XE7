@@ -109,6 +109,10 @@ object FullMainForm: TFullMainForm
     end
     object CONTABILIDAD1: TMenuItem
       Caption = 'CONTABILIDAD'
+      object PAGODEIIBB1: TMenuItem
+        Caption = 'PAGO DE IIBB'
+        OnClick = PAGODEIIBB1Click
+      end
       object PAGODEIVA1: TMenuItem
         Caption = 'PAGO DE IVA'
         OnClick = PAGODEIVA1Click
