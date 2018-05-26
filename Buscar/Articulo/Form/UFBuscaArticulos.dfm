@@ -528,8 +528,10 @@ object FBuscaArticulo: TFBuscaArticulo
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
-      'SELECT '
-      '("Articulo".Precio/("Articulo".Tasa/100+1)) as precioIVA,'
+      'SELECT'
+      
+        '  ROUND(("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*' +
+        '0.01)),2) as precioIVA, '
       '  "Articulo".DESCRIPCION,'
       '  "Articulo".CODIGO,'
       '  "Articulo".COSTO,'

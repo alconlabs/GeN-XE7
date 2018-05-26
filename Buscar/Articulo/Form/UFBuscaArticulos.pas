@@ -63,7 +63,7 @@ type
   public
     { Public declarations }
     cb: String;
-    Precio, Proveedor: string;
+    Precio, Proveedor, articulos: string;
     procedure buscar;
   end;
 
@@ -115,8 +115,8 @@ begin
     if Precio = 'Costo' then
       Precio := 'Costo';
   end;
-  Tabla.SQL.Text := 'SELECT' +
-    '  ("Articulo".Precio/("Articulo".Tasa/100+1)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
+  {Tabla.SQL.Text := 'SELECT' +
+    '    ("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*0.01)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
     + '  "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
     + '  "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'
     + '  "Articulo".PRECIO,  "Articulo".PORCENTAJE,  "Articulo".ULTPRECIO,  "Articulo".UBICACION,'
@@ -136,9 +136,32 @@ begin
     '  INNER JOIN "Categoria" ON ("Articulo".CATEGORIA = "Categoria".CODIGO)' +
     '  INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCategoria".CODIGO)'
     + '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
-    '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +
-    '  WHERE (PROVEEDOR like ' + QuotedStr(ProveedorEdit.Text + '%') + ')' +
-    '  ORDER BY   "Articulo".DESCRIPCION';
+    '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +  }
+  articulos := 'SELECT'
+    + ' ROUND(("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*0.01)),2) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
+    + ' "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
+    + ' "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'
+    + ' "Articulo".PRECIO,  "Articulo".PORCENTAJE,  "Articulo".ULTPRECIO,  "Articulo".UBICACION,'
+    + ' "Articulo".UNIDAD,  "Articulo".DISPONIBLE,  "Articulo".ENPRODUCCION,  "Articulo".NOTAS,'
+    + ' "Articulo".IVA,  "Articulo".TASA,  "Articulo".IMPOTROS,  "Articulo".IIBB,'
+    + ' "Articulo".STOCKMINIMO,  "Articulo".STOCKMAXIMO,  "Articulo".STOCKVENDIDO,  "Articulo".FECHACOMPULT,'
+    + ' "Articulo".LISTA,  "Articulo".PROCEDENCIA,  "Articulo".CODIGOBARRA,  "Articulo".GARANTIA,'
+    + ' "Articulo".FECHA,  "Articulo".PEDIDO,  "Articulo".STOCK,  "Articulo".EXISTENTE,'
+    + ' "Articulo".ACTUAL,  "Articulo".MARCADOCONTADO,  "Articulo".MARCADOLISTA,  "Articulo".MARCADOFINAL,'
+    + ' "Articulo".PREPARADO,  "Articulo".CTANOMBRE,  "Articulo".CTATIPO,  "Articulo".CTAANTICIPO,'
+    + ' "Articulo".CTAIIBB,  "Articulo".ESTADO,  "Articulo".VENCE,  "Articulo".VENCIMIENTO,'
+    + ' "Marca".DESCRIPCION AS MARCA,  "Color".DESCRIPCION AS COLOR,  "Categoria".DESCRIPCION AS CATEGORIA,'
+    + ' "SubCategoria".DESCRIPCION AS SUBCATEGORIA,  "Rubro".DESCRIPCION AS RUBRO,  "Proveedor".NOMBRE AS PROVEEDOR'
+    + ' FROM' + '  "Articulo"' +
+    ' INNER JOIN "Marca" ON ("Articulo".MARCA = "Marca".CODIGO)' +
+    ' INNER JOIN "Color" ON ("Articulo".COLOR = "Color".CODIGO)' +
+    ' INNER JOIN "Categoria" ON ("Articulo".CATEGORIA = "Categoria".CODIGO)' +
+    ' INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCategoria".CODIGO)'
+    + ' INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
+    ' INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)';
+  Tabla.SQL.Text:= articulos
+    +'  WHERE (PROVEEDOR like ' + QuotedStr(ProveedorEdit.Text + '%') + ')'
+    +'  ORDER BY   "Articulo".DESCRIPCION';
   if (DM.ConfigQuery.FieldByName('CodigoBarra').AsString) = 'SI ' then
     CodigoEdit.SetFocus
   else
@@ -161,8 +184,8 @@ end;
 
 procedure TFBuscaArticulo.buscar;
 begin
-  Tabla.SQL.Text := 'SELECT' +
-    '  ("Articulo".Precio/("Articulo".Tasa/100+1)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
+  {Tabla.SQL.Text := 'SELECT' +
+    '    ("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*0.01)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
     + '  "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
     + '  "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'
     + '  "Articulo".PRECIO,  "Articulo".PORCENTAJE,  "Articulo".ULTPRECIO,  "Articulo".UBICACION,'
@@ -182,8 +205,9 @@ begin
     '  INNER JOIN "Categoria" ON ("Articulo".CATEGORIA = "Categoria".CODIGO)' +
     '  INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCategoria".CODIGO)'
     + '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
-    '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +
-    ' WHERE ' + '(CODIGOBARRA like ' + QuotedStr(CodigoEdit.Text + '%') + ')' +
+    '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +}
+  Tabla.SQL.Text:= articulos
+    +' WHERE ' + '(CODIGOBARRA like ' + QuotedStr(CodigoEdit.Text + '%') + ')' +
     'AND ("Articulo".DESCRIPCION Containing ' + QuotedStr(DescripcionEdit.Text)
     + ')' + 'AND ("Marca".DESCRIPCION like ' + QuotedStr(MarcaEdit.Text + '%') +
     ')' + 'AND ("Rubro".DESCRIPCION like ' + QuotedStr(RubroEdit.Text + '%') +
@@ -216,8 +240,8 @@ begin
   RubroEdit.Text := '';
   ProveedorEdit.Text := '';
   CodigoEdit.Text := '';
-  Tabla.SQL.Text := 'SELECT' +
-    '  ("Articulo".Precio/("Articulo".Tasa/100+1)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
+  {Tabla.SQL.Text := 'SELECT' +
+    '    ("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*0.01)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
     + '  "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
     + '  "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'
     + '  "Articulo".PRECIO,  "Articulo".PORCENTAJE,  "Articulo".ULTPRECIO,  "Articulo".UBICACION,'
@@ -237,8 +261,9 @@ begin
     '  INNER JOIN "Categoria" ON ("Articulo".CATEGORIA = "Categoria".CODIGO)' +
     '  INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCategoria".CODIGO)'
     + '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
-    '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +
-    '  ORDER BY   "Articulo".DESCRIPCION';
+    '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' + }
+  Tabla.SQL.Text:= articulos
+    +'  ORDER BY   "Articulo".DESCRIPCION';
   Tabla.Open;
 end;
 
