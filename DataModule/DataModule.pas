@@ -201,6 +201,7 @@ begin
   CUIT := ConfigQuery.FieldByName('CUIT').AsString;
   reporte := ConfigQuery.FieldByName('Reporte').AsString;
   IngresosBrutos := ConfigQuery.FieldByName('IIBB').AsString;
+  if IngresosBrutos='' then IngresosBrutos:='0';
 end;
 
 procedure TDM.connection;
