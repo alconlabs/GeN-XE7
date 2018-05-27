@@ -244,7 +244,7 @@ begin
   costo := 0;
   reparaciones := 0;
   ClienteEdit.Text := '0';
-  ClienteLabel.Caption := 'Consumidor Final';
+//  ClienteLabel.Caption := 'Consumidor Final';
   CUITLabel.Caption:='';
   ComprobanteEdit.Text:='';
   FEContado.Text := '0';
@@ -491,30 +491,31 @@ begin
   Deuda := 0;
   if Compra then
   begin
-      FBuscaProve := TFBuscaProve.Create(self);
-  try
-    FBuscaProve.ShowModal;
-  finally
-    ClienteEdit.Text := FBuscaProve.Tabla.FieldByName('CODIGO').AsString;
-    with FBuscaProve do
-    begin
-      ClienteLabel.Caption := Tabla.FieldByName('Nombre').AsString;
-      Label3.Caption := Tabla.FieldByName('Direccion').AsString;
-      CUITLabel.Caption := Tabla.FieldByName('CUIT').AsString;
-      CtaNombre := Tabla.FieldByName('CtaNombre').AsString;
-      CtaTipo := Tabla.FieldByName('CtaTipo').AsString;
-      CtaAnticipo := Tabla.FieldByName('CtaAnticipo').AsString;
+    FBuscaProve := TFBuscaProve.Create(self);
+    try
+      FBuscaProve.ShowModal;
+    finally
+      ClienteEdit.Text := FBuscaProve.Tabla.FieldByName('CODIGO').AsString;
+      with FBuscaProve do
+      begin
+        ClienteLabel.Caption := Tabla.FieldByName('Nombre').AsString;
+        Label3.Caption := Tabla.FieldByName('Direccion').AsString;
+        CUITLabel.Caption := Tabla.FieldByName('CUIT').AsString;
+        CtaNombre := Tabla.FieldByName('CtaNombre').AsString;
+        CtaTipo := Tabla.FieldByName('CtaTipo').AsString;
+        CtaAnticipo := Tabla.FieldByName('CtaAnticipo').AsString;
 
-      PagareCheckBox.Checked := Tabla.FieldByName('PAGARE').AsBoolean;
-      if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Inscripto') and
-        (Tabla.FieldByName('IVA').AsString = 'RI') then cbTipo.ItemIndex := 0
-      else if (Tabla.FieldByName('IVA').AsString = 'RI') then
-        cbTipo.ItemIndex := 1
-      else
-        cbTipo.ItemIndex := 2;
+        PagareCheckBox.Checked := Tabla.FieldByName('PAGARE').AsBoolean;
+        if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Inscripto') and
+          (Tabla.FieldByName('IVA').AsString = 'RI') then cbTipo.ItemIndex := 0
+        else
+        if (Tabla.FieldByName('IVA').AsString = 'RI') then
+          cbTipo.ItemIndex := 6
+        else
+          cbTipo.ItemIndex := 11;
+      end;
+      FBuscaProve.Free;
     end;
-    FBuscaProve.Free;
-  end;
   end
   else
   begin
@@ -735,35 +736,38 @@ end;
 
 procedure TOperacionForm.FormShow(Sender: TObject);
 begin
-if (reporte='COriginal') or (reporte='CDupicado') or (reporte='CTriplicado')
-or (reporte='CCuadruplicado') or (reporte='Ticket')then
-  cbTipo.ItemIndex := 0
-  else
-    begin
-      if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Monotributo')
-      then
-        cbTipo.ItemIndex := 11
-      else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Inscripto')
-      then
-        cbTipo.ItemIndex := 6
-      else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Exento') then
-        cbTipo.ItemIndex := 11
-      else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'No Responsable') then
-        cbTipo.ItemIndex := 14
-      else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'S.R.L.') then
-        cbTipo.ItemIndex := 6
-      else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'S.A.') then
-        cbTipo.ItemIndex := 6
-      else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Cooperativa') then
-        cbTipo.ItemIndex := 6;
-    end;
-  Nuevo;
   if Compra then
   begin
     ClienteBitBtn.Caption := 'Proveedor';
     Label1.Caption := ClienteBitBtn.Caption+':';
     ClienteBitBtn.Click;
+  end
+  else
+  begin
+    if (reporte='COriginal') or (reporte='CDupicado') or (reporte='CTriplicado')
+    or (reporte='CCuadruplicado') or (reporte='Ticket')then
+      cbTipo.ItemIndex := 0
+      else
+        begin
+          if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Monotributo')
+          then
+            cbTipo.ItemIndex := 11
+          else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Inscripto')
+          then
+            cbTipo.ItemIndex := 6
+          else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Exento') then
+            cbTipo.ItemIndex := 11
+          else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'No Responsable') then
+            cbTipo.ItemIndex := 14
+          else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'S.R.L.') then
+            cbTipo.ItemIndex := 6
+          else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'S.A.') then
+            cbTipo.ItemIndex := 6
+          else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Cooperativa') then
+            cbTipo.ItemIndex := 6;
+        end;
   end;
+  Nuevo;
 end;
 
 procedure TOperacionForm.FormKeyUp(Sender: TObject; var Key: Word;

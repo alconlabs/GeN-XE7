@@ -740,8 +740,8 @@ object VaciarBaseForm: TVaciarBaseForm
         'OMBRE, CTATIPO, CTAANTICIPO, PAGARE) VALUES (1, '#39'proveedor'#39', NUL' +
         'L, '#39'Calle s/n'#39', NULL, NULL, '#39'Mendoza'#39', '#39'San Rafael'#39', '#39'Ciudad'#39', N' +
         'ULL, NULL, '#39'15'#39', '#39'4'#39', NULL, '#39'2627'#39', NULL, NULL, NULL, NULL, NULL' +
-        ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '#39'4'#39', NULL, NUL' +
-        'L, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 76, 13, 36, NULL);'
+        ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '#39'RI'#39', NULL, NU' +
+        'LL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 76, 13, 36, NULL);'
       
         'INSERT INTO "Proveedor" (CODIGO, NOMBRE, TITULAR, DIRECCION, DIR' +
         'ECCIONCOMERCIAL, PAIS, PROVINCIA, DEPARTAMENTO, CIUDAD, CP, CODI' +

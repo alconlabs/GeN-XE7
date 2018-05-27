@@ -338,9 +338,9 @@ object OperacionForm: TOperacionForm
     object ClienteLabel: TLabel
       Left = 92
       Top = 6
-      Width = 9
+      Width = 80
       Height = 13
-      Caption = '...'
+      Caption = 'Consumidor Final'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
