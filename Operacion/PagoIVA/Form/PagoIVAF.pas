@@ -159,7 +159,7 @@ procedure TPagoIVAForm.CalcularBitBtnClick(Sender: TObject);
 begin
   // DEBITO
   QTemp.SQL.Text := 'SELECT ' + '  "LibroIVAventa".IVA1,' +
-    '  "LibroIVAventa".IVA2, ' + '  "LibroIVAventa".FECHA ' + ' FROM ' +
+    '  "LibroIVAventa".IVA2, IDERPYPAC, ' + '  "LibroIVAventa".FECHA ' + ' FROM ' +
     '  "LibroIVAventa"  ' + ' WHERE ' + '  ("LibroIVAventa".FECHA >= ' +
     QuotedStr(DateToStr(DesdeDateTimePicker.Date)) + ' ) AND' +
     '  ("LibroIVAventa".FECHA <= ' +
@@ -168,13 +168,13 @@ begin
   while QTemp.Eof = False do
   begin
     CreditoEdit.Text := FloatToStr(StrToFloat(CreditoEdit.Text) +
-      QTemp.FieldByName('IVA1').AsFloat + QTemp.FieldByName('IVA2').AsFloat);
+      QTemp.FieldByName('IVA1').AsFloat + QTemp.FieldByName('IVA2').AsFloat + QTemp.FieldByName('IDERPYPAC').AsFloat);
     QTemp.Next;
   end;
 
   // CREDITO
   QTemp.SQL.Text := 'SELECT ' + '  "LibroIVAcompra".IVA1,' +
-    '  "LibroIVAcompra".IVA2, ' + '  "LibroIVAcompra".FECHA ' + ' FROM ' +
+    '  "LibroIVAcompra".IVA2, IDERPYPAC, ' + '  "LibroIVAcompra".FECHA ' + ' FROM ' +
     '  "LibroIVAcompra"  ' + ' WHERE ' + '  ("LibroIVAcompra".FECHA >= ' +
     QuotedStr(DateToStr(DesdeDateTimePicker.Date)) + ' ) AND' +
     '  ("LibroIVAcompra".FECHA <= ' +
@@ -183,7 +183,7 @@ begin
   while QTemp.Eof = False do
   begin
     DebitoEdit.Text := FloatToStr(StrToFloat(DebitoEdit.Text) +
-      QTemp.FieldByName('IVA1').AsFloat + QTemp.FieldByName('IVA2').AsFloat);
+      QTemp.FieldByName('IVA1').AsFloat + QTemp.FieldByName('IVA2').AsFloat - QTemp.FieldByName('IDERPYPAC').AsFloat);
     QTemp.Next;
   end;
 
