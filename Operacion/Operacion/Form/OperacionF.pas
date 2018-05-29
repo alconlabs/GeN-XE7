@@ -142,60 +142,59 @@ begin
     QuitarBitBtn.Click; // vaciar articulos
   Nuevo;
 end;
+
 procedure TOperacionForm.TraerArticulo;
 var
 NG,IVA : double;
 begin
-  If Cuenta > 1 then
-        SGFact.RowCount := SGFact.RowCount + 1;
-      Tabla.Close;
-      Tabla.SQL.Text := 'SELECT * FROM "Articulo" ' + 'WHERE CODIGO = ' +
-        (codigoArticulo);
-      Tabla.Open;
-      if PrecioLabel.Caption = '0' then
-        PrecioLabel.Caption := '';
-      SGFact.Cells[0, Cuenta] := Tabla.FieldByName('CODIGO').AsString;
-      SGFact.Cells[1, Cuenta] := Tabla.FieldByName('DESCRIPCION').AsString;
-      // nombre
-      SGFact.Cells[2, Cuenta] := '0';
+  If Cuenta > 1 then SGFact.RowCount := SGFact.RowCount + 1;
+  Tabla.Close;
+  Tabla.SQL.Text := 'SELECT * FROM "Articulo" ' + 'WHERE CODIGO = ' +
+    (codigoArticulo);
+  Tabla.Open;
+  if PrecioLabel.Caption = '0' then
+    PrecioLabel.Caption := '';
+  SGFact.Cells[0, Cuenta] := Tabla.FieldByName('CODIGO').AsString;
+  SGFact.Cells[1, Cuenta] := Tabla.FieldByName('DESCRIPCION').AsString;
+  // nombre
+  SGFact.Cells[2, Cuenta] := '0';
 //      if  SGFact.Cells[3, Cuenta] ='0'  then SGFact.Cells[3, Cuenta] := '1'; // cantidad
-      SGFact.Cells[3, Cuenta] := FloatToStr(CAN);
-      if PR=0 then PR := Tabla.FieldByName('PRECIO' + PrecioLabel.Caption).AsFloat;
-      SGFact.Cells[4, Cuenta] := FloatToStr(PR);
+  SGFact.Cells[3, Cuenta] := FloatToStr(CAN);
+  if PR=0 then PR := Tabla.FieldByName('PRECIO' + PrecioLabel.Caption).AsFloat;
+  SGFact.Cells[4, Cuenta] := FloatToStr(PR);
 
-      // IVA
-      IVA := Tabla.FieldByName('TASA').AsFloat;
-      SGFact.Cells[6, Cuenta] := FloatToStr(IVA);
+  // IVA
+  IVA := Tabla.FieldByName('TASA').AsFloat;
+  SGFact.Cells[6, Cuenta] := FloatToStr(IVA);
 
-      //NETO
-      if Compra then NG:=PR else
-        if IVA = 105 then NG:=RoundTo((100*PR)/110.5,-2) else NG:=RoundTo((100*PR)/(100+IVA),-2);
-      SGFact.Cells[8, Cuenta] := FloatToStr(NG * CAN);
+  //NETO
+  if Compra then NG:=PR else
+    if IVA = 105 then NG:=RoundTo((100*PR)/110.5,-2) else NG:=RoundTo((100*PR)/(100+IVA),-2);
+  SGFact.Cells[8, Cuenta] := FloatToStr(NG * CAN);
 
 //      if FLEPorcDesc.Text<>'0' then  SGFact.Cells[7, Cuenta] :=  FloatToStr( StrToFloat(SGFact.Cells[8, Cuenta]) * (StrToFloat(FLEPorcDesc.Text)/100) )
 //      else  SGFact.Cells[7, Cuenta] := '0';
 
-      //Total
+  //Total
 //       SGFact.Cells[5, Cuenta] := FloatToStr(StrToFloat(SGFact.Cells[4, Cuenta]) * StrToFloat(SGFact.Cells[3, Cuenta]));
-      SGFact.Cells[5, Cuenta] := FloatToStr(PR * CAN);
+  SGFact.Cells[5, Cuenta] := FloatToStr(PR * CAN);
 
+  // INGRESOS BRUTOS
+  SGFact.Cells[9, Cuenta] := Tabla.FieldByName('IIBB').AsString;
+  Q.SQL.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' +
+    QuotedStr(SGFact.Cells[9, Cuenta]);
+  Q.Open;
 
-      // INGRESOS BRUTOS
-      SGFact.Cells[9, Cuenta] := Tabla.FieldByName('IIBB').AsString;
-      Q.SQL.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' +
-        QuotedStr(SGFact.Cells[9, Cuenta]);
-      Q.Open;
+  // PORCENTAJE DE INGRESOS BRUTOS
+  SGFact.Cells[10, Cuenta] :=
+    Format('%8.2f', [Q.FieldByName('PORCENTAJE').AsFloat]);
 
-      // PORCENTAJE DE INGRESOS BRUTOS
-      SGFact.Cells[10, Cuenta] :=
-        Format('%8.2f', [Q.FieldByName('PORCENTAJE').AsFloat]);
-
-      //ULTIMO NETO
-      SGFact.Cells[11, Cuenta] :=
-        FloatToStr(Tabla.FieldByName('ULTCOSTO').AsFloat *
-        StrToFloat(SGFact.Cells[3, SGFact.Row])); // PRECIO DE COSTO
-      Cuenta := Cuenta + 1;
-      CalculaTotales;
+  //ULTIMO NETO
+  SGFact.Cells[11, Cuenta] :=
+    FloatToStr(Tabla.FieldByName('ULTCOSTO').AsFloat *
+    StrToFloat(SGFact.Cells[3, SGFact.Row])); // PRECIO DE COSTO
+  Cuenta := Cuenta + 1;
+  CalculaTotales;
 end;
 
 procedure TOperacionForm.Nuevo;

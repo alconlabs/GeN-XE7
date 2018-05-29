@@ -724,12 +724,16 @@ begin
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
  // CALCULAR IIBB
-  Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + IngresosBrutos;
-  Q.Open;
-//  if tot - impu > Q.FieldByName('MONTO').AsFloat then
-//    IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
-//      Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
-IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
+
+      Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + IngresosBrutos;
+      Q.Open;
+      //  if tot - impu > Q.FieldByName('MONTO').AsFloat then
+      //    IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
+      //      Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
+      if let = 'C' then
+        IIBB := tot * (Q.FieldByName('PORCENTAJE').AsFloat/100)
+      else
+        IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
   // INSERTA EN LA TABLA VENTA
   Q.sql.Text := 'Insert Into "Venta" (CODIGO, LETRA, CLIENTE, ' +
     ' SUBTOTAL, DESCUENTO, FECHA, IMPUESTO, IIBB, TOTAL, CONTADO, CHEQUE,' +
@@ -745,11 +749,11 @@ IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
   for i := 1 to High(mat[0]) do
   begin
     // CALCULAR IIBB
-    Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + quotedstr(mat[9, i]);
-    Q.Open;
-    if tot - impu > Q.FieldByName('MONTO').AsFloat then
-      IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
-        Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
+//    Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + quotedstr(mat[9, i]);
+//    Q.Open;
+//    if tot - impu > Q.FieldByName('MONTO').AsFloat then
+//      IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
+//        Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
     Q.sql.Text :=
       'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
       + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
@@ -808,7 +812,7 @@ IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
   end;
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA VENTAS
-  if let <> 'X' then
+  if let = 'A' then//  if let <> 'X' then
     LibroIVAvta(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(tot)); // en blanco
   // Insertar en la tabla LibroDiario
@@ -1003,7 +1007,7 @@ begin
   end;
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA COMPRAS
-  if let <> 'X' then
+  if let = 'A' then//  if let <> 'X' then
     LibroIVACompra(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(perc), floattostr(tot)); // en blanco
   // Insertar en la tabla LibroDiario

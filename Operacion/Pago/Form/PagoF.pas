@@ -45,7 +45,7 @@ procedure TPagoForm.AceptarBitBtnClick(Sender: TObject);
 var
   i, c: integer;
 begin
-{  fecha := (FormatDateTime('mm/dd/yyyy hh:mm:ss', now));
+  fecha := (FormatDateTime('mm/dd/yyyy hh:mm:ss', now));
 
   // Iniciar la Transaccion
 
@@ -61,29 +61,17 @@ begin
   // LIQUIDACION DE
 
   if StrToFloat(SaldoEdit.Text) > 0 then
-  begin // renglon  -  A PAGAR
-    Q.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
-      dm.ConfigQuery.FieldByName('CtaIVAAPagar').AsString;
-    Q.Open;
-    c := c + 1;
-    QTemp.SQL.Text :=
-      'Insert Into "LibroDiario" (ASIENTO, FECHA, LEYENDA, JERARQUIA, CUENTA, DEBE, HABER, OCULTO)'
-      + ' Values ' + '( ' + IntToStr(i) + ', ' + QuotedStr(fecha) +
-      ', ''LIQUIDACION DE IVA'', ' + QuotedStr(Q.FieldByName('Jerarquia')
-      .AsString) + ', ' + QuotedStr(Q.FieldByName('DESCRIPCION').AsString) +
-      ', 0, ' + SaldoEdit.Text + ', ' + QuotedStr(Oculto) + ' )';
-    QTemp.ExecSQL;
-
-    // PAGO DE
+  begin
+    // PAGO DE IIBB
     // renglon  -  A PAGAR
     Q.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
-      dm.ConfigQuery.FieldByName('CtaIVAAPagar').AsString;
+      dm.ConfigQuery.FieldByName('CtaIIBB').AsString;
     Q.Open;
     c := c + 1;
     QTemp.SQL.Text :=
       'Insert Into "LibroDiario" (ASIENTO, FECHA, LEYENDA, JERARQUIA, CUENTA, DEBE, HABER, OCULTO)'
       + ' Values ' + '( ' + IntToStr(i) + ', ' + QuotedStr(fecha) +
-      ', ''PAGO DE IVA'', ' + QuotedStr(Q.FieldByName('Jerarquia').AsString) +
+      ', ''PAGO DE IIBB'', ' + QuotedStr(Q.FieldByName('Jerarquia').AsString) +
       ', ' + QuotedStr(Q.FieldByName('DESCRIPCION').AsString) + ', ' +
       SaldoEdit.Text + ', 0, ' + QuotedStr(Oculto) + ' )';
     QTemp.ExecSQL;
@@ -96,7 +84,7 @@ begin
     QTemp.SQL.Text :=
       'Insert Into "LibroDiario" (ASIENTO, FECHA, LEYENDA, JERARQUIA, CUENTA, DEBE, HABER, OCULTO)'
       + ' Values ' + '( ' + IntToStr(i) + ', ' + QuotedStr(fecha) +
-      ', ''PAGO DE IVA'', ' + QuotedStr(Q.FieldByName('Jerarquia').AsString) +
+      ', ''PAGO DE IIBB'', ' + QuotedStr(Q.FieldByName('Jerarquia').AsString) +
       ', ' + QuotedStr(Q.FieldByName('DESCRIPCION').AsString) + ', 0, ' +
       SaldoEdit.Text + ', ' + QuotedStr(Oculto) + ' )';
     QTemp.ExecSQL;
@@ -106,7 +94,7 @@ begin
 
   // Completa la Transaccion
   QTemp.Transaction.CommitRetaining;
-  Close;         }
+  Close;
 end;
 
 procedure TPagoForm.CalcularBitBtnClick(Sender: TObject);
