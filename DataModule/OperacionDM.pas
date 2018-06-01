@@ -685,11 +685,11 @@ begin
   for i := 1 to High(mat[0]) do
   begin
     // CALCULAR IIBB
-    Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + quotedstr(mat[9, i]);
-    Q.Open;
-    if tot - impu > Q.FieldByName('MONTO').AsFloat then
-      IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
-        Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
+//    Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + quotedstr(mat[9, i]);
+//    Q.Open;
+//    if tot - impu > Q.FieldByName('MONTO').AsFloat then
+//      IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
+//        Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
     Q.sql.Text :=
       'Insert Into "PresupuestoItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
       + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
@@ -859,12 +859,6 @@ begin
   // Insertar en la tabla de OPERACIONITEM
   for i := 1 to High(mat[0]) do
   begin
-    // CALCULAR IIBB
-    Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + quotedstr(mat[9, i]);
-    Q.Open;
-    if tot - impu > Q.FieldByName('MONTO').AsFloat then
-      IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
-        Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
     Q.sql.Text :=
       'Insert Into "OperacionItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
       + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
@@ -1025,7 +1019,7 @@ var
 begin
   sal := tot - pag;
   a := floattostr(UltimoRegistro('"LibroDiario"', 'ASIENTO'));
-  if (oper = 'CLIENTE') or (oper = 'VENTA') then
+  if (oper = 'CLIENTE') or (oper = 'VENTA') {or (oper = 'PEDIDO')} then
     tabl := 'Cliente'
   else if (oper = 'PROVEEDOR') or (oper = 'COMPRA') then
     tabl := 'Proveedor'
@@ -1216,7 +1210,142 @@ begin
         Asiento(dm.ConfigQuery.FieldByName('CTACAJA').AsString, a, fech,
           (oper + ' - ' + let + ' - ' + cod + ' - ' + cui), '0',
           floattostr(tot));
-      end;
+      end
+      else if oper = 'VENTA' then // SI ES VENTA
+      begin
+        // -----------------------------------0-----------------------------------------
+        // PAGO CON EFECTIVO
+        if (cont) > 0.04 then
+          Asiento(dm.ConfigQuery.FieldByName('CtaCaja').AsString, a, fech,
+            (oper + ' - ' + let + ' - ' + cod + ' - ' + cui), floattostr(pag),
+            '0'); // CAJA
+        // CUENTA CORRIENTE
+        if ((pag) < tot) AND (pgr <> True) then
+          Asiento(ctan, a, fech, (oper + ' - ' + let + ' - ' + cod + ' - ' +
+            cui), floattostr(sal), '0'); // DSXVTA
+        // CON DOCUMENTOS (PAGARE)
+        if (pag < tot) AND (pgr = True) then
+          Asiento(dm.ConfigQuery.FieldByName('CtaDocumentoACobrar').AsString, a,
+            fech, (oper + ' - ' + let + ' - ' + cod + ' - ' + cui),
+            floattostr(sal), '0'); // DOC A COBRAR
+        // PAGO CON CHEQUE
+        if (cheq) > 0.04 then
+          Asiento(dm.ConfigQuery.FieldByName('CtaValorAlCobro').AsString, a,
+            fech, (oper + ' - ' + let + ' - ' + cod + ' - ' + cui),
+            floattostr(cheq), '0'); // VALOR AL COBRO
+        // a
+        // PAGO DE CUENTA CORRIENTE
+        if ((pag) > (tot - deud)) then
+          Asiento(ctan, a, fech, (oper + ' - ' + let + ' - ' + cod + ' - ' +
+            cui), '0', floattostr(pag - (tot - deud)));
+        // renglon  - DEUDORES POR VENTA
+        // si es factura A
+        if let = 'A' then
+        begin
+          Asiento(dm.ConfigQuery.FieldByName('CtaIVADebitoFiscal').AsString, a,
+            fech, (oper + ' - ' + let + ' - ' + cod + ' - ' + cui), '0',
+            floattostr(impu)); // renglon  - IVA DEBITO FISCAL
+          tot := tot - impu;
+        end;
+        // VENTAS
+        if oper <> 'CtaCte' then
+        begin
+          Asiento(dm.ConfigQuery.FieldByName('CtaVenta').AsString, a, fech,
+            (oper + ' - ' + let + ' - ' + cod + ' - ' + cui), '0',
+            floattostr(tot)); // renglon  - VENTAS
+          // -----------------------------------1-----------------------------------------
+          // COSTO DE MERCADERIAS VENDIDAS
+          if cmv > 0 then
+          begin
+            // CMV
+            Asiento(dm.ConfigQuery.FieldByName('CtaCMV').AsString, a, fech,
+              (oper + ' - ' + let + ' - ' + cod + ' - ' + cui),
+              floattostr(cmv), '0');
+            // a
+            // renglon  - MERCADERIAS DE REVENTA
+            Asiento(dm.ConfigQuery.FieldByName('CtaMercaderia').AsString, a,
+              fech, (oper + ' - ' + let + ' - ' + cod + ' - ' + cui), '0',
+              floattostr(cmv));
+          end;
+          // -----------------------------------2-----------------------------------------
+          // COMISION DE VENDEDORES
+          if comv > 0 then
+          begin
+            // renglon  - COMISION VENDEDOR
+            Asiento(dm.ConfigQuery.FieldByName('CtaComisionVendedor').AsString,
+              a, fech, (oper + ' - ' + let + ' - ' + cod + ' - ' + cui),
+              floattostr(comv), '0');
+            // a
+            // renglon  - COMISION VENDEDOR A PAGAR
+            Asiento(dm.ConfigQuery.FieldByName('CtaComisionVendedorAPagar')
+              .AsString, a, fech, (oper + ' - ' + let + ' - ' + cod + ' - ' +
+              cui), '0', floattostr(comv));
+          end;
+          // -----------------------------------3-----------------------------------------
+        end;
+      end
+      {else if oper = 'PEDIDO' then // SI ES VENTA
+      begin
+        // -----------------------------------0-----------------------------------------
+        // PAGO CON EFECTIVO
+        if (cont) > 0.04 then
+          Asiento(dm.ConfigQuery.FieldByName('CtaCaja').AsString, a, fech,
+            (oper + ' - ' + let + ' - ' + cod + ' - ' + cui), floattostr(pag),
+            '0'); // CAJA
+        // CUENTA CORRIENTE
+        if ((pag) < tot) AND (pgr <> True) then
+          Asiento(ctan, a, fech, (oper + ' - ' + let + ' - ' + cod + ' - ' +
+            cui), floattostr(sal), '0'); // DSXVTA
+        // CON DOCUMENTOS (PAGARE)
+        if (pag < tot) AND (pgr = True) then
+          Asiento(dm.ConfigQuery.FieldByName('CtaDocumentoACobrar').AsString, a,
+            fech, (oper + ' - ' + let + ' - ' + cod + ' - ' + cui),
+            floattostr(sal), '0'); // DOC A COBRAR
+        // PAGO CON CHEQUE
+        if (cheq) > 0.04 then
+          Asiento(dm.ConfigQuery.FieldByName('CtaValorAlCobro').AsString, a,
+            fech, (oper + ' - ' + let + ' - ' + cod + ' - ' + cui),
+            floattostr(cheq), '0'); // VALOR AL COBRO
+        // a
+        // PAGO DE CUENTA CORRIENTE
+        if ((pag) > (tot - deud)) then
+          Asiento(ctan, a, fech, (oper + ' - ' + let + ' - ' + cod + ' - ' +
+            cui), '0', floattostr(pag - (tot - deud)));
+        // VENTAS
+          Asiento(dm.ConfigQuery.FieldByName('CtaVenta').AsString, a, fech,
+            (oper + ' - ' + let + ' - ' + cod + ' - ' + cui), '0',
+            floattostr(tot)); // renglon  - VENTAS
+          // -----------------------------------1-----------------------------------------
+          // COSTO DE MERCADERIAS VENDIDAS
+          if cmv > 0 then
+          begin
+            // CMV
+            Asiento(dm.ConfigQuery.FieldByName('CtaCMV').AsString, a, fech,
+              (oper + ' - ' + let + ' - ' + cod + ' - ' + cui),
+              floattostr(cmv), '0');
+            // a
+            // renglon  - MERCADERIAS DE REVENTA
+            Asiento(dm.ConfigQuery.FieldByName('CtaMercaderia').AsString, a,
+              fech, (oper + ' - ' + let + ' - ' + cod + ' - ' + cui), '0',
+              floattostr(cmv));
+          end;
+          // -----------------------------------2-----------------------------------------
+          // COMISION DE VENDEDORES
+          if comv > 0 then
+          begin
+            // renglon  - COMISION VENDEDOR
+            Asiento(dm.ConfigQuery.FieldByName('CtaComisionVendedor').AsString,
+              a, fech, (oper + ' - ' + let + ' - ' + cod + ' - ' + cui),
+              floattostr(comv), '0');
+            // a
+            // renglon  - COMISION VENDEDOR A PAGAR
+            Asiento(dm.ConfigQuery.FieldByName('CtaComisionVendedorAPagar')
+              .AsString, a, fech, (oper + ' - ' + let + ' - ' + cod + ' - ' +
+              cui), '0', floattostr(comv));
+          end;
+          // -----------------------------------3-----------------------------------------
+      end}
+      ;
 end;
 
 Procedure TOperacionDataModule.FormaPago;

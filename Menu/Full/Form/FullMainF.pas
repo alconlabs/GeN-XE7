@@ -189,7 +189,7 @@ var
   FullMainForm: TFullMainForm;
 
 const
-version='201805282057';
+version='201806011928';
 
 implementation
 
@@ -977,11 +977,18 @@ end;
 procedure TFullMainForm.CrearPedido1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'CrearPedido.exe')), SW_SHOWNORMAL);
-  CrearPedidoForm := TCrearPedidoForm.Create(self);
+//  CrearPedidoForm := TCrearPedidoForm.Create(self);
+//  try
+//    CrearPedidoForm.ShowModal;
+//  finally
+//    CrearPedidoForm.Free;
+//  end;
+OperacionForm := TOperacionForm.Create(self);
+  OperacionForm.Pedido := True;
   try
-    CrearPedidoForm.ShowModal;
+    OperacionForm.ShowModal;
   finally
-    CrearPedidoForm.Free;
+    OperacionForm.Free;
   end;
 end;
 

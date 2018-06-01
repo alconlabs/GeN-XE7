@@ -98,7 +98,7 @@ type
   private
     { Private declarations }
   public
-    OK, Proveedor, FPagoOK, Compra: Boolean;
+    OK, Proveedor, FPagoOK, Compra, Pedido: Boolean;
     Cuenta, DiasCalculo, CuotasTotal, d, numfact, OrdTrans: Integer;
     CMV, UltCosto, subtotal, Impuesto, NG21, IVA21, NG105, IVA105, NGO, IVAO,
       desc, perc, costo, reparaciones, Total, IIBB, NGIIBB, Exento,
@@ -707,6 +707,15 @@ begin
       subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
       Saldo, Pagado, NG105, NG21, IVA105, IVA21, perc, Total - Saldo)
     else
+    if Pedido then
+    ProcOPER('PED', cbTipo.Text, ClienteEdit.Text,
+      FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
+      VendedorEdit.Text, '', CtaNombre, False, PagareCheckBox.Checked, costo,
+      Comision, Impuesto, StrToFloat(FECheque.Text), 0,
+      StrToFloat(FEContado.Text), Total, subtotal, desc,
+      StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text), Saldo, Pagado,
+      Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
+    else
     if Presupuesto.Checked then
       ProcPresup(cbTipo.Text, ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
@@ -736,36 +745,38 @@ end;
 procedure TOperacionForm.FormShow(Sender: TObject);
 begin
   if Compra then
-  begin
-    ClienteBitBtn.Caption := 'Proveedor';
-    Label1.Caption := ClienteBitBtn.Caption+':';
-    ClienteBitBtn.Click;
-  end
+    begin
+      ClienteBitBtn.Caption := 'Proveedor';
+      Label1.Caption := ClienteBitBtn.Caption+':';
+      ClienteBitBtn.Click;
+    end
   else
-  begin
-    if (reporte='COriginal') or (reporte='CDupicado') or (reporte='CTriplicado')
-    or (reporte='CCuadruplicado') or (reporte='Ticket')then
-      cbTipo.ItemIndex := 0
-      else
-        begin
-          if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Monotributo')
-          then
-            cbTipo.ItemIndex := 11
-          else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Inscripto')
-          then
-            cbTipo.ItemIndex := 6
-          else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Exento') then
-            cbTipo.ItemIndex := 11
-          else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'No Responsable') then
-            cbTipo.ItemIndex := 14
-          else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'S.R.L.') then
-            cbTipo.ItemIndex := 6
-          else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'S.A.') then
-            cbTipo.ItemIndex := 6
-          else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Cooperativa') then
-            cbTipo.ItemIndex := 6;
-        end;
-  end;
+    if Pedido then cbTipo.ItemIndex := 29
+  else
+    begin
+      if (reporte='COriginal') or (reporte='CDupicado') or (reporte='CTriplicado')
+      or (reporte='CCuadruplicado') or (reporte='Ticket')then
+        cbTipo.ItemIndex := 0
+        else
+          begin
+            if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Monotributo')
+            then
+              cbTipo.ItemIndex := 11
+            else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Inscripto')
+            then
+              cbTipo.ItemIndex := 6
+            else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Exento') then
+              cbTipo.ItemIndex := 11
+            else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'No Responsable') then
+              cbTipo.ItemIndex := 14
+            else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'S.R.L.') then
+              cbTipo.ItemIndex := 6
+            else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'S.A.') then
+              cbTipo.ItemIndex := 6
+            else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Cooperativa') then
+              cbTipo.ItemIndex := 6;
+          end;
+    end;
   Nuevo;
 end;
 
@@ -862,6 +873,7 @@ begin
   cbTipo.Items.Add('M'); // 52	Nota de Débito M	20150522	NULL
   cbTipo.Items.Add('M'); // 53	Nota de Crédito M	20150522	NULL
   cbTipo.Items.Add('M'); // 54	Recibo M
+  cbTipo.Items.Add('X'); //
   dm.ConfigQuery.Open;
 end;
 
