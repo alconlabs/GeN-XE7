@@ -50,7 +50,6 @@ type
     CantidadBitBtn: TBitBtn;
     Label24: TLabel;
     FLEPorcDesc: TEdit;
-    Label10: TLabel;
     Label3: TLabel;
     PrecioLabel: TLabel;
     Panel2: TPanel;
@@ -312,6 +311,7 @@ procedure TOperacionForm.CalculaTotales;
 var
   i: Integer;
   NG,DSC,NGD,IVA: Double;
+//  des : PAnsiString;
 begin
   // Calcula los totales de la factura
   //  subtotal := 0;
@@ -362,7 +362,12 @@ begin
   For i := 1 to SGFact.RowCount - 1 do
   begin
    NG := StrToFloat(SGFact.Cells[8, i]);
-   DSC := (NG * StrToFloat(FLEPorcDesc.Text) / 100);
+//   des:=PAnsiString(FLEPorcDesc.Text);
+//   if (StrScan(des, 'A') = nil) then
+  if Pos( '%', FLEPorcDesc.Text ) >0 then
+    DSC := (NG * StrToFloat(StringReplace(FLEPorcDesc.Text, '%', '.00', [rfReplaceAll, rfIgnoreCase]))/100)
+   else
+    DSC := StrToFloat(FLEPorcDesc.Text);
    NGD:= NG-DSC;
    with OperacionDataModule do
     begin

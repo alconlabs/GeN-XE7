@@ -400,19 +400,6 @@ object OperacionForm: TOperacionForm
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Label10: TLabel
-      Left = 634
-      Top = 6
-      Width = 8
-      Height = 13
-      Caption = '%'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-    end
     object Label3: TLabel
       Left = 265
       Top = 6
@@ -521,7 +508,7 @@ object OperacionForm: TOperacionForm
     object FLEPorcDesc: TEdit
       Left = 596
       Top = 2
-      Width = 37
+      Width = 50
       Height = 21
       TabOrder = 3
       Text = '0'
