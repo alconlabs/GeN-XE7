@@ -387,19 +387,6 @@ object OperacionForm: TOperacionForm
       Font.Style = []
       ParentFont = False
     end
-    object Label24: TLabel
-      Left = 558
-      Top = 6
-      Width = 38
-      Height = 13
-      Caption = 'DESC:'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
     object Label3: TLabel
       Left = 265
       Top = 6
@@ -414,11 +401,10 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object PrecioLabel: TLabel
-      Left = 306
+      Left = 304
       Top = 6
-      Width = 6
+      Width = 3
       Height = 13
-      Caption = '0'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -440,8 +426,8 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label5: TLabel
-      Left = 466
-      Top = 6
+      Left = 559
+      Top = 7
       Width = 38
       Height = 13
       Caption = 'PERC:'
@@ -453,8 +439,8 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label6: TLabel
-      Left = 543
-      Top = 6
+      Left = 636
+      Top = 7
       Width = 8
       Height = 13
       Caption = '%'
@@ -505,21 +491,12 @@ object OperacionForm: TOperacionForm
       Time = 42736.475039594910000000
       TabOrder = 2
     end
-    object FLEPorcDesc: TEdit
-      Left = 596
-      Top = 2
-      Width = 50
-      Height = 21
-      TabOrder = 3
-      Text = '0'
-      OnExit = FLEPorcDescExit
-    end
     object PercEdit: TEdit
-      Left = 505
-      Top = 2
+      Left = 598
+      Top = 3
       Width = 37
       Height = 21
-      TabOrder = 4
+      TabOrder = 3
       Text = '0'
       OnExit = PercEditExit
     end
@@ -618,7 +595,7 @@ object OperacionForm: TOperacionForm
       OnClick = VendedorBitBtnClick
     end
     object AgregarBitBtn: TBitBtn
-      Left = 271
+      Left = 236
       Top = 4
       Width = 80
       Height = 50
@@ -636,7 +613,7 @@ object OperacionForm: TOperacionForm
       OnClick = AgregarBitBtnClick
     end
     object NuevoBitBtn: TBitBtn
-      Left = 349
+      Left = 314
       Top = 4
       Width = 80
       Height = 50
@@ -654,7 +631,7 @@ object OperacionForm: TOperacionForm
       OnClick = NuevoBitBtnClick
     end
     object QuitarBitBtn: TBitBtn
-      Left = 427
+      Left = 392
       Top = 4
       Width = 80
       Height = 50
@@ -672,7 +649,7 @@ object OperacionForm: TOperacionForm
       OnClick = QuitarBitBtnClick
     end
     object CantidadBitBtn: TBitBtn
-      Left = 505
+      Left = 470
       Top = 4
       Width = 80
       Height = 50
@@ -688,6 +665,24 @@ object OperacionForm: TOperacionForm
       ShowHint = True
       TabOrder = 6
       OnClick = CantidadBitBtnClick
+    end
+    object DescuentoBitBtn: TBitBtn
+      Left = 548
+      Top = 4
+      Width = 90
+      Height = 50
+      Hint = 'F8 - DESCUENTO SOBRE ARTICULO'
+      Caption = 'descuento'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clYellow
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 7
+      OnClick = DescuentoBitBtnClick
     end
   end
   object Panel2: TPanel

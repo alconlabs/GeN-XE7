@@ -80,7 +80,10 @@ implementation
 
 function  TOperacionDataModule.CalcularIVA;
 begin
-  Result := RoundTo( ( neto + (neto * (porcentaje / 100)) ) ,-2);
+  Result := //RoundTo( (
+   neto + (neto * (porcentaje / 100))
+   //) ,-2)
+   ;
 end;
 
 Procedure TOperacionDataModule.MovCaja;
@@ -1048,7 +1051,7 @@ begin
     end;
     // renglon  - PROVEEDOR
     if (pag < tot) AND (pgr <> True) then
-      Asiento(ctan, a, fech, (oper + ' n� ' + nro + ' - ' + let + ' - ' + cod +
+      Asiento(ctan, a, fech, (oper + ' n ' + nro + ' - ' + let + ' - ' + cod +
         ' - ' + cui), '0', floattostr(sal)); // DSXVTA
     // renglon  - OBLIGACIONES A PAGAR
     if (pag < tot) AND (pgr = True) then
@@ -1056,7 +1059,7 @@ begin
         fech, (oper + ' - ' + let + ' - ' + cod), '0', floattostr(sal));
     // renglon  - ANTICIPO A PROVEEDORES
     if sal < 0 then
-      Asiento(ctaan, a, fech, (oper + ' n� ' + nro + ' - ' + let + ' - ' + cod +
+      Asiento(ctaan, a, fech, (oper + ' n ' + nro + ' - ' + let + ' - ' + cod +
         ' - ' + cui), floattostr(sal), '0'); // DSXVTA
     // VALOR AL COBRO (PAGO CON CHEQUE3ros)
     if (ch3q) > 0.04 then

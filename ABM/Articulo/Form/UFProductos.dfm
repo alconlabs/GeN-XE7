@@ -117,9 +117,9 @@ object FProductos: TFProductos
       object Label16: TLabel
         Left = 468
         Top = 195
-        Width = 38
+        Width = 29
         Height = 16
-        Caption = 'Neto:'
+        Caption = 'IVA:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -145,7 +145,7 @@ object FProductos: TFProductos
         Top = 242
         Width = 28
         Height = 13
-        Caption = 'Lista'
+        Caption = 'Neto'
         FocusControl = PrecioCtaCteDBEdit
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

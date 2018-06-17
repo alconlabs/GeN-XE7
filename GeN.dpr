@@ -110,7 +110,8 @@ uses
   IngresosBrutosF in 'abm\ingresosbrutos\form\IngresosBrutosF.pas' {IngresosBrutosForm},
   AfipDM in 'DataModule\AfipDM.pas' {AfipDataModule: TDataModule},
   VenderF in 'Operacion\VenderCodBarra\Form\VenderF.pas' {VenderForm},
-  PagoIVAF in 'Operacion\PagoIVA\Form\PagoIVAF.pas' {PagoIVAForm};
+  PagoIVAF in 'Operacion\PagoIVA\Form\PagoIVAF.pas' {PagoIVAForm},
+  DescuentoF in 'SubOperacion\Descuento\Form\DescuentoF.pas' {DescuentoForm};
 
 {$R *.res}
 
@@ -120,9 +121,6 @@ begin
   Application.Title := 'GeN';
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFullMainForm, FullMainForm);
-  Application.CreateForm(TAfipDataModule, AfipDataModule);
-  Application.CreateForm(TVenderForm, VenderForm);
-  Application.CreateForm(TPagoIVAForm, PagoIVAForm);
   Application.Run;
 
 end.

@@ -320,8 +320,8 @@ object FBuscaArticulo: TFBuscaArticulo
       ParentFont = False
     end
     object DBText3: TDBText
-      Left = 10
-      Top = 160
+      Left = 6
+      Top = 203
       Width = 80
       Height = 33
       Alignment = taRightJustify
@@ -348,10 +348,10 @@ object FBuscaArticulo: TFBuscaArticulo
       ParentFont = False
     end
     object DBText2: TDBText
-      Left = 10
-      Top = 203
+      Left = 6
+      Top = 159
       Width = 80
-      Height = 33
+      Height = 20
       Alignment = taRightJustify
       DataField = 'precioIVA'
       DataSource = DataSource
