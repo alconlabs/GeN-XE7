@@ -321,7 +321,7 @@ object FBuscaArticulo: TFBuscaArticulo
     end
     object DBText3: TDBText
       Left = 6
-      Top = 203
+      Top = 160
       Width = 80
       Height = 33
       Alignment = taRightJustify
@@ -334,12 +334,12 @@ object FBuscaArticulo: TFBuscaArticulo
       Font.Style = []
       ParentFont = False
     end
-    object Label8: TLabel
+    object ivaLabel: TLabel
       Left = 26
-      Top = 181
-      Width = 49
+      Top = 182
+      Width = 50
       Height = 24
-      Caption = 's/iva:'
+      Caption = 'c/iva:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -19
@@ -347,9 +347,9 @@ object FBuscaArticulo: TFBuscaArticulo
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object DBText2: TDBText
+    object ivaDBText: TDBText
       Left = 6
-      Top = 159
+      Top = 207
       Width = 80
       Height = 20
       Alignment = taRightJustify

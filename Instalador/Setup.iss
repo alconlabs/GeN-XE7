@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GeN"
-#define MyAppVersion "201806011928"
+#define MyAppVersion "201806181247"
 #define MyAppPublisher "Civeloo"
 #define MyAppURL "http://www.civeloo.com/"
 #define MyAppExeName "GeN.exe"

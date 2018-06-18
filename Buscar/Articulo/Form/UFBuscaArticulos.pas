@@ -33,8 +33,8 @@ type
     BitBtn1: TBitBtn;
     DataSource: TDataSource;
     VerTodosBitBtn: TBitBtn;
-    Label8: TLabel;
-    DBText2: TDBText;
+    ivaLabel: TLabel;
+    ivaDBText: TDBText;
     Tabla: TIBQuery;
     imprimir_exportarImage: TImage;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -98,6 +98,12 @@ end;
 
 procedure TFBuscaArticulo.FormShow(Sender: TObject);
 begin
+  if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Monotributo') then
+  begin
+    ivaLabel.Visible := False;
+    ivaDBText.Visible := False;
+  end;
+
   imprimir_exportarImage.Picture.LoadFromFile
     (Path + '\img\boton_imprimir_exportar.gif');
   if Tabla.Active = True then

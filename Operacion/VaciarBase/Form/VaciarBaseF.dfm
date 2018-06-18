@@ -634,8 +634,8 @@ object VaciarBaseForm: TVaciarBaseForm
         ' RUBRO, IVA, MSN, WEB, ZONA, CTA, CTANOMBRE, CTATIPO, CTAANTICIP' +
         'O, PAGARE) VALUES (1, '#39'Mi Empresa'#39', '#39'Yo'#39', NULL, '#39'Lejos'#39', NULL, N' +
         'ULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,' +
-        ' NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '#39'Responsable Inscr' +
-        'ipto'#39', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);'
+        ' NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '#39'Responsable Monot' +
+        'ributo'#39', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);'
       ''
       ''
       ''
@@ -908,7 +908,7 @@ object VaciarBaseForm: TVaciarBaseForm
         'A, PEDIDO, STOCK, EXISTENTE, ACTUAL, MARCADOCONTADO, MARCADOLIST' +
         'A, MARCADOFINAL, PREPARADO, CTANOMBRE, CTATIPO, CTAANTICIPO, CTA' +
         'IIBB, ESTADO, VENCE, VENCIMIENTO) VALUES (2, '#39'articulo'#39', 100, 10' +
-        '0, 126, 131, 136, 141, 146, 151, 171, 50, NULL, 0, 0, 0, 0, NULL' +
+        '0, 105, 110, 115, 120, 125, 130, 135, 50, NULL, 0, 0, 0, 0, NULL' +
         ', '#39'c/u'#39', 0, NULL, NULL, NULL, 21, 0, 1, NULL, NULL, NULL, '#39'07/07' +
         '/2010'#39', NULL, NULL, '#39'11000013'#39', 0, 1, NULL, '#39'07/22/2010 11:46:07' +
         #39', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 13, 13, 13, 6' +
