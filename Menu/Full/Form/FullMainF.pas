@@ -189,11 +189,11 @@ var
   FullMainForm: TFullMainForm;
 
 const
-version='201806181247';
+version='201806202046';
 
 implementation
 
-uses LoginF, VenderF, CrearCreditoF, CtaCteF, BuscaFactura,
+uses LoginF, CrearCreditoF, CtaCteF, BuscaFactura,
   AnularVtaF, incremento, CrearPedidoF, RendicionCartonF, PagoComisionCobrador,
   RendicionClienteLF, RendicionClienteF, NotaCreditoPlanF, CartonCobranzaF,
   PagoIVAF, AporteCapitalF, CuentaContableF, CapituloF, RubroContableFormF,

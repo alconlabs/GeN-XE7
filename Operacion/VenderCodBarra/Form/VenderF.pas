@@ -161,8 +161,8 @@ begin
       SGFact.Cells[6, Cuenta] := FloatToStr(IVA);
 
       //NETO
-        if IVA = 105 then NG:=RoundTo((100*PR)/110.5,-2) else NG:=RoundTo((100*PR)/(100+IVA),-2);
-        SGFact.Cells[8, Cuenta] := FloatToStr(NG);
+//        if IVA = 105 then NG:=RoundTo((100*PR)/110.5,-2) else NG:=RoundTo((100*PR)/(100+IVA),-2);
+//        SGFact.Cells[8, Cuenta] := FloatToStr(NG);
 
 //      if FLEPorcDesc.Text<>'0' then  SGFact.Cells[7, Cuenta] :=  FloatToStr( StrToFloat(SGFact.Cells[8, Cuenta]) * (StrToFloat(FLEPorcDesc.Text)/100) )
 //      else  SGFact.Cells[7, Cuenta] := '0';
@@ -178,8 +178,8 @@ begin
       Q.Open;
 
       // PORCENTAJE DE INGRESOS BRUTOS
-      SGFact.Cells[10, Cuenta] :=
-        Format('%8.2f', [Q.FieldByName('PORCENTAJE').AsFloat]);
+//      SGFact.Cells[10, Cuenta] :=
+//        Format('%8.2f', [Q.FieldByName('PORCENTAJE').AsFloat]);
 
       //ULTIMO NETO
       SGFact.Cells[11, Cuenta] :=

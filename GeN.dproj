@@ -83,9 +83,9 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_DcuOutput>C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\bin\</DCC_DcuOutput>
-        <VerInfo_Build>41</VerInfo_Build>
+        <VerInfo_Build>42</VerInfo_Build>
         <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.41;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.42;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <DCC_ExeOutput>C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\bin\</DCC_ExeOutput>
         <VerInfo_Locale>1033</VerInfo_Locale>
@@ -366,9 +366,6 @@
         <DCCReference Include="ABM\ArticuloCelular\Form\ArticuloCelularF.pas">
             <Form>ArticuloCelularForm</Form>
         </DCCReference>
-        <DCCReference Include="ABM\Vendedor\Form\VendedorF.pas">
-            <Form>VendedorForm</Form>
-        </DCCReference>
         <DCCReference Include="Operacion\VaciarBase\Form\VaciarBaseF.pas">
             <Form>VaciarBaseForm</Form>
         </DCCReference>
@@ -431,16 +428,16 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Operacion\VenderCodBarra\Form\VenderF.pas">
-            <Form>VenderForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Operacion\PagoIVA\Form\PagoIVAF.pas">
             <Form>PagoIVAForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="SubOperacion\Descuento\Form\DescuentoF.pas">
             <Form>DescuentoForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="ABM\Vendedor\Form\VendedorF.pas">
+            <Form>VendedorForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

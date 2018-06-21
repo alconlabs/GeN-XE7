@@ -88,7 +88,6 @@ uses
   MigrarF in 'Operacion\Migrar\form\MigrarF.pas' {MigrarForm},
   BackUpF in 'Operacion\BackUp\Form\BackUpF.pas' {BackUpForm},
   ArticuloCelularF in 'ABM\ArticuloCelular\Form\ArticuloCelularF.pas' {ArticuloCelularForm},
-  VendedorF in 'ABM\Vendedor\Form\VendedorF.pas' {VendedorForm},
   VaciarBaseF in 'Operacion\VaciarBase\Form\VaciarBaseF.pas' {VaciarBaseForm},
   UsuariosF in 'ABM\Usuarios\Form\UsuariosF.pas' {UsuariosForm},
   Unit1 in 'Exportar\Excel\Unit1.pas' {Form1},
@@ -109,9 +108,9 @@ uses
   MarcaF in 'ABM\Marca\Form\MarcaF.pas' {MarcaForm},
   IngresosBrutosF in 'abm\ingresosbrutos\form\IngresosBrutosF.pas' {IngresosBrutosForm},
   AfipDM in 'DataModule\AfipDM.pas' {AfipDataModule: TDataModule},
-  VenderF in 'Operacion\VenderCodBarra\Form\VenderF.pas' {VenderForm},
   PagoIVAF in 'Operacion\PagoIVA\Form\PagoIVAF.pas' {PagoIVAForm},
-  DescuentoF in 'SubOperacion\Descuento\Form\DescuentoF.pas' {DescuentoForm};
+  DescuentoF in 'SubOperacion\Descuento\Form\DescuentoF.pas' {DescuentoForm},
+  VendedorF in 'ABM\Vendedor\Form\VendedorF.pas' {VendedorForm};
 
 {$R *.res}
 
@@ -121,6 +120,7 @@ begin
   Application.Title := 'GeN';
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFullMainForm, FullMainForm);
+  Application.CreateForm(TVendedorForm, VendedorForm);
   Application.Run;
 
 end.

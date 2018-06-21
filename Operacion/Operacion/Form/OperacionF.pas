@@ -350,21 +350,24 @@ begin
       end
       else DSC := StrToFloat(des);
 
+  NG := NG + (PR-DSC);
+
   // Calcula el monto para cobrar el impuesto de ventas
-    if ((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) or Compra then
+    if ((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then
     begin
 //      PRD :=PR-DSC;
       //DSC := PR-PRD;
-      NGO := NGO + (PR-DSC);
+//      NGO := NGO + (PR-DSC);
+      NGO:= NGO + NG;
     end
     else
     begin
     //NETO
 //      if Compra then NG:=PR
 //      else
-        if IVA = 105 then NG:=(100*PR)/110.5
-        else NG:=(100*PR)/(100+IVA);
-      NG := StrToFloat(SGFact.Cells[8, i]);
+//        if IVA = 105 then NG:=(100*PR)/110.5
+//        else NG:=(100*PR)/(100+IVA);
+//      NG := StrToFloat(SGFact.Cells[8, i]);
   //   if DSCP then DSC := NG * DSC;
   //   NGO:= NGO + NG;
   //   IVAO := PR-NG;
@@ -386,20 +389,20 @@ begin
       If (SGFact.Cells[6, i] = '21') then
       begin
         NG21 := NG21 + NG;
-        IVA := CalcularIVA((NGD),21)-NGD;
+        IVA := CalcularIVA((NG),21)-NG;
         IVA21 := IVA21 + IVA;
       end // IVA 21% 100 * 1.21 - 100 = 21
       else
       if (SGFact.Cells[6, i] = '105') then
         begin
           NG105 := NG105 + NG;
-          IVA := CalcularIVA((NGD),10.5)-NGD;
+          IVA := CalcularIVA((NG),10.5)-NG;
           IVA105 := IVA105 + IVA;
         end // IVA 10.5% 100 * 1.105 - 100 = 10.5
         else
          begin
           NGO := NGO + NG; // NETO GRABADO
-          IVA := CalcularIVA((NGD),StrToFloat(SGFact.Cells[6, i]))-NGD;
+          IVA := CalcularIVA((NG),StrToFloat(SGFact.Cells[6, i]))-NG;
           IVAO := IVAO + IVA;
         end;
       end;
