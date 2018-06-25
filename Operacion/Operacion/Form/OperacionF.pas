@@ -828,12 +828,17 @@ begin
 //  end;
   if Compra then
     begin
+      OperacionForm.Caption := 'COMPRA';
       ClienteBitBtn.Caption := 'Proveedor';
       Label1.Caption := ClienteBitBtn.Caption+':';
 //      ClienteBitBtn.Click;
     end
   else
-    if Pedido then cbTipo.ItemIndex := 29
+    if Pedido then
+    begin
+      OperacionForm.Caption := 'PEDIDO';
+      cbTipo.ItemIndex := 29;
+    end
   else
     begin
       if (reporte='COriginal') or (reporte='CDupicado') or (reporte='CTriplicado')

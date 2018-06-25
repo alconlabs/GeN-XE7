@@ -924,7 +924,7 @@ begin
     LibroIVAvta(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(tot)); // en blanco
   // Insertar en la tabla LibroDiario
-  LibroDiario('VENTA', nro, let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
+  LibroDiario(tipo, nro, let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, comv);
   // Completa la Transaccion
   Q.Transaction.CommitRetaining;
@@ -1022,7 +1022,7 @@ var
 begin
   sal := tot - pag;
   a := floattostr(UltimoRegistro('"LibroDiario"', 'ASIENTO'));
-  if (oper = 'CLIENTE') or (oper = 'VENTA') {or (oper = 'PEDIDO')} then
+  if (oper = 'CLIENTE') or (oper = 'VENTA') or (oper = 'PED') then
     tabl := 'Cliente'
   else if (oper = 'PROVEEDOR') or (oper = 'COMPRA') then
     tabl := 'Proveedor'
@@ -1214,7 +1214,7 @@ begin
           (oper + ' - ' + let + ' - ' + cod + ' - ' + cui), '0',
           floattostr(tot));
       end
-      else if oper = 'VENTA' then // SI ES VENTA
+      else if oper = 'PED' then // SI ES VENTA
       begin
         // -----------------------------------0-----------------------------------------
         // PAGO CON EFECTIVO
@@ -1243,13 +1243,13 @@ begin
             cui), '0', floattostr(pag - (tot - deud)));
         // renglon  - DEUDORES POR VENTA
         // si es factura A
-        if let = 'A' then
-        begin
-          Asiento(dm.ConfigQuery.FieldByName('CtaIVADebitoFiscal').AsString, a,
-            fech, (oper + ' - ' + let + ' - ' + cod + ' - ' + cui), '0',
-            floattostr(impu)); // renglon  - IVA DEBITO FISCAL
-          tot := tot - impu;
-        end;
+//        if let = 'A' then
+//        begin
+//          Asiento(dm.ConfigQuery.FieldByName('CtaIVADebitoFiscal').AsString, a,
+//            fech, (oper + ' - ' + let + ' - ' + cod + ' - ' + cui), '0',
+//            floattostr(impu)); // renglon  - IVA DEBITO FISCAL
+//          tot := tot - impu;
+//        end;
         // VENTAS
         if oper <> 'CtaCte' then
         begin
