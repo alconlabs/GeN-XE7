@@ -350,7 +350,7 @@ begin
       end
       else DSC := StrToFloat(des);
 
-  NG := NG + (PR-DSC);
+  NG := (PR-DSC);
 
   // Calcula el monto para cobrar el impuesto de ventas
     if ((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then
