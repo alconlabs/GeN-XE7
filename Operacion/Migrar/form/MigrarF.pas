@@ -104,35 +104,64 @@ begin
       if  (O.RecordCount>0) then
         for i := 0 to O.RecordCount - 1 do
         begin
+          categories := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(O.FieldByName('categories').AsString),0) as TJSONArray;
+          rub := existeEnTJSONArray('Rubro',categories);
+          cat := existeEnTJSONArray('Categoria',categories);
+          subcat := existeEnTJSONArray('SubCategoria',categories);
+          disponible:=O.FieldByName('stock_quantity').AsString;
+          if O.FieldByName('regular_price').AsString='' then precio:=0 else precio:=O.FieldByName('regular_price').AsFloat;
+          if (O.FieldByName('tax_class').AsString = 'tasa-reducida') then
+            iva := 10.5
+            else
+              iva := 21;
+          ganancia := precio/(iva/100+1);
+          costo := FloatToStrF( ( ganancia/(35/100+1) ), ffFixed, 16, 2 );
+          fecha := ConvertToDateTimeStr(O.FieldByName('date_modified').AsString);
+          if disponible='' then disponible:='0';
           if not existeEnTabla('Articulo',O.FieldByName('id').AsString) then
           begin
-            categories := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(O.FieldByName('categories').AsString),0) as TJSONArray;
-            rub := existeEnTJSONArray('Rubro',categories);
-            cat := existeEnTJSONArray('Categoria',categories);
-            subcat := existeEnTJSONArray('SubCategoria',categories);
-            disponible:=O.FieldByName('stock_quantity').AsString;
-            if O.FieldByName('price').AsString='' then precio:=0 else precio:=O.FieldByName('price').AsFloat;
-            if (O.FieldByName('tax_class').AsString = 'tasa-reducida') then
-              iva := 10.5
-              else
-                iva := 21;
-            ganancia := precio/(iva/100+1);
-            costo := FloatToStrF( ( ganancia/(30/100+1) ), ffFixed, 16, 2 );
-            fecha := ConvertToDateTimeStr(O.FieldByName('date_modified').AsString);
-            if disponible='' then disponible:='0';
             D.SQL.Text := 'INSERT INTO "Articulo" ( CODIGO, DESCRIPCION '
             + ', ULTCOSTO, COSTO, PRECIO, PRECIO1, PRECIO2, DISPONIBLE'
-            + ', PORCENTAJE, UNIDAD, TASA, IIBB, CTANOMBRE, CTATIPO, CTAANTICIPO, CTAIIBB '
+            + ', PORCENTAJE, IMPOTROS, UNIDAD, TASA, IIBB, CTANOMBRE, CTATIPO, CTAANTICIPO, CTAIIBB '
             + ', FECHA, FECHACOMPULT, CODIGOBARRA'
             + ', CATEGORIA, COLOR, MARCA, PROVEEDOR, RUBRO, SUBCATEGORIA'
             + ' ) VALUES ( '
             + IntToStr(O.FieldByName('id').AsInteger) + ', ' + QuotedStr(O.FieldByName('name').AsString)
             + ', ' + costo + ', ' + costo + ', ' + FloatToStr(precio) + ', ' + O.FieldByName('regular_price').AsString+'0' + ', ' + O.FieldByName('sale_price').AsString+'0' + ', ' + disponible
-            + ', 30, ''c/u'', 21, 1, 13, 13, 13, 66'
+            + ', 30, 5, ''c/u'', '+FloatToStr(iva)+', 1, 13, 13, 13, 66'
             + ', ' + QuotedStr(fecha) + ', ' + QuotedStr(fecha) + ', ' + QuotedStr(O.FieldByName('sku').AsString)
             + ', '+cat+', 0, 0, 1, '+rub+', '+subcat+' )';
-            D.ExecSQL;
-          end;
+//            D.ExecSQL;
+          end
+            else
+              D.SQL.Text := 'UPDATE "Articulo" SET'
+              +' DESCRIPCION = ' + QuotedStr(O.FieldByName('name').AsString)
+  //            +', ULTCOSTO = ' + costo
+//              +', COSTO = ' + costo
+              +', PRECIO = ' + FloatToStr(precio)
+              +', PRECIO1 = ' + O.FieldByName('regular_price').AsString+'0'
+              +', PRECIO2 = ' + O.FieldByName('sale_price').AsString+'0'
+              +', DISPONIBLE = ' + disponible
+//              +', PORCENTAJE = 30' +
+//              +', IMPOTROS = 5' +
+//              +', UNIDAD = ''c/u''' +
+//              +', TASA = ' + FloatToStr(iva)
+//              +', IIBB = 1' +
+//              +', CTANOMBRE = 13' +
+//              +', CTATIPO = 13' +
+//              +', CTAANTICIPO = 13' +
+//              +', CTAIIBB = 66' +
+//              +', FECHA = ' + QuotedStr(fecha)
+//              +', FECHACOMPULT = ' + QuotedStr(fecha)
+              +', CODIGOBARRA = ' + QuotedStr(O.FieldByName('sku').AsString)
+              +', CATEGORIA = ' + cat
+//              +', COLOR = 0' +
+//              +', MARCA = 0' +
+//              +', PROVEEDOR = 1' +
+              +', RUBRO = ' + rub
+              +', SUBCATEGORIA = ' + subcat
+              +' WHERE CODIGO ='+ IntToStr(O.FieldByName('id').AsInteger);
+          D.ExecSQL;
           ProgressBar1.Position := i;
           O.Next;
         end;

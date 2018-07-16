@@ -13,6 +13,7 @@ object PagoForm: TPagoForm
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -168,11 +169,24 @@ object PagoForm: TPagoForm
     ParentBackground = False
     TabOrder = 2
     object Label6: TLabel
-      Left = 230
-      Top = 65
-      Width = 75
+      Left = 246
+      Top = 105
+      Width = 43
       Height = 13
-      Caption = 'Total a Pagar'
+      Caption = 'a Pagar'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label4: TLabel
+      Left = 253
+      Top = 59
+      Width = 29
+      Height = 13
+      Caption = 'Total'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -182,11 +196,20 @@ object PagoForm: TPagoForm
     end
     object SaldoEdit: TEdit
       Left = 185
-      Top = 84
+      Top = 124
       Width = 166
       Height = 21
       Alignment = taCenter
       TabOrder = 0
+      Text = '0'
+    end
+    object TotalEdit: TEdit
+      Left = 185
+      Top = 78
+      Width = 166
+      Height = 21
+      Alignment = taCenter
+      TabOrder = 1
       Text = '0'
     end
   end

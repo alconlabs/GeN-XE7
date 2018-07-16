@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GeN"
-#define MyAppVersion "201806291157"
+#define MyAppVersion "201807161940"
 #define MyAppPublisher "Civeloo"
 #define MyAppURL "http://www.civeloo.com/"
 #define MyAppExeName "GeN.exe"
@@ -33,8 +33,8 @@ SolidCompression=true
 Name: spanish; MessagesFile: compiler:Languages\Spanish.isl
 
 [Tasks]
-Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}
-Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked; OnlyBelowVersion: 0,6.1
+;Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}
+;Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
 ;Source: C:\Civeloo\GeN\bin\GeN.exe; DestDir: {app}; Flags: ignoreversion
@@ -46,27 +46,27 @@ Source: C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\rpt\*; DestDir: {app}\
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: {group}\{#MyAppName}; Filename: {app}\bin\{#MyAppExeName}
-Name: {group}\{cm:ProgramOnTheWeb,{#MyAppName}}; Filename: {#MyAppURL}
-Name: {group}\{cm:UninstallProgram,{#MyAppName}}; Filename: {uninstallexe}
-Name: {commondesktop}\{#MyAppName}; Filename: {app}\bin\{#MyAppExeName}; Tasks: desktopicon
-Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}; Filename: {app}\bin\{#MyAppExeName}; Tasks: quicklaunchicon
+;Name: {group}\{#MyAppName}; Filename: {app}\bin\{#MyAppExeName}
+;Name: {group}\{cm:ProgramOnTheWeb,{#MyAppName}}; Filename: {#MyAppURL}
+;Name: {group}\{cm:UninstallProgram,{#MyAppName}}; Filename: {uninstallexe}
+;Name: {commondesktop}\{#MyAppName}; Filename: {app}\bin\{#MyAppExeName}; Tasks: desktopicon
+;Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}; Filename: {app}\bin\{#MyAppExeName}; Tasks: quicklaunchicon
 
 [Run]
 ;Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}; Flags: nowait postinstall skipifsilent
 
 [Registry]
 ; keys for 32-bit systems
-Root: HKCU32; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
+;Root: HKCU32; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
     ValueType: String; ValueName: {app}\bin\{#MyAppExeName}; ValueData: "RUNASADMIN"; \
     Flags: uninsdeletekeyifempty uninsdeletevalue; Check: not IsWin64
-Root: HKLM32; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
+;Root: HKLM32; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
     ValueType: String; ValueName: {app}\bin\{#MyAppExeName}; ValueData: "RUNASADMIN"; \
     Flags: uninsdeletekeyifempty uninsdeletevalue; Check: not IsWin64
 ; keys for 64-bit systems
-Root: HKCU64; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
+;Root: HKCU64; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
     ValueType: String; ValueName: {app}\bin\{#MyAppExeName}; ValueData: "RUNASADMIN"; \
     Flags: uninsdeletekeyifempty uninsdeletevalue; Check: IsWin64
-Root: HKLM64; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
+;Root: HKLM64; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
     ValueType: String; ValueName: {app}\bin\{#MyAppExeName}; ValueData: "RUNASADMIN"; \
     Flags: uninsdeletekeyifempty uninsdeletevalue; Check: IsWin64

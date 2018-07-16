@@ -24,9 +24,12 @@ type
     Label6: TLabel;
     QTemp: TIBQuery;
     Q: TIBQuery;
+    TotalEdit: TEdit;
+    Label4: TLabel;
     procedure AceptarBitBtnClick(Sender: TObject);
     procedure CalcularBitBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -98,26 +101,35 @@ begin
 end;
 
 procedure TPagoForm.CalcularBitBtnClick(Sender: TObject);
-var v : Double;
+var iibb, tot : Double;
 begin
-  v:=0;
-  QTemp.SQL.Text := 'SELECT IIBB FROM "Venta" WHERE ("Venta".FECHA >= ' +
+  iibb:=0;
+  tot:=0;
+  QTemp.SQL.Text := 'SELECT IIBB, TOTAL FROM "Venta" WHERE ("Venta".FECHA >= ' +
     QuotedStr(DateToStr(DesdeDateTimePicker.Date)) + ' ) AND' +
     '  ("Venta".FECHA <= ' +
     QuotedStr(DateToStr(HastaDateTimePicker.Date)) + ' )' + '';
   QTemp.Open;
   while QTemp.Eof = False do
   begin
-    v := v + QTemp.FieldByName('IIBB').AsFloat;
+    iibb := iibb + QTemp.FieldByName('IIBB').AsFloat;
+    tot := tot + QTemp.FieldByName('TOTAL').AsFloat;
     QTemp.Next;
   end;
-  SaldoEdit.Text := FloatToStr(v);
+  SaldoEdit.Text := FloatToStr(iibb);
+  TotalEdit.Text := FloatToStr(tot);
 end;
 
 procedure TPagoForm.FormCreate(Sender: TObject);
 begin
   // dm := TDM.Create(Self);
   dm.ConfigQuery.Open;
+end;
+
+procedure TPagoForm.FormShow(Sender: TObject);
+begin
+  DesdeDateTimePicker.DateTime:=(now-30);
+  HastaDateTimePicker.DateTime:=now;
 end;
 
 end.
