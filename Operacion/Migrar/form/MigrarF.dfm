@@ -2,7 +2,7 @@ object MigrarForm: TMigrarForm
   Left = 0
   Top = 0
   Caption = 'Migrar'
-  ClientHeight = 209
+  ClientHeight = 170
   ClientWidth = 297
   Color = clWindow
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object MigrarForm: TMigrarForm
   TextHeight = 13
   object ProcesarButton: TButton
     Left = 209
-    Top = 150
+    Top = 114
     Width = 80
     Height = 50
     Caption = 'PROCESAR'
@@ -33,8 +33,8 @@ object MigrarForm: TMigrarForm
   object ProgressBar1: TProgressBar
     Left = 8
     Top = 114
-    Width = 281
-    Height = 30
+    Width = 201
+    Height = 50
     TabOrder = 1
   end
   object EditUrl: TEdit
@@ -74,8 +74,8 @@ object MigrarForm: TMigrarForm
     Params = <>
     HandleRedirects = True
     RaiseExceptionOn500 = False
-    Left = 48
-    Top = 152
+    Left = 152
+    Top = 216
   end
   object RESTRequest1: TRESTRequest
     Client = RESTClient1
@@ -87,8 +87,8 @@ object MigrarForm: TMigrarForm
     Resource = 'products/?'
     Response = RESTResponse1
     SynchronizedEvents = False
-    Left = 48
-    Top = 184
+    Left = 152
+    Top = 248
   end
   object RESTResponse1: TRESTResponse
     Left = 48
@@ -121,8 +121,8 @@ object MigrarForm: TMigrarForm
     Params = <>
     HandleRedirects = True
     RaiseExceptionOn500 = False
-    Left = 8
-    Top = 152
+    Left = 120
+    Top = 216
   end
   object RESTRequestCategories: TRESTRequest
     Client = RESTClientCategories
@@ -134,8 +134,8 @@ object MigrarForm: TMigrarForm
     Resource = 'products/?'
     Response = RESTResponseCategories
     SynchronizedEvents = False
-    Left = 8
-    Top = 184
+    Left = 120
+    Top = 248
   end
   object RESTResponseCategories: TRESTResponse
     ContentType = 'application/json'
@@ -168,8 +168,8 @@ object MigrarForm: TMigrarForm
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
-    Left = 88
-    Top = 152
+    Left = 184
+    Top = 216
   end
   object T: TIBQuery
     Database = DM.BaseDatos
@@ -177,8 +177,8 @@ object MigrarForm: TMigrarForm
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
-    Left = 88
-    Top = 184
+    Left = 184
+    Top = 248
   end
   object D: TIBQuery
     Database = DM.BaseDatos

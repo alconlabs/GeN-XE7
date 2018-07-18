@@ -36,11 +36,11 @@ Var
   IniFile: TIniFile;
   // Path, BaseDeDatos: string;
 begin
+  IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'DeG');
   FormatSettings.ShortDateFormat := 'mm/dd/yyyy';
   // Obtiene la ruta y el nombre de la base de datos
   if Path = '' then
   begin
-    IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'DeG');
     Path := IniFile.ReadString('BD', 'Path', '');
   end;
   if Path = '' then
@@ -58,8 +58,13 @@ begin
     Borrar.ExecuteScript;
     ShowMessage('Base de Datos Restaurada con éxito!!!');
   end;
+  IniFile.WriteString('WEB', 'URL', '');
+  IniFile.WriteString('WEB', 'RES', '');
+  IniFile.WriteString('WEB', 'USR', '');
+  IniFile.WriteString('WEB', 'PSW', '');
   // IniFile.WriteString('Licencia', 'Dia', inttostr(1));
   // IniFile.WriteString('Licencia', 'Fecha', datetostr(date));
+  IniFile.Destroy;
 end;
 
 procedure TVaciarBaseForm.FormCreate(Sender: TObject);

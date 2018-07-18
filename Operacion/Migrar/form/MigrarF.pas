@@ -15,7 +15,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.FB, FireDAC.Phys.FBDef,
   FireDAC.VCLUI.Wait
   ,System.JSON
-  ,DataModule;
+  ,DataModule, IniFiles;
 
 type
   TMigrarForm = class(TForm)
@@ -49,6 +49,8 @@ type
     function existeEnTJSONArray(tabla: string ; streams: TJSONArray): string;
     function existeEnTabla(tabla,codigo: string): Boolean;
     procedure importCategories;
+    procedure readINI;
+    procedure writeINI;
   public
     { Public declarations }
   end;
@@ -68,6 +70,7 @@ with FormatSettings do
     ThousandSeparator := '.';
     ShortDateFormat := 'mm/dd/yyyy';
   end;
+  readINI;
 end;
 
 procedure TMigrarForm.ProcesarButtonClick(Sender: TObject);
@@ -91,10 +94,11 @@ var
 
 begin
   ProgressBar1.Position := 1;
-  importCategories;
-  ShowMessage('IMPORTACION DE CATEGORIAS FINALIZADA');
-  p:=0;
+  writeINI;
   ProgressBar1.Position := 2;
+  importCategories;
+  p:=0;
+  ProgressBar1.Position := 3;
   repeat
     Inc(p);
     GetREST(EditUrl.text, EditResource.text+'status=publish&per_page=100&page='+IntToStr(p)+'&', EditUser.text, EditPassword.text);
@@ -169,6 +173,7 @@ begin
   until (O.RecordCount<2); //  until ((O.RecordCount=0) or (O.RecordCount=1));
   D.Transaction.CommitRetaining;
   ShowMessage('IMPORTACION DE PRODUCTOS FINALIZADA');
+  Close;
 end;
 
 procedure TMigrarForm.ResetRESTComponentsToDefaults;
@@ -304,11 +309,35 @@ begin
   result :='0';
 end;
 
-  function TMigrarForm.existeEnTabla;
-  begin
-    T.SQL.Text := 'SELECT * FROM "' + tabla + '" WHERE CODIGO=' + codigo;
-    T.Open;
-    result := (T.RecordCount<>0);
-  end;
+function TMigrarForm.existeEnTabla;
+begin
+  T.SQL.Text := 'SELECT * FROM "' + tabla + '" WHERE CODIGO=' + codigo;
+  T.Open;
+  result := (T.RecordCount<>0);
+end;
+
+procedure TMigrarForm.readINI;
+Var
+  IniFile: TIniFile;
+begin
+  IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'DeG');
+  EditUrl.Text := IniFile.ReadString('WEB', 'URL', '');
+  EditResource.Text := IniFile.ReadString('WEB', 'RES', '');
+  EditUser.Text := IniFile.ReadString('WEB', 'USR', '');
+  EditPassword.Text := IniFile.ReadString('WEB', 'PSW', '');
+  IniFile.Destroy;
+end;
+
+procedure TMigrarForm.writeINI;
+Var
+  IniFile: TIniFile;
+begin
+  IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'DeG');
+  IniFile.WriteString('WEB', 'URL', EditUrl.Text);
+  IniFile.WriteString('WEB', 'RES', EditResource.Text);
+  IniFile.WriteString('WEB', 'USR', EditUser.Text);
+  IniFile.WriteString('WEB', 'PSW', EditPassword.Text);
+  IniFile.Destroy;
+end;
 
 end.
