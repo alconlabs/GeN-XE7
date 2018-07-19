@@ -189,7 +189,7 @@ var
   FullMainForm: TFullMainForm;
 
 const
-version='201807181720';
+version='201807191834';
 
 implementation
 
@@ -347,6 +347,7 @@ procedure TFullMainForm.Productos1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'Stock.exe')), SW_SHOWNORMAL);
   FBuscaArticulo := TFBuscaArticulo.Create(self);
+  FBuscaArticulo.Stock := True;
   try
     FBuscaArticulo.ShowModal;
   finally
@@ -976,15 +977,8 @@ end;
 
 procedure TFullMainForm.CrearPedido1Click(Sender: TObject);
 begin
-  // WinExec(PAnsiChar(AnsiString(path + 'CrearPedido.exe')), SW_SHOWNORMAL);
-//  CrearPedidoForm := TCrearPedidoForm.Create(self);
-//  try
-//    CrearPedidoForm.ShowModal;
-//  finally
-//    CrearPedidoForm.Free;
-//  end;
 OperacionForm := TOperacionForm.Create(self);
-  OperacionForm.Pedido := True;
+  OperacionForm.PedidoCheckBox.Checked := True;
   try
     OperacionForm.ShowModal;
   finally

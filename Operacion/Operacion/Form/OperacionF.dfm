@@ -160,6 +160,19 @@ object OperacionForm: TOperacionForm
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object Label7: TLabel
+      Left = 8
+      Top = 3
+      Width = 47
+      Height = 13
+      Caption = 'Pedido?'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
     object TipoRadioGroup: TRadioGroup
       Left = 819
       Top = 42
@@ -310,6 +323,21 @@ object OperacionForm: TOperacionForm
       Width = 17
       Height = 17
       TabOrder = 12
+    end
+    object PedidoCheckBox: TCheckBox
+      Left = 60
+      Top = 3
+      Width = 14
+      Height = 16
+      Color = clBlack
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 13
     end
   end
   object Panel1: TPanel

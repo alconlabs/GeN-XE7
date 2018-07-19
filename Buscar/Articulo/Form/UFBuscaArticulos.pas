@@ -62,6 +62,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    Stock: Boolean;
     cb: String;
     Precio, Proveedor, articulos: string;
     procedure buscar;
@@ -98,6 +99,7 @@ end;
 
 procedure TFBuscaArticulo.FormShow(Sender: TObject);
 begin
+  if Stock then BitBtn1.Visible:=False;
   if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Monotributo') then
   begin
     ivaLabel.Visible := False;

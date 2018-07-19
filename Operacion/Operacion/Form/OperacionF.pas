@@ -68,6 +68,8 @@ type
     PercEdit: TEdit;
     Label6: TLabel;
     DescuentoBitBtn: TBitBtn;
+    Label7: TLabel;
+    PedidoCheckBox: TCheckBox;
     procedure ClienteBitBtnClick(Sender: TObject);
     procedure RJustifyEdit(var ThisEdit: TEdit);
     procedure TraeNombreCliente;
@@ -763,8 +765,8 @@ begin
       subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
       Saldo, Pagado, NG105, NG21, IVA105, IVA21, perc, Total - Saldo)
     else
-    if Pedido then
-    ProcOPER('PED', cbTipo.Text, ClienteEdit.Text,
+    if PedidoCheckBox.Checked then
+    ProcOPER('PED', 'X', ClienteEdit.Text,
       FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
       VendedorEdit.Text, '', CtaNombre, False, PagareCheckBox.Checked, costo,
       Comision, Impuesto, StrToFloat(FECheque.Text), 0,
@@ -834,7 +836,7 @@ begin
 //      ClienteBitBtn.Click;
     end
   else
-    if Pedido then
+  if PedidoCheckBox.Checked then
     begin
       OperacionForm.Caption := 'PEDIDO';
       cbTipo.ItemIndex := 29;
