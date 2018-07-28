@@ -120,7 +120,6 @@ begin
   Application.Title := 'GeN';
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFullMainForm, FullMainForm);
-  Application.CreateForm(TVendedorForm, VendedorForm);
   Application.Run;
 
 end.

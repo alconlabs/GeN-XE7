@@ -3,10 +3,16 @@
 interface
 
 uses
-  System.SysUtils, System.Classes, DataModule, Windows, System.Variants, FMX.Dialogs, ComObj;
+  System.SysUtils, System.Classes, DataModule, Windows, System.Variants, FMX.Dialogs, ComObj,
+  IPPeerClient, REST.Client, Data.Bind.Components, Data.Bind.ObjectScope
+  ,JSON,REST.Types, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, REST.Response.Adapter;
 
 type
   TAfipDataModule = class(TDataModule)
+    RESTClient1: TRESTClient;
+    RESTRequest1: TRESTRequest;
   Procedure AfipWsaa(path, Certificado, ClavePrivada: string);
     Procedure AfipWsfev1(
     tipo_cbte, punto_vta, tipo_doc, presta_serv, id,
@@ -18,11 +24,17 @@ type
     bi21, i21, bi105, i105: String
     );
     Procedure AfipWsfev11;
+
   private
     { Private declarations }
     WSAA: Variant;
   public
     { Public declarations }
+    function FacturaAfip( CbteFch, ptovta, tipocbte, concepto, DocTipo, DocNro, Cbte, ImpNeto, ImpTotal,
+    ImpTotConc, ImpIVA, ImpTrib, ImpOpEx, MonCotiz,
+    regfetribId, regfetribBaseImp, regfetribAlic, regfetribImporte, regfeivaId,
+    regfeivaBaseImp, regfeivaImporte, MonId, regfetribDesc, FchServDesde,
+    FchServHasta, FchVtoPago, razon, nombre, direccion, articulo : string) : TJSONValue;
   end;
 
 var
@@ -322,6 +334,72 @@ OutputDebugString(PChar(VarToStr( 'CAE' + WSFEv1.CAE)));
 //  showmessage('Presione Enter para terminar');
   // ReadLn;
   // CoUninitialize;
+end;
+
+function TAfipDataModule.FacturaAfip;
+var
+//  jsResponse: TJSONValue;
+  jsRequest, J: TJSONObject;
+  cuit, pass : string;
+begin
+  jsRequest := TJSONObject.Create();
+//  jsRequest.AddPair('dato', 'holis');
+  cuit := '20314661967';
+  pass := 'afipkey';
+  if DocNro='' then
+  begin
+    DocTipo:='80';
+    DocNro:='20222222223';//https://www.afip.gob.ar/genericos/guiavirtual/consultas_detalle.aspx?id=4359106
+  end;
+  jsRequest.AddPair('ptovta', ptovta);//'11');
+  jsRequest.AddPair('tipocbte', tipocbte);//'11');
+  jsRequest.AddPair('cuit', cuit);//'20314661967');
+  jsRequest.AddPair('pass', pass);//'afipkey');
+  jsRequest.AddPair('concepto', concepto);//'1');
+  jsRequest.AddPair('razon', razon);//'Lopez Automotores SRL');
+  jsRequest.AddPair('nombre', nombre);//'Cinthia Lopez');
+  jsRequest.AddPair('direccion', direccion);//'Sierra Grande');
+  jsRequest.AddPair('DocTipo', DocTipo);//'96');
+  jsRequest.AddPair('DocNro', DocNro);//'34127332');
+  jsRequest.AddPair('CbteFch', formatdatetime('yyyymmdd', StrToDateTime(CbteFch)) );//'23072018');
+  jsRequest.AddPair('Cbte', Cbte);//'1');
+  jsRequest.AddPair('articulo', articulo);//'sistema gen');
+  jsRequest.AddPair('ImpNeto', ImpNeto);//'121');
+  jsRequest.AddPair('ImpTotConc', ImpTotConc);//'0');
+  jsRequest.AddPair('ImpIVA', ImpIVA);//'0');
+  jsRequest.AddPair('ImpTrib', ImpTrib);//'0');
+  jsRequest.AddPair('ImpOpEx', ImpOpEx);//'0');
+  jsRequest.AddPair('ImpTotal', ImpTotal);//'121');
+  jsRequest.AddPair('FchServDesde', FchServDesde);//'null');
+  jsRequest.AddPair('FchServHasta', FchServHasta);//'null');
+  jsRequest.AddPair('FchVtoPago', FchVtoPago);//'null');
+  jsRequest.AddPair('MonId', MonId);//'PES');
+  jsRequest.AddPair('MonCotiz', MonCotiz);//'1');
+  jsRequest.AddPair('regfetribId', regfetribId);//'1');
+  jsRequest.AddPair('regfetribDesc', regfetribDesc);//'impuesto');
+  jsRequest.AddPair('regfetribBaseImp', regfetribBaseImp);//'0');
+  jsRequest.AddPair('regfetribAlic', regfetribAlic);//'0');
+  jsRequest.AddPair('regfetribImporte', regfetribImporte);//'0');
+  jsRequest.AddPair('regfeivaId', regfeivaId);//'0');
+  jsRequest.AddPair('regfeivaBaseImp', regfeivaBaseImp);//'0');
+  jsRequest.AddPair('regfeivaImporte', regfeivaImporte);//'0');
+//  ResetRESTComponentsToDefaults;
+//  FDMemTable1.Close;
+  RESTRequest1.ResetToDefaults;
+  RESTClient1.ResetToDefaults;
+//  RESTResponse1.ResetToDefaults;
+//  RESTResponseDataSetAdapter1.ResetToDefaults;
+{  RESTClient1.BaseURL := 'http://civeloo.com/afip';
+  RESTRequest1.Resource := '/jsonpb.php';
+}  RESTClient1.BaseURL := 'http://192.168.0.10:8888/civeloo/public_html/afip';
+    RESTRequest1.Resource := '/index.php';
+    RESTRequest1.Method:=rmPOST;
+  RESTRequest1.Params.AddItem('body',jsRequest.ToString, TRESTRequestParameterKind.pkREQUESTBODY, [poDoNotEncode], TRESTContentType.ctAPPLICATION_JSON);
+  jsRequest.Free();
+  RESTRequest1.Execute();
+//  jsResponse := RESTRequest1.Response.JSONValue;
+//  Memo1.Text := jsResponse.GetValue<String>('mensaje');
+  result := RESTRequest1.Response.JSONValue;//.GetValue<String>('mensaje');
 end;
 
 end.

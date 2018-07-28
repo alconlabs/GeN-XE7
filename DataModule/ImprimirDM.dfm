@@ -41,7 +41,9 @@ object ImprimirDataModule: TImprimirDataModule
         'RIPCION AS DESCR, "VentaItem".IMPUESTO as VIIMPUESTO,'
       '      '
       '      "Venta".CODIGO,   "Venta".LETRA,   "Venta".FECHA,'
-      '      "Venta".COMPROBANTE,   "Venta".IVA3,   "Venta".TOTAL,'
+      
+        '      "Venta".COMPROBANTE, "Venta".TERMINOS ,   "Venta".IVA3,   ' +
+        '"Venta".TOTAL,'
       '      "Venta".CONTADO,   "Venta".CLIENTE,   "Venta".SUBTOTAL,'
       '      "Venta".DESCUENTO,   "Venta".IMPUESTO,   "Venta".IVA2,'
       '      "Venta".IVA1,   "Venta".EXCENTO,   "Venta".SALDO,'
@@ -74,35 +76,6 @@ object ImprimirDataModule: TImprimirDataModule
     LoginPrompt = False
     Left = 743
     Top = 387
-  end
-  object frxDBDataset1: TfrxDBDataset
-    UserName = 'frxDBDataset1'
-    CloseDataSource = False
-    DataSet = Query
-    BCDToCurrency = False
-    Left = 40
-    Top = 64
-  end
-  object frxReport1: TfrxReport
-    Version = '5.3.14'
-    DotMatrixReport = False
-    IniFile = '\Software\Fast Reports'
-    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
-    PreviewOptions.Zoom = 1.000000000000000000
-    PrintOptions.Printer = 'Default'
-    PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 42889.918250763890000000
-    ReportOptions.LastChange = 42889.918250763890000000
-    ScriptLanguage = 'PascalScript'
-    ScriptText.Strings = (
-      'begin'
-      ''
-      'end.')
-    Left = 40
-    Top = 112
-    Datasets = <>
-    Variables = <>
-    Style = <>
   end
   object frxBarCodeObject1: TfrxBarCodeObject
     Left = 56
@@ -144,5 +117,36 @@ object ImprimirDataModule: TImprimirDataModule
     ForcedQuotes = False
     Left = 184
     Top = 352
+  end
+  object frxDBDataset1: TfrxDBDataset
+    UserName = 'frxDBDataset1'
+    CloseDataSource = False
+    DataSet = Query
+    BCDToCurrency = False
+    Left = 40
+    Top = 56
+  end
+  object frxReport1: TfrxReport
+    Version = '5.3.14'
+    DataSet = frxDBDataset1
+    DataSetName = 'frxDBDataset1'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 43309.844803217590000000
+    ReportOptions.LastChange = 43309.844803217590000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 40
+    Top = 104
+    Datasets = <>
+    Variables = <>
+    Style = <>
   end
 end

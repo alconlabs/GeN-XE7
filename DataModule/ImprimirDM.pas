@@ -17,11 +17,11 @@ type
     VentasFDQuery1: TFDQuery;
     FDQuery1: TFDQuery;
     FirebirdConnection: TFDConnection;
-    frxDBDataset1: TfrxDBDataset;
-    frxReport1: TfrxReport;
     frxBarCodeObject1: TfrxBarCodeObject;
     frxPDFExport1: TfrxPDFExport;
     frxCSVExport1: TfrxCSVExport;
+    frxDBDataset1: TfrxDBDataset;
+    frxReport1: TfrxReport;
     Function VTA(nro, let: string): string;
     Function OPER(nro, let: string): string;
     Function PRE(nro, let: string): string;
@@ -136,7 +136,7 @@ begin
     + ' INNER JOIN "Articulo" ON ("PresupuestoItem".ARTICULO = "Articulo".CODIGO)'
     + ' INNER JOIN "Cliente" ON ("Presupuesto".CLIENTE = "Cliente".CODIGO)';
   ventaTSql:=' "Venta".CODIGO,' + '  "Venta".LETRA,' +
-    '  "Venta".FECHA,' + '  "Venta".COMPROBANTE,' +
+    '  "Venta".FECHA,' + '  "Venta".COMPROBANTE,' + '  "Venta".TERMINOS,'+
     '  "Venta".TOTAL,' + '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' +
     '  "Venta".SUBTOTAL,' + '  "Venta".DESCUENTO,' + '  "Venta".IMPUESTO,' +
     '  "Venta".EXCENTO,' + '  "Venta".SALDO,' + '  "Venta".PAGADO'

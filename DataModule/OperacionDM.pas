@@ -15,7 +15,7 @@ interface
 
 uses
   SysUtils, Classes, DB, DataModule, ImprimirDM, Dialogs, Controls, DateUtils,
-  IBX.IBCustomDataSet, IBX.IBQuery, Math;
+  IBX.IBCustomDataSet, IBX.IBQuery, Math, AfipDM, System.JSON;
 
 type
   matriz = array of array of string;
@@ -715,9 +715,10 @@ end;
 
 Procedure TOperacionDataModule.ProcVTA; // PROCESA UNA VENTA
 var
-  nro, a, pagare: string;
+  nro, a, pagare, cae, vto, mensaje: string;
   i: integer;
   IIBB, cmv: Double;
+  jsResponse: TJSONValue;
 begin
     pagare := '0';
   nro := inttostr(UltimoRegistro('"Venta"', 'CODIGO'));
@@ -727,21 +728,39 @@ begin
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
  // CALCULAR IIBB
+  Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + IngresosBrutos;
+  Q.Open;
+  //  if tot - impu > Q.FieldByName('MONTO').AsFloat then
+  //    IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
+  //      Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
+  if let = 'C' then
+    IIBB := tot * (Q.FieldByName('PORCENTAJE').AsFloat/100)
+  else
+    IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
 
-      Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + IngresosBrutos;
-      Q.Open;
-      //  if tot - impu > Q.FieldByName('MONTO').AsFloat then
-      //    IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
-      //      Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
-      if let = 'C' then
-        IIBB := tot * (Q.FieldByName('PORCENTAJE').AsFloat/100)
-      else
-        IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
+  AfipDataModule := TAfipDataModule.Create(self);
+  try
+    with AfipDataModule do
+    begin
+      jsResponse := FacturaAfip( fech, '11', '11', '1', '96', cui, nro, floattostr(tot), floattostr(tot),
+      '0', '0', '0', '0', '1',
+      '1', '0', '0', '0', '0',
+      '0', '0', 'PES', 'impuesto', 'null',
+      'null', 'null', 'Lopez Automotores SRL', 'Cinthia Lopez', 'Sierra Grande', 'sistema gen');
+      cae:=jsResponse.GetValue<String>('cae');
+      nro:=jsResponse.GetValue<String>('nro');
+      vto:=jsResponse.GetValue<String>('vto');
+      mensaje:=jsResponse.GetValue<String>('mensaje');
+    end;
+  finally
+    AfipDataModule.Free;
+  end;
+
   // INSERTA EN LA TABLA VENTA
-  Q.sql.Text := 'Insert Into "Venta" (CODIGO, LETRA, CLIENTE, ' +
+  Q.sql.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE, ' +
     ' SUBTOTAL, DESCUENTO, FECHA, IMPUESTO, IIBB, TOTAL, CONTADO, CHEQUE,' +
     ' TARJETA, OTROS, SALDO, PAGADO' + ', PAGARE, COSTO, DEUDA, COMISION' +
-    ') Values ' + '(' + (nro) + ', ' + quotedstr(let) + ', ' + cod + ', ' + ' '
+    ') Values ' + '('+QuotedStr(cae)+', ' + quotedstr(vto) + ', ' + (nro) + ', ' + quotedstr(let) + ', ' + cod + ', ' + ' '
     + floattostr(sbt) + ', ' + floattostr(des) + ', ' + quotedstr(fech) + ', ' +
     floattostr(impu) + ',' + floattostr(IIBB) + ', ' + floattostr(tot) + ', ' +floattostr(cont) + ', ' +
     floattostr(cheq) + ', ' + floattostr(tarj) + ', ' + floattostr(otr) + ', ' +
@@ -821,6 +840,7 @@ begin
   // Insertar en la tabla LibroDiario
   LibroDiario('VENTA', nro, let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, comv);
+
   // Completa la Transaccion
   Q.Transaction.CommitRetaining;
   // IMPRIMIR
