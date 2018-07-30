@@ -567,6 +567,7 @@ begin
         // Label19.Caption := Tabla.FieldByName('TERMINOS').AsString;
         // Label23.Caption := DateToStr(IncDay(now,Tabla.FieldByName('DIASCREDITO').AsInteger));
         VendedorEdit.Text := Tabla.FieldByName('VENDEDOR').AsString;
+        CUITLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
         CUITLabel.Caption := Tabla.FieldByName('CUIT').AsString;
         // DocumentoLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
         // CUENTA CLIENTE

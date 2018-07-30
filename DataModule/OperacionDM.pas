@@ -721,9 +721,10 @@ var
   jsResponse: TJSONValue;
 begin
     pagare := '0';
-  nro := inttostr(UltimoRegistro('"Venta"', 'CODIGO'));
-  if nro = '1' then
-    nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
+//  nro := inttostr(UltimoRegistro('"Venta"', 'CODIGO'));
+//  if nro = '1' then
+//    nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
+  nro:=IntToStr((dm.ObtenerConfig('NroFactura'))+1);
   if pgr then
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
@@ -751,11 +752,14 @@ begin
       nro:=jsResponse.GetValue<String>('nro');
       vto:=jsResponse.GetValue<String>('vto');
       mensaje:=jsResponse.GetValue<String>('mensaje');
+      if mensaje <> 'Ok' then ShowMessage(mensaje);
     end;
   finally
     AfipDataModule.Free;
   end;
-
+  //actualiza el nro de factura
+  Q.sql.Text := 'Update "Config" Set NroFactura ='+nro;
+  Q.ExecSQL;
   // INSERTA EN LA TABLA VENTA
   Q.sql.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE, ' +
     ' SUBTOTAL, DESCUENTO, FECHA, IMPUESTO, IIBB, TOTAL, CONTADO, CHEQUE,' +

@@ -2,7 +2,7 @@ object MigrarForm: TMigrarForm
   Left = 0
   Top = 0
   Caption = 'Migrar'
-  ClientHeight = 170
+  ClientHeight = 239
   ClientWidth = 297
   Color = clWindow
   Font.Charset = DEFAULT_CHARSET
@@ -15,9 +15,37 @@ object MigrarForm: TMigrarForm
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 2
+    Width = 19
+    Height = 13
+    Caption = 'URL'
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 48
+    Width = 45
+    Height = 13
+    Caption = 'Resource'
+  end
+  object Label3: TLabel
+    Left = 8
+    Top = 92
+    Width = 69
+    Height = 13
+    Caption = 'Consumer Key'
+  end
+  object Label4: TLabel
+    Left = 8
+    Top = 136
+    Width = 82
+    Height = 13
+    Caption = 'Consumer Secret'
+  end
   object ProcesarButton: TButton
     Left = 209
-    Top = 114
+    Top = 175
     Width = 80
     Height = 50
     Caption = 'PROCESAR'
@@ -32,14 +60,14 @@ object MigrarForm: TMigrarForm
   end
   object ProgressBar1: TProgressBar
     Left = 8
-    Top = 114
+    Top = 175
     Width = 201
     Height = 50
     TabOrder = 1
   end
   object EditUrl: TEdit
     Left = 8
-    Top = 9
+    Top = 21
     Width = 281
     Height = 21
     TabOrder = 2
@@ -47,7 +75,7 @@ object MigrarForm: TMigrarForm
   end
   object EditResource: TEdit
     Left = 8
-    Top = 33
+    Top = 65
     Width = 281
     Height = 21
     TabOrder = 3
@@ -55,17 +83,19 @@ object MigrarForm: TMigrarForm
   end
   object EditUser: TEdit
     Left = 8
-    Top = 60
+    Top = 109
     Width = 281
     Height = 21
     TabOrder = 4
+    Text = 'ck'
   end
   object EditPassword: TEdit
     Left = 8
-    Top = 87
+    Top = 153
     Width = 281
     Height = 21
     TabOrder = 5
+    Text = 'cs'
   end
   object RESTClient1: TRESTClient
     Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
@@ -75,7 +105,7 @@ object MigrarForm: TMigrarForm
     HandleRedirects = True
     RaiseExceptionOn500 = False
     Left = 152
-    Top = 216
+    Top = 240
   end
   object RESTRequest1: TRESTRequest
     Client = RESTClient1
@@ -88,18 +118,18 @@ object MigrarForm: TMigrarForm
     Response = RESTResponse1
     SynchronizedEvents = False
     Left = 152
-    Top = 248
+    Top = 272
   end
   object RESTResponse1: TRESTResponse
     Left = 48
-    Top = 216
+    Top = 240
   end
   object RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter
     Dataset = O
     FieldDefs = <>
     Response = RESTResponse1
     Left = 48
-    Top = 248
+    Top = 272
   end
   object O: TFDMemTable
     FieldDefs = <>
@@ -112,7 +142,7 @@ object MigrarForm: TMigrarForm
     UpdateOptions.CheckRequired = False
     StoreDefs = True
     Left = 48
-    Top = 280
+    Top = 304
   end
   object RESTClientCategories: TRESTClient
     Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
@@ -122,7 +152,7 @@ object MigrarForm: TMigrarForm
     HandleRedirects = True
     RaiseExceptionOn500 = False
     Left = 120
-    Top = 216
+    Top = 240
   end
   object RESTRequestCategories: TRESTRequest
     Client = RESTClientCategories
@@ -135,12 +165,12 @@ object MigrarForm: TMigrarForm
     Response = RESTResponseCategories
     SynchronizedEvents = False
     Left = 120
-    Top = 248
+    Top = 272
   end
   object RESTResponseCategories: TRESTResponse
     ContentType = 'application/json'
     Left = 8
-    Top = 216
+    Top = 240
   end
   object FDMemTableCategories: TFDMemTable
     FieldDefs = <>
@@ -153,14 +183,14 @@ object MigrarForm: TMigrarForm
     UpdateOptions.CheckRequired = False
     StoreDefs = True
     Left = 8
-    Top = 280
+    Top = 304
   end
   object RESTResponseDataSetAdapterCategories: TRESTResponseDataSetAdapter
     Dataset = FDMemTableCategories
     FieldDefs = <>
     Response = RESTResponseCategories
     Left = 8
-    Top = 248
+    Top = 272
   end
   object Q: TIBQuery
     Database = DM.BaseDatos
@@ -169,7 +199,7 @@ object MigrarForm: TMigrarForm
     CachedUpdates = False
     ParamCheck = True
     Left = 184
-    Top = 216
+    Top = 240
   end
   object T: TIBQuery
     Database = DM.BaseDatos
@@ -178,7 +208,7 @@ object MigrarForm: TMigrarForm
     CachedUpdates = False
     ParamCheck = True
     Left = 184
-    Top = 248
+    Top = 272
   end
   object D: TIBQuery
     Database = DM.BaseDatos
@@ -187,6 +217,6 @@ object MigrarForm: TMigrarForm
     CachedUpdates = False
     ParamCheck = True
     Left = 88
-    Top = 216
+    Top = 240
   end
 end

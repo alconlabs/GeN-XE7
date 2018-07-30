@@ -99,7 +99,7 @@ WSFEv1 := CreateOleObject('WSFEv1');
 WSFEv1.Token := WSAA.Token;
 WSFEv1.Sign := WSAA.Sign;
 // CUIT del emisor (debe estar registrado en la AFIP)
-WSFEv1.Cuit := '20314661967';
+WSFEv1.Cuit := '23000000000';
 WSFEv1.LanzarExcepciones := False;
 // Conectar al Servicio Web de Facturación
 ok := WSFEv1.Conectar(cache, url_wsdl, proxy); // homologación
@@ -123,7 +123,7 @@ LastCBTE := WSFEv1.CompUltimoAutorizado(punto_vta, tipo_cbte) + 1; //+ 1
 // Establezco los valores de la factura o lote a autorizar:
 DateTimeToString(Fecha, 'yyyymmdd', Date);
 id := LastId + 1; presta_serv := 3;
-tipo_doc := 80; nro_doc := '27341273329';
+tipo_doc := 80; nro_doc := '23000000000';
 cbt_desde := LastCBTE ;
 cbt_hasta := LastCBTE ;
 imp_total := '121.00'; imp_tot_conc := '0.00'; imp_neto := '100.00';
@@ -244,7 +244,7 @@ begin
   WSFEv1.Token := WSAA.Token;
   WSFEv1.Sign := WSAA.Sign;
   // CUIT del emisor (debe estar registrado en la AFIP)
-//  WSFEv1.Cuit := '20314661967';//
+//  WSFEv1.Cuit := '23000000000';//
   WSFEv1.Cuit := CUIT;
   WSFEv1.LanzarExcepciones := False;
   // Conectar al Servicio Web de Facturaci�n
@@ -338,68 +338,71 @@ end;
 
 function TAfipDataModule.FacturaAfip;
 var
-//  jsResponse: TJSONValue;
   jsRequest, J: TJSONObject;
   cuit, pass : string;
 begin
-  jsRequest := TJSONObject.Create();
-//  jsRequest.AddPair('dato', 'holis');
-  cuit := '20314661967';
-  pass := 'afipkey';
-  if DocNro='' then
+with dm do
   begin
-    DocTipo:='80';
-    DocNro:='20222222223';//https://www.afip.gob.ar/genericos/guiavirtual/consultas_detalle.aspx?id=4359106
-  end;
-  jsRequest.AddPair('ptovta', ptovta);//'11');
-  jsRequest.AddPair('tipocbte', tipocbte);//'11');
-  jsRequest.AddPair('cuit', cuit);//'20314661967');
-  jsRequest.AddPair('pass', pass);//'afipkey');
-  jsRequest.AddPair('concepto', concepto);//'1');
-  jsRequest.AddPair('razon', razon);//'Lopez Automotores SRL');
-  jsRequest.AddPair('nombre', nombre);//'Cinthia Lopez');
-  jsRequest.AddPair('direccion', direccion);//'Sierra Grande');
-  jsRequest.AddPair('DocTipo', DocTipo);//'96');
-  jsRequest.AddPair('DocNro', DocNro);//'34127332');
-  jsRequest.AddPair('CbteFch', formatdatetime('yyyymmdd', StrToDateTime(CbteFch)) );//'23072018');
-  jsRequest.AddPair('Cbte', Cbte);//'1');
-  jsRequest.AddPair('articulo', articulo);//'sistema gen');
-  jsRequest.AddPair('ImpNeto', ImpNeto);//'121');
-  jsRequest.AddPair('ImpTotConc', ImpTotConc);//'0');
-  jsRequest.AddPair('ImpIVA', ImpIVA);//'0');
-  jsRequest.AddPair('ImpTrib', ImpTrib);//'0');
-  jsRequest.AddPair('ImpOpEx', ImpOpEx);//'0');
-  jsRequest.AddPair('ImpTotal', ImpTotal);//'121');
-  jsRequest.AddPair('FchServDesde', FchServDesde);//'null');
-  jsRequest.AddPair('FchServHasta', FchServHasta);//'null');
-  jsRequest.AddPair('FchVtoPago', FchVtoPago);//'null');
-  jsRequest.AddPair('MonId', MonId);//'PES');
-  jsRequest.AddPair('MonCotiz', MonCotiz);//'1');
-  jsRequest.AddPair('regfetribId', regfetribId);//'1');
-  jsRequest.AddPair('regfetribDesc', regfetribDesc);//'impuesto');
-  jsRequest.AddPair('regfetribBaseImp', regfetribBaseImp);//'0');
-  jsRequest.AddPair('regfetribAlic', regfetribAlic);//'0');
-  jsRequest.AddPair('regfetribImporte', regfetribImporte);//'0');
-  jsRequest.AddPair('regfeivaId', regfeivaId);//'0');
-  jsRequest.AddPair('regfeivaBaseImp', regfeivaBaseImp);//'0');
-  jsRequest.AddPair('regfeivaImporte', regfeivaImporte);//'0');
-//  ResetRESTComponentsToDefaults;
-//  FDMemTable1.Close;
-  RESTRequest1.ResetToDefaults;
-  RESTClient1.ResetToDefaults;
-//  RESTResponse1.ResetToDefaults;
-//  RESTResponseDataSetAdapter1.ResetToDefaults;
-{  RESTClient1.BaseURL := 'http://civeloo.com/afip';
-  RESTRequest1.Resource := '/jsonpb.php';
-}  RESTClient1.BaseURL := 'http://192.168.0.10:8888/civeloo/public_html/afip';
-    RESTRequest1.Resource := '/index.php';
+    LeerINI;
+    jsRequest := TJSONObject.Create();
+    if cuit='' then cuit := afipUsr;
+
+    if DocNro='' then
+      if StrToFloat( ImpTotal )<1000 then begin
+        DocTipo:='99';
+        DocNro:='0';
+      end
+      else
+      begin
+        DocTipo:='80';
+        DocNro:='20222222223';//https://www.afip.gob.ar/genericos/guiavirtual/consultas_detalle.aspx?id=4359106
+        //      DocNro:='23000000000';
+      end
+    else
+      if DocNro.Length < 11  then DocTipo := '96' else DocTipo := '80';
+
+    jsRequest.AddPair('ptovta', ptovta);
+    jsRequest.AddPair('tipocbte', tipocbte);
+    jsRequest.AddPair('cuit', cuit);
+    jsRequest.AddPair('pass', afipPsw);
+    jsRequest.AddPair('concepto', concepto);
+    jsRequest.AddPair('razon', razon);
+    jsRequest.AddPair('nombre', nombre);
+    jsRequest.AddPair('direccion', direccion);
+    jsRequest.AddPair('DocTipo', DocTipo);
+    jsRequest.AddPair('DocNro', DocNro);
+    jsRequest.AddPair('CbteFch', formatdatetime('yyyymmdd', StrToDateTime(CbteFch)) );
+    jsRequest.AddPair('Cbte', Cbte);//'1');
+    jsRequest.AddPair('articulo', articulo);
+    jsRequest.AddPair('ImpNeto', ImpNeto);
+    jsRequest.AddPair('ImpTotConc', ImpTotConc);
+    jsRequest.AddPair('ImpIVA', ImpIVA);
+    jsRequest.AddPair('ImpTrib', ImpTrib);
+    jsRequest.AddPair('ImpOpEx', ImpOpEx);
+    jsRequest.AddPair('ImpTotal', ImpTotal);
+    jsRequest.AddPair('FchServDesde', FchServDesde);
+    jsRequest.AddPair('FchServHasta', FchServHasta);
+    jsRequest.AddPair('FchVtoPago', FchVtoPago);
+    jsRequest.AddPair('MonId', MonId);
+    jsRequest.AddPair('MonCotiz', MonCotiz);
+    jsRequest.AddPair('regfetribId', regfetribId);
+    jsRequest.AddPair('regfetribDesc', regfetribDesc);
+    jsRequest.AddPair('regfetribBaseImp', regfetribBaseImp);
+    jsRequest.AddPair('regfetribAlic', regfetribAlic);
+    jsRequest.AddPair('regfetribImporte', regfetribImporte);
+    jsRequest.AddPair('regfeivaId', regfeivaId);
+    jsRequest.AddPair('regfeivaBaseImp', regfeivaBaseImp);
+    jsRequest.AddPair('regfeivaImporte', regfeivaImporte);
+    RESTRequest1.ResetToDefaults;
+    RESTClient1.ResetToDefaults;
+    RESTClient1.BaseURL := afipURL;
+    RESTRequest1.Resource := afipRes;
     RESTRequest1.Method:=rmPOST;
-  RESTRequest1.Params.AddItem('body',jsRequest.ToString, TRESTRequestParameterKind.pkREQUESTBODY, [poDoNotEncode], TRESTContentType.ctAPPLICATION_JSON);
-  jsRequest.Free();
-  RESTRequest1.Execute();
-//  jsResponse := RESTRequest1.Response.JSONValue;
-//  Memo1.Text := jsResponse.GetValue<String>('mensaje');
-  result := RESTRequest1.Response.JSONValue;//.GetValue<String>('mensaje');
+    RESTRequest1.Params.AddItem('body',jsRequest.ToString, TRESTRequestParameterKind.pkREQUESTBODY, [poDoNotEncode], TRESTContentType.ctAPPLICATION_JSON);
+    jsRequest.Free();
+    RESTRequest1.Execute();
+  end;
+  result := RESTRequest1.Response.JSONValue;
 end;
 
 end.

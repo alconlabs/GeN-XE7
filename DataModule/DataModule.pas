@@ -19,6 +19,9 @@ type
     ConfigQuery: TIBQuery;
     Query: TIBQuery;
     procedure DataModuleCreate(Sender: TObject);
+    function ObtenerConfig(campo:string):Variant;
+    procedure LeerINI;
+    procedure EscribirINI;
   private
     { Private declarations }
   public
@@ -32,6 +35,7 @@ type
     function ExecuteProcess(ProcessName, Path: String): Cardinal;
     { function Gratis(arch: String): boolean; }
     { Public declarations }
+
   end;
 
 const
@@ -57,6 +61,8 @@ var
   Permiso: Integer;
   LoginOK, Cancelar: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
+  webUrl, webRes, webUsr, webPsw : string;
+  afipUrl, afipRes, afipUsr, afipPsw : string;
 
 implementation
 
@@ -205,10 +211,11 @@ begin
 end;
 
 procedure TDM.connection;
-Var
+var
   IniFile: TIniFile;
   // ?  dia: Integer;
   // ?  fech: tdate;
+  bd : string;
 begin
   with FormatSettings do
   begin
@@ -219,14 +226,19 @@ begin
   if BaseDatos.Connected = True then
     BaseDatos.Close;
   // Obtiene la ruta y el nombre de la base de datos
-  IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'DeG');
+
+  Path := ExtractFilePath(Application.ExeName);
+  Path := StringReplace(Path, 'bin\', '', [rfReplaceAll]);
+//  IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'DeG');
+  IniFile := TIniFile.Create((Path+'db\') + 'DeG');
   U := ExtractFileDrive(Application.ExeName);
-  Path := IniFile.ReadString('BD', 'Path', '');
-  if Path = '' then
-  begin
-    Path := ExtractFilePath(Application.ExeName);
-    Path := StringReplace(Path, 'bin\', '', [rfReplaceAll]);
-  end;
+  bd := IniFile.ReadString('BD', 'Path', '');
+  if bd<>'' then Path := bd;
+//  if Path = '' then
+//  begin
+//    Path := ExtractFilePath(Application.ExeName);
+//    Path := StringReplace(Path, 'bin\', '', [rfReplaceAll]);
+//  end;
   BasedeDatos := IniFile.ReadString('BD', 'DBase', '');
   if BasedeDatos = '' then
   begin
@@ -263,9 +275,48 @@ begin
   // if Transaccion.Active=False then Transaccion.Active:=True;
   IniFile.Destroy;
   // Obtiene la ruta y el nombre de la base de datos
-  IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) +
-    'Datos.ini');
-  Unidad := IniFile.ReadString('ACTUALIZA', 'Unidad', '');
+//  IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) +
+//    'Datos.ini');
+//  Unidad := IniFile.ReadString('ACTUALIZA', 'Unidad', '');
+end;
+
+function TDM.ObtenerConfig;
+begin
+  ConfigQuery.Close;
+  ConfigQuery.Open;
+  result := ConfigQuery.FieldByName(campo).Value;
+end;
+
+procedure TDM.LeerINI;
+Var
+  IniFile: TIniFile;
+begin
+  IniFile := TIniFile.Create(Path + 'db\' + 'DeG');
+  webUrl := IniFile.ReadString('WEB', 'URL', '');
+  webRes := IniFile.ReadString('WEB', 'RES', '');
+  webUsr := IniFile.ReadString('WEB', 'USR', '');
+  webPsw := IniFile.ReadString('WEB', 'PSW', '');
+  afipUrl := IniFile.ReadString('AFIP', 'URL', '');
+  afipRes := IniFile.ReadString('AFIP', 'RES', '');
+  afipUsr := IniFile.ReadString('AFIP', 'USR', '');
+  afipPsw := IniFile.ReadString('AFIP', 'PSW', '');
+  IniFile.Destroy;
+end;
+
+procedure TDM.EscribirINI;
+Var
+  IniFile: TIniFile;
+begin
+  IniFile := TIniFile.Create(Path + 'db\' + 'DeG');
+  IniFile.WriteString('WEB', 'URL', webUrl);
+  IniFile.WriteString('WEB', 'RES', webRes);
+  IniFile.WriteString('WEB', 'USR', webUsr);
+  IniFile.WriteString('WEB', 'PSW', webPsw);
+  IniFile.WriteString('AFIP', 'URL', afipUrl);
+  IniFile.WriteString('AFIP', 'RES', afipRes);
+  IniFile.WriteString('AFIP', 'USR', afipUsr);
+  IniFile.WriteString('AFIP', 'PSW', afipPsw);
+  IniFile.Destroy;
 end;
 
 end.
