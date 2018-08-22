@@ -773,12 +773,13 @@ begin
   Q.sql.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE, ' +
     ' SUBTOTAL, DESCUENTO, FECHA, IMPUESTO, IIBB, TOTAL, CONTADO, CHEQUE,' +
     ' TARJETA, OTROS, SALDO, PAGADO' + ', PAGARE, COSTO, DEUDA, COMISION, DESCRIPCION' +
-    ') Values ' + '('+QuotedStr(comp)+', ' + quotedstr(vto) + ', ' + (nro) + ', ' + quotedstr(let) + ', ' + cod + ', ' + ' '
-    + floattostr(sbt) + ', ' + floattostr(des) + ', ' + quotedstr(fech) + ', ' +
-    floattostr(impu) + ',' + floattostr(IIBB) + ', ' + floattostr(tot) + ', ' +floattostr(cont) + ', ' +
-    floattostr(cheq) + ', ' + floattostr(tarj) + ', ' + floattostr(otr) + ', ' +
-    floattostr(sal) + ', ' + floattostr(pag) + ',' + quotedstr(pagare) + ',' +
-    floattostr(cmv) + ',' + floattostr(deud) + ',' + floattostr(comv) + ', ' + QuotedStr(cae) + ')';
+    ') Values ' + '('+QuotedStr(comp)+', ' + quotedstr(vto) + ', ' + (nro) + ', ' +
+    quotedstr(let) + ', ' + cod + ', ' + floattostr(sbt) + ', ' + floattostr(des) + ', ' +
+    quotedstr(fech) + ', ' + floattostr(impu) + ', ' + floattostr(IIBB) + ', ' +
+    floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
+    floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
+    floattostr(pag) + ', ' + quotedstr(pagare) + ', ' + floattostr(cmv) + ', ' +
+    floattostr(deud) + ',' + floattostr(comv) + ', ' + QuotedStr(cae) + ')';
   Q.ExecSQL;
   // Insertar en la tabla de VENTAITEM
   for i := 1 to High(mat[0]) do
