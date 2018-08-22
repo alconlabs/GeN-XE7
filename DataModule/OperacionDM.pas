@@ -715,16 +715,16 @@ end;
 
 Procedure TOperacionDataModule.ProcVTA; // PROCESA UNA VENTA
 var
-  nro, a, pagare, cae, vto, mensaje: string;
+  nro, comp, a, pagare, cae, vto, mensaje: string;
   i: integer;
   IIBB, cmv: Double;
   jsResponse: TJSONValue;
 begin
     pagare := '0';
-//  nro := inttostr(UltimoRegistro('"Venta"', 'CODIGO'));
+  nro := inttostr(UltimoRegistro('"Venta"', 'CODIGO'));
 //  if nro = '1' then
 //    nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
-  nro:=IntToStr((dm.ObtenerConfig('NroFactura'))+1);
+  comp:=IntToStr((dm.ObtenerConfig('NroFactura'))+1);
   if pgr then
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
@@ -738,38 +738,47 @@ begin
     IIBB := tot * (Q.FieldByName('PORCENTAJE').AsFloat/100)
   else
     IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
-
-  AfipDataModule := TAfipDataModule.Create(self);
-  try
-    with AfipDataModule do
-    begin
-      jsResponse := FacturaAfip( fech, '11', '11', '1', '96', cui, nro, floattostr(tot), floattostr(tot),
-      '0', '0', '0', '0', '1',
-      '1', '0', '0', '0', '0',
-      '0', '0', 'PES', 'impuesto', 'null',
-      'null', 'null', 'Lopez Automotores SRL', 'Cinthia Lopez', 'Sierra Grande', 'sistema gen');
-      cae:=jsResponse.GetValue<String>('cae');
-      nro:=jsResponse.GetValue<String>('nro');
-      vto:=jsResponse.GetValue<String>('vto');
-      mensaje:=jsResponse.GetValue<String>('mensaje');
-      if mensaje <> 'Ok' then ShowMessage(mensaje);
+  if reporte = 'FElectronica' then
+  begin
+    AfipDataModule := TAfipDataModule.Create(self);
+    try
+      with AfipDataModule do
+      begin
+        jsResponse := FacturaAfip( fech, '3', '11', '1', '96', cui, comp, floattostr(tot), floattostr(tot),
+        '0', '0', '0', '0', '1',
+        '1', '0', '0', '0', '0',
+        '0', '0', 'PES', 'impuesto', 'null',
+        'null', 'null', '', '', '', '');
+        cae:=jsResponse.GetValue<String>('cae');
+        comp:=jsResponse.GetValue<String>('nro');
+        vto:=jsResponse.GetValue<String>('vto');
+        mensaje:=jsResponse.GetValue<String>('mensaje');
+        if mensaje <> 'Ok' then
+        begin
+          ShowMessage(mensaje);
+          exit;
+        end;
+      end;
+    finally
+      AfipDataModule.Free;
     end;
-  finally
-    AfipDataModule.Free;
   end;
   //actualiza el nro de factura
-  Q.sql.Text := 'Update "Config" Set NroFactura ='+nro;
-  Q.ExecSQL;
+  if comp<>'' then
+  begin
+    Q.sql.Text := 'Update "Config" Set NroFactura ='+comp;
+    Q.ExecSQL;
+  end;
   // INSERTA EN LA TABLA VENTA
   Q.sql.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE, ' +
     ' SUBTOTAL, DESCUENTO, FECHA, IMPUESTO, IIBB, TOTAL, CONTADO, CHEQUE,' +
-    ' TARJETA, OTROS, SALDO, PAGADO' + ', PAGARE, COSTO, DEUDA, COMISION' +
-    ') Values ' + '('+QuotedStr(cae)+', ' + quotedstr(vto) + ', ' + (nro) + ', ' + quotedstr(let) + ', ' + cod + ', ' + ' '
+    ' TARJETA, OTROS, SALDO, PAGADO' + ', PAGARE, COSTO, DEUDA, COMISION, DESCRIPCION' +
+    ') Values ' + '('+QuotedStr(comp)+', ' + quotedstr(vto) + ', ' + (nro) + ', ' + quotedstr(let) + ', ' + cod + ', ' + ' '
     + floattostr(sbt) + ', ' + floattostr(des) + ', ' + quotedstr(fech) + ', ' +
     floattostr(impu) + ',' + floattostr(IIBB) + ', ' + floattostr(tot) + ', ' +floattostr(cont) + ', ' +
     floattostr(cheq) + ', ' + floattostr(tarj) + ', ' + floattostr(otr) + ', ' +
     floattostr(sal) + ', ' + floattostr(pag) + ',' + quotedstr(pagare) + ',' +
-    floattostr(cmv) + ',' + floattostr(deud) + ',' + floattostr(comv) + ')';
+    floattostr(cmv) + ',' + floattostr(deud) + ',' + floattostr(comv) + ', ' + QuotedStr(cae) + ')';
   Q.ExecSQL;
   // Insertar en la tabla de VENTAITEM
   for i := 1 to High(mat[0]) do

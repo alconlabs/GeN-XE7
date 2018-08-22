@@ -128,7 +128,7 @@ begin
           cat := existeEnTJSONArray('Categoria',categories);
           subcat := existeEnTJSONArray('SubCategoria',categories);
           disponible:=O.FieldByName('stock_quantity').AsString;
-          if O.FieldByName('regular_price').AsString='' then precio:=0 else precio:=O.FieldByName('regular_price').AsFloat;
+          if O.FieldByName('price').AsString='' then precio:=0 else precio:=O.FieldByName('price').AsFloat;
           if (O.FieldByName('tax_class').AsString = 'tasa-reducida') then
             iva := 10.5
             else

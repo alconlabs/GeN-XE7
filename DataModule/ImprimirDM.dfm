@@ -78,8 +78,8 @@ object ImprimirDataModule: TImprimirDataModule
     Top = 387
   end
   object frxBarCodeObject1: TfrxBarCodeObject
-    Left = 56
-    Top = 352
+    Left = 40
+    Top = 152
   end
   object frxPDFExport1: TfrxPDFExport
     UseFileCache = True
@@ -102,21 +102,8 @@ object ImprimirDataModule: TImprimirDataModule
     CenterWindow = False
     PrintScaling = False
     PdfA = False
-    Left = 120
-    Top = 352
-  end
-  object frxCSVExport1: TfrxCSVExport
-    UseFileCache = True
-    ShowProgress = True
-    OverwritePrompt = False
-    DataOnly = False
-    Separator = ';'
-    OEMCodepage = False
-    UTF8 = False
-    NoSysSymbols = True
-    ForcedQuotes = False
-    Left = 184
-    Top = 352
+    Left = 40
+    Top = 200
   end
   object frxDBDataset1: TfrxDBDataset
     UserName = 'frxDBDataset1'
@@ -127,7 +114,7 @@ object ImprimirDataModule: TImprimirDataModule
     Top = 56
   end
   object frxReport1: TfrxReport
-    Version = '5.3.14'
+    Version = '5.6.17'
     DataSet = frxDBDataset1
     DataSetName = 'frxDBDataset1'
     DotMatrixReport = False
@@ -136,8 +123,8 @@ object ImprimirDataModule: TImprimirDataModule
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 43309.844803217590000000
-    ReportOptions.LastChange = 43309.844803217590000000
+    ReportOptions.CreateDate = 43332.649842800930000000
+    ReportOptions.LastChange = 43332.649842800930000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'

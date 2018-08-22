@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  frxExportCSV, frxClass, frxExportPDF, frxBarcode, frxDBSet
+  frxClass, frxDBSet, frxExportPDF, frxBarcode
  ;
 type
   TImprimirDataModule = class(TDataModule)
@@ -19,7 +19,6 @@ type
     FirebirdConnection: TFDConnection;
     frxBarCodeObject1: TfrxBarCodeObject;
     frxPDFExport1: TfrxPDFExport;
-    frxCSVExport1: TfrxCSVExport;
     frxDBDataset1: TfrxDBDataset;
     frxReport1: TfrxReport;
     Function VTA(nro, let: string): string;
@@ -135,7 +134,7 @@ begin
     ' INNER JOIN "PresupuestoItem" ON ("Presupuesto".CODIGO = "PresupuestoItem".OPERACION)'
     + ' INNER JOIN "Articulo" ON ("PresupuestoItem".ARTICULO = "Articulo".CODIGO)'
     + ' INNER JOIN "Cliente" ON ("Presupuesto".CLIENTE = "Cliente".CODIGO)';
-  ventaTSql:=' "Venta".CODIGO,' + '  "Venta".LETRA,' +
+  ventaTSql:=' "Venta".CODIGO,' + '  "Venta".LETRA,' + '  "Venta".DESCRIPCION as VDESC,' +
     '  "Venta".FECHA,' + '  "Venta".COMPROBANTE,' + '  "Venta".TERMINOS,'+
     '  "Venta".TOTAL,' + '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' +
     '  "Venta".SUBTOTAL,' + '  "Venta".DESCUENTO,' + '  "Venta".IMPUESTO,' +
@@ -178,6 +177,7 @@ begin
     ' As EDEPARTAMENTO,' + QuotedStr(dm.ConfigQuery.FieldByName('PROVINCIA')
     .AsString) + ' As EPROVINCIA,' +
     QuotedStr(dm.ConfigQuery.FieldByName('CUIT').AsString) + ' As ECUIT,' +
+    QuotedStr(dm.ConfigQuery.FieldByName('WEB').AsString) + ' As EWEB,' +
     QuotedStr(FormatDateTime('dd/mm/yyyy', dm.ConfigQuery.FieldByName('FECHA')
     .AsDateTime)) + ' As EFECHA,' + QuotedStr(dm.ConfigQuery.FieldByName('IIBB')
     .AsString) + ' As EIIBB,' + vsql;

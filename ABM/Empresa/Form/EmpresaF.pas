@@ -81,6 +81,8 @@ type
     IIBBQuery: TIBQuery;
     IIBBDataSource: TDataSource;
     DBLookupComboBox2: TDBLookupComboBox;
+    Label15: TLabel;
+    DBEdit11: TDBEdit;
     procedure NoBitBtnClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);

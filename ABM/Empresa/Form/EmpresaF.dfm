@@ -320,10 +320,10 @@ object EmpresaForm: TEmpresaForm
         ParentFont = False
       end
       object Image1: TImage
-        Left = 473
-        Top = 220
+        Left = 472
+        Top = 247
         Width = 202
-        Height = 135
+        Height = 127
         Hint = 'CLICK PARA CAMBIAR'
         Center = True
         ParentShowHint = False
@@ -393,8 +393,8 @@ object EmpresaForm: TEmpresaForm
         OnClick = Image1Click
       end
       object Label1: TLabel
-        Left = 438
-        Top = 220
+        Left = 436
+        Top = 247
         Width = 29
         Height = 13
         Caption = 'Logo'
@@ -412,6 +412,20 @@ object EmpresaForm: TEmpresaForm
         Width = 59
         Height = 13
         Caption = 'Inic.Activ.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label15: TLabel
+        Left = 439
+        Top = 220
+        Width = 27
+        Height = 13
+        Caption = 'Web'
+        FocusControl = DBEdit11
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -11
@@ -603,7 +617,7 @@ object EmpresaForm: TEmpresaForm
       object DBLookupComboBox2: TDBLookupComboBox
         Left = 140
         Top = 353
-        Width = 534
+        Width = 209
         Height = 21
         DataField = 'IIBB'
         DataSource = DataSource
@@ -611,6 +625,15 @@ object EmpresaForm: TEmpresaForm
         ListField = 'DESCRIPCION'
         ListSource = IIBBDataSource
         TabOrder = 20
+      end
+      object DBEdit11: TDBEdit
+        Left = 471
+        Top = 220
+        Width = 201
+        Height = 21
+        DataField = 'WEB'
+        DataSource = DataSource
+        TabOrder = 21
       end
     end
     object TabSheet2: TTabSheet
