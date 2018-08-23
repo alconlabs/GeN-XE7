@@ -390,6 +390,7 @@ object EmpresaForm: TEmpresaForm
           8681B1A0340680D01A0F2BF7A76EDEBDF418A67F693FAC3FDC9A0CFA0F1FCCBD
           BF8F7D07889FDA5FB7EE5FB3B6833680D07FFFD9}
         ShowHint = True
+        Stretch = True
         OnClick = Image1Click
       end
       object Label1: TLabel

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GeN"
-#define MyAppVersion "201807191834"
+#define MyAppVersion "201808231831"
 #define MyAppPublisher "Civeloo"
 #define MyAppURL "http://www.civeloo.com/"
 #define MyAppExeName "GeN.exe"
@@ -22,10 +22,10 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppPublisher}\{#MyAppName}
 DefaultGroupName={#MyAppPublisher}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\bin\LICENSE-2.0.txt
-OutputDir=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Instalador
+LicenseFile=C:\Users\User\Documents\Embarcadero\Studio\Projects\Bin\GeN\bin\LICENSE-2.0.txt
+OutputDir=C:\Users\User\Documents\Embarcadero\Studio\Projects\Instalador
 OutputBaseFilename=Actualizar{#MyAppName}
-SetupIconFile=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\bin\DeGsoft.ico
+SetupIconFile=C:\Users\User\Documents\Embarcadero\Studio\Projects\Bin\GeN\bin\DeGsoft.ico
 Compression=lzma
 SolidCompression=true
 
@@ -38,11 +38,11 @@ Name: spanish; MessagesFile: compiler:Languages\Spanish.isl
 
 [Files]
 ;Source: C:\Civeloo\GeN\bin\GeN.exe; DestDir: {app}; Flags: ignoreversion
-Source: C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\bin\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: C:\Users\User\Documents\Embarcadero\Studio\Projects\Bin\GeN\bin\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
 ;Source: C:\Civeloo\GeN\db\*; DestDir: {app}\db\; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\hlp\*; DestDir: {app}\hlp\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: C:\Users\User\Documents\Embarcadero\Studio\Projects\Bin\GeN\hlp\*; DestDir: {app}\hlp\; Flags: ignoreversion recursesubdirs createallsubdirs
 ;Source: C:\Civeloo\GeN\img\*; DestDir: {app}\img\; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: C:\Users\Usuario\Documents\GitHub\GeN-XE7\Bin\GeN\rpt\*; DestDir: {app}\rpt\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: C:\Users\User\Documents\Embarcadero\Studio\Projects\Bin\GeN\rpt\*; DestDir: {app}\rpt\; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

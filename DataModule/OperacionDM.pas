@@ -715,7 +715,7 @@ end;
 
 Procedure TOperacionDataModule.ProcVTA; // PROCESA UNA VENTA
 var
-  nro, comp, a, pagare, cae, vto, mensaje: string;
+  nro, comp, a, pagare, cae, vto, mensaje, ptovta, tipocbte: string;
   i: integer;
   IIBB, cmv: Double;
   jsResponse: TJSONValue;
@@ -725,6 +725,7 @@ begin
 //  if nro = '1' then
 //    nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
   comp:=IntToStr((dm.ObtenerConfig('NroFactura'))+1);
+  ptovta:= IntToStr(dm.ObtenerConfig('Empresa'));
   if pgr then
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
@@ -735,7 +736,10 @@ begin
   //    IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
   //      Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
   if let = 'C' then
+    begin
+    tipocbte:='11';
     IIBB := tot * (Q.FieldByName('PORCENTAJE').AsFloat/100)
+    end
   else
     IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
   if reporte = 'FElectronica' then
@@ -744,7 +748,7 @@ begin
     try
       with AfipDataModule do
       begin
-        jsResponse := FacturaAfip( fech, '3', '11', '1', '96', cui, comp, floattostr(tot), floattostr(tot),
+        jsResponse := FacturaAfip( fech, ptovta, tipocbte, '1', '96', cui, comp, floattostr(tot), floattostr(tot),
         '0', '0', '0', '0', '1',
         '1', '0', '0', '0', '0',
         '0', '0', 'PES', 'impuesto', 'null',

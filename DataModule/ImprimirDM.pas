@@ -186,7 +186,7 @@ begin
   begin
     LoadFromFile(path + 'rpt\' + reporte + '.fr3');
     if (reporte = 'COriginal') or (reporte = 'Presupuesto')
-//    or (reporte = 'FElectronica')
+    or (reporte = 'FElectronica')
     then
     begin
       Pict := TfrxPictureView(frxReport1.FindObject('Picture1'));
