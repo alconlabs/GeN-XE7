@@ -15,7 +15,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.FB, FireDAC.Phys.FBDef,
   FireDAC.VCLUI.Wait
   ,System.JSON
-  ,DataModule;
+  ,DataModule, OperacionDM;
 
 type
   TMigrarForm = class(TForm)
@@ -42,6 +42,7 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    BorrarArticulosCheckBox: TCheckBox;
     procedure ProcesarButtonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -51,7 +52,6 @@ type
     procedure GetREST(url, resource, ck, cs: string);
     procedure GetRESTCategories(url, resource, ck, cs: string);
     function existeEnTJSONArray(tabla: string ; streams: TJSONArray): string;
-    function existeEnTabla(tabla,codigo: string): Boolean;
     procedure importCategories;
   public
     { Public declarations }
@@ -79,7 +79,7 @@ begin
     EditUser.Text := webUsr;
     EditPassword.Text := webPsw;
   end;
-
+  OperacionDataModule := TOperacionDataModule.Create(self);
 end;
 
 procedure TMigrarForm.ProcesarButtonClick(Sender: TObject);
@@ -88,107 +88,124 @@ var
   mar, col, cat, subcat, rub, s, disponible, costo, fecha : string;
   categories: TJSONArray;
   precio, iva, ganancia: Double;
-    function ConvertToDateTimeStr(DateStr: String): String;
-    var
-      s: string;
-      fmt: TFormatSettings;
-    begin
-      fmt := TFormatSettings.Create;
-      fmt.ShortDateFormat := 'YYYY-MM-DD';
-      //      fmt.ShortTimeFormat := 'hh:mm:ss';
-      //      fmt.TimeSeparator := ':';
-      fmt.DateSeparator := '-';
-      Result := formatdatetime('mm/dd/yyyy hh:mm:ss',StrToDateTime(DateStr, fmt));
-    end;
+  function ConvertToDateTimeStr(DateStr: String): String;
+  var
+    s: string;
+    fmt: TFormatSettings;
+  begin
+    fmt := TFormatSettings.Create;
+    fmt.ShortDateFormat := 'YYYY-MM-DD';
+    //      fmt.ShortTimeFormat := 'hh:mm:ss';
+    //      fmt.TimeSeparator := ':';
+    fmt.DateSeparator := '-';
+    Result := formatdatetime('mm/dd/yyyy hh:mm:ss',StrToDateTime(DateStr, fmt));
+  end;
 
 begin
-  ProgressBar1.Position := 1;
-  with dm do begin
-    webUrl := EditUrl.Text;
-    webRes := EditResource.Text;
-    webUsr := EditUser.Text;
-    webPsw := EditPassword.Text;
-    EscribirINI;
-  end;
-  ProgressBar1.Position := 2;
-  importCategories;
-  p:=0;
-  ProgressBar1.Position := 3;
-  repeat
-    Inc(p);
-    GetREST(EditUrl.text, EditResource.text+'status=publish&per_page=100&page='+IntToStr(p)+'&', EditUser.text, EditPassword.text);
-    if (O<>nil) then
-    begin
-      ProgressBar1.Max := O.RecordCount;
-      if  (O.RecordCount>0) then
-        for i := 0 to O.RecordCount - 1 do
-        begin
-          categories := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(O.FieldByName('categories').AsString),0) as TJSONArray;
-          rub := existeEnTJSONArray('Rubro',categories);
-          cat := existeEnTJSONArray('Categoria',categories);
-          subcat := existeEnTJSONArray('SubCategoria',categories);
-          disponible:=O.FieldByName('stock_quantity').AsString;
-          if O.FieldByName('price').AsString='' then precio:=0 else precio:=O.FieldByName('price').AsFloat;
-          if (O.FieldByName('tax_class').AsString = 'tasa-reducida') then
-            iva := 10.5
-            else
-              iva := 21;
-          ganancia := precio/(iva/100+1);
-          costo := FloatToStrF( ( ganancia/(35/100+1) ), ffFixed, 16, 2 );
-          fecha := ConvertToDateTimeStr(O.FieldByName('date_modified').AsString);
-          if disponible='' then disponible:='0';
-          if not existeEnTabla('Articulo',O.FieldByName('id').AsString) then
-          begin
-            D.SQL.Text := 'INSERT INTO "Articulo" ( CODIGO, DESCRIPCION '
-            + ', ULTCOSTO, COSTO, PRECIO, PRECIO1, PRECIO2, DISPONIBLE'
-            + ', PORCENTAJE, IMPOTROS, UNIDAD, TASA, IIBB, CTANOMBRE, CTATIPO, CTAANTICIPO, CTAIIBB '
-            + ', FECHA, FECHACOMPULT, CODIGOBARRA'
-            + ', CATEGORIA, COLOR, MARCA, PROVEEDOR, RUBRO, SUBCATEGORIA'
-            + ' ) VALUES ( '
-            + IntToStr(O.FieldByName('id').AsInteger) + ', ' + QuotedStr(O.FieldByName('name').AsString)
-            + ', ' + costo + ', ' + costo + ', ' + FloatToStr(precio) + ', ' + O.FieldByName('regular_price').AsString+'0' + ', ' + O.FieldByName('sale_price').AsString+'0' + ', ' + disponible
-            + ', 30, 5, ''c/u'', '+FloatToStr(iva)+', 1, 13, 13, 13, 66'
-            + ', ' + QuotedStr(fecha) + ', ' + QuotedStr(fecha) + ', ' + QuotedStr(O.FieldByName('sku').AsString)
-            + ', '+cat+', 0, 0, 1, '+rub+', '+subcat+' )';
-//            D.ExecSQL;
-          end
-            else
-              D.SQL.Text := 'UPDATE "Articulo" SET'
-              +' DESCRIPCION = ' + QuotedStr(O.FieldByName('name').AsString)
-  //            +', ULTCOSTO = ' + costo
-//              +', COSTO = ' + costo
-              +', PRECIO = ' + FloatToStr(precio)
-              +', PRECIO1 = ' + O.FieldByName('regular_price').AsString+'0'
-              +', PRECIO2 = ' + O.FieldByName('sale_price').AsString+'0'
-              +', DISPONIBLE = ' + disponible
-//              +', PORCENTAJE = 30' +
-//              +', IMPOTROS = 5' +
-//              +', UNIDAD = ''c/u''' +
-//              +', TASA = ' + FloatToStr(iva)
-//              +', IIBB = 1' +
-//              +', CTANOMBRE = 13' +
-//              +', CTATIPO = 13' +
-//              +', CTAANTICIPO = 13' +
-//              +', CTAIIBB = 66' +
-//              +', FECHA = ' + QuotedStr(fecha)
-//              +', FECHACOMPULT = ' + QuotedStr(fecha)
-              +', CODIGOBARRA = ' + QuotedStr(O.FieldByName('sku').AsString)
-              +', CATEGORIA = ' + cat
-//              +', COLOR = 0' +
-//              +', MARCA = 0' +
-//              +', PROVEEDOR = 1' +
-              +', RUBRO = ' + rub
-              +', SUBCATEGORIA = ' + subcat
-              +' WHERE CODIGO ='+ IntToStr(O.FieldByName('id').AsInteger);
-          D.ExecSQL;
-          ProgressBar1.Position := i;
-          O.Next;
-        end;
+  with OperacionDataModule do
+  begin
+    ProgressBar1.Position := 1;
+    with dm do begin
+      webUrl := EditUrl.Text;
+      webRes := EditResource.Text;
+      webUsr := EditUser.Text;
+      webPsw := EditPassword.Text;
+      EscribirINI;
     end;
-  until (O.RecordCount<2); //  until ((O.RecordCount=0) or (O.RecordCount=1));
-  D.Transaction.CommitRetaining;
-  ShowMessage('IMPORTACION DE PRODUCTOS FINALIZADA');
-  Close;
+    ProgressBar1.Position := 2;
+    importCategories;
+    p:=0;
+    ProgressBar1.Position := 3;
+    repeat
+      Inc(p);
+      GetREST(EditUrl.text, EditResource.text+'status=publish&per_page=100&page='+IntToStr(p)+'&', EditUser.text, EditPassword.text);
+      if (O<>nil) then
+
+        ProgressBar1.Max := O.RecordCount;
+        if  (O.RecordCount>0) then
+          for i := 0 to O.RecordCount - 1 do
+          begin
+            categories := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(O.FieldByName('categories').AsString),0) as TJSONArray;
+            rub := existeEnTJSONArray('Rubro',categories);
+  //          if rub = '' then
+  //          begin
+  //            insertarTabla2('Rubro','0','Sin Rubro');
+  //            rub := '0';
+  //          end;
+            cat := existeEnTJSONArray('Categoria',categories);
+  //          if cat = '' then
+  //          begin
+  //            insertarTabla2('Categoria','0','Sin Categoría');
+  //            cat := '0';
+  //          end;
+            subcat := existeEnTJSONArray('SubCategoria',categories);
+  //          if subcat = '' then
+  //          begin
+  //            insertarTabla2('SubCategoria','0','Sin SubCategoría');
+  //            subcat := '0';
+  //          end;
+            disponible:=O.FieldByName('stock_quantity').AsString;
+            if O.FieldByName('price').AsString='' then precio:=0 else precio:=O.FieldByName('price').AsFloat;
+            if (O.FieldByName('tax_class').AsString = 'tasa-reducida') then
+              iva := 10.5
+              else
+                iva := 21;
+            ganancia := precio/(iva/100+1);
+            costo := FloatToStrF( ( ganancia/(50/100+1) ), ffFixed, 16, 2 );
+            fecha := ConvertToDateTimeStr(O.FieldByName('date_modified').AsString);
+            if disponible='' then disponible:='0';
+            if not existeEnTabla('Articulo',O.FieldByName('id').AsString) then
+            begin
+              D.SQL.Text := 'INSERT INTO "Articulo" ( CODIGO, DESCRIPCION '
+              + ', ULTCOSTO, COSTO, PRECIO, PRECIO1, PRECIO2, DISPONIBLE'
+              + ', PORCENTAJE, IMPOTROS, UNIDAD, TASA, IIBB, CTANOMBRE, CTATIPO, CTAANTICIPO, CTAIIBB '
+              + ', FECHA, FECHACOMPULT, CODIGOBARRA'
+              + ', CATEGORIA, COLOR, MARCA, PROVEEDOR, RUBRO, SUBCATEGORIA'
+              + ' ) VALUES ( '
+              + IntToStr(O.FieldByName('id').AsInteger) + ', ' + QuotedStr(O.FieldByName('name').AsString)
+              + ', ' + costo + ', ' + costo + ', ' + FloatToStr(precio) + ', ' + O.FieldByName('regular_price').AsString+'0' + ', ' + O.FieldByName('sale_price').AsString+'0' + ', ' + disponible
+              + ', 30, 5, ''c/u'', '+FloatToStr(iva)+', 1, 13, 13, 13, 66'
+              + ', ' + QuotedStr(fecha) + ', ' + QuotedStr(fecha) + ', ' + QuotedStr(O.FieldByName('sku').AsString)
+              + ', '+cat+', 0, 0, 1, '+rub+', '+subcat+' )';
+  //            D.ExecSQL;
+            end
+              else
+                D.SQL.Text := 'UPDATE "Articulo" SET'
+                +' DESCRIPCION = ' + QuotedStr(O.FieldByName('name').AsString)
+    //            +', ULTCOSTO = ' + costo
+  //              +', COSTO = ' + costo
+                +', PRECIO = ' + FloatToStr(precio)
+                +', PRECIO1 = ' + O.FieldByName('regular_price').AsString+'0'
+                +', PRECIO2 = ' + O.FieldByName('sale_price').AsString+'0'
+                +', DISPONIBLE = ' + disponible
+  //              +', PORCENTAJE = 30' +
+  //              +', IMPOTROS = 5' +
+  //              +', UNIDAD = ''c/u''' +
+  //              +', TASA = ' + FloatToStr(iva)
+  //              +', IIBB = 1' +
+  //              +', CTANOMBRE = 13' +
+  //              +', CTATIPO = 13' +
+  //              +', CTAANTICIPO = 13' +
+  //              +', CTAIIBB = 66' +
+  //              +', FECHA = ' + QuotedStr(fecha)
+  //              +', FECHACOMPULT = ' + QuotedStr(fecha)
+                +', CODIGOBARRA = ' + QuotedStr(O.FieldByName('sku').AsString)
+                +', CATEGORIA = ' + cat
+  //              +', COLOR = 0' +
+  //              +', MARCA = 0' +
+  //              +', PROVEEDOR = 1' +
+                +', RUBRO = ' + rub
+                +', SUBCATEGORIA = ' + subcat
+                +' WHERE CODIGO ='+ IntToStr(O.FieldByName('id').AsInteger);
+            D.ExecSQL;
+            ProgressBar1.Position := i;
+            O.Next;
+          end;
+    until (O.RecordCount<2); //  until ((O.RecordCount=0) or (O.RecordCount=1));
+    D.Transaction.CommitRetaining;
+    ShowMessage('IMPORTACION DE PRODUCTOS FINALIZADA');
+    Close;
+    end;
 end;
 
 procedure TMigrarForm.ResetRESTComponentsToDefaults;
@@ -236,70 +253,73 @@ var
   id,name,parent: string;
   i,p: integer;
 begin
-  GetRESTCategories(EditUrl.text, 'products/categories/?per_page=100&page=1&parent=0&', EditUser.text, EditPassword.text);
-  ProgressBar1.Max := FDMemTableCategories.RecordCount;
-  for i := 0 to FDMemTableCategories.RecordCount - 1 do
-  begin
-    id := FDMemTableCategories.FieldByName('id').AsString;
-    name := FDMemTableCategories.FieldByName('name').AsString;
-    parent := FDMemTableCategories.FieldByName('parent').AsString;
-//    T.SQL.Text := 'SELECT * FROM "Rubro" WHERE CODIGO = ' + id;
-//    T.Open;
-    if not existeEnTabla('Rubro',id) then //    if T.RecordCount = 0 then
+//  with OperacionDataModule do
     begin
-      D.SQL.Text := 'INSERT INTO "Rubro" (CODIGO,DESCRIPCION) VALUES ('
-      + id + ',' + QuotedStr(name) + ')';
-      D.ExecSQL;
-    end;
-    FDMemTableCategories.Next;
-    ProgressBar1.Position := i;
-  end;
-  p:=0;
-  repeat
-    Inc(p);
-    FDMemTableCategories.Close;
-    GetRESTCategories(EditUrl.text, 'products/categories/?per_page=100&page='+IntToStr(p)+'&', EditUser.text, EditPassword.text);
+    GetRESTCategories(EditUrl.text, 'products/categories/?per_page=100&page=1&parent=0&', EditUser.text, EditPassword.text);
     ProgressBar1.Max := FDMemTableCategories.RecordCount;
-    FDMemTableCategories.Filtered := False;
-    FDMemTableCategories.Filter := 'parent <> 0';//  O.Filter := 'parent LIKE ' + QuotedStr('%' + IntToStr( category ) + '%');
-    FDMemTableCategories.Filtered := True;
-
-    ProgressBar1.Max := FDMemTableCategories.RecordCount;
-    for i := 0 to FDMemTableCategories.RecordCount - 1 do
+    if (FDMemTableCategories<>nil) then
     begin
-      id := FDMemTableCategories.FieldByName('id').AsString;
-      name := FDMemTableCategories.FieldByName('name').AsString;
-      parent := FDMemTableCategories.FieldByName('parent').AsString;
-//      T.SQL.Text := 'SELECT * FROM "Rubro" WHERE CODIGO = ' + parent;
-//      T.Open;
-        if not existeEnTabla('Rubro',id) then//      if T.RecordCount = 0 then
+     if BorrarArticulosCheckBox.Checked then OperacionDataModule.BorrarArticulos;
+      for i := 0 to FDMemTableCategories.RecordCount - 1 do
+      begin
+        id := FDMemTableCategories.FieldByName('id').AsString;
+        name := FDMemTableCategories.FieldByName('name').AsString;
+        parent := FDMemTableCategories.FieldByName('parent').AsString;
+    //    T.SQL.Text := 'SELECT * FROM "Rubro" WHERE CODIGO = ' + id;
+    //    T.Open;
+        if not OperacionDataModule.existeEnTabla('Categoria',id) then //    if T.RecordCount = 0 then
         begin
-//          T.SQL.Text := 'SELECT * FROM "SubCategoria" WHERE CODIGO = ' + id;
-//          T.Open;
-          if not existeEnTabla('SubCategoria',id) then//          if T.RecordCount = 0 then
-          begin
-            D.SQL.Text := 'INSERT INTO "SubCategoria" (CODIGO,DESCRIPCION) VALUES ('
-            + id + ',' + QuotedStr(name) + ')';
-            D.ExecSQL;
-          end;
-        end
-      else
-        begin
-//          T.SQL.Text := 'SELECT * FROM "Categoria" WHERE CODIGO = ' + id;
-//          T.Open;
-          if not existeEnTabla('Categoria',id) then//          if T.RecordCount = 0 then
-          begin
-            D.SQL.Text := 'INSERT INTO "Categoria" (CODIGO,DESCRIPCION) VALUES ('
-            + id + ',' + QuotedStr(name) + ')';
-            D.ExecSQL;
-          end;
+          OperacionDataModule.insertarTabla2('Categoria',id,name);
+  //        D.SQL.Text := 'INSERT INTO "Categoria" (CODIGO,DESCRIPCION) VALUES ('
+  //        + id + ',' + QuotedStr(name) + ')';
+  //        D.ExecSQL;
+  //        D.Transaction.CommitRetaining;
         end;
-    FDMemTableCategories.Next;
-    ProgressBar1.Position := i;
+        FDMemTableCategories.Next;
+        ProgressBar1.Position := i;
+      end;
+      p:=0;
+      repeat
+        Inc(p);
+        FDMemTableCategories.Close;
+        GetRESTCategories(EditUrl.text, 'products/categories/?per_page=100&page='+IntToStr(p)+'&', EditUser.text, EditPassword.text);
+        ProgressBar1.Max := FDMemTableCategories.RecordCount;
+        FDMemTableCategories.Filtered := False;
+        FDMemTableCategories.Filter := 'parent <> 0';//  O.Filter := 'parent LIKE ' + QuotedStr('%' + IntToStr( category ) + '%');
+        FDMemTableCategories.Filtered := True;
+
+        ProgressBar1.Max := FDMemTableCategories.RecordCount;
+        for i := 0 to FDMemTableCategories.RecordCount - 1 do
+        begin
+          id := FDMemTableCategories.FieldByName('id').AsString;
+          name := FDMemTableCategories.FieldByName('name').AsString;
+          parent := FDMemTableCategories.FieldByName('parent').AsString;
+          if OperacionDataModule.existeEnTabla('Categoria',parent) then
+          begin
+            if not OperacionDataModule.existeEnTabla('SubCategoria',id) then
+            begin
+              OperacionDataModule.insertarTabla2('SubCategoria',id,name);
+  //              D.SQL.Text := 'INSERT INTO "SubCategoria" (CODIGO,DESCRIPCION) VALUES ('
+  //              + id + ',' + QuotedStr(name) + ')';
+  //              D.ExecSQL;
+            end;
+          end
+          else
+          if not OperacionDataModule.existeEnTabla('Rubro',id) then
+          begin
+            OperacionDataModule.insertarTabla2('Rubro',id,name);
+  //           D.SQL.Text := 'INSERT INTO "Rubro" (CODIGO,DESCRIPCION) VALUES ('
+  //           + id + ',' + QuotedStr(name) + ')';
+  //           D.ExecSQL;
+          end;
+          FDMemTableCategories.Next;
+          ProgressBar1.Position := i;
+  //        D.Transaction.CommitRetaining;
+        end;
+
+      until FDMemTableCategories.RecordCount=0;
     end;
-
-  until FDMemTableCategories.RecordCount=0;
-
+  end;
 end;
 
 function TMigrarForm.existeEnTJSONArray;
@@ -315,20 +335,13 @@ begin
   begin
     stream := streams.Get(i) as TJSONObject;
     id := stream.Get('id').JsonValue as TJSONString;
-    if existeEnTabla(tabla,id.Value) then
+    if OperacionDataModule.existeEnTabla(tabla,id.Value) then
     begin
       result := id.Value;
       exit;
     end;
   end;
   result :='0';
-end;
-
-function TMigrarForm.existeEnTabla;
-begin
-  T.SQL.Text := 'SELECT * FROM "' + tabla + '" WHERE CODIGO=' + codigo;
-  T.Open;
-  result := (T.RecordCount<>0);
 end;
 
 end.

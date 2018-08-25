@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
   FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client, IBX.IBScript;
 
 type
 
@@ -18,6 +18,7 @@ type
     Transaccion: TIBTransaction;
     ConfigQuery: TIBQuery;
     Query: TIBQuery;
+    Consulta: TIBScript;
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
     procedure LeerINI;
@@ -33,6 +34,7 @@ type
     procedure TraerUsuario;
     procedure DejarUsuario;
     function ExecuteProcess(ProcessName, Path: String): Cardinal;
+    procedure VaciarBase;
     { function Gratis(arch: String): boolean; }
     { Public declarations }
 
@@ -317,6 +319,50 @@ begin
   IniFile.WriteString('AFIP', 'USR', afipUsr);
   IniFile.WriteString('AFIP', 'PSW', afipPsw);
   IniFile.Destroy;
+end;
+
+procedure TDM.VaciarBase;
+//Var
+//  IniFile: TIniFile;
+  // Path, BaseDeDatos: string;
+begin
+//  IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'DeG');
+//  FormatSettings.ShortDateFormat := 'mm/dd/yyyy';
+//  // Obtiene la ruta y el nombre de la base de datos
+//  if Path = '' then
+//  begin
+//    Path := IniFile.ReadString('BD', 'Path', '');
+//  end;
+//  if Path = '' then
+//    Path := ExtractFilePath(Application.ExeName);
+//  if BaseDeDatos = '' then
+//    BaseDeDatos := IniFile.ReadString('BD', 'DBase', '');
+//  if BaseDeDatos = '' then
+//    BaseDeDatos := Path + 'GeN.FDB';
+//  if BaseDeDatos = '' then
+//    ShowMessage('Error al cargar Base de Datos')
+//  else
+//  begin
+    Consulta.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
+      + ' USER ''SYSDBA'' PASSWORD ''masterkey''; ' + Consulta.Script.Text;
+    Consulta.ExecuteScript;
+    ShowMessage('Base de Datos Restaurada con éxito!!!');
+//  end;
+
+  webUrl := '';
+  webRes := '';
+  webUsr := '';
+  webPsw := '';
+  afipUrl := '';
+  afipRes := '';
+  afipUsr := '';
+  afipPsw := '';
+  EscribirINI;
+
+  // IniFile.WriteString('Licencia', 'Dia', inttostr(1));
+  // IniFile.WriteString('Licencia', 'Fecha', datetostr(date));
+
+//  IniFile.Destroy;
 end;
 
 end.

@@ -37,6 +37,7 @@ type
     ivaDBText: TDBText;
     Tabla: TIBQuery;
     imprimir_exportarImage: TImage;
+    EnStockCheckBox: TCheckBox;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BitBtn1Click(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
@@ -216,13 +217,13 @@ begin
     '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +}
   Tabla.SQL.Text:= articulos
     +' WHERE ' + '(CODIGOBARRA like ' + QuotedStr(CodigoEdit.Text + '%') + ')' +
-    'AND ("Articulo".DESCRIPCION Containing ' + QuotedStr(DescripcionEdit.Text)
-    + ')' + 'AND ("Marca".DESCRIPCION like ' + QuotedStr(MarcaEdit.Text + '%') +
-    ')' + 'AND ("Rubro".DESCRIPCION like ' + QuotedStr(RubroEdit.Text + '%') +
-    ')' + 'AND ("Categoria".DESCRIPCION like ' +
-    QuotedStr(CategoriaEdit.Text + '%') + ')' + 'AND ("Proveedor".NOMBRE like '
-    + QuotedStr(ProveedorEdit.Text + '%') + ')' +
-    '  ORDER BY   "Articulo".DESCRIPCION';
+    'AND ("Articulo".DESCRIPCION Containing '+QuotedStr(DescripcionEdit.Text)+')'+
+    'AND ("Marca".DESCRIPCION like '+QuotedStr(MarcaEdit.Text + '%')+')'+
+    'AND ("Rubro".DESCRIPCION like '+QuotedStr(RubroEdit.Text + '%')+')'+
+    'AND ("Categoria".DESCRIPCION like '+QuotedStr(CategoriaEdit.Text + '%')+')'+
+    'AND ("Proveedor".NOMBRE like '+QuotedStr(ProveedorEdit.Text + '%')+')';
+    if EnStockCheckBox.Checked then Tabla.SQL.Text := Tabla.SQL.Text+'AND ("Articulo".Disponible > 0)';
+    Tabla.SQL.Text := Tabla.SQL.Text+ ' ORDER BY   "Articulo".DESCRIPCION';
   Tabla.Open;
 end;
 

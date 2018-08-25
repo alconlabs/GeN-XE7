@@ -278,9 +278,11 @@ object FBuscaArticulo: TFBuscaArticulo
     Color = clBlack
     ParentBackground = False
     TabOrder = 2
+    ExplicitLeft = 698
+    ExplicitTop = 70
     object Label6: TLabel
-      Left = 17
-      Top = 137
+      Left = 10
+      Top = 150
       Width = 67
       Height = 24
       Caption = 'Precio:'
@@ -292,8 +294,8 @@ object FBuscaArticulo: TFBuscaArticulo
       ParentFont = False
     end
     object Label3: TLabel
-      Left = 21
-      Top = 75
+      Left = 10
+      Top = 96
       Width = 58
       Height = 24
       Caption = 'Stock:'
@@ -306,10 +308,9 @@ object FBuscaArticulo: TFBuscaArticulo
     end
     object DBText1: TDBText
       Left = 10
-      Top = 96
+      Top = 117
       Width = 80
       Height = 33
-      Alignment = taRightJustify
       DataField = 'Disponible'
       DataSource = DataSource
       Font.Charset = DEFAULT_CHARSET
@@ -320,11 +321,10 @@ object FBuscaArticulo: TFBuscaArticulo
       ParentFont = False
     end
     object DBText3: TDBText
-      Left = 6
-      Top = 160
+      Left = 10
+      Top = 173
       Width = 80
       Height = 33
-      Alignment = taRightJustify
       DataField = 'PRECIO'
       DataSource = DataSource
       Font.Charset = DEFAULT_CHARSET
@@ -335,8 +335,8 @@ object FBuscaArticulo: TFBuscaArticulo
       ParentFont = False
     end
     object ivaLabel: TLabel
-      Left = 26
-      Top = 182
+      Left = 10
+      Top = 203
       Width = 50
       Height = 24
       Caption = 'c/iva:'
@@ -348,11 +348,10 @@ object FBuscaArticulo: TFBuscaArticulo
       ParentFont = False
     end
     object ivaDBText: TDBText
-      Left = 6
-      Top = 207
+      Left = 10
+      Top = 228
       Width = 80
       Height = 20
-      Alignment = taRightJustify
       DataField = 'precioIVA'
       DataSource = DataSource
       Font.Charset = DEFAULT_CHARSET
@@ -364,7 +363,7 @@ object FBuscaArticulo: TFBuscaArticulo
     end
     object imprimir_exportarImage: TImage
       Left = 10
-      Top = 242
+      Top = 267
       Width = 80
       Height = 50
       Cursor = crHandPoint
@@ -449,7 +448,7 @@ object FBuscaArticulo: TFBuscaArticulo
     end
     object BitBtn1: TBitBtn
       Left = 10
-      Top = 323
+      Top = 331
       Width = 80
       Height = 50
       Caption = 'mostrar'
@@ -484,7 +483,7 @@ object FBuscaArticulo: TFBuscaArticulo
     end
     object VerTodosBitBtn: TBitBtn
       Left = 10
-      Top = 16
+      Top = 15
       Width = 80
       Height = 50
       Caption = 'Todos'
@@ -514,6 +513,25 @@ object FBuscaArticulo: TFBuscaArticulo
       ParentFont = False
       TabOrder = 1
       OnClick = VerTodosBitBtnClick
+    end
+    object EnStockCheckBox: TCheckBox
+      Left = 10
+      Top = 71
+      Width = 69
+      Height = 17
+      Alignment = taLeftJustify
+      Caption = 'Disponible'
+      Checked = True
+      Color = clBlack
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+      State = cbChecked
+      TabOrder = 2
     end
   end
   object DataSource: TDataSource

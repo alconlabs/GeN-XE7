@@ -58,8 +58,11 @@ type
     procedure ExpCSV(sql: string);
     Procedure MovCaja(tipo, soc, imp, desc: string);
     procedure DataModuleCreate(Sender: TObject);
-    Procedure CodigoBarra(cb: string);
+    procedure CodigoBarra(cb: string);
     function CalcularIVA(neto,porcentaje:Double):Double;
+    procedure insertarTabla2(tabla,codigo,desc: string);
+    function existeEnTabla(tabla,codigo: string): Boolean;
+    procedure BorrarArticulos;
 //    Procedure FillCbIva;
   private
     { Private declarations }
@@ -1408,6 +1411,43 @@ begin
   with ImprimirDataModule do
     Impr(EAN(cb), 'codebar');
   ImprimirDataModule.Free;
+end;
+
+procedure TOperacionDataModule.insertarTabla2;
+begin
+  Q.SQL.Text := 'INSERT INTO "'+tabla+'" (CODIGO,DESCRIPCION) VALUES ('
+  + codigo + ',' + QuotedStr(desc) + ')';
+  Q.ExecSQL;
+  Q.Transaction.CommitRetaining;
+end;
+
+function TOperacionDataModule.existeEnTabla;
+begin
+  T.SQL.Text := 'SELECT * FROM "' + tabla + '" WHERE CODIGO=' + codigo;
+  T.Open;
+  result := (T.RecordCount<>0);
+end;
+
+procedure TOperacionDataModule.BorrarArticulos;
+begin
+  with T do
+  begin
+    SQL.Text := 'DELETE FROM "Articulo" ;';
+    ExecSQL;
+    SQL.Text :=
+    ' DELETE FROM "Rubro" ;';
+    ExecSQL;
+    SQL.Text :=
+    ' DELETE FROM "SubCategoria" ;';
+    ExecSQL;
+    SQL.Text :=
+    ' DELETE FROM "Categoria" ;';
+    ExecSQL;
+    Transaction.CommitRetaining;
+    insertarTabla2('Rubro','0','Rubro');
+    insertarTabla2('SubCategoria','0','SinSubCategoría');
+    insertarTabla2('Categoria','0','Sin Categoría');
+  end;
 end;
 
 end.

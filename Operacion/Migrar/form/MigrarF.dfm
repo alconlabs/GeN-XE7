@@ -2,7 +2,7 @@ object MigrarForm: TMigrarForm
   Left = 0
   Top = 0
   Caption = 'Migrar'
-  ClientHeight = 239
+  ClientHeight = 250
   ClientWidth = 297
   Color = clWindow
   Font.Charset = DEFAULT_CHARSET
@@ -97,6 +97,14 @@ object MigrarForm: TMigrarForm
     TabOrder = 5
     Text = 'cs'
   end
+  object BorrarArticulosCheckBox: TCheckBox
+    Left = 8
+    Top = 231
+    Width = 129
+    Height = 17
+    Caption = 'Borrar Articulos Viejos'
+    TabOrder = 6
+  end
   object RESTClient1: TRESTClient
     Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
     AcceptCharset = 'UTF-8, *;q=0.8'
@@ -105,7 +113,7 @@ object MigrarForm: TMigrarForm
     HandleRedirects = True
     RaiseExceptionOn500 = False
     Left = 152
-    Top = 240
+    Top = 272
   end
   object RESTRequest1: TRESTRequest
     Client = RESTClient1
@@ -118,18 +126,18 @@ object MigrarForm: TMigrarForm
     Response = RESTResponse1
     SynchronizedEvents = False
     Left = 152
-    Top = 272
+    Top = 304
   end
   object RESTResponse1: TRESTResponse
     Left = 48
-    Top = 240
+    Top = 272
   end
   object RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter
     Dataset = O
     FieldDefs = <>
     Response = RESTResponse1
     Left = 48
-    Top = 272
+    Top = 304
   end
   object O: TFDMemTable
     FieldDefs = <>
@@ -142,7 +150,7 @@ object MigrarForm: TMigrarForm
     UpdateOptions.CheckRequired = False
     StoreDefs = True
     Left = 48
-    Top = 304
+    Top = 336
   end
   object RESTClientCategories: TRESTClient
     Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
@@ -152,7 +160,7 @@ object MigrarForm: TMigrarForm
     HandleRedirects = True
     RaiseExceptionOn500 = False
     Left = 120
-    Top = 240
+    Top = 272
   end
   object RESTRequestCategories: TRESTRequest
     Client = RESTClientCategories
@@ -165,12 +173,12 @@ object MigrarForm: TMigrarForm
     Response = RESTResponseCategories
     SynchronizedEvents = False
     Left = 120
-    Top = 272
+    Top = 304
   end
   object RESTResponseCategories: TRESTResponse
     ContentType = 'application/json'
     Left = 8
-    Top = 240
+    Top = 272
   end
   object FDMemTableCategories: TFDMemTable
     FieldDefs = <>
@@ -183,14 +191,14 @@ object MigrarForm: TMigrarForm
     UpdateOptions.CheckRequired = False
     StoreDefs = True
     Left = 8
-    Top = 304
+    Top = 336
   end
   object RESTResponseDataSetAdapterCategories: TRESTResponseDataSetAdapter
     Dataset = FDMemTableCategories
     FieldDefs = <>
     Response = RESTResponseCategories
     Left = 8
-    Top = 272
+    Top = 304
   end
   object Q: TIBQuery
     Database = DM.BaseDatos
@@ -199,7 +207,7 @@ object MigrarForm: TMigrarForm
     CachedUpdates = False
     ParamCheck = True
     Left = 184
-    Top = 240
+    Top = 272
   end
   object T: TIBQuery
     Database = DM.BaseDatos
@@ -208,7 +216,7 @@ object MigrarForm: TMigrarForm
     CachedUpdates = False
     ParamCheck = True
     Left = 184
-    Top = 272
+    Top = 304
   end
   object D: TIBQuery
     Database = DM.BaseDatos
@@ -217,6 +225,6 @@ object MigrarForm: TMigrarForm
     CachedUpdates = False
     ParamCheck = True
     Left = 88
-    Top = 240
+    Top = 272
   end
 end
