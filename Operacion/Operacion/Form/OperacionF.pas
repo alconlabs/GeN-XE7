@@ -744,6 +744,7 @@ end;
 procedure TOperacionForm.ProcesarBitBtnClick(Sender: TObject);
 var
   r, c: Integer;
+  ok : Boolean;
 begin
   c := 0; // columna i
   r := 0; // row j
@@ -784,7 +785,7 @@ begin
         subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
         Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
     else
-      ProcVTA(cbTipo.Text, ClienteEdit.Text,
+      ok := ProcVTA(cbTipo.Text, ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
         VendedorEdit.Text, CUITLabel.Caption, CtaNombre, Presupuesto.Checked,
         PagareCheckBox.Checked, costo, Comision, Impuesto,
@@ -793,7 +794,8 @@ begin
         Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);
   end;
   OperacionDataModule.Free;
-  ClienteBitBtn.Click;//  QuitarArticulos;
+  if ok then
+    ClienteBitBtn.Click;//  QuitarArticulos;
 end;
 
 procedure TOperacionForm.CheckBox1Click(Sender: TObject);

@@ -343,6 +343,7 @@ var
 begin
 with dm do
   begin
+  try
     LeerINI;
     jsRequest := TJSONObject.Create();
     if cuit='' then cuit := afipUsr;
@@ -399,8 +400,17 @@ with dm do
     RESTRequest1.Resource := afipRes;
     RESTRequest1.Method:=rmPOST;
     RESTRequest1.Params.AddItem('body',jsRequest.ToString, TRESTRequestParameterKind.pkREQUESTBODY, [poDoNotEncode], TRESTContentType.ctAPPLICATION_JSON);
-    jsRequest.Free();
     RESTRequest1.Execute();
+    except
+      on e : exception do
+      begin
+        ShowMessage ('Clase de error: ' + e.ClassName + chr(13) + chr(13) +
+            'Mensaje del error: ' + e.Message);
+            result:=nil;
+        exit
+      end;
+    end;
+    jsRequest.Free();
   end;
   result := RESTRequest1.Response.JSONValue;
 end;

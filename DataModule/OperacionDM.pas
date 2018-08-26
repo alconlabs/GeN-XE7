@@ -24,9 +24,9 @@ type
     Q: TIBQuery;
     T: TIBQuery;
     Function UltimoRegistro(T, c: String): integer;
-    Procedure ProcVTA(let, cod, fech, ven, cui, ctan: string; pre, pgr: Boolean;
+    function ProcVTA(let, cod, fech, ven, cui, ctan: string; pre, pgr: Boolean;
       cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
-      int, n10, n21, i10, i21, deud, ulc: Double);
+      int, n10, n21, i10, i21, deud, ulc: Double):Boolean;
     Procedure ProcOPER(tipo, let, cod, fech, ven, cui, ctan: string;
       pre, pgr: Boolean; cost, comv, impu, cheq, ch3q, cont, tot, sbt, des,
       tarj, otr, sal, pag, int, n10, n21, i10, i21, deud, ulc: Double);
@@ -716,14 +716,14 @@ begin
 
 end;
 
-Procedure TOperacionDataModule.ProcVTA; // PROCESA UNA VENTA
+function TOperacionDataModule.ProcVTA; // PROCESA UNA VENTA
 var
   nro, comp, a, pagare, cae, vto, mensaje, ptovta, tipocbte: string;
   i: integer;
   IIBB, cmv: Double;
   jsResponse: TJSONValue;
 begin
-    pagare := '0';
+  pagare := '0';
   nro := inttostr(UltimoRegistro('"Venta"', 'CODIGO'));
 //  if nro = '1' then
 //    nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
@@ -756,10 +756,15 @@ begin
         '1', '0', '0', '0', '0',
         '0', '0', 'PES', 'impuesto', 'null',
         'null', 'null', '', '', '', '');
-        cae:=jsResponse.GetValue<String>('cae');
-        comp:=jsResponse.GetValue<String>('nro');
-        vto:=jsResponse.GetValue<String>('vto');
-        mensaje:=jsResponse.GetValue<String>('mensaje');
+        if jsResponse = nil then
+          exit
+        else
+        begin
+          cae:=jsResponse.GetValue<String>('cae');
+          comp:=jsResponse.GetValue<String>('nro');
+          vto:=jsResponse.GetValue<String>('vto');
+          mensaje:=jsResponse.GetValue<String>('mensaje');
+        end;
         if mensaje <> 'Ok' then
         begin
           ShowMessage(mensaje);
@@ -872,6 +877,7 @@ begin
       Impr(vta(nro, let), reporte);
     ImprimirDataModule.Free;
   end;
+  result := true;
 end;
 
 Procedure TOperacionDataModule.ProcOPER; // PROCESA UNA OPERACION

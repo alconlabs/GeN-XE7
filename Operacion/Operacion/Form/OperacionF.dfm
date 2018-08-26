@@ -578,7 +578,6 @@ object OperacionForm: TOperacionForm
       Font.Height = -16
       Font.Name = 'Arial'
       Font.Style = [fsBold]
-      ModalResult = 6
       NumGlyphs = 2
       ParentFont = False
       ParentShowHint = False
