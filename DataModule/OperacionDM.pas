@@ -15,7 +15,7 @@ interface
 
 uses
   SysUtils, Classes, DB, DataModule, ImprimirDM, Dialogs, Controls, DateUtils,
-  IBX.IBCustomDataSet, IBX.IBQuery, Math, AfipDM, System.JSON;
+  IBX.IBCustomDataSet, IBX.IBQuery, Math, AfipDM, System.JSON, RestDM;
 
 type
   matriz = array of array of string;
@@ -63,6 +63,12 @@ type
     procedure insertarTabla2(tabla,codigo,desc: string);
     function existeEnTabla(tabla,codigo: string): Boolean;
     procedure BorrarArticulos;
+    procedure ModificarArticulos(codigo, descripcion,
+  ultcosto, costo, precio, precio1, precio2, disponible,
+  porcentaje, impotros, unidad, tasa, iibb, ctanombre, ctatipo, ctaanticipo,ctaiibb,
+  fecha, fechacompult, codigobarra,
+  categoria, color, marca, proveedor, rubro, subcategoria : string);
+  procedure ActualizarCantidadArticulo(codigo,cantidad:string);
 //    Procedure FillCbIva;
   private
     { Private declarations }
@@ -745,7 +751,7 @@ begin
     end
   else
     IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
-  if reporte = 'FElectronica' then
+  if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
   begin
     AfipDataModule := TAfipDataModule.Create(self);
     try
@@ -854,10 +860,12 @@ begin
   // Actualizar la tabla de Articulos
   For i := 1 to High(mat[0]) do
   begin
-    Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE - ' + mat[3, i]
-      + ' Where ' + ' "Articulo".CODIGO = ' + (mat[0, i]);
-    Q.ExecSQL;
+    OperacionDataModule.ActualizarCantidadArticulo(mat[0, i], mat[3, i])
+//    Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE - ' + mat[3, i]
+//      + ' Where ' + ' "Articulo".CODIGO = ' + (mat[0, i]);
+//    Q.ExecSQL;
   end;
+
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA VENTAS
   if let = 'A' then//  if let <> 'X' then
@@ -874,7 +882,7 @@ begin
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
-      Impr(vta(nro, let), reporte);
+      Impr(vta(nro, let), '');
     ImprimirDataModule.Free;
   end;
   result := true;
@@ -980,7 +988,7 @@ begin
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
-      Impr(oper(nro, let), '');
+      Impr(oper(nro, let), 'CTicket');
     ImprimirDataModule.Free;
   end;
 end;
@@ -1429,7 +1437,7 @@ end;
 
 function TOperacionDataModule.existeEnTabla;
 begin
-  T.SQL.Text := 'SELECT * FROM "' + tabla + '" WHERE CODIGO=' + codigo;
+  T.SQL.Text := 'SELECT * FROM "' + tabla + '" WHERE ' + codigo;
   T.Open;
   result := (T.RecordCount<>0);
 end;
@@ -1454,6 +1462,89 @@ begin
     insertarTabla2('SubCategoria','0','SinSubCategoría');
     insertarTabla2('Categoria','0','Sin Categoría');
   end;
+end;
+
+procedure TOperacionDataModule.ModificarArticulos;
+{
+var
+  codigo, descripcion,
+  ultcosto, costo, precio, precio1, precio2, disponible,
+  porcentaje, impotros, unidad, tasa, iibb, ctanombre, ctatipo, ctaanticipo,ctaiibb,
+  fecha, fechacompult, codigobarra,
+  categoria, color, marca, proveedor, rubro, subcategoria : string;
+}
+begin
+  proveedor := '1';
+
+  //if descripcion = nil then descripcion := '';
+
+  if not ( existeEnTabla('Articulo','CODIGOBARRA='+codigobarra) ) then
+  begin
+    Q.SQL.Text := 'INSERT INTO "Articulo" ( CODIGO, DESCRIPCION '
+    + ', ULTCOSTO, COSTO, PRECIO, PRECIO1, PRECIO2, DISPONIBLE'
+    + ', PORCENTAJE, IMPOTROS, UNIDAD, TASA, IIBB, CTANOMBRE, CTATIPO, CTAANTICIPO, CTAIIBB '
+    + ', FECHA, FECHACOMPULT, CODIGOBARRA'
+    + ', CATEGORIA, COLOR, MARCA, PROVEEDOR, RUBRO, SUBCATEGORIA'
+    + ' ) VALUES ( '
+    + codigo + ', ' + descripcion
+    + ', '+ ultcosto +', ' + costo + ', ' + precio + ', ' + precio1 + ', ' + precio2 + ', ' + disponible
+    + ', '+ porcentaje +', 5, ''c/u'', '+ tasa +', 1, 13, 13, 13, 66'
+    + ', '+ fecha +', ' + fechacompult + ', ' + codigobarra
+    + ', '+ categoria +', 0, 0, '+ proveedor +', '+ rubro +', '+ subcategoria +' )';
+//            D.ExecSQL;
+  end
+    else
+      Q.SQL.Text := 'UPDATE "Articulo" SET'
+      +' DESCRIPCION = ' + descripcion
+      +', ULTCOSTO = ' + ultcosto
+      +', COSTO = ' + costo
+      +', PRECIO = ' + precio
+      +', PRECIO1 = ' + precio1
+      +', PRECIO2 = ' + precio2
+      +', DISPONIBLE = ' + disponible
+      +', PORCENTAJE = ' + porcentaje
+//              +', IMPOTROS = 5' +
+//              +', UNIDAD = ''c/u''' +
+      +', TASA = ' + tasa
+//              +', IIBB = 1' +
+//              +', CTANOMBRE = 13' +
+//              +', CTATIPO = 13' +
+//              +', CTAANTICIPO = 13' +
+//              +', CTAIIBB = 66' +
+      +', FECHA = ' + fecha
+      +', FECHACOMPULT = ' + fechacompult
+      +', CODIGOBARRA = ' + codigobarra
+      +', CATEGORIA = ' + categoria
+//              +', COLOR = 0' +
+//              +', MARCA = 0' +
+      +', PROVEEDOR = ' + proveedor
+      +', RUBRO = ' + rubro
+      +', SUBCATEGORIA = ' + subcategoria
+      +' WHERE CODIGO ='+ codigo;
+    Q.ExecSQL;
+end;
+
+procedure TOperacionDataModule.ActualizarCantidadArticulo;
+begin
+  T.SQL.Text := 'SELECT DISPONIBLE FROM "Articulo" WHERE CODIGO = ' + codigo;
+  T.Open;
+  cantidad := IntToStr( T.Fields.Fields[0].AsInteger - StrToInt(cantidad) );
+  Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = ' + cantidad
+    + ' Where "Articulo".CODIGO = ' + codigo;
+  Q.ExecSQL;
+  if webUpd<>'' then
+    if StrToBool(webUpd) then
+    begin
+      RestDataModule := TRestDataModule.Create(self);
+        try
+          with RestDataModule do
+          begin
+            PutREST('products/'+codigo+'/?', '{ "stock_quantity":'+cantidad+' }');
+          end;
+        finally
+          RestDataModule.Free;
+        end;
+    end;
 end;
 
 end.

@@ -19,6 +19,7 @@ type
     ConfigQuery: TIBQuery;
     Query: TIBQuery;
     Consulta: TIBScript;
+    FDConnection1: TFDConnection;
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
     procedure LeerINI;
@@ -63,7 +64,7 @@ var
   Permiso: Integer;
   LoginOK, Cancelar: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
-  webUrl, webRes, webUsr, webPsw : string;
+  webUrl, webRes, webUsr, webPsw, webUpd : string;
   afipUrl, afipRes, afipUsr, afipPsw : string;
 
 implementation
@@ -222,7 +223,7 @@ begin
   with FormatSettings do
   begin
     DecimalSeparator := '.';
-    ThousandSeparator := '.';
+    ThousandSeparator := ',';
     ShortDateFormat := 'mm/dd/yyyy';
   end;
   if BaseDatos.Connected = True then
@@ -298,6 +299,7 @@ begin
   webRes := IniFile.ReadString('WEB', 'RES', '');
   webUsr := IniFile.ReadString('WEB', 'USR', '');
   webPsw := IniFile.ReadString('WEB', 'PSW', '');
+  webUpd := IniFile.ReadString('WEB', 'UPD', '');
   afipUrl := IniFile.ReadString('AFIP', 'URL', '');
   afipRes := IniFile.ReadString('AFIP', 'RES', '');
   afipUsr := IniFile.ReadString('AFIP', 'USR', '');
@@ -314,11 +316,13 @@ begin
   IniFile.WriteString('WEB', 'RES', webRes);
   IniFile.WriteString('WEB', 'USR', webUsr);
   IniFile.WriteString('WEB', 'PSW', webPsw);
+  IniFile.WriteString('WEB', 'UPD', webUpd);
   IniFile.WriteString('AFIP', 'URL', afipUrl);
   IniFile.WriteString('AFIP', 'RES', afipRes);
   IniFile.WriteString('AFIP', 'USR', afipUsr);
   IniFile.WriteString('AFIP', 'PSW', afipPsw);
   IniFile.Destroy;
+  LeerINI;
 end;
 
 procedure TDM.VaciarBase;
@@ -353,6 +357,7 @@ begin
   webRes := '';
   webUsr := '';
   webPsw := '';
+  webUpd := '';
   afipUrl := '';
   afipRes := '';
   afipUsr := '';

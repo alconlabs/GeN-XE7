@@ -1,9 +1,9 @@
 object MigrarForm: TMigrarForm
   Left = 0
   Top = 0
-  Caption = 'Migrar'
-  ClientHeight = 250
-  ClientWidth = 297
+  Caption = 'Importar Articulos'
+  ClientHeight = 310
+  ClientWidth = 295
   Color = clWindow
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,9 +18,9 @@ object MigrarForm: TMigrarForm
   object Label1: TLabel
     Left = 8
     Top = 2
-    Width = 19
+    Width = 55
     Height = 13
-    Caption = 'URL'
+    Caption = 'URL (REST)'
   end
   object Label2: TLabel
     Left = 8
@@ -45,7 +45,7 @@ object MigrarForm: TMigrarForm
   end
   object ProcesarButton: TButton
     Left = 209
-    Top = 175
+    Top = 235
     Width = 80
     Height = 50
     Caption = 'PROCESAR'
@@ -60,7 +60,7 @@ object MigrarForm: TMigrarForm
   end
   object ProgressBar1: TProgressBar
     Left = 8
-    Top = 175
+    Top = 236
     Width = 201
     Height = 50
     TabOrder = 1
@@ -99,132 +99,64 @@ object MigrarForm: TMigrarForm
   end
   object BorrarArticulosCheckBox: TCheckBox
     Left = 8
-    Top = 231
+    Top = 292
     Width = 129
     Height = 17
     Caption = 'Borrar Articulos Viejos'
     TabOrder = 6
   end
-  object RESTClient1: TRESTClient
-    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
-    AcceptCharset = 'UTF-8, *;q=0.8'
-    BaseURL = 'https://gamersenmadryn.com.ar/wp-json/wc/v2'
-    Params = <>
-    HandleRedirects = True
-    RaiseExceptionOn500 = False
-    Left = 152
-    Top = 272
+  object CSVButton: TButton
+    Left = 209
+    Top = 180
+    Width = 80
+    Height = 50
+    Caption = 'CSV'
+    TabOrder = 7
+    Visible = False
+    OnClick = CSVButtonClick
   end
-  object RESTRequest1: TRESTRequest
-    Client = RESTClient1
-    Params = <
-      item
-        name = 'consumer_key'
-        Value = 'ck_7c1d43a542563b3cf47e1bb51b86ccac0099c883'
-      end>
-    Resource = 'products/?'
-    Response = RESTResponse1
-    SynchronizedEvents = False
-    Left = 152
-    Top = 304
+  object DesdeRadioGroup: TRadioGroup
+    Left = 8
+    Top = 180
+    Width = 201
+    Height = 49
+    Caption = 'Desde'
+    ItemIndex = 0
+    Items.Strings = (
+      'WEB - WooCommerce'
+      'CSV')
+    TabOrder = 8
+    Visible = False
   end
-  object RESTResponse1: TRESTResponse
+  object StringGrid1: TStringGrid
+    Left = 295
+    Top = 0
+    Width = 721
+    Height = 522
+    Align = alCustom
+    TabOrder = 9
+  end
+  object ActualizarCB: TCheckBox
+    Left = 222
+    Top = 291
+    Width = 65
+    Height = 17
+    Hint = 
+      'Actualizar Articulos en la Web, cuando se realizan modificacione' +
+      's.'
+    Caption = 'Actualizar'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 10
+  end
+  object OpenTextFileDialog1: TOpenTextFileDialog
     Left = 48
-    Top = 272
+    Top = 240
   end
-  object RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter
-    Dataset = O
-    FieldDefs = <>
-    Response = RESTResponse1
-    Left = 48
-    Top = 304
-  end
-  object O: TFDMemTable
-    FieldDefs = <>
-    IndexDefs = <>
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired]
-    UpdateOptions.CheckRequired = False
-    StoreDefs = True
-    Left = 48
-    Top = 336
-  end
-  object RESTClientCategories: TRESTClient
-    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
-    AcceptCharset = 'UTF-8, *;q=0.8'
-    BaseURL = 'https://gamersenmadryn.com.ar/wp-json/wc/v2'
-    Params = <>
-    HandleRedirects = True
-    RaiseExceptionOn500 = False
+  object Timer1: TTimer
+    Enabled = False
+    OnTimer = Timer1Timer
     Left = 120
-    Top = 272
-  end
-  object RESTRequestCategories: TRESTRequest
-    Client = RESTClientCategories
-    Params = <
-      item
-        name = 'consumer_key'
-        Value = 'ck_7c1d43a542563b3cf47e1bb51b86ccac0099c883'
-      end>
-    Resource = 'products/?'
-    Response = RESTResponseCategories
-    SynchronizedEvents = False
-    Left = 120
-    Top = 304
-  end
-  object RESTResponseCategories: TRESTResponse
-    ContentType = 'application/json'
-    Left = 8
-    Top = 272
-  end
-  object FDMemTableCategories: TFDMemTable
-    FieldDefs = <>
-    IndexDefs = <>
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired]
-    UpdateOptions.CheckRequired = False
-    StoreDefs = True
-    Left = 8
-    Top = 336
-  end
-  object RESTResponseDataSetAdapterCategories: TRESTResponseDataSetAdapter
-    Dataset = FDMemTableCategories
-    FieldDefs = <>
-    Response = RESTResponseCategories
-    Left = 8
-    Top = 304
-  end
-  object Q: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 184
-    Top = 272
-  end
-  object T: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 184
-    Top = 304
-  end
-  object D: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 88
-    Top = 272
+    Top = 240
   end
 end

@@ -1031,4 +1031,11 @@ object DM: TDM
     Left = 80
     Top = 112
   end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'ConnectionDef=GeN')
+    LoginPrompt = False
+    Left = 312
+    Top = 8
+  end
 end

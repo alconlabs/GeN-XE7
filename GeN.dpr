@@ -110,7 +110,8 @@ uses
   AfipDM in 'DataModule\AfipDM.pas' {AfipDataModule: TDataModule},
   PagoIVAF in 'Operacion\PagoIVA\Form\PagoIVAF.pas' {PagoIVAForm},
   DescuentoF in 'SubOperacion\Descuento\Form\DescuentoF.pas' {DescuentoForm},
-  VendedorF in 'ABM\Vendedor\Form\VendedorF.pas' {VendedorForm};
+  VendedorF in 'ABM\Vendedor\Form\VendedorF.pas' {VendedorForm},
+  RestDM in 'DataModule\RestDM.pas' {RestDataModule: TDataModule};
 
 {$R *.res}
 

@@ -48,6 +48,7 @@ object FullMainForm: TFullMainForm
       end
       object CrearPedido1: TMenuItem
         Caption = 'CREAR PEDIDO'
+        Visible = False
         OnClick = CrearPedido1Click
       end
       object Comprar1: TMenuItem
@@ -74,6 +75,7 @@ object FullMainForm: TFullMainForm
     end
     object CREDITOS1: TMenuItem
       Caption = 'CREDITOS'
+      Visible = False
       OnClick = CREDITOS1Click
       object CREARCREDITO1: TMenuItem
         Caption = 'CREAR CREDITO'
@@ -162,6 +164,7 @@ object FullMainForm: TFullMainForm
     end
     object COBRANZA1: TMenuItem
       Caption = 'COBRANZA'
+      Visible = False
       object REGISTRO1: TMenuItem
         Caption = 'REGISTRO'
         OnClick = REGISTRO1Click
