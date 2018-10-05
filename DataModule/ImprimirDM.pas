@@ -277,7 +277,12 @@ begin
         Pict4.Picture.LoadFromFile(path + 'img\empresa.BMP');
     end;
     try
-      ShowReport(True);
+      if DM.ObtenerConfig('ImprimirMostrar')='NO ' then
+      begin
+        PrepareReport;
+        PrintOptions.ShowDialog := False;
+        Print;
+      end else ShowReport(True);
     finally
       Free;
       // FreeAndNil(pict);
