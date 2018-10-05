@@ -543,7 +543,7 @@ begin
   end;
   if T.FieldByName('ANULADA').AsString = 'S' then
   begin
-    MessageDlg(' ya est� anulada.', mtError, [mbOK], 0);
+    MessageDlg(' ya esta anulada.', mtError, [mbOK], 0);
     T.Close;
     Exit;
   end;
@@ -729,6 +729,7 @@ var
   IIBB, cmv: Double;
   jsResponse: TJSONValue;
 begin
+  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
   pagare := '0';
   nro := inttostr(UltimoRegistro('"Venta"', 'CODIGO'));
 //  if nro = '1' then
@@ -746,8 +747,8 @@ begin
   //      Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
   if let = 'C' then
     begin
-    tipocbte:='11';
-    IIBB := tot * (Q.FieldByName('PORCENTAJE').AsFloat/100)
+      tipocbte:='11';
+      IIBB := tot * (Q.FieldByName('PORCENTAJE').AsFloat/100)
     end
   else
     IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
@@ -815,6 +816,7 @@ begin
       quotedstr(mat[1, i]) + ');';
     Q.ExecSQL;
   end;
+
   // Insertar en la tabla de CtaCte
   if (sal > 0.05) then
   begin
@@ -862,7 +864,7 @@ begin
   begin
     OperacionDataModule.ActualizarCantidadArticulo(mat[0, i], mat[3, i])
 //    Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE - ' + mat[3, i]
-//      + ' Where ' + ' "Articulo".CODIGO = ' + (mat[0, i]);
+//      + ' Where "Articulo".CODIGO = ' + (mat[0, i]);
 //    Q.ExecSQL;
   end;
 
@@ -877,6 +879,7 @@ begin
 
   // Completa la Transaccion
   Q.Transaction.CommitRetaining;
+  if webUpd='True' then RestDataModule.CrearOrden;
   // IMPRIMIR
   if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
   begin
@@ -1526,24 +1529,13 @@ end;
 
 procedure TOperacionDataModule.ActualizarCantidadArticulo;
 begin
-  T.SQL.Text := 'SELECT DISPONIBLE FROM "Articulo" WHERE CODIGO = ' + codigo;
-  T.Open;
-  cantidad := IntToStr( T.Fields.Fields[0].AsInteger - StrToInt(cantidad) );
-  Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = ' + cantidad
+  Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE - ' + cantidad
     + ' Where "Articulo".CODIGO = ' + codigo;
   Q.ExecSQL;
-  if webUpd<>'' then
-    if StrToBool(webUpd) then
+  if webUpd='True' then
+    with RestDataModule do
     begin
-      RestDataModule := TRestDataModule.Create(self);
-        try
-          with RestDataModule do
-          begin
-            PutREST('products/'+codigo+'/?', '{ "stock_quantity":'+cantidad+' }');
-          end;
-        finally
-          RestDataModule.Free;
-        end;
+      JAline_items.AddElement( Jline_items( codigo, cantidad ) );
     end;
 end;
 
