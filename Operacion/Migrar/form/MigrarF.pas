@@ -72,52 +72,10 @@ begin
     Q.SQL.Text:='Select * from "Articulo"';
     Q.Open;
     SaveTextFileDialog1.Execute();
-    Stream := TFileStream.Create(SaveTextFileDialog1.FileName, fmCreate);
-    OutLine :=
-    'CODIGO, DESCRIPCION, COSTO, ULTCOSTO, PRECIO1, PRECIO2, PRECIO3, PRECIO4'
-    +', PRECIO5, PRECIO6, PRECIO, PORCENTAJE, ULTPRECIO, MARCA, COLOR, CATEGORIA'
-    +', SUBCATEGORIA, UBICACION, UNIDAD, DISPONIBLE, ENPRODUCCION, NOTAS, IVA'
-    +', TASA, IMPOTROS, IIBB, STOCKMINIMO, STOCKMAXIMO, STOCKVENDIDO'
-    +', FECHACOMPULT, LISTA, PROCEDENCIA, CODIGOBARRA, RUBRO, PROVEEDOR'
-    +', GARANTIA, FECHA, PEDIDO, STOCK, EXISTENTE, ACTUAL, MARCADOCONTADO'
-    +', MARCADOLISTA, MARCADOFINAL, PREPARADO, CTANOMBRE, CTATIPO, CTAANTICIPO'
-    +', CTAIIBB, ESTADO, VENCE, VENCIMIENTO'
-    + #13#10;
-    Stream.Write(OutLine[1], Length(OutLine) * SizeOf(Char));
-    try
-      while not Q.Eof do
-      begin
-        // You'll need to add your special handling here where OutLine is built
-        OutLine := '';
-        for i := 0 to Q.FieldCount - 1 do
-        begin
-          sTemp := Q.Fields[i].AsString;
-          // Special handling to sTemp here
-          OutLine := OutLine + sTemp + ',';
-        end;
-        // Remove final unnecessary ','
-        SetLength(OutLine, Length(OutLine) - 1);
-        OutLine := OutLine + #13#10;
-        // Write line to file
-        Stream.Write(OutLine[1], Length(OutLine) * SizeOf(Char));
-//Stream.Write(OutLine[1], Length(OutLine));//AStream.Write(S[1], Length(S));
-        // Write line ending
-//        Stream.Write(sLineBreak, Length(sLineBreak));
-        Q.Next;
-      end;
-    finally
-      Stream.Free;  // Saves the file
-      Q.Close;
-    end;
+    DataSetToCsv( SaveTextFileDialog1.FileName );
   end;
-//end;
-//  ImprimirDataModule := TImprimirDataModule.Create(self);
-//  ImprimirDataModule.SImpr('Select * from Articulos', 'Articulos');
-//  ImprimirDataModule.Free;
-//  OperacionDataModule.DataSetToCsv(OperacionDataModule.T.DataSet; psRutaFichero : String);
-//  DataSetToCsv(dsXXXX.DataSet, 'c:\Fichero.csv');
-ShowMessage('Exportación finalizada con éxito!!!');
-close;
+  ShowMessage('Exportación finalizada con éxito!!!');
+  close;
 end;
 
 procedure TMigrarForm.FormCreate(Sender: TObject);
@@ -338,8 +296,8 @@ begin
 			for j := 0 to fila.Count -1 do
 			begin
 //				lista.Items.Add(fila[j]);
-        campo:=fila[j];
-        if campo='CODIGOBARRA' then cb:=j else if campo='COSTO' then costo:=j;
+        campo:=Trim(fila[j]);
+//        if campo='CODIGOBARRA' then cb:=j else if campo='COSTO' then costo:=j;
 
         Case IndexStr(campo, ['CODIGO', 'DESCRIPCION', 'ULTCOSTO','COSTO'
         ,'PRECIO','PRECIO1','PRECIO2','DISPONIBLE','PORCENTAJE','IMPOTROS'

@@ -140,7 +140,7 @@ object MigrarForm: TMigrarForm
   end
   object ExportarButton: TButton
     Left = 211
-    Top = 180
+    Top = 179
     Width = 78
     Height = 50
     Caption = 'Exportar'
@@ -154,14 +154,14 @@ object MigrarForm: TMigrarForm
   object Timer1: TTimer
     Enabled = False
     OnTimer = Timer1Timer
-    Left = 120
-    Top = 240
+    Left = 264
   end
   object SaveTextFileDialog1: TSaveTextFileDialog
     DefaultExt = '.csv'
     FileName = 'Articulos.csv'
     Filter = 'CSV files only|*.csv'
-    Left = 168
-    Top = 256
+    EncodingIndex = 4
+    Left = 152
+    Top = 240
   end
 end

@@ -69,6 +69,7 @@ type
   fecha, fechacompult, codigobarra,
   categoria, color, marca, proveedor, rubro, subcategoria : string);
   procedure ActualizarCantidadArticulo(codigo,cantidad:string);
+  procedure DataSetToCsv(psRutaFichero : String);
 //    Procedure FillCbIva;
   private
     { Private declarations }
@@ -1583,6 +1584,44 @@ begin
     begin
       JAline_items.AddElement( Jline_items( codigo, cantidad ) );
     end;
+end;
+
+procedure TOperacionDataModule.DataSetToCsv;
+var
+  i : Integer;
+  voFichero : TStringList;
+  vsLinea : String;
+  vsBookMark : TBookmark;
+begin
+  vsBookMark := Q.Bookmark;
+  voFichero := nil;
+  try
+    voFichero := TStringList.Create;
+    // Ponemos la cabecera
+    vsLinea := '';
+    for i := 0 to Q.FieldCount - 1 do
+      if Q.Fields[i].Visible then
+        vsLinea := vsLinea + '"' + Q.Fields[i].DisplayName + '",';
+    voFichero.Add(vsLinea);
+    // Insertamos los registros
+    Q.DisableControls;
+    Q.First;
+    while not Q.Eof do
+    begin
+      vsLinea := '';
+      for i := 0 to Q.FieldCount - 1 do
+        if Q.Fields[i].Visible then
+          vsLinea := vsLinea + '"' + Q.Fields[i].AsString + '",';
+      voFichero.Add(vsLinea);
+      Q.Next;
+    end;
+    // Lo guardamos en disco
+    voFichero.SaveToFile(psRutaFichero);
+  finally
+    FreeAndNil(voFichero);
+    Q.Bookmark := vsBookMark;
+    Q.EnableControls;
+  end;
 end;
 
 end.
