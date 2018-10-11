@@ -74,7 +74,6 @@ type
     { Private declarations }
   public
     { Public declarations }
-
   end;
 
 var
@@ -1440,9 +1439,29 @@ end;
 
 function TOperacionDataModule.existeEnTabla;
 begin
-  T.SQL.Text := 'SELECT * FROM "' + tabla + '" WHERE ' + codigo;
-  T.Open;
-  result := (T.RecordCount<>0);
+//    try
+//      T.SQL.Text := 'SELECT * FROM "' + tabla + '" WHERE ' + codigo;
+//      T.Open;
+//      result := (T.RecordCount<>0);
+//    finally
+//      result := false;
+//    end;
+  TRY
+    T.SQL.Text := 'SELECT * FROM "' + tabla + '" WHERE ' + codigo;
+    T.open;
+    TRY
+      result := (T.RecordCount<>0);
+    FINALLY
+    { Esta línea se ejecuta SIEMPRE, haya o no excepción. }
+      T.close ;
+    END;
+  EXCEPT
+    On Error: EDatabaseError DO
+//      ShowMessage ('Error al cargar los datos: '+Error.Message);
+    result := false;
+//    ON Error: Exception DO
+//      ShowMessage ('Excepción: '+Error.Message);
+  END;
 end;
 
 procedure TOperacionDataModule.BorrarArticulos;
@@ -1461,49 +1480,71 @@ begin
     ' DELETE FROM "Categoria" ;';
     ExecSQL;
     Transaction.CommitRetaining;
-    insertarTabla2('Rubro','0','Rubro');
+    insertarTabla2('Rubro','0','Sin Rubro');
     insertarTabla2('SubCategoria','0','SinSubCategoría');
     insertarTabla2('Categoria','0','Sin Categoría');
+    T.Close;
   end;
 end;
 
 procedure TOperacionDataModule.ModificarArticulos;
-{
 var
-  codigo, descripcion,
+  existe : Boolean;
+  ganancia : double;
+ { codigo, descripcion,
   ultcosto, costo, precio, precio1, precio2, disponible,
   porcentaje, impotros, unidad, tasa, iibb, ctanombre, ctatipo, ctaanticipo,ctaiibb,
   fecha, fechacompult, codigobarra,
   categoria, color, marca, proveedor, rubro, subcategoria : string;
 }
 begin
-  proveedor := '1';
-
+  if proveedor = '' then proveedor := '1';
+  if not existeEnTabla('Categoria','CODIGO='+categoria) then categoria := '0';
+  if subcategoria = '' then subcategoria := '0';
+  if rubro = '' then rubro := '0';
+  if fecha = '' then fecha := DateTimeToStr(now);
+  if fechacompult = '' then fechacompult := fecha;
+  if tasa = '' then tasa := '21';
+  if porcentaje = '' then porcentaje := '50';
+  precio := StringReplace(precio, ',', '.',[]);
+  ganancia := StrToFloat(precio)/(StrToFloat(tasa)/100+1);
+  costo := FloatToStrF( ( ganancia/(StrToFloat(porcentaje)/100+1) ), ffFixed, 16, 2 );
+//  ultcosto := costo;
   //if descripcion = nil then descripcion := '';
-
-  if not ( existeEnTabla('Articulo','CODIGOBARRA='+codigobarra) ) then
+//  if codigobarra <> '' then existe := existeEnTabla('Articulo','CODIGOBARRA='+QuotedStr(codigobarra))
+    if descripcion <> '' then existe := existeEnTabla('Articulo','DESCRIPCION='+QuotedStr(descripcion))
+    else
+      existe := false;
+  if not ( existe ) then
   begin
-    Q.SQL.Text := 'INSERT INTO "Articulo" ( CODIGO, DESCRIPCION '
-    + ', ULTCOSTO, COSTO, PRECIO, PRECIO1, PRECIO2, DISPONIBLE'
+    Q.SQL.Text := 'INSERT INTO "Articulo" ('
+//    + ' CODIGO,'
+    + ' DESCRIPCION '
+    + ', ULTCOSTO, COSTO, PRECIO'
+//    +', PRECIO1, PRECIO2'
+    +', DISPONIBLE'
     + ', PORCENTAJE, IMPOTROS, UNIDAD, TASA, IIBB, CTANOMBRE, CTATIPO, CTAANTICIPO, CTAIIBB '
     + ', FECHA, FECHACOMPULT, CODIGOBARRA'
     + ', CATEGORIA, COLOR, MARCA, PROVEEDOR, RUBRO, SUBCATEGORIA'
     + ' ) VALUES ( '
-    + codigo + ', ' + descripcion
-    + ', '+ ultcosto +', ' + costo + ', ' + precio + ', ' + precio1 + ', ' + precio2 + ', ' + disponible
+//    + IntToStr(codigo) + ', '
+    + QuotedStr(descripcion)
+    + ', '+ costo +', ' + costo + ', ' + precio
+//    + ', ' + precio1 + ', ' + precio2
+    + ', ' + disponible
     + ', '+ porcentaje +', 5, ''c/u'', '+ tasa +', 1, 13, 13, 13, 66'
-    + ', '+ fecha +', ' + fechacompult + ', ' + codigobarra
+    + ', '+ QuotedStr(fecha) +', ' + QuotedStr(fechacompult) + ', ' + QuotedStr(codigobarra)
     + ', '+ categoria +', 0, 0, '+ proveedor +', '+ rubro +', '+ subcategoria +' )';
 //            D.ExecSQL;
   end
     else
       Q.SQL.Text := 'UPDATE "Articulo" SET'
-      +' DESCRIPCION = ' + descripcion
-      +', ULTCOSTO = ' + ultcosto
+//      +' DESCRIPCION = ' + QuotedStr(descripcion)
+      +' ULTCOSTO = COSTO'
       +', COSTO = ' + costo
       +', PRECIO = ' + precio
-      +', PRECIO1 = ' + precio1
-      +', PRECIO2 = ' + precio2
+//      +', PRECIO1 = ' + precio1
+//      +', PRECIO2 = ' + precio2
       +', DISPONIBLE = ' + disponible
       +', PORCENTAJE = ' + porcentaje
 //              +', IMPOTROS = 5' +
@@ -1514,17 +1555,22 @@ begin
 //              +', CTATIPO = 13' +
 //              +', CTAANTICIPO = 13' +
 //              +', CTAIIBB = 66' +
-      +', FECHA = ' + fecha
-      +', FECHACOMPULT = ' + fechacompult
-      +', CODIGOBARRA = ' + codigobarra
-      +', CATEGORIA = ' + categoria
+      +', FECHACOMPULT = FECHA'
+      +', FECHA = ' + QuotedStr(fecha)
+      +', CODIGOBARRA = ' + QuotedStr(codigobarra)
+//      +', CATEGORIA = ' + categoria
 //              +', COLOR = 0' +
 //              +', MARCA = 0' +
-      +', PROVEEDOR = ' + proveedor
-      +', RUBRO = ' + rubro
-      +', SUBCATEGORIA = ' + subcategoria
-      +' WHERE CODIGO ='+ codigo;
+//      +', PROVEEDOR = ' + proveedor
+//      +', RUBRO = ' + rubro
+//      +', SUBCATEGORIA = ' + subcategoria
+      +' WHERE '
+//      +' CODIGO ='+ IntToStr(codigo);
+//      +' CODIGOBARRA = ' + QuotedStr(codigobarra);
+        +' DESCRIPCION = ' + QuotedStr(descripcion)
+      ;
     Q.ExecSQL;
+//    Q.Transaction.CommitRetaining;
 end;
 
 procedure TOperacionDataModule.ActualizarCantidadArticulo;

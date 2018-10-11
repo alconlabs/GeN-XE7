@@ -136,4 +136,17 @@ object ImprimirDataModule: TImprimirDataModule
     Variables = <>
     Style = <>
   end
+  object frxCSVExport1: TfrxCSVExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = True
+    Separator = ','
+    OEMCodepage = False
+    UTF8 = True
+    NoSysSymbols = True
+    ForcedQuotes = False
+    Left = 40
+    Top = 248
+  end
 end

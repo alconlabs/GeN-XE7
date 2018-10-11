@@ -17,7 +17,7 @@ uses
 
 type
   TMigrarForm = class(TForm)
-    ProcesarButton: TButton;
+    ImportarButton: TButton;
     ProgressBar1: TProgressBar;
     EditUrl: TEdit;
     EditResource: TEdit;
@@ -28,21 +28,23 @@ type
     Label3: TLabel;
     Label4: TLabel;
     BorrarArticulosCheckBox: TCheckBox;
-    CSVButton: TButton;
     DesdeRadioGroup: TRadioGroup;
     OpenTextFileDialog1: TOpenTextFileDialog;
     StringGrid1: TStringGrid;
     Timer1: TTimer;
     ActualizarCB: TCheckBox;
-    procedure ProcesarButtonClick(Sender: TObject);
+    ExportarButton: TButton;
+    SaveTextFileDialog1: TSaveTextFileDialog;
+    procedure ImportarButtonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure CSVButtonClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure ExportarButtonClick(Sender: TObject);
 //    procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
     RubroId, CategoriaId, SubCategoriaId : string;
     procedure Procesar;
+    procedure Importar;
   public
     { Public declarations }
   end;
@@ -54,8 +56,69 @@ implementation
 
 {$R *.dfm}
 
+uses ImprimirDM;
+
 // implentación de la clase THilo
 
+
+procedure TMigrarForm.ExportarButtonClick(Sender: TObject);
+var
+  Stream: TFileStream;
+  i: Integer;
+  OutLine: string;
+  sTemp: string;
+begin
+  with OperacionDataModule do begin
+    Q.SQL.Text:='Select * from "Articulo"';
+    Q.Open;
+    SaveTextFileDialog1.Execute();
+    Stream := TFileStream.Create(SaveTextFileDialog1.FileName, fmCreate);
+    OutLine :=
+    'CODIGO, DESCRIPCION, COSTO, ULTCOSTO, PRECIO1, PRECIO2, PRECIO3, PRECIO4'
+    +', PRECIO5, PRECIO6, PRECIO, PORCENTAJE, ULTPRECIO, MARCA, COLOR, CATEGORIA'
+    +', SUBCATEGORIA, UBICACION, UNIDAD, DISPONIBLE, ENPRODUCCION, NOTAS, IVA'
+    +', TASA, IMPOTROS, IIBB, STOCKMINIMO, STOCKMAXIMO, STOCKVENDIDO'
+    +', FECHACOMPULT, LISTA, PROCEDENCIA, CODIGOBARRA, RUBRO, PROVEEDOR'
+    +', GARANTIA, FECHA, PEDIDO, STOCK, EXISTENTE, ACTUAL, MARCADOCONTADO'
+    +', MARCADOLISTA, MARCADOFINAL, PREPARADO, CTANOMBRE, CTATIPO, CTAANTICIPO'
+    +', CTAIIBB, ESTADO, VENCE, VENCIMIENTO'
+    + #13#10;
+    Stream.Write(OutLine[1], Length(OutLine) * SizeOf(Char));
+    try
+      while not Q.Eof do
+      begin
+        // You'll need to add your special handling here where OutLine is built
+        OutLine := '';
+        for i := 0 to Q.FieldCount - 1 do
+        begin
+          sTemp := Q.Fields[i].AsString;
+          // Special handling to sTemp here
+          OutLine := OutLine + sTemp + ',';
+        end;
+        // Remove final unnecessary ','
+        SetLength(OutLine, Length(OutLine) - 1);
+        OutLine := OutLine + #13#10;
+        // Write line to file
+        Stream.Write(OutLine[1], Length(OutLine) * SizeOf(Char));
+//Stream.Write(OutLine[1], Length(OutLine));//AStream.Write(S[1], Length(S));
+        // Write line ending
+//        Stream.Write(sLineBreak, Length(sLineBreak));
+        Q.Next;
+      end;
+    finally
+      Stream.Free;  // Saves the file
+      Q.Close;
+    end;
+  end;
+//end;
+//  ImprimirDataModule := TImprimirDataModule.Create(self);
+//  ImprimirDataModule.SImpr('Select * from Articulos', 'Articulos');
+//  ImprimirDataModule.Free;
+//  OperacionDataModule.DataSetToCsv(OperacionDataModule.T.DataSet; psRutaFichero : String);
+//  DataSetToCsv(dsXXXX.DataSet, 'c:\Fichero.csv');
+ShowMessage('Exportación finalizada con éxito!!!');
+close;
+end;
 
 procedure TMigrarForm.FormCreate(Sender: TObject);
 begin
@@ -77,10 +140,11 @@ begin
   RestDataModule := TRestDataModule.Create(self);
 end;
 
-procedure TMigrarForm.ProcesarButtonClick(Sender: TObject);
+procedure TMigrarForm.ImportarButtonClick(Sender: TObject);
 begin
   Timer1.Enabled:=True;
-  Procesar;
+  if BorrarArticulosCheckBox.Checked then OperacionDataModule.BorrarArticulos;
+  if DesdeRadioGroup.ItemIndex = 0 then Importar else Procesar;
 end;
 
 procedure TMigrarForm.Timer1Timer(Sender: TObject);
@@ -215,7 +279,7 @@ with RestDataModule do
     end;
 end;
 
-procedure TMigrarForm.CSVButtonClick(Sender: TObject);
+procedure TMigrarForm.Importar;
 var
   csv : TStringList;
   fila : TStringList;
@@ -249,7 +313,6 @@ var
   : Integer;
   campo : string;
 begin
-
   cb:=0;
   costo:=0;
 
@@ -363,7 +426,7 @@ begin
 			end;
 		end;
 		MessageDlg('Lectura Exitosa..', mtInformation, [mbOK], 0);
-  RestDataModule.D.Transaction.CommitRetaining;
+  OperacionDataModule.Q.Transaction.CommitRetaining;
 	Except
 	    on E : Exception do
 	    begin
@@ -372,6 +435,8 @@ begin
 	end;
 	// liberar la memoria
 	csv.Free;
+Close;
 end;
+
 
 end.

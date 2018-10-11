@@ -2,8 +2,8 @@ object MigrarForm: TMigrarForm
   Left = 0
   Top = 0
   Caption = 'Importar Articulos'
-  ClientHeight = 310
-  ClientWidth = 295
+  ClientHeight = 309
+  ClientWidth = 290
   Color = clWindow
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -43,12 +43,12 @@ object MigrarForm: TMigrarForm
     Height = 13
     Caption = 'Consumer Secret'
   end
-  object ProcesarButton: TButton
+  object ImportarButton: TButton
     Left = 209
     Top = 235
     Width = 80
     Height = 50
-    Caption = 'PROCESAR'
+    Caption = 'Importar'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -11
@@ -56,7 +56,7 @@ object MigrarForm: TMigrarForm
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 0
-    OnClick = ProcesarButtonClick
+    OnClick = ImportarButtonClick
   end
   object ProgressBar1: TProgressBar
     Left = 8
@@ -105,16 +105,6 @@ object MigrarForm: TMigrarForm
     Caption = 'Borrar Articulos Viejos'
     TabOrder = 6
   end
-  object CSVButton: TButton
-    Left = 209
-    Top = 180
-    Width = 80
-    Height = 50
-    Caption = 'CSV'
-    TabOrder = 7
-    Visible = False
-    OnClick = CSVButtonClick
-  end
   object DesdeRadioGroup: TRadioGroup
     Left = 8
     Top = 180
@@ -123,10 +113,9 @@ object MigrarForm: TMigrarForm
     Caption = 'Desde'
     ItemIndex = 0
     Items.Strings = (
-      'WEB - WooCommerce'
-      'CSV')
-    TabOrder = 8
-    Visible = False
+      'CSV'
+      'WEB - WooCommerce')
+    TabOrder = 7
   end
   object StringGrid1: TStringGrid
     Left = 295
@@ -134,7 +123,7 @@ object MigrarForm: TMigrarForm
     Width = 721
     Height = 522
     Align = alCustom
-    TabOrder = 9
+    TabOrder = 8
   end
   object ActualizarCB: TCheckBox
     Left = 222
@@ -147,7 +136,16 @@ object MigrarForm: TMigrarForm
     Caption = 'Actualizar'
     ParentShowHint = False
     ShowHint = True
+    TabOrder = 9
+  end
+  object ExportarButton: TButton
+    Left = 211
+    Top = 180
+    Width = 78
+    Height = 50
+    Caption = 'Exportar'
     TabOrder = 10
+    OnClick = ExportarButtonClick
   end
   object OpenTextFileDialog1: TOpenTextFileDialog
     Left = 48
@@ -158,5 +156,12 @@ object MigrarForm: TMigrarForm
     OnTimer = Timer1Timer
     Left = 120
     Top = 240
+  end
+  object SaveTextFileDialog1: TSaveTextFileDialog
+    DefaultExt = '.csv'
+    FileName = 'Articulos.csv'
+    Filter = 'CSV files only|*.csv'
+    Left = 168
+    Top = 256
   end
 end
