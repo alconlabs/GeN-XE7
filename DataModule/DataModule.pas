@@ -9,7 +9,9 @@ uses
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
   FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, IBX.IBScript;
+  FireDAC.Comp.Client, IBX.IBScript
+  , System.Net.HTTPClient, System.StrUtils, ShellApi
+  ;
 
 type
 
@@ -27,6 +29,10 @@ type
   private
     { Private declarations }
   public
+  const
+    NumThreads: Integer = 4;
+  public
+    { Public declarations }
     Unidad: string;
     // Gratis:boolean;
     IniFile: TIniFile;
@@ -36,9 +42,10 @@ type
     procedure DejarUsuario;
     function ExecuteProcess(ProcessName, Path: String): Cardinal;
     procedure VaciarBase;
+    function Descargar(FURL,FFileName:string):string;
+    function TextoAfecha(StrDate : string):TDateTime;
+    function ReadTextFile(FileName : String):string;
     { function Gratis(arch: String): boolean; }
-    { Public declarations }
-
   end;
 
 const
@@ -211,6 +218,10 @@ begin
   reporte := ConfigQuery.FieldByName('Reporte').AsString;
   IngresosBrutos := ConfigQuery.FieldByName('IIBB').AsString;
   if IngresosBrutos='' then IngresosBrutos:='0';
+
+  Descargar('https://raw.githubusercontent.com/DeGsoft/GeN-XE7/master/Instalador/Update.iss'
+  , Path+'Update.iss');
+
 end;
 
 procedure TDM.connection;
@@ -368,6 +379,75 @@ begin
   // IniFile.WriteString('Licencia', 'Fecha', datetostr(date));
 
 //  IniFile.Destroy;
+end;
+
+function TDM.TextoAfecha;
+var
+Fmt : TFormatSettings;
+begin
+  fmt.ShortDateFormat:='yyyy/mm/dd';
+  fmt.DateSeparator  :='/';
+  fmt.ShortTimeFormat :='hh:nn';
+  fmt.TimeSeparator  :=':';
+  result := StrToDateTime((
+    (Copy(StrDate, 1, 4))+'/'+
+    (Copy(StrDate, 5, 2))+'/'+
+    (Copy(StrDate, 7, 2))+' '+
+    (Copy(StrDate, 9, 2))+':'+
+    (Copy(StrDate, 11, 2))
+  ),Fmt);
+end;
+
+function TDM.Descargar;
+var
+  LResponse: IHTTPResponse;
+  LStream: TFileStream;
+  LHttpClient: THTTPClient;
+begin
+//  inherited;
+  LHttpClient := THTTPClient.Create;
+  try
+    // if a "partial" download already exists
+    if FileExists(FFileName) then
+    begin
+      // re-utilize the same file stream, with position on the end of the stream
+      LStream := TFileStream.Create(FFileName, fmOpenWrite or fmShareDenyNone);
+    end else begin
+      // create a new file stream, with the position on the beginning of the stream
+      LStream := TFileStream.Create(FFileName, fmCreate);
+    end;
+    try
+      LResponse := LHttpClient.Get(FURL, LStream);
+      result:= FFileName;
+      LStream.Free;
+    except
+//      MessageDlg('Error Get', mtInformation, [mbOK], 0);
+   end;
+  finally
+    LHttpClient.Free;
+  end;
+end;
+
+// Lee un archivo de texto y lo devuelve como un arreglo.
+function TDM.ReadTextFile;
+var
+   F : TextFile;
+   i : Integer;
+//   Buffer, version, b1,b2,b3,b4 : String;
+begin
+   try
+      FileMode := fmOpenRead;
+      AssignFile(F, FileName);
+      Reset(F);
+      i := 0;
+      REPEAT
+          Readln(F, Result);
+          Inc(i);
+      UNTIL i = 5;
+          CloseFile(F);
+   except
+//      MessageDlg('Error de I/O', mtInformation, [mbOK], 0);
+   end;
 end;
 
 end.
