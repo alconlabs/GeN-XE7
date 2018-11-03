@@ -34,12 +34,13 @@ type
     procedure Image1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ActualizarGrilla(nro,letra:string);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     Codigo, CodProve, Tipo: String;
-    Cancela: boolean;
+    Cancela, anular: boolean;
   end;
 
 var
@@ -52,9 +53,10 @@ implementation
 procedure TBuscaFacturaForm.ActualizarGrilla;
 var sql, where:string;
 begin
+  where := ' WHERE (ANULADA <> ''S'') ';
   if ((nro <> '') or (letra <> '')) then
-    where := ' WHERE' + '  (CODIGO like ' + QuotedStr(nro + '%') + '  ) AND'
-    + ' (LETRA like ' + QuotedStr(letra + '%') + ' )';
+    where := where + ' AND (CODIGO like ' + QuotedStr(nro + '%') + '  ) AND'
+    + ' (LETRA like ' + QuotedStr(letra + '%') + ' ) AND ANULADA <> ''S'' ';
   ImprimirDataModule := TImprimirDataModule.Create(self);
   if Presupuesto.Checked then
     sql := 'SELECT ' + ImprimirDataModule.presupuestoTSql
@@ -76,6 +78,12 @@ begin
     Close;
 end;
 
+procedure TBuscaFacturaForm.FormShow(Sender: TObject);
+begin
+  if anular then SiBitBtn.Caption := 'Seleccionar';
+  todoBitBtn.Click;
+end;
+
 procedure TBuscaFacturaForm.Image1Click(Sender: TObject);
 begin
   ImprimirDataModule := TImprimirDataModule.Create(self);
@@ -95,7 +103,7 @@ var
   nro, letra: string;
 begin
   // IMPRIMIR
-  if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
+  if not ( anular and ((dm.ConfigQuery.FieldByName('Imprimir').AsString ) <> 'SI')) then
   begin
     nro := Tabla.FieldByName('CODIGO').AsString;
     letra := Tabla.FieldByName('LETRA').AsString;

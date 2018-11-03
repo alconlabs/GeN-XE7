@@ -64,17 +64,23 @@ type
     function existeEnTabla(tabla,codigo: string): Boolean;
     procedure BorrarArticulos;
     procedure ModificarArticulos(codigo, descripcion,
-  ultcosto, costo, precio, precio1, precio2, disponible,
-  porcentaje, impotros, unidad, tasa, iibb, ctanombre, ctatipo, ctaanticipo,ctaiibb,
-  fecha, fechacompult, codigobarra,
-  categoria, color, marca, proveedor, rubro, subcategoria : string);
-  procedure ActualizarCantidadArticulo(codigo,cantidad:string);
-  procedure DataSetToCsv(psRutaFichero : String);
+      ultcosto, costo, precio, precio1, precio2, disponible,
+      porcentaje, impotros, unidad, tasa, iibb, ctanombre, ctatipo, ctaanticipo,ctaiibb,
+      fecha, fechacompult, codigobarra,
+      categoria, color, marca, proveedor, rubro, subcategoria : string);
+    procedure ActualizarCantidadArticulo(codigo,cantidad:string);
+    procedure DataSetToCsv(psRutaFichero : String);
+    procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impTotal, asocTipo, asocNro:string);
 //    Procedure FillCbIva;
   private
     { Private declarations }
   public
     { Public declarations }
+    nro, comp, a, pagare, cae, vto, mensaje//, ptovta, tipocbte
+    : string;
+    i: integer;
+    IIBB, cmv: Double;
+    jsResponse: TJSONValue;
   end;
 
 var
@@ -527,12 +533,12 @@ end;
 
 Procedure TOperacionDataModule.AnularVTA;
 var
-  let, cod, fec, ven, cui, cno, a: string;
+  let, cod, fech, ven, cui, cno, a: string;
   pre, pgr: Boolean;
-  cost, com, imp, che, cont, tot, sbt, des, tar, otr, sal, pag, int, n10, n21,
-    i10, i21, deu, ulc, cmv: Double;
+  cost, com, impu, cheq, cont, tot, sbt, des, tarj, otr, sal, pag, int, n10, n21,
+    i10, i21, deud, ulc, comv: Double;
 begin
-  // Verificar que la factura Exista y que no est� anulada
+  // Verificar que la factura Exista y que no este anulada
   T.sql.Text := 'Select * From "Venta" Where CODIGO = ' + nro;
   T.Open;
   IF T.RecordCount = 0 then
@@ -555,23 +561,22 @@ begin
     T.Close;
     Exit;
   end;
-  if MessageDlg('�Est� seguro que desea anular la venta ' + nro + '?',
+  if MessageDlg('Está seguro que desea anular la venta ' + nro + '?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   begin
-    fec := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
+    fech := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
     cod := T.FieldByName('CLIENTE').AsString;
     let := T.FieldByName('LETRA').AsString;
     sal := T.FieldByName('SALDO').AsFloat;
     cont := T.FieldByName('CONTADO').AsFloat;
     pag := T.FieldByName('PAGADO').AsFloat;
     tot := T.FieldByName('TOTAL').AsFloat;
-    che := T.FieldByName('CHEQUE').AsFloat;
-    tar := T.FieldByName('TARJETA').AsFloat;
-    imp := T.FieldByName('IMPUESTO').AsFloat;
-    cmv := T.FieldByName('COSTO').AsFloat;
-    deu := T.FieldByName('DEUDA').AsFloat;
+    cheq := T.FieldByName('CHEQUE').AsFloat;
+    tarj := T.FieldByName('TARJETA').AsFloat;
+    impu := T.FieldByName('IMPUESTO').AsFloat;
+    comv := T.FieldByName('COSTO').AsFloat;
+    deud := T.FieldByName('DEUDA').AsFloat;
     com := T.FieldByName('COMISION').AsFloat;
-    imp := T.FieldByName('IMPUESTO').AsFloat;
     tot := T.FieldByName('TOTAL').AsFloat;
     if T.FieldByName('PAGARE').AsString = 's' then
       pgr := True;
@@ -586,22 +591,54 @@ begin
     // Marcar la Factura como anulada y poner los saldos en cero
     Q.sql.Text := 'Update "Venta" set ANULADA = ''S'' where CODIGO = ' + nro;
     Q.ExecSQL;
-    // Actualizar la cantidad disponible en la tabla de Articulos
-    T.sql.Text :=
-      'SELECT ARTICULO, CANTIDAD FROM "VentaItem" WHERE OPERACION = ' + nro;
-    T.Open;
-    While not T.Eof do
-    begin
-      Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = (DISPONIBLE + ' +
-        T.FieldByName('CANTIDAD').AsString + ') Where ' + 'CODIGO = ' +
-        T.FieldByName('ARTICULO').AsString;
-      Q.ExecSQL;
-      T.Next;
+    // ---Nota de credito electronica
+    with dm do begin
+      LeerINI;
+      comp := IntToStr(StrToInt(operNCC)+1);
+
+      if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
+      WSFE( fech, let, '1', '96', cui, comp, floattostr(tot), floattostr(tot), '0', '0' );
+
+      if comp<>'' then
+      begin
+        operNCC :=comp;
+        EscribirINI;
+      end;
+
     end;
-    T.Close;
-    // Borrar los Items de la factura de la tabla "VentaItem"
-    Q.sql.Text := 'DELETE FROM "VentaItem" WHERE "VentaItem".OPERACION=' + nro;
+    // INSERTA EN LA TABLA OPERACION
+  Q.sql.Text :=
+    'Insert Into "Operacion" (COMPROBANTE, TERMINOS, CODIGO, TIPO, LETRA'+
+    ', CLIENTE, VENDEDOR, SUBTOTAL' +
+    ', DESCUENTO, FECHA, IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
+    ' TARJETA, OTROS, SALDO, PAGADO, PAGARE, COSTO, DEUDA, COMISION' +
+    ') Values ' + '(' +QuotedStr(comp)+ ', ' + quotedstr(vto) + ', ' + (nro) + ', ' + quotedstr('NCC') + ', ' + quotedstr(let) +
+    ', ' + cod + ', ' + ven + ', ' + ' ' + floattostr(sbt) + ', ' +
+    floattostr(des) + ', ' + quotedstr(fech) + ', ' + floattostr(impu) + ', ' +
+    floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
+    floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
+    floattostr(pag) + ',' + quotedstr(pagare) + ',' + floattostr(cmv) + ',' +
+    floattostr(deud) + ',' + floattostr(comv) + ')';
+  Q.ExecSQL;
+// Insertar en la tabla de OPERACIONITEM
+  T.SQL.Text := 'Select * From "VentaItem" Where CODIGO = ' + nro;
+  T.Open;
+  T.First;
+  while not T.Eof do
+  begin
+    Q.sql.Text :=
+      'Insert Into "OperacionItem" (OPERACION, ARTICULO, CANTIDAD'+
+      ', PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
+      + ' ( ' + nro + ', ' + T.FieldByName('ARTICULO').AsString + ', ' + T.FieldByName('CANTIDAD').AsString
+      + ',' + T.FieldByName('PRECIO').AsString + ', ' + T.FieldByName('IMPUESTO').AsString + ', ' + nro + ', ' +
+      QuotedStr(T.FieldByName('DESCRIPCION').AsString) + ');';
     Q.ExecSQL;
+    T.Next;
+  end;
+
+    // Borrar los Items de la factura de la tabla "VentaItem"
+//    Q.sql.Text := 'DELETE FROM "VentaItem" WHERE "VentaItem".OPERACION=' + nro;
+//    Q.ExecSQL;
     // Borrar los Items de la factura de la tabla "VentaItem"
     Q.sql.Text :=
       'DELETE FROM "CtaCteItem" WHERE "CtaCteItem".OPERACION=' + nro;
@@ -613,64 +650,79 @@ begin
     // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Insertar en el Libro IVA Ventas
     if let <> 'X' then
-      LibroIVAvta(fec, nro, '...', 'ANULADA', '0', '0', '0', '0', '0');
+      LibroIVAvta(fech, nro, '...', 'ANULADA', '0', '0', '0', '0', '0');
     // en blanco
     // Insertar en la tabla LibroDiario
     a := inttostr(UltimoRegistro('"LibroDiario"', 'ASIENTO')); // GENERAR INDICE
     // ------------------------------------------------------------------------------
     // VENTAS
-    Asiento(dm.ConfigQuery.FieldByName('CtaVenta').AsString, a, fec,
+    Asiento(dm.ConfigQuery.FieldByName('CtaVenta').AsString, a, fech,
       (nro + ' - ' + let + ' - ' + cod), floattostr(tot), '0');
     // renglon  - VENTAS
     // si es factura A
     if let = 'A' then
-      Asiento(dm.ConfigQuery.FieldByName('CtaIVADebitoFiscal').AsString, a, fec,
-        (nro + ' - ' + let + ' - ' + cod), floattostr(imp), '0');
+      Asiento(dm.ConfigQuery.FieldByName('CtaIVADebitoFiscal').AsString, a, fech,
+        (nro + ' - ' + let + ' - ' + cod), floattostr(impu), '0');
     // renglon  - IVA DEBITO FISCAL
     // PAGO DE CUENTA CORRIENTE
-    if ((pag) > (tot - deu)) then
-      Asiento(cno, a, fec, (nro + ' - ' + let + ' - ' + cod + ' - ' + cui),
-        floattostr(pag - (tot - deu)), '0'); // renglon  - DEUDORES POR VENTA
+    if ((pag) > (tot - deud)) then
+      Asiento(cno, a, fech, (nro + ' - ' + let + ' - ' + cod + ' - ' + cui),
+        floattostr(pag - (tot - deud)), '0'); // renglon  - DEUDORES POR VENTA
     // a
     // PAGO CON
     // CAJA (EFECTIVO)
     if (cont) > 0.04 then
-      Asiento(dm.ConfigQuery.FieldByName('CtaCaja').AsString, a, fec,
+      Asiento(dm.ConfigQuery.FieldByName('CtaCaja').AsString, a, fech,
         (nro + ' - ' + let + ' - ' + cod), '0', floattostr(pag));
     // DSXVTA (CUENTA CORRIENTE)
     if (sal > 0.04) AND (pgr <> True) then
-      Asiento(cno, a, fec, (nro + ' - ' + let + ' - ' + cod), '0',
+      Asiento(cno, a, fech, (nro + ' - ' + let + ' - ' + cod), '0',
         floattostr(sal));
     // DOC A COBRAR (CON DOCUMENTOS (PAGARE))
     if (pag < tot) AND (pgr = True) then
       Asiento(dm.ConfigQuery.FieldByName('CtaDocumentoACobrar').AsString, a,
-        fec, (nro + ' - ' + let + ' - ' + cod), floattostr(sal), '0');
+        fech, (nro + ' - ' + let + ' - ' + cod), floattostr(sal), '0');
     // VALOR AL COBRO (PAGO CON CHEQUE)
-    if (che) > 0.04 then
-      Asiento(dm.ConfigQuery.FieldByName('CtaValorAlCobro').AsString, a, fec,
-        (nro + ' - ' + let + ' - ' + cod), '0', floattostr(che));
+    if (cheq) > 0.04 then
+      Asiento(dm.ConfigQuery.FieldByName('CtaValorAlCobro').AsString, a, fech,
+        (nro + ' - ' + let + ' - ' + cod), '0', floattostr(cheq));
     // -----------------------------------1------------------------------------------
     // MERCADERIAS DE REVENTA
-    Asiento(dm.ConfigQuery.FieldByName('CtaMercaderia').AsString, a, fec,
+    Asiento(dm.ConfigQuery.FieldByName('CtaMercaderia').AsString, a, fech,
       (nro + ' - ' + let + ' - ' + cod), floattostr(cmv), '0');
     // a
     // CMV
-    Asiento(dm.ConfigQuery.FieldByName('CtaCMV').AsString, a, fec,
+    Asiento(dm.ConfigQuery.FieldByName('CtaCMV').AsString, a, fech,
       (nro + ' - ' + let + ' - ' + cod), '0', floattostr(cmv));
     // -----------------------------------2------------------------------------------
     if com > 0 then
     begin
       // COMISION VENDEDOR A PAGAR
       Asiento(dm.ConfigQuery.FieldByName('CtaComisionVendedorAPagar').AsString,
-        a, fec, (nro + ' - ' + let + ' - ' + cod), floattostr(com), '0');
+        a, fech, (nro + ' - ' + let + ' - ' + cod), floattostr(com), '0');
       // a
       // COMISION VENDEDOR
       Asiento(dm.ConfigQuery.FieldByName('CtaComisionVendedor').AsString, a,
-        fec, (nro + ' - ' + let + ' - ' + cod), '0', floattostr(com));
+        fech, (nro + ' - ' + let + ' - ' + cod), '0', floattostr(com));
     end;
     // -----------------------------------3------------------------------------------
     // CONTABILIDAD---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     Q.Transaction.CommitRetaining;
+    // IMPRIMIR
+    if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
+    begin
+      ImprimirDataModule := TImprimirDataModule.Create(self);
+      if reporte = 'FElectronica' then reporte:='NCElectronica'
+      else
+        if reporte = 'TElectronica' then reporte:='NCTElectronica'
+        else
+          if reporte = 'CTicket' then reporte:='NCTicket'
+          else
+            if reporte = 'COriginal' then reporte:='CNCredito';
+      with ImprimirDataModule do
+        Impr(oper(nro, let), reporte);
+      ImprimirDataModule.Free;
+    end;
   end;
 end;
 
@@ -723,11 +775,11 @@ begin
 end;
 
 function TOperacionDataModule.ProcVTA; // PROCESA UNA VENTA
-var
-  nro, comp, a, pagare, cae, vto, mensaje, ptovta, tipocbte: string;
-  i: integer;
-  IIBB, cmv: Double;
-  jsResponse: TJSONValue;
+//var
+//  nro, comp, a, pagare, cae, vto, mensaje, ptovta, tipocbte: string;
+//  i: integer;
+//  IIBB, cmv: Double;
+//  jsResponse: TJSONValue;
 begin
   if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
   pagare := '0';
@@ -735,7 +787,7 @@ begin
 //  if nro = '1' then
 //    nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
   comp:=IntToStr((dm.ObtenerConfig('NroFactura'))+1);
-  ptovta:= IntToStr(dm.ObtenerConfig('Empresa'));
+//  ptovta:= IntToStr(dm.ObtenerConfig('Empresa'));
   if pgr then
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
@@ -747,41 +799,42 @@ begin
   //      Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
   if let = 'C' then
     begin
-      tipocbte:='11';
+//      tipocbte:='11';
       IIBB := tot * (Q.FieldByName('PORCENTAJE').AsFloat/100)
     end
   else
     IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
   if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
-  begin
-    AfipDataModule := TAfipDataModule.Create(self);
-    try
-      with AfipDataModule do
-      begin
-        jsResponse := FacturaAfip( fech, ptovta, tipocbte, '1', '96', cui, comp, floattostr(tot), floattostr(tot),
-        '0', '0', '0', '0', '1',
-        '1', '0', '0', '0', '0',
-        '0', '0', 'PES', 'impuesto', 'null',
-        'null', 'null', '', '', '', '');
-        if jsResponse = nil then
-          exit
-        else
-        begin
-          cae:=jsResponse.GetValue<String>('cae');
-          comp:=jsResponse.GetValue<String>('nro');
-          vto:=jsResponse.GetValue<String>('vto');
-          mensaje:=jsResponse.GetValue<String>('mensaje');
-        end;
-        if mensaje <> 'Ok' then
-        begin
-          ShowMessage(mensaje);
-          exit;
-        end;
-      end;
-    finally
-      AfipDataModule.Free;
-    end;
-  end;
+    WSFE( fech, let, '1', '96', cui, comp, floattostr(tot), floattostr(tot), '0', '0' );
+//  begin
+//    AfipDataModule := TAfipDataModule.Create(self);
+//    try
+//      with AfipDataModule do
+//      begin
+//        jsResponse := FacturaAfip( fech, ptovta, tipocbte, '1', '96', cui, comp, floattostr(tot), floattostr(tot),
+//        '0', '0', '0', '0', '1',
+//        '1', '0', '0', '0', '0',
+//        '0', '0', 'PES', 'impuesto', 'null',
+//        'null', 'null', '', '', '', '');
+//        if jsResponse = nil then
+//          exit
+//        else
+//        begin
+//          cae:=jsResponse.GetValue<String>('cae');
+//          comp:=jsResponse.GetValue<String>('nro');
+//          vto:=jsResponse.GetValue<String>('vto');
+//          mensaje:=jsResponse.GetValue<String>('mensaje');
+//        end;
+//        if mensaje <> 'Ok' then
+//        begin
+//          ShowMessage(mensaje);
+//          exit;
+//        end;
+//      end;
+//    finally
+//      AfipDataModule.Free;
+//    end;
+//  end;
   //actualiza el nro de factura
   if comp<>'' then
   begin
@@ -1622,6 +1675,41 @@ begin
     FreeAndNil(voFichero);
     Q.Bookmark := vsBookMark;
     Q.EnableControls;
+  end;
+end;
+
+procedure TOperacionDataModule.WSFE;
+var
+  tipocbte : string;
+begin
+  if let = 'C' then tipocbte:='11';
+  AfipDataModule := TAfipDataModule.Create(self);
+  try
+    with AfipDataModule do
+    begin
+      jsResponse := FacturaAfip( cbteFecha, tipocbte, concepto, docTipo, docNro, cbte, cbte, impTotal,
+      '0', '0', '0', '0', '1',
+      asocTipo, asocNro,
+      '1', '0', '0', '0', '0',
+      '0', '0', 'PES', 'impuesto', 'null',
+      'null', 'null', '', '', '', '');
+      if jsResponse = nil then
+        exit
+      else
+      begin
+        cae:=jsResponse.GetValue<String>('cae');
+        comp:=jsResponse.GetValue<String>('nro');
+        vto:=jsResponse.GetValue<String>('vto');
+        mensaje:=jsResponse.GetValue<String>('mensaje');
+      end;
+      if mensaje <> 'Ok' then
+      begin
+        ShowMessage(mensaje);
+        exit;
+      end;
+    end;
+  finally
+    AfipDataModule.Free;
   end;
 end;
 

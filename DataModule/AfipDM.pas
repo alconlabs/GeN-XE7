@@ -30,8 +30,9 @@ type
     WSAA: Variant;
   public
     { Public declarations }
-    function FacturaAfip( CbteFch, ptovta, tipocbte, concepto, DocTipo, DocNro, Cbte, ImpNeto, ImpTotal,
+    function FacturaAfip( CbteFch, tipocbte, concepto, DocTipo, DocNro, Cbte, ImpNeto, ImpTotal,
     ImpTotConc, ImpIVA, ImpTrib, ImpOpEx, MonCotiz,
+    regfeasocTipo, regfeasocNro,
     regfetribId, regfetribBaseImp, regfetribAlic, regfetribImporte, regfeivaId,
     regfeivaBaseImp, regfeivaImporte, MonId, regfetribDesc, FchServDesde,
     FchServHasta, FchVtoPago, razon, nombre, direccion, articulo : string) : TJSONValue;
@@ -339,7 +340,7 @@ end;
 function TAfipDataModule.FacturaAfip;
 var
   jsRequest, J: TJSONObject;
-  cuit, pass : string;
+  cuit, pass, ptovta : string;
 begin
 with dm do
   begin
@@ -361,7 +362,7 @@ with dm do
       end
     else
       if DocNro.Length < 11  then DocTipo := '96' else DocTipo := '80';
-
+    ptovta:=IntToStr(dm.ObtenerConfig('Empresa'));
     jsRequest.AddPair('ptovta', ptovta);
     jsRequest.AddPair('tipocbte', tipocbte);
     jsRequest.AddPair('cuit', cuit);
@@ -386,6 +387,11 @@ with dm do
     jsRequest.AddPair('FchVtoPago', FchVtoPago);
     jsRequest.AddPair('MonId', MonId);
     jsRequest.AddPair('MonCotiz', MonCotiz);
+
+    jsRequest.AddPair('regfeasocTipo', regfeasocTipo);
+    jsRequest.AddPair('regfeasocPtoVta', ptovta);
+    jsRequest.AddPair('regfeasocNro', regfeasocNro);
+
     jsRequest.AddPair('regfetribId', regfetribId);
     jsRequest.AddPair('regfetribDesc', regfetribDesc);
     jsRequest.AddPair('regfetribBaseImp', regfetribBaseImp);

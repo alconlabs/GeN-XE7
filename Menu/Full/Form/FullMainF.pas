@@ -240,7 +240,6 @@ begin
       Query.SQL.Text := 'insert into "Control" (USUARIO, MAQUINA) values (' +
         Usuario + ', ' + QuotedStr(Maquina) + ')';
       Query.ExecSQL;
-      // Query.Transaction.Commit;
       Query.Transaction.Commit;
       LoginOk := True;
     end;

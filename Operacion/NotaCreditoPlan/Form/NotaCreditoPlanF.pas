@@ -228,7 +228,7 @@ begin
     end;
   end;
 
-  // CONTABILIDAD++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
   // Insertar en la tabla LibroDiario
   // obtener el numero de asiento

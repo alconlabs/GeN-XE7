@@ -69,7 +69,6 @@ object FullMainForm: TFullMainForm
       end
       object AnularVenta1: TMenuItem
         Caption = 'ANULAR VENTA'
-        Visible = False
         OnClick = AnularVenta1Click
       end
     end

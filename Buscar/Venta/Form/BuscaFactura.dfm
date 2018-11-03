@@ -16,6 +16,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyUp = FormKeyUp
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -190,9 +191,9 @@ object BuscaFacturaForm: TBuscaFacturaForm
       OnClick = Image1Click
     end
     object SiBitBtn: TBitBtn
-      Left = 11
-      Top = 321
-      Width = 80
+      Left = 4
+      Top = 345
+      Width = 91
       Height = 50
       Caption = 'Imprimir'
       Font.Charset = DEFAULT_CHARSET

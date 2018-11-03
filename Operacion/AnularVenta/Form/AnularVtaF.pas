@@ -11,7 +11,7 @@ type
   TFAnulaReimp = class(TForm)
     Label1: TLabel;
     BitBtn1: TBitBtn;
-    BitBtn3: TBitBtn;
+    NoBitBtn: TBitBtn;
     buscarBitBtn: TBitBtn;
     BitBtn2: TBitBtn;
     nroEdit: TEdit;
@@ -22,7 +22,7 @@ type
     procedure BitBtn1Click(Sender: TObject);
     procedure buscarBitBtnClick(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
-    procedure BitBtn3Click(Sender: TObject);
+    procedure NoBitBtnClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
@@ -53,6 +53,7 @@ end;
 procedure TFAnulaReimp.buscarBitBtnClick(Sender: TObject);
 begin
   BuscaFacturaForm := TBuscaFacturaForm.Create(self);
+  BuscaFacturaForm.anular := true;
   try
     BuscaFacturaForm.ShowModal;
   finally
@@ -233,9 +234,9 @@ begin
     Close; }
 end;
 
-procedure TFAnulaReimp.BitBtn3Click(Sender: TObject);
+procedure TFAnulaReimp.NoBitBtnClick(Sender: TObject);
 begin
-  Close;
+  FAnulaReimp.Close;
 end;
 
 end.
