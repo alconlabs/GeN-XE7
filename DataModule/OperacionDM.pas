@@ -15,7 +15,7 @@ interface
 
 uses
   SysUtils, Classes, DB, DataModule, ImprimirDM, Dialogs, Controls, DateUtils,
-  IBX.IBCustomDataSet, IBX.IBQuery, Math, AfipDM, System.JSON, RestDM;
+  IBX.IBCustomDataSet, IBX.IBQuery, Math, AfipDM, System.JSON, RestDM, System.Ansistrings;
 
 type
   matriz = array of array of string;
@@ -71,6 +71,7 @@ type
     procedure ActualizarCantidadArticulo(codigo,cantidad:string);
     procedure DataSetToCsv(psRutaFichero : String);
     procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impTotal, asocTipo, asocNro:string);
+    function TraerTipoCbte(tipo:string):string;
 //    Procedure FillCbIva;
   private
     { Private declarations }
@@ -533,11 +534,13 @@ end;
 
 Procedure TOperacionDataModule.AnularVTA;
 var
-  let, cod, fech, ven, cui, cno, a: string;
+  let, cod, fech, ven, cui, cno, a, cli, tipo: string;
   pre, pgr: Boolean;
   cost, com, impu, cheq, cont, tot, sbt, des, tarj, otr, sal, pag, int, n10, n21,
     i10, i21, deud, ulc, comv: Double;
 begin
+  tipo:='NCC';
+  cod := inttostr(UltimoRegistro('"Operacion"', 'CODIGO'));
   // Verificar que la factura Exista y que no este anulada
   T.sql.Text := 'Select * From "Venta" Where CODIGO = ' + nro;
   T.Open;
@@ -565,7 +568,9 @@ begin
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   begin
     fech := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
-    cod := T.FieldByName('CLIENTE').AsString;
+    cli := T.FieldByName('CLIENTE').AsString;
+    ven := T.FieldByName('VENDEDOR').AsString;
+    if ven='' then ven:='0';
     let := T.FieldByName('LETRA').AsString;
     sal := T.FieldByName('SALDO').AsFloat;
     cont := T.FieldByName('CONTADO').AsFloat;
@@ -582,29 +587,27 @@ begin
       pgr := True;
     T.Close;
     // +++TRAER CLIENTE
-    T.sql.Text := 'select * from "Cliente" where CODIGO=' + cod;
+    T.sql.Text := 'select * from "Cliente" where CODIGO=' + cli;
     T.Open;
     cno := T.FieldByName('CTANOMBRE').AsString;
     cui := T.FieldByName('CUIT').AsString;
     T.Close;
     // ---
-    // Marcar la Factura como anulada y poner los saldos en cero
-    Q.sql.Text := 'Update "Venta" set ANULADA = ''S'' where CODIGO = ' + nro;
-    Q.ExecSQL;
     // ---Nota de credito electronica
     with dm do begin
-      LeerINI;
-      comp := IntToStr(StrToInt(operNCC)+1);
-
       if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
-      WSFE( fech, let, '1', '96', cui, comp, floattostr(tot), floattostr(tot), '0', '0' );
-
-      if comp<>'' then
       begin
-        operNCC :=comp;
-        EscribirINI;
+        LeerINI;
+        if operNCC='' then operNCC:='0';
+        comp := IntToStr(StrToInt(operNCC)+1);
+        WSFE( fech, 'NCC', '1', '96', cui, comp, floattostr(tot), floattostr(tot), let, nro );
+        if mensaje <> 'Ok' then Exit;
+        if comp<>'' then
+        begin
+          operNCC := comp;
+          EscribirINI;
+        end;
       end;
-
     end;
     // INSERTA EN LA TABLA OPERACION
   Q.sql.Text :=
@@ -612,8 +615,8 @@ begin
     ', CLIENTE, VENDEDOR, SUBTOTAL' +
     ', DESCUENTO, FECHA, IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
     ' TARJETA, OTROS, SALDO, PAGADO, PAGARE, COSTO, DEUDA, COMISION' +
-    ') Values ' + '(' +QuotedStr(comp)+ ', ' + quotedstr(vto) + ', ' + (nro) + ', ' + quotedstr('NCC') + ', ' + quotedstr(let) +
-    ', ' + cod + ', ' + ven + ', ' + ' ' + floattostr(sbt) + ', ' +
+    ') Values ' + '(' +QuotedStr(comp)+ ', ' + quotedstr(vto) + ', ' + (cod) + ', ' + quotedstr(tipo) + ', ' + quotedstr(let) +
+    ', ' + cli + ', ' + ven + ', ' + ' ' + floattostr(sbt) + ', ' +
     floattostr(des) + ', ' + quotedstr(fech) + ', ' + floattostr(impu) + ', ' +
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
@@ -629,7 +632,7 @@ begin
     Q.sql.Text :=
       'Insert Into "OperacionItem" (OPERACION, ARTICULO, CANTIDAD'+
       ', PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-      + ' ( ' + nro + ', ' + T.FieldByName('ARTICULO').AsString + ', ' + T.FieldByName('CANTIDAD').AsString
+      + ' ( ' + cod + ', ' + T.FieldByName('ARTICULO').AsString + ', ' + T.FieldByName('CANTIDAD').AsString
       + ',' + T.FieldByName('PRECIO').AsString + ', ' + T.FieldByName('IMPUESTO').AsString + ', ' + nro + ', ' +
       QuotedStr(T.FieldByName('DESCRIPCION').AsString) + ');';
     Q.ExecSQL;
@@ -639,13 +642,13 @@ begin
     // Borrar los Items de la factura de la tabla "VentaItem"
 //    Q.sql.Text := 'DELETE FROM "VentaItem" WHERE "VentaItem".OPERACION=' + nro;
 //    Q.ExecSQL;
-    // Borrar los Items de la factura de la tabla "VentaItem"
+    // Borrar los Items de la factura de la tabla "CtaCteItem"
     Q.sql.Text :=
       'DELETE FROM "CtaCteItem" WHERE "CtaCteItem".OPERACION=' + nro;
     Q.ExecSQL;
     // ACTUALIZAR SALDOS
     Q.sql.Text := 'Update "CtaCte" Set SALDO = SALDO - ' + floattostr(sal) +
-      ' Where CLIENTE = ' + cod;
+      ' Where CLIENTE = ' + cli;
     Q.ExecSQL;
     // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Insertar en el Libro IVA Ventas
@@ -707,6 +710,9 @@ begin
     end;
     // -----------------------------------3------------------------------------------
     // CONTABILIDAD---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Marcar la Factura como anulada y poner los saldos en cero
+    Q.sql.Text := 'Update "Venta" set ANULADA = ''S'' where CODIGO = ' + nro;
+    Q.ExecSQL;
     Q.Transaction.CommitRetaining;
     // IMPRIMIR
     if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
@@ -720,7 +726,7 @@ begin
           else
             if reporte = 'COriginal' then reporte:='CNCredito';
       with ImprimirDataModule do
-        Impr(oper(nro, let), reporte);
+        Impr(oper(cod, tipo, let), reporte);
       ImprimirDataModule.Free;
     end;
   end;
@@ -775,13 +781,13 @@ begin
 end;
 
 function TOperacionDataModule.ProcVTA; // PROCESA UNA VENTA
-//var
+var
 //  nro, comp, a, pagare, cae, vto, mensaje, ptovta, tipocbte: string;
-//  i: integer;
+  i: integer;
 //  IIBB, cmv: Double;
 //  jsResponse: TJSONValue;
 begin
-  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
+//  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
   pagare := '0';
   nro := inttostr(UltimoRegistro('"Venta"', 'CODIGO'));
 //  if nro = '1' then
@@ -835,6 +841,7 @@ begin
 //      AfipDataModule.Free;
 //    end;
 //  end;
+  if mensaje <> 'Ok' then exit;
   //actualiza el nro de factura
   if comp<>'' then
   begin
@@ -932,7 +939,7 @@ begin
 
   // Completa la Transaccion
   Q.Transaction.CommitRetaining;
-  if webUpd='True' then RestDataModule.CrearOrden;
+//  if webUpd='True' then RestDataModule.CrearOrden;
   // IMPRIMIR
   if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
   begin
@@ -952,8 +959,7 @@ var
 begin
   pagare := '0';
   nro := inttostr(UltimoRegistro('"Operacion"', 'CODIGO'));
-  if nro = '1' then
-    nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
+//  if nro = '1' then nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
   if pgr then
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
@@ -1044,7 +1050,7 @@ begin
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
-      Impr(oper(nro, let), 'CTicket');
+      Impr(oper(nro, tipo, let), 'CTicket');
     ImprimirDataModule.Free;
   end;
 end;
@@ -1679,17 +1685,15 @@ begin
 end;
 
 procedure TOperacionDataModule.WSFE;
-var
-  tipocbte : string;
 begin
-  if let = 'C' then tipocbte:='11';
+
   AfipDataModule := TAfipDataModule.Create(self);
   try
     with AfipDataModule do
     begin
-      jsResponse := FacturaAfip( cbteFecha, tipocbte, concepto, docTipo, docNro, cbte, cbte, impTotal,
+      jsResponse := FacturaAfip( cbteFecha, TraerTipoCbte(let), concepto, docTipo, docNro, cbte, impTotal, impTotal,
       '0', '0', '0', '0', '1',
-      asocTipo, asocNro,
+      TraerTipoCbte(asocTipo), asocNro,
       '1', '0', '0', '0', '0',
       '0', '0', 'PES', 'impuesto', 'null',
       'null', 'null', '', '', '', '');
@@ -1711,6 +1715,15 @@ begin
   finally
     AfipDataModule.Free;
   end;
+end;
+
+function TOperacionDataModule.TraerTipoCbte(tipo:string):string;
+begin
+  Case IndexStr(tipo, ['0','C','NCC' ]) of
+    0 : result:='0';
+    1 : result:='11';
+    2 : result:='13';
+  End;
 end;
 
 end.

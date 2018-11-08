@@ -23,7 +23,7 @@ type
     frxReport1: TfrxReport;
     frxCSVExport1: TfrxCSVExport;
     Function VTA(nro, let: string): string;
-    Function OPER(nro, let: string): string;
+    Function OPER(nro, tipo, let: string): string;
     Function PRE(nro, let: string): string;
     Function PlanillaCobrador(nro, let: string): string;
     Function Contrato(nro, let: string): string;
@@ -322,10 +322,11 @@ begin
     '  "Operacion".EXCENTO,' + '  "Operacion".SALDO,' + '  "Operacion".PAGADO' +
     ' FROM' + '  "Operacion"' +
     '  INNER JOIN "OperacionItem" ON ("Operacion".CODIGO = "OperacionItem".OPERACION)'
-    + '  INNER JOIN "Articulo" ON ("OperacionItem".ARTICULO = "Articulo".CODIGO)'
-    + '  INNER JOIN "Cliente" ON ("Operacion".CLIENTE = "Cliente".CODIGO)' +
-    ' WHERE' + '  ("Operacion".CODIGO = ' + nro + ' ) AND' +
-    '  ("Operacion".LETRA = ' + QuotedStr(let) + ' )' + '';
+    +'  INNER JOIN "Articulo" ON ("OperacionItem".ARTICULO = "Articulo".CODIGO)'
+    +'  INNER JOIN "Cliente" ON ("Operacion".CLIENTE = "Cliente".CODIGO)'
+    +' WHERE' + '  ("Operacion".CODIGO = ' + nro + ' )'
+    +' AND ("Operacion".TIPO = ' + QuotedStr(tipo) + ' )'
+    +' AND ("Operacion".LETRA = ' + QuotedStr(let) + ' )';
 end;
 
 Function TImprimirDataModule.PlanillaCobrador;

@@ -137,6 +137,7 @@ object MigrarForm: TMigrarForm
     ParentShowHint = False
     ShowHint = True
     TabOrder = 9
+    Visible = False
   end
   object ExportarButton: TButton
     Left = 211

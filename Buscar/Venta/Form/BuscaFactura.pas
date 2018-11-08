@@ -51,13 +51,22 @@ implementation
 {$R *.dfm}
 
 procedure TBuscaFacturaForm.ActualizarGrilla;
-var sql, where:string;
+var sql, where,anulada,buscar:string;
 begin
-  where := ' WHERE (ANULADA <> ''S'') ';
+  anulada := '(ANULADA IS NULL)';
+
   if ((nro <> '') or (letra <> '')) then
-    where := where + ' AND (CODIGO like ' + QuotedStr(nro + '%') + '  ) AND'
-    + ' (LETRA like ' + QuotedStr(letra + '%') + ' ) AND ANULADA <> ''S'' ';
+    buscar := '(CODIGO like ' + QuotedStr(nro + '%') + '  ) '
+    + ' AND (LETRA like ' + QuotedStr(letra + '%') + ' )';
+
+  if (anular and (buscar<>'')) then
+    where:='WHERE '+buscar+' AND '+anulada
+    else if anular then
+      where:='WHERE '+anulada
+      else if buscar<>'' then where:='WHERE '+buscar;
+
   ImprimirDataModule := TImprimirDataModule.Create(self);
+
   if Presupuesto.Checked then
     sql := 'SELECT ' + ImprimirDataModule.presupuestoTSql
     else
@@ -65,6 +74,7 @@ begin
   ImprimirDataModule.Free;
   Tabla.SQL.Text := sql + where;
   Tabla.Open;
+  Tabla.Last;
 end;
 
 procedure TBuscaFacturaForm.FormKeyUp(Sender: TObject; var Key: Word;
