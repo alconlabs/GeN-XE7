@@ -582,6 +582,7 @@ begin
     comv := T.FieldByName('COSTO').AsFloat;
     deud := T.FieldByName('DEUDA').AsFloat;
     com := T.FieldByName('COMISION').AsFloat;
+    des := T.FieldByName('DESCUENTO').AsFloat;
     tot := T.FieldByName('TOTAL').AsFloat;
     if T.FieldByName('PAGARE').AsString = 's' then
       pgr := True;
@@ -811,7 +812,10 @@ begin
   else
     IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
   if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
+  begin
     WSFE( fech, let, '1', '96', cui, comp, floattostr(tot), floattostr(tot), '0', '0' );
+    if mensaje <> 'Ok' then exit;
+  end;
 //  begin
 //    AfipDataModule := TAfipDataModule.Create(self);
 //    try
@@ -841,7 +845,6 @@ begin
 //      AfipDataModule.Free;
 //    end;
 //  end;
-  if mensaje <> 'Ok' then exit;
   //actualiza el nro de factura
   if comp<>'' then
   begin
