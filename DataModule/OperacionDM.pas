@@ -285,7 +285,7 @@ begin
   T.Close;
   if let = 'X' then
     Oculto := 'S';
-  // + formula d�a mes a�o
+  // + formula día mes año
   Dia := FormatDateTime('dd', fecha);
   mes := MesLetra(fecha);
   Ano := FormatDateTime('yyyy', fecha);
@@ -784,7 +784,7 @@ end;
 function TOperacionDataModule.ProcVTA; // PROCESA UNA VENTA
 var
 //  nro, comp, a, pagare, cae, vto, mensaje, ptovta, tipocbte: string;
-  i: integer;
+  i : integer;
 //  IIBB, cmv: Double;
 //  jsResponse: TJSONValue;
 begin
@@ -814,7 +814,7 @@ begin
   if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
   begin
     WSFE( fech, let, '1', '96', cui, comp, floattostr(tot), floattostr(tot), '0', '0' );
-    if mensaje <> 'Ok' then exit;
+    if cae = '' then exit;
   end;
 //  begin
 //    AfipDataModule := TAfipDataModule.Create(self);
@@ -1704,15 +1704,10 @@ begin
         exit
       else
       begin
-        cae:=jsResponse.GetValue<String>('cae');
-        comp:=jsResponse.GetValue<String>('nro');
-        vto:=jsResponse.GetValue<String>('vto');
-        mensaje:=jsResponse.GetValue<String>('mensaje');
-      end;
-      if mensaje <> 'Ok' then
-      begin
-        ShowMessage(mensaje);
-        exit;
+        cae := jsResponse.GetValue<String>('cae');
+        comp := jsResponse.GetValue<String>('nro');
+        vto := jsResponse.GetValue<String>('vto');
+        mensaje := jsResponse.GetValue<String>('mensaje');
       end;
     end;
   finally

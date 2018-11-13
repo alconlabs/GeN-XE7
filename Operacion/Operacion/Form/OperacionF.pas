@@ -746,6 +746,7 @@ var
   r, c: Integer;
   ok : Boolean;
 begin
+  screen.Cursor := crHourGlass;
   c := 0; // columna i
   r := 0; // row j
   OperacionDataModule := TOperacionDataModule.Create(self);
@@ -794,6 +795,7 @@ begin
         Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);
   end;
   OperacionDataModule.Free;
+  screen.Cursor := crDefault;
   if ok then
     ClienteBitBtn.Click;//  QuitarArticulos;
 end;

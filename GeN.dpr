@@ -111,7 +111,9 @@ uses
   PagoIVAF in 'Operacion\PagoIVA\Form\PagoIVAF.pas' {PagoIVAForm},
   DescuentoF in 'SubOperacion\Descuento\Form\DescuentoF.pas' {DescuentoForm},
   VendedorF in 'ABM\Vendedor\Form\VendedorF.pas' {VendedorForm},
-  RestDM in 'DataModule\RestDM.pas' {RestDataModule: TDataModule};
+  RestDM in 'DataModule\RestDM.pas' {RestDataModule: TDataModule},
+  UHomoLoginCMS in 'DataModule\UHomoLoginCMS.pas',
+  UHomoWsfev1 in 'DataModule\UHomoWsfev1.pas';
 
 {$R *.res}
 

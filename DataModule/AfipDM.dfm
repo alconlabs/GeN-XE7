@@ -1,5 +1,6 @@
 object AfipDataModule: TAfipDataModule
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Height = 256
   Width = 433
   object RESTClient1: TRESTClient
@@ -24,5 +25,23 @@ object AfipDataModule: TAfipDataModule
     SynchronizedEvents = False
     Left = 16
     Top = 48
+  end
+  object XMLDocument1: TXMLDocument
+    Left = 24
+    Top = 152
+    DOMVendorDesc = 'MSXML'
+  end
+  object HTTPRIO1: THTTPRIO
+    WSDLLocation = 'http://wswhomo.afip.gov.ar/wsfev1/service.asmx?WSDL'
+    Service = 'Service'
+    Port = 'ServiceSoap'
+    HTTPWebNode.Agent = 'Borland SOAP 1.2'
+    HTTPWebNode.UseUTF8InHeader = True
+    HTTPWebNode.InvokeOptions = [soIgnoreInvalidCerts, soNoSOAPActionHeader, soAutoCheckAccessPointViaUDDI]
+    HTTPWebNode.WebNodeOptions = []
+    Converter.Options = [soSendMultiRefArray, soTryAllSchema, soDontSendEmptyNodes]
+    Converter.Encoding = 'utf-8'
+    Left = 23
+    Top = 104
   end
 end
