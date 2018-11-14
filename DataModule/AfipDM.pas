@@ -49,7 +49,7 @@ type
     procedure ListaDocumentos;
     procedure ListaTributos;
     procedure ListaComprobantes;
-    procedure ObtieneUltimoComprobante;
+    function ObtieneUltimoComprobante(puntoventa, idcomprobante: integer) : Int64;
     procedure ConsultaComprobantes;
     function SolicitaCAE(f:TJSONObject):TJSONValue;
     function FacturaAfip( CbteFch, tipocbte, concepto, DocTipo, DocNro, Cbte, ImpNeto, ImpTotal,
@@ -874,14 +874,13 @@ begin
   end;
 end;
 
-procedure TAfipDataModule.ObtieneUltimoComprobante;//OBTIENE ULTIMO COMPROBANTE
+function TAfipDataModule.ObtieneUltimoComprobante;//OBTIENE ULTIMO COMPROBANTE
 var
   s: FERecuperaLastCbteResponse;
   FEAuth : FEAuthRequest;
   x : Integer;
   WS: ServiceSoap;
   i : integer;
-  puntoventa, idcomprobante: integer;
 begin
 
   WS := GetServiceSoap(false,'', httprio1);
@@ -893,8 +892,8 @@ begin
     FEAuth.Sign  := sign;
     FEAuth.Cuit  := cuit;
 
-    puntoventa    := 2;
-    idcomprobante := 11; //es factura A
+//    puntoventa    := 2;
+//    idcomprobante := 11; //es factura C
 
 
     s := WS.FECompUltimoAutorizado(FEAuth, puntoventa, idcomprobante);
@@ -904,7 +903,8 @@ begin
     m.Add('Ultima Fact Emitido: '+ INTTOSTR(s.CbteNro));
     m.Add('Proxima Fact: '+ INTTOSTR(s.CbteNro+1));
 
-    proximaFactura :=  INTTOSTR(s.CbteNro+1);
+    //proximaFactura :=  INTTOSTR(s.CbteNro+1);
+    result := s.CbteNro+1;
 
     if (Length(s.Errors) > 0) then
       showmessage(s.Errors[0].Msg);
@@ -975,10 +975,7 @@ showmessage(Respuesta.Events[x].Msg);
      m.Add('TOTAL: $' +FLOATTOSTR(respuesta.ResultGet.ImpTotal));
      m.Add('CUIT: ' +FLOATTOSTR(respuesta.ResultGet.DocNro));
 
-
     end;
-
-
 
   finally
     FEAuth.Free;
@@ -987,7 +984,6 @@ showmessage(Respuesta.Events[x].Msg);
   end;
 
 //  screen.Cursor := crDefault;
-
 
 end;
 
@@ -1096,25 +1092,23 @@ e := mes+'/'+dia+'/'+año;
   Request.FeCabReq.PtoVta   := f.GetValue<Integer>('ptovta');//2;    //   Punto de venta
 
   //   FecDetReq
-  Request.FeDetReq[0].Concepto  := f.GetValue<Integer>('concepto');//1;   //   1=productos, 2=servicios, 3=ambos
-  Request.FeDetReq[0].DocTipo   := f.GetValue<Integer>('DocTipo');//80; //80 -cuit   86 - cuil   96-dni
-  Request.FeDetReq[0].DocNro    := f.GetValue<Integer>('DocNro');//20000000001; //cuit del cliente
+  Request.FeDetReq[0].Concepto := f.GetValue<Integer>('concepto');//1;   //   1=productos, 2=servicios, 3=ambos
+  Request.FeDetReq[0].DocTipo  := f.GetValue<Integer>('DocTipo');//80; //80 -cuit   86 - cuil   96-dni
+  Request.FeDetReq[0].DocNro   := f.GetValue<Integer>('DocNro');//20000000001; //cuit del cliente
 
-  ObtieneUltimoComprobante;
-  if proximaFactura = '1' then
-    NroComp := f.GetValue<Int64>('Cbte')
-  else
-    NroComp := STRTOINT64(proximaFactura);
+  NroComp := ObtieneUltimoComprobante(Request.FeCabReq.PtoVta, Request.FeCabReq.CbteTipo);
+  if NroComp = 1 then
+    NroComp := f.GetValue<Int64>('Cbte');
 
-  Request.FeDetReq[0].CbteDesde   := NroComp;
-  Request.FeDetReq[0].CbteHasta   := NroComp;
-  Request.FeDetReq[0].CbteFch     := f.GetValue<WideString>('CbteFch');//formatdatetime('yyyymmdd',now);
-  Request.FeDetReq[0].ImpTotal    := f.GetValue<Double>('ImpTotal');//121;
-  Request.FeDetReq[0].ImpTotConc  := f.GetValue<Double>('ImpTotConc');//0;
-  Request.FeDetReq[0].ImpNeto     := f.GetValue<Double>('ImpNeto');//100;
-  Request.FeDetReq[0].ImpOpEx     := f.GetValue<Double>('ImpOpEx');//0;
-//  Request.FeDetReq[0].ImpIva      := f.GetValue<Double>('ImpIVA');//21;
-  Request.FeDetReq[0].ImpTrib     := f.GetValue<Double>('ImpTrib');//0;  //si tiene percepciones de IIBB o IVA van aca
+  Request.FeDetReq[0].CbteDesde  := NroComp;
+  Request.FeDetReq[0].CbteHasta  := NroComp;
+  Request.FeDetReq[0].CbteFch    := f.GetValue<WideString>('CbteFch');//formatdatetime('yyyymmdd',now);
+  Request.FeDetReq[0].ImpTotal   := f.GetValue<Double>('ImpTotal');//121;
+  Request.FeDetReq[0].ImpTotConc := f.GetValue<Double>('ImpTotConc');//0;
+  Request.FeDetReq[0].ImpNeto    := f.GetValue<Double>('ImpNeto');//100;
+  Request.FeDetReq[0].ImpOpEx    := f.GetValue<Double>('ImpOpEx');//0;
+//  Request.FeDetReq[0].ImpIva     := f.GetValue<Double>('ImpIVA');//21;
+  Request.FeDetReq[0].ImpTrib    := f.GetValue<Double>('ImpTrib');//0;  //si tiene percepciones de IIBB o IVA van aca
 
   if Request.FeDetReq[0].Concepto <> 1 then
   begin
@@ -1125,18 +1119,19 @@ e := mes+'/'+dia+'/'+año;
     //------------------------------------------------------------------------
   end;
 
-  Request.FeDetReq[0].MonId      := f.GetValue<WideString>('MonId');//'PES';
-  Request.FeDetReq[0].MonCotiz   := f.GetValue<Double>('MonCotiz');//1;
+  Request.FeDetReq[0].MonId     := f.GetValue<WideString>('MonId');//'PES';
+  Request.FeDetReq[0].MonCotiz  := f.GetValue<Double>('MonCotiz');//1;
   //    Request.FeDetReq[0].FchServDesde :=          //   solo para concepto 2 o 3
 
 
- // i:= dbTipoCbte.KeyValue;
- // if (i IN [2,3,7,8]) then //es nota de debito o credito lleva doc asociado
- // begin
- //   Request.FeDetReq[0].CbtesAsoc[0].Tipo   := dbTipoCbteVinc.KeyValue;    //  tipo del comprobante asociado (nc/nd)
- //   Request.FeDetReq[0].CbtesAsoc[0].PtoVta := STRTOINT(edtCompVincPto.Text);    //  Punto de venta de la nc
- //   Request.FeDetReq[0].CbtesAsoc[0].Nro    := STRTOINT64(edtCompVincComp.Text);    //  numero de la (nc/nd)
- //end;
+//  i:= dbTipoCbte.KeyValue;
+//  if (i IN [2,3,7,8]) then //es nota de debito o credito lleva doc asociado
+  if f.GetValue<Integer>('regfeasocTipo')>0 then
+  begin
+    Request.FeDetReq[0].CbtesAsoc[0].Tipo   := f.GetValue<Integer>('regfeasocTipo');//dbTipoCbteVinc.KeyValue;    //  tipo del comprobante asociado (nc/nd)
+    Request.FeDetReq[0].CbtesAsoc[0].PtoVta := f.GetValue<Integer>('regfeasocPtoVta');//STRTOINT(edtCompVincPto.Text);    //  Punto de venta de la nc
+    Request.FeDetReq[0].CbtesAsoc[0].Nro    := f.GetValue<Int64>('regfeasocNro');//STRTOINT64(edtCompVincComp.Text);    //  numero de la (nc/nd)
+  end;
 
   //carga retencion de IIBB si tiene
 //  if STRTOFLOAT(edtPercIIBB.Text) > 0 then

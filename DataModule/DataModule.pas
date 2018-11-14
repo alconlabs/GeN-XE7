@@ -28,6 +28,8 @@ type
     procedure EscribirINI;
   private
     { Private declarations }
+    procedure ActualizarImprimir(reporte:string);
+
   public
   const
     NumThreads: Integer = 4;
@@ -223,6 +225,8 @@ begin
   Descargar('https://raw.githubusercontent.com/DeGsoft/GeN-XE7/master/Instalador/Update.iss'
   , Path+'Update.iss');
 
+  ActualizarImprimir('FElectronica');
+  ActualizarImprimir('TElectronica');
 end;
 
 procedure TDM.connection;
@@ -440,18 +444,34 @@ var
 //   Buffer, version, b1,b2,b3,b4 : String;
 begin
    try
-      FileMode := fmOpenRead;
-      AssignFile(F, FileName);
-      Reset(F);
-      i := 0;
-      REPEAT
-          Readln(F, Result);
-          Inc(i);
-      UNTIL i = 5;
-          CloseFile(F);
+    FileMode := fmOpenRead;
+    AssignFile(F, FileName);
+    Reset(F);
+    i := 0;
+    REPEAT
+      Readln(F, Result);
+      Inc(i);
+    UNTIL i = 5;
+      CloseFile(F);
    except
 //      MessageDlg('Error de I/O', mtInformation, [mbOK], 0);
    end;
 end;
+
+procedure TDM.ActualizarImprimir;
+begin
+  Query.SQL.Text :=
+    'Select * from "Imprimir" WHERE "Imprimir".REPORTE = '+QuotedStr(reporte);
+  Query.Open;
+  if Query.RecordCount = 0 then
+  begin
+    Query.Close;
+    Query.SQL.Text :=
+      'INSERT INTO "Imprimir" (DESCRIPCION, REPORTE) VALUES ('+QuotedStr(reporte)+', '+QuotedStr(reporte)+')';
+    Query.ExecSQL;
+    Query.Transaction.Commit;
+  end;
+end;
+
 
 end.

@@ -124,7 +124,6 @@ type
   private
     { Private declarations }
     path: string;
-    procedure ActualizarImprimir(reporte:string);
   public
     { Public declarations }
   end;
@@ -191,28 +190,11 @@ begin
 //    ImprimirQuery.ExecSQL;
 //    ImprimirQuery.Transaction.Commit;
 //  end;
-  ActualizarImprimir('FElectronica');
-  ActualizarImprimir('TElectronica');
   ImprimirQuery.SQL.Text := 'Select * from "Imprimir"';
   ImprimirQuery.Open;
   ImprimirQuery.Last;
   Tabla.Open;
   Tabla.Edit;
-end;
-
-procedure TConfiguracionForm.ActualizarImprimir;
-begin
-  ImprimirQuery.SQL.Text :=
-    'Select * from "Imprimir" where "Imprimir".REPORTE = '+QuotedStr(reporte);
-  ImprimirQuery.Open;
-  if ImprimirQuery.RecordCount = 0 then
-  begin
-    ImprimirQuery.Close;
-    ImprimirQuery.SQL.Text :=
-      'INSERT INTO "Imprimir" (DESCRIPCION, REPORTE) VALUES ('+QuotedStr(reporte)+', '+QuotedStr(reporte)+')';
-    ImprimirQuery.ExecSQL;
-    ImprimirQuery.Transaction.Commit;
-  end;
 end;
 
 procedure TConfiguracionForm.FormKeyPress(Sender: TObject; var Key: Char);

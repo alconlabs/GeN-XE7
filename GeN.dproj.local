@@ -2,34 +2,34 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2015/04/24 21:08:47.000.136,=C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2015/04/24 21:11:51.000.276,C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.pas</Transaction>
-    <Transaction>2015/04/24 21:11:51.000.276,C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.dfm</Transaction>
-    <Transaction>2015/04/24 21:12:41.000.031,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.pas=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeNF.pas</Transaction>
-    <Transaction>2015/04/24 21:12:41.000.031,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.dfm=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeNF.dfm</Transaction>
-    <Transaction>2015/04/24 21:12:55.000.874,C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.dproj</Transaction>
+    <Transaction>2015/04/24 21:11:51.000.276,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.dfm=C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2015/04/24 21:11:51.000.276,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.pas=C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2015/04/24 21:12:41.000.031,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeNF.pas=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.pas</Transaction>
+    <Transaction>2015/04/24 21:12:41.000.031,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeNF.dfm=C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.dfm</Transaction>
+    <Transaction>2015/04/24 21:12:55.000.874,C:\Users\diego_000\Documents\GitHub\GeN-XE7\GeN.dproj=C:\Users\diego_000\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
     <Transaction>2015/04/24 21:17:35.000.916,=C:\Users\diego_000\Documents\GitHub\GeN-XE7\DataModule\DataModule.pas</Transaction>
     <Transaction>2017/05/11 19:36:40.000.038,=E:\Documents\GeN-XE7\Unit2.pas</Transaction>
-    <Transaction>2017/05/11 19:37:05.000.940,E:\Documents\GeN-XE7\DataModule\AfipDM.pas=E:\Documents\GeN-XE7\Unit2.pas</Transaction>
-    <Transaction>2017/05/11 19:37:05.000.940,E:\Documents\GeN-XE7\DataModule\AfipDM.dfm=E:\Documents\GeN-XE7\Unit2.dfm</Transaction>
-    <Transaction>2018/05/12 12:32:28.000.514,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\VenderCodBarra\Form\VenderF.pas=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.pas</Transaction>
-    <Transaction>2018/05/12 12:32:28.000.515,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\VenderCodBarra\Form\VenderF.dfm=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.dfm</Transaction>
+    <Transaction>2017/05/11 19:37:05.000.940,E:\Documents\GeN-XE7\Unit2.pas=E:\Documents\GeN-XE7\DataModule\AfipDM.pas</Transaction>
+    <Transaction>2017/05/11 19:37:05.000.940,E:\Documents\GeN-XE7\Unit2.dfm=E:\Documents\GeN-XE7\DataModule\AfipDM.dfm</Transaction>
+    <Transaction>2018/05/12 12:32:28.000.515,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.dfm=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\VenderCodBarra\Form\VenderF.dfm</Transaction>
+    <Transaction>2018/05/12 12:32:28.000.514,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.pas=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\VenderCodBarra\Form\VenderF.pas</Transaction>
     <Transaction>2018/05/12 12:34:04.000.604,=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\VenderCodBarra\Form\VenderF.pas</Transaction>
-    <Transaction>2018/05/12 12:40:08.000.468,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\OperacionF.pas=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.pas</Transaction>
-    <Transaction>2018/05/12 12:40:08.000.468,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\OperacionF.dfm=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.dfm</Transaction>
+    <Transaction>2018/05/12 12:40:08.000.468,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.pas=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\OperacionF.pas</Transaction>
+    <Transaction>2018/05/12 12:40:08.000.468,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\Operacion.dfm=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Operacion\Form\OperacionF.dfm</Transaction>
     <Transaction>2018/05/22 20:41:41.000.467,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Comprar\Form\ComprarF.pas=</Transaction>
-    <Transaction>2018/05/25 19:05:48.000.699,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Pago\Form\PagoF.dfm=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\PagoIVA\Form\PagoIVAF.dfm</Transaction>
-    <Transaction>2018/05/25 19:05:48.000.699,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Pago\Form\PagoF.pas=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\PagoIVA\Form\PagoIVAF.pas</Transaction>
+    <Transaction>2018/05/25 19:05:48.000.699,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\PagoIVA\Form\PagoIVAF.pas=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Pago\Form\PagoF.pas</Transaction>
+    <Transaction>2018/05/25 19:05:48.000.699,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\PagoIVA\Form\PagoIVAF.dfm=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\Pago\Form\PagoF.dfm</Transaction>
     <Transaction>2018/05/25 19:07:50.000.805,=C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\PagoIVA\Form\PagoIVAF.pas</Transaction>
     <Transaction>2018/06/08 11:26:05.000.801,=C:\Users\Usuario\Documents\GitHub\GeN-XE7\SubOperacion\Descuento\Form\DescuentoF.pas</Transaction>
     <Transaction>2018/06/19 11:44:24.000.302,C:\Users\Usuario\Documents\GitHub\GeN-XE7\Operacion\VenderCodBarra\Form\VenderF.pas=</Transaction>
     <Transaction>2018/06/20 20:00:35.000.548,=C:\Users\Usuario\Documents\GitHub\GeN-XE7\ABM\Vendedor\Form\VendedorF.pas</Transaction>
     <Transaction>2018/09/17 19:10:33.000.581,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2018/09/17 19:11:35.000.602,C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\RestDM.dfm=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.dfm</Transaction>
-    <Transaction>2018/09/17 19:11:35.000.602,C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\RestDM.pas=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/09/17 19:11:35.000.602,C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.dfm=C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\RestDM.dfm</Transaction>
+    <Transaction>2018/09/17 19:11:35.000.602,C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.pas=C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\RestDM.pas</Transaction>
     <Transaction>2018/10/12 19:15:39.000.886,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>2018/10/12 19:17:33.000.939,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2018/11/12 09:21:24.738,=C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\UHomoLoginCMS.pas</Transaction>
-    <Transaction>2018/11/12 09:21:31.848,=C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\UHomoWsfev1.pas</Transaction>
+    <Transaction>2018/11/12 09:21:24.000.738,=C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\UHomoLoginCMS.pas</Transaction>
+    <Transaction>2018/11/12 09:21:31.000.848,=C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\UHomoWsfev1.pas</Transaction>
   </Transactions>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>
