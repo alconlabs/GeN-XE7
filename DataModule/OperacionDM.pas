@@ -602,7 +602,7 @@ begin
         if operNCC='' then operNCC:='0';
         comp := IntToStr(StrToInt(operNCC)+1);
         WSFE( fech, 'NCC', '1', '96', cui, comp, floattostr(tot), floattostr(tot), let, nro );
-        if mensaje <> 'Ok' then Exit;
+        if cae = '' then Exit;//if mensaje <> 'Ok' then Exit;
         if comp<>'' then
         begin
           operNCC := comp;
@@ -615,14 +615,14 @@ begin
     'Insert Into "Operacion" (COMPROBANTE, TERMINOS, CODIGO, TIPO, LETRA'+
     ', CLIENTE, VENDEDOR, SUBTOTAL' +
     ', DESCUENTO, FECHA, IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
-    ' TARJETA, OTROS, SALDO, PAGADO, PAGARE, COSTO, DEUDA, COMISION' +
+    ' TARJETA, OTROS, SALDO, PAGADO, PAGARE, COSTO, DEUDA, COMISION, DESCRIPCION' +
     ') Values ' + '(' +QuotedStr(comp)+ ', ' + quotedstr(vto) + ', ' + (cod) + ', ' + quotedstr(tipo) + ', ' + quotedstr(let) +
     ', ' + cli + ', ' + ven + ', ' + ' ' + floattostr(sbt) + ', ' +
     floattostr(des) + ', ' + quotedstr(fech) + ', ' + floattostr(impu) + ', ' +
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
     floattostr(pag) + ',' + quotedstr(pagare) + ',' + floattostr(cmv) + ',' +
-    floattostr(deud) + ',' + floattostr(comv) + ')';
+    floattostr(deud) + ',' + floattostr(comv) + ',' + QuotedStr(cae) + ')';
   Q.ExecSQL;
 // Insertar en la tabla de OPERACIONITEM
   T.SQL.Text := 'Select * From "VentaItem" Where CODIGO = ' + nro;

@@ -41,6 +41,7 @@ type
     procedure connection;
     procedure chequeo;
     procedure TraerUsuario;
+    procedure TraerConfig;
     procedure DejarUsuario;
     function ExecuteProcess(ProcessName, Path: String): Cardinal;
     procedure VaciarBase;
@@ -160,6 +161,21 @@ begin
   end;
 end;
 
+procedure TDM.TraerConfig;
+begin
+  if ConfigQuery.Active then ConfigQuery.Close;
+  ConfigQuery.SQL.Text := 'SELECT * FROM "Config"' +
+    ' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".CODIGO)' +
+    ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)';
+  ConfigQuery.Open;
+  Empresa := ConfigQuery.FieldByName('NOMBRE').AsString;
+  Fecha := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
+  CUIT := ConfigQuery.FieldByName('CUIT').AsString;
+  reporte := ConfigQuery.FieldByName('Reporte').AsString;
+  IngresosBrutos := ConfigQuery.FieldByName('IIBB').AsString;
+  if IngresosBrutos='' then IngresosBrutos:='0';
+end;
+
 procedure TDM.chequeo;
 // var
 // L: ShortString;
@@ -211,16 +227,8 @@ begin
     U := ExtractFileDrive(Application.ExeName);
   Maquina := GetVolumeID(U);
   connection;
-  ConfigQuery.SQL.Text := 'SELECT * FROM "Config"' +
-    ' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".CODIGO)' +
-    ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)';
-  ConfigQuery.Open;
-  Empresa := ConfigQuery.FieldByName('NOMBRE').AsString;
-  Fecha := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
-  CUIT := ConfigQuery.FieldByName('CUIT').AsString;
-  reporte := ConfigQuery.FieldByName('Reporte').AsString;
-  IngresosBrutos := ConfigQuery.FieldByName('IIBB').AsString;
-  if IngresosBrutos='' then IngresosBrutos:='0';
+
+  TraerConfig;
 
   Descargar('https://raw.githubusercontent.com/DeGsoft/GeN-XE7/master/Instalador/Update.iss'
   , Path+'Update.iss');

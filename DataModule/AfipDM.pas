@@ -1013,7 +1013,7 @@ var
   año,mes,dia,e : string;
 
   jR : TJSONObject;
-
+regfeasocTipo:integer;
 begin
   ExtraerTokenSing;
 año := Copy(expirationTA, 1, 4);
@@ -1070,14 +1070,14 @@ e := mes+'/'+dia+'/'+año;
   // si lleva documento vinculado
 //  i:= dbTipoCbte.KeyValue;
 //  if (i IN [2,3,7,8]) then
-//  begin
-//    CbtesAsoc := CbteAsoc.Create;
-//    SetLength(ACbtesAsoc,1);
-//    ACbtesAsoc[0]                             := CbtesAsoc;
-//    Request.FeDetReq[0].CbtesAsoc             := ACbtesAsoc;
-
-//  end;
-
+regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
+  if regfeasocTipo>0 then
+  begin
+    CbtesAsoc := CbteAsoc.Create;
+    SetLength(ACbtesAsoc,1);
+    ACbtesAsoc[0]                             := CbtesAsoc;
+    Request.FeDetReq[0].CbtesAsoc             := ACbtesAsoc;
+  end;
 
   iva:=false;
 
@@ -1094,7 +1094,7 @@ e := mes+'/'+dia+'/'+año;
   //   FecDetReq
   Request.FeDetReq[0].Concepto := f.GetValue<Integer>('concepto');//1;   //   1=productos, 2=servicios, 3=ambos
   Request.FeDetReq[0].DocTipo  := f.GetValue<Integer>('DocTipo');//80; //80 -cuit   86 - cuil   96-dni
-  Request.FeDetReq[0].DocNro   := f.GetValue<Integer>('DocNro');//20000000001; //cuit del cliente
+  Request.FeDetReq[0].DocNro   := f.GetValue<Int64>('DocNro');//20000000001; //cuit del cliente
 
   NroComp := ObtieneUltimoComprobante(Request.FeCabReq.PtoVta, Request.FeCabReq.CbteTipo);
   if NroComp = 1 then
@@ -1126,9 +1126,9 @@ e := mes+'/'+dia+'/'+año;
 
 //  i:= dbTipoCbte.KeyValue;
 //  if (i IN [2,3,7,8]) then //es nota de debito o credito lleva doc asociado
-  if f.GetValue<Integer>('regfeasocTipo')>0 then
+  if regfeasocTipo>0 then
   begin
-    Request.FeDetReq[0].CbtesAsoc[0].Tipo   := f.GetValue<Integer>('regfeasocTipo');//dbTipoCbteVinc.KeyValue;    //  tipo del comprobante asociado (nc/nd)
+    Request.FeDetReq[0].CbtesAsoc[0].Tipo   := regfeasocTipo;//f.GetValue<Integer>('regfeasocTipo');//dbTipoCbteVinc.KeyValue;    //  tipo del comprobante asociado (nc/nd)
     Request.FeDetReq[0].CbtesAsoc[0].PtoVta := f.GetValue<Integer>('regfeasocPtoVta');//STRTOINT(edtCompVincPto.Text);    //  Punto de venta de la nc
     Request.FeDetReq[0].CbtesAsoc[0].Nro    := f.GetValue<Int64>('regfeasocNro');//STRTOINT64(edtCompVincComp.Text);    //  numero de la (nc/nd)
   end;

@@ -37,7 +37,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    clienteSql, articuloSql, ventaItemSql, ivaVtaSql, presupuestoSql, presupuestoTSql, vtaSql, ventaTSql: string;
+    clienteSql, articuloSql, ventaItemSql, ivaVtaSql, presupuestoSql, presupuestoTSql, vtaSql, ventaTSql, OperSql, OperacionSql, OperacionItemSql: string;
   end;
 
 var
@@ -135,6 +135,28 @@ begin
     ' INNER JOIN "PresupuestoItem" ON ("Presupuesto".CODIGO = "PresupuestoItem".OPERACION)'
     + ' INNER JOIN "Articulo" ON ("PresupuestoItem".ARTICULO = "Articulo".CODIGO)'
     + ' INNER JOIN "Cliente" ON ("Presupuesto".CLIENTE = "Cliente".CODIGO)';
+  OperacionItemSql:=
+    '  "OperacionItem".ARTICULO,' + '  "OperacionItem".CANTIDAD,' +
+    '  "OperacionItem".PRECIO,' + '  "OperacionItem".OPERACION,' +
+    '  ("OperacionItem".PRECIO * "OperacionItem".CANTIDAD ) as PREXCANT, "OperacionItem".IMPUESTO as VIIMPUESTO,' +
+    '  "OperacionItem".SERVICIO,' + '  "OperacionItem".DESCRIPCION AS DESCR';
+  OperacionSql:=
+    ' "Operacion".CODIGO,' + '  "Operacion".LETRA,' + '  "Operacion".FECHA,' +
+    ' "Operacion".COMPROBANTE, "Operacion".TERMINOS, "Operacion".DESCRIPCION as VDESC,' +
+    ' "Operacion".TOTAL,' + '  "Operacion".CONTADO,' + '  "Operacion".CLIENTE,'+
+    ' "Operacion".SUBTOTAL,' + ' "Operacion".DESCUENTO,' +
+    ' "Operacion".IMPUESTO,' + ' "Operacion".IVA1, "Operacion".IVA2, "Operacion".IVA3,' +
+    ' "Operacion".EXCENTO,' + ' "Operacion".SALDO,' + ' "Operacion".PAGADO' +
+    ' FROM  "Operacion"';
+  OperSql:=
+    clienteSql
+    +','+ articuloSql
+    +','+ OperacionItemSql
+//    +','+ ivaVtaSql
+    +','+ OperacionSql
+    +'  INNER JOIN "OperacionItem" ON ("Operacion".CODIGO = "OperacionItem".OPERACION)'
+    +'  INNER JOIN "Articulo" ON ("OperacionItem".ARTICULO = "Articulo".CODIGO)'
+    +'  INNER JOIN "Cliente" ON ("Operacion".CLIENTE = "Cliente".CODIGO)';
   ventaTSql:=' "Venta".CODIGO,' + '  "Venta".LETRA,' + '  "Venta".DESCRIPCION as VDESC,' +
     '  "Venta".FECHA,' + '  "Venta".COMPROBANTE,' + '  "Venta".TERMINOS,'+
     '  "Venta".TOTAL,' + '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' +
@@ -142,7 +164,7 @@ begin
     '  "Venta".EXCENTO,' + '  "Venta".SALDO,' + '  "Venta".PAGADO'
     + ' FROM'
     + ' "Venta"';
-    vtaSql:=
+  vtaSql:=
     clienteSql
     +','+ articuloSql
     +','+ ventaItemSql
@@ -307,23 +329,24 @@ end;
 
 Function TImprimirDataModule.OPER;
 begin
-  Result := '  "Cliente".NOMBRE,' + '  "Cliente".TITULAR,' +
-    '  "Cliente".DIRECCION,' + '  "Cliente".DIRECCIONCOMERCIAL,' +
-    '  "Articulo".DESCRIPCION,' + '  "Articulo".UNIDAD,' +
-    '  "OperacionItem".ARTICULO,' + '  "OperacionItem".CANTIDAD,' +
-    '  "OperacionItem".PRECIO,' + '  "OperacionItem".OPERACION,' +
-    '  ("OperacionItem".PRECIO * "OperacionItem".CANTIDAD ) as PREXCANT,' +
-    '  "OperacionItem".SERVICIO,' + '  "OperacionItem".DESCRIPCION AS DESCR,' +
-    '  "Operacion".CODIGO,' + '  "Operacion".LETRA,' + '  "Operacion".FECHA,' +
-    '  "Operacion".COMPROBANTE,' + '  "Operacion".IVA3,' +
-    '  "Operacion".TOTAL,' + '  "Operacion".CONTADO,' + '  "Operacion".CLIENTE,'
-    + '  "Operacion".SUBTOTAL,' + '  "Operacion".DESCUENTO,' +
-    '  "Operacion".IMPUESTO,' + '  "Operacion".IVA2,' + '  "Operacion".IVA1,' +
-    '  "Operacion".EXCENTO,' + '  "Operacion".SALDO,' + '  "Operacion".PAGADO' +
-    ' FROM' + '  "Operacion"' +
-    '  INNER JOIN "OperacionItem" ON ("Operacion".CODIGO = "OperacionItem".OPERACION)'
-    +'  INNER JOIN "Articulo" ON ("OperacionItem".ARTICULO = "Articulo".CODIGO)'
-    +'  INNER JOIN "Cliente" ON ("Operacion".CLIENTE = "Cliente".CODIGO)'
+  Result := operSql
+//    '  "Cliente".NOMBRE,' + '  "Cliente".TITULAR,' +
+//    '  "Cliente".DIRECCION,' + '  "Cliente".DIRECCIONCOMERCIAL,' +
+//    '  "Articulo".DESCRIPCION,' + '  "Articulo".UNIDAD,' +
+//    '  "OperacionItem".ARTICULO,' + '  "OperacionItem".CANTIDAD,' +
+//    '  "OperacionItem".PRECIO,' + '  "OperacionItem".OPERACION,' +
+//    '  ("OperacionItem".PRECIO * "OperacionItem".CANTIDAD ) as PREXCANT,' +
+//    '  "OperacionItem".SERVICIO,' + '  "OperacionItem".DESCRIPCION AS DESCR,' +
+//    '  "Operacion".CODIGO,' + '  "Operacion".LETRA,' + '  "Operacion".FECHA,' +
+//    '  "Operacion".COMPROBANTE,' + '  "Operacion".IVA3,' +
+//    '  "Operacion".TOTAL,' + '  "Operacion".CONTADO,' + '  "Operacion".CLIENTE,'
+//    + '  "Operacion".SUBTOTAL,' + '  "Operacion".DESCUENTO,' +
+//    '  "Operacion".IMPUESTO,' + '  "Operacion".IVA2,' + '  "Operacion".IVA1,' +
+//    '  "Operacion".EXCENTO,' + '  "Operacion".SALDO,' + '  "Operacion".PAGADO' +
+//    ' FROM' + '  "Operacion"' +
+//    '  INNER JOIN "OperacionItem" ON ("Operacion".CODIGO = "OperacionItem".OPERACION)'
+//    +'  INNER JOIN "Articulo" ON ("OperacionItem".ARTICULO = "Articulo".CODIGO)'
+//    +'  INNER JOIN "Cliente" ON ("Operacion".CLIENTE = "Cliente".CODIGO)'
     +' WHERE' + '  ("Operacion".CODIGO = ' + nro + ' )'
     +' AND ("Operacion".TIPO = ' + QuotedStr(tipo) + ' )'
     +' AND ("Operacion".LETRA = ' + QuotedStr(let) + ' )';
