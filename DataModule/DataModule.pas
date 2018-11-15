@@ -9,9 +9,8 @@ uses
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
   FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, IBX.IBScript
-  , System.Net.HTTPClient, System.StrUtils, ShellApi
-  ;
+  FireDAC.Comp.Client, IBX.IBScript, System.Net.HTTPClient, System.StrUtils,
+  ShellApi, System.Variants;
 
 type
 
@@ -43,8 +42,9 @@ type
     procedure TraerUsuario;
     procedure TraerConfig;
     procedure DejarUsuario;
-    function ExecuteProcess(ProcessName, Path: String): Cardinal;
     procedure VaciarBase;
+    procedure Ejecutar(dir:string);
+    function ExecuteProcess(ProcessName, Path: String): Cardinal;
     function Descargar(FURL,FFileName:string):string;
     function TextoAfecha(StrDate : string):TDateTime;
     function ReadTextFile(FileName : String):string;
@@ -70,7 +70,7 @@ var
   DM: TDM;
   Compartido: PCompartido;
   FicheroM: THandle;
-  Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa, CUIT, IngresosBrutos, reporte: string;
+  Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa, Titular, CUIT, IngresosBrutos, reporte: string;
   Permiso: Integer;
   LoginOK, Cancelar: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
@@ -169,6 +169,7 @@ begin
     ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)';
   ConfigQuery.Open;
   Empresa := ConfigQuery.FieldByName('NOMBRE').AsString;
+  Titular := ConfigQuery.FieldByName('TITULAR').AsString;
   Fecha := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
   CUIT := ConfigQuery.FieldByName('CUIT').AsString;
   reporte := ConfigQuery.FieldByName('Reporte').AsString;
@@ -481,5 +482,10 @@ begin
   end;
 end;
 
+procedure TDM.Ejecutar;
+begin
+//  ShellExecute(0, 'open', PChar(VarToStr( dir )), 'param1 param2', nil,  SW_HIDE);
+  WinExec(PAnsiChar(AnsiString(dir)), SW_SHOWNORMAL);
+end;
 
 end.

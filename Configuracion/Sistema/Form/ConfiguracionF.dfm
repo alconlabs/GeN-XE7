@@ -29,6 +29,7 @@ object ConfiguracionForm: TConfiguracionForm
     Color = clBlack
     ParentBackground = False
     TabOrder = 0
+    ExplicitLeft = 962
     object Label38: TLabel
       Left = 6
       Top = 242
@@ -886,7 +887,7 @@ object ConfiguracionForm: TConfiguracionForm
       end
       object Label50: TLabel
         Left = 16
-        Top = 152
+        Top = 149
         Width = 48
         Height = 13
         Caption = 'Imprimir:'
@@ -923,7 +924,7 @@ object ConfiguracionForm: TConfiguracionForm
         DataSource = DataSource
         TabOrder = 0
       end
-      object DBLookupComboBox28: TDBLookupComboBox
+      object ReporteDBLookupComboBox: TDBLookupComboBox
         Left = 144
         Top = 112
         Width = 193
@@ -934,10 +935,11 @@ object ConfiguracionForm: TConfiguracionForm
         ListField = 'Descripcion'
         ListSource = ImprimirDataSource
         TabOrder = 1
+        OnClick = ReporteDBLookupComboBoxClick
       end
       object DBComboBox1: TDBComboBox
         Left = 144
-        Top = 152
+        Top = 149
         Width = 57
         Height = 21
         DataField = 'Imprimir'
@@ -970,6 +972,16 @@ object ConfiguracionForm: TConfiguracionForm
           'SI'
           'NO')
         TabOrder = 4
+      end
+      object ConfigurarFEButton: TButton
+        Left = 343
+        Top = 111
+        Width = 57
+        Height = 25
+        Caption = 'Configurar'
+        TabOrder = 5
+        Visible = False
+        OnClick = ConfigurarFEButtonClick
       end
     end
     object TabSheet2: TTabSheet

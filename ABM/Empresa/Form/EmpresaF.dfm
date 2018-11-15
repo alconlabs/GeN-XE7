@@ -588,12 +588,13 @@ object EmpresaForm: TEmpresaForm
         TabOrder = 16
       end
       object IVADBComboBox: TDBComboBox
-        Left = 473
+        Left = 472
         Top = 91
         Width = 201
         Height = 21
         DataField = 'IVA'
         DataSource = DataSource
+        Enabled = False
         TabOrder = 18
         OnChange = IVADBComboBoxChange
       end

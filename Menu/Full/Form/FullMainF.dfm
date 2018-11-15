@@ -57,6 +57,7 @@ object FullMainForm: TFullMainForm
       end
       object CuentaCorriente1: TMenuItem
         Caption = 'CUENTA CORRIENTE'
+        Visible = False
         OnClick = CuentaCorriente1Click
       end
       object ReImprimir: TMenuItem
@@ -116,14 +117,17 @@ object FullMainForm: TFullMainForm
       end
       object PAGODEIVA1: TMenuItem
         Caption = 'PAGO DE IVA'
+        Visible = False
         OnClick = PAGODEIVA1Click
       end
       object APORTEDECAPITAL1: TMenuItem
         Caption = 'APORTE DE CAPITAL'
+        Visible = False
         OnClick = APORTEDECAPITAL1Click
       end
       object ABM2: TMenuItem
         Caption = 'ABM'
+        Visible = False
         object CUENTAS1: TMenuItem
           Caption = 'CUENTAS'
           OnClick = CUENTAS1Click
@@ -147,6 +151,7 @@ object FullMainForm: TFullMainForm
       end
       object LIBROS1: TMenuItem
         Caption = 'LIBROS'
+        Visible = False
         object DIARIO1: TMenuItem
           Caption = 'DIARIO'
           OnClick = DIARIO1Click
@@ -190,6 +195,7 @@ object FullMainForm: TFullMainForm
     end
     object Pagos1: TMenuItem
       Caption = 'PAGOS'
+      Visible = False
       object PagosaProveedores1: TMenuItem
         Caption = 'PROVEEDORES'
         OnClick = PagosaProveedores1Click
@@ -296,6 +302,7 @@ object FullMainForm: TFullMainForm
       end
       object RENDICION1: TMenuItem
         Caption = 'RENDICION'
+        Visible = False
         object COBRADOR1: TMenuItem
           Caption = 'COBRADOR'
           OnClick = COBRADOR1Click

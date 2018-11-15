@@ -113,7 +113,8 @@ uses
   VendedorF in 'ABM\Vendedor\Form\VendedorF.pas' {VendedorForm},
   RestDM in 'DataModule\RestDM.pas' {RestDataModule: TDataModule},
   UHomoLoginCMS in 'DataModule\UHomoLoginCMS.pas',
-  UHomoWsfev1 in 'DataModule\UHomoWsfev1.pas';
+  UHomoWsfev1 in 'DataModule\UHomoWsfev1.pas',
+  AfipUnit in 'Configuracion\Afip\AfipUnit.pas' {AfipForm};
 
 {$R *.res}
 

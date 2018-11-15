@@ -85,7 +85,7 @@ type
     Label50: TLabel;
     Label51: TLabel;
     DBEdit1: TDBEdit;
-    DBLookupComboBox28: TDBLookupComboBox;
+    ReporteDBLookupComboBox: TDBLookupComboBox;
     DBComboBox1: TDBComboBox;
     DBComboBox2: TDBComboBox;
     DBComboBox3: TDBComboBox;
@@ -112,6 +112,7 @@ type
     DBEdit6: TDBEdit;
     DBEdit7: TDBEdit;
     DBEdit8: TDBEdit;
+    ConfigurarFEButton: TButton;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -121,6 +122,8 @@ type
     procedure TablaAfterCancel(DataSet: TDataSet);
     procedure TablaAfterDelete(DataSet: TDataSet);
     procedure TablaAfterPost(DataSet: TDataSet);
+    procedure ConfigurarFEButtonClick(Sender: TObject);
+    procedure ReporteDBLookupComboBoxClick(Sender: TObject);
   private
     { Private declarations }
     path: string;
@@ -135,6 +138,8 @@ implementation
 
 {$R *.dfm}
 
+uses AfipUnit;
+
 procedure TConfiguracionForm.BitBtn1Click(Sender: TObject);
 begin
   Tabla.Post;
@@ -148,9 +153,25 @@ begin
   Close;
 end;
 
+procedure TConfiguracionForm.ConfigurarFEButtonClick(Sender: TObject);
+begin
+  AfipForm := TAfipForm.Create(self);
+  try
+    AfipForm.ShowModal;
+  finally
+    AfipForm.Free;
+  end;
+end;
+
 procedure TConfiguracionForm.CuentasBitBtnClick(Sender: TObject);
 begin
   WinExec(PAnsiChar(AnsiString(path + 'CuentaContableGeN.exe')), SW_SHOWNORMAL);
+end;
+
+procedure TConfiguracionForm.ReporteDBLookupComboBoxClick(Sender: TObject);
+begin
+  if (ReporteDBLookupComboBox.KeyValue > 10) then ConfigurarFEButton.Visible := True
+  else ConfigurarFEButton.Visible := False;
 end;
 
 procedure TConfiguracionForm.TablaAfterCancel(DataSet: TDataSet);
