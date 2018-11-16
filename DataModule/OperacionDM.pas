@@ -530,6 +530,7 @@ var
   cost, com, impu, cheq, cont, tot, sbt, des, tarj, otr, sal, pag, int, n10, n21,
     i10, i21, deud, ulc, comv: Double;
 begin
+  DM.FormatearFecha;
   tipo:='NCC';
   cod := inttostr(DM.UltimoRegistro('"Operacion"', 'CODIGO'));
   // Verificar que la factura Exista y que no este anulada
@@ -780,6 +781,7 @@ var
 //  jsResponse: TJSONValue;
 begin
 //  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
+DM.FormatearFecha;
   pagare := '0';
   nro := inttostr(DM.UltimoRegistro('"Venta"', 'CODIGO'));
 //  if nro = '1' then

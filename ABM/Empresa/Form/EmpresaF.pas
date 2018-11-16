@@ -122,6 +122,7 @@ begin
     dm.Query.SQL.Text := 'Update "Config" Set "Empresa" = (' +
       QuotedStr(CodigoDBEdit.Text) + ')';
     dm.Query.ExecSQL;
+    dm.Transaccion.CommitRetaining;
   end;
   dm.ConfigQuery.Close;
   dm.ConfigQuery.Open;

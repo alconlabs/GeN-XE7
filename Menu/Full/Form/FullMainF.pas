@@ -190,7 +190,7 @@ var
   FullMainForm: TFullMainForm;
 
 const
-version='201811161249';
+version='201811161858';
 
 implementation
 
@@ -221,6 +221,7 @@ begin
   // CONTROL DE USUARIOS
   with DM do
   begin
+    TraerConfig;
     Query.SQL.Text :=
       'select * from "Usuario" where  (NOMBRE=''admin'' and "password"=''admin'')';
     Query.Open;
@@ -290,6 +291,7 @@ begin
           ,nil,nil,SW_NORMAL);
         end;
   end;
+  DM.FormatearFecha;
 end;
 
 procedure TFullMainForm.Cuentas1Click(Sender: TObject);

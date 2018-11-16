@@ -30,6 +30,7 @@ object DM: TDM
   object ConfigQuery: TIBQuery
     Database = BaseDatos
     Transaction = Transaccion
+    ForcedRefresh = True
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True

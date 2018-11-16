@@ -396,8 +396,8 @@ begin
 //  m.Add('openssl smime -sign -in '+ruta+'ticketsf.xml -out '+ruta+'ticketf.xml -inkey '+ruta+'MiClavePrivada -signer '+ruta+'certificado.crt -outform PEM -nodetach ');
 //  m.SaveToFile(ruta + 'firmar.bat');
 //  m.Clear;
-  xml := 'C:\OpenSSL-Win32\bin\openssl smime -sign -in '+ruta+'ticketsf.xml -out '+ruta+'ticketf.xml -inkey '+ruta+'MiClavePrivada -signer '+ruta+'certificado.crt -outform PEM -nodetach';
-  DM.Ejecutar(xml);
+  xml := ' smime -sign -in "'+ruta+'ticketsf.xml" -out "'+ruta+'ticketf.xml" -inkey "'+ruta+'MiClavePrivada" -signer "'+ruta+'certificado.crt" -outform PEM -nodetach';
+  DM.Ejecutar(openSSl+xml);
   sleep(1000);
 //ShellExecute(0, 'open', PChar(VarToStr(ruta + 'firmar.bat')), 'param1 param2', nil,  SW_HIDE);
 end;

@@ -50,6 +50,7 @@ type
     function ReadTextFile(FileName : String):string;
     function UltimoRegistro(T, c: String): integer;
     { function Gratis(arch: String): boolean; }
+    procedure FormatearFecha;
   end;
 
 const
@@ -77,7 +78,7 @@ var
   detalle, memo, BasedeDatos, mode: string; // revisar
   webUrl, webRes, webUsr, webPsw, webUpd,
   afipUrl, afipRes, afipUsr, afipPsw,
-  operNCC : string;
+  operNCC, openSSl : string;
 
 implementation
 
@@ -164,7 +165,7 @@ end;
 
 procedure TDM.TraerConfig;
 begin
-  if ConfigQuery.Active then ConfigQuery.Close;
+  if (ConfigQuery.Active) then ConfigQuery.Close;
 {
 SELECT
 	"Config".CODIGO, "Config".NROFACTURA, "Config"."FechaInicio", "Config".PP1, "Config".PP2, "Config".PP3, "Config".PP4, "Config".PP5, "Config".PP6, "Config".PP7, "Config".PP8, "Config".PP9, "Config".PP, "Config"."CtaCompra", "Config"."CtaMercaderia", "Config"."CtaIIBB", "Config"."CtaImpuesto", "Config"."CtaDeudor", "Config"."CtaVenta", "Config"."CtaCaja", "Config"."CtaAnticipoAProveedor", "Config"."CtaBanco", "Config"."CtaCMV", "Config"."CtaComisionVendedor", "Config"."CtaComisionVendedorAPagar", "Config"."CtaDeudorEnGestionJudicial", "Config"."CtaDeudorIncobrable", "Config"."CtaDeudorMoroso", "Config"."CtaDeudorPorVenta", "Config"."CtaDocumentoACobrar", "Config"."CtaHonorarioLegal", "Config"."CtaHonorarioLegalApagar", "Config"."CtaIVARemanente", "Config"."CtaIVAAPagar", "Config"."CtaIVACreditoFiscal", "Config"."CtaIVADebitoFiscal", "Config"."CtaLiquidacionDeIVA", "Config"."CtaMerRecJudicialmente", "Config"."CtaMercaderiaDeReventa", "Config"."CtaObligacionAPagar", "Config"."CtaPagoDeHonorario", "Config"."CtaTarjetaDeCredito", "Config"."CtaProveedor", "Config"."CtaRecuperoJudicial", "Config"."CtaServicioAPAgar", "Config"."CtaServicio", "Config"."CtaValorAlCobro", "Config"."CtaValorADepositar", "Config"."Cuenta", "Config"."Precio", "Config"."Comprobante", "Config"."Empresa", "Config"."ImprimirTipo", "Config"."Imprimir", "Config"."ImprimirFiscal", "Config"."ImprimirMostrar", "Config"."CodigoBarra", "Config"."GesCobTemprana", "Config"."GesCobExtraJudicial", "Config"."GesCobJudicial", "Config".CMV, "Config".CTACAPITALSOC,
@@ -177,6 +178,45 @@ FROM "Config"
 //  ConfigQuery.SQL.Text := 'SELECT * FROM "Config"' +
 //    ' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".CODIGO)' +
 //    ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)';
+
+ConfigQuery.SQL.Text := 'SELECT '
++'"Config".CODIGO, "Config".NROFACTURA, "Config"."FechaInicio", "Config".PP1, '
++'"Config".PP2, "Config".PP3, "Config".PP4, "Config".PP5, "Config".PP6, '
++'"Config".PP7, "Config".PP8, "Config".PP9, "Config".PP, "Config"."CtaCompra", '
++'"Config"."CtaMercaderia", "Config"."CtaIIBB", "Config"."CtaImpuesto", '
++'"Config"."CtaDeudor", "Config"."CtaVenta", "Config"."CtaCaja", '
++'"Config"."CtaAnticipoAProveedor", "Config"."CtaBanco", "Config"."CtaCMV", '
++'"Config"."CtaComisionVendedor", "Config"."CtaComisionVendedorAPagar", '
++'"Config"."CtaDeudorEnGestionJudicial", "Config"."CtaDeudorIncobrable", '
++'"Config"."CtaDeudorMoroso", "Config"."CtaDeudorPorVenta", '
++'"Config"."CtaDocumentoACobrar", "Config"."CtaHonorarioLegal", '
++'"Config"."CtaHonorarioLegalApagar", "Config"."CtaIVARemanente", '
++'"Config"."CtaIVAAPagar", "Config"."CtaIVACreditoFiscal", '
++'"Config"."CtaIVADebitoFiscal", "Config"."CtaLiquidacionDeIVA", '
++'"Config"."CtaMerRecJudicialmente", "Config"."CtaMercaderiaDeReventa", '
++'"Config"."CtaObligacionAPagar", "Config"."CtaPagoDeHonorario", '
++'"Config"."CtaTarjetaDeCredito", "Config"."CtaProveedor", '
++'"Config"."CtaRecuperoJudicial", "Config"."CtaServicioAPAgar", '
++'"Config"."CtaServicio", "Config"."CtaValorAlCobro", '
++'"Config"."CtaValorADepositar", "Config"."Cuenta", "Config"."Precio", '
++'"Config"."Comprobante", "Config"."Empresa", "Config"."ImprimirTipo", '
++'"Config"."Imprimir", "Config"."ImprimirFiscal", "Config"."ImprimirMostrar", '
++'"Config"."CodigoBarra", "Config"."GesCobTemprana", '
++'"Config"."GesCobExtraJudicial", "Config"."GesCobJudicial", "Config".CMV, '
++'"Config".CTACAPITALSOC, '
++'"Empresa".CODIGO AS PtoVta, "Empresa".NOMBRE, "Empresa".TITULAR, '
++'"Empresa".DIRECCION, "Empresa".DIRECCIONCOMERCIAL, "Empresa".PAIS, '
++'"Empresa".PROVINCIA, "Empresa".DEPARTAMENTO, "Empresa".CIUDAD, "Empresa".CP, '
++'"Empresa".CODIGOAREA, "Empresa".CELULAR, "Empresa".TELEFONO, "Empresa".FAX, '
++'"Empresa".EMAIL, "Empresa".SUSPENDIDO, "Empresa".EXCENTO, "Empresa".FECHA, '
++'"Empresa".LIMITECREDITO, "Empresa".DIASCREDITO, "Empresa".DOCUMENTO, '
++'"Empresa".RAZONSOCIAL, "Empresa".CUIT, "Empresa".IIBB, "Empresa".RUBRO, '
++'"Empresa".IVA, "Empresa".MSN, "Empresa".WEB, "Empresa".ZONA, "Empresa".CTA, '
++'"Empresa".CTANOMBRE, "Empresa".CTATIPO, "Empresa".CTAANTICIPO, "Empresa".PAGARE, '
++'"Imprimir".DESCRIPCION, "Imprimir".REPORTE '
++'FROM "Config" '
++' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".CODIGO) '
++' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO) ';
   ConfigQuery.Open;
   Empresa := ConfigQuery.FieldByName('NOMBRE').AsString;
   PuntoVenta := ConfigQuery.FieldByName('PtoVta').AsString;
@@ -239,14 +279,11 @@ begin
     U := ExtractFileDrive(Application.ExeName);
   Maquina := GetVolumeID(U);
   connection;
-
-  TraerConfig;
-
   Descargar('https://raw.githubusercontent.com/DeGsoft/GeN-XE7/master/Instalador/Update.iss'
   , Path+'Update.iss');
-
   ActualizarImprimir('FElectronica');
   ActualizarImprimir('TElectronica');
+  openSSl:='C:\OpenSSL-Win32\bin\openssl.exe';
 end;
 
 procedure TDM.connection;
@@ -256,12 +293,7 @@ var
   // ?  fech: tdate;
   bd : string;
 begin
-  with FormatSettings do
-  begin
-    DecimalSeparator := '.';
-    ThousandSeparator := ',';
-    ShortDateFormat := 'mm/dd/yyyy';
-  end;
+  FormatearFecha;
   if BaseDatos.Connected = True then
     BaseDatos.Close;
   // Obtiene la ruta y el nombre de la base de datos
@@ -507,6 +539,16 @@ begin
   Query.Open;
   result := Query.Fields[0].AsInteger + 1;
   Query.Close;
+end;
+
+procedure TDM.FormatearFecha;
+begin
+  with FormatSettings do
+  begin
+    DecimalSeparator := '.';
+    ThousandSeparator := ',';
+    ShortDateFormat := 'mm/dd/yyyy';
+  end;
 end;
 
 end.
