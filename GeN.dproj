@@ -73,9 +73,9 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_DcuOutput>C:\Users\User\Documents\Embarcadero\Studio\Projects\Bin\GeN\bin</DCC_DcuOutput>
-        <VerInfo_Build>56</VerInfo_Build>
+        <VerInfo_Build>57</VerInfo_Build>
         <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=;FileVersion=1.0.0.56;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=GeN;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=;FileVersion=1.0.0.57;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=GeN;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <DCC_ExeOutput>C:\Users\User\Documents\Embarcadero\Studio\Projects\Bin\GeN\bin</DCC_ExeOutput>
         <VerInfo_Locale>11274</VerInfo_Locale>
@@ -441,6 +441,8 @@
             <Form>AfipForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="DataModule\LoginCms1.pas"/>
+        <DCCReference Include="DataModule\service.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

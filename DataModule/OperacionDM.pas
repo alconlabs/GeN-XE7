@@ -23,7 +23,6 @@ type
   TOperacionDataModule = class(TDataModule)
     Q: TIBQuery;
     T: TIBQuery;
-    Function UltimoRegistro(T, c: String): integer;
     function ProcVTA(let, cod, fech, ven, cui, ctan: string; pre, pgr: Boolean;
       cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
       int, n10, n21, i10, i21, deud, ulc: Double):Boolean;
@@ -124,7 +123,7 @@ Function TOperacionDataModule.ArtNuevo;
 var
   nro: string;
 begin
-  nro := inttostr(UltimoRegistro('"Articulo"', 'CODIGO'));
+  nro := inttostr(DM.UltimoRegistro('"Articulo"', 'CODIGO'));
   Q.sql.Text := 'INSERT INTO "Articulo" (CODIGO, DESCRIPCION, COSTO, ULTCOSTO, '
     + ' PRECIO1, PRECIO2, PRECIO3, PRECIO4, ' +
     ' PRECIO5, PRECIO6, PRECIO, PORCENTAJE, ' +
@@ -289,7 +288,7 @@ begin
   Dia := FormatDateTime('dd', fecha);
   mes := MesLetra(fecha);
   Ano := FormatDateTime('yyyy', fecha);
-  nro := inttostr(UltimoRegistro('"Venta"', 'CODIGO'));
+  nro := inttostr(DM.UltimoRegistro('"Venta"', 'CODIGO'));
   if nro = '1' then
     nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
   cmv := CostMercVend(ulc, cost);
@@ -524,14 +523,6 @@ begin
   Q.ExecSQL;
 end;
 
-function TOperacionDataModule.UltimoRegistro; // OBTENER EL NUMERO DE INDICE
-begin
-  Q.sql.Text := 'Select Max(' + c + ') From' + T;
-  Q.Open;
-  result := Q.Fields[0].AsInteger + 1;
-  Q.Close;
-end;
-
 Procedure TOperacionDataModule.AnularVTA;
 var
   let, cod, fech, ven, cui, cno, a, cli, tipo: string;
@@ -540,7 +531,7 @@ var
     i10, i21, deud, ulc, comv: Double;
 begin
   tipo:='NCC';
-  cod := inttostr(UltimoRegistro('"Operacion"', 'CODIGO'));
+  cod := inttostr(DM.UltimoRegistro('"Operacion"', 'CODIGO'));
   // Verificar que la factura Exista y que no este anulada
   T.sql.Text := 'Select * From "Venta" Where CODIGO = ' + nro;
   T.Open;
@@ -657,7 +648,7 @@ begin
       LibroIVAvta(fech, nro, '...', 'ANULADA', '0', '0', '0', '0', '0');
     // en blanco
     // Insertar en la tabla LibroDiario
-    a := inttostr(UltimoRegistro('"LibroDiario"', 'ASIENTO')); // GENERAR INDICE
+    a := inttostr(DM.UltimoRegistro('"LibroDiario"', 'ASIENTO')); // GENERAR INDICE
     // ------------------------------------------------------------------------------
     // VENTAS
     Asiento(dm.ConfigQuery.FieldByName('CtaVenta').AsString, a, fech,
@@ -739,7 +730,7 @@ var
   i: integer;
   IIBB, cmv: Double;
 begin
-  nro := inttostr(UltimoRegistro('"Presupuesto"', 'CODIGO'));
+  nro := inttostr(DM.UltimoRegistro('"Presupuesto"', 'CODIGO'));
 
   // INSERTA EN LA TABLA PRESUPUESTO
   Q.sql.Text := 'Insert Into "Presupuesto" (CODIGO, LETRA, CLIENTE, ' +
@@ -790,7 +781,7 @@ var
 begin
 //  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
   pagare := '0';
-  nro := inttostr(UltimoRegistro('"Venta"', 'CODIGO'));
+  nro := inttostr(DM.UltimoRegistro('"Venta"', 'CODIGO'));
 //  if nro = '1' then
 //    nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
   comp:=IntToStr((dm.ObtenerConfig('NroFactura'))+1);
@@ -961,7 +952,7 @@ var
   IIBB, cmv: Double;
 begin
   pagare := '0';
-  nro := inttostr(UltimoRegistro('"Operacion"', 'CODIGO'));
+  nro := inttostr(DM.UltimoRegistro('"Operacion"', 'CODIGO'));
 //  if nro = '1' then nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
   if pgr then
     pagare := 'S';
@@ -1065,7 +1056,7 @@ var
   IIBB, cmv: Double;
 begin
   cmv := 0;
-  nro := inttostr(UltimoRegistro('"Compra"', 'CODIGO'));
+  nro := inttostr(DM.UltimoRegistro('"Compra"', 'CODIGO'));
   // INSERTA EN LA TABLA COMPRA
   Q.sql.Text := 'Insert Into "Compra" (CODIGO, LETRA, PROVEEDOR, ' +
     ' SUBTOTAL, DESCUENTO, FECHA,' + ' IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
@@ -1128,7 +1119,7 @@ begin
     LibroIVACompra(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(perc), floattostr(tot)); // en blanco
   // Insertar en la tabla LibroDiario
-  a := inttostr(UltimoRegistro('"LibroDiario"', 'ASIENTO')); // GENERAR INDICE
+  a := inttostr(DM.UltimoRegistro('"LibroDiario"', 'ASIENTO')); // GENERAR INDICE
   LibroDiario('COMPRA', nro, let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, 0);
   // Completa la Transaccion
@@ -1141,7 +1132,7 @@ var
   sal: Double;
 begin
   sal := tot - pag;
-  a := floattostr(UltimoRegistro('"LibroDiario"', 'ASIENTO'));
+  a := floattostr(DM.UltimoRegistro('"LibroDiario"', 'ASIENTO'));
   if (oper = 'CLIENTE') or (oper = 'VENTA') or (oper = 'PED') then
     tabl := 'Cliente'
   else if (oper = 'PROVEEDOR') or (oper = 'COMPRA') then

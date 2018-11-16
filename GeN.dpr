@@ -114,7 +114,9 @@ uses
   RestDM in 'DataModule\RestDM.pas' {RestDataModule: TDataModule},
   UHomoLoginCMS in 'DataModule\UHomoLoginCMS.pas',
   UHomoWsfev1 in 'DataModule\UHomoWsfev1.pas',
-  AfipUnit in 'Configuracion\Afip\AfipUnit.pas' {AfipForm};
+  AfipUnit in 'Configuracion\Afip\AfipUnit.pas' {AfipForm},
+  LoginCms1 in 'DataModule\LoginCms1.pas',
+  service in 'DataModule\service.pas';
 
 {$R *.res}
 

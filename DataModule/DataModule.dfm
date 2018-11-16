@@ -33,6 +33,52 @@ object DM: TDM
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
+    SQL.Strings = (
+      'SELECT'
+      
+        #9'"Config".CODIGO, "Config".NROFACTURA, "Config"."FechaInicio", "' +
+        'Config".PP1, "Config".PP2, "Config".PP3, "Config".PP4, "Config".' +
+        'PP5, "Config".PP6, "Config".PP7, "Config".PP8, "Config".PP9, "Co' +
+        'nfig".PP, "Config"."CtaCompra", "Config"."CtaMercaderia", "Confi' +
+        'g"."CtaIIBB", "Config"."CtaImpuesto", "Config"."CtaDeudor", "Con' +
+        'fig"."CtaVenta", "Config"."CtaCaja", "Config"."CtaAnticipoAProve' +
+        'edor", "Config"."CtaBanco", "Config"."CtaCMV", "Config"."CtaComi' +
+        'sionVendedor", "Config"."CtaComisionVendedorAPagar", "Config"."C' +
+        'taDeudorEnGestionJudicial", "Config"."CtaDeudorIncobrable", "Con' +
+        'fig"."CtaDeudorMoroso", "Config"."CtaDeudorPorVenta", "Config"."' +
+        'CtaDocumentoACobrar", "Config"."CtaHonorarioLegal", "Config"."Ct' +
+        'aHonorarioLegalApagar", "Config"."CtaIVARemanente", "Config"."Ct' +
+        'aIVAAPagar", "Config"."CtaIVACreditoFiscal", "Config"."CtaIVADeb' +
+        'itoFiscal", "Config"."CtaLiquidacionDeIVA", "Config"."CtaMerRecJ' +
+        'udicialmente", "Config"."CtaMercaderiaDeReventa", "Config"."CtaO' +
+        'bligacionAPagar", "Config"."CtaPagoDeHonorario", "Config"."CtaTa' +
+        'rjetaDeCredito", "Config"."CtaProveedor", "Config"."CtaRecuperoJ' +
+        'udicial", "Config"."CtaServicioAPAgar", "Config"."CtaServicio", ' +
+        '"Config"."CtaValorAlCobro", "Config"."CtaValorADepositar", "Conf' +
+        'ig"."Cuenta", "Config"."Precio", "Config"."Comprobante", "Config' +
+        '"."Empresa", "Config"."ImprimirTipo", "Config"."Imprimir", "Conf' +
+        'ig"."ImprimirFiscal", "Config"."ImprimirMostrar", "Config"."Codi' +
+        'goBarra", "Config"."GesCobTemprana", "Config"."GesCobExtraJudici' +
+        'al", "Config"."GesCobJudicial", "Config".CMV, "Config".CTACAPITA' +
+        'LSOC,'
+      
+        '  '#9'"Empresa".CODIGO AS PtoVta, "Empresa".NOMBRE, "Empresa".TITUL' +
+        'AR, "Empresa".DIRECCION, "Empresa".DIRECCIONCOMERCIAL, "Empresa"' +
+        '.PAIS, "Empresa".PROVINCIA, "Empresa".DEPARTAMENTO, "Empresa".CI' +
+        'UDAD, "Empresa".CP, "Empresa".CODIGOAREA, "Empresa".CELULAR, "Em' +
+        'presa".TELEFONO, "Empresa".FAX, "Empresa".EMAIL, "Empresa".SUSPE' +
+        'NDIDO, "Empresa".EXCENTO, "Empresa".FECHA, "Empresa".LIMITECREDI' +
+        'TO, "Empresa".DIASCREDITO, "Empresa".DOCUMENTO, "Empresa".RAZONS' +
+        'OCIAL, "Empresa".CUIT, "Empresa".IIBB, "Empresa".RUBRO, "Empresa' +
+        '".IVA, "Empresa".MSN, "Empresa".WEB, "Empresa".ZONA, "Empresa".C' +
+        'TA, "Empresa".CTANOMBRE, "Empresa".CTATIPO, "Empresa".CTAANTICIP' +
+        'O, "Empresa".PAGARE,'
+      '  '#9'"Imprimir".DESCRIPCION, "Imprimir".REPORTE'
+      'FROM "Config"'
+      
+        ' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".' +
+        'CODIGO)'
+      ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)')
     Left = 152
     Top = 16
   end
@@ -198,7 +244,7 @@ object DM: TDM
         'AlCobro", "CtaValorADepositar", "Cuenta", "Precio", "Comprobante' +
         '", "Empresa", "ImprimirTipo", "Imprimir", "ImprimirFiscal", "Imp' +
         'rimirMostrar", "CodigoBarra", "GesCobTemprana", "GesCobExtraJudi' +
-        'cial", "GesCobJudicial", CMV, CTACAPITALSOC) VALUES (1, 1, '#39'01/0' +
+        'cial", "GesCobJudicial", CMV, CTACAPITALSOC) VALUES (1, 0, '#39'01/0' +
         '1/2010'#39', 5, 10, 15, 20, 25, 30, 0, 0, 0, 0, 8, 13, 8, 5, 16, 46,' +
         ' 77, 36, 4, 45, 50, 25, 12, 58, 11, 9, 10, 79, 79, 86, 31, 14, 3' +
         '0, 0, 15, 13, 38, 0, 0, 76, 3, 28, 81, 3, 85, 0, 0, 1, 1, 1, '#39'SI' +
@@ -635,6 +681,9 @@ object DM: TDM
       
         'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (11' +
         ', '#39'Factura Electronica'#39', '#39'FElectronica'#39');'
+      
+        'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (12' +
+        ', '#39'Ticket Electronico'#39', '#39'TElectronica'#39');'
       ''
       ''
       'INSERT INTO "Marca" (CODIGO, DESCRIPCION) VALUES (0, '#39'VARIOS'#39');'

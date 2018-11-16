@@ -71,7 +71,8 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses UHomoLoginCMS, UHomoWsfev1;//modo prueba Homologacion
+uses service, LoginCms1;
+//uses UHomoLoginCMS, UHomoWsfev1;//modo prueba Homologacion
 //uses ULoginCMS, UWsfev1; // Modo Produccion
 
 {$R *.dfm}
@@ -384,21 +385,21 @@ begin
 end;
 
 procedure TAfipDataModule.CreaXMLFirmado();
-var p1: string;
+var p1, xml: string;
     r: PAnsiChar;
 begin
-
-  m.Clear;
-  m.Add('c:');
-  m.Add('cd /');
-  m.Add('cd OpenSSL-Win32');
-  m.Add('cd bin');
-  m.Add('openssl smime -sign -in '+ruta+' ticketsf.xml -out '+ruta+' ticketf.xml -inkey '+ruta+' MiClavePrivada -signer '+ruta+' certificado.crt -outform PEM -nodetach ');
-  m.SaveToFile(ruta + 'firmar.bat');
-  m.Clear;
-
-//ShellExecute(0, 'open', PAnsiString(ruta + 'firmar.bat'), 'param1 param2', nil,  SW_HIDE);
-ShellExecute(0, 'open', PChar(VarToStr(ruta + 'firmar.bat')), 'param1 param2', nil,  SW_HIDE);
+//  m.Clear;
+//  m.Add('c:');
+//  m.Add('cd /');
+//  m.Add('cd OpenSSL-Win32');
+//  m.Add('cd bin');
+//  m.Add('openssl smime -sign -in '+ruta+'ticketsf.xml -out '+ruta+'ticketf.xml -inkey '+ruta+'MiClavePrivada -signer '+ruta+'certificado.crt -outform PEM -nodetach ');
+//  m.SaveToFile(ruta + 'firmar.bat');
+//  m.Clear;
+  xml := 'C:\OpenSSL-Win32\bin\openssl smime -sign -in '+ruta+'ticketsf.xml -out '+ruta+'ticketf.xml -inkey '+ruta+'MiClavePrivada -signer '+ruta+'certificado.crt -outform PEM -nodetach';
+  DM.Ejecutar(xml);
+  sleep(1000);
+//ShellExecute(0, 'open', PChar(VarToStr(ruta + 'firmar.bat')), 'param1 param2', nil,  SW_HIDE);
 end;
 
 procedure TAfipDataModule.DataModuleCreate(Sender: TObject);
@@ -468,8 +469,6 @@ end;
 procedure TAfipDataModule.Generar;
 var TA: widestring;
 begin
-////  screen.Cursor := crHourGlass;
-
   GeneraTiketSF;
   sleep(1000);
   CreaXMLFirmado;
@@ -479,8 +478,6 @@ begin
   EnviaTicket(TA);
   sleep(1000);
   ExtraerTokenSing;
-
-////  screen.Cursor := crDefault;
 end;
 
 procedure TAfipDataModule.ListaPuntoVenta;//LISTA DE PUNTOS DE VENTA
@@ -873,7 +870,11 @@ var
   jR : TJSONObject;
 regfeasocTipo:integer;
 begin
-  ExtraerTokenSing;
+  if FileExists(ruta+'TA.XML') then
+    ExtraerTokenSing
+  else
+    Generar;
+
 año := Copy(expirationTA, 1, 4);
 mes := Copy(expirationTA, 6, 2);
 dia := Copy(expirationTA, 9, 2);
@@ -939,7 +940,7 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
 
   iva:=false;
 
-  auth.Cuit  := f.GetValue<Int64>('cuit');//cuit;
+  auth.Cuit  := StrToInt64(CUIT);//f.GetValue<Int64>('cuit');//cuit;
   auth.token := token;
   auth.Sign  := sign;
 

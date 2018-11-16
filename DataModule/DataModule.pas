@@ -48,6 +48,7 @@ type
     function Descargar(FURL,FFileName:string):string;
     function TextoAfecha(StrDate : string):TDateTime;
     function ReadTextFile(FileName : String):string;
+    function UltimoRegistro(T, c: String): integer;
     { function Gratis(arch: String): boolean; }
   end;
 
@@ -70,7 +71,7 @@ var
   DM: TDM;
   Compartido: PCompartido;
   FicheroM: THandle;
-  Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa, Titular, CUIT, IngresosBrutos, reporte: string;
+  Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa, PuntoVenta, Titular, CUIT, IngresosBrutos, reporte: string;
   Permiso: Integer;
   LoginOK, Cancelar: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
@@ -164,11 +165,21 @@ end;
 procedure TDM.TraerConfig;
 begin
   if ConfigQuery.Active then ConfigQuery.Close;
-  ConfigQuery.SQL.Text := 'SELECT * FROM "Config"' +
-    ' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".CODIGO)' +
-    ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)';
+{
+SELECT
+	"Config".CODIGO, "Config".NROFACTURA, "Config"."FechaInicio", "Config".PP1, "Config".PP2, "Config".PP3, "Config".PP4, "Config".PP5, "Config".PP6, "Config".PP7, "Config".PP8, "Config".PP9, "Config".PP, "Config"."CtaCompra", "Config"."CtaMercaderia", "Config"."CtaIIBB", "Config"."CtaImpuesto", "Config"."CtaDeudor", "Config"."CtaVenta", "Config"."CtaCaja", "Config"."CtaAnticipoAProveedor", "Config"."CtaBanco", "Config"."CtaCMV", "Config"."CtaComisionVendedor", "Config"."CtaComisionVendedorAPagar", "Config"."CtaDeudorEnGestionJudicial", "Config"."CtaDeudorIncobrable", "Config"."CtaDeudorMoroso", "Config"."CtaDeudorPorVenta", "Config"."CtaDocumentoACobrar", "Config"."CtaHonorarioLegal", "Config"."CtaHonorarioLegalApagar", "Config"."CtaIVARemanente", "Config"."CtaIVAAPagar", "Config"."CtaIVACreditoFiscal", "Config"."CtaIVADebitoFiscal", "Config"."CtaLiquidacionDeIVA", "Config"."CtaMerRecJudicialmente", "Config"."CtaMercaderiaDeReventa", "Config"."CtaObligacionAPagar", "Config"."CtaPagoDeHonorario", "Config"."CtaTarjetaDeCredito", "Config"."CtaProveedor", "Config"."CtaRecuperoJudicial", "Config"."CtaServicioAPAgar", "Config"."CtaServicio", "Config"."CtaValorAlCobro", "Config"."CtaValorADepositar", "Config"."Cuenta", "Config"."Precio", "Config"."Comprobante", "Config"."Empresa", "Config"."ImprimirTipo", "Config"."Imprimir", "Config"."ImprimirFiscal", "Config"."ImprimirMostrar", "Config"."CodigoBarra", "Config"."GesCobTemprana", "Config"."GesCobExtraJudicial", "Config"."GesCobJudicial", "Config".CMV, "Config".CTACAPITALSOC,
+  	"Empresa".CODIGO AS PtoVta, "Empresa".NOMBRE, "Empresa".TITULAR, "Empresa".DIRECCION, "Empresa".DIRECCIONCOMERCIAL, "Empresa".PAIS, "Empresa".PROVINCIA, "Empresa".DEPARTAMENTO, "Empresa".CIUDAD, "Empresa".CP, "Empresa".CODIGOAREA, "Empresa".CELULAR, "Empresa".TELEFONO, "Empresa".FAX, "Empresa".EMAIL, "Empresa".SUSPENDIDO, "Empresa".EXCENTO, "Empresa".FECHA, "Empresa".LIMITECREDITO, "Empresa".DIASCREDITO, "Empresa".DOCUMENTO, "Empresa".RAZONSOCIAL, "Empresa".CUIT, "Empresa".IIBB, "Empresa".RUBRO, "Empresa".IVA, "Empresa".MSN, "Empresa".WEB, "Empresa".ZONA, "Empresa".CTA, "Empresa".CTANOMBRE, "Empresa".CTATIPO, "Empresa".CTAANTICIPO, "Empresa".PAGARE,
+  	"Imprimir".DESCRIPCION, "Imprimir".REPORTE
+FROM "Config"
+ INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".CODIGO)
+ INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)
+}
+//  ConfigQuery.SQL.Text := 'SELECT * FROM "Config"' +
+//    ' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".CODIGO)' +
+//    ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)';
   ConfigQuery.Open;
   Empresa := ConfigQuery.FieldByName('NOMBRE').AsString;
+  PuntoVenta := ConfigQuery.FieldByName('CODIGO').AsString;
   Titular := ConfigQuery.FieldByName('TITULAR').AsString;
   Fecha := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
   CUIT := ConfigQuery.FieldByName('CUIT').AsString;
@@ -468,6 +479,7 @@ begin
 end;
 
 procedure TDM.ActualizarImprimir;
+var c:string;
 begin
   Query.SQL.Text :=
     'Select * from "Imprimir" WHERE "Imprimir".REPORTE = '+QuotedStr(reporte);
@@ -475,8 +487,9 @@ begin
   if Query.RecordCount = 0 then
   begin
     Query.Close;
+    c:=IntToStr(DM.UltimoRegistro('"Imprimir"', 'CODIGO'));
     Query.SQL.Text :=
-      'INSERT INTO "Imprimir" (DESCRIPCION, REPORTE) VALUES ('+QuotedStr(reporte)+', '+QuotedStr(reporte)+')';
+      'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES ('+c+', '+QuotedStr(reporte)+', '+QuotedStr(reporte)+')';
     Query.ExecSQL;
     Query.Transaction.Commit;
   end;
@@ -486,6 +499,14 @@ procedure TDM.Ejecutar;
 begin
 //  ShellExecute(0, 'open', PChar(VarToStr( dir )), 'param1 param2', nil,  SW_HIDE);
   WinExec(PAnsiChar(AnsiString(dir)), SW_SHOWNORMAL);
+end;
+
+function TDM.UltimoRegistro; // OBTENER EL NUMERO DE INDICE
+begin
+  Query.sql.Text := 'Select Max(' + c + ') From' + T;
+  Query.Open;
+  result := Query.Fields[0].AsInteger + 1;
+  Query.Close;
 end;
 
 end.
