@@ -179,7 +179,7 @@ FROM "Config"
 //    ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)';
   ConfigQuery.Open;
   Empresa := ConfigQuery.FieldByName('NOMBRE').AsString;
-  PuntoVenta := ConfigQuery.FieldByName('CODIGO').AsString;
+  PuntoVenta := ConfigQuery.FieldByName('PtoVta').AsString;
   Titular := ConfigQuery.FieldByName('TITULAR').AsString;
   Fecha := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
   CUIT := ConfigQuery.FieldByName('CUIT').AsString;
