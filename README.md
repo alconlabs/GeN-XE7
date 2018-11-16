@@ -1,10 +1,16 @@
-﻿# GeN 2017 - Sistema de gestión
+﻿# GeN 2018 - Sistema de gestión para Comercios
 
-Con el puedes comprar, vender, llevar stock, cuentas corrientes, proveedores, pedidos, inventarios, libros contables, financiaciones, comisiones, intereses. Y la mas variable y flexible forma de obtener reportes. Esta basado en una solida estructura contable totalmente adaptable a cualquier empresa. Es simple y complejo al mismo tiempo lo que permite que en pequeñas empresas pueda ser utilizado sin mayores complicaciones y en estructuras mas grandes poder ir parametrizandolo para adaptarlo a sus necesidades. GeN es eso y mucho mas…
+Ahora con Factura Electronica.
 
-LO QUE USTED NECESITA PARA SU PYME O COMERCIO MAYORISTA/MINORISTA.
+Con el puedes comprar, vender, llevar stock, proveedores, pedidos, inventarios, ingresos brutos. 
+Y la mas variable y flexible forma de obtener reportes. 
+Esta basado en una solida estructura contable totalmente adaptable a cualquier empresa. 
+Es simple y complejo al mismo tiempo lo que permite que en pequeñas empresas pueda ser utilizado sin mayores complicaciones y en estructuras mas grandes poder ir parametrizandolo para adaptarlo a sus necesidades. 
+GeN es eso y mucho mas…
 
-Stock. Ventas. Facturación. Clientes. Vendedores. Proveedores. Cobradores. Servicios. Financiación (diaria, semanal y mensual). Cuentas Corrientes. Cheques. Contratos. Pagares. Remitos. Presupuestos. Libros contables (IVA vtas./compras, Bancos, etc.). Ingresos Brutos. IVA. Backups. Ganancias.
+LO QUE USTED NECESITA PARA SU PYME O COMERCIO.
+
+Stock. Ventas. Facturación. Remitos. Clientes. Vendedores. Proveedores. Servicios. Presupuestos. Ingresos Brutos. Caja.
 
 Instalación
 https://sourceforge.net/projects/gen-xe7/files/InstalarGeN.exe/download

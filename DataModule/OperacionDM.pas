@@ -774,8 +774,8 @@ end;
 
 function TOperacionDataModule.ProcVTA; // PROCESA UNA VENTA
 var
-//  nro, comp, a, pagare, cae, vto, mensaje, ptovta, tipocbte: string;
   i : integer;
+//  nro, comp, a, pagare, cae, vto, mensaje, ptovta, tipocbte: string;
 //  IIBB, cmv: Double;
 //  jsResponse: TJSONValue;
 begin
@@ -784,7 +784,7 @@ begin
   nro := inttostr(DM.UltimoRegistro('"Venta"', 'CODIGO'));
 //  if nro = '1' then
 //    nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
-  comp:=IntToStr((dm.ObtenerConfig('NroFactura'))+1);
+  comp := IntToStr( ( dm.ObtenerConfig('NroFactura') ) + 1 );
 //  ptovta:= IntToStr(dm.ObtenerConfig('Empresa'));
   if pgr then
     pagare := 'S';
@@ -839,11 +839,11 @@ begin
   //actualiza el nro de factura
   if comp<>'' then
   begin
-    Q.sql.Text := 'Update "Config" Set NroFactura ='+comp;
+    Q.SQL.Text := 'Update "Config" Set NroFactura ='+comp;
     Q.ExecSQL;
   end;
   // INSERTA EN LA TABLA VENTA
-  Q.sql.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE, ' +
+  Q.SQL.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE, ' +
     ' SUBTOTAL, DESCUENTO, FECHA, IMPUESTO, IIBB, TOTAL, CONTADO, CHEQUE,' +
     ' TARJETA, OTROS, SALDO, PAGADO' + ', PAGARE, COSTO, DEUDA, COMISION, DESCRIPCION' +
     ') Values ' + '('+QuotedStr(comp)+', ' + quotedstr(vto) + ', ' + (nro) + ', ' +
@@ -863,7 +863,7 @@ begin
 //    if tot - impu > Q.FieldByName('MONTO').AsFloat then
 //      IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
 //        Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
-    Q.sql.Text :=
+    Q.SQL.Text :=
       'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
       + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
       (mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
@@ -874,17 +874,17 @@ begin
   // Insertar en la tabla de CtaCte
   if (sal > 0.05) then
   begin
-    Q.sql.Text := 'SELECT * FROM "CtaCte" WHERE CLIENTE = ' + cod;
+    Q.SQL.Text := 'SELECT * FROM "CtaCte" WHERE CLIENTE = ' + cod;
     Q.Open;
     if (Q.RecordCount > 0) and (sal < 0.05) then
-      Q.sql.Text := 'Update "CtaCte" Set SALDO = ' + floattostr(sal) +
+      Q.SQL.Text := 'Update "CtaCte" Set SALDO = ' + floattostr(sal) +
         ', FECHA = ' + quotedstr(fech) + ' Where CLIENTE = ' + cod
     else
-      Q.sql.Text := 'Insert Into "CtaCte" (CLIENTE, SALDO, OPERACION,' +
+      Q.SQL.Text := 'Insert Into "CtaCte" (CLIENTE, SALDO, OPERACION,' +
         ' DESCUENTO, INTERES, FECHA, RENDIDAS) Values (' + cod + ', ' +
         floattostr(sal) + ', ' + nro + ', ' + floattostr(des) + ', ' +
         floattostr(int) + ', ' + quotedstr(fech) + ', 0' + ')';
-    Q.ExecSQL;
+      Q.ExecSQL;
     // Insertar en la tabla de CtaCte Item
     if sal > 0.04 then
     begin
@@ -914,14 +914,13 @@ begin
     Q.ExecSQL;
   end;
   // Actualizar la tabla de Articulos
-  For i := 1 to High(mat[0]) do
+  for i := 1 to High(mat[0]) do
   begin
     OperacionDataModule.ActualizarCantidadArticulo(mat[0, i], mat[3, i])
 //    Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE - ' + mat[3, i]
 //      + ' Where "Articulo".CODIGO = ' + (mat[0, i]);
 //    Q.ExecSQL;
   end;
-
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA VENTAS
   if let = 'A' then//  if let <> 'X' then
@@ -930,7 +929,6 @@ begin
   // Insertar en la tabla LibroDiario
   LibroDiario('VENTA', nro, let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, comv);
-
   // Completa la Transaccion
   Q.Transaction.CommitRetaining;
 //  if webUpd='True' then RestDataModule.CrearOrden;
