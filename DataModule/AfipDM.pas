@@ -881,7 +881,7 @@ dia := Copy(expirationTA, 9, 2);
 
 e := mes+'/'+dia+'/'+año;
 
-  if StrToDate(e) < now-1 then
+  if StrToDate(e) < now then
     Generar;
 //  screen.Cursor := crHourGlass;
 
