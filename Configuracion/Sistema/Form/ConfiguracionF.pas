@@ -142,7 +142,7 @@ uses AfipUnit;
 
 procedure TConfiguracionForm.BitBtn1Click(Sender: TObject);
 begin
-  if (ReporteDBLookupComboBox.KeyValue > 10) then
+  if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
     if not dm.existeOpenSSL() then
       tabla.FieldByName('ImprimirTipo').AsInteger:=1;
   Tabla.Post;
@@ -173,7 +173,8 @@ end;
 
 procedure TConfiguracionForm.ReporteDBLookupComboBoxClick(Sender: TObject);
 begin
-  if (ReporteDBLookupComboBox.KeyValue > 10) then ConfigurarFEButton.Visible := True
+  reporte := ImprimirQuery.FieldByName('REPORTE').AsString;
+  if (reporte = 'FElectronica') or (reporte = 'TElectronica') then ConfigurarFEButton.Visible := True
   else ConfigurarFEButton.Visible := False;
 end;
 

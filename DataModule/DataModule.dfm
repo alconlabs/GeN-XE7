@@ -660,31 +660,14 @@ object DM: TDM
         ' '#39'Original'#39', '#39'COriginal'#39');'
       
         'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (3,' +
-        ' '#39'Duplicado'#39', '#39'CDuplicado'#39');'
-      
-        'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (4,' +
-        ' '#39'Triplicado'#39', '#39'CTriplicado'#39');'
-      
-        'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (5,' +
-        ' '#39'Cuadruplicado'#39', '#39'CCuadruplicado'#39');'
-      
-        'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (7,' +
         ' '#39'Preimpresa Original'#39', '#39'CPOriginal'#39');'
       
-        'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (8,' +
-        ' '#39'Preimpresa Duplicado'#39', '#39'CPDuplicado'#39');'
+        'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (4,' +
+        ' '#39'Factura Electronica'#39', '#39'FElectronica'#39');'
       
-        'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (9,' +
-        ' '#39'Preimpresa Triplicado'#39', '#39'CPTriplicado'#39');'
-      
-        'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (10' +
-        ', '#39'Preimpresa Cuadruplicado'#39', '#39'CPCuadruplicado'#39');'
-      
-        'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (11' +
-        ', '#39'Factura Electronica'#39', '#39'FElectronica'#39');'
-      
-        'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (12' +
-        ', '#39'Ticket Electronico'#39', '#39'TElectronica'#39');'
+        'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (5,' +
+        ' '#39'Ticket Electronico'#39', '#39'TElectronica'#39');'
+      ''
       ''
       ''
       'INSERT INTO "Marca" (CODIGO, DESCRIPCION) VALUES (0, '#39'VARIOS'#39');'
