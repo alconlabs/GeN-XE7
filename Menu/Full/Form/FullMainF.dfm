@@ -53,7 +53,6 @@ object FullMainForm: TFullMainForm
       end
       object Comprar1: TMenuItem
         Caption = 'COMPRAR'
-        Visible = False
         OnClick = Comprar1Click
       end
       object CuentaCorriente1: TMenuItem

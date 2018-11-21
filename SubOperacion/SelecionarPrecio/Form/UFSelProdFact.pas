@@ -133,7 +133,10 @@ end;
 procedure TFSelProdFact.BitBtn1Click(Sender: TObject);
 begin
   if (Edit1.Text = '') OR (CantidadEdit.Text = '') then
-    MessageDlg('Los valores no deben estar en blanco.', mtError, [mbOK], 0)
+  begin
+    cancela:=true;
+    MessageDlg('Los valores no deben estar en blanco.', mtError, [mbCancel], 0)
+  end
   else
   begin
     Cancela := False;

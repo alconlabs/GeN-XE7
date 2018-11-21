@@ -750,59 +750,60 @@ var
 begin
   if Total >0 then
   begin
-      screen.Cursor := crHourGlass;
-  c := 0; // columna i
-  r := 0; // row j
-  OperacionDataModule := TOperacionDataModule.Create(self);
-  with OperacionDataModule do
-  begin
-    SetLength(mat, SGFact.ColCount, SGFact.RowCount);
-    for r := 0 to SGFact.RowCount - 1 do
-      for c := 0 to SGFact.ColCount - 1 do
-      begin
-        mat[c, r] := SGFact.Cells[c, r];
-      end;
+    screen.Cursor := crHourGlass;
+    c := 0; // columna i
+    r := 0; // row j
+    OperacionDataModule := TOperacionDataModule.Create(self);
+    with OperacionDataModule do
+    begin
+      SetLength(mat, SGFact.ColCount, SGFact.RowCount);
+      for r := 0 to SGFact.RowCount - 1 do
+        for c := 0 to SGFact.ColCount - 1 do
+        begin
+          mat[c, r] := SGFact.Cells[c, r];
+        end;
 
-    if Compra then
-    OperacionDataModule.ProcCompra(cbTipo.Text, ClienteEdit.Text,
-      FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-      VendedorEdit.Text, ComprobanteEdit.Text, CtaNombre, CUITLabel.Caption, PagareCheckBox.Checked,
-      costo, Impuesto, StrToFloat(FECheque.Text),
-      StrToFloat(FECheque.Text), StrToFloat(FEContado.Text), Total,
-      subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
-      Saldo, Pagado, NG105, NG21, IVA105, IVA21, perc, Total - Saldo)
-    else
-    if PedidoCheckBox.Checked then
-    ProcOPER('PED', 'X', ClienteEdit.Text,
-      FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-      VendedorEdit.Text, '', CtaNombre, False, PagareCheckBox.Checked, costo,
-      Comision, Impuesto, StrToFloat(FECheque.Text), 0,
-      StrToFloat(FEContado.Text), Total, subtotal, desc,
-      StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text), Saldo, Pagado,
-      Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
-    else
-    if Presupuesto.Checked then
-      ProcPresup(cbTipo.Text, ClienteEdit.Text,
+      if Compra then
+      OperacionDataModule.ProcCompra(cbTipo.Text, ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-        VendedorEdit.Text, CUITLabel.Caption, CtaNombre, Presupuesto.Checked,
-        PagareCheckBox.Checked, costo, Comision, Impuesto,
-        StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
+        VendedorEdit.Text, ComprobanteEdit.Text, CtaNombre, CUITLabel.Caption, PagareCheckBox.Checked,
+        costo, Impuesto, StrToFloat(FECheque.Text),
+        StrToFloat(FECheque.Text), StrToFloat(FEContado.Text), Total,
         subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
-        Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
-    else
-      ok := ProcVTA(cbTipo.Text, ClienteEdit.Text,
+        Saldo, Pagado, NG105, NG21, IVA105, IVA21, perc, Total - Saldo)
+      else
+      if PedidoCheckBox.Checked then
+      ProcOPER('PED', 'X', ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-        VendedorEdit.Text, CUITLabel.Caption, CtaNombre, Presupuesto.Checked,
-        PagareCheckBox.Checked, costo, Comision, Impuesto,
-        StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
-        subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
-        Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);
+        VendedorEdit.Text, '', CtaNombre, False, PagareCheckBox.Checked, costo,
+        Comision, Impuesto, StrToFloat(FECheque.Text), 0,
+        StrToFloat(FEContado.Text), Total, subtotal, desc,
+        StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text), Saldo, Pagado,
+        Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
+      else
+      if Presupuesto.Checked then
+        ProcPresup(cbTipo.Text, ClienteEdit.Text,
+          FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
+          VendedorEdit.Text, CUITLabel.Caption, CtaNombre, Presupuesto.Checked,
+          PagareCheckBox.Checked, costo, Comision, Impuesto,
+          StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
+          subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
+          Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
+      else
+        ok := ProcVTA(cbTipo.Text, ClienteEdit.Text,
+          FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
+          VendedorEdit.Text, CUITLabel.Caption, CtaNombre, Presupuesto.Checked,
+          PagareCheckBox.Checked, costo, Comision, Impuesto,
+          StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
+          subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
+          Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);
+    end;
+    OperacionDataModule.Free;
+    screen.Cursor := crDefault;
+//    if ok then ClienteBitBtn.Click;
   end;
-  OperacionDataModule.Free;
-  screen.Cursor := crDefault;
-  if ok then
-    ClienteBitBtn.Click;//  QuitarArticulos;
-  end else Close;
+  ClienteBitBtn.Click;
+//  Close;
 end;
 
 procedure TOperacionForm.CheckBox1Click(Sender: TObject);
