@@ -29,7 +29,6 @@ object ConfiguracionForm: TConfiguracionForm
     Color = clBlack
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 962
     object Label38: TLabel
       Left = 6
       Top = 242
@@ -44,8 +43,8 @@ object ConfiguracionForm: TConfiguracionForm
       ParentFont = False
     end
     object BitBtn1: TBitBtn
-      Left = 0
-      Top = 152
+      Left = 2
+      Top = 156
       Width = 60
       Height = 50
       Caption = 'Si'

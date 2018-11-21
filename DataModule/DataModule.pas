@@ -51,6 +51,7 @@ type
     function UltimoRegistro(T, c: String): integer;
     { function Gratis(arch: String): boolean; }
     procedure FormatearFecha;
+    function existeOpenSSL():boolean;
   end;
 
 const
@@ -549,6 +550,15 @@ begin
     ThousandSeparator := ',';
     ShortDateFormat := 'mm/dd/yyyy';
   end;
+end;
+
+function TDM.existeOpenSSL;
+begin
+  if not FileExists(openSSl) then
+  begin
+    ShowMessage('Por favor instalar OpenSSL (verificar que se encuentre en C:\OpenSSL-Win32\bin\openssl)!!!');
+    result:=false;
+  end else result:=true;
 end;
 
 end.

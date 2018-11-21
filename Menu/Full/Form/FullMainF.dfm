@@ -53,6 +53,7 @@ object FullMainForm: TFullMainForm
       end
       object Comprar1: TMenuItem
         Caption = 'COMPRAR'
+        Visible = False
         OnClick = Comprar1Click
       end
       object CuentaCorriente1: TMenuItem
@@ -66,6 +67,7 @@ object FullMainForm: TFullMainForm
       end
       object Aumentarporporcentaje1: TMenuItem
         Caption = 'AUMENTAR POR PORCENTAJE'
+        Visible = False
         OnClick = Aumentarporporcentaje1Click
       end
       object AnularVenta1: TMenuItem
@@ -261,6 +263,7 @@ object FullMainForm: TFullMainForm
     end
     object Listados1: TMenuItem
       Caption = 'LISTADO'
+      Visible = False
       object Productos1: TMenuItem
         Caption = 'STOCK'
         OnClick = Productos1Click
@@ -333,6 +336,7 @@ object FullMainForm: TFullMainForm
       end
       object Login1: TMenuItem
         Caption = 'USUARIOS'
+        Visible = False
         OnClick = Login1Click
       end
       object Sistema1: TMenuItem

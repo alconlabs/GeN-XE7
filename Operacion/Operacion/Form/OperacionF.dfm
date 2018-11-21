@@ -68,6 +68,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
     object Label30: TLabel
       Left = 420
@@ -81,6 +82,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
     object Label32: TLabel
       Left = 591
@@ -94,6 +96,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
     object Label33: TLabel
       Left = 641
@@ -107,6 +110,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
     object Label34: TLabel
       Left = 722
@@ -120,6 +124,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
     object Label31: TLabel
       Left = 30
@@ -133,6 +138,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
     object Label2: TLabel
       Left = 171
@@ -146,6 +152,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
     object Label4: TLabel
       Left = 275
@@ -159,6 +166,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
     object Label7: TLabel
       Left = 8
@@ -213,6 +221,7 @@ object OperacionForm: TOperacionForm
       Font.Style = []
       ParentFont = False
       TabOrder = 2
+      Visible = False
     end
     object NroTarjetaEdit: TEdit
       Left = 570
@@ -227,6 +236,7 @@ object OperacionForm: TOperacionForm
       Font.Style = []
       ParentFont = False
       TabOrder = 3
+      Visible = False
     end
     object DetChequeEdit: TEdit
       Left = 618
@@ -241,6 +251,7 @@ object OperacionForm: TOperacionForm
       Font.Style = []
       ParentFont = False
       TabOrder = 4
+      Visible = False
     end
     object DetTarjetaEdit: TEdit
       Left = 618
@@ -255,6 +266,7 @@ object OperacionForm: TOperacionForm
       Font.Style = []
       ParentFont = False
       TabOrder = 5
+      Visible = False
     end
     object FECheque: TEdit
       Left = 465
@@ -263,6 +275,7 @@ object OperacionForm: TOperacionForm
       Height = 21
       TabOrder = 6
       Text = '0'
+      Visible = False
       OnChange = FEChequeChange
     end
     object FETarjeta: TEdit
@@ -272,6 +285,7 @@ object OperacionForm: TOperacionForm
       Height = 21
       TabOrder = 7
       Text = '0'
+      Visible = False
       OnChange = FETarjetaChange
     end
     object DiaChequeDateTimePicker: TDateTimePicker
@@ -282,9 +296,10 @@ object OperacionForm: TOperacionForm
       Date = 43100.506836111110000000
       Time = 43100.506836111110000000
       TabOrder = 8
+      Visible = False
     end
     object FEContado: TEdit
-      Left = 59
+      Left = 60
       Top = 19
       Width = 106
       Height = 21
@@ -300,6 +315,7 @@ object OperacionForm: TOperacionForm
       Height = 21
       TabOrder = 10
       Text = '0'
+      Visible = False
       OnChange = FEOtroChange
     end
     object PagareCheckBox: TCheckBox
@@ -316,6 +332,7 @@ object OperacionForm: TOperacionForm
       ParentColor = False
       ParentFont = False
       TabOrder = 11
+      Visible = False
     end
     object Presupuesto: TCheckBox
       Left = 359
@@ -323,6 +340,7 @@ object OperacionForm: TOperacionForm
       Width = 17
       Height = 17
       TabOrder = 12
+      Visible = False
     end
     object PedidoCheckBox: TCheckBox
       Left = 60
@@ -401,6 +419,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
     object VendedorLabel: TLabel
       Left = 404
@@ -414,6 +433,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      Visible = False
     end
     object Label3: TLabel
       Left = 265
@@ -509,6 +529,7 @@ object OperacionForm: TOperacionForm
       ParentFont = False
       TabOrder = 1
       Text = '0'
+      Visible = False
     end
     object FechaDateTimePicker: TDateTimePicker
       Left = 688
@@ -619,6 +640,7 @@ object OperacionForm: TOperacionForm
       ParentShowHint = False
       ShowHint = True
       TabOrder = 3
+      Visible = False
       OnClick = VendedorBitBtnClick
     end
     object AgregarBitBtn: TBitBtn
@@ -655,6 +677,7 @@ object OperacionForm: TOperacionForm
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4
+      Visible = False
       OnClick = NuevoBitBtnClick
     end
     object QuitarBitBtn: TBitBtn

@@ -9,7 +9,9 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, REST.Response.Adapter,
   Xml.xmldom, Xml.XMLIntf, Soap.InvokeRegistry, Soap.Rio, Soap.SOAPHTTPClient,
-  Xml.Win.msxmldom, Xml.XMLDoc, ShellAPI, DateUtils;
+  Xml.Win.msxmldom, Xml.XMLDoc, ShellAPI, DateUtils, Winapi.Messages, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+  Vcl.ExtDlgs;
 
 type
   TAfipDataModule = class(TDataModule)
@@ -28,7 +30,6 @@ type
     bi21, i21, bi105, i105: String
     );
     procedure DataModuleCreate(Sender: TObject);
-
   private
     { Private declarations }
     WSAA: Variant;
@@ -57,6 +58,7 @@ type
     regfetribId, regfetribBaseImp, regfetribAlic, regfetribImporte, regfeivaId,
     regfeivaBaseImp, regfeivaImporte, MonId, regfetribDesc, FchServDesde,
     FchServHasta, FchVtoPago, razon, nombre, direccion, articulo : string) : TJSONValue;
+
   end;
 
 var

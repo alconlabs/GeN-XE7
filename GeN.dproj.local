@@ -30,13 +30,13 @@
     <Transaction>2018/10/12 19:17:33.000.939,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>2018/11/12 09:21:24.000.738,=C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\UHomoLoginCMS.pas</Transaction>
     <Transaction>2018/11/12 09:21:31.000.848,=C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\UHomoWsfev1.pas</Transaction>
-    <Transaction>2018/11/14 17:34:59.938,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2018/11/14 17:37:43.603,C:\Users\User\Documents\Embarcadero\Studio\Projects\Configuracion\Afip\AfipUnit.dfm=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.dfm</Transaction>
-    <Transaction>2018/11/14 17:37:43.603,C:\Users\User\Documents\Embarcadero\Studio\Projects\Configuracion\Afip\AfipUnit.pas=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2018/11/15 13:00:21.986,=C:\Users\User\Documents\Embarcadero\Studio\Projects\LoginCms1.pas</Transaction>
-    <Transaction>2018/11/15 13:00:43.738,C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\LoginCms1.pas=C:\Users\User\Documents\Embarcadero\Studio\Projects\LoginCms1.pas</Transaction>
-    <Transaction>2018/11/15 13:02:03.099,=C:\Users\User\Documents\Embarcadero\Studio\Projects\service.pas</Transaction>
-    <Transaction>2018/11/15 13:02:16.036,C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\service.pas=C:\Users\User\Documents\Embarcadero\Studio\Projects\service.pas</Transaction>
+    <Transaction>2018/11/14 17:34:59.000.938,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/11/14 17:37:43.000.603,C:\Users\User\Documents\Embarcadero\Studio\Projects\Configuracion\Afip\AfipUnit.dfm=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.dfm</Transaction>
+    <Transaction>2018/11/14 17:37:43.000.603,C:\Users\User\Documents\Embarcadero\Studio\Projects\Configuracion\Afip\AfipUnit.pas=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/11/15 13:00:21.000.986,=C:\Users\User\Documents\Embarcadero\Studio\Projects\LoginCms1.pas</Transaction>
+    <Transaction>2018/11/15 13:00:43.000.738,C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\LoginCms1.pas=C:\Users\User\Documents\Embarcadero\Studio\Projects\LoginCms1.pas</Transaction>
+    <Transaction>2018/11/15 13:02:03.000.099,=C:\Users\User\Documents\Embarcadero\Studio\Projects\service.pas</Transaction>
+    <Transaction>2018/11/15 13:02:16.000.036,C:\Users\User\Documents\Embarcadero\Studio\Projects\DataModule\service.pas=C:\Users\User\Documents\Embarcadero\Studio\Projects\service.pas</Transaction>
   </Transactions>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>

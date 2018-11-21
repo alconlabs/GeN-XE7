@@ -142,6 +142,9 @@ uses AfipUnit;
 
 procedure TConfiguracionForm.BitBtn1Click(Sender: TObject);
 begin
+  if (ReporteDBLookupComboBox.KeyValue > 10) then
+    if not dm.existeOpenSSL() then
+      tabla.FieldByName('ImprimirTipo').AsInteger:=1;
   Tabla.Post;
   DM.TraerConfig;
   Close;
