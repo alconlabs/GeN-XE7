@@ -45,8 +45,11 @@ uses BuscaFactura;
 procedure TFAnulaReimp.BitBtn1Click(Sender: TObject);
 begin
   OperacionDataModule := TOperacionDataModule.Create(self);
-  OperacionDataModule.AnularVTA(nroEdit.Text);
-  OperacionDataModule.Free;
+  try
+    if nroEdit.Text<>'' then OperacionDataModule.AnularVTA(nroEdit.Text);
+  finally
+    OperacionDataModule.Free;
+  end;
   Close;
 end;
 
