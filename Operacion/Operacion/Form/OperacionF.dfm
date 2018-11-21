@@ -485,6 +485,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
     object Label6: TLabel
       Left = 636
@@ -498,6 +499,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      Visible = False
     end
     object ClienteEdit: TEdit
       Left = 72
@@ -547,6 +549,7 @@ object OperacionForm: TOperacionForm
       Height = 21
       TabOrder = 3
       Text = '0'
+      Visible = False
       OnExit = PercEditExit
     end
   end

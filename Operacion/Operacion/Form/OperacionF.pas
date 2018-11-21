@@ -291,7 +291,7 @@ end;
 
 procedure TOperacionForm.CalculaTotales;
 var
-  i: Integer;
+  i,TIVA: Integer;
   NG,DSC,NGD,IVA,CONT,PR,PRD : Double;
   des : string;
 //  DSCP : Boolean;
@@ -324,7 +324,9 @@ begin
     // total
     IF (SGFact.Cells[5, i] = '') then SGFact.Cells[5, i] := '0';
     // IVA
-    IF (SGFact.Cells[6, i] = '') then SGFact.Cells[6, i] := '0';
+    IF (SGFact.Cells[6, i] = '') then TIVA := 0
+    else
+      TIVA := StrToInt(SGFact.Cells[6, i]);
     // NG
     IF (SGFact.Cells[8, i] = '') then SGFact.Cells[8, i] := '0';
     //
@@ -388,14 +390,14 @@ begin
   //   IVAO := IVAO + IVA;
      with OperacionDataModule do
       begin
-      If (SGFact.Cells[6, i] = '21') then
+      If TIVA = 21 then
       begin
         NG21 := NG21 + NG;
         IVA := CalcularIVA((NG),21)-NG;
         IVA21 := IVA21 + IVA;
       end // IVA 21% 100 * 1.21 - 100 = 21
       else
-      if (SGFact.Cells[6, i] = '105') then
+      if TIVA = 105 then
         begin
           NG105 := NG105 + NG;
           IVA := CalcularIVA((NG),10.5)-NG;
@@ -404,7 +406,7 @@ begin
         else
          begin
           NGO := NGO + NG; // NETO GRABADO
-          IVA := CalcularIVA((NG),StrToFloat(SGFact.Cells[6, i]))-NG;
+          IVA := CalcularIVA((NG),TIVA)-NG;
           IVAO := IVAO + IVA;
         end;
       end;
@@ -850,30 +852,30 @@ begin
       cbTipo.ItemIndex := 29;
     end
   else
-    begin
-      if (reporte='COriginal') or (reporte='CDupicado') or (reporte='CTriplicado')
-      or (reporte='CCuadruplicado') or (reporte='Ticket')then
-        cbTipo.ItemIndex := 0
-        else
+//    begin
+//      if (reporte='COriginal') or (reporte='CDupicado') or (reporte='CTriplicado')
+//      or (reporte='CCuadruplicado') or (reporte='Ticket')then
+//        cbTipo.ItemIndex := 0
+//        else
           begin
             if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Monotributo')
             then
               cbTipo.ItemIndex := 11
             else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Inscripto')
             then
-              cbTipo.ItemIndex := 6
+              cbTipo.ItemIndex := 0
             else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Exento') then
               cbTipo.ItemIndex := 11
             else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'No Responsable') then
               cbTipo.ItemIndex := 14
             else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'S.R.L.') then
-              cbTipo.ItemIndex := 6
+              cbTipo.ItemIndex := 0
             else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'S.A.') then
-              cbTipo.ItemIndex := 6
+              cbTipo.ItemIndex := 0
             else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Cooperativa') then
               cbTipo.ItemIndex := 6;
           end;
-    end;
+//    end;
   ClienteBitBtn.Click;
 end;
 
