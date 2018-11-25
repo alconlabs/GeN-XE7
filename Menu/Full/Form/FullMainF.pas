@@ -223,7 +223,7 @@ begin
   begin
     TraerConfig;
     Query.SQL.Text :=
-      'select * from "Usuario" where  (NOMBRE=''admin'' and "password"=''admin'')';
+      'Select * from "Usuario" where  (NOMBRE=''admin'' and "password"=''admin'')';
     Query.Open;
     If Query.RecordCount = 0 then
     begin
@@ -289,6 +289,7 @@ begin
           ShellExecute(Handle,'open',
           'https://sourceforge.net/projects/gen-xe7/files/ActualizarGeN.exe/download'
           ,nil,nil,SW_NORMAL);
+          Close;
         end;
   end;
   DM.FormatearFecha;
