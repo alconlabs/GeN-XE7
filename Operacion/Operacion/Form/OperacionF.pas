@@ -540,7 +540,6 @@ begin
         CtaNombre := Tabla.FieldByName('CtaNombre').AsString;
         CtaTipo := Tabla.FieldByName('CtaTipo').AsString;
         CtaAnticipo := Tabla.FieldByName('CtaAnticipo').AsString;
-
         PagareCheckBox.Checked := Tabla.FieldByName('PAGARE').AsBoolean;
         if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Inscripto') and
           (Tabla.FieldByName('IVA').AsString = 'RI') then cbTipo.ItemIndex := 0
@@ -610,12 +609,12 @@ begin
           begin
             If Cuenta > 1 then
               SGFact.RowCount := SGFact.RowCount + 1;
-            SGFact.Cells[0, Cuenta] := '0'; // c�digo
+            SGFact.Cells[0, Cuenta] := '0'; // código
             Deuda := DM.Query.FieldByName('SALDO').AsFloat;
             if Deuda > 0 then
               SGFact.Cells[1, Cuenta] := 'Deuda CtaCte'
             else
-              SGFact.Cells[1, Cuenta] := 'Saldo a Favor'; // descripci�n
+              SGFact.Cells[1, Cuenta] := 'Saldo a Favor'; // descripción
             SGFact.Cells[2, Cuenta] := '0'; // serie
             SGFact.Cells[3, Cuenta] := '1'; // cantidad
             SGFact.Cells[4, Cuenta] := Format('%8.2f', [Deuda]); // precio
@@ -765,7 +764,6 @@ begin
         begin
           mat[c, r] := SGFact.Cells[c, r];
         end;
-
       if Compra then
       OperacionDataModule.ProcCompra(cbTipo.Text, ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),

@@ -779,6 +779,7 @@ var
 //  nro, comp, a, pagare, cae, vto, mensaje, ptovta, tipocbte: string;
 //  IIBB, cmv: Double;
 //  jsResponse: TJSONValue;
+  ctaCte : boolean;
 begin
 //  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
 DM.FormatearFecha;
@@ -865,11 +866,20 @@ DM.FormatearFecha;
 //    if tot - impu > Q.FieldByName('MONTO').AsFloat then
 //      IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
 //        Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
+    if (mat[1, i]= 'Deuda CtaCte') then
+      ctaCte := True;
     Q.SQL.Text :=
       'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
       + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
       (mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
       quotedstr(mat[1, i]) + ');';
+    Q.ExecSQL;
+  end;
+
+  if ctaCte then
+  begin
+    Q.SQL.Text := 'Update "CtaCte" Set SALDO = ' + floattostr(sal) +
+        ', FECHA = ' + quotedstr(fech) + ' Where CLIENTE = ' + cod;
     Q.ExecSQL;
   end;
 
