@@ -70,7 +70,6 @@ type
     procedure ActualizarCantidadArticulo(codigo,cantidad:string);
     procedure DataSetToCsv(psRutaFichero : String);
     procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impTotal, asocTipo, asocNro:string);
-    function TraerTipoCbte(tipo:string):string;
 //    Procedure FillCbIva;
   private
     { Private declarations }
@@ -1695,9 +1694,9 @@ begin
   try
     with AfipDataModule do
     begin
-      jsResponse := FacturaAfip( cbteFecha, TraerTipoCbte(let), concepto, docTipo, docNro, cbte, impTotal, impTotal,
+      jsResponse := FacturaAfip( cbteFecha, dm.TraerTipoCbte(let), concepto, docTipo, docNro, cbte, impTotal, impTotal,
       '0', '0', '0', '0', '1',
-      TraerTipoCbte(asocTipo), asocNro,
+      dm.TraerTipoCbte(asocTipo), asocNro,
       '1', '0', '0', '0', '0',
       '0', '0', 'PES', 'impuesto', 'null',
       'null', 'null', '', '', '', '');
@@ -1714,15 +1713,6 @@ begin
   finally
     AfipDataModule.Free;
   end;
-end;
-
-function TOperacionDataModule.TraerTipoCbte(tipo:string):string;
-begin
-  Case IndexStr(tipo, ['0','C','NCC' ]) of
-    0 : result:='0';
-    1 : result:='11';
-    2 : result:='13';
-  End;
 end;
 
 end.

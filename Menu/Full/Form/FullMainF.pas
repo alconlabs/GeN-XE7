@@ -190,7 +190,7 @@ var
   FullMainForm: TFullMainForm;
 
 const
-version='201811242120';
+version='201811271922';
 
 implementation
 
@@ -223,7 +223,7 @@ begin
   begin
     TraerConfig;
     Query.SQL.Text :=
-      'Select * from "Usuario" where  (NOMBRE=''admin'' and "password"=''admin'')';
+      'Select * From "Usuario" Where (NOMBRE=''admin'' and "password"=''admin'')';
     Query.Open;
     If Query.RecordCount = 0 then
     begin

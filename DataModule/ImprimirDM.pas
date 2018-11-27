@@ -32,12 +32,13 @@ type
     Procedure CSV(sql, n: string);
     Procedure SImpr(vsql, reporte: string);
     procedure DataModuleCreate(Sender: TObject);
-    
   private
     { Private declarations }
+    function DigitoVerificador(Numero: string): string;
   public
     { Public declarations }
     clienteSql, articuloSql, ventaItemSql, ivaVtaSql, presupuestoSql, presupuestoTSql, vtaSql, ventaTSql, OperSql, OperacionSql, OperacionItemSql: string;
+    function CodigoBarraElectronico(cuit,tipo,pvta,cae,vto:string):string;
   end;
 
 var
@@ -184,8 +185,7 @@ var
 begin
   if reporte = '' then
     reporte := dm.ConfigQuery.FieldByName('Reporte').AsString;
-  Query.sql.Text := 'SELECT ' + QuotedStr(dm.ConfigQuery.FieldByName('CODIGO')
-    .AsString) + ' As PtoVta,' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE')
+  Query.sql.Text := 'SELECT '+ QuotedStr(dm.ConfigQuery.FieldByName('CODIGO').AsString) + ' As PtoVta,' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE')
     .AsString) + ' As Empresa,' +
     QuotedStr(dm.ConfigQuery.FieldByName('TITULAR').AsString) + ' As ETITULAR,'
     + QuotedStr(dm.ConfigQuery.FieldByName('IVA').AsString) + ' As EIVA,' +
@@ -320,11 +320,18 @@ begin
 end;
 
 Function TImprimirDataModule.VTA;
+var
+  w,cb,tipo,cae,vto : string;
 begin
-  Result := vtaSql
-    + ' WHERE'
-    + '  ("Venta".CODIGO = ' + nro + ' ) AND' + '  ("Venta".LETRA = ' +
-    QuotedStr(let) + ' )' + '';
+  w := ' WHERE ("Venta".CODIGO = '+nro+') AND ("Venta".LETRA = '+QuotedStr(let)+')';
+  Query.sql.Text:='Select "Venta".DESCRIPCION, "Venta".TERMINOS  From "Venta" '+w;
+  Query.Open;
+  tipo := DM.TraerTipoCbte(let);
+  cae := Query.FieldByName('DESCRIPCION').AsString;
+  vto := Query.FieldByName('TERMINOS').AsString;
+  Query.Close;
+  cb := CodigoBarraElectronico(CUIT,tipo,PuntoVenta,cae,vto);
+  Result := QuotedStr(cb)+' as CB, '+vtaSql+w;
 end;
 
 Function TImprimirDataModule.OPER;
@@ -378,6 +385,37 @@ end;
 Function TImprimirDataModule.EAN;
 begin
   Result := nro + 'as CODIGOBARRA FROM "Empresa"';
+end;
+
+function TImprimirDataModule.DigitoVerificador;
+var
+  i, par, non, sum : Integer;
+begin
+  par:= 0;
+  non:= 0;
+  for i:= 1 to Length(Numero) do
+    if i mod 2 = 0 then
+      Inc(par, StrToInt(Numero[i]))
+    else
+      Inc(non, StrToInt(Numero[i]));
+
+  non:= non * 3;
+  sum:= non + par;
+
+  for i:= 0 to 9 do
+    if (sum + i) mod 10 = 0 then
+    begin
+      Result:= Numero + IntToStr(i);//Result:= IntToStr(i); (si queres solo el díg.)
+      Exit;
+    end;
+end;
+
+function TImprimirDataModule.CodigoBarraElectronico;
+var
+  cb : string;
+begin
+  cb := cuit+'0'+tipo+'0000'+pvta+cae+vto;
+  result := DigitoVerificador(cb);
 end;
 
 end.

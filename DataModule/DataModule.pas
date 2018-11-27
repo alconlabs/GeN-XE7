@@ -52,6 +52,7 @@ type
     { function Gratis(arch: String): boolean; }
     procedure FormatearFecha;
     function existeOpenSSL():boolean;
+    function TraerTipoCbte(tipo:string):string;
   end;
 
 const
@@ -559,6 +560,15 @@ begin
     ShowMessage('Por favor instalar OpenSSL (verificar que se encuentre en C:\OpenSSL-Win32\bin\openssl)!!!');
     result:=false;
   end else result:=true;
+end;
+
+function TDM.TraerTipoCbte(tipo:string):string;
+begin
+  Case IndexStr(tipo, ['0','C','NCC' ]) of
+    0 : result:='0';
+    1 : result:='11';
+    2 : result:='13';
+  End;
 end;
 
 end.
