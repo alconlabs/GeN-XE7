@@ -39,6 +39,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure ExportarButtonClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
 //    procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
@@ -76,6 +77,11 @@ begin
   end;
   ShowMessage('Exportación finalizada con éxito!!!');
   close;
+end;
+
+procedure TMigrarForm.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  dm.FormatearFecha;
 end;
 
 procedure TMigrarForm.FormCreate(Sender: TObject);
