@@ -21,12 +21,14 @@ type
     Query: TIBQuery;
     Consulta: TIBScript;
     FDConnection1: TFDConnection;
+    OpenDialog1: TOpenDialog;
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
     procedure LeerINI;
     procedure EscribirINI;
   private
     { Private declarations }
+    bd : string;
     procedure ActualizarImprimir(reporte:string);
 
   public
@@ -285,72 +287,22 @@ begin
   , Path+'Update.iss');
   ActualizarImprimir('FElectronica');
   ActualizarImprimir('TElectronica');
-  openSSl:='C:\OpenSSL-Win32\bin\openssl.exe';
 end;
 
 procedure TDM.connection;
-var
-  IniFile: TIniFile;
-  // ?  dia: Integer;
-  // ?  fech: tdate;
-  bd : string;
 begin
   FormatearFecha;
-  if BaseDatos.Connected = True then
-    BaseDatos.Close;
+  if BaseDatos.Connected = True then BaseDatos.Close;
   // Obtiene la ruta y el nombre de la base de datos
-
   Path := ExtractFilePath(Application.ExeName);
   Path := StringReplace(Path, 'bin\', '', [rfReplaceAll]);
-//  IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'DeG');
-  IniFile := TIniFile.Create((Path+'db\') + 'DeG');
+  LeerINI;
   U := ExtractFileDrive(Application.ExeName);
-  bd := IniFile.ReadString('BD', 'Path', '');
-  if bd<>'' then Path := bd;
-//  if Path = '' then
-//  begin
-//    Path := ExtractFilePath(Application.ExeName);
-//    Path := StringReplace(Path, 'bin\', '', [rfReplaceAll]);
-//  end;
-  BasedeDatos := IniFile.ReadString('BD', 'DBase', '');
-  if BasedeDatos = '' then
-  begin
-    BasedeDatos := Path + 'db\GeN.FDB';
-  end;
-  If BasedeDatos = '' then
-    ShowMessage('Error al cargar Base de Datos');
+  if bd <> '' then Path := bd;
+  if BasedeDatos = '' then BasedeDatos := Path + 'db\GeN.FDB';
+  If BasedeDatos = '' then ShowMessage('Error al cargar Base de Datos');
   BaseDatos.DatabaseName := BasedeDatos;
-  {
-    if Gratis(ExtractFileName(Application.ExeName)) <> True then
-    //NO ES GRATIS
-    begin
-    //licencia
-    if IniFile.ReadString('Licencia','Tipo','') <> Maquina then
-    begin
-    dia:= strtoint(IniFile.ReadString('Licencia','Dia',''));
-    fech:= StrToDate(IniFile.ReadString('Licencia','Fecha',''));
-    if dia > 31 then
-    begin
-    showmessage('EL PERIODO DE LICENCIA HA TERMINADO.'+#13+'LOS ERRORES QUE SE LE PRESENTEN ES DEBIDO HA ELLO.'+#13+'POR FAVOR COMUNIQUESE A:'+#13+'consultas@degsoft.com.ar');
-    if Transaccion.Active=True then Transaccion.Active:=False;
-    Transaccion.Params.Text:= 'read';//'concurrency'+#13+'nowait'+#13+'read';
-    end
-    else
-    if fech <> date then
-    begin
-    IniFile.WriteString('Licencia','Dia',inttostr(dia+1));
-    IniFile.WriteString('Licencia','Fecha',datetostr(date));
-    end;
-    end;
-    end;
-  }
   BaseDatos.Open;
-  // if Transaccion.Active=False then Transaccion.Active:=True;
-  IniFile.Destroy;
-  // Obtiene la ruta y el nombre de la base de datos
-//  IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) +
-//    'Datos.ini');
-//  Unidad := IniFile.ReadString('ACTUALIZA', 'Unidad', '');
 end;
 
 function TDM.ObtenerConfig;
@@ -365,6 +317,8 @@ Var
   IniFile: TIniFile;
 begin
   IniFile := TIniFile.Create(Path + 'db\' + 'DeG');
+  bd := IniFile.ReadString('BD', 'Path', '');
+  BasedeDatos := IniFile.ReadString('BD', 'DBase', '');
   webUrl := IniFile.ReadString('WEB', 'URL', '');
   webRes := IniFile.ReadString('WEB', 'RES', '');
   webUsr := IniFile.ReadString('WEB', 'USR', '');
@@ -375,6 +329,7 @@ begin
   afipUsr := IniFile.ReadString('AFIP', 'USR', '');
   afipPsw := IniFile.ReadString('AFIP', 'PSW', '');
   operNCC := IniFile.ReadString('OPER', 'NCC', '');
+  openSSL := IniFile.ReadString('OSSL', 'EXE', '');
   IniFile.Destroy;
 end;
 
@@ -393,6 +348,7 @@ begin
   IniFile.WriteString('AFIP', 'USR', afipUsr);
   IniFile.WriteString('AFIP', 'PSW', afipPsw);
   IniFile.WriteString('OPER', 'NCC', operNCC);
+  IniFile.WriteString('OSSL', 'EXE', openSSL);
   IniFile.Destroy;
   LeerINI;
 end;
@@ -554,12 +510,29 @@ begin
 end;
 
 function TDM.existeOpenSSL;
+var f :string;
 begin
-  if not FileExists(openSSl) then
+  if openSSl='' then
+    openSSl := 'C:\OpenSSL-Win32\bin\openssl.exe';
+  if FileExists(openSSl) then
+    result:=true
+  else
   begin
-    ShowMessage('Por favor instalar OpenSSL (verificar que se encuentre en C:\OpenSSL-Win32\bin\openssl)!!!');
-    result:=false;
-  end else result:=true;
+    ShowMessage('Seleccione el ejectutable de OpenSSL para continuar...');
+    OpenDialog1.Execute();
+    f := ExtractFilePath(OpenDialog1.FileName)+'openssl.exe';
+    if FileExists(f) then
+    begin
+      openSSl := f;
+      EscribirINI;
+      result:=true;
+    end
+    else
+    begin
+      ShowMessage('Por favor descargar e instalar OpenSSL!!!');
+      result:=false;
+    end;
+  end;
 end;
 
 function TDM.TraerTipoCbte(tipo:string):string;
