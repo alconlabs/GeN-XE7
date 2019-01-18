@@ -513,7 +513,10 @@ function TDM.existeOpenSSL;
 var f :string;
 begin
   if openSSl='' then
-    openSSl := 'C:\OpenSSL-Win32\bin\openssl.exe';
+    begin
+      openSSl := 'C:\OpenSSL-Win32\bin\openssl.exe';
+      EscribirINI;
+    end;
   if FileExists(openSSl) then
     result:=true
   else

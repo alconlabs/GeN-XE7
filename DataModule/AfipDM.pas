@@ -398,8 +398,10 @@ begin
 //  m.Add('openssl smime -sign -in '+ruta+'ticketsf.xml -out '+ruta+'ticketf.xml -inkey '+ruta+'MiClavePrivada -signer '+ruta+'certificado.crt -outform PEM -nodetach ');
 //  m.SaveToFile(ruta + 'firmar.bat');
 //  m.Clear;
+
   xml := ' smime -sign -in "'+ruta+'ticketsf.xml" -out "'+ruta+'ticketf.xml" -inkey "'+ruta+'MiClavePrivada" -signer "'+ruta+'certificado.crt" -outform PEM -nodetach';
-  DM.Ejecutar(openSSl+xml);
+  with dm do if existeOpenSSL then Ejecutar(openSSl+xml);
+
   sleep(1000);
 //ShellExecute(0, 'open', PChar(VarToStr(ruta + 'firmar.bat')), 'param1 param2', nil,  SW_HIDE);
 end;
@@ -431,8 +433,8 @@ var
   ChildNode, cc : IXMLNode;
 begin
   MDate := Now;
-  F1    := MDate;//IncHour(MDate, - Abs(4));
-  F2    := IncDay(MDate, 1);//IncHour(MDate, + Abs(4));
+  F1    := IncHour(MDate, - Abs(4));
+  F2    := IncHour(MDate, + Abs(4));
   Uni   := inttostr(GenUniqueId(F1));
   Gen   := FormatDateTime('yyyy-MM-dd', F1)+'T'+FormatDateTime('hh:nn:ss', F1);
   Exp   := FormatDateTime('yyyy-MM-dd', F2)+'T'+FormatDateTime('hh:nn:ss', F2);
