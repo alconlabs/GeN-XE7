@@ -268,7 +268,8 @@ begin
         PaintBox1.Visible:=True;
       end
   else
-    ShowMessage('LONGITUD DE CODIGO NO VALIDA');
+//    ShowMessage('LONGITUD DE CODIGO NO VALIDA');
+    PaintBox1.Visible:=False;
   end;
 end;
 

@@ -323,7 +323,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'Descripcion'
         DataSource = DataSource
-        TabOrder = 1
+        TabOrder = 0
       end
       object DBEdit1: TDBEdit
         Left = 90
@@ -332,7 +332,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'Disponible'
         DataSource = DataSource
-        TabOrder = 3
+        TabOrder = 2
       end
       object DBLookupComboBox4: TDBLookupComboBox
         Left = 90
@@ -344,7 +344,7 @@ object FProductos: TFProductos
         KeyField = 'CODIGO'
         ListField = 'NOMBRE'
         ListSource = DSQProve
-        TabOrder = 2
+        TabOrder = 1
         OnEnter = DBLookupComboBox4Enter
       end
       object BitBtn13: TBitBtn
@@ -362,7 +362,7 @@ object FProductos: TFProductos
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 9
+        TabOrder = 8
         OnClick = BitBtn13Click
       end
       object FleteDBEdit: TDBEdit
@@ -372,7 +372,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'ImpOtros'
         DataSource = DataSource
-        TabOrder = 5
+        TabOrder = 4
       end
       object CostoDBEdit: TDBEdit
         Left = 90
@@ -381,7 +381,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'Costo'
         DataSource = DataSource
-        TabOrder = 4
+        TabOrder = 3
       end
       object PrecioCtaCteDBEdit: TDBEdit
         Left = 519
@@ -390,7 +390,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'PRECIO'
         DataSource = DataSource
-        TabOrder = 8
+        TabOrder = 7
       end
       object GanaciaDBEdit: TDBEdit
         Left = 519
@@ -399,7 +399,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'PORCENTAJE'
         DataSource = DataSource
-        TabOrder = 7
+        TabOrder = 6
         OnExit = GanaciaDBEditExit
       end
       object CodigoBarraEdit: TDBEdit
@@ -409,7 +409,7 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'CodigoBarra'
         DataSource = DataSource
-        TabOrder = 0
+        TabOrder = 9
       end
       object CodigoBarraBitBtn: TBitBtn
         Left = 195
@@ -437,7 +437,7 @@ object FProductos: TFProductos
           '21'
           '105'
           '0')
-        TabOrder = 6
+        TabOrder = 5
       end
     end
     object TabSheet3: TTabSheet
