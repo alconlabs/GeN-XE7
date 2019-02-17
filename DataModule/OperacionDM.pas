@@ -1568,7 +1568,7 @@ begin
   if fecha = '' then fecha := DateToStr(now);
   if fechacompult = '' then fechacompult := fecha;
   if tasa = '' then tasa := '21';
-  if porcentaje = '' then porcentaje := '50';
+  if porcentaje = '' then porcentaje := FloatToStr(dm.ConfigQuery.FieldByName('PP').AsFloat);
   if disponible = '' then disponible := '1';
   precio := StringReplace(precio, ',', '.',[]);
   ganancia := StrToFloat(precio)/(StrToFloat(tasa)/100+1);

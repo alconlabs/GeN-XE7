@@ -121,7 +121,7 @@ var
   i,p : integer;
   mar, col, cat, subcat, rub, s, disponible, costo, fecha : string;
   categories: TJSONArray;
-  precio, iva, ganancia: Double;
+  precio, iva, ganancia, porcentaje : Double;
   function ConvertToDateTimeStr(DateStr: String): String;
   var
     s: string;
@@ -136,7 +136,6 @@ var
   end;
 
 begin
-//  with OperacionDataModule do
 with RestDataModule do
   begin
     ProgressBar1.Position := ProgressBar1.Position+1;
@@ -180,13 +179,15 @@ with RestDataModule do
   //            subcat := '0';
   //          end;
             disponible:=O.FieldByName('stock_quantity').AsString;
+            dm.TraerConfig;
+            porcentaje := dm.ConfigQuery.FieldByName('PP').AsFloat;
             if O.FieldByName('price').AsString='' then precio:=0 else precio:=O.FieldByName('price').AsFloat;
             if (O.FieldByName('tax_class').AsString = 'tasa-reducida') then
               iva := 10.5
               else
                 iva := 21;
             ganancia := precio/(iva/100+1);
-            costo := FloatToStrF( ( ganancia/(50/100+1) ), ffFixed, 16, 2 );
+            costo := FloatToStrF( ( ganancia/(porcentaje/100+1) ), ffFixed, 16, 2 );
             fecha := ConvertToDateTimeStr(O.FieldByName('date_modified').AsString);
             if disponible='' then disponible:='0';
             if not (OperacionDataModule.existeEnTabla('Articulo','CODIGO='+O.FieldByName('id').AsString)) then
