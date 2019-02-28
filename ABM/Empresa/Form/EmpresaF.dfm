@@ -594,7 +594,6 @@ object EmpresaForm: TEmpresaForm
         Height = 21
         DataField = 'IVA'
         DataSource = DataSource
-        Enabled = False
         TabOrder = 18
         OnChange = IVADBComboBoxChange
       end
@@ -612,8 +611,8 @@ object EmpresaForm: TEmpresaForm
         Top = 193
         Width = 202
         Height = 21
-        Date = 42827.892104178240000000
-        Time = 42827.892104178240000000
+        Date = 43466.892104178240000000
+        Time = 43466.892104178240000000
         TabOrder = 19
       end
       object DBLookupComboBox2: TDBLookupComboBox
@@ -853,12 +852,12 @@ object EmpresaForm: TEmpresaForm
   end
   object DataSource: TDataSource
     DataSet = Tabla
-    Left = 184
+    Left = 172
     Top = 396
   end
   object CuentaDataSource: TDataSource
     DataSet = CuentaT
-    Left = 270
+    Left = 249
     Top = 396
   end
   object Tabla: TIBTable
@@ -1048,7 +1047,7 @@ object EmpresaForm: TEmpresaForm
     StoreDefs = True
     TableName = 'Empresa'
     UniDirectional = False
-    Left = 152
+    Left = 144
     Top = 396
   end
   object CuentaT: TIBQuery
@@ -1060,12 +1059,12 @@ object EmpresaForm: TEmpresaForm
     SQL.Strings = (
       'select * from "Cuenta"'
       'order by DESCRIPCION')
-    Left = 240
+    Left = 221
     Top = 396
   end
   object OpenPictureDialog1: TOpenPictureDialog
     Filter = 'Bitmaps (*.bmp)|*.bmp'
-    Left = 440
+    Left = 400
     Top = 396
   end
   object IIBBQuery: TIBQuery
@@ -1076,12 +1075,12 @@ object EmpresaForm: TEmpresaForm
     ParamCheck = True
     SQL.Strings = (
       'Select * from "IIBB"')
-    Left = 363
+    Left = 325
     Top = 396
   end
   object IIBBDataSource: TDataSource
     DataSet = IIBBQuery
-    Left = 335
+    Left = 297
     Top = 396
   end
 end

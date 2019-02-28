@@ -126,7 +126,6 @@ object FProductos: TFProductos
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        Visible = False
       end
       object Label28: TLabel
         Left = 590
@@ -182,7 +181,6 @@ object FProductos: TFProductos
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        Visible = False
       end
       object Label24: TLabel
         Left = 14

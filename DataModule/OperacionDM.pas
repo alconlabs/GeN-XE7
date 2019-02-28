@@ -846,12 +846,15 @@ DM.FormatearFecha;
   end;
   // INSERTA EN LA TABLA VENTA
   Q.SQL.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE, ' +
-    ' SUBTOTAL, DESCUENTO, FECHA, IMPUESTO, IIBB, TOTAL, CONTADO, CHEQUE,' +
+    ' SUBTOTAL, DESCUENTO, FECHA'+
+    ', IMPUESTO, IVA1, IVA2'+
+    ', IIBB, TOTAL, CONTADO, CHEQUE,' +
     ' TARJETA, OTROS, SALDO, PAGADO' + ', PAGARE, COSTO, DEUDA, COMISION, DESCRIPCION' +
     ') Values ' + '('+QuotedStr(comp)+', ' + quotedstr(vto) + ', ' + (nro) + ', ' +
-    quotedstr(let) + ', ' + cod + ', ' + floattostr(sbt) + ', ' + floattostr(des) + ', ' +
-    quotedstr(fech) + ', ' + floattostr(impu) + ', ' + floattostr(IIBB) + ', ' +
-    floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
+    quotedstr(let) + ', ' + cod + ', ' +
+    floattostr(sbt) + ', ' + floattostr(des) + ', ' + quotedstr(fech) + ', ' +
+    floattostr(impu) + ', ' + floattostr(i10) + ', ' + floattostr(i21) + ', ' +
+    floattostr(IIBB) + ', ' + floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
     floattostr(pag) + ', ' + quotedstr(pagare) + ', ' + floattostr(cmv) + ', ' +
     floattostr(deud) + ',' + floattostr(comv) + ', ' + QuotedStr(cae) + ')';

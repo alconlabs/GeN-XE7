@@ -152,7 +152,6 @@ object FullMainForm: TFullMainForm
       end
       object LIBROS1: TMenuItem
         Caption = 'LIBROS'
-        Visible = False
         object DIARIO1: TMenuItem
           Caption = 'DIARIO'
           OnClick = DIARIO1Click

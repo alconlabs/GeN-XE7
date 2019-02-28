@@ -459,7 +459,7 @@ var
   comision
   : Integer;
   campo : string;
-//  i10, i21 : Double;
+  n10, n21 : Double;
 begin
 	try
 		csv := TStringList.Create;
@@ -535,8 +535,12 @@ begin
 //			ProgressBar1.Position := i;
 //			fila.CommaText := csv.Strings[i];
       fila.DelimitedText:= csv.Strings[i];
+
       if fila[iva1]='' then fila[iva1]:='0';
+      if fila[iva1]='0' then n10 := 0 else n10:=(StrToFloat(fila[iva1])*100)/10.5;
       if fila[iva2]='' then fila[iva2]:='0';
+      if fila[iva2]='0' then n21:=0 else n21:=(StrToFloat(fila[iva2])*100)/21;
+
       if fila[pagare]='1' then fila[pagare]:='True' else fila[pagare]:='False';
 //      fila[fecha] := FormatDateTime('mm/dd/yyyy hh:mm:ss', StrToDateTime(fila[fecha]));
       OperacionDataModule.
@@ -564,8 +568,8 @@ begin
         , StrToFloat(fila[saldo])// sal
         , StrToFloat(fila[pagado])// pag
         , 0// int
-        , (StrToFloat(fila[iva1])/1.105)// n10
-        , (StrToFloat(fila[iva2])/1.21)// n21
+        , n10
+        , n21
         , StrToFloat(fila[iva1])// i10
         , StrToFloat(fila[iva2])// i21
         , StrToFloat(fila[deuda])// deud
