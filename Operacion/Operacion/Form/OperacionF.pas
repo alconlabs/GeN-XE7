@@ -748,13 +748,14 @@ end;
 procedure TOperacionForm.ProcesarBitBtnClick(Sender: TObject);
 var
   r, c: Integer;
-  ok : Boolean;
+  ok, impr : Boolean;
 begin
   if Total >0 then
   begin
     screen.Cursor := crHourGlass;
     c := 0; // columna i
     r := 0; // row j
+    if dm.ConfigQuery.FieldByName('Imprimir').AsString<>'NO' then impr := True;
     OperacionDataModule := TOperacionDataModule.Create(self);
     with OperacionDataModule do
     begin
@@ -776,7 +777,7 @@ begin
       if PedidoCheckBox.Checked then
       ProcOPER('PED', 'X', ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-        VendedorEdit.Text, '', CtaNombre, False, PagareCheckBox.Checked, costo,
+        VendedorEdit.Text, '', CtaNombre, False, PagareCheckBox.Checked, impr, costo,
         Comision, Impuesto, StrToFloat(FECheque.Text), 0,
         StrToFloat(FEContado.Text), Total, subtotal, desc,
         StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text), Saldo, Pagado,
@@ -794,7 +795,7 @@ begin
         ok := ProcVTA(cbTipo.Text, ClienteEdit.Text,
           FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
           VendedorEdit.Text, CUITLabel.Caption, CtaNombre, Presupuesto.Checked,
-          PagareCheckBox.Checked, costo, Comision, Impuesto,
+          PagareCheckBox.Checked, impr, costo, Comision, Impuesto,
           StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
           Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);

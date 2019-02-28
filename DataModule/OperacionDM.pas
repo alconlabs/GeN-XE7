@@ -23,11 +23,11 @@ type
   TOperacionDataModule = class(TDataModule)
     Q: TIBQuery;
     T: TIBQuery;
-    function ProcVTA(let, cod, fech, ven, cui, ctan: string; pre, pgr: Boolean;
+    function ProcVTA(let, cod, fech, ven, cui, ctan: string; pre, pgr,impr: Boolean;
       cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
       int, n10, n21, i10, i21, deud, ulc: Double):Boolean;
     Procedure ProcOPER(tipo, let, cod, fech, ven, cui, ctan: string;
-      pre, pgr: Boolean; cost, comv, impu, cheq, ch3q, cont, tot, sbt, des,
+      pre, pgr, impr: Boolean; cost, comv, impu, cheq, ch3q, cont, tot, sbt, des,
       tarj, otr, sal, pag, int, n10, n21, i10, i21, deud, ulc: Double);
     Procedure ProcCompra(let, cod, fech, ven, com, ctan,cui: string; pgr: Boolean;
       cost, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag, n10,
@@ -857,23 +857,24 @@ DM.FormatearFecha;
     floattostr(deud) + ',' + floattostr(comv) + ', ' + QuotedStr(cae) + ')';
   Q.ExecSQL;
   // Insertar en la tabla de VENTAITEM
-  for i := 1 to High(mat[0]) do
-  begin
-    // CALCULAR IIBB
-//    Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + quotedstr(mat[9, i]);
-//    Q.Open;
-//    if tot - impu > Q.FieldByName('MONTO').AsFloat then
-//      IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
-//        Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
-    if (mat[1, i]= 'Deuda CtaCte') then
-      ctaCte := True;
-    Q.SQL.Text :=
-      'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-      + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
-      (mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
-      quotedstr(mat[1, i]) + ');';
-    Q.ExecSQL;
-  end;
+  if mat <> nil then
+    for i := 1 to High(mat[0]) do
+    begin
+      // CALCULAR IIBB
+  //    Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + quotedstr(mat[9, i]);
+  //    Q.Open;
+  //    if tot - impu > Q.FieldByName('MONTO').AsFloat then
+  //      IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
+  //        Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
+      if (mat[1, i]= 'Deuda CtaCte') then
+        ctaCte := True;
+      Q.SQL.Text :=
+        'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
+        + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
+        (mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
+        quotedstr(mat[1, i]) + ');';
+      Q.ExecSQL;
+    end;
 
   if ctaCte then
   begin
@@ -925,13 +926,14 @@ DM.FormatearFecha;
     Q.ExecSQL;
   end;
   // Actualizar la tabla de Articulos
-  for i := 1 to High(mat[0]) do
-  begin
-    OperacionDataModule.ActualizarCantidadArticulo(mat[0, i], mat[3, i])
-//    Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE - ' + mat[3, i]
-//      + ' Where "Articulo".CODIGO = ' + (mat[0, i]);
-//    Q.ExecSQL;
-  end;
+  if mat <> nil then
+    for i := 1 to High(mat[0]) do
+    begin
+      OperacionDataModule.ActualizarCantidadArticulo(mat[0, i], mat[3, i])
+  //    Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE - ' + mat[3, i]
+  //      + ' Where "Articulo".CODIGO = ' + (mat[0, i]);
+  //    Q.ExecSQL;
+    end;
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA VENTAS
   if let = 'A' then//  if let <> 'X' then
@@ -944,7 +946,7 @@ DM.FormatearFecha;
   Q.Transaction.CommitRetaining;
 //  if webUpd='True' then RestDataModule.CrearOrden;
   // IMPRIMIR
-  if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
+  if impr then
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
@@ -1049,7 +1051,7 @@ begin
   // Completa la Transaccion
   Q.Transaction.CommitRetaining;
   // IMPRIMIR
-  if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
+  if impr then
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do

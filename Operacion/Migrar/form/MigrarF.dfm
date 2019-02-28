@@ -1,7 +1,7 @@
 object MigrarForm: TMigrarForm
   Left = 0
   Top = 0
-  Caption = 'Importar Articulos'
+  Caption = 'Migrar '
   ClientHeight = 309
   ClientWidth = 290
   Color = clWindow
@@ -14,6 +14,7 @@ object MigrarForm: TMigrarForm
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel

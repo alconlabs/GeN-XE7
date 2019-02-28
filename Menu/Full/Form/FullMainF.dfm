@@ -354,7 +354,14 @@ object FullMainForm: TFullMainForm
       object MIGRAR1: TMenuItem
         Caption = 'MIGRAR'
         Hint = 'MIGRAR DESDE VERSIONES ANTERIORES'
-        OnClick = MIGRAR1Click
+        object MigrarArticulos: TMenuItem
+          Caption = 'ARTICULOS'
+          OnClick = MigrarArticulosClick
+        end
+        object MigrarVentas: TMenuItem
+          Caption = 'VENTAS'
+          OnClick = MigrarVentasClick
+        end
       end
     end
     object N1: TMenuItem

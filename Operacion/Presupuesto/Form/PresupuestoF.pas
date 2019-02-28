@@ -545,7 +545,9 @@ end;
 procedure TPresupuestoForm.ProcesarBitBtnClick(Sender: TObject);
 var
   r, c: Integer;
+  impr : Boolean;
 begin
+  if dm.ConfigQuery.FieldByName('Imprimir').AsString<>'NO' then impr := True;
   c := 0; // columna i
   r := 0; // row j
   OperacionDataModule := TOperacionDataModule.Create(self);
@@ -560,7 +562,7 @@ begin
       end;
     ProcVTA(cbTipo.Text, ClienteEdit.Text, FormatDateTime('mm/dd/yyyy hh:mm:ss',
       FechaDateTimePicker.DateTime), VendedorEdit.Text, DocumentoLabel.Caption,
-      CtaNombre, Presupuesto.Checked, PagareCheckBox.Checked, costo, Comision,
+      CtaNombre, Presupuesto.Checked, PagareCheckBox.Checked, impr, costo, Comision,
       Impuesto, StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
       subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
       Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);

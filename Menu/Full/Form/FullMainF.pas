@@ -98,6 +98,8 @@ type
     COMPRAS1: TMenuItem;
     VENTAS1: TMenuItem;
     PAGODEIIBB1: TMenuItem;
+    MigrarArticulos: TMenuItem;
+    MigrarVentas: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ProveedoresClick(Sender: TObject);
@@ -172,13 +174,14 @@ type
     procedure INCOBRABLE1Click(Sender: TObject);
     procedure Acercade1Click(Sender: TObject);
     procedure Ayuda1Click(Sender: TObject);
-    procedure MIGRAR1Click(Sender: TObject);
     procedure IngresosBrutosClick(Sender: TObject);
     procedure COMPRAS1Click(Sender: TObject);
     procedure VENTAS1Click(Sender: TObject);
     procedure SubCategoriasClick(Sender: TObject);
     procedure ReImprimirClick(Sender: TObject);
     procedure PAGODEIIBB1Click(Sender: TObject);
+    procedure MigrarArticulosClick(Sender: TObject);
+    procedure MigrarVentasClick(Sender: TObject);
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
@@ -455,6 +458,17 @@ begin
   end;
 end;
 
+procedure TFullMainForm.MigrarArticulosClick(Sender: TObject);
+begin
+  MigrarForm := TMigrarForm.Create(self);
+  MigrarForm.tabla := 'Articulo';
+  try
+    MigrarForm.ShowModal;
+  finally
+    MigrarForm.Free;
+  end;
+end;
+
 procedure TFullMainForm.Aumentarporporcentaje1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'IncrementarValor.exe')), SW_SHOWNORMAL);
@@ -533,6 +547,17 @@ begin
   // WinExec(PAnsiChar(AnsiString(path + 'VentaL.exe')), SW_SHOWNORMAL);
 end;
 
+procedure TFullMainForm.MigrarVentasClick(Sender: TObject);
+begin
+  MigrarForm := TMigrarForm.Create(self);
+  MigrarForm.tabla := 'Venta';
+  try
+    MigrarForm.ShowModal;
+  finally
+    MigrarForm.Free;
+  end;
+end;
+
 procedure TFullMainForm.LibroIVACompras1Click(Sender: TObject);
 begin
   WinExec(PAnsiChar(AnsiString(path + 'LibroIVACompras.exe')), SW_SHOWNORMAL);
@@ -562,17 +587,6 @@ begin
     UsuariosForm.ShowModal;
   finally
     UsuariosForm.Free;
-  end;
-end;
-
-procedure TFullMainForm.MIGRAR1Click(Sender: TObject);
-begin
-  // WinExec(PAnsiChar(AnsiString(path + 'Migrar.exe')), SW_SHOWNORMAL);
-  MigrarForm := TMigrarForm.Create(self);
-  try
-    MigrarForm.ShowModal;
-  finally
-    MigrarForm.Free;
   end;
 end;
 

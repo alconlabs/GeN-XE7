@@ -542,8 +542,10 @@ end;
 
 procedure TCrearPedidoForm.ProcesarBitBtnClick(Sender: TObject);
 var
-  r, c: Integer;
+  r, c : Integer;
+  impr : Boolean;
 begin
+  if dm.ConfigQuery.FieldByName('Imprimir').AsString<>'NO' then impr := True;
   c := 0; // columna i
   r := 0; // row j
   OperacionDataModule := TOperacionDataModule.Create(self);
@@ -557,7 +559,7 @@ begin
       end;
     ProcOPER('PED', cbTipo.Text, ClienteEdit.Text,
       FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-      VendedorEdit.Text, '', CtaNombre, False, PagareCheckBox.Checked, costo,
+      VendedorEdit.Text, '', CtaNombre, False, PagareCheckBox.Checked, impr, costo,
       Comision, Impuesto, StrToFloat(FECheque.Text), 0,
       StrToFloat(FEContado.Text), Total, subtotal, desc,
       StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text), Saldo, Pagado,

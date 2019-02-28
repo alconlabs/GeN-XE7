@@ -40,14 +40,17 @@ type
     procedure Timer1Timer(Sender: TObject);
     procedure ExportarButtonClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
 //    procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
     RubroId, CategoriaId, SubCategoriaId : string;
     procedure Procesar;
-    procedure Importar;
+    procedure ImportarArticulo;
+    procedure ImportarVenta;
   public
     { Public declarations }
+    tabla : string;
   end;
 
 var
@@ -69,8 +72,9 @@ var
   OutLine: string;
   sTemp: string;
 begin
+  SaveTextFileDialog1.FileName := tabla;
   with OperacionDataModule do begin
-    Q.SQL.Text:='Select * from "Articulo"';
+    Q.SQL.Text:='Select * from "'+tabla+'"';
     Q.Open;
     SaveTextFileDialog1.Execute();
     DataSetToCsv( SaveTextFileDialog1.FileName );
@@ -104,11 +108,21 @@ begin
   RestDataModule := TRestDataModule.Create(self);
 end;
 
+procedure TMigrarForm.FormShow(Sender: TObject);
+begin
+  Caption := Caption + tabla;
+end;
+
 procedure TMigrarForm.ImportarButtonClick(Sender: TObject);
 begin
   Timer1.Enabled:=True;
   if BorrarArticulosCheckBox.Checked then OperacionDataModule.BorrarArticulos;
-  if DesdeRadioGroup.ItemIndex = 0 then Importar else Procesar;
+  if DesdeRadioGroup.ItemIndex = 0 then
+    begin
+      if tabla = 'Venta' then ImportarVenta;
+      if tabla = 'Articulo' then ImportarArticulo;
+    end
+  else Procesar;
 end;
 
 procedure TMigrarForm.Timer1Timer(Sender: TObject);
@@ -244,7 +258,7 @@ with RestDataModule do
     end;
 end;
 
-procedure TMigrarForm.Importar;
+procedure TMigrarForm.ImportarArticulo;
 var
   csv : TStringList;
   fila : TStringList;
@@ -403,5 +417,196 @@ begin
 Close;
 end;
 
+procedure TMigrarForm.ImportarVenta;
+var
+  csv : TStringList;
+  fila : TStringList;
+  i, j,
+  codigo,
+  letra,
+  fecha,
+  cliente,
+  terminos,
+  comprobante,
+  remito,
+  vendedor,
+  excento,
+  anulada,
+  subtotal,
+  descuento,
+  impuesto,
+  iva1,
+  iva2,
+  iva3,
+  iibb,
+  minimp,
+  total,
+  contado,
+  cheque,
+  tarjeta,
+  otros,
+  monedaextranjera,
+  meimporte,
+  metipocambio,
+  saldo,
+  pagado,
+  descripcion,
+  usuario,
+  empresa,
+  pagare,
+  costo,
+  deuda,
+  comision
+  : Integer;
+  campo : string;
+//  i10, i21 : Double;
+begin
+	try
+		csv := TStringList.Create;
+		// cargar a partir del fichero csv
+//		csv.LoadFromFile(FolderDialog.Directory + 'datos.csv');
+    OpenTextFileDialog1.Execute();
+		csv.LoadFromFile( OpenTextFileDialog1.FileName );
+
+		fila := TStringList.Create;
+    fila.StrictDelimiter := True;
+    fila.Delimiter := ',';
+
+//		ProgressBar1.Max := csv.Count -1;
+
+    StringGrid1.Cells[0,0]:='code';
+   // fila.CommaText := csv.Strings[0];
+
+    fila.DelimitedText:= csv.Strings[0];
+    StringGrid1.ColCount := fila.Count;
+    // recorrer la columna
+    for j := 0 to fila.Count -1 do
+    begin
+//				lista.Items.Add(fila[j]);
+      campo:=Trim(fila[j]);
+//        if campo='CODIGOBARRA' then cb:=j else if campo='COSTO' then costo:=j;
+
+      Case IndexStr(campo, ['CODIGO', 'LETRA', 'FECHA', 'CLIENTE', 'TERMINOS'
+      , 'COMPROBANTE', 'REMITO', 'VENDEDOR', 'EXCENTO', 'ANULADA', 'SUBTOTAL'      , 'DESCUENTO', 'IMPUESTO', 'IVA1', 'IVA2', 'IVA3', 'IIBB', 'MINIMP', 'TOTAL'      , 'CONTADO', 'CHEQUE', 'TARJETA', 'OTROS', 'MONEDAEXTRANJERA', 'MEIMPORTE'      , 'METIPOCAMBIO', 'SALDO', 'PAGADO', 'DESCRIPCION', 'USUARIO', 'EMPRESA'      , 'PAGARE', 'COSTO', 'DEUDA', 'COMISION']) of      0 : codigo:=j;
+      1 : letra:=j;
+      2 : fecha:=j;
+      3 : cliente:=j;
+      4 : terminos:=j;
+      5 : comprobante:=j;
+      6 : remito:=j;
+      7 : vendedor:=j;
+      8 : excento:=j;
+      9 : anulada:=j;
+      10 : subtotal:=j;
+      11 : descuento:=j;
+      12 : impuesto:=j;
+      13 : iva1:=j;
+      14 : iva2:=j;
+      15 : iva3:=j;
+      16 : iibb:=j;
+      17 : minimp:=j;
+      18 : total:=j;
+      19 : contado:=j;
+      20 : cheque:=j;
+      21 : tarjeta:=j;
+      22 : otros:=j;
+      23 : monedaextranjera:=j;
+      24 : meimporte:=j;
+      25 : metipocambio:=j;
+      26 : saldo:=j;
+      27 : pagado:=j;
+      28 : descripcion:=j;
+      29 : usuario:=j;
+      30 : empresa:=j;
+      31 : pagare:=j;
+      32 : costo:=j;
+      33 : deuda:=j;
+      34 : comision:=j;
+//        else ShowMessage('Unknown!');
+      end;
+
+      StringGrid1.Cells[j,0]:=campo;
+    end;
+
+    StringGrid1.RowCount := csv.Count;
+		// recorrer las filas
+		for i := 1 to csv.Count -1 do
+		begin
+//			ProgressBar1.Position := i;
+//			fila.CommaText := csv.Strings[i];
+      fila.DelimitedText:= csv.Strings[i];
+      if fila[iva1]='' then fila[iva1]:='0';
+      if fila[iva2]='' then fila[iva2]:='0';
+      if fila[pagare]='1' then fila[pagare]:='True' else fila[pagare]:='False';
+//      fila[fecha] := FormatDateTime('mm/dd/yyyy hh:mm:ss', StrToDateTime(fila[fecha]));
+      OperacionDataModule.
+        ProcVTA(
+         fila[letra]// let
+        , fila[cliente]// cod
+        , fila[fecha]// fech
+        , fila[vendedor]// ven
+        , ''// cui
+        , ''// ctan: string;
+        , False// pre
+        , StrToBool(fila[pagare])// pgr: Boolean;
+        , False// impr
+        , StrToFloat(fila[costo])// cost
+        , StrToFloat(fila[comision])// comv
+        , StrToFloat(fila[impuesto])// impu
+        , StrToFloat(fila[cheque])// cheq
+        , 0// ch3q
+        , StrToFloat(fila[contado])// cont
+        , StrToFloat(fila[total])// tot
+        , StrToFloat(fila[subtotal])// sbt
+        , StrToFloat(fila[descuento])// des
+        , StrToFloat(fila[tarjeta])// tarj
+        , StrToFloat(fila[otros])// otr
+        , StrToFloat(fila[saldo])// sal
+        , StrToFloat(fila[pagado])// pag
+        , 0// int
+        , (StrToFloat(fila[iva1])/1.105)// n10
+        , (StrToFloat(fila[iva2])/1.21)// n21
+        , StrToFloat(fila[iva1])// i10
+        , StrToFloat(fila[iva2])// i21
+        , StrToFloat(fila[deuda])// deud
+        , 0// ulc
+        );
+    {
+          fila[codigo]
+          , fila[terminos]
+          , fila[comprobante]
+          , fila[remito]
+          , fila[excento]
+          , fila[anulada]
+          , fila[iva3]
+          , fila[iibb]
+          , fila[minimp]
+          , fila[monedaextranjera]
+          , fila[meimporte]
+          , fila[metipocambio]
+          , fila[descripcion]
+          , fila[usuario]
+          , fila[empresa]
+}
+			// recorrer las columnas
+			for j := 0 to fila.Count -1 do
+			begin
+//				lista.Items.Add(fila[j]);
+        campo:=fila[j];
+        StringGrid1.Cells[j,i]:=campo;
+			end;
+		end;
+		MessageDlg('Lectura Exitosa..', mtInformation, [mbOK], 0);
+  OperacionDataModule.Q.Transaction.CommitRetaining;
+	Except
+	    on E : Exception do
+	    begin
+			MessageDlg('Ocurrio un Error: ' + E.Message, mtInformation, [mbOK], 0);
+	    end;
+	end;
+	// liberar la memoria
+	csv.Free;
+Close;
+end;
 
 end.
