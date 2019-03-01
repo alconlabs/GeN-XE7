@@ -86,7 +86,7 @@ var
   mat: matriz;
   OperacionDataModule: TOperacionDataModule;
 
-const tipoIVA : array[1..7] of string = ('Responsable Monotributo','Responsable Inscripto','Exento','No Responsable','S.R.L.','S.A.','Cooperativa');
+const tipoIVA : array[1..3] of string = ('Responsable Monotributo','Responsable Inscripto','No Responsable');//,'Exento','S.R.L.','S.A.','Cooperativa');
 
 implementation
 

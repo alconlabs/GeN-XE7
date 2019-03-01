@@ -522,6 +522,7 @@ begin
 end;
 
 procedure TOperacionForm.ClienteBitBtnClick(Sender: TObject);
+var tipoIVA:string;
 begin
   QuitarArticulos;
   Deuda := 0;
@@ -581,23 +582,27 @@ begin
         IF Tabla.FieldByName('PAGARE').AsString = 'SI' THEN
           PagareCheckBox.Checked := True;
         // IVA
-        // if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') and
-        // (Tabla.FieldByName('IVA').AsString = 'RI') then
-        // cbTipo.ItemIndex := 0
-        // else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') and
-        // (Tabla.FieldByName('IVA').AsString <> 'RI') then
-        // cbTipo.ItemIndex := 1
-        // else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'NR') then
-        // cbTipo.ItemIndex := 4
-        // else
-        // cbTipo.ItemIndex := 2;
-        // if ((Tabla.FieldByName('IVA').AsString = 'Responsable Inscripto') or (Tabla.FieldByName('IVA').AsString = 'S.R.L.') or (Tabla.FieldByName('IVA').AsString = 'S.A.') or (Tabla.FieldByName('IVA').AsString = 'Cooperativa')) and (cbTipo.ItemIndex = 1) then cbTipo.ItemIndex := 1;
-        if (((Tabla.FieldByName('IVA').AsString = 'Responsable Monotributo') or
-          (Tabla.FieldByName('IVA').AsString = 'Exento') or
-          (Tabla.FieldByName('IVA').AsString = 'S.A.') or
-          (Tabla.FieldByName('IVA').AsString = 'No Responsable')) and
-          (cbTipo.ItemIndex = 1)) then
-          cbTipo.ItemIndex := 6;
+        tipoIVA := Tabla.FieldByName('IVA').AsString;
+        if dm.ConfigQuery.FieldByName('IVA').AsString='Responsable Monotributo' then cbTipo.ItemIndex := 11
+        else
+          if dm.ConfigQuery.FieldByName('IVA').AsString='Responsable Inscripto' then
+            if tipoIVA='Responsable Inscripto' then cbTipo.ItemIndex := 0
+            else cbTipo.ItemIndex := 6;
+//        else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') and
+//        (Tabla.FieldByName('IVA').AsString <> 'RI') then
+//        cbTipo.ItemIndex := 1
+//        else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'NR') then
+//        cbTipo.ItemIndex := 4
+//        else
+//        cbTipo.ItemIndex := 2;
+//        if ((Tabla.FieldByName('IVA').AsString = 'Responsable Inscripto') or (Tabla.FieldByName('IVA').AsString = 'S.R.L.') or (Tabla.FieldByName('IVA').AsString = 'S.A.') or (Tabla.FieldByName('IVA').AsString = 'Cooperativa')) and (cbTipo.ItemIndex = 1) then cbTipo.ItemIndex := 1;
+//
+//        if (((Tabla.FieldByName('IVA').AsString = 'Responsable Monotributo') or
+//          (Tabla.FieldByName('IVA').AsString = 'Exento') or
+//          (Tabla.FieldByName('IVA').AsString = 'S.A.') or
+//          (Tabla.FieldByName('IVA').AsString = 'No Responsable')) and
+//          (cbTipo.ItemIndex = 1)) then
+//          cbTipo.ItemIndex := 6;
 
         if TipoRadioGroup.ItemIndex = 0 then
         begin

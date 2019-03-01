@@ -169,7 +169,7 @@ begin
   CuentaT.Open;
   Tabla.Open;
   Tabla.Insert;
-  for i := 1 to 7 do IVADBComboBox.Items.Add(OperacionDM.tipoIVA[i]);
+  for i := 1 to 3 do IVADBComboBox.Items.Add(OperacionDM.tipoIVA[i]);
 end;
 
 procedure TFClientes.FormKeyPress(Sender: TObject; var Key: Char);

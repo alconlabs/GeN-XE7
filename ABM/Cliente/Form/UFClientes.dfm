@@ -31,6 +31,10 @@ object FClientes: TFClientes
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label2: TLabel
         Left = 229
         Top = 67
@@ -338,6 +342,10 @@ object FClientes: TFClientes
     object TabSheet2: TTabSheet
       Caption = 'Notas'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -483,6 +491,10 @@ object FClientes: TFClientes
     object TabSheet4: TTabSheet
       Caption = 'Datos Secundarios'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label19: TLabel
         Left = 43
         Top = 50
@@ -655,6 +667,10 @@ object FClientes: TFClientes
     object TabSheet5: TTabSheet
       Caption = 'Parametros'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label13: TLabel
         Left = 20
         Top = 29
