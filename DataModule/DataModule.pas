@@ -76,7 +76,7 @@ var
   DM: TDM;
   Compartido: PCompartido;
   FicheroM: THandle;
-  Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa, PuntoVenta, Titular, CUIT, IngresosBrutos, reporte: string;
+  Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa, PuntoVenta, Titular, CUIT, IngresosBrutos, reporte, catIVA: string;
   Permiso: Integer;
   LoginOK, Cancelar: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
@@ -230,6 +230,7 @@ ConfigQuery.SQL.Text := 'SELECT '
   reporte := ConfigQuery.FieldByName('Reporte').AsString;
   IngresosBrutos := ConfigQuery.FieldByName('IIBB').AsString;
   if IngresosBrutos='' then IngresosBrutos:='0';
+  catIVA := dm.ConfigQuery.FieldByName('IVA').AsString;
 end;
 
 procedure TDM.chequeo;

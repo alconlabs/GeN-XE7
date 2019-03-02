@@ -522,7 +522,7 @@ begin
 end;
 
 procedure TOperacionForm.ClienteBitBtnClick(Sender: TObject);
-var tipoIVA:string;
+var cliIVA : string;
 begin
   QuitarArticulos;
   Deuda := 0;
@@ -582,11 +582,11 @@ begin
         IF Tabla.FieldByName('PAGARE').AsString = 'SI' THEN
           PagareCheckBox.Checked := True;
         // IVA
-        tipoIVA := Tabla.FieldByName('IVA').AsString;
-        if dm.ConfigQuery.FieldByName('IVA').AsString='Responsable Monotributo' then cbTipo.ItemIndex := 11
+        cliIVA := Tabla.FieldByName('IVA').AsString;
+        if catIVA='Responsable Monotributo' then cbTipo.ItemIndex := 11
         else
-          if dm.ConfigQuery.FieldByName('IVA').AsString='Responsable Inscripto' then
-            if tipoIVA='Responsable Inscripto' then cbTipo.ItemIndex := 0
+          if catIVA='Responsable Inscripto' then
+            if cliIVA='Responsable Inscripto' then cbTipo.ItemIndex := 0
             else cbTipo.ItemIndex := 6;
 //        else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') and
 //        (Tabla.FieldByName('IVA').AsString <> 'RI') then
@@ -603,7 +603,6 @@ begin
 //          (Tabla.FieldByName('IVA').AsString = 'No Responsable')) and
 //          (cbTipo.ItemIndex = 1)) then
 //          cbTipo.ItemIndex := 6;
-
         if TipoRadioGroup.ItemIndex = 0 then
         begin
           DM.Query.Close;

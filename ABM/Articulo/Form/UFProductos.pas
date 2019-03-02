@@ -43,13 +43,13 @@ type
     DBEdit1: TDBEdit;
     DBLookupComboBox4: TDBLookupComboBox;
     BitBtn13: TBitBtn;
-    Label8: TLabel;
+    IVADBCBLabel: TLabel;
     Label19: TLabel;
     Label30: TLabel;
     Label10: TLabel;
     Label5: TLabel;
     DBText1: TDBText;
-    Label16: TLabel;
+    IVADBTLabel: TLabel;
     Label28: TLabel;
     Label21: TLabel;
     FleteDBEdit: TDBEdit;
@@ -89,7 +89,7 @@ type
     Precio6DBEdit: TDBEdit;
     Precio4DBEdit: TDBEdit;
     Precio5DBEdit: TDBEdit;
-    DBText2: TDBText;
+    IVADBText: TDBText;
     TabSheet5: TTabSheet;
     CuentaDataSource: TDataSource;
     Label50: TLabel;
@@ -339,6 +339,13 @@ begin
     PrecioCtaCte := ConfigQuery.FieldByName('PP').AsFloat / 100 + 1;
   end;
   QTemp.Close;
+  if catIVA = 'Responsable Inscripto' then
+  begin
+    IVADBCBLabel.Visible:=True;
+    IVADBComboBox.Visible:=True;
+    IVADBText.Visible:=True;
+    IVADBTLabel.Visible:=True;
+  end;
   CuentaQuery.Open;
   Tabla.Insert;
 end;
@@ -411,7 +418,7 @@ begin
 
     //  Label21.Caption := '= ' + FloatToStr(iva);
     DBText1.Caption := FloatToStr( costo );
-    DBText2.Caption := FloatToStr( CalcularIVA( (costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),tasa));//FloatToStr( costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1) );
+    IVADBText.Caption := FloatToStr( CalcularIVA( (costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),tasa));//FloatToStr( costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1) );
   end;
     BitBtn1.SetFocus;
 end;

@@ -59,12 +59,13 @@ object FProductos: TFProductos
         Height = 13
         Caption = 'Proveedor'
       end
-      object Label8: TLabel
+      object IVADBCBLabel: TLabel
         Left = 454
         Top = 85
         Width = 59
         Height = 13
         Caption = 'Tasa de IVA'
+        Visible = False
       end
       object Label19: TLabel
         Left = 490
@@ -79,6 +80,7 @@ object FProductos: TFProductos
         Width = 8
         Height = 13
         Caption = '%'
+        Visible = False
       end
       object Label10: TLabel
         Left = 56
@@ -114,8 +116,8 @@ object FProductos: TFProductos
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label16: TLabel
-        Left = 468
+      object IVADBTLabel: TLabel
+        Left = 467
         Top = 195
         Width = 29
         Height = 16
@@ -126,6 +128,7 @@ object FProductos: TFProductos
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        Visible = False
       end
       object Label28: TLabel
         Left = 590
@@ -169,7 +172,7 @@ object FProductos: TFProductos
         Height = 13
         Caption = '%'
       end
-      object DBText2: TDBText
+      object IVADBText: TDBText
         Left = 519
         Top = 189
         Width = 144
@@ -181,6 +184,7 @@ object FProductos: TFProductos
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        Visible = False
       end
       object Label24: TLabel
         Left = 14
@@ -436,6 +440,7 @@ object FProductos: TFProductos
           '105'
           '0')
         TabOrder = 5
+        Visible = False
       end
     end
     object TabSheet3: TTabSheet
