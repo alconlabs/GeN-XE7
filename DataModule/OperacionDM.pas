@@ -953,7 +953,7 @@ DM.FormatearFecha;
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
-      Impr(vta(nro, let), '');
+      Impr(vta(nro, let), let);
     ImprimirDataModule.Free;
   end;
   result := true;

@@ -28,7 +28,7 @@ type
     Function PlanillaCobrador(nro, let: string): string;
     Function Contrato(nro, let: string): string;
     Function EAN(nro: string): string;
-    Procedure Impr(vsql, reporte: string);
+    Procedure Impr(vsql, rpt: string);
     Procedure CSV(sql, n: string);
     Procedure SImpr(vsql, reporte: string);
     procedure DataModuleCreate(Sender: TObject);
@@ -183,8 +183,7 @@ var
   Pict, Pict2, Pict3, Pict4: TfrxPictureView;
   tipo_cbte: Integer;
 begin
-  if reporte = '' then
-    reporte := dm.ConfigQuery.FieldByName('Reporte').AsString;
+  if (reporte='TElectronica') or (reporte='CTicket') then rpt := reporte;
   Query.sql.Text := 'SELECT '+ QuotedStr(dm.ConfigQuery.FieldByName('CODIGO').AsString) + ' As PtoVta,' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE')
     .AsString) + ' As Empresa,' +
     QuotedStr(dm.ConfigQuery.FieldByName('TITULAR').AsString) + ' As ETITULAR,'
@@ -207,7 +206,7 @@ begin
   Query.Open;
   with frxReport1 do
   begin
-    LoadFromFile(path + 'rpt\' + reporte + '.fr3');
+    LoadFromFile(path + 'rpt\' + rpt + '.fr3');
     if (reporte = 'COriginal') or (reporte = 'Presupuesto')
     or (reporte = 'FElectronica')
     then
