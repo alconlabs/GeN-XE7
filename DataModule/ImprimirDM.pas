@@ -121,7 +121,8 @@ begin
   articuloSql :=
     ' "Articulo".DESCRIPCION, "Articulo".UNIDAD, "Articulo".IVA as AIVA';
   ventaItemSql :=
-    ' "VentaItem".ARTICULO, "VentaItem".CANTIDAD, "VentaItem".PRECIO, "VentaItem".OPERACION, ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT, "VentaItem".SERVICIO, "VentaItem".DESCRIPCION AS DESCR, "VentaItem".IMPUESTO as VIIMPUESTO';
+    ' "VentaItem".ARTICULO, "VentaItem".CANTIDAD, "VentaItem".COSTO AS VIDESCUENTO,'
+    +' "VentaItem".PRECIO, "VentaItem".OPERACION, ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT, "VentaItem".SERVICIO, "VentaItem".DESCRIPCION AS DESCR, "VentaItem".IMPUESTO as VIIMPUESTO';
   ivaVtaSql := ' "LibroIVAventa".NG1, "LibroIVAventa".IVA1, "LibroIVAventa".NG2, "LibroIVAventa".IVA2, "LibroIVAventa".NG3';
   presupuestoTSql:= ' "Presupuesto".CODIGO, "Presupuesto".LETRA, "Presupuesto".FECHA, "Presupuesto".COMPROBANTE,'
     + ' "Presupuesto".IVA3, "Presupuesto".TOTAL, "Presupuesto".CONTADO, "Presupuesto".CLIENTE,'

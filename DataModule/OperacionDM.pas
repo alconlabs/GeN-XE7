@@ -872,9 +872,9 @@ DM.FormatearFecha;
       if (mat[1, i]= 'Deuda CtaCte') then
         ctaCte := True;
       Q.SQL.Text :=
-        'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
+        'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, COSTO, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
         + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
-        (mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
+        (mat[7, i]) + ', ' +(mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
         quotedstr(mat[1, i]) + ');';
       Q.ExecSQL;
     end;

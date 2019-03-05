@@ -191,7 +191,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
       OnClick = Image1Click
     end
     object SiBitBtn: TBitBtn
-      Left = 4
+      Left = 6
       Top = 345
       Width = 91
       Height = 50
