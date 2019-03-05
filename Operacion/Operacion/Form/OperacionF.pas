@@ -276,6 +276,7 @@ begin
       SGFact.Cells[5, Cuenta] := FloatToStr(StrToFloat(SGFact.Cells[4, Cuenta])
         * StrToFloat(SGFact.Cells[3, Cuenta])); // total
       SGFact.Cells[6, Cuenta] := '0';
+      SGFact.Cells[7, Cuenta] := '0';
       SGFact.Cells[8, Cuenta] := '0'; // PRECIO DE COSTO
       SGFact.Cells[9, Cuenta] := '0';
       SGFact.Cells[10, Cuenta] := '0';
@@ -344,11 +345,9 @@ begin
     // Calcula el Ultimo Costo
     if SGFact.Cells[9, i] <> '0' then reparaciones := reparaciones + StrToFloat(SGFact.Cells[9, i]);
 //    IF (SGFact.Cells[7, i] = '') then SGFact.Cells[7, i] := '0';
-    if (SGFact.Cells[7, i] = '') then des := '0'
-    else
-      des := (SGFact.Cells[7, i]);
+    if (SGFact.Cells[7, i] = '') then SGFact.Cells[7, i] := '0';
+    des := (SGFact.Cells[7, i]);
     //{descuento}DSC:= StrToFloat(SGFact.Cells[7, i]);
-//    des:=SGFact.Cells[7, i];
       if Pos( '%', des ) >0 then
       begin
         DSC := StrToFloat( StringReplace(des, '%', '', [rfReplaceAll, rfIgnoreCase]) )/100;
