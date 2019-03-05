@@ -159,8 +159,11 @@ type
     procedure RubroDBLookupComboBoxEnter(Sender: TObject);
     procedure MarcaDBLookupComboBoxEnter(Sender: TObject);
     procedure PaintBox1Click(Sender: TObject);
+    procedure PrecioCtaCteDBEditExit(Sender: TObject);
+    procedure IVADBComboBoxExit(Sender: TObject);
   private
     { Private declarations }
+    tasa: Double;
   public
     desc: string;
     Precio1, Precio2, Precio3, Precio4, Precio5, Precio6, PrecioCtaCte: Double;
@@ -378,7 +381,7 @@ end;
 
 procedure TFProductos.GanaciaDBEditExit(Sender: TObject);
 var
-  costo, flete,tasa: Double;
+  costo, flete: Double;
 begin
   if CostoDBEdit.Text = '' then
     CostoDBEdit.Text := '0';
@@ -391,8 +394,7 @@ begin
   costo := StrToFloat(CostoDBEdit.Text);
   flete := costo * (StrToFloat(FleteDBEdit.Text) / 100);
   costo := costo + flete;
-  if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
-  else tasa:=StrToFloat(IVADBComboBox.Text);
+  
   with OperacionDataModule do
   begin
   if GanaciaDBEdit.Text = '0' then
@@ -421,6 +423,12 @@ begin
     IVADBText.Caption := FloatToStr( CalcularIVA( (costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),tasa));//FloatToStr( costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1) );
   end;
     BitBtn1.SetFocus;
+end;
+
+procedure TFProductos.IVADBComboBoxExit(Sender: TObject);
+begin
+if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
+  else tasa:=StrToFloat(IVADBComboBox.Text);
 end;
 
 Procedure TFProductos.nuevo;
@@ -531,6 +539,13 @@ end;
 procedure TFProductos.Precio6DBEditExit(Sender: TObject);
 begin
 //  IVADBEdit.SetFocus;
+end;
+
+procedure TFProductos.PrecioCtaCteDBEditExit(Sender: TObject);
+begin
+  with OperacionDataModule do
+    IVADBText.Caption := FloatToStr( CalcularIVA( StrToFloat(PrecioCtaCteDBEdit.Text),tasa));
+  BitBtn1.SetFocus;
 end;
 
 procedure TFProductos.CategoriaBitBtnClick(Sender: TObject);

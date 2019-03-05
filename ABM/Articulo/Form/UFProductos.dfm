@@ -393,6 +393,7 @@ object FProductos: TFProductos
         DataField = 'PRECIO'
         DataSource = DataSource
         TabOrder = 7
+        OnExit = PrecioCtaCteDBEditExit
       end
       object GanaciaDBEdit: TDBEdit
         Left = 519
@@ -441,6 +442,7 @@ object FProductos: TFProductos
           '0')
         TabOrder = 5
         Visible = False
+        OnExit = IVADBComboBoxExit
       end
     end
     object TabSheet3: TTabSheet

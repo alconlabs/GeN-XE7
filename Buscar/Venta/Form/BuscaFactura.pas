@@ -123,7 +123,7 @@ begin
         Impr(ImprimirDataModule.PRE(nro, letra), 'Presupuesto')
     else
       with ImprimirDataModule do
-        Impr(ImprimirDataModule.VTA(nro, letra), '');
+        Impr(ImprimirDataModule.VTA(nro, letra), letra);
     ImprimirDataModule.Free;
   end;
   Close;
