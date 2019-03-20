@@ -111,12 +111,10 @@ uses
   PagoIVAF in 'Operacion\PagoIVA\Form\PagoIVAF.pas' {PagoIVAForm},
   DescuentoF in 'SubOperacion\Descuento\Form\DescuentoF.pas' {DescuentoForm},
   VendedorF in 'ABM\Vendedor\Form\VendedorF.pas' {VendedorForm},
-  RestDM in 'DataModule\RestDM.pas' {RestDataModule: TDataModule},
-  UHomoLoginCMS in 'DataModule\UHomoLoginCMS.pas',
-  UHomoWsfev1 in 'DataModule\UHomoWsfev1.pas',
   AfipUnit in 'Configuracion\Afip\AfipUnit.pas' {AfipForm},
   LoginCms1 in 'DataModule\LoginCms1.pas',
-  service in 'DataModule\service.pas';
+  service in 'DataModule\service.pas',
+  RestDM in 'DataModule\RestDM.pas' {RestDataModule: TDataModule};
 
 {$R *.res}
 
@@ -126,6 +124,7 @@ begin
   Application.Title := 'GeN';
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFullMainForm, FullMainForm);
+  Application.CreateForm(TRestDataModule, RestDataModule);
   Application.Run;
 
 end.
