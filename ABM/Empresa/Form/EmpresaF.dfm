@@ -611,8 +611,8 @@ object EmpresaForm: TEmpresaForm
         Top = 193
         Width = 202
         Height = 21
-        Date = 43466.892104178240000000
-        Time = 43466.892104178240000000
+        Date = 43466.000000000000000000
+        Time = 0.892104178237787000
         TabOrder = 19
       end
       object DBLookupComboBox2: TDBLookupComboBox

@@ -9,19 +9,17 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  frxClass, frxDBSet, frxExportPDF, frxBarcode, frxExportCSV
+  frxClass, frxDBSet, frxExportPDF, frxBarcode, frxExportCSV,
+  frxExportBaseDialog
  ;
 type
   TImprimirDataModule = class(TDataModule)
     Query: TIBQuery;
-    VentasFDQuery1: TFDQuery;
-    FDQuery1: TFDQuery;
-    FirebirdConnection: TFDConnection;
     frxBarCodeObject1: TfrxBarCodeObject;
     frxPDFExport1: TfrxPDFExport;
     frxDBDataset1: TfrxDBDataset;
-    frxReport1: TfrxReport;
     frxCSVExport1: TfrxCSVExport;
+    frxReport1: TfrxReport;
     Function VTA(nro, let: string): string;
     Function OPER(nro, tipo, let: string): string;
     Function PRE(nro, let: string): string;

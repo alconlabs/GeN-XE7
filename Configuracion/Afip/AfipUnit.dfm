@@ -27,8 +27,8 @@ object AfipForm: TAfipForm
       Width = 121
       Height = 13
       Align = alBottom
-      ExplicitTop = 26
-      ExplicitWidth = 3
+      ExplicitLeft = 6
+      ExplicitTop = 136
     end
     object CRTButton: TButton
       Left = 1
@@ -39,7 +39,6 @@ object AfipForm: TAfipForm
       Caption = '3 - CRT'
       TabOrder = 0
       OnClick = CRTButtonClick
-      ExplicitTop = 58
     end
     object CSRButton: TButton
       Left = 1
@@ -50,7 +49,6 @@ object AfipForm: TAfipForm
       Caption = '2 - CSR'
       TabOrder = 1
       OnClick = CSRButtonClick
-      ExplicitLeft = -7
     end
     object AyudaButton: TButton
       Left = 1
@@ -71,8 +69,6 @@ object AfipForm: TAfipForm
       Caption = '4 - Autorizar'
       TabOrder = 3
       OnClick = Button1Click
-      ExplicitLeft = 6
-      ExplicitTop = 261
     end
     object PuntoVentaButton: TButton
       Left = 1
@@ -83,7 +79,6 @@ object AfipForm: TAfipForm
       Caption = '1 - Punto Venta'
       TabOrder = 4
       OnClick = PuntoVentaButtonClick
-      ExplicitTop = 174
     end
     object OpensslButton: TButton
       Left = 1
@@ -94,7 +89,6 @@ object AfipForm: TAfipForm
       Caption = '0 - OpenSSL'
       TabOrder = 5
       OnClick = OpensslButtonClick
-      ExplicitTop = 142
     end
   end
   object Memo1: TMemo
@@ -103,8 +97,6 @@ object AfipForm: TAfipForm
     Width = 520
     Height = 281
     Align = alClient
-    Lines.Strings = (
-      'Memo1')
     TabOrder = 1
   end
   object SaveTextFileDialog1: TSaveTextFileDialog

@@ -76,13 +76,15 @@ var
   DM: TDM;
   Compartido: PCompartido;
   FicheroM: THandle;
-  Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa, PuntoVenta, Titular, CUIT, IngresosBrutos, reporte, catIVA: string;
+  Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa,
+  PuntoVenta, Titular, CUIT, IngresosBrutos, reporte, catIVA: string;
   Permiso: Integer;
   LoginOK, Cancelar: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
   webUrl, webRes, webUsr, webPsw, webUpd,
   afipUrl, afipRes, afipUsr, afipPsw,
   operNCC, openSSl : string;
+  Precio1, Precio2, Precio3, Precio4, Precio5, Precio6, PrecioCtaCte: Double;
 
 implementation
 
@@ -231,6 +233,13 @@ ConfigQuery.SQL.Text := 'SELECT '
   IngresosBrutos := ConfigQuery.FieldByName('IIBB').AsString;
   if IngresosBrutos='' then IngresosBrutos:='0';
   catIVA := dm.ConfigQuery.FieldByName('IVA').AsString;
+  Precio1 := ConfigQuery.FieldByName('PP1').AsFloat / 100 + 1;
+  Precio2 := ConfigQuery.FieldByName('PP2').AsFloat / 100 + 1;
+  Precio3 := ConfigQuery.FieldByName('PP3').AsFloat / 100 + 1;
+  Precio4 := ConfigQuery.FieldByName('PP4').AsFloat / 100 + 1;
+  Precio5 := ConfigQuery.FieldByName('PP5').AsFloat / 100 + 1;
+  Precio6 := ConfigQuery.FieldByName('PP6').AsFloat / 100 + 1;
+  PrecioCtaCte := ConfigQuery.FieldByName('PP').AsFloat / 100 + 1;
 end;
 
 procedure TDM.chequeo;
@@ -288,6 +297,7 @@ begin
   , Path+'Update.iss');
   ActualizarImprimir('FElectronica');
   ActualizarImprimir('TElectronica');
+  TraerConfig;
 end;
 
 procedure TDM.connection;

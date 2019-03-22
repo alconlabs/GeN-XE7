@@ -113,7 +113,6 @@ begin
   // guardar imagen
   Image1.Picture.SaveToFile(path + 'img\empresa.bmp');
   //
-
   If (Tabla.State = dsEdit) or (Tabla.State = dsInsert) then
   begin
     Tabla.FieldByName('Fecha').AsDateTime := DateTimePicker1.Date;
@@ -124,8 +123,9 @@ begin
     dm.Query.ExecSQL;
     dm.Transaccion.CommitRetaining;
   end;
-  dm.ConfigQuery.Close;
-  dm.ConfigQuery.Open;
+//  dm.ConfigQuery.Close;
+//  dm.ConfigQuery.Open;
+  DM.TraerConfig;
   Close;
 end;
 

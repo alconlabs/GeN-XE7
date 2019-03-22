@@ -61,7 +61,7 @@ object FProductos: TFProductos
       end
       object IVADBCBLabel: TLabel
         Left = 454
-        Top = 85
+        Top = 113
         Width = 59
         Height = 13
         Caption = 'Tasa de IVA'
@@ -76,7 +76,7 @@ object FProductos: TFProductos
       end
       object Label30: TLabel
         Left = 590
-        Top = 85
+        Top = 113
         Width = 8
         Height = 13
         Caption = '%'
@@ -117,7 +117,7 @@ object FProductos: TFProductos
         ParentFont = False
       end
       object IVADBTLabel: TLabel
-        Left = 467
+        Left = 484
         Top = 195
         Width = 29
         Height = 16
@@ -159,7 +159,7 @@ object FProductos: TFProductos
       end
       object Label33: TLabel
         Left = 467
-        Top = 114
+        Top = 88
         Width = 46
         Height = 13
         Caption = 'Ganancia'
@@ -167,7 +167,7 @@ object FProductos: TFProductos
       end
       object Label34: TLabel
         Left = 590
-        Top = 112
+        Top = 86
         Width = 8
         Height = 13
         Caption = '%'
@@ -365,6 +365,7 @@ object FProductos: TFProductos
         ParentShowHint = False
         ShowHint = True
         TabOrder = 8
+        Visible = False
         OnClick = BitBtn13Click
       end
       object FleteDBEdit: TDBEdit
@@ -397,12 +398,12 @@ object FProductos: TFProductos
       end
       object GanaciaDBEdit: TDBEdit
         Left = 519
-        Top = 112
+        Top = 86
         Width = 65
         Height = 21
         DataField = 'PORCENTAJE'
         DataSource = DataSource
-        TabOrder = 6
+        TabOrder = 5
         OnExit = GanaciaDBEditExit
       end
       object CodigoBarraEdit: TDBEdit
@@ -431,7 +432,7 @@ object FProductos: TFProductos
       end
       object IVADBComboBox: TDBComboBox
         Left = 519
-        Top = 85
+        Top = 113
         Width = 67
         Height = 21
         DataField = 'Tasa'
@@ -440,7 +441,7 @@ object FProductos: TFProductos
           '21'
           '105'
           '0')
-        TabOrder = 5
+        TabOrder = 6
         Visible = False
         OnExit = IVADBComboBoxExit
       end
@@ -645,6 +646,7 @@ object FProductos: TFProductos
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 11
+        Visible = False
         OnClick = RubroBitBtnClick
       end
       object MarcaDBLookupComboBox: TDBLookupComboBox
@@ -674,6 +676,7 @@ object FProductos: TFProductos
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 12
+        Visible = False
         OnClick = MarcaBitBtnClick
       end
       object CategoriaDBLookupComboBox: TDBLookupComboBox
@@ -702,6 +705,7 @@ object FProductos: TFProductos
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 13
+        Visible = False
         OnClick = CategoriaBitBtnClick
       end
       object DBEdit2: TDBEdit

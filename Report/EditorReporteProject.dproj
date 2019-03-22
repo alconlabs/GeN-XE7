@@ -1,9 +1,9 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{13101A61-52C0-46F9-8F94-698B1AA4BF2D}</ProjectGuid>
+        <ProjectGuid>{4FAEC82C-50D8-48A0-BB17-FAF57649AC7F}</ProjectGuid>
         <ProjectVersion>18.6</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
-        <MainSource>GeN.dpr</MainSource>
+        <MainSource>EditorReporteProject.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
@@ -15,6 +15,11 @@
     </PropertyGroup>
     <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
         <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
@@ -41,27 +46,30 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
-        <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <VerInfo_Locale>3082</VerInfo_Locale>
-        <SanitizedProjectName>GeN</SanitizedProjectName>
-        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
-        <DCC_DcuOutput>\DeGsoft\GeN</DCC_DcuOutput>
-        <DCC_ExeOutput>\DeGsoft\GeN</DCC_ExeOutput>
+        <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
+        <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
         <DCC_E>false</DCC_E>
         <DCC_N>false</DCC_N>
         <DCC_S>false</DCC_S>
         <DCC_F>false</DCC_F>
         <DCC_K>false</DCC_K>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
+        <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
-        <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <DCC_UsePackage>FireDACSqliteDriver;FireDACDSDriver;DBXSqliteDriver;FireDACPgDriver;fmx;IndySystem;frxe21;TeeDB;tethering;vclib;DBXInterBaseDriver;DataSnapClient;DataSnapServer;DataSnapCommon;frx21;DataSnapProviderClient;DBXSybaseASEDriver;DbxCommonDriver;vclimg;dbxcds;DatasnapConnectorsFreePascal;MetropolisUILiveTile;vcldb;vcldsnap;fmxFireDAC;DBXDb2Driver;DBXOracleDriver;CustomIPTransport;vclribbon;dsnap;IndyIPServer;fmxase;vcl;IndyCore;DBXMSSQLDriver;IndyIPCommon;CloudService;FmxTeeUI;FireDACIBDriver;CodeSiteExpressPkg;DataSnapFireDAC;FireDACDBXDriver;soapserver;inetdbxpress;dsnapxml;FireDACInfxDriver;FireDACDb2Driver;adortl;FireDACASADriver;bindcompfmx;FireDACODBCDriver;RESTBackendComponents;emsclientfiredac;rtl;dbrtl;DbxClientDriver;FireDACCommon;bindcomp;inetdb;frxTee21;Tee;DBXOdbcDriver;frxDB21;vclFireDAC;xmlrtl;DataSnapNativeClient;svnui;ibxpress;IndyProtocols;DBXMySQLDriver;FireDACCommonDriver;bindengine;vclactnband;bindcompdbx;soaprtl;FMXTee;TeeUI;bindcompvcl;vclie;FireDACADSDriver;vcltouch;emsclient;VCLRESTComponents;FireDACMSSQLDriver;FireDAC;VclSmp;DBXInformixDriver;Intraweb;DataSnapConnectors;DataSnapServerMidas;dsnapcon;DBXFirebirdDriver;inet;fmxobj;FireDACMySQLDriver;soapmidas;vclx;svn;DBXSybaseASADriver;FireDACOracleDriver;fmxdae;RESTComponents;FireDACMSAccDriver;dbexpress;DataSnapIndy10ServerTransport;IndyIPClient;$(DCC_UsePackage)</DCC_UsePackage>
+        <SanitizedProjectName>EditorReporteProject</SanitizedProjectName>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_UsePackage>DBXSqliteDriver;RESTComponents;fmxase;DBXInterBaseDriver;vclactnband;vclFireDAC;emsclientfiredac;tethering;svnui;DataSnapFireDAC;FireDACADSDriver;DatasnapConnectorsFreePascal;FireDACMSSQLDriver;vcltouch;vcldb;bindcompfmx;svn;inetdb;FmxTeeUI;emsedge;fmx;FireDACIBDriver;fmxdae;vclib;frxTee26;FireDACDBXDriver;dbexpress;IndyCore;vclx;dsnap;emsclient;DataSnapCommon;FireDACCommon;RESTBackendComponents;DataSnapConnectors;VCLRESTComponents;soapserver;vclie;bindengine;DBXMySQLDriver;CloudService;FireDACOracleDriver;FireDACMySQLDriver;frx26;FireDACCommonODBC;FireDACCommonDriver;DataSnapClient;inet;IndyIPCommon;bindcompdbx;vcl;IndyIPServer;frxDB26;IndySystem;FireDACDb2Driver;dsnapcon;FireDACMSAccDriver;fmxFireDAC;FireDACInfxDriver;vclimg;TeeDB;FireDAC;emshosting;frxe26;FireDACSqliteDriver;FireDACPgDriver;ibmonitor;FireDACASADriver;FireDACTDataDriver;FMXTee;soaprtl;DbxCommonDriver;ibxpress;Tee;DataSnapServer;xmlrtl;soapmidas;DataSnapNativeClient;fmxobj;vclwinx;FireDACDSDriver;rtl;emsserverresource;DbxClientDriver;ibxbindings;CustomIPTransport;vcldsnap;bindcomp;appanalytics;IndyIPClient;bindcompvcl;TeeUI;dbxcds;VclSmp;adortl;FireDACODBCDriver;DataSnapIndy10ServerTransport;dsnapxml;DataSnapProviderClient;dbrtl;IndyProtocols;inetdbxpress;FireDACMongoDBDriver;DataSnapServerMidas;$(DCC_UsePackage)</DCC_UsePackage>
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <BT_BuildType>Debug</BT_BuildType>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <DCC_UsePackage>DBXSqliteDriver;RESTComponents;fmxase;DBXInterBaseDriver;vclactnband;vclFireDAC;emsclientfiredac;tethering;DataSnapFireDAC;FireDACADSDriver;DatasnapConnectorsFreePascal;FireDACMSSQLDriver;vcltouch;vcldb;bindcompfmx;inetdb;FmxTeeUI;emsedge;fmx;FireDACIBDriver;fmxdae;vclib;FireDACDBXDriver;dbexpress;IndyCore;vclx;dsnap;emsclient;DataSnapCommon;FireDACCommon;RESTBackendComponents;DataSnapConnectors;VCLRESTComponents;soapserver;vclie;bindengine;DBXMySQLDriver;CloudService;FireDACOracleDriver;FireDACMySQLDriver;FireDACCommonODBC;FireDACCommonDriver;DataSnapClient;inet;IndyIPCommon;bindcompdbx;vcl;IndyIPServer;IndySystem;FireDACDb2Driver;dsnapcon;FireDACMSAccDriver;fmxFireDAC;FireDACInfxDriver;vclimg;TeeDB;FireDAC;emshosting;FireDACSqliteDriver;FireDACPgDriver;ibmonitor;FireDACASADriver;FireDACTDataDriver;FMXTee;soaprtl;DbxCommonDriver;ibxpress;Tee;DataSnapServer;xmlrtl;soapmidas;DataSnapNativeClient;fmxobj;vclwinx;FireDACDSDriver;rtl;emsserverresource;DbxClientDriver;ibxbindings;CustomIPTransport;vcldsnap;bindcomp;appanalytics;IndyIPClient;bindcompvcl;TeeUI;dbxcds;VclSmp;adortl;FireDACODBCDriver;DataSnapIndy10ServerTransport;dsnapxml;DataSnapProviderClient;dbrtl;IndyProtocols;inetdbxpress;FireDACMongoDBDriver;DataSnapServerMidas;$(DCC_UsePackage)</DCC_UsePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -72,15 +80,9 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <DCC_DcuOutput>C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\bin\</DCC_DcuOutput>
-        <VerInfo_Build>66</VerInfo_Build>
-        <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=;FileVersion=1.0.0.66;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=GeN;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <DCC_ExeOutput>C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\bin\</DCC_ExeOutput>
-        <VerInfo_Locale>11274</VerInfo_Locale>
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -89,357 +91,16 @@
         <DCC_DebugInformation>0</DCC_DebugInformation>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-        <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="SubOperacion\FormaPago\Form\UFFormaPago.pas">
-            <Form>FFormaPago</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Cliente\Form\UFClientes.pas">
-            <Form>FClientes</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Categoria\Form\UFCategorias.pas">
-            <Form>FCategorias</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\Proveedor\Form\UFBuscaProve.pas">
-            <Form>FBuscaProve</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\Cliente\Form\UFBuscaCliente.pas">
-            <Form>FBuscaCliente</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\AporteCapital\Form\AporteCapitalF.pas">
-            <Form>AporteCapitalForm</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\AgregarCantidad\Form\AgregarCantidad.pas">
-            <Form>AgregarCantidadForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\ActivarCelular\Form\ActivarCelularF.pas">
-            <Form>VendedorActivaForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\Activaciones\Form\ActivacionesLF.pas">
-            <Form>ActivacionesLForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\Pedidos\Form\ListarPedidoF.pas">
-            <Form>ListarPedidoForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\Clientes\Form\ListadoClientes.pas">
-            <Form>ListadoClientesForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\LibroIVAVentas\Form\LibroIVAVentasF.pas">
-            <Form>CuentasForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\LibroIVACompras\Form\LibroIVAComprasF.pas">
-            <Form>LibroIVAComprasForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\LibroDiario\Form\LibroDiarioF.pas">
-            <Form>LibroDiarioLForm</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\IngresoDinero\Form\IngresoDineroF.pas">
-            <Form>IngresoDineroForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\IncrementarValorPorc\Form\incremento.pas">
-            <Form>IncrementoForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\ImpuestoServicio\Form\ImpuestosServicios.pas">
-            <Form>ImpuestosServiciosFrom</Form>
-        </DCCReference>
-        <DCCReference Include="DataModule\ImprimirDM.pas">
-            <Form>ImprimirDataModule</Form>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="Exportar\Excel\Hoja_Calculo.pas"/>
-        <DCCReference Include="Operacion\GestionCobranza\From\GestionCobranzaF.pas">
-            <Form>GestionCobranzaForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\Ganancias\Form\GananciasL.pas">
-            <Form>GanaciaxVtaLForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\EstadoCuenta\Form\EstadoCuentaLF.pas">
-            <Form>EstadoCuentaLForm</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\EntregaDinero\Form\Entrega.pas">
-            <Form>EntregaForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Empresa\Form\EmpresaF.pas">
-            <Form>EmpresaForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\DevolucionProveedorCelular\Form\DevolucionProveedorCelularF.pas">
-            <Form>DevolucionesForm</Form>
-        </DCCReference>
-        <DCCReference Include="DataModule\DataModule.pas">
-            <Form>DM</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\CalculoCuotas\Form\CalculoCuotas.pas">
-            <Form>CalculoCuotasForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\Cuentas\Form\ListadoCuentasF.pas">
-            <Form>ListadoCuentasForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\CuentaContable\Form\CuentaContableF.pas">
-            <Form>CuentasContablesForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\PagoProveedor\Form\CtaCteProveedores.pas">
-            <Form>CtaCteProveedoresForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\CtaCte\Form\CtaCteF.pas">
-            <Form>CtaCteForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\CrearPedido\Form\CrearPedidoF.pas">
-            <Form>CrearPedidoForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\CrearCredito\Form\CrearCreditoF.pas">
-            <Form>CrearCreditoForm</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\BackUp\Form\ConfigurarF.pas">
-            <Form>ConfigurarForm</Form>
-        </DCCReference>
-        <DCCReference Include="Configuracion\Sistema\Form\ConfiguracionF.pas">
-            <Form>ConfiguracionForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\ComprarCelular\Form\ComprarCelularF.pas">
-            <Form>ComprarCelularForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Color\Form\Color.pas">
-            <Form>ColorForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\GestionCobranzaJudicial\Form\CobranzaJudicialF.pas">
-            <Form>CobranzaJudicialForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\GestionCobranzaIncobrable\Form\CobranzaIncobrableF.pas">
-            <Form>CobranzaIncobrableForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\GestionCobranzaExtraJudicial\Form\CobranzaExtraJudicialF.pas">
-            <Form>CobranzaExtraJudicialForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Cobrador\Form\CobradorF.pas">
-            <Form>CobradorForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\CartonCobranza\Form\CartonCobranzaF.pas">
-            <Form>CartonCobranzaForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Capitulo\Form\CapituloF.pas">
-            <Form>CapituloForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\Caja\Form\CajaLF.pas">
-            <Form>CajaLForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Caja\Form\CajaF.pas">
-            <Form>ABMCajaForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\Socio\Form\BuscaSocioF.pas">
-            <Form>BuscaSocioForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\Vendedor\Form\BuscarVendedor.pas">
-            <Form>BuscarVendedorForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\TipoGasto\Form\BuscarTipoGastoF.pas">
-            <Form>BuscarTipoGastoForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\RubroContable\Form\BuscarRubroContableF.pas">
-            <Form>BuscarRubroContableForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\PlanProcesado\Form\BuscarPlanFacturado.pas">
-            <Form>BuscarPlanFacturadoForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\Plan\Form\BuscarPlan.pas">
-            <Form>BuscarPlanForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\ImpuestoServicio\Form\BuscarImpuestosServicios.pas">
-            <Form>BuscarImpuestosServiciosForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\CuentaContable\Form\BuscarCuentaF.pas">
-            <Form>BuscarCuentaForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\Cobrador\Form\BuscarCobrador.pas">
-            <Form>BuscarCobradorForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\Cheque\Form\BuscarCheques.pas">
-            <Form>BuscarChequesForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\Capitulo\Form\BuscarCapituloF.pas">
-            <Form>BuscarCapituloForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\Articulo\Form\UFBuscaArticulos.pas">
-            <Form>FBuscaArticulo</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Cuota\Form\Cuotas.pas">
-            <Form>CuotaForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\AnularVenta\Form\AnularVtaF.pas">
-            <Form>FAnulaReimp</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\TipoGasto\Form\TipoGastoF.pas">
-            <Form>TipoGastoForm</Form>
-        </DCCReference>
-        <DCCReference Include="Menu\Stock\Form\StockF.pas">
-            <Form>StockForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Socio\Form\SocioF.pas">
-            <Form>SocioForm</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\ManoObra\Form\servicio.pas">
-            <Form>ServForm</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\SeleccionarCelular\Form\SeleccionarCelularF.pas">
-            <Form>SeleccionarCelularForm</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\SeleccionarCarton\Form\SeleccionarCartonF.pas">
-            <Form>SeleccionarCartonForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Rubro\Form\RubroF.pas">
-            <Form>RubroForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\RubroContable\Form\RubroContableFormF.pas">
-            <Form>RubroContableForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\RetiroCaja\Form\RetiroCajaF.pas">
-            <Form>RetiroCajaForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\RendicionCobrador\Form\RendicionCobradorLF.pas">
-            <Form>RendicionCobradorLForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\RendicionCliente\Form\RendicionClienteLF.pas">
-            <Form>RendicionClienteLForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\RendicionCliente\Form\RendicionClienteF.pas">
-            <Form>RendicionClienteForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\RendicionCarton\Form\RendicionCartonF.pas">
-            <Form>RendicionCartonForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Proveedor\Form\ProveedorF.pas">
-            <Form>ProveedorForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\Presupuesto\Form\PresupuestoF.pas">
-            <Form>PresupuestoForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\Precios\Form\Precios.pas">
-            <Form>ListaPreciosForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Plan\Form\PlanF.pas">
-            <Form>PlanForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\Pedidos\Form\PedidoLF.pas">
-            <Form>PedidoLForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\PagoVendedor\Form\PagoVendedorF.pas">
-            <Form>PagoVendedorForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\PagoServicio\Form\Pagos.pas">
-            <Form>PagosForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\Pago\Form\PagoF.pas">
-            <Form>PagoForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\PagoCobrador\Form\PagoComisionCobrador.pas">
-            <Form>PagoComisionCobradorForm</Form>
-        </DCCReference>
-        <DCCReference Include="DataModule\OperacionDM.pas">
-            <Form>OperacionDataModule</Form>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="Operacion\NotaCreditoPlan\Form\NotaCreditoPlanF.pas">
-            <Form>NotaCreditoPlanForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\Migrar\form\MigrarF.pas">
-            <Form>MigrarForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\BackUp\Form\BackUpF.pas">
-            <Form>BackUpForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\ArticuloCelular\Form\ArticuloCelularF.pas">
-            <Form>ArticuloCelularForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\VaciarBase\Form\VaciarBaseF.pas">
-            <Form>VaciarBaseForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Usuarios\Form\UsuariosF.pas">
-            <Form>UsuariosForm</Form>
-        </DCCReference>
-        <DCCReference Include="Exportar\Excel\Unit1.pas">
+        <DCCReference Include="EditorReporteUnit.pas">
             <Form>Form1</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\SubCategoria\Form\UFSubCategorias.pas">
-            <Form>FSubCategorias</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\SelecionarPrecio\Form\UFSelProdFact.pas">
-            <Form>FSelProdFact</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\Orden\Form\UFSelOrden.pas">
-            <Form>FSelOrden</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Articulo\Form\UFProductos.pas">
-            <Form>FProductos</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\Cobranza\Form\VerCobranza.pas">
-            <Form>VerCobranzaForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\Operacion\Form\OperacionF.pas">
-            <Form>OperacionForm</Form>
-        </DCCReference>
-        <DCCReference Include="Exportar\Excel\Form\ExportarExcelF.pas">
-            <Form>Menu1</Form>
-        </DCCReference>
-        <DCCReference Include="AcercaDe\form\main.pas">
-            <Form>mainForm</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\Login\Form\LoginF.pas">
-            <Form>FLogin</Form>
-        </DCCReference>
-        <DCCReference Include="Menu\Full\Form\FullMainF.pas">
-            <Form>FullMainForm</Form>
-        </DCCReference>
-        <DCCReference Include="buscar\compra\form\BuscaCompra.pas">
-            <Form>BuscaCompraForm</Form>
-        </DCCReference>
-        <DCCReference Include="Buscar\Venta\Form\BuscaFactura.pas">
-            <Form>BuscaFacturaForm</Form>
-        </DCCReference>
-        <DCCReference Include="operacion\devolucion\form\UFDevoluciones.pas">
-            <Form>FDevoluciones</Form>
-        </DCCReference>
-        <DCCReference Include="buscar\articulocelular\form\BuscarArticulosCelularF.pas">
-            <Form>BuscaArticuloCelularForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Marca\Form\MarcaF.pas">
-            <Form>MarcaForm</Form>
-        </DCCReference>
-        <DCCReference Include="abm\ingresosbrutos\form\IngresosBrutosF.pas">
-            <Form>IngresosBrutosForm</Form>
-        </DCCReference>
-        <DCCReference Include="DataModule\AfipDM.pas">
-            <Form>AfipDataModule</Form>
             <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="Operacion\PagoIVA\Form\PagoIVAF.pas">
-            <Form>PagoIVAForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\Descuento\Form\DescuentoF.pas">
-            <Form>DescuentoForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="ABM\Vendedor\Form\VendedorF.pas">
-            <Form>VendedorForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Configuracion\Afip\AfipUnit.pas">
-            <Form>AfipForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="DataModule\LoginCms1.pas"/>
-        <DCCReference Include="DataModule\service.pas"/>
-        <DCCReference Include="DataModule\RestDM.pas">
-            <Form>RestDataModule</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
@@ -459,19 +120,13 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">GeN.dpr</Source>
+                    <Source Name="MainSource">EditorReporteProject.dpr</Source>
                 </Source>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclDBXDriversEnt260.bpl">Embarcadero Enterprise Driver Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\DataExplorerDBXPluginEnt260.bpl">DBExpress Enterprise Data Explorer Integration</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k260.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp260.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="..\..\..\..\User\Documents\Embarcadero\Studio\Projects\Bin\GeN\bin\GeN.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Win32\Debug\EditorReporteProject.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>GeN.exe</RemoteName>
+                        <RemoteName>EditorReporteProject.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -517,7 +172,6 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <DeployClass Name="AndroidLibnativeX86File"/>
                 <DeployClass Name="AndroidServiceOutput">
                     <Platform Name="Android">
                         <RemoteDir>library\lib\armeabi-v7a</RemoteDir>
@@ -935,11 +589,11 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSDevice64" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSDevice32" Name="$(PROJECTNAME).app"/>
-                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Linux64" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="Android" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="OSX64" Name="$(PROJECTNAME).app"/>
@@ -947,8 +601,8 @@
             </Deployment>
             <Platforms>
                 <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
             </Platforms>
-            <ModelSupport>False</ModelSupport>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>

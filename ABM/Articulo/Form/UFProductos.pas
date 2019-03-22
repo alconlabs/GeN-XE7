@@ -148,7 +148,6 @@ type
     procedure DBEdit14Exit(Sender: TObject);
     procedure BitBtn13Click(Sender: TObject);
     procedure TablaAfterInsert(DataSet: TDataSet);
-    procedure GanaciaDBEditExit(Sender: TObject);
     procedure TablaAfterPost(DataSet: TDataSet);
     procedure TablaAfterCancel(DataSet: TDataSet);
     procedure TablaAfterDelete(DataSet: TDataSet);
@@ -161,12 +160,13 @@ type
     procedure PaintBox1Click(Sender: TObject);
     procedure PrecioCtaCteDBEditExit(Sender: TObject);
     procedure IVADBComboBoxExit(Sender: TObject);
+    procedure GanaciaDBEditExit(Sender: TObject);
   private
     { Private declarations }
     tasa: Double;
+    procedure Calcular;
   public
     desc: string;
-    Precio1, Precio2, Precio3, Precio4, Precio5, Precio6, PrecioCtaCte: Double;
     { Public declarations }
     // procedimiento que codifica el número en un nº binario
     procedure Codifica(num: string);
@@ -330,17 +330,18 @@ begin
   RubroT.Active := True;
   MarcaT.Active := True;
   CategoriaT.Active := True;
-  with DM do
-  begin
-    ConfigQuery.Open;
-    Precio1 := ConfigQuery.FieldByName('PP1').AsFloat / 100 + 1;
-    Precio2 := ConfigQuery.FieldByName('PP2').AsFloat / 100 + 1;
-    Precio3 := ConfigQuery.FieldByName('PP3').AsFloat / 100 + 1;
-    Precio4 := ConfigQuery.FieldByName('PP4').AsFloat / 100 + 1;
-    Precio5 := ConfigQuery.FieldByName('PP5').AsFloat / 100 + 1;
-    Precio6 := ConfigQuery.FieldByName('PP6').AsFloat / 100 + 1;
-    PrecioCtaCte := ConfigQuery.FieldByName('PP').AsFloat / 100 + 1;
-  end;
+//  with DM do
+//  begin
+    //ConfigQuery.Open;
+//    TraerConfig;
+//    Precio1 := ConfigQuery.FieldByName('PP1').AsFloat / 100 + 1;
+//    Precio2 := ConfigQuery.FieldByName('PP2').AsFloat / 100 + 1;
+//    Precio3 := ConfigQuery.FieldByName('PP3').AsFloat / 100 + 1;
+//    Precio4 := ConfigQuery.FieldByName('PP4').AsFloat / 100 + 1;
+//    Precio5 := ConfigQuery.FieldByName('PP5').AsFloat / 100 + 1;
+//    Precio6 := ConfigQuery.FieldByName('PP6').AsFloat / 100 + 1;
+//    PrecioCtaCte := ConfigQuery.FieldByName('PP').AsFloat / 100 + 1;
+//  end;
   QTemp.Close;
   if catIVA = 'Responsable Inscripto' then
   begin
@@ -379,56 +380,12 @@ begin
   end;
 end;
 
-procedure TFProductos.GanaciaDBEditExit(Sender: TObject);
-var
-  costo, flete: Double;
-begin
-  if CostoDBEdit.Text = '' then
-    CostoDBEdit.Text := '0';
-  if FleteDBEdit.Text = '' then
-    FleteDBEdit.Text := '0';
-//  if IVADBEdit.Text = '' then
-//    IVADBEdit.Text := '0';
-  if GanaciaDBEdit.Text = '' then
-    GanaciaDBEdit.Text := '0';
-  costo := StrToFloat(CostoDBEdit.Text);
-  flete := costo * (StrToFloat(FleteDBEdit.Text) / 100);
-  costo := costo + flete;
-  
-  with OperacionDataModule do
-  begin
-  if GanaciaDBEdit.Text = '0' then
-        PrecioCtaCteDBEdit.Text := FloatToStr(costo * PrecioCtaCte)//FloatToStr(  CalcularIVA( (costo * PrecioCtaCte) , tasa) )
-   else
-   //     PrecioCtaCteDBEdit.Text := FloatToStr((neto + iva));
-
-   //((COSTO+(COSTO*(IMPOTROS/100)))*(PORCENTAJE/100+1))+(((COSTO+(COSTO*(IMPOTROS/100)))*(PORCENTAJE/100+1))*(TASA/100));
-    PrecioCtaCteDBEdit.Text := FloatToStr( costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1) );//FloatToStr( CalcularIVA( (costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),tasa));
-
-    //Precio1DBEdit.Text := FloatToStr((costo * Precio1) + iva);
-    Precio1DBEdit.Text := FloatToStr(costo * Precio1);//FloatToStr( CalcularIVA( (costo * Precio1),tasa) );
-    //  Precio2DBEdit.Text := FloatToStr((costo * Precio2) + iva);
-    Precio2DBEdit.Text := FloatToStr(costo * Precio2);//FloatToStr( CalcularIVA( (costo * Precio2),tasa) );
-    //  Precio3DBEdit.Text := FloatToStr((costo * Precio3) + iva);
-    Precio3DBEdit.Text := FloatToStr(costo * Precio3);//FloatToStr( CalcularIVA( (costo * Precio3),tasa) );
-    //  Precio4DBEdit.Text := FloatToStr((costo * Precio4) + iva);
-    Precio4DBEdit.Text := FloatToStr(costo * Precio4);//FloatToStr( CalcularIVA( (costo * Precio4),tasa) );
-    //  Precio5DBEdit.Text := FloatToStr((costo * Precio5) + iva);
-    Precio5DBEdit.Text := FloatToStr(costo * Precio5);//FloatToStr( CalcularIVA( (costo * Precio5),tasa) );
-    //  Precio6DBEdit.Text := FloatToStr((costo * Precio6) + iva);
-    Precio6DBEdit.Text := FloatToStr(costo * Precio6);//FloatToStr( CalcularIVA( (costo * Precio6),tasa) );
-
-    //  Label21.Caption := '= ' + FloatToStr(iva);
-    DBText1.Caption := FloatToStr( costo );
-    IVADBText.Caption := FloatToStr( CalcularIVA( (costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),tasa));//FloatToStr( costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1) );
-  end;
-    BitBtn1.SetFocus;
-end;
-
 procedure TFProductos.IVADBComboBoxExit(Sender: TObject);
 begin
 if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
   else tasa:=StrToFloat(IVADBComboBox.Text);
+  Calcular;
+  BitBtn1.SetFocus;
 end;
 
 Procedure TFProductos.nuevo;
@@ -474,7 +431,6 @@ begin
     RubroT.Open;
     MarcaDBLookupComboBox.SetFocus;
   }
-
 end;
 
 procedure TFProductos.RubroDBLookupComboBoxEnter(Sender: TObject);
@@ -526,6 +482,11 @@ begin
     CodigoBarraBitBtn.Click;
 end;
 
+procedure TFProductos.GanaciaDBEditExit(Sender: TObject);
+begin
+  Calcular;
+end;
+
 procedure TFProductos.PaintBox1Click(Sender: TObject);
 begin
   OperacionDataModule := TOperacionDataModule.Create(Self);
@@ -543,8 +504,7 @@ end;
 
 procedure TFProductos.PrecioCtaCteDBEditExit(Sender: TObject);
 begin
-  with OperacionDataModule do
-    IVADBText.Caption := FloatToStr( CalcularIVA( StrToFloat(PrecioCtaCteDBEdit.Text),tasa));
+  Calcular;
   BitBtn1.SetFocus;
 end;
 
@@ -653,6 +613,33 @@ end;
 procedure TFProductos.TablaAfterPost(DataSet: TDataSet);
 begin
   Tabla.Transaction.CommitRetaining;
+end;
+
+procedure TFProductos.Calcular;
+var
+  costo, flete: Double;
+begin
+  if CostoDBEdit.Text = '' then CostoDBEdit.Text := '0';
+  if FleteDBEdit.Text = '' then FleteDBEdit.Text := '0';
+  if GanaciaDBEdit.Text = '' then GanaciaDBEdit.Text := '0';
+  costo := StrToFloat(CostoDBEdit.Text);
+  flete := costo * (StrToFloat(FleteDBEdit.Text) / 100);
+  costo := costo + flete;
+  with OperacionDataModule do
+  begin
+   if GanaciaDBEdit.Text = '0' then
+     PrecioCtaCteDBEdit.Text := FloatToStr(costo * PrecioCtaCte)
+   else
+    PrecioCtaCteDBEdit.Text := FloatToStr( costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1) );
+   Precio1DBEdit.Text := FloatToStr(costo * Precio1);
+   Precio2DBEdit.Text := FloatToStr(costo * Precio2);
+   Precio3DBEdit.Text := FloatToStr(costo * Precio3);
+   Precio4DBEdit.Text := FloatToStr(costo * Precio4);
+   Precio5DBEdit.Text := FloatToStr(costo * Precio5);
+   Precio6DBEdit.Text := FloatToStr(costo * Precio6);
+   DBText1.Caption := FloatToStr( costo );
+   IVADBText.Caption := FloatToStr( CalcularIVA( StrToFloat(PrecioCtaCteDBEdit.Text),tasa));
+  end;
 end;
 
 end.
