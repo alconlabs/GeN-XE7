@@ -293,8 +293,8 @@ object OperacionForm: TOperacionForm
       Top = 18
       Width = 82
       Height = 21
-      Date = 43100.506836111110000000
-      Time = 43100.506836111110000000
+      Date = 43100.000000000000000000
+      Time = 0.506836111111624600
       TabOrder = 8
       Visible = False
     end
@@ -538,8 +538,8 @@ object OperacionForm: TOperacionForm
       Top = 2
       Width = 103
       Height = 21
-      Date = 42736.475039594910000000
-      Time = 42736.475039594910000000
+      Date = 42736.000000000000000000
+      Time = 0.475039594908594200
       TabOrder = 2
     end
     object PercEdit: TEdit
@@ -647,7 +647,7 @@ object OperacionForm: TOperacionForm
       OnClick = VendedorBitBtnClick
     end
     object AgregarBitBtn: TBitBtn
-      Left = 236
+      Left = 314
       Top = 4
       Width = 80
       Height = 50
@@ -665,7 +665,7 @@ object OperacionForm: TOperacionForm
       OnClick = AgregarBitBtnClick
     end
     object NuevoBitBtn: TBitBtn
-      Left = 314
+      Left = 235
       Top = 4
       Width = 80
       Height = 50

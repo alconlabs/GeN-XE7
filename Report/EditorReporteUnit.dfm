@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 281
-  ClientWidth = 643
+  ClientHeight = 696
+  ClientWidth = 720
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,6 +13,20 @@ object Form1: TForm1
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
+  object DBGrid1: TDBGrid
+    Left = 0
+    Top = 272
+    Width = 720
+    Height = 424
+    Align = alBottom
+    DataSource = DataSource1
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
   object frxBarCodeObject1: TfrxBarCodeObject
     Left = 24
     Top = 112
@@ -125,7 +139,7 @@ object Form1: TForm1
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 39416.849051458300000000
-    ReportOptions.LastChange = 43545.878697500000000000
+    ReportOptions.LastChange = 43548.825041377300000000
     ReportOptions.Picture.Data = {
       0954474946496D61676547494638396150003200F70000FDFDFDFCFCFCFBFBFB
       F9F9F9030303FAFAFA010101F8F8F8020202040404F7F7F70606060505050707
@@ -1105,9 +1119,7 @@ object Form1: TForm1
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            
-              '[<frxDBDataset1."SUBTOTAL">-<frxDBDataset1."DESCUENTO">+<frxDBDa' +
-              'taset1."IMPUESTO">]')
+            '[<frxDBDataset1."SUBTOTAL">+<frxDBDataset1."IMPUESTO">]')
           ParentFont = False
         end
       end
@@ -1329,8 +1341,8 @@ object Form1: TForm1
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[(<frxDBDataset1."PREXCANT">-<frxDBDataset1."VIDESCUENTO">)*(<fr' +
-              'xDBDataset1."VIIMPUESTO">/100+1)]')
+              '[(<frxDBDataset1."PREXCANT">*(<frxDBDataset1."VIIMPUESTO">/100+1' +
+              '))-<frxDBDataset1."VIDESCUENTO">]')
           ParentFont = False
         end
         object Memo15: TfrxMemoView
@@ -1502,10 +1514,9 @@ object Form1: TForm1
   object FirebirdConnection: TFDConnection
     Params.Strings = (
       'ConnectionDef=GeN')
-    Connected = True
     LoginPrompt = False
-    Left = 583
-    Top = 237
+    Left = 591
+    Top = 117
   end
   object IBDatabase1: TIBDatabase
     Connected = True
@@ -1517,12 +1528,14 @@ object Form1: TForm1
       'lc_ctype=WIN1252')
     LoginPrompt = False
     ServerType = 'IBServer'
+    AllowStreamedConnected = False
     Left = 304
     Top = 24
   end
   object IBQuery1: TIBQuery
     Database = IBDatabase1
-    Transaction = IBTransaction1
+    Transaction = db
+    AutoCalcFields = False
     Active = True
     BufferChunks = 1000
     CachedUpdates = False
@@ -1576,14 +1589,21 @@ object Form1: TForm1
         '".CODIGO)'
       
         '      INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIG' +
-        'O)')
+        'O)'
+      'WHERE "Venta".CODIGO = 7'
+      '')
     Left = 304
     Top = 88
   end
-  object IBTransaction1: TIBTransaction
+  object db: TIBTransaction
     Active = True
     DefaultDatabase = IBDatabase1
     Left = 304
     Top = 152
+  end
+  object DataSource1: TDataSource
+    DataSet = IBQuery1
+    Left = 304
+    Top = 200
   end
 end

@@ -146,60 +146,20 @@ end;
 
 procedure TOperacionForm.TraerArticulo;
 var
-NG,IVA : double;
+  TASA : String;
 begin
   If Cuenta > 1 then SGFact.RowCount := SGFact.RowCount + 1;
   Tabla.Close;
   Tabla.SQL.Text := 'SELECT * FROM "Articulo" ' + 'WHERE CODIGO = ' + codigoArticulo;
   Tabla.Open;
-//  if PrecioLabel.Caption = '0' then PrecioLabel.Caption := '';
   {codigo}SGFact.Cells[0, Cuenta] := Tabla.FieldByName('CODIGO').AsString;
   {nombre}SGFact.Cells[1, Cuenta] := Tabla.FieldByName('DESCRIPCION').AsString;
-//  SGFact.Cells[2, Cuenta] := '0';
   {cantidad}SGFact.Cells[3, Cuenta] := FloatToStr(CAN);
   if PR=0 then PR := Tabla.FieldByName('PRECIO' + PrecioLabel.Caption).AsFloat;
   {precio}SGFact.Cells[4, Cuenta] := FloatToStr(PR);
-  {total}SGFact.Cells[5, Cuenta] := FloatToStr(PR*CAN);
-  {iva}SGFact.Cells[6, Cuenta] :=  Tabla.FieldByName('TASA').AsString;
-//  {descuento}SGFact.Cells[7, Cuenta]:='0';
-
-  // IVA
-//  IVA := Tabla.FieldByName('TASA').AsFloat;
-//  SGFact.Cells[6, Cuenta] := FloatToStr(IVA);
-
-  //NETO
-{  if Compra then NG:=PR else
-    if IVA = 105 then NG:=//RoundTo(
-    (100*PR)/110.5//,-2)
-    else NG:=//RoundTo(
-    (100*PR)/(100+IVA)//,-2)
-    ;
-  SGFact.Cells[8, Cuenta] := FloatToStr(NG * CAN);
- {
-//      if FLEPorcDesc.Text<>'0' then  SGFact.Cells[7, Cuenta] :=  FloatToStr( StrToFloat(SGFact.Cells[8, Cuenta]) * (StrToFloat(FLEPorcDesc.Text)/100) )
-//      else  SGFact.Cells[7, Cuenta] := '0';
-}
-  //Total
-
-//  if Compra then
-//    if IVA = 105 then PR:=(NG*1.105) else PR:=(NG*(IVA/100+1));
-//  SGFact.Cells[5, Cuenta] := FloatToStr(PR * CAN);
-{
-  // INGRESOS BRUTOS
-  SGFact.Cells[9, Cuenta] := Tabla.FieldByName('IIBB').AsString;
-  Q.SQL.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' +
-    QuotedStr(SGFact.Cells[9, Cuenta]);
-  Q.Open;
-
-  // PORCENTAJE DE INGRESOS BRUTOS
-  SGFact.Cells[10, Cuenta] :=
-    Format('%8.2f', [Q.FieldByName('PORCENTAJE').AsFloat]);
-
-  //ULTIMO NETO
-  SGFact.Cells[11, Cuenta] :=
-    FloatToStr(Tabla.FieldByName('ULTCOSTO').AsFloat *
-    StrToFloat(SGFact.Cells[3, SGFact.Row])); // PRECIO DE COSTO
-}
+  TASA := Tabla.FieldByName('TASA').AsString;
+  if TASA='105' then TASA := '10.5';
+  {iva}SGFact.Cells[6, Cuenta] := TASA;
   Cuenta := Cuenta + 1;
   FEContado.Text:='0';
   CalculaTotales;
@@ -213,11 +173,11 @@ SGFact.Cells[0, 0] := 'Codigo';
   SGFact.Cells[3, 0] := 'Cantidad';
   SGFact.Cells[4, 0] := 'Precio';
   SGFact.Cells[5, 0] := 'Total';
-  SGFact.Cells[6, 0] := 'IVA';
+  SGFact.Cells[6, 0] := 'Tasa';
   SGFact.Cells[7, 0] := 'Descuento';
   SGFact.Cells[8, 0] := 'NG';
   SGFact.Cells[9, 0] := 'IIBB';
-  SGFact.Cells[10,0] := 'UC';
+  SGFact.Cells[10,0] := 'IVA';
   SGFact.Cells[3, 1] := '0';
   SGFact.Cells[4, 1] := '0.00';
   SGFact.Cells[5, 1] := '0.00';
@@ -292,8 +252,8 @@ end;
 
 procedure TOperacionForm.CalculaTotales;
 var
-  i,TIVA: Integer;
-  NG,DSC,NGD,IVA,CONT,PR,PRD,TOT : Double;
+  i: Integer;
+  NG,DSC,NGD,IVA,CONT,PR,PRD,TOT,CAN,TIVA : Double;
   des : string;
 //  DSCP : Boolean;
 begin
@@ -318,121 +278,81 @@ begin
   IVA :=0;
   CONT:=StrToFloat( FEContado.Text );
   PR:=0;
-
-  // Calcula el SubTotal
   For i := 1 to SGFact.RowCount - 1 do
   begin
-    // total
-    if (SGFact.Cells[5, i] = '') then TOT := 0
-    else
-      TOT := StrToFloat(SGFact.Cells[5, i]);
-    // IVA
+    //CANTIDAD
+    if (SGFact.Cells[3, i] = '') then SGFact.Cells[3, i] := '1';
+    CAN := StrToFloat(SGFact.Cells[3, i]);
+    // TASA
     if (SGFact.Cells[6, i] = '') then TIVA := 0
-    else
-      TIVA := StrToInt(SGFact.Cells[6, i]);
-    // NG
-    if (SGFact.Cells[8, i] = '') then SGFact.Cells[8, i] := '0';
-    //
-    if (SGFact.Cells[9, i] = '') then SGFact.Cells[9, i] := '0';
-    //
-    if (SGFact.Cells[11, i] = '') then SGFact.Cells[11, i] := '0';
-    // SUBTOTAL
-    PR := TOT;
-    // Calcula el Neto
-    if SGFact.Cells[8, i] <> '0' then costo := costo + StrToFloat(SGFact.Cells[8, i]);
-    //
-    if SGFact.Cells[11, i] <> '0' then UltCosto := UltCosto + StrToFloat(SGFact.Cells[11, i]);
-    // Calcula el Ultimo Costo
-    if SGFact.Cells[9, i] <> '0' then reparaciones := reparaciones + StrToFloat(SGFact.Cells[9, i]);
-//    IF (SGFact.Cells[7, i] = '') then SGFact.Cells[7, i] := '0';
+    else TIVA := StrToFloat(SGFact.Cells[6, i]);
+    //PRECIO
+    if (SGFact.Cells[4, i] = '') then SGFact.Cells[4, i] := '0';
+    PR := StrToFloat(SGFact.Cells[4, i]);
+    if not((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then PR := OperacionDataModule.CalcularIVA((PR),TIVA);
+    //DESCUENTO
     if (SGFact.Cells[7, i] = '') then SGFact.Cells[7, i] := '0';
     des := (SGFact.Cells[7, i]);
-    //{descuento}DSC:= StrToFloat(SGFact.Cells[7, i]);
       if Pos( '%', des ) >0 then
-      begin
-        DSC := StrToFloat( StringReplace(des, '%', '', [rfReplaceAll, rfIgnoreCase]) )/100;
-        PRD := PR-(PR*DSC);
-        DSC := PR-PRD;
-      end
+        begin
+          DSC := StrToFloat( StringReplace(des, '%', '', [rfReplaceAll, rfIgnoreCase]) )/100;
+          PRD := PR-(PR*DSC);
+          DSC := PR-PRD;
+        end
       else DSC := StrToFloat(des);
-
-  NG := (PR-DSC);
+    //TOTAL
+    TOT := (PR*CAN)-DSC;
+    SGFact.Cells[5, i] := FloatToStr(TOT);
+    //IVA
+    IVA := OperacionDataModule.SacarIVA((TOT),TIVA);
+    SGFact.Cells[10, i] := FloatToStr(IVA);
+    // NG
+    NG := TOT - IVA;
+    SGFact.Cells[8, i] := FloatToStr(NG);
+    //
+    if (SGFact.Cells[9, i] = '') then SGFact.Cells[9, i] := '0';
+    // Calcula el Ultimo Costo
+//    if (SGFact.Cells[11, i] = '') then SGFact.Cells[11, i] := '0';
+//    if SGFact.Cells[11, i] <> '0' then UltCosto := UltCosto + StrToFloat(SGFact.Cells[11, i]);
+    //
+    if SGFact.Cells[9, i] <> '0' then reparaciones := reparaciones + StrToFloat(SGFact.Cells[9, i]);
 
   // Calcula el monto para cobrar el impuesto de ventas
     if ((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then
     begin
-//      PRD :=PR-DSC;
-      //DSC := PR-PRD;
-//      NGO := NGO + (PR-DSC);
       NGO:= NGO + NG;
     end
     else
     begin
-    //NETO
-//      if Compra then NG:=PR
-//      else
-//        if IVA = 105 then NG:=(100*PR)/110.5
-//        else NG:=(100*PR)/(100+IVA);
-//      NG := StrToFloat(SGFact.Cells[8, i]);
-  //   if DSCP then DSC := NG * DSC;
-  //   NGO:= NGO + NG;
-  //   IVAO := PR-NG;
-  //   IVAO := IVAO + IVA;
-
-    //  For i := 1 to SGFact.RowCount - 1 do
-  //  begin
-  //   NG := StrToFloat(SGFact.Cells[8, i]);
-  //  if Pos( '%', FLEPorcDesc.Text ) >0 then
-  //    DSC := (NG * StrToFloat(StringReplace(FLEPorcDesc.Text, '%', '.00', [rfReplaceAll, rfIgnoreCase]))/100)
-  //   else
-  //    DSC := StrToFloat(FLEPorcDesc.Text);
-  //   NGD:= NG-DSC;
-  //   NGO:= NGO + NGD;
-  //   IVA := StrToFloat(TOT)-NGO;
-  //   IVAO := IVAO + IVA;
-     with OperacionDataModule do
-      begin
       If TIVA = 21 then
       begin
         NG21 := NG21 + NG;
-        IVA := CalcularIVA((NG),21)-NG;
         IVA21 := IVA21 + IVA;
-      end // IVA 21% 100 * 1.21 - 100 = 21
+      end
       else
-      if TIVA = 105 then
+      if TIVA = 10.5 then
         begin
           NG105 := NG105 + NG;
-          IVA := CalcularIVA((NG),10.5)-NG;
           IVA105 := IVA105 + IVA;
-        end // IVA 10.5% 100 * 1.105 - 100 = 10.5
+        end
         else
          begin
-          NGO := NGO + NG; // NETO GRABADO
-          IVA := CalcularIVA((NG),TIVA)-NG;
+          NGO := NGO + NG;
           IVAO := IVAO + IVA;
         end;
-      end;
     end;
-      desc:=  //RoundTo((
-      desc + DSC//),-2)
-      ;
+      desc:= desc + DSC;
     end;
 
   desc:=  RoundTo((desc),-2);
 
-  subtotal:= //RoundTo((
-  NG21 + NG105 + NGO + desc//),-2)
-  ;
+  subtotal:= NG21 + NG105 + NGO;
 
   perc := (subtotal * StrToFloat(PercEdit.Text) / 100);
 
-  Impuesto := //RoundTo(
-  (IVA21 + IVA105 + IVAO + perc)//,-2)
-  ;
-  //subtotal := (subtotal - Impuesto);
+  Impuesto := (IVA21 + IVA105 + IVAO + perc);
 
-//  desc:=RoundTo(desc,-2);
-  Total := RoundTo( (subtotal + Impuesto + Interes - desc),-2);
+  Total := RoundTo((subtotal + Impuesto + Interes),-2);
 
   // escribe los valores en las celdas
   SGTotal.Cells[1, 0] := Format('%8.2n', [subtotal]);
@@ -644,9 +564,8 @@ begin
 end;
 
 procedure TOperacionForm.DescuentoBitBtnClick(Sender: TObject);
-//var
-//  desc : string;
-//  DSC,TOT,TOTD : Double;
+var
+ PR,CAN,DSC : Double;
 begin
 DescuentoForm := TDescuentoForm.Create(self);
   try
@@ -664,8 +583,14 @@ DescuentoForm := TDescuentoForm.Create(self);
 //      end
 //      else DSC := StrToFloat(desc);
 //      SGFact.Cells[7, SGFact.Row] := Format('%8.2f', [DSC]);
-
       SGFact.Cells[7, SGFact.Row] := DescuentoForm.DescuentoEdit.Text;
+      if cbTipo.ItemIndex<>1 then
+      begin
+        PR:=StrToFloat(SGFact.Cells[4, SGFact.Row]);
+        CAN:=StrToFloat(SGFact.Cells[3, SGFact.Row]);
+        DSC:=StrToFloat(SGFact.Cells[7, SGFact.Row]);
+        {total}SGFact.Cells[5, SGFact.Row] := FloatToStr((PR*CAN)-DSC);
+      end;
       FEContado.Text:='0';
       CalculaTotales;
     end;

@@ -58,7 +58,7 @@ type
     Procedure MovCaja(tipo, soc, imp, desc: string);
     procedure DataModuleCreate(Sender: TObject);
     procedure CodigoBarra(cb: string);
-    function CalcularIVA(neto,porcentaje:Double):Double;
+
     procedure insertarTabla2(tabla,codigo,desc: string);
     function existeEnTabla(tabla,codigo: string): Boolean;
     procedure BorrarArticulos;
@@ -70,7 +70,6 @@ type
     procedure ActualizarCantidadArticulo(codigo,cantidad:string);
     procedure DataSetToCsv(psRutaFichero : String);
     procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impTotal, asocTipo, asocNro:string);
-//    Procedure FillCbIva;
   private
     { Private declarations }
   public
@@ -80,6 +79,8 @@ type
     i: integer;
     IIBB, cmv: Double;
     jsResponse: TJSONValue;
+    function CalcularIVA(monto,porcentaje:Double):Double;
+    function SacarIVA(monto,porcentaje:Double):Double;
   end;
 
 var
@@ -91,14 +92,6 @@ const tipoIVA : array[1..3] of string = ('Responsable Monotributo','Responsable 
 implementation
 
 {$R *.dfm}
-
-function  TOperacionDataModule.CalcularIVA;
-begin
-  Result := //RoundTo( (
-   neto + (neto * (porcentaje / 100))
-   //) ,-2)
-   ;
-end;
 
 Procedure TOperacionDataModule.MovCaja;
 begin
@@ -1718,6 +1711,18 @@ begin
   finally
     AfipDataModule.Free;
   end;
+end;
+
+function  TOperacionDataModule.CalcularIVA;
+begin
+  if porcentaje = 105 then porcentaje := 10.5;
+  Result := monto + (monto * (porcentaje / 100));
+end;
+
+function  TOperacionDataModule.SacarIVA;
+begin
+  if porcentaje = 105 then porcentaje := 10.5;
+  Result := monto-monto/(porcentaje/100+1);
 end;
 
 end.

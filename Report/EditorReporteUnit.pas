@@ -10,7 +10,8 @@ uses
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.FB,
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client,
   FireDAC.Comp.DataSet, frxClass, frxExportCSV, frxDBSet, frxExportBaseDialog,
-  frxExportPDF, frxBarcode, IBX.IBCustomDataSet, IBX.IBQuery, IBX.IBDatabase;
+  frxExportPDF, frxBarcode, IBX.IBCustomDataSet, IBX.IBQuery, IBX.IBDatabase,
+  Vcl.Grids, Vcl.DBGrids;
 
 type
   TForm1 = class(TForm)
@@ -24,7 +25,9 @@ type
     FirebirdConnection: TFDConnection;
     IBDatabase1: TIBDatabase;
     IBQuery1: TIBQuery;
-    IBTransaction1: TIBTransaction;
+    db: TIBTransaction;
+    DBGrid1: TDBGrid;
+    DataSource1: TDataSource;
   private
     { Private declarations }
   public
