@@ -1716,7 +1716,8 @@ end;
 function  TOperacionDataModule.CalcularIVA;
 begin
   if porcentaje = 105 then porcentaje := 10.5;
-  Result := monto + (monto * (porcentaje / 100));
+//  Result := monto + (monto * (porcentaje / 100));
+  Result := monto*(porcentaje/100+1);
 end;
 
 function  TOperacionDataModule.SacarIVA;

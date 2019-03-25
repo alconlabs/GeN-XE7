@@ -255,7 +255,7 @@ var
   i: Integer;
   NG,DSC,NGD,IVA,CONT,PR,PRD,TOT,CAN,TIVA : Double;
   des : string;
-//  DSCP : Boolean;
+  esA, esB, esC : Boolean;
 begin
   // Calcula los totales de la factura
   //  subtotal := 0;
@@ -278,6 +278,9 @@ begin
   IVA :=0;
   CONT:=StrToFloat( FEContado.Text );
   PR:=0;
+  if (cbTipo.ItemIndex<6) then esA:=true;
+  if (cbTipo.ItemIndex>5) and (cbTipo.ItemIndex<11) then esB:=true;
+//  if (cbTipo.ItemIndex>10) and (cbTipo.ItemIndex<15) then esC:=true;
   For i := 1 to SGFact.RowCount - 1 do
   begin
     //CANTIDAD
@@ -289,7 +292,8 @@ begin
     //PRECIO
     if (SGFact.Cells[4, i] = '') then SGFact.Cells[4, i] := '0';
     PR := StrToFloat(SGFact.Cells[4, i]);
-    if not((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then PR := OperacionDataModule.CalcularIVA((PR),TIVA);
+//    if not((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then PR := OperacionDataModule.CalcularIVA((PR),TIVA);
+    if esB then PR := OperacionDataModule.CalcularIVA((PR),TIVA);//es B
     //DESCUENTO
     if (SGFact.Cells[7, i] = '') then SGFact.Cells[7, i] := '0';
     des := (SGFact.Cells[7, i]);
@@ -304,10 +308,12 @@ begin
     TOT := (PR*CAN)-DSC;
     SGFact.Cells[5, i] := FloatToStr(TOT);
     //IVA
-    IVA := OperacionDataModule.SacarIVA((TOT),TIVA);
+    if esA then IVA := OperacionDataModule.CalcularIVA((TOT),TIVA)-TOT
+    else if esB then IVA := OperacionDataModule.SacarIVA((TOT),TIVA);
     SGFact.Cells[10, i] := FloatToStr(IVA);
     // NG
-    NG := TOT - IVA;
+    if esA then NG := TOT
+    else if esB then NG := TOT - IVA;
     SGFact.Cells[8, i] := FloatToStr(NG);
     //
     if (SGFact.Cells[9, i] = '') then SGFact.Cells[9, i] := '0';
