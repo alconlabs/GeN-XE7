@@ -406,6 +406,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
     object Label16: TLabel
       Left = 319
@@ -541,6 +542,7 @@ object OperacionForm: TOperacionForm
       Date = 42736.000000000000000000
       Time = 0.475039594908594200
       TabOrder = 2
+      Visible = False
     end
     object PercEdit: TEdit
       Left = 598
@@ -792,15 +794,30 @@ object OperacionForm: TOperacionForm
       ParentFont = False
       TabOrder = 1
       object LbSaldo: TLabel
-        Left = 7
-        Top = 40
+        Left = 3
+        Top = 18
         Width = 186
         Height = 43
         Alignment = taRightJustify
         AutoSize = False
         Caption = '0.00'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
+        Font.Color = clRed
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+      end
+      object TotalLabel: TLabel
+        Left = 5
+        Top = 55
+        Width = 186
+        Height = 43
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = '0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
         Font.Height = -32
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]

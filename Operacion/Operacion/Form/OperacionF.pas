@@ -70,6 +70,7 @@ type
     DescuentoBitBtn: TBitBtn;
     Label7: TLabel;
     PedidoCheckBox: TCheckBox;
+    TotalLabel: TLabel;
     procedure ClienteBitBtnClick(Sender: TObject);
     procedure RJustifyEdit(var ThisEdit: TEdit);
     procedure TraeNombreCliente;
@@ -141,7 +142,7 @@ procedure TOperacionForm.QuitarArticulos;
 begin
   while Cuenta > 1 do
     QuitarBitBtn.Click; // vaciar articulos
-  Nuevo;
+//  Nuevo;
 end;
 
 procedure TOperacionForm.TraerArticulo;
@@ -167,7 +168,8 @@ end;
 
 procedure TOperacionForm.Nuevo;
 begin
-SGFact.Cells[0, 0] := 'Codigo';
+  QuitarArticulos;
+  SGFact.Cells[0, 0] := 'Codigo';
   SGFact.Cells[1, 0] := 'Descripcion';
   SGFact.Cells[2, 0] := '# Pieza';
   SGFact.Cells[3, 0] := 'Cantidad';
@@ -208,6 +210,7 @@ SGFact.Cells[0, 0] := 'Codigo';
   costo := 0;
   reparaciones := 0;
   ClienteEdit.Text := '0';
+  ClienteLabel.Caption := 'Consumidor Final';
   CUITLabel.Caption:='';
   ComprobanteEdit.Text:='';
   FEContado.Text := '0';
@@ -377,7 +380,7 @@ begin
   Pagado := StrToFloat(FEContado.Text) + StrToFloat(FECheque.Text) +
     StrToFloat(FETarjeta.Text) + StrToFloat(FEOtro.Text);
   Saldo := Total - Pagado;
-
+  TotalLabel.Caption := FloatToStr(Total);
   LbSaldo.Caption := FloatToStr(Saldo);
 end;
 
@@ -738,7 +741,9 @@ begin
     screen.Cursor := crDefault;
 //    if ok then ClienteBitBtn.Click;
   end;
-  ClienteBitBtn.Click;
+//  ClienteBitBtn.Click;
+  Nuevo;
+  AgregarBitBtn.Click;
 //  Close;
 end;
 
@@ -814,7 +819,7 @@ begin
               cbTipo.ItemIndex := 6;
           end;
 //    end;
-  ClienteBitBtn.Click;
+  AgregarBitBtn.Click;//  ClienteBitBtn.Click;
 end;
 
 procedure TOperacionForm.FormKeyUp(Sender: TObject; var Key: Word;
