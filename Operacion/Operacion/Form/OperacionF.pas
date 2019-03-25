@@ -312,8 +312,8 @@ begin
     else if esB then IVA := OperacionDataModule.SacarIVA((TOT),TIVA);
     SGFact.Cells[10, i] := FloatToStr(IVA);
     // NG
-    if esA then NG := TOT
-    else if esB then NG := TOT - IVA;
+    if esB then NG := TOT - IVA
+    else NG := TOT;
     SGFact.Cells[8, i] := FloatToStr(NG);
     //
     if (SGFact.Cells[9, i] = '') then SGFact.Cells[9, i] := '0';
