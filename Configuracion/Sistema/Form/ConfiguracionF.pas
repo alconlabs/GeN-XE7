@@ -124,9 +124,11 @@ type
     procedure TablaAfterPost(DataSet: TDataSet);
     procedure ConfigurarFEButtonClick(Sender: TObject);
     procedure ReporteDBLookupComboBoxClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     path: string;
+    procedure EsElectronica;
   public
     { Public declarations }
   end;
@@ -174,8 +176,9 @@ end;
 procedure TConfiguracionForm.ReporteDBLookupComboBoxClick(Sender: TObject);
 begin
   reporte := ImprimirQuery.FieldByName('REPORTE').AsString;
-  if (reporte = 'FElectronica') or (reporte = 'TElectronica') then ConfigurarFEButton.Visible := True
-  else ConfigurarFEButton.Visible := False;
+//  if (reporte = 'FElectronica') or (reporte = 'TElectronica') then ConfigurarFEButton.Visible := True
+//  else ConfigurarFEButton.Visible := False;
+  EsElectronica;
 end;
 
 procedure TConfiguracionForm.TablaAfterCancel(DataSet: TDataSet);
@@ -228,6 +231,17 @@ begin
     Key := #0; { eat enter key }
     Perform(WM_NEXTDLGCTL, 0, 0); { move to next control }
   end;
+end;
+
+procedure TConfiguracionForm.FormShow(Sender: TObject);
+begin
+  EsElectronica;
+end;
+
+procedure TConfiguracionForm.EsElectronica;
+begin
+  if (reporte = 'FElectronica') or (reporte = 'TElectronica') then ConfigurarFEButton.Visible := True
+    else ConfigurarFEButton.Visible := False;
 end;
 
 end.

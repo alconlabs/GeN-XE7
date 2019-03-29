@@ -17,6 +17,7 @@ object ConfiguracionForm: TConfiguracionForm
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel

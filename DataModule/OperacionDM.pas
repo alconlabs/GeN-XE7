@@ -1558,16 +1558,22 @@ var
   fecha, fechacompult, codigobarra,
   categoria, color, marca, proveedor, rubro, subcategoria : string;
 }
+  Numero :Integer;
 begin
-  if proveedor = '' then proveedor := '1';
-  if not existeEnTabla('Categoria','CODIGO='+categoria) then categoria := '0';
-  if subcategoria = '' then subcategoria := '0';
-  if rubro = '' then rubro := '0';
+//  if not TryStrToInt(categoria, Numero) then
+  categoria := '0';
+//  if not TryStrToInt(proveedor, Numero) then
+  proveedor := '1';
+//  if not TryStrToInt(subcategoria, Numero) then
+  subcategoria := '0';
+//  if not TryStrToInt(rubro, Numero) then
+  rubro := '0';
   if fecha = '' then fecha := DateToStr(now);
   if fechacompult = '' then fechacompult := fecha;
   if tasa = '' then tasa := '21';
   if porcentaje = '' then porcentaje := FloatToStr(dm.ConfigQuery.FieldByName('PP').AsFloat);
   if disponible = '' then disponible := '1';
+  tasa := StringReplace(tasa, ',', '.',[]);
   precio := StringReplace(precio, ',', '.',[]);
   ganancia := StrToFloat(precio)/(StrToFloat(tasa)/100+1);
   costo := FloatToStrF( ( ganancia/(StrToFloat(porcentaje)/100+1) ), ffFixed, 16, 2 );

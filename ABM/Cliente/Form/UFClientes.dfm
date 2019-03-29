@@ -26,15 +26,11 @@ object FClientes: TFClientes
     Top = 0
     Width = 648
     Height = 468
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label2: TLabel
         Left = 229
         Top = 67

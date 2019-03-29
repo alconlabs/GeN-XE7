@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
-  Vcl.ExtDlgs, ShellApi;
+  Vcl.ExtDlgs, ShellApi, System.IOUtils;
 
 type
   TAfipForm = class(TForm)
@@ -21,6 +21,7 @@ type
     PuntoVentaButton: TButton;
     OpensslButton: TButton;
     OpenDialog1: TOpenDialog;
+    ProbarButton: TButton;
     procedure CSRButtonClick(Sender: TObject);
     procedure CRTButtonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -28,6 +29,7 @@ type
     procedure PuntoVentaButtonClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure OpensslButtonClick(Sender: TObject);
+    procedure ProbarButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,7 +43,7 @@ implementation
 
 {$R *.dfm}
 
-uses DataModule, EmpresaF;
+uses DataModule, EmpresaF, AfipDM;
 
 procedure TAfipForm.AyudaButtonClick(Sender: TObject);
 begin
@@ -51,7 +53,7 @@ end;
 procedure TAfipForm.Button1Click(Sender: TObject);
 begin
   ShellExecute(Handle,'open','http://www.afip.gob.ar/ws/WSAA/wsaa_asociar_certificado_a_wsn_produccion.pdf',nil,nil,SW_NORMAL);
-  Close;
+//  Close;
 end;
 
 procedure TAfipForm.CRTButtonClick(Sender: TObject);
@@ -99,6 +101,7 @@ begin
         Ejecutar(openssl+csr);
         Sleep(1000);
         Memo1.Lines.LoadFromFile(ruta+'MiPedido.CSR');
+        SaveTextFileDialog1.FileName:=System.IOUtils.TPath.GetDocumentsPath()+'\MiPedido.CSR';
         SaveTextFileDialog1.Execute();
         Memo1.Lines.SaveToFile(SaveTextFileDialog1.FileName);
         ShellExecute(Handle,'open','http://www.afip.gob.ar/ws/WSAA/wsaa_obtener_certificado_produccion.pdf',nil,nil,SW_NORMAL);
@@ -132,6 +135,12 @@ end;
 procedure TAfipForm.OpensslButtonClick(Sender: TObject);
 begin
   ShellExecute(Handle,'open','https://slproweb.com/products/Win32OpenSSL.html',nil,nil,SW_NORMAL);
+end;
+
+procedure TAfipForm.ProbarButtonClick(Sender: TObject);
+begin
+  AfipDataModule.Generar;
+  Memo1.Lines.LoadFromFile(ruta + 'TA.XML');
 end;
 
 procedure TAfipForm.PuntoVentaButtonClick(Sender: TObject);

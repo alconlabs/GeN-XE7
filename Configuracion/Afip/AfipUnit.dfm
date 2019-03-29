@@ -23,32 +23,34 @@ object AfipForm: TAfipForm
     TabOrder = 0
     object Label38: TLabel
       Left = 1
-      Top = 142
+      Top = 117
       Width = 121
       Height = 13
       Align = alBottom
-      ExplicitLeft = 6
-      ExplicitTop = 136
+      ExplicitTop = 142
+      ExplicitWidth = 3
     end
     object CRTButton: TButton
       Left = 1
-      Top = 230
+      Top = 205
       Width = 121
       Height = 25
       Align = alBottom
       Caption = '3 - CRT'
       TabOrder = 0
       OnClick = CRTButtonClick
+      ExplicitTop = 230
     end
     object CSRButton: TButton
       Left = 1
-      Top = 205
+      Top = 180
       Width = 121
       Height = 25
       Align = alBottom
       Caption = '2 - CSR'
       TabOrder = 1
       OnClick = CSRButtonClick
+      ExplicitTop = 205
     end
     object AyudaButton: TButton
       Left = 1
@@ -62,33 +64,48 @@ object AfipForm: TAfipForm
     end
     object Button1: TButton
       Left = 1
-      Top = 255
+      Top = 230
       Width = 121
       Height = 25
       Align = alBottom
       Caption = '4 - Autorizar'
       TabOrder = 3
       OnClick = Button1Click
+      ExplicitTop = 255
     end
     object PuntoVentaButton: TButton
       Left = 1
-      Top = 180
+      Top = 155
       Width = 121
       Height = 25
       Align = alBottom
       Caption = '1 - Punto Venta'
       TabOrder = 4
       OnClick = PuntoVentaButtonClick
+      ExplicitTop = 180
     end
     object OpensslButton: TButton
       Left = 1
-      Top = 155
+      Top = 130
       Width = 121
       Height = 25
       Align = alBottom
       Caption = '0 - OpenSSL'
       TabOrder = 5
       OnClick = OpensslButtonClick
+      ExplicitTop = 155
+    end
+    object ProbarButton: TButton
+      Left = 1
+      Top = 255
+      Width = 121
+      Height = 25
+      Align = alBottom
+      Caption = '5 - Probar'
+      TabOrder = 6
+      OnClick = ProbarButtonClick
+      ExplicitLeft = 6
+      ExplicitTop = 256
     end
   end
   object Memo1: TMemo
