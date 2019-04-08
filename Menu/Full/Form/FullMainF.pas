@@ -248,7 +248,8 @@ begin
       LoginOk := True;
     end;
   end;
-  WebBrowser1.Navigate(path + 'hlp\index.htm');
+  //WebBrowser1.Navigate(path + 'hlp\index.htm');
+  WebBrowser1.Navigate('gamerzone.com.ar');
   if LoginOk <> True then
   begin
     ShowMessage('el usuario no coincide con la clave...');
@@ -482,7 +483,7 @@ end;
 
 procedure TFullMainForm.Ayuda1Click(Sender: TObject);
 begin
-  HlinkNavigateString(Nil, pChar(path + 'ayuda\index.htm'));
+  HlinkNavigateString(Nil, pChar(path + 'hlp\index.htm'));
 end;
 
 procedure TFullMainForm.Acercade1Click(Sender: TObject);
