@@ -773,8 +773,8 @@ var
 //  jsResponse: TJSONValue;
   ctaCte : boolean;
 begin
-//  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
-DM.FormatearFecha;
+  //  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
+  DM.FormatearFecha;
   pagare := '0';
   nro := inttostr(DM.UltimoRegistro('"Venta"', 'CODIGO'));
 //  if nro = '1' then

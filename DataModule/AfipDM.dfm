@@ -8,7 +8,6 @@ object AfipDataModule: TAfipDataModule
     AcceptCharset = 'UTF-8, *;q=0.8'
     BaseURL = 'http://civeloo.com/afip/jsonpb.php'
     Params = <>
-    HandleRedirects = True
     RaiseExceptionOn500 = False
     Left = 16
   end
@@ -18,7 +17,7 @@ object AfipDataModule: TAfipDataModule
     Params = <
       item
         Kind = pkREQUESTBODY
-        name = 'body'
+        Name = 'body'
         Options = [poDoNotEncode]
         ContentType = ctAPPLICATION_JSON
       end>
@@ -36,9 +35,7 @@ object AfipDataModule: TAfipDataModule
     Service = 'Service'
     Port = 'ServiceSoap'
     HTTPWebNode.Agent = 'Borland SOAP 1.2'
-    HTTPWebNode.UseUTF8InHeader = True
     HTTPWebNode.InvokeOptions = [soIgnoreInvalidCerts, soNoSOAPActionHeader, soAutoCheckAccessPointViaUDDI]
-    HTTPWebNode.WebNodeOptions = []
     Converter.Options = [soSendMultiRefArray, soTryAllSchema, soDontSendEmptyNodes]
     Converter.Encoding = 'utf-8'
     Left = 23

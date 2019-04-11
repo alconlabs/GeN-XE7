@@ -262,7 +262,7 @@ begin
     jsRequest.AddPair('direccion', direccion);
     jsRequest.AddPair('DocTipo', DocTipo);
     jsRequest.AddPair('DocNro', DocNro);
-    jsRequest.AddPair('CbteFch', formatdatetime('yyyymmdd', StrToDateTime(CbteFch)) );
+    jsRequest.AddPair('CbteFch', formatdatetime('yyyymmdd', now) );
     jsRequest.AddPair('Cbte', Cbte);//'1');
     jsRequest.AddPair('articulo', articulo);
     jsRequest.AddPair('ImpNeto', ImpNeto);
@@ -965,7 +965,7 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
 
   Request.FeDetReq[0].CbteDesde  := NroComp;
   Request.FeDetReq[0].CbteHasta  := NroComp;
-  Request.FeDetReq[0].CbteFch    := f.GetValue<WideString>('CbteFch');//formatdatetime('yyyymmdd',now);
+  Request.FeDetReq[0].CbteFch    := formatdatetime('yyyymmdd',now);//f.GetValue<WideString>('CbteFch');
   Request.FeDetReq[0].ImpTotal   := f.GetValue<Double>('ImpTotal');//121;
   Request.FeDetReq[0].ImpTotConc := f.GetValue<Double>('ImpTotConc');//0;
   Request.FeDetReq[0].ImpNeto    := f.GetValue<Double>('ImpNeto');//100;
@@ -982,7 +982,7 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
     //------------------------------------------------------------------------
   end;
 
-  Request.FeDetReq[0].MonId     := f.GetValue<WideString>('MonId');//'PES';
+  Request.FeDetReq[0].MonId     := 'PES';//f.GetValue<WideString>('MonId');
   Request.FeDetReq[0].MonCotiz  := f.GetValue<Double>('MonCotiz');//1;
   //    Request.FeDetReq[0].FchServDesde :=          //   solo para concepto 2 o 3
 

@@ -402,6 +402,7 @@ begin
   afipUsr := '';
   afipPsw := '';
   operNCC := '0';
+  openSSL := '';
   EscribirINI;
 
   // IniFile.WriteString('Licencia', 'Dia', inttostr(1));
