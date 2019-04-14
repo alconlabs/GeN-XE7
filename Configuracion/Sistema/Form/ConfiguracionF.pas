@@ -179,6 +179,7 @@ begin
 //  if (reporte = 'FElectronica') or (reporte = 'TElectronica') then ConfigurarFEButton.Visible := True
 //  else ConfigurarFEButton.Visible := False;
   EsElectronica;
+  if ConfigurarFEButton.Visible then ConfigurarFEButton.Click;
 end;
 
 procedure TConfiguracionForm.TablaAfterCancel(DataSet: TDataSet);

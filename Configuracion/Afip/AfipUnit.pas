@@ -22,6 +22,7 @@ type
     OpensslButton: TButton;
     OpenDialog1: TOpenDialog;
     ProbarButton: TButton;
+    SubscripcionButton: TButton;
     procedure CSRButtonClick(Sender: TObject);
     procedure CRTButtonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -30,6 +31,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure OpensslButtonClick(Sender: TObject);
     procedure ProbarButtonClick(Sender: TObject);
+    procedure SubscripcionButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -146,6 +148,13 @@ end;
 procedure TAfipForm.PuntoVentaButtonClick(Sender: TObject);
 begin
   ShellExecute(Handle,'open','https://servicios1.afip.gov.ar/genericos/guiasPasoPaso/VerGuia.aspx?id=135',nil,nil,SW_NORMAL);
+end;
+
+procedure TAfipForm.SubscripcionButtonClick(Sender: TObject);
+begin
+  ShellExecute(Handle,'open',
+          'https://articulo.mercadolibre.com.ar/MLA-757192136-sistema-gen-facturacion-stock-monotributo-ingresos-brutos-_JM'
+          ,nil,nil,SW_NORMAL);
 end;
 
 end.

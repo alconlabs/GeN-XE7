@@ -27,7 +27,6 @@ object AfipForm: TAfipForm
       Width = 121
       Height = 13
       Align = alBottom
-      ExplicitTop = 142
       ExplicitWidth = 3
     end
     object CRTButton: TButton
@@ -39,7 +38,6 @@ object AfipForm: TAfipForm
       Caption = '3 - CRT'
       TabOrder = 0
       OnClick = CRTButtonClick
-      ExplicitTop = 230
     end
     object CSRButton: TButton
       Left = 1
@@ -50,7 +48,6 @@ object AfipForm: TAfipForm
       Caption = '2 - CSR'
       TabOrder = 1
       OnClick = CSRButtonClick
-      ExplicitTop = 205
     end
     object AyudaButton: TButton
       Left = 1
@@ -71,7 +68,6 @@ object AfipForm: TAfipForm
       Caption = '4 - Autorizar'
       TabOrder = 3
       OnClick = Button1Click
-      ExplicitTop = 255
     end
     object PuntoVentaButton: TButton
       Left = 1
@@ -82,7 +78,6 @@ object AfipForm: TAfipForm
       Caption = '1 - Punto Venta'
       TabOrder = 4
       OnClick = PuntoVentaButtonClick
-      ExplicitTop = 180
     end
     object OpensslButton: TButton
       Left = 1
@@ -93,7 +88,6 @@ object AfipForm: TAfipForm
       Caption = '0 - OpenSSL'
       TabOrder = 5
       OnClick = OpensslButtonClick
-      ExplicitTop = 155
     end
     object ProbarButton: TButton
       Left = 1
@@ -104,8 +98,24 @@ object AfipForm: TAfipForm
       Caption = '5 - Probar'
       TabOrder = 6
       OnClick = ProbarButtonClick
+    end
+    object SubscripcionButton: TButton
+      Left = 1
+      Top = 26
+      Width = 121
+      Height = 25
+      Align = alTop
+      Caption = 'SOPORTE'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 7
+      OnClick = SubscripcionButtonClick
       ExplicitLeft = 6
-      ExplicitTop = 256
+      ExplicitTop = 41
     end
   end
   object Memo1: TMemo
