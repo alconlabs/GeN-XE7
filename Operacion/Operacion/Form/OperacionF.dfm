@@ -539,7 +539,7 @@ object OperacionForm: TOperacionForm
       Top = 2
       Width = 103
       Height = 21
-      Date = 42736.000000000000000000
+      Date = 43466.000000000000000000
       Time = 0.475039594908594200
       TabOrder = 2
       Visible = False

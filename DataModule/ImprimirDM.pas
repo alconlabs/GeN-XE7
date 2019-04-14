@@ -182,7 +182,7 @@ var
   Pict, Pict2, Pict3, Pict4: TfrxPictureView;
   tipo_cbte: Integer;
 begin
-  if (reporte='TElectronica') or (reporte='CTicket') then rpt := reporte;
+  if not(rpt='CTicket') and ((reporte='TElectronica') or (reporte='CTicket')) then rpt := reporte;
   Query.sql.Text := 'SELECT '+ QuotedStr(dm.ConfigQuery.FieldByName('CODIGO').AsString) + ' As PtoVta,' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE')
     .AsString) + ' As Empresa,' +
     QuotedStr(dm.ConfigQuery.FieldByName('TITULAR').AsString) + ' As ETITULAR,'

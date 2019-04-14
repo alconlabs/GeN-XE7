@@ -219,6 +219,7 @@ begin
   FEOtro.Text := '0';
   Cuenta := 1;
   LbSaldo.Caption:='0.00';
+  PedidoCheckBox.Checked:=False;
 end;
 
 procedure TOperacionForm.NuevoBitBtnClick(Sender: TObject);
