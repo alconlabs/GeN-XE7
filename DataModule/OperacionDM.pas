@@ -69,7 +69,7 @@ type
       categoria, color, marca, proveedor, rubro, subcategoria : string);
     procedure ActualizarCantidadArticulo(codigo,cantidad:string);
     procedure DataSetToCsv(psRutaFichero : String);
-    procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impTotal, asocTipo, asocNro:string);
+    procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impTotal, asocTipo, asocNro, n10, n21, i10, i21:string);
   private
     { Private declarations }
   public
@@ -802,35 +802,6 @@ begin
     WSFE( fech, let, '1', '96', cui, comp, floattostr(tot), floattostr(tot), '0', '0' );
     if cae = '' then exit;
   end;
-//  begin
-//    AfipDataModule := TAfipDataModule.Create(self);
-//    try
-//      with AfipDataModule do
-//      begin
-//        jsResponse := FacturaAfip( fech, ptovta, tipocbte, '1', '96', cui, comp, floattostr(tot), floattostr(tot),
-//        '0', '0', '0', '0', '1',
-//        '1', '0', '0', '0', '0',
-//        '0', '0', 'PES', 'impuesto', 'null',
-//        'null', 'null', '', '', '', '');
-//        if jsResponse = nil then
-//          exit
-//        else
-//        begin
-//          cae:=jsResponse.GetValue<String>('cae');
-//          comp:=jsResponse.GetValue<String>('nro');
-//          vto:=jsResponse.GetValue<String>('vto');
-//          mensaje:=jsResponse.GetValue<String>('mensaje');
-//        end;
-//        if mensaje <> 'Ok' then
-//        begin
-//          ShowMessage(mensaje);
-//          exit;
-//        end;
-//      end;
-//    finally
-//      AfipDataModule.Free;
-//    end;
-//  end;
   //actualiza el nro de factura
   if comp<>'' then
   begin
@@ -1701,8 +1672,9 @@ begin
       jsResponse := FacturaAfip( cbteFecha, dm.TraerTipoCbte(let), concepto, docTipo, docNro, cbte, impTotal, impTotal,
       '0', '0', '0', '0', '1',
       dm.TraerTipoCbte(asocTipo), asocNro,
-      '1', '0', '0', '0', '0',
-      '0', '0', 'PES', 'impuesto', 'null',
+      '1', '0', '0', '0',
+      n10, n21, i10, i21,//'0', '0', '0',
+      'PES', 'impuesto', 'null',
       'null', 'null', '', '', '', '');
       if jsResponse = nil then
         exit

@@ -55,8 +55,9 @@ type
     function FacturaAfip( CbteFch, tipocbte, concepto, DocTipo, DocNro, Cbte, ImpNeto, ImpTotal,
     ImpTotConc, ImpIVA, ImpTrib, ImpOpEx, MonCotiz,
     regfeasocTipo, regfeasocNro,
-    regfetribId, regfetribBaseImp, regfetribAlic, regfetribImporte, regfeivaId,
-    regfeivaBaseImp, regfeivaImporte, MonId, regfetribDesc, FchServDesde,
+    regfetribId, regfetribBaseImp, regfetribAlic, regfetribImporte,
+    n10, n21, i10, i21,//regfeivaId, regfeivaBaseImp, regfeivaImporte,
+    MonId, regfetribDesc, FchServDesde,
     FchServHasta, FchVtoPago, razon, nombre, direccion, articulo : string) : TJSONValue;
 
   end;
@@ -230,7 +231,7 @@ end;
 
 function TAfipDataModule.FacturaAfip;
 var
-  jsRequest, J: TJSONObject;
+  jsRequest, J, JSONAlicIva, JSONAlicIva10, JSONAlicIva21, JSONIva: TJSONObject;
   cuit, pass, ptovta : string;
   local: boolean;
 begin
@@ -284,9 +285,33 @@ begin
     jsRequest.AddPair('regfetribBaseImp', regfetribBaseImp);
     jsRequest.AddPair('regfetribAlic', regfetribAlic);
     jsRequest.AddPair('regfetribImporte', regfetribImporte);
-    jsRequest.AddPair('regfeivaId', regfeivaId);
-    jsRequest.AddPair('regfeivaBaseImp', regfeivaBaseImp);
-    jsRequest.AddPair('regfeivaImporte', regfeivaImporte);
+//    jsRequest.AddPair('regfeivaId', regfeivaId);
+//    jsRequest.AddPair('regfeivaBaseImp', regfeivaBaseImp);
+//    jsRequest.AddPair('regfeivaImporte', regfeivaImporte);
+    jsRequest.AddPair('n10', n10);
+    jsRequest.AddPair('i10', i10);
+    jsRequest.AddPair('n21',n21);
+    jsRequest.AddPair('i21',i21);
+//    JSONAlicIva := TJSONObject.Create;
+//    if n10<>'' then
+//    begin
+//      JSONAlicIva10 := TJSONObject.Create;
+//      JSONAlicIva10.AddPair('Id', '4');
+//      JSONAlicIva10.AddPair('BaseImp', n10);
+//      JSONAlicIva10.AddPair('Importe', '10.5');
+//      JSONAlicIva.AddPair(JSONAlicIva10.AddPair);
+//    end;
+//    if n21<>'' then
+//    begin
+//      JSONAlicIva21 := TJSONObject.Create;
+//      JSONAlicIva21.AddPair('Id', '5');
+//      JSONAlicIva21.AddPair('BaseImp', n21);
+//      JSONAlicIva21.AddPair('Importe', '21');
+//      JSONAlicIva.AddPair(JSONAlicIva21.AddPair);
+//    end;
+//    JSONIva := TJSONObject.Create;
+//    JSONIva.AddPair('AlicIva', JSONAlicIva);
+//    jsRequest.AddPair('regfeiva', JSONIva);
     local := true;
     if local then
       result := SolicitaCAE(jsRequest)
@@ -912,22 +937,22 @@ e := mes+'/'+dia+'/'+año;
 //    Request.FeDetReq[0].Tributos             := ATributos;
 //  end;
 
-  //si tiene los 2 ivas dimensiona para 2 sino 1
+//  si tiene los 2 ivas dimensiona para 2 sino 1
 //  if (STRTOFLOAT(edtIVA105.Text) > 0) and (STRTOFLOAT(edtIVA21.Text) > 0)
-//  then
-//  begin
-//    SetLength(ADetIva,2);
-//    ADetIVA[0]              := DetIva21;
-//    ADetIVA[1]              := DetIva105;
-//    Request.FeDetReq[0].Iva := ADetIva;
-//  end
-//  else
-//  begin
+  if (f.GetValue<String>('n10')<>'') and (f.GetValue<String>('21')<>'')
+  then
+  begin
+    SetLength(ADetIva,2);
+    ADetIVA[0]              := DetIva21;
+    ADetIVA[1]              := DetIva105;
+    Request.FeDetReq[0].Iva := ADetIva;
+  end
+  else
+  begin
     SetLength(ADetIva,1);
-   ADetIVA[0]              := DetIva21;
-//    Request.FeDetReq[0].Iva := ADetIva;
-
-//  end;
+    ADetIVA[0]              := DetIva21;
+    Request.FeDetReq[0].Iva := ADetIva;
+  end;
 
 
   // si lleva documento vinculado
@@ -970,7 +995,8 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
   Request.FeDetReq[0].ImpTotConc := f.GetValue<Double>('ImpTotConc');//0;
   Request.FeDetReq[0].ImpNeto    := f.GetValue<Double>('ImpNeto');//100;
   Request.FeDetReq[0].ImpOpEx    := f.GetValue<Double>('ImpOpEx');//0;
-//  Request.FeDetReq[0].ImpIva     := f.GetValue<Double>('ImpIVA');//21;
+  if (f.GetValue<String>('n10')<>'') and (f.GetValue<String>('21')<>'') then
+    Request.FeDetReq[0].ImpIva     := f.GetValue<Double>('ImpIVA');//21;
   Request.FeDetReq[0].ImpTrib    := f.GetValue<Double>('ImpTrib');//0;  //si tiene percepciones de IIBB o IVA van aca
 
   if Request.FeDetReq[0].Concepto <> 1 then
@@ -1008,33 +1034,35 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
 
   //la factura contiene 2 tipos de iva 10.5 y 21%
 //  if (STRTOFLOAT(edtIVA105.Text) > 0) and (STRTOFLOAT(edtIVA21.Text) > 0) then
-//  begin
-//    Request.FeDetReq[0].Iva[1].id       := 4;     //   alicuota 10.5%
-//    Request.FeDetReq[0].Iva[1].BaseImp  := STRTOFLOAT(LNeto105.Caption); //   base imponible
-//    Request.FeDetReq[0].Iva[1].importe  := STRTOFLOAT(edtIva105.Text);//   Importe del impuesto
-//
-//    Request.FeDetReq[0].Iva[0].id       := 5;     //   alicuota 21%
-//    Request.FeDetReq[0].Iva[0].BaseImp  := STRTOFLOAT(LNeto21.Caption); //   base imponible
-//    Request.FeDetReq[0].Iva[0].importe  := STRTOFLOAT(edtIva21.TExt);//   Importe del impuesto
-//    iva := true;
-//  end;
+  if (f.GetValue<String>('n10')<>'') and (f.GetValue<String>('n21')<>'') then
+  begin
+    Request.FeDetReq[0].Iva[1].id       := 4;     //   alicuota 10.5%
+    Request.FeDetReq[0].Iva[1].BaseImp  := STRTOFLOAT(f.GetValue<String>('n10')); //   base imponible
+    Request.FeDetReq[0].Iva[1].importe  := STRTOFLOAT(f.GetValue<String>('i10'));//   Importe del impuesto
+
+    Request.FeDetReq[0].Iva[0].id       := 5;     //   alicuota 21%
+    Request.FeDetReq[0].Iva[0].BaseImp  := STRTOFLOAT(f.GetValue<String>('n21')); //   base imponible
+    Request.FeDetReq[0].Iva[0].importe  := STRTOFLOAT(f.GetValue<String>('i21'));//   Importe del impuesto
+    iva := true;
+  end;
 
   //la factura contiene iva 10.5
 //  if (STRTOFLOAT(edtIVA105.Text) > 0) and NOT(iva) then
-//  begin
-//    Request.FeDetReq[0].Iva[0].id       := 4;     //   alicuota 10.5%
-//    Request.FeDetReq[0].Iva[0].BaseImp  := STRTOFLOAT(LNeto105.Caption); //   base imponible
-//    Request.FeDetReq[0].Iva[0].importe  := STRTOFLOAT(edtIva105.Text);//   Importe del impuesto
-//  end;
-
+  if (f.GetValue<String>('n10')<>'') and NOT(iva) then
+  begin
+    Request.FeDetReq[0].Iva[0].id       := 4;     //   alicuota 10.5%
+    Request.FeDetReq[0].Iva[1].BaseImp  := STRTOFLOAT(f.GetValue<String>('n10')); //   base imponible
+    Request.FeDetReq[0].Iva[1].importe  := STRTOFLOAT(f.GetValue<String>('i10'));//   Importe del impuesto
+  end;
 
   //la factura contiene iva 21
 //  if NOT(iva) and (STRTOFLOAT(edtIVA21.Text) > 0) then
-//  begin
-//    Request.FeDetReq[0].Iva[0].id      := f.GetValue<Integer>('regfeivaId');//5;     //   alicuota 21%
-//    Request.FeDetReq[0].Iva[0].BaseImp := f.GetValue<Double>('regfeivaBaseImp');//100; //   base imponible
-//    Request.FeDetReq[0].Iva[0].importe := f.GetValue<Double>('regfeivaImporte');//21;//   Importe del impuesto
-//  end;
+  if (f.GetValue<String>('n21')<>'') and NOT(iva) then
+  begin
+    Request.FeDetReq[0].Iva[0].id       := 5;     //   alicuota 21%
+    Request.FeDetReq[0].Iva[0].BaseImp  := STRTOFLOAT(f.GetValue<String>('n21')); //   base imponible
+    Request.FeDetReq[0].Iva[0].importe  := STRTOFLOAT(f.GetValue<String>('i21'));//   Importe del impuesto
+  end;
 
     //la factura NO LLEVA IVA DISCRIMINADO ES B
 //  if (LLetra.Caption = 'B') then
