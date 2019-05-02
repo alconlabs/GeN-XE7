@@ -552,10 +552,14 @@ end;
 
 function TDM.TraerTipoCbte(tipo:string):string;
 begin
-  Case IndexStr(tipo, ['0','C','NCC' ]) of
+  Case IndexStr(tipo, ['0', 'A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
     0 : result:='0';
-    1 : result:='11';
-    2 : result:='13';
+    1 : result:='1';
+    2 : result:='3';
+    3 : result:='6';
+    4 : result:='8';
+    5 : result:='11';
+    6 : result:='13';
   End;
 end;
 

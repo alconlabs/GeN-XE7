@@ -585,7 +585,7 @@ begin
         LeerINI;
         if operNCC='' then operNCC:='0';
         comp := IntToStr(StrToInt(operNCC)+1);
-        WSFE( fech, 'NCC', '1', '96', cui, comp, floattostr(tot), floattostr(tot), let, nro );
+        WSFE( fech, 'NCC', '1', '96', cui, comp, floattostr(tot), floattostr(tot), let, nro, FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
         if cae = '' then Exit;//if mensaje <> 'Ok' then Exit;
         if comp<>'' then
         begin
@@ -799,7 +799,7 @@ begin
     IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
   if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
   begin
-    WSFE( fech, let, '1', '96', cui, comp, floattostr(tot), floattostr(tot), '0', '0' );
+    WSFE(fech, let, '1', '96', cui, comp, floattostr(tot), floattostr(tot), '0', '0', FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
     if cae = '' then exit;
   end;
   //actualiza el nro de factura
@@ -1664,7 +1664,6 @@ end;
 
 procedure TOperacionDataModule.WSFE;
 begin
-
   AfipDataModule := TAfipDataModule.Create(self);
   try
     with AfipDataModule do

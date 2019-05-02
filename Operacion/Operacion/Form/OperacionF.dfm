@@ -594,7 +594,7 @@ object OperacionForm: TOperacionForm
     TabOrder = 0
     object ProcesarBitBtn: TBitBtn
       Left = 709
-      Top = 4
+      Top = 5
       Width = 80
       Height = 50
       Hint = 'F12 - PROCESAR VENTA'

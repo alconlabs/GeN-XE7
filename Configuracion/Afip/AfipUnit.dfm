@@ -1,7 +1,7 @@
 object AfipForm: TAfipForm
   Left = 0
   Top = 0
-  Caption = 'memo'
+  Caption = 'AFIP WS'
   ClientHeight = 281
   ClientWidth = 643
   Color = clBtnFace
@@ -114,8 +114,6 @@ object AfipForm: TAfipForm
       ParentFont = False
       TabOrder = 7
       OnClick = SubscripcionButtonClick
-      ExplicitLeft = 6
-      ExplicitTop = 41
     end
   end
   object Memo1: TMemo

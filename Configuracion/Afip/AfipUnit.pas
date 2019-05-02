@@ -141,13 +141,18 @@ end;
 
 procedure TAfipForm.ProbarButtonClick(Sender: TObject);
 begin
-  AfipDataModule.Generar;
+  AfipDataModule := TAfipDataModule.Create(self);
+  try
+      AfipDataModule.Generar;
+  finally
+    AfipDataModule.Free;
+  end;
   Memo1.Lines.LoadFromFile(ruta + 'TA.XML');
 end;
 
 procedure TAfipForm.PuntoVentaButtonClick(Sender: TObject);
 begin
-  ShellExecute(Handle,'open','https://servicios1.afip.gov.ar/genericos/guiasPasoPaso/VerGuia.aspx?id=135',nil,nil,SW_NORMAL);
+  ShellExecute(Handle,'open','https://serviciosweb.afip.gob.ar/genericos/guiasPasoPaso/VerGuia.aspx?id=135',nil,nil,SW_NORMAL);
 end;
 
 procedure TAfipForm.SubscripcionButtonClick(Sender: TObject);

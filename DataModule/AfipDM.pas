@@ -939,7 +939,7 @@ e := mes+'/'+dia+'/'+año;
 
 //  si tiene los 2 ivas dimensiona para 2 sino 1
 //  if (STRTOFLOAT(edtIVA105.Text) > 0) and (STRTOFLOAT(edtIVA21.Text) > 0)
-  if (f.GetValue<String>('n10')<>'') and (f.GetValue<String>('21')<>'')
+  if (f.GetValue<String>('n10')<>'0') and (f.GetValue<String>('21')<>'0')
   then
   begin
     SetLength(ADetIva,2);
@@ -973,7 +973,6 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
   auth.token := token;
   auth.Sign  := sign;
 
-
   //   FeCabReq
   Request.FeCabReq.CantReg  := 1;  //   cantidad de registros
   Request.FeCabReq.CbteTipo := f.GetValue<Integer>('tipocbte');//1;    //   1=fc.A 2=nd.A 3=nc.A    6=fc.B 7=nd.B 8=nc.B
@@ -995,8 +994,8 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
   Request.FeDetReq[0].ImpTotConc := f.GetValue<Double>('ImpTotConc');//0;
   Request.FeDetReq[0].ImpNeto    := f.GetValue<Double>('ImpNeto');//100;
   Request.FeDetReq[0].ImpOpEx    := f.GetValue<Double>('ImpOpEx');//0;
-  if (f.GetValue<String>('n10')<>'') and (f.GetValue<String>('21')<>'') then
-    Request.FeDetReq[0].ImpIva     := f.GetValue<Double>('ImpIVA');//21;
+  if (f.GetValue<String>('n10')<>'0') and (f.GetValue<String>('21')<>'0') then
+    Request.FeDetReq[0].ImpIva := f.GetValue<Double>('ImpIVA');//21;
   Request.FeDetReq[0].ImpTrib    := f.GetValue<Double>('ImpTrib');//0;  //si tiene percepciones de IIBB o IVA van aca
 
   if Request.FeDetReq[0].Concepto <> 1 then
@@ -1034,7 +1033,7 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
 
   //la factura contiene 2 tipos de iva 10.5 y 21%
 //  if (STRTOFLOAT(edtIVA105.Text) > 0) and (STRTOFLOAT(edtIVA21.Text) > 0) then
-  if (f.GetValue<String>('n10')<>'') and (f.GetValue<String>('n21')<>'') then
+  if (f.GetValue<String>('n10')<>'0') and (f.GetValue<String>('n21')<>'0') then
   begin
     Request.FeDetReq[0].Iva[1].id       := 4;     //   alicuota 10.5%
     Request.FeDetReq[0].Iva[1].BaseImp  := STRTOFLOAT(f.GetValue<String>('n10')); //   base imponible
@@ -1048,7 +1047,7 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
 
   //la factura contiene iva 10.5
 //  if (STRTOFLOAT(edtIVA105.Text) > 0) and NOT(iva) then
-  if (f.GetValue<String>('n10')<>'') and NOT(iva) then
+  if (f.GetValue<String>('n10')<>'0') and NOT(iva) then
   begin
     Request.FeDetReq[0].Iva[0].id       := 4;     //   alicuota 10.5%
     Request.FeDetReq[0].Iva[1].BaseImp  := STRTOFLOAT(f.GetValue<String>('n10')); //   base imponible
@@ -1057,7 +1056,7 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
 
   //la factura contiene iva 21
 //  if NOT(iva) and (STRTOFLOAT(edtIVA21.Text) > 0) then
-  if (f.GetValue<String>('n21')<>'') and NOT(iva) then
+  if (f.GetValue<String>('n21')<>'0') and NOT(iva) then
   begin
     Request.FeDetReq[0].Iva[0].id       := 5;     //   alicuota 21%
     Request.FeDetReq[0].Iva[0].BaseImp  := STRTOFLOAT(f.GetValue<String>('n21')); //   base imponible
@@ -1066,11 +1065,12 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
 
     //la factura NO LLEVA IVA DISCRIMINADO ES B
 //  if (LLetra.Caption = 'B') then
-//  begin
-//    Request.FeDetReq[0].Iva[0].id       := 3;     //   alicuota 10.5%
-//    Request.FeDetReq[0].Iva[0].BaseImp  := STRTOFLOAT(edtSubtotal.Text); //   base imponible
-//    Request.FeDetReq[0].Iva[0].importe  := 0;//   Importe del impuesto
-//  end;
+  if (f.GetValue<Integer>('tipocbte') <9) and  (f.GetValue<Integer>('tipocbte') > 5) then
+  begin
+    Request.FeDetReq[0].Iva[0].id       := 3;     //   alicuota 10.5%
+    Request.FeDetReq[0].Iva[0].BaseImp  := f.GetValue<Double>('ImpNeto'); //   base imponible
+    Request.FeDetReq[0].Iva[0].importe  := 0;//   Importe del impuesto
+  end;
 
   //    Request.FeDetReq[0].Opcionales[0].Id    := s(4)    //  id del opcional
   //    Request.FeDetReq[0].Opcionales[0].Valor := s(250); //  valor

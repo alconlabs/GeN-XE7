@@ -183,8 +183,9 @@ var
   tipo_cbte: Integer;
 begin
   if not(rpt='CTicket') and ((reporte='TElectronica') or (reporte='CTicket')) then rpt := reporte;
-  Query.sql.Text := 'SELECT '+ QuotedStr(dm.ConfigQuery.FieldByName('CODIGO').AsString) + ' As PtoVta,' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE')
-    .AsString) + ' As Empresa,' +
+  Query.sql.Text := 'SELECT '+
+    QuotedStr(PuntoVenta) + ' As PtoVta,' +
+    QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE').AsString) + ' As Empresa,' +
     QuotedStr(dm.ConfigQuery.FieldByName('TITULAR').AsString) + ' As ETITULAR,'
     + QuotedStr(dm.ConfigQuery.FieldByName('IVA').AsString) + ' As EIVA,' +
     QuotedStr(dm.ConfigQuery.FieldByName('CODIGOAREA').AsString) +
