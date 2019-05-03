@@ -52,8 +52,8 @@ type
     function ObtieneUltimoComprobante(puntoventa, idcomprobante: integer) : Int64;
     procedure ConsultaComprobantes(puntoVenta, idComprobante: integer; nroComprobante : Int64);
     function SolicitaCAE(f:TJSONObject):TJSONValue;
-    function FacturaAfip( CbteFch, tipocbte, concepto, DocTipo, DocNro, Cbte, ImpNeto, ImpTotal,
-    ImpTotConc, ImpIVA, ImpTrib, ImpOpEx, MonCotiz,
+    function FacturaAfip( CbteFch, tipocbte, concepto, DocTipo, DocNro, Cbte,
+    ImpNeto, ImpTotal, ImpTotConc, ImpIVA, ImpTrib, ImpOpEx, MonCotiz,
     regfeasocTipo, regfeasocNro,
     regfetribId, regfetribBaseImp, regfetribAlic, regfetribImporte,
     n10, n21, i10, i21,//regfeivaId, regfeivaBaseImp, regfeivaImporte,
@@ -939,7 +939,7 @@ e := mes+'/'+dia+'/'+año;
 
 //  si tiene los 2 ivas dimensiona para 2 sino 1
 //  if (STRTOFLOAT(edtIVA105.Text) > 0) and (STRTOFLOAT(edtIVA21.Text) > 0)
-  if (f.GetValue<String>('n10')<>'0') and (f.GetValue<String>('21')<>'0')
+  if (f.GetValue<String>('n10')<>'0') and (f.GetValue<String>('n21')<>'0')
   then
   begin
     SetLength(ADetIva,2);
@@ -994,7 +994,7 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
   Request.FeDetReq[0].ImpTotConc := f.GetValue<Double>('ImpTotConc');//0;
   Request.FeDetReq[0].ImpNeto    := f.GetValue<Double>('ImpNeto');//100;
   Request.FeDetReq[0].ImpOpEx    := f.GetValue<Double>('ImpOpEx');//0;
-  if (f.GetValue<String>('n10')<>'0') and (f.GetValue<String>('21')<>'0') then
+  if (f.GetValue<String>('n10')<>'0') or (f.GetValue<String>('n21')<>'0') then
     Request.FeDetReq[0].ImpIva := f.GetValue<Double>('ImpIVA');//21;
   Request.FeDetReq[0].ImpTrib    := f.GetValue<Double>('ImpTrib');//0;  //si tiene percepciones de IIBB o IVA van aca
 

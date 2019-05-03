@@ -69,7 +69,7 @@ type
       categoria, color, marca, proveedor, rubro, subcategoria : string);
     procedure ActualizarCantidadArticulo(codigo,cantidad:string);
     procedure DataSetToCsv(psRutaFichero : String);
-    procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impTotal, asocTipo, asocNro, n10, n21, i10, i21:string);
+    procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impIva, impTotal, asocTipo, asocNro, n10, n21, i10, i21:string);
   private
     { Private declarations }
   public
@@ -585,7 +585,7 @@ begin
         LeerINI;
         if operNCC='' then operNCC:='0';
         comp := IntToStr(StrToInt(operNCC)+1);
-        WSFE( fech, 'NCC', '1', '96', cui, comp, floattostr(tot), floattostr(tot), let, nro, FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
+        WSFE( fech, 'NCC', '1', '96', cui, comp, FloatToStr(sbt), FloatToStr(impu), floattostr(tot), let, nro, FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
         if cae = '' then Exit;//if mensaje <> 'Ok' then Exit;
         if comp<>'' then
         begin
@@ -777,10 +777,18 @@ begin
   DM.FormatearFecha;
   pagare := '0';
   nro := inttostr(DM.UltimoRegistro('"Venta"', 'CODIGO'));
-//  if nro = '1' then
-//    nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
-  comp := IntToStr( ( dm.ObtenerConfig('NroFactura') ) + 1 );
-//  ptovta:= IntToStr(dm.ObtenerConfig('Empresa'));
+//  comp := IntToStr( ( dm.ObtenerConfig('NroFactura') ) + 1 );
+  case IndexStr(let, ['0', 'A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
+    0 : comp := IntToStr( dm.ObtenerConfig('NroFactura') );
+    1 : comp := NroA;
+    2 : comp := NroNCA;
+    3 : comp := NroB;
+    4 : comp := NroNCB;
+    5 : comp := NroC;
+    6 : comp := NroNCC;
+  end;
+  if comp='' then comp:='0';
+  comp := IntToStr(StrToInt(comp)+1);
   if pgr then
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
@@ -799,14 +807,25 @@ begin
     IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
   if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
   begin
-    WSFE(fech, let, '1', '96', cui, comp, floattostr(tot), floattostr(tot), '0', '0', FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
+    WSFE(fech, let, '1', '96', cui, comp,  FloatToStr(sbt), FloatToStr(impu), floattostr(tot), '0', '0', FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
     if cae = '' then exit;
   end;
   //actualiza el nro de factura
   if comp<>'' then
   begin
-    Q.SQL.Text := 'Update "Config" Set NroFactura ='+comp;
-    Q.ExecSQL;
+//    Q.SQL.Text := 'Update "Config" Set NroFactura ='+comp;
+//    Q.ExecSQL;
+    case IndexStr(let, ['0', 'A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
+      0 : Q.SQL.Text := 'Update "Config" Set NroFactura ='+comp;
+      1 : NroA := comp;
+      2 : NroNCA := comp;
+      3 : NroB := comp;
+      4 : NroNCB := comp;
+      5 : NroC := comp;
+      6 : NroNCC := comp;
+    end;
+      DM.EscribirINI;
+//      Q.ExecSQL;
   end;
   // INSERTA EN LA TABLA VENTA
   Q.SQL.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE, ' +
@@ -1668,8 +1687,9 @@ begin
   try
     with AfipDataModule do
     begin
-      jsResponse := FacturaAfip( cbteFecha, dm.TraerTipoCbte(let), concepto, docTipo, docNro, cbte, impTotal, impTotal,
-      '0', '0', '0', '0', '1',
+      jsResponse := FacturaAfip( cbteFecha, dm.TraerTipoCbte(let), concepto,
+      docTipo, docNro, cbte, impTotal, impTotal,
+      '0', ImpIva, '0', '0', '1',
       dm.TraerTipoCbte(asocTipo), asocNro,
       '1', '0', '0', '0',
       n10, n21, i10, i21,//'0', '0', '0',

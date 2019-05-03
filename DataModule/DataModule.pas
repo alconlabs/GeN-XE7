@@ -83,7 +83,8 @@ var
   detalle, memo, BasedeDatos, mode: string; // revisar
   webUrl, webRes, webUsr, webPsw, webUpd,
   afipUrl, afipRes, afipUsr, afipPsw,
-  operNCC, openSSl : string;
+  operNCC, openSSl,
+  NroA, NroNCA, NroB, NroNCB, NroC, NroNCC : string;
   Precio1, Precio2, Precio3, Precio4, Precio5, Precio6, PrecioCtaCte: Double;
 
 implementation
@@ -341,6 +342,12 @@ begin
   afipPsw := IniFile.ReadString('AFIP', 'PSW', '');
   operNCC := IniFile.ReadString('OPER', 'NCC', '');
   openSSL := IniFile.ReadString('OSSL', 'EXE', '');
+  NroA := IniFile.ReadString('NRO', 'A', '');
+  NroNCA := IniFile.ReadString('NRO', 'NCA', '');
+  NroB := IniFile.ReadString('NRO', 'B', '');
+  NroNCB := IniFile.ReadString('NRO', 'NCB', '');
+  NroC := IniFile.ReadString('NRO', 'C', '');
+  NroNCB := IniFile.ReadString('NRO', 'NCB', '');
   IniFile.Destroy;
 end;
 
@@ -360,6 +367,12 @@ begin
   IniFile.WriteString('AFIP', 'PSW', afipPsw);
   IniFile.WriteString('OPER', 'NCC', operNCC);
   IniFile.WriteString('OSSL', 'EXE', openSSL);
+  IniFile.WriteString('NRO', 'A', NroA);
+  IniFile.WriteString('NRO', 'NCA', NroNCA);
+  IniFile.WriteString('NRO', 'B', NroB);
+  IniFile.WriteString('NRO', 'NCB', NroNCB);
+  IniFile.WriteString('NRO', 'C', NroC);
+  IniFile.WriteString('NRO', 'NCC', NroNCC);
   IniFile.Destroy;
   LeerINI;
 end;
@@ -403,6 +416,12 @@ begin
   afipPsw := '';
   operNCC := '0';
   openSSL := '';
+  NroA := '0';
+  NroNCA := '0';
+  NroB := '0';
+  NroNCB := '0';
+  NroC := '0';
+  NroNCC := '0';
   EscribirINI;
 
   // IniFile.WriteString('Licencia', 'Dia', inttostr(1));
@@ -552,7 +571,7 @@ end;
 
 function TDM.TraerTipoCbte(tipo:string):string;
 begin
-  Case IndexStr(tipo, ['0', 'A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
+  case IndexStr(tipo, ['0', 'A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
     0 : result:='0';
     1 : result:='1';
     2 : result:='3';
@@ -560,7 +579,7 @@ begin
     4 : result:='8';
     5 : result:='11';
     6 : result:='13';
-  End;
+  end;
 end;
 
 end.

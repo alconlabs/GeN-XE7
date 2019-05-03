@@ -354,13 +354,20 @@ begin
       desc:= desc + DSC;
     end;
 
+  NG21 := RoundTo(NG21,-2);
+  NG105 := RoundTo(NG105,-2);
+  NGO := RoundTo(NGO,-2);
+  IVA21 := RoundTo(IVA21,-2);
+  IVA105 := RoundTo(IVA105,-2);
+  IVAO := RoundTo(IVAO,-2);
+  perc := RoundTo(perc,-2);
   desc:=  RoundTo((desc),-2);
 
-  subtotal:= NG21 + NG105 + NGO;
+  subtotal:= RoundTo((NG21 + NG105 + NGO),-2);
 
   perc := (subtotal * StrToFloat(PercEdit.Text) / 100);
 
-  Impuesto := (IVA21 + IVA105 + IVAO + perc);
+  Impuesto := RoundTo((IVA21 + IVA105 + IVAO + perc),-2);
 
   Total := RoundTo((subtotal + Impuesto + Interes),-2);
 
@@ -742,10 +749,8 @@ begin
     screen.Cursor := crDefault;
 //    if ok then ClienteBitBtn.Click;
   end;
-//  ClienteBitBtn.Click;
   Nuevo;
-  AgregarBitBtn.Click;
-//  Close;
+  ClienteBitBtn.Click;
 end;
 
 procedure TOperacionForm.CheckBox1Click(Sender: TObject);

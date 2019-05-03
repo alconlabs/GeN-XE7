@@ -4,6 +4,7 @@ object DM: TDM
   Height = 176
   Width = 369
   object BaseDatos: TIBDatabase
+    Connected = True
     DatabaseName = 'C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\db\GeN.FDB'
     Params.Strings = (
       'user_name=SYSDBA'
