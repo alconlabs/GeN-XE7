@@ -1570,14 +1570,15 @@ begin
 //  ultcosto := costo;
   //if descripcion = nil then descripcion := '';
 //  if codigobarra <> '' then existe := existeEnTabla('Articulo','CODIGOBARRA='+QuotedStr(codigobarra))
-    if descripcion <> '' then existe := existeEnTabla('Articulo','DESCRIPCION='+QuotedStr(descripcion))
+//  if descripcion <> '' then existe := existeEnTabla('Articulo','DESCRIPCION='+QuotedStr(descripcion))
+  if codigo <> '' then existe := existeEnTabla('Articulo','CODIGO='+(codigo))
     else
       existe := false;
   if not ( existe ) then
   begin
     Q.SQL.Text := 'INSERT INTO "Articulo" ('
-//    + ' CODIGO,'
-    + ' DESCRIPCION '
+    + ' CODIGO '
+    + ', DESCRIPCION '
     + ', ULTCOSTO, COSTO, PRECIO'
 //    +', PRECIO1, PRECIO2'
     +', DISPONIBLE'
@@ -1585,7 +1586,7 @@ begin
     + ', FECHA, FECHACOMPULT, CODIGOBARRA'
     + ', CATEGORIA, COLOR, MARCA, PROVEEDOR, RUBRO, SUBCATEGORIA'
     + ' ) VALUES ( '
-//    + IntToStr(codigo) + ', '
+    + (codigo) + ', '
     + QuotedStr(descripcion)
     + ', '+ costo +', ' + costo + ', ' + precio
 //    + ', ' + precio1 + ', ' + precio2
@@ -1597,8 +1598,8 @@ begin
   end
     else
       Q.SQL.Text := 'UPDATE "Articulo" SET'
-//      +' DESCRIPCION = ' + QuotedStr(descripcion)
-      +' ULTCOSTO = COSTO'
+      +' DESCRIPCION = ' + QuotedStr(descripcion)
+      +', ULTCOSTO = COSTO'
       +', COSTO = ' + costo
       +', PRECIO = ' + precio
 //      +', PRECIO1 = ' + precio1
@@ -1623,10 +1624,9 @@ begin
 //      +', RUBRO = ' + rubro
 //      +', SUBCATEGORIA = ' + subcategoria
       +' WHERE '
-//      +' CODIGO ='+ IntToStr(codigo);
+      +' CODIGO ='+ (codigo);
 //      +' CODIGOBARRA = ' + QuotedStr(codigobarra);
-        +' DESCRIPCION = ' + QuotedStr(descripcion)
-      ;
+//        +' DESCRIPCION = ' + QuotedStr(descripcion);
     Q.ExecSQL;
 //    Q.Transaction.CommitRetaining;
 end;
