@@ -947,7 +947,7 @@ e := mes+'/'+dia+'/'+año;
     ADetIVA[1]              := DetIva105;
     Request.FeDetReq[0].Iva := ADetIva;
   end
-  else
+  else if (f.GetValue<String>('n21')<>'0') then
   begin
     SetLength(ADetIva,1);
     ADetIVA[0]              := DetIva21;

@@ -193,7 +193,7 @@ var
   FullMainForm: TFullMainForm;
 
 const
-version='201904141304';
+version='201905061948';
 
 implementation
 
