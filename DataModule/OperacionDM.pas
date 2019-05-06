@@ -1564,6 +1564,7 @@ begin
   if porcentaje = '' then porcentaje := FloatToStr(dm.ConfigQuery.FieldByName('PP').AsFloat);
   if disponible = '' then disponible := '1';
   tasa := StringReplace(tasa, ',', '.',[]);
+  if tasa = '10.5' then tasa := '105';
   precio := StringReplace(precio, ',', '.',[]);
   ganancia := StrToFloat(precio)/(StrToFloat(tasa)/100+1);
   costo := FloatToStrF( ( ganancia/(StrToFloat(porcentaje)/100+1) ), ffFixed, 16, 2 );
@@ -1581,7 +1582,7 @@ begin
     + ', DESCRIPCION '
     + ', ULTCOSTO, COSTO, PRECIO'
 //    +', PRECIO1, PRECIO2'
-    +', DISPONIBLE'
+    + ', DISPONIBLE'
     + ', PORCENTAJE, IMPOTROS, UNIDAD, TASA, IIBB, CTANOMBRE, CTATIPO, CTAANTICIPO, CTAIIBB '
     + ', FECHA, FECHACOMPULT, CODIGOBARRA'
     + ', CATEGORIA, COLOR, MARCA, PROVEEDOR, RUBRO, SUBCATEGORIA'

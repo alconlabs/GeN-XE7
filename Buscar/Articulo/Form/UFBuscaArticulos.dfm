@@ -278,8 +278,6 @@ object FBuscaArticulo: TFBuscaArticulo
     Color = clBlack
     ParentBackground = False
     TabOrder = 2
-    ExplicitLeft = 698
-    ExplicitTop = 70
     object Label6: TLabel
       Left = 10
       Top = 150

@@ -147,7 +147,9 @@ begin
     + '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
     '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +  }
   articulos := 'SELECT'
-    + ' ROUND(("Articulo".Precio+"Articulo".Precio * ("Articulo".Tasa*0.01)),2) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
+//    + ' ROUND(("Articulo".Precio+"Articulo".Precio * ("Articulo".Tasa*0.01)),2) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
+    + ' iif( "Articulo".Tasa = 105, "Articulo".Precio*1.105, "Articulo".Precio*1.21 ) as precioIVA,'
+    + ' "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
     + ' "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
     + ' "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'
     + ' "Articulo".PRECIO,  "Articulo".PORCENTAJE,  "Articulo".ULTPRECIO,  "Articulo".UBICACION,'
