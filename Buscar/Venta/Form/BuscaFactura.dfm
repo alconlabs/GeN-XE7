@@ -54,19 +54,6 @@ object BuscaFacturaForm: TBuscaFacturaForm
       Font.Style = []
       ParentFont = False
     end
-    object Label4: TLabel
-      Left = 682
-      Top = 28
-      Width = 78
-      Height = 13
-      Caption = 'Presupuesto?'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
     object ventaEdit: TEdit
       Left = 11
       Top = 26
@@ -93,11 +80,23 @@ object BuscaFacturaForm: TBuscaFacturaForm
       ParentFont = False
       TabOrder = 1
     end
-    object Presupuesto: TCheckBox
-      Left = 766
-      Top = 26
-      Width = 17
-      Height = 17
+    object TipoRadioGroup: TRadioGroup
+      Left = 692
+      Top = 4
+      Width = 91
+      Height = 57
+      Caption = 'Tipo'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ItemIndex = 0
+      Items.Strings = (
+        'Factura'
+        'Remito'
+        'Presupuesto')
+      ParentFont = False
       TabOrder = 2
     end
   end

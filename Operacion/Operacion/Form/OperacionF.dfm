@@ -169,11 +169,11 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Label7: TLabel
-      Left = 8
+      Left = 6
       Top = 3
-      Width = 47
+      Width = 49
       Height = 13
-      Caption = 'Pedido?'
+      Caption = 'REMITO'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -293,7 +293,7 @@ object OperacionForm: TOperacionForm
       Top = 18
       Width = 82
       Height = 21
-      Date = 43100.000000000000000000
+      Date = 43830.000000000000000000
       Time = 0.506836111111624600
       TabOrder = 8
       Visible = False

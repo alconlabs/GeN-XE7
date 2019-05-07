@@ -21,8 +21,7 @@ type
     DBGrid1: TDBGrid;
     todoBitBtn: TBitBtn;
     Image1: TImage;
-    Presupuesto: TCheckBox;
-    Label4: TLabel;
+    TipoRadioGroup: TRadioGroup;
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure DBGrid1DblClick(Sender: TObject);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
@@ -67,10 +66,12 @@ begin
 
   ImprimirDataModule := TImprimirDataModule.Create(self);
 
-  if Presupuesto.Checked then
-    sql := 'SELECT ' + ImprimirDataModule.presupuestoTSql
-    else
-      sql := 'SELECT ' + ImprimirDataModule.ventaTSql;
+  case TipoRadioGroup.ItemIndex of
+    0 : sql := 'SELECT ' + ImprimirDataModule.ventaTSql;
+    1 : sql := 'SELECT ' + ImprimirDataModule.OperacionSql;
+    2 : sql := 'SELECT ' + ImprimirDataModule.presupuestoTSql;
+  end;
+
   ImprimirDataModule.Free;
   Tabla.SQL.Text := sql + where;
   Tabla.Open;
@@ -118,12 +119,12 @@ begin
     nro := Tabla.FieldByName('CODIGO').AsString;
     letra := Tabla.FieldByName('LETRA').AsString;
     ImprimirDataModule := TImprimirDataModule.Create(self);
-    if Presupuesto.Checked then
-      with ImprimirDataModule do
-        Impr(ImprimirDataModule.PRE(nro, letra), 'Presupuesto')
-    else
-      with ImprimirDataModule do
-        Impr(ImprimirDataModule.VTA(nro, letra), letra);
+    with ImprimirDataModule do
+      case TipoRadioGroup.ItemIndex of
+        0 : Impr(ImprimirDataModule.VTA(nro, letra), letra);
+        1 : Impr(oper(nro, 'PED', letra), 'CTicket');
+        2 : Impr(ImprimirDataModule.PRE(nro, letra), 'Presupuesto');
+      end;
     ImprimirDataModule.Free;
   end;
   Close;
