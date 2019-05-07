@@ -106,11 +106,11 @@ object FBuscaArticulo: TFBuscaArticulo
     ParentBackground = False
     TabOrder = 1
     object Label1: TLabel
-      Left = 666
+      Left = 663
       Top = 8
-      Width = 66
+      Width = 124
       Height = 24
-      Caption = 'Codigo:'
+      Caption = 'Codigo Barras:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -19

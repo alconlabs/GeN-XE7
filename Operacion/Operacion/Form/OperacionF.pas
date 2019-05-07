@@ -149,21 +149,29 @@ procedure TOperacionForm.TraerArticulo;
 var
   TASA : String;
 begin
-  If Cuenta > 1 then SGFact.RowCount := SGFact.RowCount + 1;
+  if Cuenta > 1 then SGFact.RowCount := SGFact.RowCount + 1;
   Tabla.Close;
   Tabla.SQL.Text := 'SELECT * FROM "Articulo" ' + 'WHERE CODIGO = ' + codigoArticulo;
-  Tabla.Open;
-  {codigo}SGFact.Cells[0, Cuenta] := Tabla.FieldByName('CODIGO').AsString;
-  {nombre}SGFact.Cells[1, Cuenta] := Tabla.FieldByName('DESCRIPCION').AsString;
-  {cantidad}SGFact.Cells[3, Cuenta] := FloatToStr(CAN);
-  if PR=0 then PR := Tabla.FieldByName('PRECIO' + PrecioLabel.Caption).AsFloat;
-  {precio}SGFact.Cells[4, Cuenta] := FloatToStr(PR);
-  TASA := Tabla.FieldByName('TASA').AsString;
-  if TASA='105' then TASA := '10.5';
-  {iva}SGFact.Cells[6, Cuenta] := TASA;
-  Cuenta := Cuenta + 1;
-  FEContado.Text:='0';
-  CalculaTotales;
+  if codigoArticulo <> '' then Tabla.Open;
+  if Tabla.RecordCount < 1 then
+    begin
+      MessageDlg('¡El código no existe!', mtError, [mbOK], 0);
+      AgregarBitBtn.SetFocus;
+    end
+  else
+    begin
+      {codigo}SGFact.Cells[0, Cuenta] := Tabla.FieldByName('CODIGO').AsString;
+      {nombre}SGFact.Cells[1, Cuenta] := Tabla.FieldByName('DESCRIPCION').AsString;
+      {cantidad}SGFact.Cells[3, Cuenta] := FloatToStr(CAN);
+      if PR=0 then PR := Tabla.FieldByName('PRECIO' + PrecioLabel.Caption).AsFloat;
+      {precio}SGFact.Cells[4, Cuenta] := FloatToStr(PR);
+      TASA := Tabla.FieldByName('TASA').AsString;
+      if TASA='105' then TASA := '10.5';
+      {iva}SGFact.Cells[6, Cuenta] := TASA;
+      Cuenta := Cuenta + 1;
+      FEContado.Text:='0';
+      CalculaTotales;
+    end;
 end;
 
 procedure TOperacionForm.Nuevo;
@@ -443,22 +451,82 @@ begin
 end;
 
 procedure TOperacionForm.TraeNombreCliente;
+var cliIVA : string;
 begin
-  If ClienteEdit.Text <> '' then
+If ClienteEdit.Text <> '' then
   begin
     Tabla.SQL.Text := 'Select * from "Cliente" where CODIGO = ' +
       ClienteEdit.Text;
     Tabla.Active := True;
     If Tabla.RecordCount < 1 then
     begin
-      MessageDlg('�C�digo de cliente no existe!', mtError, [mbOK], 0);
+      MessageDlg('¡Código de cliente no existe!', mtError, [mbOK], 0);
       ClienteEdit.SetFocus;
-    end;
+    end
+    else
+      begin
+        ClienteLabel.Caption := Tabla.FieldByName('NOMBRE').AsString;
+        Label3.Caption := Tabla.FieldByName('DIRECCION').AsString;
+        // DireccionLabel.Caption := Tabla.FieldByName('DIRECCIONCOMERCIAL').AsString;
+        // Label13.Caption := Tabla.FieldByName('TELEFONO').AsString;
+        // Label14.Caption := Tabla.FieldByName('CELULAR').AsString;
+        PrecioLabel.Caption := Tabla.FieldByName('PRECIO').AsString;
+//        if PrecioLabel.Caption = '' then PrecioLabel.Caption := '0';
+        // Label19.Caption := Tabla.FieldByName('TERMINOS').AsString;
+        // Label23.Caption := DateToStr(IncDay(now,Tabla.FieldByName('DIASCREDITO').AsInteger));
+        VendedorEdit.Text := Tabla.FieldByName('VENDEDOR').AsString;
+        CUITLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
+        CUITLabel.Caption := Tabla.FieldByName('CUIT').AsString;
+        // DocumentoLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
+        // CUENTA CLIENTE
+        CtaNombre := Tabla.FieldByName('CTANOMBRE').AsString;
+        CtaTipo := Tabla.FieldByName('CTATIPO').AsString;
+        CtaAnticipo := Tabla.FieldByName('CTAANTICIPO').AsString;
+        IF Tabla.FieldByName('PAGARE').AsString = 'SI' THEN
+          PagareCheckBox.Checked := True;
+        // IVA
+        cliIVA := Tabla.FieldByName('IVA').AsString;
+        if catIVA='Responsable Monotributo' then cbTipo.ItemIndex := 11
+        else
+          if catIVA='Responsable Inscripto' then
+            if cliIVA='Responsable Inscripto' then cbTipo.ItemIndex := 0
+            else cbTipo.ItemIndex := 6;
+        if TipoRadioGroup.ItemIndex = 0 then
+        begin
+          DM.Query.Close;
+          DM.Query.SQL.Text := 'SELECT * FROM "CtaCte" WHERE CLIENTE=' +
+            ClienteEdit.Text;
+          DM.Query.Open;
+          if Abs(DM.Query.FieldByName('SALDO').AsFloat) > 0.4 then
+          begin
+            If Cuenta > 1 then
+              SGFact.RowCount := SGFact.RowCount + 1;
+            SGFact.Cells[0, Cuenta] := '0'; // código
+            Deuda := DM.Query.FieldByName('SALDO').AsFloat;
+            if Deuda > 0 then
+              SGFact.Cells[1, Cuenta] := 'Deuda CtaCte'
+            else
+              SGFact.Cells[1, Cuenta] := 'Saldo a Favor'; // descripción
+            SGFact.Cells[2, Cuenta] := '0'; // serie
+            SGFact.Cells[3, Cuenta] := '1'; // cantidad
+            SGFact.Cells[4, Cuenta] := Format('%8.2f', [Deuda]); // precio
+            SGFact.Cells[5, Cuenta] :=
+              Format('%8.2f', [StrToFloat(SGFact.Cells[4, Cuenta]) *
+              StrToFloat(SGFact.Cells[3, Cuenta])]); // total
+            SGFact.Cells[6, Cuenta] := '0'; // IVA
+            SGFact.Cells[9, Cuenta] := '0'; // ACTIVIDAD DE MONOTRIBUTO
+            SGFact.Cells[10, Cuenta] := '0'; // PORCENTAJE DE INGRESOS BRUTOS
+            Cuenta := Cuenta + 1;
+            DM.Query.Close;
+            FEContado.Text := FloatToStr(Total);
+          end;
+          Tabla.Active := False;
+        end;
+      end;
   end;
 end;
 
 procedure TOperacionForm.ClienteBitBtnClick(Sender: TObject);
-var cliIVA : string;
 begin
   QuitarArticulos;
   Deuda := 0;
@@ -494,89 +562,15 @@ begin
     FBuscaCliente := TFBuscaCliente.Create(self);
     try
       FBuscaCliente.ShowModal;
-    finally
       ClienteEdit.Text := FBuscaCliente.Tabla.FieldByName('CODIGO').AsString;
-      with FBuscaCliente do
-      begin
-        ClienteLabel.Caption := Tabla.FieldByName('NOMBRE').AsString;
-        Label3.Caption := Tabla.FieldByName('DIRECCION').AsString;
-        // DireccionLabel.Caption := Tabla.FieldByName('DIRECCIONCOMERCIAL').AsString;
-        // Label13.Caption := Tabla.FieldByName('TELEFONO').AsString;
-        // Label14.Caption := Tabla.FieldByName('CELULAR').AsString;
-        PrecioLabel.Caption := Tabla.FieldByName('PRECIO').AsString;
-//        if PrecioLabel.Caption = '' then PrecioLabel.Caption := '0';
-        // Label19.Caption := Tabla.FieldByName('TERMINOS').AsString;
-        // Label23.Caption := DateToStr(IncDay(now,Tabla.FieldByName('DIASCREDITO').AsInteger));
-        VendedorEdit.Text := Tabla.FieldByName('VENDEDOR').AsString;
-        CUITLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
-        CUITLabel.Caption := Tabla.FieldByName('CUIT').AsString;
-        // DocumentoLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
-        // CUENTA CLIENTE
-        CtaNombre := Tabla.FieldByName('CTANOMBRE').AsString;
-        CtaTipo := Tabla.FieldByName('CTATIPO').AsString;
-        CtaAnticipo := Tabla.FieldByName('CTAANTICIPO').AsString;
-        IF Tabla.FieldByName('PAGARE').AsString = 'SI' THEN
-          PagareCheckBox.Checked := True;
-        // IVA
-        cliIVA := Tabla.FieldByName('IVA').AsString;
-        if catIVA='Responsable Monotributo' then cbTipo.ItemIndex := 11
-        else
-          if catIVA='Responsable Inscripto' then
-            if cliIVA='Responsable Inscripto' then cbTipo.ItemIndex := 0
-            else cbTipo.ItemIndex := 6;
-//        else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'RI') and
-//        (Tabla.FieldByName('IVA').AsString <> 'RI') then
-//        cbTipo.ItemIndex := 1
-//        else if (dm.ConfigQuery.FieldByName('IVA').AsString = 'NR') then
-//        cbTipo.ItemIndex := 4
-//        else
-//        cbTipo.ItemIndex := 2;
-//        if ((Tabla.FieldByName('IVA').AsString = 'Responsable Inscripto') or (Tabla.FieldByName('IVA').AsString = 'S.R.L.') or (Tabla.FieldByName('IVA').AsString = 'S.A.') or (Tabla.FieldByName('IVA').AsString = 'Cooperativa')) and (cbTipo.ItemIndex = 1) then cbTipo.ItemIndex := 1;
-//
-//        if (((Tabla.FieldByName('IVA').AsString = 'Responsable Monotributo') or
-//          (Tabla.FieldByName('IVA').AsString = 'Exento') or
-//          (Tabla.FieldByName('IVA').AsString = 'S.A.') or
-//          (Tabla.FieldByName('IVA').AsString = 'No Responsable')) and
-//          (cbTipo.ItemIndex = 1)) then
-//          cbTipo.ItemIndex := 6;
-        if TipoRadioGroup.ItemIndex = 0 then
-        begin
-          DM.Query.Close;
-          DM.Query.SQL.Text := 'SELECT * FROM "CtaCte" WHERE CLIENTE=' +
-            ClienteEdit.Text;
-          DM.Query.Open;
-          if Abs(DM.Query.FieldByName('SALDO').AsFloat) > 0.4 then
-          begin
-            If Cuenta > 1 then
-              SGFact.RowCount := SGFact.RowCount + 1;
-            SGFact.Cells[0, Cuenta] := '0'; // código
-            Deuda := DM.Query.FieldByName('SALDO').AsFloat;
-            if Deuda > 0 then
-              SGFact.Cells[1, Cuenta] := 'Deuda CtaCte'
-            else
-              SGFact.Cells[1, Cuenta] := 'Saldo a Favor'; // descripción
-            SGFact.Cells[2, Cuenta] := '0'; // serie
-            SGFact.Cells[3, Cuenta] := '1'; // cantidad
-            SGFact.Cells[4, Cuenta] := Format('%8.2f', [Deuda]); // precio
-            SGFact.Cells[5, Cuenta] :=
-              Format('%8.2f', [StrToFloat(SGFact.Cells[4, Cuenta]) *
-              StrToFloat(SGFact.Cells[3, Cuenta])]); // total
-            SGFact.Cells[6, Cuenta] := '0'; // IVA
-            SGFact.Cells[9, Cuenta] := '0'; // ACTIVIDAD DE MONOTRIBUTO
-            SGFact.Cells[10, Cuenta] := '0'; // PORCENTAJE DE INGRESOS BRUTOS
-            Cuenta := Cuenta + 1;
-            DM.Query.Close;
-            FEContado.Text := FloatToStr(Total);
-          end;
-          Tabla.Active := False;
-        end;
-        FBuscaCliente.Free;
+//      with FBuscaCliente do
+        TraeNombreCliente;
+    finally
+      FBuscaCliente.Free;
       end;
-      TraeNombreCliente;
   end;
-    FEContado.Text:='0';
-    CalculaTotales;
-  end;
+  FEContado.Text:='0';
+  CalculaTotales;
   AgregarBitBtn.Click;
 end;
 
