@@ -947,7 +947,7 @@ e := mes+'/'+dia+'/'+año;
     ADetIVA[1]              := DetIva105;
     Request.FeDetReq[0].Iva := ADetIva;
   end
-  else if (f.GetValue<String>('n21')<>'0') then
+  else if (f.GetValue<String>('n21')<>'0') or (f.GetValue<String>('n10')<>'0') then
   begin
     SetLength(ADetIva,1);
     ADetIVA[0]              := DetIva21;
@@ -1050,8 +1050,8 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
   if (f.GetValue<String>('n10')<>'0') and NOT(iva) then
   begin
     Request.FeDetReq[0].Iva[0].id       := 4;     //   alicuota 10.5%
-    Request.FeDetReq[0].Iva[1].BaseImp  := STRTOFLOAT(f.GetValue<String>('n10')); //   base imponible
-    Request.FeDetReq[0].Iva[1].importe  := STRTOFLOAT(f.GetValue<String>('i10'));//   Importe del impuesto
+    Request.FeDetReq[0].Iva[0].BaseImp  := STRTOFLOAT(f.GetValue<String>('n10')); //   base imponible
+    Request.FeDetReq[0].Iva[0].importe  := STRTOFLOAT(f.GetValue<String>('i10'));//   Importe del impuesto
   end;
 
   //la factura contiene iva 21
@@ -1065,12 +1065,12 @@ regfeasocTipo:=f.GetValue<Integer>('regfeasocTipo');
 
     //la factura NO LLEVA IVA DISCRIMINADO ES B
 //  if (LLetra.Caption = 'B') then
-  if (f.GetValue<Integer>('tipocbte') <9) and  (f.GetValue<Integer>('tipocbte') > 5) then
-  begin
-    Request.FeDetReq[0].Iva[0].id       := 3;     //   alicuota 10.5%
-    Request.FeDetReq[0].Iva[0].BaseImp  := f.GetValue<Double>('ImpNeto'); //   base imponible
-    Request.FeDetReq[0].Iva[0].importe  := 0;//   Importe del impuesto
-  end;
+//  if (f.GetValue<Integer>('tipocbte') <9) and  (f.GetValue<Integer>('tipocbte') > 5) then
+//  begin
+//    Request.FeDetReq[0].Iva[0].id       := 3;     //   alicuota 10.5%
+//    Request.FeDetReq[0].Iva[0].BaseImp  := f.GetValue<Double>('ImpNeto'); //   base imponible
+//    Request.FeDetReq[0].Iva[0].importe  := 0;//   Importe del impuesto
+//  end;
 
   //    Request.FeDetReq[0].Opcionales[0].Id    := s(4)    //  id del opcional
   //    Request.FeDetReq[0].Opcionales[0].Valor := s(250); //  valor

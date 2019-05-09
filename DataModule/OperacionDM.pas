@@ -1691,7 +1691,7 @@ begin
     with AfipDataModule do
     begin
       jsResponse := FacturaAfip( cbteFecha, dm.TraerTipoCbte(let), concepto,
-      docTipo, docNro, cbte, impTotal, impTotal,
+      docTipo, docNro, cbte, impNeto, impTotal,
       '0', ImpIva, '0', '0', '1',
       dm.TraerTipoCbte(asocTipo), asocNro,
       '1', '0', '0', '0',
