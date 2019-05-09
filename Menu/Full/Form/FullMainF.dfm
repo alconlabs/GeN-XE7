@@ -46,6 +46,10 @@ object FullMainForm: TFullMainForm
         Caption = 'VENDER'
         OnClick = Vender1Click
       end
+      object REMITO: TMenuItem
+        Caption = 'REMITO'
+        OnClick = REMITOClick
+      end
       object CrearPedido1: TMenuItem
         Caption = 'CREAR PEDIDO'
         Visible = False
@@ -341,10 +345,6 @@ object FullMainForm: TFullMainForm
         Caption = 'SISTEMA'
         OnClick = Sistema1Click
       end
-      object VaciarBasedeDatos1: TMenuItem
-        Caption = 'RESTAURAR SISTEMA'
-        OnClick = VaciarBasedeDatos1Click
-      end
       object BACKUPCopiadeSeguridad1: TMenuItem
         Caption = 'COPIA DE SEGURIDAD'
         Visible = False
@@ -361,6 +361,10 @@ object FullMainForm: TFullMainForm
           Caption = 'VENTAS'
           OnClick = MigrarVentasClick
         end
+      end
+      object VaciarBasedeDatos1: TMenuItem
+        Caption = 'RESTAURAR SISTEMA'
+        OnClick = VaciarBasedeDatos1Click
       end
     end
     object N1: TMenuItem

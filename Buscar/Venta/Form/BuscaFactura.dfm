@@ -98,6 +98,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
         'Presupuesto')
       ParentFont = False
       TabOrder = 2
+      OnClick = TipoRadioGroupClick
     end
   end
   object Panel2: TPanel
@@ -111,12 +112,12 @@ object BuscaFacturaForm: TBuscaFacturaForm
     ParentBackground = False
     TabOrder = 1
     object Image1: TImage
-      Left = 11
-      Top = 243
-      Width = 80
+      Left = 1
+      Top = 298
+      Width = 98
       Height = 50
       Hint = 'EXPORTAR A EXCEL EN FORMATO CSV'
-      Align = alCustom
+      Align = alBottom
       ParentShowHint = False
       Picture.Data = {
         0A544A504547496D61676537080000FFD8FFE000104A46494600010200006400
@@ -187,13 +188,18 @@ object BuscaFacturaForm: TBuscaFacturaForm
         9B6FDBA02DAD00B402D00B402F1D00B5006F1D398313F30EEFDBDFA840CF5D01
         6805A03FFFD9}
       ShowHint = True
+      Stretch = True
       OnClick = Image1Click
+      ExplicitLeft = 11
+      ExplicitTop = 243
+      ExplicitWidth = 80
     end
     object SiBitBtn: TBitBtn
-      Left = 6
-      Top = 345
-      Width = 91
+      Left = 1
+      Top = 348
+      Width = 98
       Height = 50
+      Align = alBottom
       Caption = 'Imprimir'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -206,11 +212,31 @@ object BuscaFacturaForm: TBuscaFacturaForm
       TabOrder = 0
       OnClick = SiBitBtnClick
     end
-    object todoBitBtn: TBitBtn
-      Left = 11
-      Top = 20
-      Width = 80
+    object FacturarBitBtn: TBitBtn
+      Left = 1
+      Top = 51
+      Width = 98
       Height = 50
+      Align = alTop
+      Caption = '&Facturar'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      Kind = bkRetry
+      NumGlyphs = 2
+      ParentFont = False
+      TabOrder = 1
+      Visible = False
+      OnClick = FacturarBitBtnClick
+    end
+    object todoBitBtn: TBitBtn
+      Left = 1
+      Top = 1
+      Width = 98
+      Height = 50
+      Align = alTop
       Caption = 'TODO'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -236,7 +262,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
         000033333333333333A3333333333333333383330000}
       NumGlyphs = 2
       ParentFont = False
-      TabOrder = 1
+      TabOrder = 2
       OnClick = todoBitBtnClick
     end
   end

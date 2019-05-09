@@ -97,6 +97,7 @@ type
     procedure PercEditExit(Sender: TObject);
     procedure DescuentoBitBtnClick(Sender: TObject);
     procedure Nuevo;
+    procedure TraerRemito(codigo:string);
   private
     { Private declarations }
   public
@@ -105,15 +106,16 @@ type
     Cuenta, DiasCalculo, CuotasTotal, d, numfact, OrdTrans: Integer;
     CMV, UltCosto, subtotal, Impuesto, NG21, IVA21, NG105, IVA105, NGO, IVAO,
       desc, perc, costo, reparaciones, Total, IIBB, NGIIBB, Exento,
-      ComisionVendedor: Double;
+      ComisionVendedor,
+      BalanceAnterior, Interes, BalanceTotal, Deuda, Saldo, Pagado,
+      Comision: Double;
     CtaNombre, CtaTipo, CtaAnticipo, CtaIIBB, code, Dia, Mes, Ano, TDocumento,
       Tiempo, T2, Precio, ChequeCodCheque, ChequeNumero, ChequeDetalle,
       ChequeCodFactura, ChequeMntCheque, ChequeFecha, ChequeDias, Fecha,
       FechaVence, iv, DetalleFactura: string;
-    BalanceAnterior, Interes, BalanceTotal, Deuda, Saldo, Pagado,
-      Comision: Double;
     Tipo: Char;
     FechaVencimiento: TDate;
+    codRem : String;
     procedure TraerImpresora;
     procedure QuitarArticulos;
 
@@ -227,7 +229,7 @@ begin
   FEOtro.Text := '0';
   Cuenta := 1;
   LbSaldo.Caption:='0.00';
-  PedidoCheckBox.Checked:=False;
+//  PedidoCheckBox.Checked:=False;
 end;
 
 procedure TOperacionForm.NuevoBitBtnClick(Sender: TObject);
@@ -731,6 +733,15 @@ begin
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
           Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
       else
+      if codRem<>'' then
+        FactRem(codRem,cbTipo.Text, ClienteEdit.Text,
+        FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
+        VendedorEdit.Text, CUITLabel.Caption, CtaNombre, Presupuesto.Checked,
+        PagareCheckBox.Checked, impr, costo, Comision, Impuesto,
+        StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
+        subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
+        Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
+      else
         ok := ProcVTA(cbTipo.Text, ClienteEdit.Text,
           FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
           VendedorEdit.Text, CUITLabel.Caption, CtaNombre, Presupuesto.Checked,
@@ -743,8 +754,13 @@ begin
     screen.Cursor := crDefault;
 //    if ok then ClienteBitBtn.Click;
   end;
-  Nuevo;
-  ClienteBitBtn.Click;
+  if (codRem = '') then
+  begin
+    Nuevo;
+    ClienteBitBtn.Click;
+  end
+  else
+    Close;
 end;
 
 procedure TOperacionForm.CheckBox1Click(Sender: TObject);
@@ -793,7 +809,9 @@ begin
     begin
       OperacionForm.Caption := 'PEDIDO';
       cbTipo.ItemIndex := 29;
-    end
+    end;
+  if codRem<>'' then
+    TraerRemito(codRem)
   else
     ClienteBitBtn.Click;
 end;
@@ -953,6 +971,26 @@ var
 begin
   for i := 0 to Printer.Printers.Count - 1 do
     ComboBox1.Items.Add(Printer.Printers[i]);
+end;
+
+procedure TOperacionForm.TraerRemito;
+begin
+  Tabla.SQL.Text := 'SELECT CLIENTE FROM  "Operacion" WHERE CODIGO='+codigo;
+  Tabla.Open;
+  ClienteEdit.Text := Tabla.FieldByName('CLIENTE').AsString;
+  TraeNombreCliente;
+  Tabla.SQL.Text := 'SELECT ARTICULO, PRECIO, CANTIDAD FROM "OperacionItem"'+
+  ' WHERE OPERACION = '+codigo;
+  Tabla.Open;
+  while not Tabla.eof do
+  begin
+    TraerArticulo(
+      Tabla.FieldByName('ARTICULO').AsString,
+      Tabla.FieldByName('PRECIO').AsFloat,
+      Tabla.FieldByName('CANTIDAD').AsFloat
+    );
+    Tabla.Next;
+  end;
 end;
 
 end.

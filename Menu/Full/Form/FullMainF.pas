@@ -100,6 +100,7 @@ type
     PAGODEIIBB1: TMenuItem;
     MigrarArticulos: TMenuItem;
     MigrarVentas: TMenuItem;
+    REMITO: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ProveedoresClick(Sender: TObject);
@@ -182,6 +183,7 @@ type
     procedure PAGODEIIBB1Click(Sender: TObject);
     procedure MigrarArticulosClick(Sender: TObject);
     procedure MigrarVentasClick(Sender: TObject);
+    procedure REMITOClick(Sender: TObject);
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
@@ -193,7 +195,7 @@ var
   FullMainForm: TFullMainForm;
 
 const
-version='201905071814';
+  version='201905091645';
 
 implementation
 
@@ -429,6 +431,17 @@ begin
     BuscaFacturaForm.ShowModal;
   finally
     BuscaFacturaForm.Free;
+  end;
+end;
+
+procedure TFullMainForm.REMITOClick(Sender: TObject);
+begin
+  OperacionForm := TOperacionForm.Create(self);
+  OperacionForm.PedidoCheckBox.Checked := True;
+  try
+    OperacionForm.ShowModal;
+  finally
+    OperacionForm.Free;
   end;
 end;
 

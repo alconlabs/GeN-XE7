@@ -19,9 +19,10 @@ type
     LetraEdit: TEdit;
     Label1: TLabel;
     DBGrid1: TDBGrid;
-    todoBitBtn: TBitBtn;
+    FacturarBitBtn: TBitBtn;
     Image1: TImage;
     TipoRadioGroup: TRadioGroup;
+    todoBitBtn: TBitBtn;
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure DBGrid1DblClick(Sender: TObject);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
@@ -34,6 +35,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure ActualizarGrilla(nro,letra:string);
     procedure FormShow(Sender: TObject);
+    procedure FacturarBitBtnClick(Sender: TObject);
+    procedure TipoRadioGroupClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -49,6 +52,8 @@ implementation
 
 {$R *.dfm}
 
+uses OperacionF;
+
 procedure TBuscaFacturaForm.ActualizarGrilla;
 var sql, where,anulada,buscar:string;
 begin
@@ -58,11 +63,15 @@ begin
     buscar := '(CODIGO like ' + QuotedStr(nro + '%') + '  ) '
     + ' AND (LETRA like ' + QuotedStr(letra + '%') + ' )';
 
-  if (anular and (buscar<>'')) then
+//  if (anular and (buscar<>'')) then
+//    where:='WHERE '+buscar+' AND '+anulada
+//    else if anular then
+//      where:='WHERE '+anulada
+//      else if buscar<>'' then where:='WHERE '+buscar;
+  if (buscar <> '') then
     where:='WHERE '+buscar+' AND '+anulada
-    else if anular then
-      where:='WHERE '+anulada
-      else if buscar<>'' then where:='WHERE '+buscar;
+  else
+    where:='WHERE '+anulada;
 
   ImprimirDataModule := TImprimirDataModule.Create(self);
 
@@ -130,6 +139,12 @@ begin
   Close;
 end;
 
+procedure TBuscaFacturaForm.TipoRadioGroupClick(Sender: TObject);
+begin
+  FacturarBitBtn.Visible := (TipoRadioGroup.ItemIndex=1);
+  todoBitBtn.Click;
+end;
+
 procedure TBuscaFacturaForm.todoBitBtnClick(Sender: TObject);
 var sql:string;
 begin
@@ -147,6 +162,32 @@ procedure TBuscaFacturaForm.DBGrid1KeyDown(Sender: TObject; var Key: Word;
 begin
   IF Key = VK_DOWN then
     DBGrid1.SetFocus;
+end;
+
+procedure TBuscaFacturaForm.FacturarBitBtnClick(Sender: TObject);
+var codRem : string;
+begin
+  if (TipoRadioGroup.ItemIndex=1) and (Tabla.RecordCount>0) then
+  begin
+    codRem := Tabla.FieldByName('CODIGO').AsString;
+    Tabla.SQL.Text:='SELECT "Venta".REMITO FROM "Venta" WHERE "Venta".REMITO='+QuotedStr(codRem);
+    Tabla.Open;
+    If Tabla.RecordCount > 0 then
+    begin
+      ShowMessage('¡Remito ya facturado!');
+      todoBitBtn.Click;
+    end
+    else
+    begin
+      OperacionForm := TOperacionForm.Create(self);
+      OperacionForm.codRem := codRem;
+      try
+        OperacionForm.ShowModal;
+      finally
+        OperacionForm.Free;
+      end;
+    end;
+  end;
 end;
 
 procedure TBuscaFacturaForm.FormCreate(Sender: TObject);

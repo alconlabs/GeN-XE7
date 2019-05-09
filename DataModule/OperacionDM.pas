@@ -58,7 +58,6 @@ type
     Procedure MovCaja(tipo, soc, imp, desc: string);
     procedure DataModuleCreate(Sender: TObject);
     procedure CodigoBarra(cb: string);
-
     procedure insertarTabla2(tabla,codigo,desc: string);
     function existeEnTabla(tabla,codigo: string): Boolean;
     procedure BorrarArticulos;
@@ -70,6 +69,9 @@ type
     procedure ActualizarCantidadArticulo(codigo,cantidad:string);
     procedure DataSetToCsv(psRutaFichero : String);
     procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impIva, impTotal, asocTipo, asocNro, n10, n21, i10, i21:string);
+    procedure FactRem(codRem,let, cod, fech, ven, cui, ctan: string; pre, pgr,impr: Boolean;
+      cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
+      int, n10, n21, i10, i21, deud, ulc: Double);
   private
     { Private declarations }
   public
@@ -411,7 +413,7 @@ begin
   end;
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA VENTAS
-  if let <> 'X' then
+  if (let = 'A') or (let = 'B') then
     LibroIVAvta(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(tot)); // en blanco
   // Insertar en la tabla LibroDiario
@@ -637,7 +639,7 @@ begin
     Q.ExecSQL;
     // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Insertar en el Libro IVA Ventas
-    if let <> 'X' then
+    if (let = 'A') or (let = 'B') then
       LibroIVAvta(fech, nro, '...', 'ANULADA', '0', '0', '0', '0', '0');
     // en blanco
     // Insertar en la tabla LibroDiario
@@ -922,7 +924,7 @@ begin
     end;
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA VENTAS
-  if let = 'A' then//  if let <> 'X' then
+  if (let = 'A') or (let = 'B') then//  if let <> 'X' then
     LibroIVAvta(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(tot)); // en blanco
   // Insertar en la tabla LibroDiario
@@ -1028,7 +1030,7 @@ begin
   end;
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA VENTAS
-  if let <> 'X' then
+  if (let = 'A') or (let = 'B') then
     LibroIVAvta(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(tot)); // en blanco
   // Insertar en la tabla LibroDiario
@@ -1723,5 +1725,181 @@ begin
   if porcentaje = 105 then porcentaje := 10.5;
   Result := monto-monto/(porcentaje/100+1);
 end;
+
+{ FACTURA UN REMITO }
+procedure TOperacionDataModule.FactRem;
+var
+  i : integer;
+  ctaCte : boolean;
+begin
+  DM.FormatearFecha;
+  pagare := '0';
+  nro := inttostr(DM.UltimoRegistro('"Venta"', 'CODIGO'));
+
+  case IndexStr(let, ['0', 'A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
+    0 : comp := IntToStr( dm.ObtenerConfig('NroFactura') );
+    1 : comp := NroA;
+    2 : comp := NroNCA;
+    3 : comp := NroB;
+    4 : comp := NroNCB;
+    5 : comp := NroC;
+    6 : comp := NroNCC;
+  end;
+  if comp='' then comp:='0';
+  comp := IntToStr(StrToInt(comp)+1);
+
+  if pgr then
+    pagare := 'S';
+  cmv := CostMercVend(ulc, cost);
+ // CALCULAR IIBB
+  Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + IngresosBrutos;
+  Q.Open;
+  //  if tot - impu > Q.FieldByName('MONTO').AsFloat then
+  //    IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
+  //      Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
+  if let = 'C' then
+    begin
+//      tipocbte:='11';
+      IIBB := tot * (Q.FieldByName('PORCENTAJE').AsFloat/100)
+    end
+  else
+    IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
+  if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
+  begin
+    WSFE(fech, let, '1', '96', cui, comp,  FloatToStr(sbt), FloatToStr(impu), floattostr(tot), '0', '0', FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
+    if cae = '' then exit;
+  end;
+  //actualiza el nro de factura
+  if comp<>'' then
+  begin
+    case IndexStr(let, ['0', 'A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
+      0 : Q.SQL.Text := 'Update "Config" Set NroFactura ='+comp;
+      1 : NroA := comp;
+      2 : NroNCA := comp;
+      3 : NroB := comp;
+      4 : NroNCB := comp;
+      5 : NroC := comp;
+      6 : NroNCC := comp;
+    end;
+      DM.EscribirINI;
+  end;
+  // INSERTA EN LA TABLA VENTA
+  Q.SQL.Text := 'Insert Into "Venta" ( COMPROBANTE, REMITO, TERMINOS, CODIGO'+
+    ', LETRA, CLIENTE ' +
+    ', SUBTOTAL, DESCUENTO, FECHA'+
+    ', IMPUESTO, IVA1, IVA2'+
+    ', IIBB, TOTAL, CONTADO, CHEQUE,' +
+    ' TARJETA, OTROS, SALDO, PAGADO' + ', PAGARE, COSTO, DEUDA, COMISION, DESCRIPCION'+
+    ') Values ' + '('+QuotedStr(comp)+', '+QuotedStr(codRem)+', '+QuotedStr(vto)+', '+nro+', '+
+    quotedstr(let) + ', ' + cod + ', ' +
+    floattostr(sbt) + ', ' + floattostr(des) + ', ' + quotedstr(fech) + ', ' +
+    floattostr(impu) + ', ' + floattostr(i10) + ', ' + floattostr(i21) + ', ' +
+    floattostr(IIBB) + ', ' + floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
+    floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
+    floattostr(pag) + ', ' + quotedstr(pagare) + ', ' + floattostr(cmv) + ', ' +
+    floattostr(deud) + ',' + floattostr(comv) + ', ' + QuotedStr(cae) + ')';
+  Q.ExecSQL;
+  // Insertar en la tabla de VENTAITEM
+  if mat <> nil then
+    for i := 1 to High(mat[0]) do
+    begin
+      // CALCULAR IIBB
+  //    Q.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + quotedstr(mat[9, i]);
+  //    Q.Open;
+  //    if tot - impu > Q.FieldByName('MONTO').AsFloat then
+  //      IIBB := (tot - impu) * (Q.FieldByName('COEF1').AsFloat *
+  //        Q.FieldByName('COEF2').AsFloat * Q.FieldByName('PORCENTAJE').AsFloat);
+      if (mat[1, i]= 'Deuda CtaCte') then
+        ctaCte := True;
+      Q.SQL.Text :=
+        'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, COSTO, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
+        + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
+        (mat[7, i]) + ', ' +(mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
+        quotedstr(mat[1, i]) + ');';
+      Q.ExecSQL;
+    end;
+
+  Q.SQL.Text := 'Update "Operacion" Set ANULADA = ''S'' Where CODIGO = '+QuotedStr(codRem);
+  Q.ExecSQL;
+
+//  if ctaCte then
+//  begin
+//    Q.SQL.Text := 'Update "CtaCte" Set SALDO = ' + floattostr(sal) +
+//        ', FECHA = ' + quotedstr(fech) + ' Where CLIENTE = ' + cod;
+//    Q.ExecSQL;
+//  end;
+//
+//  // Insertar en la tabla de CtaCte
+//  if (sal > 0.05) then
+//  begin
+//    Q.SQL.Text := 'SELECT * FROM "CtaCte" WHERE CLIENTE = ' + cod;
+//    Q.Open;
+//    if (Q.RecordCount > 0) and (sal < 0.05) then
+//      Q.SQL.Text := 'Update "CtaCte" Set SALDO = ' + floattostr(sal) +
+//        ', FECHA = ' + quotedstr(fech) + ' Where CLIENTE = ' + cod
+//    else
+//      Q.SQL.Text := 'Insert Into "CtaCte" (CLIENTE, SALDO, OPERACION,' +
+//        ' DESCUENTO, INTERES, FECHA, RENDIDAS) Values (' + cod + ', ' +
+//        floattostr(sal) + ', ' + nro + ', ' + floattostr(des) + ', ' +
+//        floattostr(int) + ', ' + quotedstr(fech) + ', 0' + ')';
+//      Q.ExecSQL;
+//    // Insertar en la tabla de CtaCte Item
+//    if sal > 0.04 then
+//    begin
+//      For i := 1 to High(mat[0]) do
+//      begin
+//        if mat[0, i] <> '1' then
+//          detalle := mat[1, i]
+//        else
+//          detalle := memo;
+//        Q.sql.Text := 'Insert Into "CtaCteItem" (OPERACION, CLIENTE,' +
+//          ' DESCRIPCION, IMPORTE, ' + ' PAGADO) Values ' + '( ' + nro + ',' +
+//          cod + ', ' + quotedstr(detalle) + ',' + (mat[5, i]) + ', 0)';
+//        Q.ExecSQL;
+//      end;
+//    end;
+//  end;
+  // Insertar en RendidoVendedor
+//  if ven <> '' then
+//  begin
+//    comv := round(tot * (comv / 100));
+//    if comv = 0 then
+//      comv := 0;
+//    Q.sql.Text :=
+//      'Insert Into "RendidoVendedor" (VENDEDOR, VENTA, IMPORTE, FECHA) Values' +
+//      ' (' + quotedstr(ven) + ', ' + nro + ', ' + Format('%8.2f', [comv]) + ', '
+//      + quotedstr(fech) + ')';
+//    Q.ExecSQL;
+//  end;
+  // Actualizar la tabla de Articulos
+//  if mat <> nil then
+//    for i := 1 to High(mat[0]) do
+//    begin
+//      OperacionDataModule.ActualizarCantidadArticulo(mat[0, i], mat[3, i])
+//      Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE - ' + mat[3, i]
+//        + ' Where "Articulo".CODIGO = ' + (mat[0, i]);
+//      Q.ExecSQL;
+//    end;
+  // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // LIBRO IVA VENTAS
+  if (let = 'A') or (let = 'B') then//  if let <> 'X' then
+    LibroIVAvta(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
+      floattostr(i10), floattostr(i21), floattostr(tot)); // en blanco
+  // Insertar en la tabla LibroDiario
+  LibroDiario('VENTA', nro, let, cod, fech, pgr, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0);
+  // Completa la Transaccion
+  Q.Transaction.CommitRetaining;
+//  if webUpd='True' then RestDataModule.CrearOrden;
+  // IMPRIMIR
+  if impr then
+  begin
+    ImprimirDataModule := TImprimirDataModule.Create(self);
+    with ImprimirDataModule do
+      Impr(vta(nro, let), let);
+    ImprimirDataModule.Free;
+  end;
+end;
+
 
 end.
