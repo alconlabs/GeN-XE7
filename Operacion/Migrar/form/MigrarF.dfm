@@ -2,7 +2,7 @@ object MigrarForm: TMigrarForm
   Left = 0
   Top = 0
   Caption = 'Migrar '
-  ClientHeight = 309
+  ClientHeight = 312
   ClientWidth = 290
   Color = clWindow
   Font.Charset = DEFAULT_CHARSET

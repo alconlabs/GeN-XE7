@@ -1,20 +1,22 @@
 object RestDataModule: TRestDataModule
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 115
-  Width = 212
+  Height = 289
+  Width = 302
   object RESTResponseCategories: TRESTResponse
     ContentType = 'application/json'
+    Left = 112
+    Top = 80
   end
   object RESTResponse1: TRESTResponse
-    Left = 40
+    Left = 144
+    Top = 80
   end
   object RESTClientCategories: TRESTClient
     Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
     AcceptCharset = 'UTF-8, *;q=0.8'
     BaseURL = 'https://gamersenmadryn.com.ar/wp-json/wc/v2'
     Params = <>
-    HandleRedirects = True
     RaiseExceptionOn500 = False
     Left = 112
   end
@@ -23,7 +25,6 @@ object RestDataModule: TRestDataModule
     AcceptCharset = 'UTF-8, *;q=0.8'
     BaseURL = 'https://gamersenmadryn.com.ar/wp-json/wc/v2'
     Params = <>
-    HandleRedirects = True
     RaiseExceptionOn500 = False
     Left = 144
   end
@@ -48,7 +49,7 @@ object RestDataModule: TRestDataModule
     Client = RESTClient1
     Params = <
       item
-        name = 'consumer_key'
+        Name = 'consumer_key'
         Value = 'ck_7c1d43a542563b3cf47e1bb51b86ccac0099c883'
       end>
     Resource = 'products/?'
@@ -61,7 +62,7 @@ object RestDataModule: TRestDataModule
     Client = RESTClientCategories
     Params = <
       item
-        name = 'consumer_key'
+        Name = 'consumer_key'
         Value = 'ck_7c1d43a542563b3cf47e1bb51b86ccac0099c883'
       end>
     Resource = 'products/?'
@@ -74,14 +75,15 @@ object RestDataModule: TRestDataModule
     Dataset = O
     FieldDefs = <>
     Response = RESTResponse1
-    Left = 40
-    Top = 32
+    Left = 144
+    Top = 120
   end
   object RESTResponseDataSetAdapterCategories: TRESTResponseDataSetAdapter
     Dataset = FDMemTableCategories
     FieldDefs = <>
     Response = RESTResponseCategories
-    Top = 32
+    Left = 112
+    Top = 120
   end
   object FDMemTableCategories: TFDMemTable
     FieldDefs = <>
@@ -93,7 +95,8 @@ object RestDataModule: TRestDataModule
     UpdateOptions.AssignedValues = [uvCheckRequired]
     UpdateOptions.CheckRequired = False
     StoreDefs = True
-    Top = 64
+    Left = 112
+    Top = 168
   end
   object O: TFDMemTable
     FieldDefs = <>
@@ -105,8 +108,8 @@ object RestDataModule: TRestDataModule
     UpdateOptions.AssignedValues = [uvCheckRequired]
     UpdateOptions.CheckRequired = False
     StoreDefs = True
-    Left = 40
-    Top = 64
+    Left = 144
+    Top = 168
   end
   object D: TIBQuery
     Database = DM.BaseDatos

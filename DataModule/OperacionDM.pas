@@ -1564,6 +1564,7 @@ begin
   if fechacompult = '' then fechacompult := fecha;
   if tasa = '' then tasa := '21';
   if porcentaje = '' then porcentaje := FloatToStr(dm.ConfigQuery.FieldByName('PP').AsFloat);
+  porcentaje := StringReplace(porcentaje, ',', '.',[]);
   if disponible = '' then disponible := '1';
   tasa := StringReplace(tasa, ',', '.',[]);
   if tasa = '10.5' then tasa := '105';
