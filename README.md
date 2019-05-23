@@ -1,6 +1,8 @@
-﻿# GeN 2018 - Sistema de gestión para Comercios
+﻿# GeN 2019 - Sistema de Gestión para Comercios
 
-Ahora con Factura Electronica.
+AHORRATE EL CONTADOR AHORA PODES LLEVAR DE MANERA AUTOMATICA LOS INGRESOS BRUTOS!!!
+
+Ahora con Factura Electrónica AFIP.
 
 Con el puedes comprar, vender, llevar stock, proveedores, pedidos, inventarios, ingresos brutos. 
 Y la mas variable y flexible forma de obtener reportes. 
@@ -10,7 +12,9 @@ GeN es eso y mucho mas…
 
 LO QUE USTED NECESITA PARA SU PYME O COMERCIO.
 
-Stock. Ventas. Facturación. Remitos. Clientes. Vendedores. Proveedores. Servicios. Presupuestos. Ingresos Brutos. Caja.
+Stock. Ventas. Facturación. Remitos. Clientes. Vendedores. Proveedores. Servicios. Presupuestos. Pedidos. IVA. Ingresos Brutos. Caja.
+
+DESCARGALO GRATIS!!!
 
 Instalación
 https://sourceforge.net/projects/gen-xe7/files/InstalarGeN.exe/download

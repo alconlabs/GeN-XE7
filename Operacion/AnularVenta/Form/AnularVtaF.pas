@@ -60,7 +60,10 @@ begin
   try
     BuscaFacturaForm.ShowModal;
   finally
-    nroEdit.Text := BuscaFacturaForm.Tabla.FieldByName('CODIGO').AsString;
+    if BuscaFacturaForm.TipoRadioGroup.ItemIndex=0 then
+      nroEdit.Text := BuscaFacturaForm.Tabla.FieldByName('CODIGO').AsString
+    else
+      ShowMessage('Solo se pueden anular Facturas!!!');
     BuscaFacturaForm.Free;
   end;
 end;

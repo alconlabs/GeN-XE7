@@ -250,8 +250,8 @@ begin
       LoginOk := True;
     end;
   end;
-  //WebBrowser1.Navigate(path + 'hlp\index.htm');
-  WebBrowser1.Navigate('gamerzone.com.ar');
+  WebBrowser1.Navigate(path + 'hlp\index.htm');
+  ShellExecute(0,'open','http://gamerzone.com.ar',nil,nil,SW_SHOWMINIMIZED);
   if LoginOk <> True then
   begin
     ShowMessage('el usuario no coincide con la clave...');

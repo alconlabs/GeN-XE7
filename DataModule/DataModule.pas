@@ -83,7 +83,7 @@ var
   detalle, memo, BasedeDatos, mode: string; // revisar
   webUrl, webRes, webUsr, webPsw, webUpd,
   afipUrl, afipRes, afipUsr, afipPsw,
-  operNCC, openSSl,
+  operNC, openSSl,
   NroA, NroNCA, NroB, NroNCB, NroC, NroNCC : string;
   Precio1, Precio2, Precio3, Precio4, Precio5, Precio6, PrecioCtaCte: Double;
 
@@ -340,14 +340,14 @@ begin
   afipRes := IniFile.ReadString('AFIP', 'RES', '');
   afipUsr := IniFile.ReadString('AFIP', 'USR', '');
   afipPsw := IniFile.ReadString('AFIP', 'PSW', '');
-  operNCC := IniFile.ReadString('OPER', 'NCC', '');
+//  operNCC := IniFile.ReadString('OPER', 'NCC', '');
   openSSL := IniFile.ReadString('OSSL', 'EXE', '');
   NroA := IniFile.ReadString('NRO', 'A', '');
   NroNCA := IniFile.ReadString('NRO', 'NCA', '');
   NroB := IniFile.ReadString('NRO', 'B', '');
   NroNCB := IniFile.ReadString('NRO', 'NCB', '');
   NroC := IniFile.ReadString('NRO', 'C', '');
-  NroNCB := IniFile.ReadString('NRO', 'NCB', '');
+  NroNCC := IniFile.ReadString('NRO', 'NCC', '');
   IniFile.Destroy;
 end;
 
@@ -365,7 +365,7 @@ begin
   IniFile.WriteString('AFIP', 'RES', afipRes);
   IniFile.WriteString('AFIP', 'USR', afipUsr);
   IniFile.WriteString('AFIP', 'PSW', afipPsw);
-  IniFile.WriteString('OPER', 'NCC', operNCC);
+//  IniFile.WriteString('OPER', 'NCC', operNCC);
   IniFile.WriteString('OSSL', 'EXE', openSSL);
   IniFile.WriteString('NRO', 'A', NroA);
   IniFile.WriteString('NRO', 'NCA', NroNCA);
@@ -414,7 +414,7 @@ begin
   afipRes := '';
   afipUsr := '';
   afipPsw := '';
-  operNCC := '0';
+//  operNCC := '0';
   openSSL := '';
   NroA := '0';
   NroNCA := '0';

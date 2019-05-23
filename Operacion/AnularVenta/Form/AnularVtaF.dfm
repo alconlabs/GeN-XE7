@@ -186,7 +186,6 @@ object FAnulaReimp: TFAnulaReimp
     Font.Style = []
     ParentFont = False
     TabOrder = 4
-    Text = '0'
   end
   object Tabla: TIBQuery
     Database = DM.BaseDatos

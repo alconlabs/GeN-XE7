@@ -74,6 +74,8 @@ type
       int, n10, n21, i10, i21, deud, ulc: Double);
   private
     { Private declarations }
+    function ObtenerNroComp(tipo:string):string;
+    procedure ActualizarNroComp(tipo,comp: string);
   public
     { Public declarations }
     nro, comp, a, pagare, cae, vto, mensaje//, ptovta, tipocbte
@@ -519,13 +521,12 @@ end;
 
 Procedure TOperacionDataModule.AnularVTA;
 var
-  let, cod, fech, ven, cui, cno, a, cli, tipo: string;
+  let, cod, fech, ven, cui, cno, a, cli: string;
   pre, pgr: Boolean;
   cost, com, impu, cheq, cont, tot, sbt, des, tarj, otr, sal, pag, int, n10, n21,
     i10, i21, deud, ulc, comv: Double;
 begin
   DM.FormatearFecha;
-  tipo:='NCC';
   cod := inttostr(DM.UltimoRegistro('"Operacion"', 'CODIGO'));
   // Verificar que la factura Exista y que no este anulada
   T.sql.Text := 'Select * From "Venta" Where CODIGO = ' + nro;
@@ -578,6 +579,7 @@ begin
     T.Open;
     cno := T.FieldByName('CTANOMBRE').AsString;
     cui := T.FieldByName('CUIT').AsString;
+    if cui='' then cui := T.FieldByName('DOCUMENTO').AsString;
     T.Close;
     // ---
     // ---Nota de credito electronica
@@ -585,15 +587,10 @@ begin
       if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
       begin
         LeerINI;
-        if operNCC='' then operNCC:='0';
-        comp := IntToStr(StrToInt(operNCC)+1);
-        WSFE( fech, 'NCC', '1', '96', cui, comp, FloatToStr(sbt), FloatToStr(impu), floattostr(tot), let, nro, FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
+        comp:=ObtenerNroComp('NC'+let);
+        WSFE( fech, 'NC'+let, '1', '96', cui, comp, FloatToStr(sbt), FloatToStr(impu), floattostr(tot), let, nro, FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
         if cae = '' then Exit;//if mensaje <> 'Ok' then Exit;
-        if comp<>'' then
-        begin
-          operNCC := comp;
-          EscribirINI;
-        end;
+        if comp<>'' then ActualizarNroComp('NC'+let,comp);
       end;
     end;
     // INSERTA EN LA TABLA OPERACION
@@ -602,7 +599,7 @@ begin
     ', CLIENTE, VENDEDOR, SUBTOTAL' +
     ', DESCUENTO, FECHA, IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
     ' TARJETA, OTROS, SALDO, PAGADO, PAGARE, COSTO, DEUDA, COMISION, DESCRIPCION' +
-    ') Values ' + '(' +QuotedStr(comp)+ ', ' + quotedstr(vto) + ', ' + (cod) + ', ' + quotedstr(tipo) + ', ' + quotedstr(let) +
+    ') Values ' + '(' +QuotedStr(comp)+ ', ' + quotedstr(vto) + ', ' + (cod) + ', ' + quotedstr('NC'+let) + ', ' + quotedstr(let) +
     ', ' + cli + ', ' + ven + ', ' + ' ' + floattostr(sbt) + ', ' +
     floattostr(des) + ', ' + quotedstr(fech) + ', ' + floattostr(impu) + ', ' +
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
@@ -713,7 +710,7 @@ begin
           else
             if reporte = 'COriginal' then reporte:='CNCredito';
       with ImprimirDataModule do
-        Impr(oper(cod, tipo, let), reporte);
+        Impr(oper(cod, 'NC'+let, let), reporte);
       ImprimirDataModule.Free;
     end;
   end;
@@ -779,18 +776,7 @@ begin
   DM.FormatearFecha;
   pagare := '0';
   nro := inttostr(DM.UltimoRegistro('"Venta"', 'CODIGO'));
-//  comp := IntToStr( ( dm.ObtenerConfig('NroFactura') ) + 1 );
-  case IndexStr(let, ['0', 'A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
-    0 : comp := IntToStr( dm.ObtenerConfig('NroFactura') );
-    1 : comp := NroA;
-    2 : comp := NroNCA;
-    3 : comp := NroB;
-    4 : comp := NroNCB;
-    5 : comp := NroC;
-    6 : comp := NroNCC;
-  end;
-  if comp='' then comp:='0';
-  comp := IntToStr(StrToInt(comp)+1);
+  comp:=ObtenerNroComp(let);
   if pgr then
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
@@ -813,22 +799,7 @@ begin
     if cae = '' then exit;
   end;
   //actualiza el nro de factura
-  if comp<>'' then
-  begin
-//    Q.SQL.Text := 'Update "Config" Set NroFactura ='+comp;
-//    Q.ExecSQL;
-    case IndexStr(let, ['0', 'A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
-      0 : Q.SQL.Text := 'Update "Config" Set NroFactura ='+comp;
-      1 : NroA := comp;
-      2 : NroNCA := comp;
-      3 : NroB := comp;
-      4 : NroNCB := comp;
-      5 : NroC := comp;
-      6 : NroNCC := comp;
-    end;
-      DM.EscribirINI;
-//      Q.ExecSQL;
-  end;
+  if comp<>'' then ActualizarNroComp(let,comp);
   // INSERTA EN LA TABLA VENTA
   Q.SQL.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE, ' +
     ' SUBTOTAL, DESCUENTO, FECHA'+
@@ -1736,19 +1707,7 @@ begin
   DM.FormatearFecha;
   pagare := '0';
   nro := inttostr(DM.UltimoRegistro('"Venta"', 'CODIGO'));
-
-  case IndexStr(let, ['0', 'A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
-    0 : comp := IntToStr( dm.ObtenerConfig('NroFactura') );
-    1 : comp := NroA;
-    2 : comp := NroNCA;
-    3 : comp := NroB;
-    4 : comp := NroNCB;
-    5 : comp := NroC;
-    6 : comp := NroNCC;
-  end;
-  if comp='' then comp:='0';
-  comp := IntToStr(StrToInt(comp)+1);
-
+  comp := ObtenerNroComp(let);
   if pgr then
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
@@ -1771,19 +1730,7 @@ begin
     if cae = '' then exit;
   end;
   //actualiza el nro de factura
-  if comp<>'' then
-  begin
-    case IndexStr(let, ['0', 'A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
-      0 : Q.SQL.Text := 'Update "Config" Set NroFactura ='+comp;
-      1 : NroA := comp;
-      2 : NroNCA := comp;
-      3 : NroB := comp;
-      4 : NroNCB := comp;
-      5 : NroC := comp;
-      6 : NroNCC := comp;
-    end;
-      DM.EscribirINI;
-  end;
+  if comp<>'' then ActualizarNroComp(let,comp);
   // INSERTA EN LA TABLA VENTA
   Q.SQL.Text := 'Insert Into "Venta" ( COMPROBANTE, REMITO, TERMINOS, CODIGO'+
     ', LETRA, CLIENTE ' +
@@ -1902,5 +1849,37 @@ begin
   end;
 end;
 
+function TOperacionDataModule.ObtenerNroComp;
+begin
+  case IndexStr(tipo, ['A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
+    0 : result := NroA;
+    1 : result := NroNCA;
+    2 : result := NroB;
+    3 : result := NroNCB;
+    4 : result := NroC;
+    5 : result := NroNCC;
+    else result := IntToStr( dm.ObtenerConfig('NroFactura') );
+  end;
+ if result='' then result:='0';
+ result := IntToStr(StrToInt(result)+1);
+end;
+
+procedure TOperacionDataModule.ActualizarNroComp;
+begin
+    case IndexStr(tipo, ['A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
+      0 : NroA := comp;
+      1 : NroNCA := comp;
+      2 : NroB := comp;
+      3 : NroNCB := comp;
+      4 : NroC := comp;
+      5 : NroNCC := comp;
+      else
+      begin
+        Q.SQL.Text := 'Update "Config" Set NroFactura ='+comp;
+        Q.ExecSQL;
+      end;
+    end;
+      DM.EscribirINI;
+end;
 
 end.

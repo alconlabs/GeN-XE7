@@ -544,6 +544,7 @@ begin
         ClienteLabel.Caption := Tabla.FieldByName('Nombre').AsString;
         Label3.Caption := Tabla.FieldByName('Direccion').AsString;
         CUITLabel.Caption := Tabla.FieldByName('CUIT').AsString;
+        if CUITLabel.Caption='' then CUITLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
         CtaNombre := Tabla.FieldByName('CtaNombre').AsString;
         CtaTipo := Tabla.FieldByName('CtaTipo').AsString;
         CtaAnticipo := Tabla.FieldByName('CtaAnticipo').AsString;

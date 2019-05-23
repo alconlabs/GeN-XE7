@@ -5,8 +5,8 @@ object FullMainForm: TFullMainForm
   BiDiMode = bdLeftToRight
   BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
   Caption = 'Civeloo GeN - Menu Principal'
-  ClientHeight = -1
-  ClientWidth = 553
+  ClientHeight = -11
+  ClientWidth = 668
   Color = clBtnFace
   ParentFont = True
   KeyPreview = True
@@ -19,20 +19,17 @@ object FullMainForm: TFullMainForm
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object WebBrowser1: TWebBrowser
     Left = 0
     Top = 0
-    Width = 553
+    Width = 668
     Height = 0
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 376
-    ExplicitTop = 120
-    ExplicitWidth = 300
-    ExplicitHeight = 150
+    ExplicitWidth = 691
     ControlData = {
-      4C00000027390000000000000000000000000000000000000000000000000000
+      4C0000003B370000000000000000000000000000000000000000000000000000
       000000004C000000000000000000000001000000E0D057007335CF11AE690800
       2B2E126208000000000000004C0000000114020000000000C000000000000046
       8000000000000000000000000000000000000000000000000000000000000000
