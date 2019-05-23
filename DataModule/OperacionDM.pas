@@ -2,7 +2,7 @@
 // * DeGsoft GeN                                                                *
 // * ===========                                                                *
 // * GeN(tm) : ERP Software (http://www.civeloo.com)                            *
-// * Copyright (c) 2002-2017 by the Degsoft                                     *
+// * Copyright (c) 2002-2019 by the Civeloo                                     *
 // * For more information visit: http://www.civeloo.com                         *
 // * This program is free software. You can redistribute it and/or modify       *
 // * it under the terms of the GNU General Public License as published by       *
@@ -23,6 +23,17 @@ type
   TOperacionDataModule = class(TDataModule)
     Q: TIBQuery;
     T: TIBQuery;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    nro, comp, a, pagare, cae, vto, mensaje//, ptovta, tipocbte
+    : string;
+    i: integer;
+    IIBB, cmv: Double;
+    jsResponse: TJSONValue;
+    function CalcularIVA(monto,porcentaje:Double):Double;
+    function SacarIVA(monto,porcentaje:Double):Double;
     function ProcVTA(let, cod, fech, ven, cui, ctan: string; pre, pgr,impr: Boolean;
       cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
       int, n10, n21, i10, i21, deud, ulc: Double):Boolean;
@@ -42,24 +53,27 @@ type
     Procedure AnularVTA(nro: string);
     Procedure CtaCte(tipo, cod, ctan: string; pag, cheq, ch3q, cont, tarj,
       sald: Double);
+    function existeEnTabla(tabla,codigo: string): Boolean;
+    procedure insertarTabla2(tabla,codigo,desc: string);
+    Procedure FormaPago(desc, vta, comp, ctac, pago, cont, cheq, chei, chen,
+      ched, chedi, tarj, tarn, tarimp, otri, mone, meim, metc, sald, paga, fech,
+      ch3q, ch3i, ch3n, ch3d, ch3di: string);
+    Function ArtNuevo(prec, desc: string): string;
+    procedure FactRem(codRem,let, cod, fech, ven, cui, ctan: string; pre, pgr,impr: Boolean;
+      cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
+      int, n10, n21, i10, i21, deud, ulc: Double);
     Procedure Asiento(ctan, nro, fech, det, d, h: string);
     Procedure LibroDiario(oper, nro, let, cod, fech: string; pgr: Boolean;
       tot, pag, cheq, ch3q, cont, tarj, impu, deud, cmv, comv: Double);
     Procedure LibroIVAvta(fec, nro, cod, cui, n10, n21, i10, i21, tot: string);
     Procedure LibroIVACompra(fec, nro, cod, com, n10, n21, i10, i21, perc, tot: string);
-    Procedure FormaPago(desc, vta, comp, ctac, pago, cont, cheq, chei, chen,
-      ched, chedi, tarj, tarn, tarimp, otri, mone, meim, metc, sald, paga, fech,
-      ch3q, ch3i, ch3n, ch3d, ch3di: string);
     Function MesLetra(fech: TDate): string;
     Function CostMercVend(ulc, cost: Double): Double;
     procedure VarCos(cod, cant: string; cost: Double);
-    Function ArtNuevo(prec, desc: string): string;
     procedure ExpCSV(sql: string);
     Procedure MovCaja(tipo, soc, imp, desc: string);
     procedure DataModuleCreate(Sender: TObject);
     procedure CodigoBarra(cb: string);
-    procedure insertarTabla2(tabla,codigo,desc: string);
-    function existeEnTabla(tabla,codigo: string): Boolean;
     procedure BorrarArticulos;
     procedure ModificarArticulos(codigo, descripcion,
       ultcosto, costo, precio, precio1, precio2, disponible,
@@ -69,22 +83,8 @@ type
     procedure ActualizarCantidadArticulo(codigo,cantidad:string);
     procedure DataSetToCsv(psRutaFichero : String);
     procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impIva, impTotal, asocTipo, asocNro, n10, n21, i10, i21:string);
-    procedure FactRem(codRem,let, cod, fech, ven, cui, ctan: string; pre, pgr,impr: Boolean;
-      cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
-      int, n10, n21, i10, i21, deud, ulc: Double);
-  private
-    { Private declarations }
     function ObtenerNroComp(tipo:string):string;
     procedure ActualizarNroComp(tipo,comp: string);
-  public
-    { Public declarations }
-    nro, comp, a, pagare, cae, vto, mensaje//, ptovta, tipocbte
-    : string;
-    i: integer;
-    IIBB, cmv: Double;
-    jsResponse: TJSONValue;
-    function CalcularIVA(monto,porcentaje:Double):Double;
-    function SacarIVA(monto,porcentaje:Double):Double;
   end;
 
 var
@@ -521,7 +521,7 @@ end;
 
 Procedure TOperacionDataModule.AnularVTA;
 var
-  let, cod, fech, ven, cui, cno, a, cli: string;
+  let, cod, fech, ven, cui, cno, a, cli, asocNro: string;
   pre, pgr: Boolean;
   cost, com, impu, cheq, cont, tot, sbt, des, tarj, otr, sal, pag, int, n10, n21,
     i10, i21, deud, ulc, comv: Double;
@@ -559,6 +559,7 @@ begin
     ven := T.FieldByName('VENDEDOR').AsString;
     if ven='' then ven:='0';
     let := T.FieldByName('LETRA').AsString;
+    asocNro := T.FieldByName('COMPROBANTE').AsString;
     sal := T.FieldByName('SALDO').AsFloat;
     cont := T.FieldByName('CONTADO').AsFloat;
     pag := T.FieldByName('PAGADO').AsFloat;
@@ -588,7 +589,7 @@ begin
       begin
         LeerINI;
         comp:=ObtenerNroComp('NC'+let);
-        WSFE( fech, 'NC'+let, '1', '96', cui, comp, FloatToStr(sbt), FloatToStr(impu), floattostr(tot), let, nro, FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
+        WSFE( fech, 'NC'+let, '1', '96', cui, comp, FloatToStr(sbt), FloatToStr(impu), floattostr(tot), let, asocNro, FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
         if cae = '' then Exit;//if mensaje <> 'Ok' then Exit;
         if comp<>'' then ActualizarNroComp('NC'+let,comp);
       end;
@@ -634,13 +635,16 @@ begin
     Q.sql.Text := 'Update "CtaCte" Set SALDO = SALDO - ' + floattostr(sal) +
       ' Where CLIENTE = ' + cli;
     Q.ExecSQL;
-    // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // Insertar en el Libro IVA Ventas
-    if (let = 'A') or (let = 'B') then
-      LibroIVAvta(fech, nro, '...', 'ANULADA', '0', '0', '0', '0', '0');
+
+    // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // LIBRO IVA VENTAS
+    if (let = 'A') or (let = 'B') then//  if let <> 'X' then
+    LibroIVAvta(fech, nro, cod, cui, floattostr(-n10), floattostr(-n21),
+      floattostr(-i10), floattostr(-i21), floattostr(-tot)); // en blanco
     // en blanco
     // Insertar en la tabla LibroDiario
     a := inttostr(DM.UltimoRegistro('"LibroDiario"', 'ASIENTO')); // GENERAR INDICE
+
     // ------------------------------------------------------------------------------
     // VENTAS
     Asiento(dm.ConfigQuery.FieldByName('CtaVenta').AsString, a, fech,
@@ -897,7 +901,7 @@ begin
   // LIBRO IVA VENTAS
   if (let = 'A') or (let = 'B') then//  if let <> 'X' then
     LibroIVAvta(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
-      floattostr(i10), floattostr(i21), floattostr(tot)); // en blanco
+      floattostr(i10), floattostr(i21), floattostr(tot));
   // Insertar en la tabla LibroDiario
   LibroDiario('VENTA', nro, let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, comv);

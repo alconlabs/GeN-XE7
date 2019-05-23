@@ -708,13 +708,13 @@ begin
           mat[c, r] := SGFact.Cells[c, r];
         end;
       if Compra then
-      OperacionDataModule.ProcCompra(cbTipo.Text, ClienteEdit.Text,
-        FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-        VendedorEdit.Text, ComprobanteEdit.Text, CtaNombre, CUITLabel.Caption, PagareCheckBox.Checked,
-        costo, Impuesto, StrToFloat(FECheque.Text),
-        StrToFloat(FECheque.Text), StrToFloat(FEContado.Text), Total,
-        subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
-        Saldo, Pagado, NG105, NG21, IVA105, IVA21, perc, Total - Saldo)
+        ProcCompra(cbTipo.Text, ClienteEdit.Text,
+          FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
+          VendedorEdit.Text, ComprobanteEdit.Text, CtaNombre, CUITLabel.Caption, PagareCheckBox.Checked,
+          costo, Impuesto, StrToFloat(FECheque.Text),
+          StrToFloat(FECheque.Text), StrToFloat(FEContado.Text), Total,
+          subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
+          Saldo, Pagado, NG105, NG21, IVA105, IVA21, perc, Total - Saldo)
       else
       if PedidoCheckBox.Checked then
       ProcOPER('PED', 'X', ClienteEdit.Text,
