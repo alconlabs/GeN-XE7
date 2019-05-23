@@ -28,6 +28,7 @@ type
     db: TIBTransaction;
     DBGrid1: TDBGrid;
     DataSource1: TDataSource;
+    OperacionFDQuery: TFDQuery;
   private
     { Private declarations }
   public

@@ -296,6 +296,12 @@ begin
   connection;
   Descargar('https://raw.githubusercontent.com/DeGsoft/GeN-XE7/master/Instalador/Update.iss'
   , Path+'Update.iss');
+
+//  Consulta.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
+//      + ' USER ''SYSDBA'' PASSWORD ''masterkey''; '
+//      +' ALTER TABLE "Operacion" ADD CbtesAsoc Integer;';
+//  Consulta.ExecuteScript;
+
   ActualizarImprimir('FElectronica');
   ActualizarImprimir('TElectronica');
   TraerConfig;

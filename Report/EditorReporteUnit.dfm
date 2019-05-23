@@ -94,7 +94,6 @@ object Form1: TForm1
       'VIIMPUESTO=VIIMPUESTO'
       'CODIGO=CODIGO'
       'LETRA=LETRA'
-      'VDESC=VDESC'
       'FECHA=FECHA'
       'COMPROBANTE=COMPROBANTE'
       'TERMINOS=TERMINOS'
@@ -111,7 +110,7 @@ object Form1: TForm1
       'SALDO=SALDO'
       'PAGADO=PAGADO'
       'CB=CB')
-    DataSet = IBQuery1
+    DataSet = OperacionFDQuery
     BCDToCurrency = False
     Left = 24
     Top = 16
@@ -564,6 +563,7 @@ object Form1: TForm1
   object FirebirdConnection: TFDConnection
     Params.Strings = (
       'ConnectionDef=GeN')
+    Connected = True
     LoginPrompt = False
     Left = 591
     Top = 117
@@ -655,5 +655,68 @@ object Form1: TForm1
     DataSet = IBQuery1
     Left = 304
     Top = 200
+  end
+  object OperacionFDQuery: TFDQuery
+    Connection = FirebirdConnection
+    SQL.Strings = (
+      'SELECT '
+      
+        #39'1'#39' as PtoVta, '#39'CIVELOO'#39' as Empresa, '#39'Diego E. Guillen'#39' as ETITU' +
+        'LAR,'
+      
+        #39'Monotributo'#39' as EIVA, '#39'2804'#39' as ECODIGOAREA, '#39'029814'#39' as ETELEF' +
+        'ONO,'
+      #39'V.Autiero 1255'#39' as EDIRECCIONCOMERCIAL, '#39'9120'#39' as ECP,'
+      
+        #39'Puerto Maryn'#39' as ECIUDAD, '#39'Biedma'#39' as EDEPARTAMENTO, '#39'Chubut'#39' a' +
+        's EPROVINCIA,'
+      
+        #39'20314661967'#39' as ECUIT, '#39'45789827'#39' as EIIBB, '#39'27/03/1985'#39' as EFE' +
+        'CHA,'
+      ''
+      '"Cliente".NOMBRE,  "Cliente".TITULAR, "Cliente".DIRECCION,'
+      
+        '"Cliente".DIRECCIONCOMERCIAL, "Cliente".IVA as CIVA, "Cliente".C' +
+        'UIT as CCUIT,'
+      ''
+      
+        '"Articulo".DESCRIPCION, "Articulo".UNIDAD, "Articulo".IVA as AIV' +
+        'A,'
+      ''
+      
+        '"OperacionItem".ARTICULO, "OperacionItem".CANTIDAD, "OperacionIt' +
+        'em".COSTO AS VIDESCUENTO,'
+      '"OperacionItem".PRECIO, "OperacionItem".OPERACION,'
+      
+        '("OperacionItem".PRECIO * "OperacionItem".CANTIDAD ) as PREXCANT' +
+        ','
+      '"OperacionItem".SERVICIO, "OperacionItem".DESCRIPCION AS DESCR,'
+      
+        '"OperacionItem".IMPUESTO as VIIMPUESTO, "Operacion".CODIGO, "Ope' +
+        'racion".LETRA,'
+      
+        '"Operacion".FECHA, "Operacion".COMPROBANTE, "Operacion".TERMINOS' +
+        ','
+      
+        '"Operacion".IVA3, "Operacion".TOTAL, "Operacion".CONTADO, "Opera' +
+        'cion".CLIENTE,'
+      
+        '"Operacion".SUBTOTAL, "Operacion".DESCUENTO, "Operacion".IMPUEST' +
+        'O,'
+      
+        '"Operacion".IVA2, "Operacion".IVA1, "Operacion".EXCENTO, "Operac' +
+        'ion".SALDO,'
+      '"Operacion".PAGADO, '#39'20121231237'#39'as CB'
+      'FROM "Operacion"'
+      
+        '  INNER JOIN "OperacionItem" ON ("Operacion".CODIGO = "Operacion' +
+        'Item".OPERACION)'
+      
+        '  INNER JOIN "Articulo" ON ("OperacionItem".ARTICULO = "Articulo' +
+        '".CODIGO)'
+      
+        '  INNER JOIN "Cliente" ON ("Operacion".CLIENTE = "Cliente".CODIG' +
+        'O)')
+    Left = 447
   end
 end

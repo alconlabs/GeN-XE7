@@ -23,6 +23,7 @@ type
   TOperacionDataModule = class(TDataModule)
     Q: TIBQuery;
     T: TIBQuery;
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -72,7 +73,6 @@ type
     procedure VarCos(cod, cant: string; cost: Double);
     procedure ExpCSV(sql: string);
     Procedure MovCaja(tipo, soc, imp, desc: string);
-    procedure DataModuleCreate(Sender: TObject);
     procedure CodigoBarra(cb: string);
     procedure BorrarArticulos;
     procedure ModificarArticulos(codigo, descripcion,
