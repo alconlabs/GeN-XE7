@@ -610,6 +610,11 @@ begin
     ActualizarTabla('Operacion', 'CBTESASOC', 'Integer');
     ActualizarTabla('Venta', 'CBTESASOC', 'Integer');
   end;
+  if not ExisteEnTabla('IVA', '') then
+  begin
+     //
+  end;
+
   ActualizarImprimir('FElectronica');
   ActualizarImprimir('TElectronica');
 end;
