@@ -46,8 +46,10 @@ procedure TFAnulaReimp.BitBtn1Click(Sender: TObject);
 begin
   OperacionDataModule := TOperacionDataModule.Create(self);
   try
-    if nroEdit.Text<>'' then OperacionDataModule.AnularVTA(nroEdit.Text);
+    if nroEdit.Text<>'' then
+      OperacionDataModule.AnularVTA(nroEdit.Text);
   finally
+    nroEdit.Text:='';
     OperacionDataModule.Free;
   end;
   Close;
@@ -61,11 +63,15 @@ begin
     BuscaFacturaForm.ShowModal;
   finally
     if BuscaFacturaForm.TipoRadioGroup.ItemIndex=0 then
-      nroEdit.Text := BuscaFacturaForm.Tabla.FieldByName('CODIGO').AsString
+      begin
+        nroEdit.Text := BuscaFacturaForm.Codigo;
+        BitBtn1.Click;
+      end
     else
       ShowMessage('Solo se pueden anular Facturas!!!');
     BuscaFacturaForm.Free;
   end;
+  Close;
 end;
 
 procedure TFAnulaReimp.FormKeyUp(Sender: TObject; var Key: Word;

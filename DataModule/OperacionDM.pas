@@ -521,7 +521,7 @@ end;
 
 Procedure TOperacionDataModule.AnularVTA;
 var
-  let, cod, fech, ven, cui, cno, a, cli, asocNro: string;
+  let, cod, fech, ven, cui, cno, a, cli, asocNro, CbteAsoc: string;
   pre, pgr: Boolean;
   cost, com, impu, cheq, cont, tot, sbt, des, tarj, otr, sal, pag, int, n10, n21,
     i10, i21, deud, ulc, comv: Double;
@@ -567,10 +567,15 @@ begin
     cheq := T.FieldByName('CHEQUE').AsFloat;
     tarj := T.FieldByName('TARJETA').AsFloat;
     impu := T.FieldByName('IMPUESTO').AsFloat;
+    i10 := T.FieldByName('IVA1').AsFloat;
+    if i10>0 then n10 := T.FieldByName('SUBTOTAL').AsFloat;
+    i21 := T.FieldByName('IVA2').AsFloat;
+    if i21>0 then n21 := T.FieldByName('SUBTOTAL').AsFloat;
     comv := T.FieldByName('COSTO').AsFloat;
     deud := T.FieldByName('DEUDA').AsFloat;
     com := T.FieldByName('COMISION').AsFloat;
     des := T.FieldByName('DESCUENTO').AsFloat;
+    sbt := T.FieldByName('SUBTOTAL').AsFloat;
     tot := T.FieldByName('TOTAL').AsFloat;
     if T.FieldByName('PAGARE').AsString = 's' then
       pgr := True;
@@ -581,7 +586,9 @@ begin
     cno := T.FieldByName('CTANOMBRE').AsString;
     cui := T.FieldByName('CUIT').AsString;
     if cui='' then cui := T.FieldByName('DOCUMENTO').AsString;
+    if cui='' then cui := '20222222223';
     T.Close;
+    CbteAsoc := IntToStr(DM.UltimoRegistro('"CbtesAsoc"','CODIGO'));
     // ---
     // ---Nota de credito electronica
     with dm do begin
@@ -594,36 +601,48 @@ begin
         if comp<>'' then ActualizarNroComp('NC'+let,comp);
       end;
     end;
+    // Marcar la Factura como anulada y poner los saldos en cero
+    Q.sql.Text := 'Update "Venta" set ANULADA = ''S'' where CODIGO = ' + nro;
+    Q.ExecSQL;
     // INSERTA EN LA TABLA OPERACION
-  Q.sql.Text :=
+    Q.sql.Text :=
     'Insert Into "Operacion" (COMPROBANTE, TERMINOS, CODIGO, TIPO, LETRA'+
     ', CLIENTE, VENDEDOR, SUBTOTAL' +
     ', DESCUENTO, FECHA, IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
     ' TARJETA, OTROS, SALDO, PAGADO, PAGARE, COSTO, DEUDA, COMISION, DESCRIPCION' +
+    ', CBTESASOC'+
     ') Values ' + '(' +QuotedStr(comp)+ ', ' + quotedstr(vto) + ', ' + (cod) + ', ' + quotedstr('NC'+let) + ', ' + quotedstr(let) +
     ', ' + cli + ', ' + ven + ', ' + ' ' + floattostr(sbt) + ', ' +
     floattostr(des) + ', ' + quotedstr(fech) + ', ' + floattostr(impu) + ', ' +
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
     floattostr(pag) + ',' + quotedstr(pagare) + ',' + floattostr(cmv) + ',' +
-    floattostr(deud) + ',' + floattostr(comv) + ',' + QuotedStr(cae) + ')';
-  Q.ExecSQL;
-// Insertar en la tabla de OPERACIONITEM
-  T.SQL.Text := 'Select * From "VentaItem" Where CODIGO = ' + nro;
-  T.Open;
-  T.First;
-  while not T.Eof do
-  begin
-    Q.sql.Text :=
-      'Insert Into "OperacionItem" (OPERACION, ARTICULO, CANTIDAD'+
-      ', PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-      + ' ( ' + cod + ', ' + T.FieldByName('ARTICULO').AsString + ', ' + T.FieldByName('CANTIDAD').AsString
-      + ',' + T.FieldByName('PRECIO').AsString + ', ' + T.FieldByName('IMPUESTO').AsString + ', ' + nro + ', ' +
-      QuotedStr(T.FieldByName('DESCRIPCION').AsString) + ');';
+    floattostr(deud) + ',' + floattostr(comv) + ',' + QuotedStr(cae) + ','
+    + (CbteAsoc)+')';
     Q.ExecSQL;
-    T.Next;
-  end;
-
+  // Insertar en la tabla de OPERACIONITEM
+    T.SQL.Text := 'Select * From "VentaItem" Where CODIGO = ' + nro;
+    T.Open;
+    T.First;
+    while not T.Eof do
+    begin
+      Q.sql.Text :=
+        'Insert Into "OperacionItem" (OPERACION, ARTICULO, CANTIDAD'+
+        ', PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
+        + ' ( ' + cod + ', ' + T.FieldByName('ARTICULO').AsString + ', ' + T.FieldByName('CANTIDAD').AsString
+        + ',' + T.FieldByName('PRECIO').AsString + ', ' + T.FieldByName('IMPUESTO').AsString + ', ' + nro + ', ' +
+        QuotedStr(T.FieldByName('DESCRIPCION').AsString) + ');';
+      Q.ExecSQL;
+      T.Next;
+    end;
+    Q.sql.Text :=
+      'Insert Into "CbtesAsoc" ('
+      +' CODIGO, TIPO, PTOVTA, NRO, CUIT, CBTEFCH'
+      +' ) Values'
+      +' ('+CbteAsoc+', '+dm.TraerTipoCbte(let)+', '+PuntoVenta+', '+QuotedStr(asocNro)+', '
+      +QuotedStr(cui)+', '+QuotedStr(fech)
+      +')';
+    Q.ExecSQL;
     // Borrar los Items de la factura de la tabla "VentaItem"
 //    Q.sql.Text := 'DELETE FROM "VentaItem" WHERE "VentaItem".OPERACION=' + nro;
 //    Q.ExecSQL;
@@ -698,9 +717,6 @@ begin
     end;
     // -----------------------------------3------------------------------------------
     // CONTABILIDAD---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    // Marcar la Factura como anulada y poner los saldos en cero
-    Q.sql.Text := 'Update "Venta" set ANULADA = ''S'' where CODIGO = ' + nro;
-    Q.ExecSQL;
     Q.Transaction.CommitRetaining;
     // IMPRIMIR
     if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then

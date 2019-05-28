@@ -122,6 +122,7 @@ procedure TBuscaFacturaForm.SiBitBtnClick(Sender: TObject);
 var
   nro, letra: string;
 begin
+  Codigo := Tabla.FieldByName('CODIGO').AsString;
   // IMPRIMIR
   if not ( anular and ((dm.ConfigQuery.FieldByName('Imprimir').AsString ) <> 'SI')) then
   begin

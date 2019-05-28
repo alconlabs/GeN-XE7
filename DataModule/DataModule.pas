@@ -22,6 +22,7 @@ type
     Consulta: TIBScript;
     FDConnection1: TFDConnection;
     OpenDialog1: TOpenDialog;
+    IBScript1: TIBScript;
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
     procedure LeerINI;
@@ -30,7 +31,10 @@ type
     { Private declarations }
     bd : string;
     procedure ActualizarImprimir(reporte:string);
-
+    procedure ActualizarBase;
+    function ExisteEnTabla(TB_NAME, FLD_NAME: string):Boolean;
+    procedure ActualizarTabla(TB_NAME, FLD_NAME, TYP_NAME: string);
+    procedure CrearTabla(TB_NAME, FLD_NAME, TYP_NAME: string);
   public
   const
     NumThreads: Integer = 4;
@@ -296,14 +300,7 @@ begin
   connection;
   Descargar('https://raw.githubusercontent.com/DeGsoft/GeN-XE7/master/Instalador/Update.iss'
   , Path+'Update.iss');
-
-//  Consulta.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
-//      + ' USER ''SYSDBA'' PASSWORD ''masterkey''; '
-//      +' ALTER TABLE "Operacion" ADD CbtesAsoc Integer;';
-//  Consulta.ExecuteScript;
-
-  ActualizarImprimir('FElectronica');
-  ActualizarImprimir('TElectronica');
+  ActualizarBase;
   TraerConfig;
 end;
 
@@ -530,7 +527,7 @@ end;
 
 function TDM.UltimoRegistro; // OBTENER EL NUMERO DE INDICE
 begin
-  Query.sql.Text := 'Select Max(' + c + ') From' + T;
+  Query.sql.Text := 'Select Max ( '+c+' ) From ' + T;
   Query.Open;
   result := Query.Fields[0].AsInteger + 1;
   Query.Close;
@@ -585,6 +582,70 @@ begin
     4 : result:='8';
     5 : result:='11';
     6 : result:='13';
+  end;
+end;
+
+procedure TDM.ActualizarBase;
+begin
+  if not ExisteEnTabla('CbtesAsoc', '') then
+  begin
+{
+<ar:CbtesAsoc>
+  <ar:CbteAsoc>
+  <ar:Tipo>short</ar:Tipo>
+  <ar:PtoVta>int</ar:PtoVta>
+  <ar:Nro>long</ar:Nro>
+  <ar:Cuit>String</ar:Cuit>
+  <ar:CbteFch>String</ar:CbteFch>
+</ar:CbteAsoc>
+}
+    CrearTabla('CbtesAsoc', 'CODIGO', 'Integer');
+//    ActualizarTabla('CbtesAsoc', 'OPERACION', 'Integer');
+//    ActualizarTabla('CbtesAsoc', 'VENTA', 'Integer');
+    ActualizarTabla('CbtesAsoc', 'TIPO', 'Integer');
+    ActualizarTabla('CbtesAsoc', 'PTOVTA', 'Integer');
+    ActualizarTabla('CbtesAsoc', 'NRO', 'Varchar(255)');
+    ActualizarTabla('CbtesAsoc', 'CUIT', 'Varchar(255)');
+    ActualizarTabla('CbtesAsoc', 'CBTEFCH', 'Varchar(255)');
+    ActualizarTabla('Operacion', 'CBTESASOC', 'Integer');
+    ActualizarTabla('Venta', 'CBTESASOC', 'Integer');
+  end;
+  ActualizarImprimir('FElectronica');
+  ActualizarImprimir('TElectronica');
+end;
+
+function TDM.ExisteEnTabla;
+begin
+  Query.SQL.Text :=
+    'SELECT RDB$FIELD_ID'
+    +' FROM RDB$RELATION_FIELDS'
+    +' WHERE RDB$RELATION_NAME = '+QuotedStr(TB_NAME)
+    +' AND RDB$SYSTEM_FLAG = 0';
+  if FLD_NAME<>'' then
+    Query.SQL.Text := Query.SQL.Text+' AND RDB$FIELD_NAME = '+QuotedStr(FLD_NAME);
+  Query.Open;
+  result := Query.RecordCount>0;
+end;
+
+procedure TDM.ActualizarTabla;
+begin
+  if not ExisteEnTabla(TB_NAME, FLD_NAME) then
+  begin
+    IBScript1.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
+      +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
+      +' ALTER TABLE "'+(TB_NAME)+'" ADD '+(FLD_NAME)+' '+(TYP_NAME)+';';
+    IBScript1.ExecuteScript;
+  end;
+end;
+
+procedure TDM.CrearTabla;
+begin
+  if not ExisteEnTabla(TB_NAME, '') then
+  begin
+    IBScript1.Script.Text := 'SET NAMES WIN1252; CONNECT '+QuotedStr(BaseDeDatos)
+      +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
+      +' CREATE TABLE "'+(TB_NAME)+'" ( '+(FLD_NAME)+' '+TYP_NAME+' )';
+    IBScript1.ExecuteScript;
   end;
 end;
 

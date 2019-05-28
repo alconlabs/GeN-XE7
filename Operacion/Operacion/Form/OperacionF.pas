@@ -477,8 +477,11 @@ If ClienteEdit.Text <> '' then
         // Label19.Caption := Tabla.FieldByName('TERMINOS').AsString;
         // Label23.Caption := DateToStr(IncDay(now,Tabla.FieldByName('DIASCREDITO').AsInteger));
         VendedorEdit.Text := Tabla.FieldByName('VENDEDOR').AsString;
-        CUITLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
         CUITLabel.Caption := Tabla.FieldByName('CUIT').AsString;
+        if CUITLabel.Caption =''  then
+          CUITLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
+          if CUITLabel.Caption =''  then
+            CUITLabel.Caption := '20222222223';
         // DocumentoLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
         // CUENTA CLIENTE
         CtaNombre := Tabla.FieldByName('CTANOMBRE').AsString;
@@ -692,7 +695,7 @@ var
   r, c: Integer;
   ok, impr : Boolean;
 begin
-  if Total >0 then
+  if Total>0 then
   begin
     screen.Cursor := crHourGlass;
     c := 0; // columna i
@@ -839,10 +842,9 @@ begin
       else if Key = VK_F8 then
         NuevoBitBtn.Click
       else if Key = VK_F12 then
-        ProcesarBitBtn.Click
+        ProcesarBitBtn.Click;
 //      else if Key = VK_Escape then
 //        Close
-        ;
 end;
 
 procedure TOperacionForm.FEContadoChange(Sender: TObject);
