@@ -35,6 +35,7 @@ type
     function ExisteEnTabla(TB_NAME, FLD_NAME: string):Boolean;
     procedure ActualizarTabla(TB_NAME, FLD_NAME, TYP_NAME: string);
     procedure CrearTabla(TB_NAME, FLD_NAME, TYP_NAME: string);
+    procedure ActualizarIVA(CODIGO, TASA: string);
   public
   const
     NumThreads: Integer = 4;
@@ -59,6 +60,8 @@ type
     procedure FormatearFecha;
     function existeOpenSSL():boolean;
     function TraerTipoCbte(tipo:string):string;
+    function TraerValor(tabla, campo, codigo: string):string;
+    function TraerValor2(tabla, campo, codigo, cam2, cod2: string):Double;
   end;
 
 const
@@ -511,7 +514,7 @@ begin
   if Query.RecordCount = 0 then
   begin
     Query.Close;
-    c:=IntToStr(DM.UltimoRegistro('"Imprimir"', 'CODIGO'));
+    c:=IntToStr(DM.UltimoRegistro('Imprimir', 'CODIGO'));
     Query.SQL.Text :=
       'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES ('+c+', '+QuotedStr(reporte)+', '+QuotedStr(reporte)+')';
     Query.ExecSQL;
@@ -527,7 +530,7 @@ end;
 
 function TDM.UltimoRegistro; // OBTENER EL NUMERO DE INDICE
 begin
-  Query.sql.Text := 'Select Max ( '+c+' ) From ' + T;
+  Query.sql.Text := 'Select Max ( '+c+' ) From "'+T+'"';
   Query.Open;
   result := Query.Fields[0].AsInteger + 1;
   Query.Close;
@@ -599,22 +602,53 @@ begin
   <ar:CbteFch>String</ar:CbteFch>
 </ar:CbteAsoc>
 }
-    CrearTabla('CbtesAsoc', 'CODIGO', 'Integer');
-//    ActualizarTabla('CbtesAsoc', 'OPERACION', 'Integer');
-//    ActualizarTabla('CbtesAsoc', 'VENTA', 'Integer');
-    ActualizarTabla('CbtesAsoc', 'TIPO', 'Integer');
-    ActualizarTabla('CbtesAsoc', 'PTOVTA', 'Integer');
-    ActualizarTabla('CbtesAsoc', 'NRO', 'Varchar(255)');
-    ActualizarTabla('CbtesAsoc', 'CUIT', 'Varchar(255)');
-    ActualizarTabla('CbtesAsoc', 'CBTEFCH', 'Varchar(255)');
-    ActualizarTabla('Operacion', 'CBTESASOC', 'Integer');
-    ActualizarTabla('Venta', 'CBTESASOC', 'Integer');
+    CrearTabla('CbtesAsoc', 'CODIGO', 'INTEGER');
+    ActualizarTabla('CbtesAsoc', 'TIPO', 'INTEGER');
+    ActualizarTabla('CbtesAsoc', 'PTOVTA', 'INTEGER');
+    ActualizarTabla('CbtesAsoc', 'NRO', 'VARCHAR(255)');
+    ActualizarTabla('CbtesAsoc', 'CUIT', 'VARCHAR(255)');
+    ActualizarTabla('CbtesAsoc', 'CBTEFCH', 'VARCHAR(255)');
+    ActualizarTabla('Operacion', 'CBTESASOC', 'INTEGER');
+    ActualizarTabla('Venta', 'CBTESASOC', 'INTEGER');
+    ActualizarTabla('CtaCte', 'CBTESASOC', 'INTEGER');
+    ActualizarTabla('Presupuesto', 'CBTESASOC', 'INTEGER');
+    ActualizarTabla('Compra', 'CBTESASOC', 'INTEGER');
   end;
-  if not ExisteEnTabla('IVA', '') then
+{
+<ar:Iva>
+  <ar:AlicIva>
+    <ar:Id>5</ar:Id>  21%
+    <ar:BaseImp>100</ar:BaseImp>
+    <ar:Importe>21</ar:Importe>
+  </ar:AlicIva>
+  <ar:AlicIva>
+    <ar:Id>4</ar:Id>  10.5%
+    <ar:BaseImp>50</ar:BaseImp>
+    <ar:Importe>5.25</ar:Importe>
+  </ar:AlicIva>
+</ar:Iva>
+}
+  if not ExisteEnTabla('Iva', '') then
   begin
-     //
+    CrearTabla('Iva', 'CODIGO', 'INTEGER');
+     ActualizarTabla('Iva', 'TASA', 'DOUBLE PRECISION');
+     ActualizarTabla('Iva', 'DESCRIPCION', 'VARCHAR(255)');
+     ActualizarIVA('3', '0');
+     ActualizarIVA('4', '10.5');
+     ActualizarIVA('5', '21');
+     ActualizarIVA('6', '27');
+     ActualizarIVA('8', '5');
+     ActualizarIVA('9', '2.5');
+    CrearTabla('AlicIva', 'CODIGO', 'INTEGER');
+     ActualizarTabla('AlicIva', 'ID', 'INTEGER');
+     ActualizarTabla('AlicIva', 'BASEIMP', 'DOUBLE PRECISION');
+     ActualizarTabla('AlicIva', 'IMPORTE', 'DOUBLE PRECISION');
+    ActualizarTabla('Operacion', 'ALICIVA', 'INTEGER');
+    ActualizarTabla('Venta', 'ALICIVA', 'INTEGER');
+    ActualizarTabla('CtaCte', 'ALICIVA', 'INTEGER');
+    ActualizarTabla('Presupuesto', 'ALICIVA', 'INTEGER');
   end;
-
+  ActualizarTabla('Compra', 'ALICIVA', 'INTEGER');
   ActualizarImprimir('FElectronica');
   ActualizarImprimir('TElectronica');
 end;
@@ -652,6 +686,38 @@ begin
       +' CREATE TABLE "'+(TB_NAME)+'" ( '+(FLD_NAME)+' '+TYP_NAME+' )';
     IBScript1.ExecuteScript;
   end;
+end;
+
+procedure TDM.ActualizarIVA;
+begin
+  Query.SQL.Text :=
+    'INSERT INTO "Iva" (CODIGO, TASA) VALUES ('+CODIGO+', '+TASA+')';
+  Query.ExecSQL;
+  Query.Transaction.Commit;
+end;
+
+function TDM.TraerValor;
+begin
+  Query.SQL.Text :=
+    'SELECT '+campo
+    +' FROM "'+tabla+'"'
+    +' WHERE CODIGO='+codigo;
+  Query.Open;
+  result := Query.Fields.Fields[0].AsString;
+end;
+
+function TDM.TraerValor2;
+begin
+  Query.SQL.Text :=
+    'SELECT '+campo
+    +' FROM "'+tabla+'"'
+    +' WHERE CODIGO='+codigo
+    +' AND '+cam2+'='+cod2;
+  Query.Open;
+  if query.RecordCount>0 then
+    result := Query.Fields.Fields[0].AsFloat
+  else
+    result := 0;
 end;
 
 end.

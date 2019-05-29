@@ -154,6 +154,7 @@ object DM: TDM
       'DELETE FROM "Vendedor";'
       'DELETE FROM "Venta";'
       'DELETE FROM "VentaItem";'
+      'DELETE FROM "AlicIva";'
       ''
       ''
       ''

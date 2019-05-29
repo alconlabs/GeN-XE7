@@ -26,9 +26,10 @@ type
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
+    procedure AlicIva(cod,id: integer; bImp,imp: double);
   public
     { Public declarations }
-    nro, comp, a, pagare, cae, vto, mensaje//, ptovta, tipocbte
+    comp, a, pagare, cae, vto, mensaje//, ptovta, tipocbte
     : string;
     i: integer;
     IIBB, cmv: Double;
@@ -119,7 +120,7 @@ Function TOperacionDataModule.ArtNuevo;
 var
   nro: string;
 begin
-  nro := inttostr(DM.UltimoRegistro('"Articulo"', 'CODIGO'));
+  nro := inttostr(DM.UltimoRegistro('Articulo', 'CODIGO'));
   Q.sql.Text := 'INSERT INTO "Articulo" (CODIGO, DESCRIPCION, COSTO, ULTCOSTO, '
     + ' PRECIO1, PRECIO2, PRECIO3, PRECIO4, ' +
     ' PRECIO5, PRECIO6, PRECIO, PORCENTAJE, ' +
@@ -284,7 +285,7 @@ begin
   Dia := FormatDateTime('dd', fecha);
   mes := MesLetra(fecha);
   Ano := FormatDateTime('yyyy', fecha);
-  nro := inttostr(DM.UltimoRegistro('"Venta"', 'CODIGO'));
+  nro := inttostr(DM.UltimoRegistro('Venta', 'CODIGO'));
   if nro = '1' then
     nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
   cmv := CostMercVend(ulc, cost);
@@ -525,9 +526,10 @@ var
   pre, pgr: Boolean;
   cost, com, impu, cheq, cont, tot, sbt, des, tarj, otr, sal, pag, int, n10, n21,
     i10, i21, deud, ulc, comv: Double;
+  aIva: Integer;
 begin
   DM.FormatearFecha;
-  cod := inttostr(DM.UltimoRegistro('"Operacion"', 'CODIGO'));
+  cod := inttostr(DM.UltimoRegistro('Operacion', 'CODIGO'));
   // Verificar que la factura Exista y que no este anulada
   T.sql.Text := 'Select * From "Venta" Where CODIGO = ' + nro;
   T.Open;
@@ -567,10 +569,15 @@ begin
     cheq := T.FieldByName('CHEQUE').AsFloat;
     tarj := T.FieldByName('TARJETA').AsFloat;
     impu := T.FieldByName('IMPUESTO').AsFloat;
-    i10 := T.FieldByName('IVA1').AsFloat;
-    if i10>0 then n10 := T.FieldByName('SUBTOTAL').AsFloat;
-    i21 := T.FieldByName('IVA2').AsFloat;
-    if i21>0 then n21 := T.FieldByName('SUBTOTAL').AsFloat;
+    aIva := T.FieldByName('ALICIVA').AsInteger;
+    i10 := DM.TraerValor2('AlicIva', 'IMPORTE', IntToStr(aIva), 'ID', '4');
+    if i10=0 then i10 := T.FieldByName('IVA1').AsFloat;
+    n10 := DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '4');
+    if n10=0 then n10 := T.FieldByName('SUBTOTAL').AsFloat;
+    i21 := DM.TraerValor2('AlicIva', 'IMPORTE', IntToStr(aIva), 'ID', '5');
+    if i21=0 then i21 := T.FieldByName('IVA2').AsFloat;
+    n21 := DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '5');
+    if n21=0 then n21 := T.FieldByName('SUBTOTAL').AsFloat;
     comv := T.FieldByName('COSTO').AsFloat;
     deud := T.FieldByName('DEUDA').AsFloat;
     com := T.FieldByName('COMISION').AsFloat;
@@ -588,7 +595,7 @@ begin
     if cui='' then cui := T.FieldByName('DOCUMENTO').AsString;
     if cui='' then cui := '20222222223';
     T.Close;
-    CbteAsoc := IntToStr(DM.UltimoRegistro('"CbtesAsoc"','CODIGO'));
+    CbteAsoc := IntToStr(DM.UltimoRegistro('CbtesAsoc','CODIGO'));
     // ---
     // ---Nota de credito electronica
     with dm do begin
@@ -604,13 +611,17 @@ begin
     // Marcar la Factura como anulada y poner los saldos en cero
     Q.sql.Text := 'Update "Venta" set ANULADA = ''S'' where CODIGO = ' + nro;
     Q.ExecSQL;
+    //AlicuotaIVA
+    aIva := DM.UltimoRegistro('AlicIva', 'CODIGO');
+    if i10>0 then AlicIva(aIva, 4, n10, i10);
+    if i21>0 then AlicIva(aIva, 5, n21, i21);
     // INSERTA EN LA TABLA OPERACION
     Q.sql.Text :=
     'Insert Into "Operacion" (COMPROBANTE, TERMINOS, CODIGO, TIPO, LETRA'+
     ', CLIENTE, VENDEDOR, SUBTOTAL' +
     ', DESCUENTO, FECHA, IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
     ' TARJETA, OTROS, SALDO, PAGADO, PAGARE, COSTO, DEUDA, COMISION, DESCRIPCION' +
-    ', CBTESASOC'+
+    ', CBTESASOC, ALICIVA'+
     ') Values ' + '(' +QuotedStr(comp)+ ', ' + quotedstr(vto) + ', ' + (cod) + ', ' + quotedstr('NC'+let) + ', ' + quotedstr(let) +
     ', ' + cli + ', ' + ven + ', ' + ' ' + floattostr(sbt) + ', ' +
     floattostr(des) + ', ' + quotedstr(fech) + ', ' + floattostr(impu) + ', ' +
@@ -618,7 +629,7 @@ begin
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
     floattostr(pag) + ',' + quotedstr(pagare) + ',' + floattostr(cmv) + ',' +
     floattostr(deud) + ',' + floattostr(comv) + ',' + QuotedStr(cae) + ','
-    + (CbteAsoc)+')';
+    + (CbteAsoc)+', '+IntToStr(aIva)+')';
     Q.ExecSQL;
   // Insertar en la tabla de OPERACIONITEM
     T.SQL.Text := 'Select * From "VentaItem" Where CODIGO = ' + nro;
@@ -662,7 +673,7 @@ begin
       floattostr(-i10), floattostr(-i21), floattostr(-tot)); // en blanco
     // en blanco
     // Insertar en la tabla LibroDiario
-    a := inttostr(DM.UltimoRegistro('"LibroDiario"', 'ASIENTO')); // GENERAR INDICE
+    a := inttostr(DM.UltimoRegistro('LibroDiario', 'ASIENTO')); // GENERAR INDICE
 
     // ------------------------------------------------------------------------------
     // VENTAS
@@ -739,22 +750,24 @@ end;
 Procedure TOperacionDataModule.ProcPresup; // PROCESA UN PRESUPUESTO
 var
   nro, a: string;
-  i: integer;
+  i, aIva: integer;
   IIBB, cmv: Double;
 begin
-  nro := inttostr(DM.UltimoRegistro('"Presupuesto"', 'CODIGO'));
-
+  nro := inttostr(DM.UltimoRegistro('Presupuesto', 'CODIGO'));
+  //AlicuotaIVA
+  aIva := DM.UltimoRegistro('AlicIva', 'CODIGO');
+  if i10>0 then AlicIva(aIva, 4, n10, i10);
+  if i21>0 then AlicIva(aIva, 5, n21, i21);
   // INSERTA EN LA TABLA PRESUPUESTO
   Q.sql.Text := 'Insert Into "Presupuesto" (CODIGO, LETRA, CLIENTE, ' +
     ' SUBTOTAL, DESCUENTO, FECHA,' + ' IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
-    ' TARJETA, OTROS, SALDO, PAGADO' + ') Values ' + '( ' + (nro) + ', ' +
+    ' TARJETA, OTROS, SALDO, PAGADO, ALICIVA) Values ' + '( ' + (nro) + ', ' +
     quotedstr(let) + ', ' + cod + ', ' + ' ' + floattostr(sbt) + ', ' +
     floattostr(des) + ', ' + quotedstr(fec) + ', ' + floattostr(impu) + ', ' +
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(che) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
-    floattostr(pag) + ')';
+    floattostr(pag)+', '+IntToStr(aIva)+')';
   Q.ExecSQL;
-
   // Insertar en la tabla de PRESUPUESTOITEM
   for i := 1 to High(mat[0]) do
   begin
@@ -771,7 +784,6 @@ begin
       quotedstr(mat[1, i]) + ');';
     Q.ExecSQL;
   end;
-
   // Completa la Transaccion
   Q.Transaction.CommitRetaining;
   // IMPRIMIR
@@ -786,7 +798,7 @@ end;
 
 function TOperacionDataModule.ProcVTA; // PROCESA UNA VENTA
 var
-  i : integer;
+  nro, i, aIva : Integer;
 //  nro, comp, a, pagare, cae, vto, mensaje, ptovta, tipocbte: string;
 //  IIBB, cmv: Double;
 //  jsResponse: TJSONValue;
@@ -795,7 +807,7 @@ begin
   //  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
   DM.FormatearFecha;
   pagare := '0';
-  nro := inttostr(DM.UltimoRegistro('"Venta"', 'CODIGO'));
+  nro := (DM.UltimoRegistro('Venta', 'CODIGO'));
   comp:=ObtenerNroComp(let);
   if pgr then
     pagare := 'S';
@@ -813,6 +825,11 @@ begin
     end
   else
     IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
+  //AlicuotaIVA
+  aIva := DM.UltimoRegistro('AlicIva', 'CODIGO');
+  if i10>0 then AlicIva(aIva, 4, n10, i10);
+  if i21>0 then AlicIva(aIva, 5, n21, i21);
+  //Factura electronica
   if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
   begin
     WSFE(fech, let, '1', '96', cui, comp,  FloatToStr(sbt), FloatToStr(impu), floattostr(tot), '0', '0', FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
@@ -821,19 +838,22 @@ begin
   //actualiza el nro de factura
   if comp<>'' then ActualizarNroComp(let,comp);
   // INSERTA EN LA TABLA VENTA
-  Q.SQL.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE, ' +
-    ' SUBTOTAL, DESCUENTO, FECHA'+
-    ', IMPUESTO, IVA1, IVA2'+
-    ', IIBB, TOTAL, CONTADO, CHEQUE,' +
-    ' TARJETA, OTROS, SALDO, PAGADO' + ', PAGARE, COSTO, DEUDA, COMISION, DESCRIPCION' +
-    ') Values ' + '('+QuotedStr(comp)+', ' + quotedstr(vto) + ', ' + (nro) + ', ' +
-    quotedstr(let) + ', ' + cod + ', ' +
-    floattostr(sbt) + ', ' + floattostr(des) + ', ' + quotedstr(fech) + ', ' +
-    floattostr(impu) + ', ' + floattostr(i10) + ', ' + floattostr(i21) + ', ' +
-    floattostr(IIBB) + ', ' + floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
-    floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
-    floattostr(pag) + ', ' + quotedstr(pagare) + ', ' + floattostr(cmv) + ', ' +
-    floattostr(deud) + ',' + floattostr(comv) + ', ' + QuotedStr(cae) + ')';
+  Q.SQL.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE,' +
+    ' SUBTOTAL, DESCUENTO, FECHA,'+
+    ' IMPUESTO, IVA1, IVA2,'+
+    ' IIBB, TOTAL, CONTADO, CHEQUE,' +
+    ' TARJETA, OTROS, SALDO,'+
+    ' PAGADO, PAGARE, COSTO,'+
+    ' DEUDA, COMISION, DESCRIPCION, ALICIVA'+
+    ') Values ('+
+    QuotedStr(comp)+', '+QuotedStr(vto)+', '+IntToStr(nro)+', '+QuotedStr(let)+', '+cod+', '+
+    floattostr(sbt)+', '+floattostr(des)+', '+QuotedStr(fech)+', '+
+    floattostr(impu)+', '+floattostr(i10)+', '+floattostr(i21)+', '+
+    floattostr(IIBB)+', '+floattostr(tot)+', '+floattostr(cont)+', '+floattostr(cheq)+', '+
+    floattostr(tarj)+', '+floattostr(otr)+', '+floattostr(sal)+', '+
+    floattostr(pag)+', '+QuotedStr(pagare)+', '+floattostr(cmv)+', '+
+    floattostr(deud)+', '+floattostr(comv)+', '+QuotedStr(cae)+', '+IntToStr(aIva)+
+    ')';
   Q.ExecSQL;
   // Insertar en la tabla de VENTAITEM
   if mat <> nil then
@@ -849,8 +869,8 @@ begin
         ctaCte := True;
       Q.SQL.Text :=
         'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, COSTO, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-        + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
-        (mat[7, i]) + ', ' +(mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
+        +' ( ' +IntToStr(nro)+ ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
+        (mat[7, i]) + ', ' +(mat[4, i]) + ', ' + mat[6, i] + ', ' + IntToStr(nro) + ', ' +
         quotedstr(mat[1, i]) + ');';
       Q.ExecSQL;
     end;
@@ -873,7 +893,7 @@ begin
     else
       Q.SQL.Text := 'Insert Into "CtaCte" (CLIENTE, SALDO, OPERACION,' +
         ' DESCUENTO, INTERES, FECHA, RENDIDAS) Values (' + cod + ', ' +
-        floattostr(sal) + ', ' + nro + ', ' + floattostr(des) + ', ' +
+        floattostr(sal) + ', ' + IntToStr(nro) + ', ' + floattostr(des) + ', ' +
         floattostr(int) + ', ' + quotedstr(fech) + ', 0' + ')';
       Q.ExecSQL;
     // Insertar en la tabla de CtaCte Item
@@ -886,7 +906,7 @@ begin
         else
           detalle := memo;
         Q.sql.Text := 'Insert Into "CtaCteItem" (OPERACION, CLIENTE,' +
-          ' DESCRIPCION, IMPORTE, ' + ' PAGADO) Values ' + '( ' + nro + ',' +
+          ' DESCRIPCION, IMPORTE, ' + ' PAGADO) Values ' + '( '+IntToStr(nro)+',' +
           cod + ', ' + quotedstr(detalle) + ',' + (mat[5, i]) + ', 0)';
         Q.ExecSQL;
       end;
@@ -900,7 +920,7 @@ begin
       comv := 0;
     Q.sql.Text :=
       'Insert Into "RendidoVendedor" (VENDEDOR, VENTA, IMPORTE, FECHA) Values' +
-      ' (' + quotedstr(ven) + ', ' + nro + ', ' + Format('%8.2f', [comv]) + ', '
+      ' (' + quotedstr(ven) + ', '+IntToStr(nro)+', ' + Format('%8.2f', [comv]) + ', '
       + quotedstr(fech) + ')';
     Q.ExecSQL;
   end;
@@ -916,10 +936,10 @@ begin
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA VENTAS
   if (let = 'A') or (let = 'B') then//  if let <> 'X' then
-    LibroIVAvta(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
+    LibroIVAvta(fech, IntToStr(nro), cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(tot));
   // Insertar en la tabla LibroDiario
-  LibroDiario('VENTA', nro, let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
+  LibroDiario('VENTA', IntToStr(nro), let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, comv);
   // Completa la Transaccion
   Q.Transaction.CommitRetaining;
@@ -929,7 +949,7 @@ begin
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
-      Impr(vta(nro, let), let);
+      Impr(vta(IntToStr(nro), let), let);
     ImprimirDataModule.Free;
   end;
   result := true;
@@ -937,36 +957,41 @@ end;
 
 Procedure TOperacionDataModule.ProcOPER; // PROCESA UNA OPERACION
 var
-  nro, a, pagare: string;
-  i: integer;
+  a, pagare: string;
+  nro, i, aiva: integer;
   IIBB, cmv: Double;
 begin
   pagare := '0';
-  nro := inttostr(DM.UltimoRegistro('"Operacion"', 'CODIGO'));
+  nro := (DM.UltimoRegistro('Operacion', 'CODIGO'));
 //  if nro = '1' then nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
   if pgr then
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
+  //AlicuotaIVA
+  aIva := DM.UltimoRegistro('AlicIva', 'CODIGO');
+  if i10>0 then AlicIva(aIva, 4, n10, i10);
+  if i21>0 then AlicIva(aIva, 5, n21, i21);
   // INSERTA EN LA TABLA OPERACION
   Q.sql.Text :=
-    'Insert Into "Operacion" (CODIGO, TIPO, LETRA, CLIENTE, VENDEDOR, ' +
-    ' SUBTOTAL, DESCUENTO, FECHA,' + ' IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
-    ' TARJETA, OTROS, SALDO, PAGADO' + ', PAGARE, COSTO, DEUDA, COMISION' +
-    ') Values ' + '(' + (nro) + ', ' + quotedstr(tipo) + ', ' + quotedstr(let) +
+    'Insert Into "Operacion" (CODIGO, TIPO, LETRA, CLIENTE, VENDEDOR' +
+    ', SUBTOTAL, DESCUENTO, FECHA,' + ' IMPUESTO, TOTAL, CONTADO, CHEQUE' +
+    ', TARJETA, OTROS, SALDO, PAGADO, PAGARE, COSTO'+
+    ', DEUDA, COMISION, ALICIVA'+
+    ') Values ' + '(' + IntToStr(nro) + ', ' + quotedstr(tipo) + ', ' + quotedstr(let) +
     ', ' + cod + ', ' + ven + ', ' + ' ' + floattostr(sbt) + ', ' +
     floattostr(des) + ', ' + quotedstr(fech) + ', ' + floattostr(impu) + ', ' +
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
     floattostr(pag) + ',' + quotedstr(pagare) + ',' + floattostr(cmv) + ',' +
-    floattostr(deud) + ',' + floattostr(comv) + ')';
+    floattostr(deud) + ',' + floattostr(comv)+', '+IntToStr(aIva)+')';
   Q.ExecSQL;
   // Insertar en la tabla de OPERACIONITEM
   for i := 1 to High(mat[0]) do
   begin
     Q.sql.Text :=
       'Insert Into "OperacionItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-      + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
-      (mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
+      + ' ( ' + IntToStr(nro) + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
+      (mat[4, i]) + ', ' + mat[6, i] + ', ' + IntToStr(nro) + ', ' +
       quotedstr(mat[1, i]) + ');';
     Q.ExecSQL;
   end;
@@ -981,7 +1006,7 @@ begin
     else
       Q.sql.Text := 'Insert Into "CtaCte" (CLIENTE, SALDO, OPERACION,' +
         ' DESCUENTO, INTERES, FECHA, RENDIDAS) Values (' + cod + ', ' +
-        floattostr(sal) + ', ' + nro + ', ' + floattostr(des) + ', ' +
+        floattostr(sal) + ', ' + IntToStr(nro) + ', ' + floattostr(des) + ', ' +
         floattostr(int) + ', ' + quotedstr(fech) + ', 0' + ')';
     Q.ExecSQL;
     // Insertar en la tabla de CtaCte Item
@@ -994,7 +1019,7 @@ begin
         else
           detalle := memo;
         Q.sql.Text := 'Insert Into "CtaCteItem" (OPERACION, CLIENTE,' +
-          ' DESCRIPCION, IMPORTE, ' + ' PAGADO) Values ' + '( ' + nro + ',' +
+          ' DESCRIPCION, IMPORTE, ' + ' PAGADO) Values ' + '( ' + IntToStr(nro) + ',' +
           cod + ', ' + quotedstr(detalle) + ',' + (mat[5, i]) + ', 0)';
         Q.ExecSQL;
       end;
@@ -1008,7 +1033,7 @@ begin
       comv := 0;
     Q.sql.Text :=
       'Insert Into "RendidoVendedor" (VENDEDOR, VENTA, IMPORTE, FECHA) Values' +
-      ' (' + quotedstr(ven) + ', ' + nro + ', ' + Format('%8.2f', [comv]) + ', '
+      ' (' + quotedstr(ven) + ', ' + IntToStr(nro) + ', ' + Format('%8.2f', [comv]) + ', '
       + quotedstr(fech) + ')';
     Q.ExecSQL;
   end;
@@ -1022,10 +1047,10 @@ begin
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA VENTAS
   if (let = 'A') or (let = 'B') then
-    LibroIVAvta(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
+    LibroIVAvta(fech, IntToStr(nro), cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(tot)); // en blanco
   // Insertar en la tabla LibroDiario
-  LibroDiario(tipo, nro, let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
+  LibroDiario(tipo, IntToStr(nro), let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, comv);
   // Completa la Transaccion
   Q.Transaction.CommitRetaining;
@@ -1034,7 +1059,7 @@ begin
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
-      Impr(oper(nro, tipo, let), 'CTicket');
+      Impr(oper(IntToStr(nro), tipo, let), 'CTicket');
     ImprimirDataModule.Free;
   end;
 end;
@@ -1042,20 +1067,25 @@ end;
 Procedure TOperacionDataModule.ProcCompra; // PROCESA UNA COMPRA
 var
   nro, a, pultc: string;
-  i: integer;
+  i, aIva: integer;
   IIBB, cmv: Double;
 begin
   cmv := 0;
-  nro := inttostr(DM.UltimoRegistro('"Compra"', 'CODIGO'));
+  nro := inttostr(DM.UltimoRegistro('Compra', 'CODIGO'));
+  //AlicuotaIVA
+  aIva := DM.UltimoRegistro('AlicIva', 'CODIGO');
+  if i10>0 then AlicIva(aIva, 4, n10, i10);
+  if i21>0 then AlicIva(aIva, 5, n21, i21);
   // INSERTA EN LA TABLA COMPRA
   Q.sql.Text := 'Insert Into "Compra" (CODIGO, LETRA, PROVEEDOR, ' +
     ' SUBTOTAL, DESCUENTO, FECHA,' + ' IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
-    ' TARJETA, OTROS, SALDO, PAGADO,' + ' COMPROBANTE) Values ' + '(' + (nro) +
+    ' TARJETA, OTROS, SALDO'+
+    ', PAGADO, COMPROBANTE, ALICIVA) Values (' + (nro) +
     ', ' + quotedstr(let) + ', ' + cod + ', ' + ' ' + floattostr(sbt) + ', ' +
     floattostr(des) + ', ' + quotedstr(fech) + ', ' + floattostr(impu) + ', ' +
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
-    floattostr(pag) + ', ' + quotedstr(com) + ')';
+    floattostr(pag) + ', ' + quotedstr(com) +', '+IntToStr(aIva)+ ')';
   Q.ExecSQL;
   // Insertar en la tabla de COMPRAITEM
   for i := 1 to High(mat[0]) do
@@ -1109,7 +1139,7 @@ begin
     LibroIVACompra(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(perc), floattostr(tot)); // en blanco
   // Insertar en la tabla LibroDiario
-  a := inttostr(DM.UltimoRegistro('"LibroDiario"', 'ASIENTO')); // GENERAR INDICE
+  a := inttostr(DM.UltimoRegistro('LibroDiario', 'ASIENTO')); // GENERAR INDICE
   LibroDiario('COMPRA', nro, let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, 0);
   // Completa la Transaccion
@@ -1122,7 +1152,7 @@ var
   sal: Double;
 begin
   sal := tot - pag;
-  a := floattostr(DM.UltimoRegistro('"LibroDiario"', 'ASIENTO'));
+  a := floattostr(DM.UltimoRegistro('LibroDiario', 'ASIENTO'));
   if (oper = 'CLIENTE') or (oper = 'VENTA') or (oper = 'PED') then
     tabl := 'Cliente'
   else if (oper = 'PROVEEDOR') or (oper = 'COMPRA') then
@@ -1721,12 +1751,12 @@ end;
 { FACTURA UN REMITO }
 procedure TOperacionDataModule.FactRem;
 var
-  i : integer;
-  ctaCte : boolean;
+  nro, i, aIva: integer;
+  ctaCte: boolean;
 begin
   DM.FormatearFecha;
   pagare := '0';
-  nro := inttostr(DM.UltimoRegistro('"Venta"', 'CODIGO'));
+  nro := (DM.UltimoRegistro('Venta', 'CODIGO'));
   comp := ObtenerNroComp(let);
   if pgr then
     pagare := 'S';
@@ -1751,21 +1781,30 @@ begin
   end;
   //actualiza el nro de factura
   if comp<>'' then ActualizarNroComp(let,comp);
+  //AlicuotaIVA
+  aIva := DM.UltimoRegistro('AlicIva', 'CODIGO');
+  if i10>0 then AlicIva(aIva, 4, n10, i10);
+  if i21>0 then AlicIva(aIva, 5, n21, i21);
   // INSERTA EN LA TABLA VENTA
-  Q.SQL.Text := 'Insert Into "Venta" ( COMPROBANTE, REMITO, TERMINOS, CODIGO'+
-    ', LETRA, CLIENTE ' +
+  Q.SQL.Text := 'Insert Into "Venta" ( COMPROBANTE, REMITO, TERMINOS'+
+    ', CODIGO, LETRA, CLIENTE ' +
     ', SUBTOTAL, DESCUENTO, FECHA'+
     ', IMPUESTO, IVA1, IVA2'+
-    ', IIBB, TOTAL, CONTADO, CHEQUE,' +
-    ' TARJETA, OTROS, SALDO, PAGADO' + ', PAGARE, COSTO, DEUDA, COMISION, DESCRIPCION'+
-    ') Values ' + '('+QuotedStr(comp)+', '+QuotedStr(codRem)+', '+QuotedStr(vto)+', '+nro+', '+
-    quotedstr(let) + ', ' + cod + ', ' +
+    ', IIBB, TOTAL, CONTADO, CHEQUE' +
+    ', TARJETA, OTROS, SALDO'+
+    ', PAGADO, PAGARE, COSTO'+
+    ', DEUDA, COMISION, DESCRIPCION'+
+    ', ALICIVA'+
+    ') Values ' + '('+QuotedStr(comp)+', '+QuotedStr(codRem)+', '+QuotedStr(vto)+
+    ', '+IntToStr(nro)+', '+quotedstr(let) + ', ' + cod + ', ' +
     floattostr(sbt) + ', ' + floattostr(des) + ', ' + quotedstr(fech) + ', ' +
     floattostr(impu) + ', ' + floattostr(i10) + ', ' + floattostr(i21) + ', ' +
     floattostr(IIBB) + ', ' + floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
     floattostr(pag) + ', ' + quotedstr(pagare) + ', ' + floattostr(cmv) + ', ' +
-    floattostr(deud) + ',' + floattostr(comv) + ', ' + QuotedStr(cae) + ')';
+    floattostr(deud) + ',' + floattostr(comv) + ', ' + QuotedStr(cae) +
+    ', '+IntToStr(aIva)+
+    ')';
   Q.ExecSQL;
   // Insertar en la tabla de VENTAITEM
   if mat <> nil then
@@ -1781,8 +1820,8 @@ begin
         ctaCte := True;
       Q.SQL.Text :=
         'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, COSTO, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-        + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
-        (mat[7, i]) + ', ' +(mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
+        + ' ( ' + IntToStr(nro) + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
+        (mat[7, i]) + ', ' +(mat[4, i]) + ', ' + mat[6, i] + ', ' + IntToStr(nro) + ', ' +
         quotedstr(mat[1, i]) + ');';
       Q.ExecSQL;
     end;
@@ -1851,10 +1890,10 @@ begin
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA VENTAS
   if (let = 'A') or (let = 'B') then//  if let <> 'X' then
-    LibroIVAvta(fech, nro, cod, cui, floattostr(n10), floattostr(n21),
+    LibroIVAvta(fech, IntToStr(nro), cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(tot)); // en blanco
   // Insertar en la tabla LibroDiario
-  LibroDiario('VENTA', nro, let, cod, fech, pgr, 0, 0, 0, 0, 0,
+  LibroDiario('VENTA', IntToStr(nro), let, cod, fech, pgr, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0);
   // Completa la Transaccion
   Q.Transaction.CommitRetaining;
@@ -1864,7 +1903,7 @@ begin
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
-      Impr(vta(nro, let), let);
+      Impr(vta(IntToStr(nro), let), let);
     ImprimirDataModule.Free;
   end;
 end;
@@ -1900,6 +1939,13 @@ begin
       end;
     end;
       DM.EscribirINI;
+end;
+
+procedure TOperacionDataModule.AlicIva;
+begin
+  Q.SQL.Text := 'Insert Into "AlicIva" (CODIGO, ID, BASEIMP, IMPORTE) Values ('
+    +IntToStr(cod)+', '+IntToStr(id)+', '+FloatToStr(bImp)+', '+FloatToStr(imp)+')';
+  Q.ExecSQL;
 end;
 
 end.
