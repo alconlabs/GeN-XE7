@@ -434,6 +434,7 @@ begin
   // IniFile.WriteString('Licencia', 'Fecha', datetostr(date));
 
 //  IniFile.Destroy;
+  TraerConfig;
 end;
 
 function TDM.TextoAfecha;

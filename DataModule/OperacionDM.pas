@@ -644,8 +644,11 @@ begin
         + ',' + T.FieldByName('PRECIO').AsString + ', ' + T.FieldByName('IMPUESTO').AsString + ', ' + nro + ', ' +
         QuotedStr(T.FieldByName('DESCRIPCION').AsString) + ');';
       Q.ExecSQL;
+      // Actualizar la tabla de Articulos
+      ActualizarCantidadArticulo(T.FieldByName('ARTICULO').AsString, '+ '+T.FieldByName('CANTIDAD').AsString);
       T.Next;
     end;
+    //
     Q.sql.Text :=
       'Insert Into "CbtesAsoc" ('
       +' CODIGO, TIPO, PTOVTA, NRO, CUIT, CBTEFCH'
@@ -928,7 +931,7 @@ begin
   if mat <> nil then
     for i := 1 to High(mat[0]) do
     begin
-      OperacionDataModule.ActualizarCantidadArticulo(mat[0, i], mat[3, i])
+      OperacionDataModule.ActualizarCantidadArticulo(mat[0, i], '- '+mat[3, i])
   //    Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE - ' + mat[3, i]
   //      + ' Where "Articulo".CODIGO = ' + (mat[0, i]);
   //    Q.ExecSQL;
@@ -1658,7 +1661,7 @@ end;
 
 procedure TOperacionDataModule.ActualizarCantidadArticulo;
 begin
-  Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE - ' + cantidad
+  Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE ' + cantidad
     + ' Where "Articulo".CODIGO = ' + codigo;
   Q.ExecSQL;
   if webUpd='True' then
@@ -1882,7 +1885,7 @@ begin
 //  if mat <> nil then
 //    for i := 1 to High(mat[0]) do
 //    begin
-//      OperacionDataModule.ActualizarCantidadArticulo(mat[0, i], mat[3, i])
+//      OperacionDataModule.ActualizarCantidadArticulo(mat[0, i], '- '+mat[3, i])
 //      Q.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE - ' + mat[3, i]
 //        + ' Where "Articulo".CODIGO = ' + (mat[0, i]);
 //      Q.ExecSQL;
