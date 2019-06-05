@@ -1991,4 +1991,14 @@ object DM: TDM
     Left = 24
     Top = 144
   end
+  object FDTable1: TFDTable
+    Connection = FDConnection1
+    Left = 184
+    Top = 112
+  end
+  object FDQuery1: TFDQuery
+    Connection = FDConnection1
+    Left = 184
+    Top = 168
+  end
 end

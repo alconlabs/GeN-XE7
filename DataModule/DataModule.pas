@@ -23,6 +23,8 @@ type
     FDConnection1: TFDConnection;
     OpenDialog1: TOpenDialog;
     IBScript1: TIBScript;
+    FDTable1: TFDTable;
+    FDQuery1: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
     procedure LeerINI;
@@ -36,6 +38,11 @@ type
     procedure ActualizarTabla(TB_NAME, FLD_NAME, TYP_NAME: string);
     procedure CrearTabla(TB_NAME, FLD_NAME, TYP_NAME: string);
     procedure ActualizarIVA(CODIGO, TASA: string);
+    procedure GetBuildInfo;//(V1, V2, V3, V4: Word);
+    procedure CrearTable(nombre: string);
+    procedure IniciarModificacionTabla(nombreTabla:string);
+    procedure AgregarCampoModificacionTabla(nombreCampo: string;tipo: TFieldType;tamaño: Integer);
+    procedure TerminarModificacionTabla;
   public
   const
     NumThreads: Integer = 4;
@@ -44,6 +51,10 @@ type
     Unidad: string;
     // Gratis:boolean;
     IniFile: TIniFile;
+    V1,       // Major Version
+    V2,       // Minor Version
+    V3,       // Release
+    V4: Word; // Build Number
     procedure connection;
     procedure chequeo;
     procedure TraerUsuario;
@@ -62,6 +73,8 @@ type
     function TraerTipoCbte(tipo:string):string;
     function TraerValor(tabla, campo, codigo: string):string;
     function TraerValor2(tabla, campo, codigo, cam2, cod2: string):Double;
+    procedure AgregarValor(tabla, campo, valor: string);
+    procedure ActualizarValor(tabla, campo, codigo, valor: string);
   end;
 
 const
@@ -295,6 +308,7 @@ end;
 
 procedure TDM.DataModuleCreate(Sender: TObject);
 begin
+  GetBuildInfo;//(v1,v2,v3,v4);
   Usuario := '0';
   Oculto := '0';
   if U = '' then
@@ -405,12 +419,11 @@ begin
 //    ShowMessage('Error al cargar Base de Datos')
 //  else
 //  begin
-    Consulta.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
-      + ' USER ''SYSDBA'' PASSWORD ''masterkey''; ' + Consulta.Script.Text;
-    Consulta.ExecuteScript;
-    ShowMessage('Base de Datos Restaurada con éxito!!!');
+  Consulta.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
+    + ' USER ''SYSDBA'' PASSWORD ''masterkey''; ' + Consulta.Script.Text;
+  Consulta.ExecuteScript;
+  ShowMessage('Base de Datos Restaurada con éxito!!!');
 //  end;
-
   webUrl := '';
   webRes := '';
   webUsr := '';
@@ -429,17 +442,15 @@ begin
   NroC := '0';
   NroNCC := '0';
   EscribirINI;
-
   // IniFile.WriteString('Licencia', 'Dia', inttostr(1));
   // IniFile.WriteString('Licencia', 'Fecha', datetostr(date));
-
 //  IniFile.Destroy;
   TraerConfig;
 end;
 
 function TDM.TextoAfecha;
 var
-Fmt : TFormatSettings;
+  Fmt: TFormatSettings;
 begin
   fmt.ShortDateFormat:='yyyy/mm/dd';
   fmt.DateSeparator  :='/';
@@ -591,67 +602,80 @@ end;
 
 procedure TDM.ActualizarBase;
 begin
-  if not ExisteEnTabla('CbtesAsoc', '') then
+  if ExisteEnTabla('Version', '') then
+//  if True then
+  else
   begin
-{
-<ar:CbtesAsoc>
-  <ar:CbteAsoc>
-  <ar:Tipo>short</ar:Tipo>
-  <ar:PtoVta>int</ar:PtoVta>
-  <ar:Nro>long</ar:Nro>
-  <ar:Cuit>String</ar:Cuit>
-  <ar:CbteFch>String</ar:CbteFch>
-</ar:CbteAsoc>
-}
-    CrearTabla('CbtesAsoc', 'CODIGO', 'INTEGER');
-    ActualizarTabla('CbtesAsoc', 'TIPO', 'INTEGER');
-    ActualizarTabla('CbtesAsoc', 'PTOVTA', 'INTEGER');
-    ActualizarTabla('CbtesAsoc', 'NRO', 'VARCHAR(255)');
-    ActualizarTabla('CbtesAsoc', 'CUIT', 'VARCHAR(255)');
-    ActualizarTabla('CbtesAsoc', 'CBTEFCH', 'VARCHAR(255)');
-    ActualizarTabla('Operacion', 'CBTESASOC', 'INTEGER');
-    ActualizarTabla('Venta', 'CBTESASOC', 'INTEGER');
-    ActualizarTabla('CtaCte', 'CBTESASOC', 'INTEGER');
-    ActualizarTabla('Presupuesto', 'CBTESASOC', 'INTEGER');
-    ActualizarTabla('Compra', 'CBTESASOC', 'INTEGER');
+    CrearTabla('Version', 'V1', 'VARCHAR(255)');
+    ActualizarTabla('Version', 'V2', 'VARCHAR(255)');
+    ActualizarTabla('Version', 'V3', 'VARCHAR(255)');
+    ActualizarTabla('Version', 'V4', 'VARCHAR(255)');
+    AgregarValor('Version','V1', FloatToStr(v1));
+    ActualizarValor('Version', 'V2', '', FloatToStr(v2));
+    ActualizarValor('Version', 'V3', '', FloatToStr(v3));
+    ActualizarValor('Version', 'V4', '', FloatToStr(v4));
+    if not ExisteEnTabla('CbtesAsoc', '') then
+    begin
+  {
+  <ar:CbtesAsoc>
+    <ar:CbteAsoc>
+    <ar:Tipo>short</ar:Tipo>
+    <ar:PtoVta>int</ar:PtoVta>
+    <ar:Nro>long</ar:Nro>
+    <ar:Cuit>String</ar:Cuit>
+    <ar:CbteFch>String</ar:CbteFch>
+  </ar:CbteAsoc>
+  }
+      CrearTabla('CbtesAsoc', 'CODIGO', 'INTEGER');
+      ActualizarTabla('CbtesAsoc', 'TIPO', 'INTEGER');
+      ActualizarTabla('CbtesAsoc', 'PTOVTA', 'INTEGER');
+      ActualizarTabla('CbtesAsoc', 'NRO', 'VARCHAR(255)');
+      ActualizarTabla('CbtesAsoc', 'CUIT', 'VARCHAR(255)');
+      ActualizarTabla('CbtesAsoc', 'CBTEFCH', 'VARCHAR(255)');
+      ActualizarTabla('Operacion', 'CBTESASOC', 'INTEGER');
+      ActualizarTabla('Venta', 'CBTESASOC', 'INTEGER');
+      ActualizarTabla('CtaCte', 'CBTESASOC', 'INTEGER');
+      ActualizarTabla('Presupuesto', 'CBTESASOC', 'INTEGER');
+      ActualizarTabla('Compra', 'CBTESASOC', 'INTEGER');
+    end;
+  {
+  <ar:Iva>
+    <ar:AlicIva>
+      <ar:Id>5</ar:Id>  21%
+      <ar:BaseImp>100</ar:BaseImp>
+      <ar:Importe>21</ar:Importe>
+    </ar:AlicIva>
+    <ar:AlicIva>
+      <ar:Id>4</ar:Id>  10.5%
+      <ar:BaseImp>50</ar:BaseImp>
+      <ar:Importe>5.25</ar:Importe>
+    </ar:AlicIva>
+  </ar:Iva>
+  }
+    if not ExisteEnTabla('Iva', '') then
+    begin
+      CrearTabla('Iva', 'CODIGO', 'INTEGER');
+       ActualizarTabla('Iva', 'TASA', 'DOUBLE PRECISION');
+       ActualizarTabla('Iva', 'DESCRIPCION', 'VARCHAR(255)');
+       ActualizarIVA('3', '0');
+       ActualizarIVA('4', '10.5');
+       ActualizarIVA('5', '21');
+       ActualizarIVA('6', '27');
+       ActualizarIVA('8', '5');
+       ActualizarIVA('9', '2.5');
+      CrearTabla('AlicIva', 'CODIGO', 'INTEGER');
+       ActualizarTabla('AlicIva', 'ID', 'INTEGER');
+       ActualizarTabla('AlicIva', 'BASEIMP', 'DOUBLE PRECISION');
+       ActualizarTabla('AlicIva', 'IMPORTE', 'DOUBLE PRECISION');
+      ActualizarTabla('Operacion', 'ALICIVA', 'INTEGER');
+      ActualizarTabla('Venta', 'ALICIVA', 'INTEGER');
+      ActualizarTabla('CtaCte', 'ALICIVA', 'INTEGER');
+      ActualizarTabla('Presupuesto', 'ALICIVA', 'INTEGER');
+    end;
+    ActualizarTabla('Compra', 'ALICIVA', 'INTEGER');
+    ActualizarImprimir('FElectronica');
+    ActualizarImprimir('TElectronica');
   end;
-{
-<ar:Iva>
-  <ar:AlicIva>
-    <ar:Id>5</ar:Id>  21%
-    <ar:BaseImp>100</ar:BaseImp>
-    <ar:Importe>21</ar:Importe>
-  </ar:AlicIva>
-  <ar:AlicIva>
-    <ar:Id>4</ar:Id>  10.5%
-    <ar:BaseImp>50</ar:BaseImp>
-    <ar:Importe>5.25</ar:Importe>
-  </ar:AlicIva>
-</ar:Iva>
-}
-  if not ExisteEnTabla('Iva', '') then
-  begin
-    CrearTabla('Iva', 'CODIGO', 'INTEGER');
-     ActualizarTabla('Iva', 'TASA', 'DOUBLE PRECISION');
-     ActualizarTabla('Iva', 'DESCRIPCION', 'VARCHAR(255)');
-     ActualizarIVA('3', '0');
-     ActualizarIVA('4', '10.5');
-     ActualizarIVA('5', '21');
-     ActualizarIVA('6', '27');
-     ActualizarIVA('8', '5');
-     ActualizarIVA('9', '2.5');
-    CrearTabla('AlicIva', 'CODIGO', 'INTEGER');
-     ActualizarTabla('AlicIva', 'ID', 'INTEGER');
-     ActualizarTabla('AlicIva', 'BASEIMP', 'DOUBLE PRECISION');
-     ActualizarTabla('AlicIva', 'IMPORTE', 'DOUBLE PRECISION');
-    ActualizarTabla('Operacion', 'ALICIVA', 'INTEGER');
-    ActualizarTabla('Venta', 'ALICIVA', 'INTEGER');
-    ActualizarTabla('CtaCte', 'ALICIVA', 'INTEGER');
-    ActualizarTabla('Presupuesto', 'ALICIVA', 'INTEGER');
-  end;
-  ActualizarTabla('Compra', 'ALICIVA', 'INTEGER');
-  ActualizarImprimir('FElectronica');
-  ActualizarImprimir('TElectronica');
 end;
 
 function TDM.ExisteEnTabla;
@@ -675,6 +699,7 @@ begin
       +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
       +' ALTER TABLE "'+(TB_NAME)+'" ADD '+(FLD_NAME)+' '+(TYP_NAME)+';';
     IBScript1.ExecuteScript;
+    IBScript1.Transaction.CommitRetaining;
   end;
 end;
 
@@ -719,6 +744,144 @@ begin
     result := Query.Fields.Fields[0].AsFloat
   else
     result := 0;
+end;
+
+procedure TDM.AgregarValor;
+begin
+  Query.SQL.Text :=
+    'INSERT INTO "'+tabla+'" ('+campo+') VALUES ('+valor+')';
+  Query.ExecSQL;
+  Query.Transaction.Commit;
+end;
+
+procedure TDM.GetBuildInfo;
+var
+   VerInfoSize, VerValueSize, Dummy : DWORD;
+   VerInfo : Pointer;
+   VerValue : PVSFixedFileInfo;
+begin
+  VerInfoSize := GetFileVersionInfoSize(PChar(ParamStr(0)), Dummy);
+  GetMem(VerInfo, VerInfoSize);
+  GetFileVersionInfo(PChar(ParamStr(0)), 0, VerInfoSize, VerInfo);
+  VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize);
+  With VerValue^ do
+  begin
+    V1 := dwFileVersionMS shr 16;
+    V2 := dwFileVersionMS and $FFFF;
+    V3 := dwFileVersionLS shr 16;
+    V4 := dwFileVersionLS and $FFFF;
+  end;
+  FreeMem(VerInfo, VerInfoSize);
+end;
+
+procedure TDM.ActualizarValor;
+begin
+  Query.SQL.Text :=
+    'update  "'+tabla+'" set '+campo+'='+valor;
+  if codigo<>'' then Query.SQL.Text := Query.SQL.Text+' where CODIGO='+codigo;
+  Query.ExecSQL;
+  Query.Transaction.Commit;
+end;
+
+procedure TDM.CrearTable;
+ var
+   TableFound: Boolean;
+ begin
+   with TFDTable.Create(nil) do // create a temporary TTable component
+   begin
+     try
+       { set properties of the temporary TTable component }
+       Active := False;
+//       DatabaseName := ;
+       Connection := FDConnection1;
+       TableName := nombre;
+//       TableType := ttDefault;
+       { define fields for the new table }
+       FieldDefs.Clear;
+       FieldDefs.Add('V1', ftString, 255, False);
+       FieldDefs.Add('V2', ftString, 255, False);
+       FieldDefs.Add('V3', ftString, 255, False);
+//       FieldDefs.Add('V4', ftString, 255, False);
+//       with FieldDefs.AddFieldDef do begin
+//         Name := 'V1';
+//         DataType := ftString;
+//         Size := 255;
+//         Required := False;
+//       end;
+       { define indexes for the new table }
+//       IndexDefs.Clear;
+//       with IndexDefs.AddIndexDef do begin
+//         Name := '';
+//         Fields := 'First';
+//         Options := [ixPrimary];
+//       end;
+       TableFound := Exists; // check whether the table already exists
+//       if TableFound then
+//         if MessageDlg('Overwrite existing table ' + nombre + '?',
+//              mtConfirmation, mbYesNoCancel, 0) = mrYes then
+//           TableFound := False;
+        if not TableFound then
+        begin
+          CreateTable(False); // create the table
+          Open;
+          Insert;
+          Fields.Fields[0].Value := FloatToStr(v1);
+          Fields.Fields[1].Value := FloatToStr(v2);
+          Fields.Fields[2].Value := FloatToStr(v3);
+//          Fields.Fields[3].Value := FloatToStr(v4);
+          Post;
+        end;
+
+     finally
+       Free; // destroy the temporary TTable when done
+
+//     AgregarValor('Version','V1', FloatToStr(v1));
+//     ActualizarValor('Version', 'V2', '', FloatToStr(v2));
+//     ActualizarValor('Version', 'V3', '', FloatToStr(v3));
+//     ActualizarValor('Version', 'V4', '', FloatToStr(v4));
+     end;
+   end;
+ end;
+
+procedure TDM.IniciarModificacionTabla;
+begin
+//    try
+    with FDQuery1 do
+    begin
+//        Connection := FDConnection1;
+      SQL.Text:= 'select * from "'+nombreTabla+'"';
+      Open;
+    end;
+    with FDTable1 do
+    begin
+      Active := False;
+//        Connection := FDConnection1;
+      TableName := '"'+nombreTabla+'"';
+      FieldDefs := FDQuery1.FieldDefs;
+//      FieldDefs.Add('V4', ftString, 255, False);
+//      CreateDataSet;//or just Open that sets Active to true;
+//      CopyDataSet(FDQuery1);
+      //      First;
+//        end;
+//    except
+    //    on E: Exception do
+    //      Error := E.Message;
+//    end;
+ end;
+end;
+
+procedure TDM.AgregarCampoModificacionTabla;
+begin
+  FDTable1.FieldDefs.Add(nombreCampo, tipo, tamaño, False);
+end;
+
+procedure TDM.TerminarModificacionTabla;
+begin
+  with FDTable1 do
+    begin
+      CreateDataSet;//or just Open that sets Active to true;
+      CopyDataSet(FDQuery1);
+    end;
 end;
 
 end.
