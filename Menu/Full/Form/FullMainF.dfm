@@ -19,7 +19,7 @@ object FullMainForm: TFullMainForm
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 16
+  TextHeight = 13
   object WebBrowser1: TWebBrowser
     Left = 0
     Top = 0
@@ -27,9 +27,9 @@ object FullMainForm: TFullMainForm
     Height = 0
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 691
+    ExplicitWidth = 534
     ControlData = {
-      4C0000003B370000000000000000000000000000000000000000000000000000
+      4C0000000A450000000000000000000000000000000000000000000000000000
       000000004C000000000000000000000001000000E0D057007335CF11AE690800
       2B2E126208000000000000004C0000000114020000000000C000000000000046
       8000000000000000000000000000000000000000000000000000000000000000
@@ -60,10 +60,6 @@ object FullMainForm: TFullMainForm
         Caption = 'CUENTA CORRIENTE'
         Visible = False
         OnClick = CuentaCorriente1Click
-      end
-      object ReImprimir: TMenuItem
-        Caption = 'RE-IMPRIMIR'
-        OnClick = ReImprimirClick
       end
       object Aumentarporporcentaje1: TMenuItem
         Caption = 'AUMENTAR POR PORCENTAJE'
@@ -262,7 +258,6 @@ object FullMainForm: TFullMainForm
     end
     object Listados1: TMenuItem
       Caption = 'LISTADO'
-      Visible = False
       object Productos1: TMenuItem
         Caption = 'STOCK'
         OnClick = Productos1Click
@@ -273,10 +268,12 @@ object FullMainForm: TFullMainForm
       end
       object Ganancias1: TMenuItem
         Caption = 'GANANCIAS'
+        Visible = False
         OnClick = Ganancias1Click
       end
       object Pedido1: TMenuItem
         Caption = 'PEDIDOS'
+        Visible = False
         OnClick = Pedido1Click
       end
       object ListadePrecios1: TMenuItem
@@ -316,6 +313,7 @@ object FullMainForm: TFullMainForm
       end
       object ESTADODECUENTA1: TMenuItem
         Caption = 'ESTADO DE CUENTA'
+        Visible = False
         OnClick = ESTADODECUENTA1Click
       end
       object COMPRAS1: TMenuItem

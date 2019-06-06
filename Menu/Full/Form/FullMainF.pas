@@ -41,7 +41,6 @@ type
     Caja2: TMenuItem;
     EnCartera1: TMenuItem;
     Entregados1: TMenuItem;
-    ReImprimir: TMenuItem;
     Pagos1: TMenuItem;
     PagosaProveedores1: TMenuItem;
     PagoaCobradores1: TMenuItem;
@@ -179,7 +178,6 @@ type
     procedure COMPRAS1Click(Sender: TObject);
     procedure VENTAS1Click(Sender: TObject);
     procedure SubCategoriasClick(Sender: TObject);
-    procedure ReImprimirClick(Sender: TObject);
     procedure PAGODEIIBB1Click(Sender: TObject);
     procedure MigrarArticulosClick(Sender: TObject);
     procedure MigrarVentasClick(Sender: TObject);
@@ -275,7 +273,7 @@ begin
       AnularVenta1.Visible := False;
       // DevolverMercadera1.Visible := False;
       // Retenciones1.Visible := False;
-      ReImprimir.Visible := False;
+//      ReImprimir.Visible := False;
       // AsignarCobrador1.Visible := False;
       CrearPedido1.Visible := False;
     end;
@@ -424,16 +422,6 @@ begin
   end;
 end;
 
-procedure TFullMainForm.ReImprimirClick(Sender: TObject);
-begin
-  BuscaFacturaForm := TBuscaFacturaForm.Create(self);
-  try
-    BuscaFacturaForm.ShowModal;
-  finally
-    BuscaFacturaForm.Free;
-  end;
-end;
-
 procedure TFullMainForm.REMITOClick(Sender: TObject);
 begin
   OperacionForm := TOperacionForm.Create(self);
@@ -558,7 +546,12 @@ end;
 
 procedure TFullMainForm.VENTAS1Click(Sender: TObject);
 begin
-  // WinExec(PAnsiChar(AnsiString(path + 'VentaL.exe')), SW_SHOWNORMAL);
+  BuscaFacturaForm := TBuscaFacturaForm.Create(self);
+  try
+    BuscaFacturaForm.ShowModal;
+  finally
+    BuscaFacturaForm.Free;
+  end;
 end;
 
 procedure TFullMainForm.MigrarVentasClick(Sender: TObject);

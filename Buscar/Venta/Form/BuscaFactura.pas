@@ -100,7 +100,11 @@ end;
 
 procedure TBuscaFacturaForm.FormShow(Sender: TObject);
 begin
-  if anular then SiBitBtn.Caption := 'Seleccionar';
+  if anular then
+  begin
+    SiBitBtn.Caption := 'Seleccionar';
+    Image1.Visible := False;
+  end;
   todoBitBtn.Click;
 end;
 
