@@ -28,6 +28,16 @@ OutputBaseFilename=Actualizar{#MyAppName}
 SetupIconFile=C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\bin\DeGsoft.ico
 Compression=lzma
 SolidCompression=true
+VersionInfoVersion=19
+VersionInfoCompany={#MyAppPublisher}
+VersionInfoDescription=ERP
+VersionInfoTextVersion={#MyAppVersion}
+VersionInfoCopyright={#MyAppPublisher}
+VersionInfoProductName={#MyAppName}
+VersionInfoProductVersion=19
+VersionInfoProductTextVersion={#MyAppVersion}
+SignTool=signtool
+SignedUninstaller=yes
 
 [Languages]
 Name: spanish; MessagesFile: compiler:Languages\Spanish.isl

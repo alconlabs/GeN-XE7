@@ -1,10 +1,10 @@
 [Stats]
 EditorSecs=430451
-DesignerSecs=33060
+DesignerSecs=33166
 InspectorSecs=7892
-CompileSecs=13287929
-OtherSecs=73888
+CompileSecs=13290710
+OtherSecs=73891
 StartTime=05/03/2017 20:09:11
 RealKeys=0
 EffectiveKeys=0
-DebugSecs=338648
+DebugSecs=338669
