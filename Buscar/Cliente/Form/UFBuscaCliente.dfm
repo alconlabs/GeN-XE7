@@ -352,7 +352,8 @@ object FBuscaCliente: TFBuscaCliente
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
-      'Select * from "Cliente"')
+      'Select * from "Cliente"'
+      'order by CODIGO asc')
     Left = 285
     Top = 278
   end

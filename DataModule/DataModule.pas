@@ -427,6 +427,7 @@ begin
   Consulta.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
     + ' USER ''SYSDBA'' PASSWORD ''masterkey''; ' + Consulta.Script.Text;
   Consulta.ExecuteScript;
+//  Consulta.Transaction.CommitRetaining;
   ShowMessage('Base de Datos Restaurada con éxito!!!');
 //  end;
   webUrl := '';
@@ -446,7 +447,7 @@ begin
   NroNCB := '0';
   NroC := '0';
   NroNCC := '0';
-  thunderbird := '0';
+  thunderbird := '';
   EscribirINI;
   // IniFile.WriteString('Licencia', 'Dia', inttostr(1));
   // IniFile.WriteString('Licencia', 'Fecha', datetostr(date));
@@ -565,23 +566,21 @@ begin
 end;
 
 function TDM.ExisteOpenSSL;
-var f :string;
 begin
-  if openSSl='' then
-    begin
-      openSSl := 'C:\OpenSSL-Win32\bin\openssl.exe';
-      EscribirINI;
-    end;
   if FileExists(openSSl) then
     result:=true
   else
   begin
-    ShowMessage('Seleccione el ejectutable de OpenSSL para continuar...');
-    OpenDialog1.Execute();
-    f := ExtractFilePath(OpenDialog1.FileName)+'openssl.exe';
-    if FileExists(f) then
+    openSSl := 'C:\OpenSSL-Win32\bin\openssl.exe';
+    if not FileExists(openSSl) then
+      begin
+        ShowMessage('Seleccione el ejectutable de OpenSSL para continuar...');
+        OpenDialog1.FileName:='openssl.exe';
+        OpenDialog1.Execute();
+        openSSl := OpenDialog1.FileName;
+      end;
+    if FileExists(openSSl) then
     begin
-      openSSl := f;
       EscribirINI;
       result:=true;
     end
@@ -904,31 +903,29 @@ begin
 end;
 
 function TDM.ExisteThunderbird;
-var f :string;
 begin
-  if thunderbird='' then
-      thunderbird := '"C:\Program Files (x86)\Mozilla Thunderbird\thunderbird.exe"';
-  if not FileExists(thunderbird) then
-    thunderbird := '"C:\Program Files\Mozilla Thunderbird\thunderbird.exe"';
-  if thunderbird<>'' then
-    EscribirINI;
   if FileExists(thunderbird) then
     result:=true
   else
   begin
-    ShowMessage('Seleccione el ejectutable de Thunderbird para continuar...');
-    OpenDialog1.FileName:='thunderbird';
-    OpenDialog1.Execute();
-    f := ExtractFilePath(OpenDialog1.FileName)+'thunderbird.exe';
-    if FileExists(f) then
+    thunderbird := 'C:\Program Files\Mozilla Thunderbird\thunderbird.exe';
+    if not FileExists(thunderbird) then
+      thunderbird := 'C:\Program Files (x86)\Mozilla Thunderbird\thunderbird.exe';
+      if not FileExists(thunderbird) then
+      begin
+        ShowMessage('Seleccione el ejectutable de Thunderbird para continuar...');
+        OpenDialog1.FileName:='thunderbird.exe';
+        OpenDialog1.Execute();
+        thunderbird := OpenDialog1.FileName;
+      end;
+    if FileExists(thunderbird) then
     begin
-      thunderbird := f;
       EscribirINI;
       result:=true;
     end
     else
     begin
-      ShowMessage('Por favor descargar e instalar Thunderbird para enviar emails!!!');
+      ShowMessage('Por favor instalar Thunderbird para enviar emails!!!');
       ShellExecute(0,'open','https://www.thunderbird.net/es-ES/',nil,nil,SW_NORMAL);
       result:=false;
     end;

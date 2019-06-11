@@ -717,6 +717,18 @@ begin
     c := 0; // columna i
     r := 0; // row j
     if dm.ConfigQuery.FieldByName('Imprimir').AsString<>'NO' then impr := True;
+
+    if (ClienteEdit.Text='0') and (EmailEdit.Text<>'') then
+    begin
+     with dm do begin
+      ClienteEdit.Text := IntToStr(UltimoRegistro('Cliente', 'CODIGO'));
+      AgregarValor('Cliente','CODIGO', ClienteEdit.Text);
+      ActualizarValor('Cliente', 'NOMBRE', ClienteEdit.Text, QuotedStr(EmailEdit.Text));
+      ActualizarValor('Cliente', 'EMAIL', ClienteEdit.Text, QuotedStr(EmailEdit.Text));
+      ActualizarValor('Cliente', 'DOCUMENTO', ClienteEdit.Text, (CuitEdit.Text));
+     end;
+    end;
+
     OperacionDataModule := TOperacionDataModule.Create(self);
     with OperacionDataModule do
     begin

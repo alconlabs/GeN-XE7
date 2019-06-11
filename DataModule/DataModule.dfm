@@ -1014,7 +1014,7 @@ object DM: TDM
   object OpenDialog1: TOpenDialog
     DefaultExt = '.exe'
     FileName = 'openssl'
-    Filter = '*.exe'
+    Filter = 'EXE|*.exe'
     InitialDir = 'C:'
     Left = 184
     Top = 56
