@@ -5,7 +5,7 @@ object FullMainForm: TFullMainForm
   BiDiMode = bdLeftToRight
   BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
   Caption = 'Civeloo GeN - Menu Principal'
-  ClientHeight = -6
+  ClientHeight = 0
   ClientWidth = 668
   Color = clBtnFace
   ParentFont = True

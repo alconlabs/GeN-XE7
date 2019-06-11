@@ -10,8 +10,7 @@ uses
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   frxClass, frxDBSet, frxExportPDF, frxBarcode, frxExportCSV,
-  frxExportBaseDialog
- ;
+  frxExportBaseDialog, shellapi, windows;
 type
   TImprimirDataModule = class(TDataModule)
     Query: TIBQuery;
@@ -115,7 +114,7 @@ procedure TImprimirDataModule.DataModuleCreate(Sender: TObject);
 begin
   dm.ConfigQuery.Open;
   clienteSql :=
-    ' "Cliente".NOMBRE,  "Cliente".TITULAR, "Cliente".DIRECCION, "Cliente".DIRECCIONCOMERCIAL, "Cliente".IVA as CIVA, "Cliente".CUIT as CCUIT';
+    ' "Cliente".NOMBRE,  "Cliente".TITULAR, "Cliente".DIRECCION, "Cliente".DIRECCIONCOMERCIAL, "Cliente".IVA as CIVA, "Cliente".CUIT as CCUIT, "Cliente".EMAIL';
   articuloSql :=
     ' "Articulo".DESCRIPCION, "Articulo".UNIDAD, "Articulo".IVA as AIVA';
   ventaItemSql :=
@@ -181,6 +180,8 @@ procedure TImprimirDataModule.Impr;
 var
   Pict, Pict2, Pict3, Pict4: TfrxPictureView;
   tipo_cbte: Integer;
+  oExportfilter: TfrxCustomExportFilter;
+  archivoPDF: string;
 begin
   if not(rpt='CTicket') and ((reporte='TElectronica') or (reporte='CTicket')) then rpt := reporte;
   Query.sql.Text := 'SELECT '+
@@ -298,6 +299,30 @@ begin
       if Assigned(Pict4) then
         Pict4.Picture.LoadFromFile(path + 'img\empresa.BMP');
     end;
+
+    if envEmail then
+    begin
+      archivoPDF := Path + 'db\'
+        +Query.FieldByName('PtoVta').AsString
+        +Query.FieldByName('LETRA').AsString
+        +Query.FieldByName('COMPROBANTE').AsString
+        +'.pdf';
+      if not FileExists(archivoPDF) then
+      begin
+        oExportfilter := TfrxCustomExportFilter(frxPDFExport1);
+        oExportFilter.ShowDialog := False;
+        oExportFilter.FileName := archivoPDF;
+        PrepareReport(True);
+        Export(oExportFilter);
+      end;
+      dm.EnviarEmail(
+        Query.FieldByName('EMAIL').AsString,
+        'FACTURA '+Query.FieldByName('Empresa').AsString,
+        'Adjunto factura&#44 que disfrutes tu compra.<br>'+Query.FieldByName('EWEB').AsString,
+        archivoPDF
+      );
+    end;
+
     try
       if DM.ObtenerConfig('ImprimirMostrar')='NO ' then
       begin

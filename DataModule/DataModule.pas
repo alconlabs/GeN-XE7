@@ -75,6 +75,8 @@ type
     function TraerValor2(tabla, campo, codigo, cam2, cod2: string):Double;
     procedure AgregarValor(tabla, campo, valor: string);
     procedure ActualizarValor(tabla, campo, codigo, valor: string);
+    procedure EnviarEmail(email,asunto,cuerpo,adjunto: String);
+    function ExisteThunderbird():boolean;
   end;
 
 const
@@ -99,12 +101,13 @@ var
   Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa,
   PuntoVenta, Titular, CUIT, IngresosBrutos, reporte, catIVA: string;
   Permiso: Integer;
-  LoginOK, Cancelar: boolean;
+  LoginOK, Cancelar, envEmail: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
   webUrl, webRes, webUsr, webPsw, webUpd,
   afipUrl, afipRes, afipUsr, afipPsw,
   operNC, openSSl,
-  NroA, NroNCA, NroB, NroNCB, NroC, NroNCC : string;
+  NroA, NroNCA, NroB, NroNCB, NroC, NroNCC,
+  thunderbird : string;
   Precio1, Precio2, Precio3, Precio4, Precio5, Precio6, PrecioCtaCte: Double;
 
 implementation
@@ -368,6 +371,7 @@ begin
   NroNCB := IniFile.ReadString('NRO', 'NCB', '');
   NroC := IniFile.ReadString('NRO', 'C', '');
   NroNCC := IniFile.ReadString('NRO', 'NCC', '');
+  thunderbird := IniFile.ReadString('EMAIL', 'EXE', '');
   IniFile.Destroy;
 end;
 
@@ -393,6 +397,7 @@ begin
   IniFile.WriteString('NRO', 'NCB', NroNCB);
   IniFile.WriteString('NRO', 'C', NroC);
   IniFile.WriteString('NRO', 'NCC', NroNCC);
+  IniFile.WriteString('EMAIL', 'EXE', thunderbird);
   IniFile.Destroy;
   LeerINI;
 end;
@@ -441,6 +446,7 @@ begin
   NroNCB := '0';
   NroC := '0';
   NroNCC := '0';
+  thunderbird := '0';
   EscribirINI;
   // IniFile.WriteString('Licencia', 'Dia', inttostr(1));
   // IniFile.WriteString('Licencia', 'Fecha', datetostr(date));
@@ -558,7 +564,7 @@ begin
   end;
 end;
 
-function TDM.existeOpenSSL;
+function TDM.ExisteOpenSSL;
 var f :string;
 begin
   if openSSl='' then
@@ -882,6 +888,51 @@ begin
       CreateDataSet;//or just Open that sets Active to true;
       CopyDataSet(FDQuery1);
     end;
+end;
+
+procedure TDM.EnviarEmail;
+begin
+  if ExisteThunderbird then
+    ShellExecute(
+      0,
+      'open',
+      pchar(thunderbird),
+      pchar('-compose "to='+email+',subject='+asunto+',body="'+cuerpo+'",attachment='''+adjunto+'''"'),
+      nil,
+      SW_NORMAL
+    );
+end;
+
+function TDM.ExisteThunderbird;
+var f :string;
+begin
+  if thunderbird='' then
+      thunderbird := '"C:\Program Files (x86)\Mozilla Thunderbird\thunderbird.exe"';
+  if not FileExists(thunderbird) then
+    thunderbird := '"C:\Program Files\Mozilla Thunderbird\thunderbird.exe"';
+  if thunderbird<>'' then
+    EscribirINI;
+  if FileExists(thunderbird) then
+    result:=true
+  else
+  begin
+    ShowMessage('Seleccione el ejectutable de Thunderbird para continuar...');
+    OpenDialog1.FileName:='thunderbird';
+    OpenDialog1.Execute();
+    f := ExtractFilePath(OpenDialog1.FileName)+'thunderbird.exe';
+    if FileExists(f) then
+    begin
+      thunderbird := f;
+      EscribirINI;
+      result:=true;
+    end
+    else
+    begin
+      ShowMessage('Por favor descargar e instalar Thunderbird para enviar emails!!!');
+      ShellExecute(0,'open','https://www.thunderbird.net/es-ES/',nil,nil,SW_NORMAL);
+      result:=false;
+    end;
+  end;
 end;
 
 end.

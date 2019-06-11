@@ -4,8 +4,8 @@ object FClientes: TFClientes
   BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
   BorderStyle = bsSingle
   Caption = 'Altas, Bajas y Modificaciones de Clientes'
-  ClientHeight = 468
-  ClientWidth = 794
+  ClientHeight = 454
+  ClientWidth = 634
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,16 +24,16 @@ object FClientes: TFClientes
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 648
-    Height = 468
+    Width = 488
+    Height = 454
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
       object Label2: TLabel
-        Left = 229
-        Top = 67
+        Left = 50
+        Top = 93
         Width = 44
         Height = 13
         Caption = 'Nombre'
@@ -46,25 +46,12 @@ object FClientes: TFClientes
         ParentFont = False
       end
       object Label3: TLabel
-        Left = 218
-        Top = 94
+        Left = 42
+        Top = 147
         Width = 55
         Height = 13
         Caption = 'Direcci'#243'n'
         FocusControl = DBEdit3
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label1: TLabel
-        Left = 225
-        Top = 40
-        Width = 48
-        Height = 13
-        Caption = 'Nro. Cta'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -79,37 +66,9 @@ object FClientes: TFClientes
         Height = 13
         Caption = '...'
       end
-      object Label4: TLabel
-        Left = 188
-        Top = 202
-        Width = 85
-        Height = 13
-        Caption = 'Telefono M'#243'vil'
-        FocusControl = DBEdit9
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label20: TLabel
-        Left = 229
-        Top = 121
-        Width = 44
-        Height = 13
-        Caption = 'Trabajo'
-        FocusControl = DBEdit3
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
       object Label9: TLabel
-        Left = 222
-        Top = 148
+        Left = 43
+        Top = 120
         Width = 51
         Height = 13
         Caption = 'Tel'#233'fono'
@@ -121,23 +80,9 @@ object FClientes: TFClientes
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label11: TLabel
-        Left = 252
-        Top = 175
-        Width = 21
-        Height = 13
-        Caption = 'Fax'
-        FocusControl = DBEdit12
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
       object Label6: TLabel
-        Left = 219
-        Top = 229
+        Left = 40
+        Top = 228
         Width = 54
         Height = 13
         Caption = 'Provincia'
@@ -149,13 +94,13 @@ object FClientes: TFClientes
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label7: TLabel
-        Left = 193
-        Top = 256
-        Width = 80
+      object Label12: TLabel
+        Left = 63
+        Top = 66
+        Width = 31
         Height = 13
-        Caption = 'Departamento'
-        FocusControl = DBEdit7
+        Caption = 'Email'
+        FocusControl = DBEdit13
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -163,13 +108,13 @@ object FClientes: TFClientes
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label27: TLabel
-        Left = 239
-        Top = 283
-        Width = 34
+      object Label8: TLabel
+        Left = 54
+        Top = 201
+        Width = 40
         Height = 13
-        Caption = 'Barrio'
-        FocusControl = DBEdit24
+        Caption = 'Ciudad'
+        FocusControl = DBEdit8
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -177,13 +122,13 @@ object FClientes: TFClientes
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label32: TLabel
-        Left = 243
-        Top = 310
-        Width = 30
+      object Label23: TLabel
+        Left = 71
+        Top = 39
+        Width = 23
         Height = 13
-        Caption = 'Zona'
-        FocusControl = DBEdit27
+        Caption = 'DNI'
+        FocusControl = DBEdit19
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -191,29 +136,23 @@ object FClientes: TFClientes
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label33: TLabel
-        Left = 227
-        Top = 337
-        Width = 46
+      object Label21: TLabel
+        Left = 15
+        Top = 174
+        Width = 79
         Height = 13
-        Caption = 'Garante'
+        Caption = 'Codigo Postal'
+        FocusControl = DBEdit17
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-      end
-      object GaranteLabel: TLabel
-        Left = 423
-        Top = 340
-        Width = 9
-        Height = 13
-        Caption = '...'
       end
       object DBEdit2: TDBEdit
-        Left = 279
-        Top = 67
+        Left = 103
+        Top = 93
         Width = 226
         Height = 21
         DataField = 'NOMBRE'
@@ -221,132 +160,77 @@ object FClientes: TFClientes
         TabOrder = 0
       end
       object DBEdit3: TDBEdit
-        Left = 279
-        Top = 94
+        Left = 103
+        Top = 147
         Width = 226
         Height = 21
         DataField = 'Direccion'
         DataSource = DataSource
         TabOrder = 1
       end
-      object CodigoDBEdit: TDBEdit
-        Left = 279
-        Top = 40
-        Width = 76
-        Height = 21
-        DataField = 'CODIGO'
-        DataSource = DataSource
-        TabOrder = 12
-      end
-      object DBEdit9: TDBEdit
-        Left = 279
-        Top = 202
-        Width = 76
-        Height = 21
-        DataField = 'Celular'
-        DataSource = DataSource
-        TabOrder = 5
-      end
-      object DBEdit4: TDBEdit
-        Left = 279
-        Top = 121
-        Width = 226
-        Height = 21
-        DataField = 'DIRECCIONCOMERCIAL'
-        DataSource = DataSource
-        TabOrder = 2
-      end
       object DBEdit10: TDBEdit
-        Left = 279
-        Top = 148
-        Width = 76
+        Left = 103
+        Top = 120
+        Width = 122
         Height = 21
         DataField = 'Telefono'
         DataSource = DataSource
-        TabOrder = 3
-      end
-      object DBEdit12: TDBEdit
-        Left = 279
-        Top = 175
-        Width = 76
-        Height = 21
-        DataField = 'Fax'
-        DataSource = DataSource
-        TabOrder = 4
+        TabOrder = 2
       end
       object DBEdit6: TDBEdit
-        Left = 279
-        Top = 229
+        Left = 103
+        Top = 228
         Width = 226
         Height = 21
         DataField = 'Provincia'
         DataSource = DataSource
+        TabOrder = 3
+      end
+      object DBEdit13: TDBEdit
+        Left = 103
+        Top = 66
+        Width = 226
+        Height = 21
+        DataField = 'Email'
+        DataSource = DataSource
+        TabOrder = 4
+      end
+      object DBEdit8: TDBEdit
+        Left = 103
+        Top = 201
+        Width = 122
+        Height = 21
+        DataField = 'Ciudad'
+        DataSource = DataSource
+        TabOrder = 5
+      end
+      object DBEdit19: TDBEdit
+        Left = 103
+        Top = 39
+        Width = 122
+        Height = 21
+        DataField = 'Documento'
+        DataSource = DataSource
         TabOrder = 6
       end
-      object DBEdit7: TDBEdit
-        Left = 279
-        Top = 256
-        Width = 226
+      object DBEdit17: TDBEdit
+        Left = 103
+        Top = 174
+        Width = 122
         Height = 21
-        DataField = 'Departamento'
+        DataField = 'CP'
         DataSource = DataSource
         TabOrder = 7
-      end
-      object DBEdit24: TDBEdit
-        Left = 279
-        Top = 283
-        Width = 226
-        Height = 21
-        DataField = 'Barrio'
-        DataSource = DataSource
-        TabOrder = 8
-      end
-      object DBEdit27: TDBEdit
-        Left = 279
-        Top = 310
-        Width = 76
-        Height = 21
-        DataField = 'Zona'
-        DataSource = DataSource
-        TabOrder = 9
-      end
-      object GaranteDBEdit: TDBEdit
-        Left = 279
-        Top = 337
-        Width = 76
-        Height = 21
-        DataField = 'Garante'
-        DataSource = DataSource
-        TabOrder = 11
-      end
-      object BuscarGaranteBitBtn: TBitBtn
-        Left = 352
-        Top = 337
-        Width = 65
-        Height = 22
-        Caption = 'Buscar'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 10
-        OnClick = BuscarGaranteBitBtnClick
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'Notas'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
-        Width = 640
-        Height = 440
+        Width = 480
+        Height = 426
         Align = alClient
         DataField = 'Notas'
         DataSource = DataSource
@@ -357,8 +241,8 @@ object FClientes: TFClientes
       Caption = 'Contabilidad'
       ImageIndex = 2
       object Label15: TLabel
-        Left = 129
-        Top = 163
+        Left = 105
+        Top = 158
         Width = 162
         Height = 13
         Caption = 'Cuenta Contable Asociada a'
@@ -370,24 +254,24 @@ object FClientes: TFClientes
         ParentFont = False
       end
       object Label24: TLabel
-        Left = 47
-        Top = 85
+        Left = 26
+        Top = 80
         Width = 73
         Height = 13
         Caption = 'Ingresos Brutos'
         FocusControl = DBEdit20
       end
       object Label25: TLabel
-        Left = 95
-        Top = 47
+        Left = 74
+        Top = 42
         Width = 25
         Height = 13
         Caption = 'CUIT'
         FocusControl = DBEdit22
       end
       object Label38: TLabel
-        Left = 24
-        Top = 124
+        Left = 0
+        Top = 119
         Width = 99
         Height = 13
         Caption = 'Categor'#237'a de IVA'
@@ -399,29 +283,29 @@ object FClientes: TFClientes
         ParentFont = False
       end
       object Label54: TLabel
-        Left = 46
-        Top = 288
+        Left = 61
+        Top = 283
         Width = 38
         Height = 13
         Caption = 'Anticipo'
       end
       object Label52: TLabel
-        Left = 46
-        Top = 190
+        Left = 62
+        Top = 185
         Width = 37
         Height = 13
         Caption = 'Nombre'
       end
       object Label51: TLabel
-        Left = 46
-        Top = 235
+        Left = 78
+        Top = 230
         Width = 21
         Height = 13
         Caption = 'Tipo'
       end
       object DBEdit20: TDBEdit
-        Left = 129
-        Top = 85
+        Left = 105
+        Top = 80
         Width = 201
         Height = 21
         DataField = 'IIBB'
@@ -429,8 +313,8 @@ object FClientes: TFClientes
         TabOrder = 1
       end
       object DBEdit22: TDBEdit
-        Left = 129
-        Top = 47
+        Left = 105
+        Top = 42
         Width = 201
         Height = 21
         DataField = 'CUIT'
@@ -438,8 +322,8 @@ object FClientes: TFClientes
         TabOrder = 0
       end
       object IVADBComboBox: TDBComboBox
-        Left = 129
-        Top = 121
+        Left = 105
+        Top = 116
         Width = 201
         Height = 21
         DataField = 'IVA'
@@ -448,8 +332,8 @@ object FClientes: TFClientes
         OnChange = IVADBComboBoxChange
       end
       object CuentaDBLookupComboBox: TDBLookupComboBox
-        Left = 129
-        Top = 190
+        Left = 105
+        Top = 185
         Width = 351
         Height = 21
         DataField = 'CTANOMBRE'
@@ -460,8 +344,8 @@ object FClientes: TFClientes
         TabOrder = 3
       end
       object DBLookupComboBox3: TDBLookupComboBox
-        Left = 129
-        Top = 280
+        Left = 105
+        Top = 275
         Width = 351
         Height = 21
         DataField = 'CTAANTICIPO'
@@ -472,8 +356,8 @@ object FClientes: TFClientes
         TabOrder = 4
       end
       object DBLookupComboBox1: TDBLookupComboBox
-        Left = 129
-        Top = 235
+        Left = 105
+        Top = 230
         Width = 351
         Height = 21
         DataField = 'CTATIPO'
@@ -487,189 +371,297 @@ object FClientes: TFClientes
     object TabSheet4: TTabSheet
       Caption = 'Datos Secundarios'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label19: TLabel
-        Left = 43
-        Top = 50
+        Left = 16
+        Top = 39
         Width = 84
         Height = 13
         Caption = 'Nombre de Titular'
         FocusControl = DBEdit16
       end
-      object Label12: TLabel
-        Left = 105
-        Top = 229
-        Width = 25
-        Height = 13
-        Caption = 'Email'
-        FocusControl = DBEdit13
-      end
       object Label28: TLabel
-        Left = 81
-        Top = 256
+        Left = 48
+        Top = 174
         Width = 52
         Height = 13
         Caption = 'Messenger'
         FocusControl = DBEdit23
       end
-      object Label23: TLabel
-        Left = 106
-        Top = 83
-        Width = 19
-        Height = 13
-        Caption = 'DNI'
-        FocusControl = DBEdit19
-      end
       object Label26: TLabel
-        Left = 100
-        Top = 117
+        Left = 71
+        Top = 66
         Width = 29
         Height = 13
         Caption = 'Rubro'
       end
       object Label5: TLabel
-        Left = 107
-        Top = 290
+        Left = 80
+        Top = 255
         Width = 20
         Height = 13
         Caption = 'Pais'
         FocusControl = DBEdit5
       end
-      object Label21: TLabel
-        Left = 62
-        Top = 148
-        Width = 65
-        Height = 13
-        Caption = 'Codigo Postal'
-        FocusControl = DBEdit17
-      end
       object Label22: TLabel
-        Left = 57
-        Top = 177
+        Left = 27
+        Top = 93
         Width = 73
         Height = 13
         Caption = 'Codigo de Area'
       end
       object Label10: TLabel
-        Left = 83
-        Top = 202
+        Left = 53
+        Top = 120
         Width = 47
         Height = 13
         Caption = 'Extenci'#243'n'
         FocusControl = DBEdit11
       end
-      object Label8: TLabel
-        Left = 88
-        Top = 333
-        Width = 33
+      object Label20: TLabel
+        Left = 1
+        Top = 147
+        Width = 99
         Height = 13
-        Caption = 'Ciudad'
-        FocusControl = DBEdit8
+        Caption = 'Direcci'#243'n de Trabajo'
+        FocusControl = DBEdit3
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label11: TLabel
+        Left = 83
+        Top = 201
+        Width = 17
+        Height = 13
+        Caption = 'Fax'
+        FocusControl = DBEdit12
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label4: TLabel
+        Left = 30
+        Top = 228
+        Width = 70
+        Height = 13
+        Caption = 'Telefono M'#243'vil'
+        FocusControl = DBEdit9
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label7: TLabel
+        Left = 33
+        Top = 282
+        Width = 67
+        Height = 13
+        Caption = 'Departamento'
+        FocusControl = DBEdit7
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label27: TLabel
+        Left = 73
+        Top = 309
+        Width = 27
+        Height = 13
+        Caption = 'Barrio'
+        FocusControl = DBEdit24
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label32: TLabel
+        Left = 75
+        Top = 336
+        Width = 25
+        Height = 13
+        Caption = 'Zona'
+        FocusControl = DBEdit27
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label33: TLabel
+        Left = 62
+        Top = 363
+        Width = 38
+        Height = 13
+        Caption = 'Garante'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+      end
+      object GaranteLabel: TLabel
+        Left = 527
+        Top = 446
+        Width = 9
+        Height = 13
+        Caption = '...'
       end
       object DBEdit16: TDBEdit
-        Left = 138
-        Top = 50
+        Left = 106
+        Top = 39
         Width = 209
         Height = 21
         DataField = 'TITULAR'
         DataSource = DataSource
         TabOrder = 0
       end
-      object DBEdit13: TDBEdit
-        Left = 138
-        Top = 229
-        Width = 209
-        Height = 21
-        DataField = 'Email'
-        DataSource = DataSource
-        TabOrder = 6
-      end
       object DBEdit23: TDBEdit
-        Left = 138
-        Top = 256
+        Left = 106
+        Top = 174
         Width = 209
         Height = 21
         DataField = 'MSN'
         DataSource = DataSource
-        TabOrder = 7
-      end
-      object DBEdit19: TDBEdit
-        Left = 138
-        Top = 83
-        Width = 209
-        Height = 21
-        DataField = 'Documento'
-        DataSource = DataSource
-        TabOrder = 1
+        TabOrder = 5
       end
       object DBEdit21: TDBEdit
-        Left = 138
-        Top = 117
+        Left = 106
+        Top = 66
         Width = 209
         Height = 21
         DataField = 'Rubro'
         DataSource = DataSource
-        TabOrder = 2
+        TabOrder = 1
       end
       object DBEdit5: TDBEdit
-        Left = 138
-        Top = 290
+        Left = 106
+        Top = 255
         Width = 97
         Height = 21
         DataField = 'Pais'
         DataSource = DataSource
         TabOrder = 8
       end
-      object DBEdit17: TDBEdit
-        Left = 138
-        Top = 148
-        Width = 82
-        Height = 21
-        DataField = 'CP'
-        DataSource = DataSource
-        TabOrder = 3
-      end
       object DBEdit11: TDBEdit
-        Left = 138
-        Top = 202
+        Left = 106
+        Top = 120
         Width = 82
         Height = 21
         DataField = 'Extencion'
         DataSource = DataSource
-        TabOrder = 5
+        TabOrder = 3
       end
       object DBEdit18: TDBEdit
-        Left = 138
-        Top = 175
+        Left = 106
+        Top = 93
         Width = 82
         Height = 21
         DataField = 'CodigoArea'
         DataSource = DataSource
+        TabOrder = 2
+      end
+      object DBEdit4: TDBEdit
+        Left = 106
+        Top = 147
+        Width = 226
+        Height = 21
+        DataField = 'DIRECCIONCOMERCIAL'
+        DataSource = DataSource
         TabOrder = 4
       end
-      object DBEdit8: TDBEdit
-        Left = 138
-        Top = 330
-        Width = 97
+      object DBEdit12: TDBEdit
+        Left = 106
+        Top = 201
+        Width = 76
         Height = 21
-        DataField = 'Ciudad'
+        DataField = 'Fax'
+        DataSource = DataSource
+        TabOrder = 6
+      end
+      object DBEdit9: TDBEdit
+        Left = 106
+        Top = 228
+        Width = 76
+        Height = 21
+        DataField = 'Celular'
+        DataSource = DataSource
+        TabOrder = 7
+      end
+      object DBEdit7: TDBEdit
+        Left = 106
+        Top = 282
+        Width = 226
+        Height = 21
+        DataField = 'Departamento'
         DataSource = DataSource
         TabOrder = 9
+      end
+      object DBEdit24: TDBEdit
+        Left = 106
+        Top = 309
+        Width = 226
+        Height = 21
+        DataField = 'Barrio'
+        DataSource = DataSource
+        TabOrder = 10
+      end
+      object DBEdit27: TDBEdit
+        Left = 106
+        Top = 336
+        Width = 76
+        Height = 21
+        DataField = 'Zona'
+        DataSource = DataSource
+        TabOrder = 11
+      end
+      object GaranteDBEdit: TDBEdit
+        Left = 106
+        Top = 363
+        Width = 76
+        Height = 21
+        DataField = 'Garante'
+        DataSource = DataSource
+        TabOrder = 12
+      end
+      object BuscarGaranteBitBtn: TBitBtn
+        Left = 211
+        Top = 374
+        Width = 65
+        Height = 22
+        Caption = 'Buscar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 13
+        OnClick = BuscarGaranteBitBtnClick
       end
     end
     object TabSheet5: TTabSheet
       Caption = 'Parametros'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitLeft = 3
+      ExplicitTop = 27
       object Label13: TLabel
-        Left = 20
-        Top = 29
+        Left = 2
+        Top = 34
         Width = 102
         Height = 13
         Alignment = taRightJustify
@@ -677,32 +669,32 @@ object FClientes: TFClientes
         FocusControl = DBEdit14
       end
       object Label14: TLabel
-        Left = 72
-        Top = 53
+        Left = 58
+        Top = 58
         Width = 46
         Height = 13
         Alignment = taRightJustify
         Caption = 'Vendedor'
       end
       object Label16: TLabel
-        Left = 53
-        Top = 77
+        Left = 39
+        Top = 82
         Width = 65
         Height = 13
         Alignment = taRightJustify
         Caption = 'L'#237'mite Cr'#233'dito'
       end
       object Label17: TLabel
-        Left = 88
-        Top = 129
+        Left = 74
+        Top = 134
         Width = 30
         Height = 13
         Alignment = taRightJustify
         Caption = 'Precio'
       end
       object Label18: TLabel
-        Left = 61
-        Top = 101
+        Left = 47
+        Top = 106
         Width = 57
         Height = 13
         Alignment = taRightJustify
@@ -710,29 +702,29 @@ object FClientes: TFClientes
         FocusControl = DBEdit1
       end
       object Label29: TLabel
-        Left = 61
-        Top = 181
+        Left = 43
+        Top = 186
         Width = 61
         Height = 13
         Caption = 'Promociones'
       end
       object Label30: TLabel
-        Left = 65
-        Top = 213
+        Left = 46
+        Top = 218
         Width = 58
         Height = 13
         Caption = 'Almanaques'
       end
       object Label31: TLabel
-        Left = 181
-        Top = 129
+        Left = 162
+        Top = 134
         Width = 34
         Height = 13
         Caption = '0=Lista'
       end
       object DBEdit14: TDBEdit
-        Left = 129
-        Top = 29
+        Left = 110
+        Top = 34
         Width = 145
         Height = 21
         DataField = 'Terminos'
@@ -740,8 +732,8 @@ object FClientes: TFClientes
         TabOrder = 0
       end
       object DBEdit15: TDBEdit
-        Left = 129
-        Top = 77
+        Left = 110
+        Top = 82
         Width = 145
         Height = 21
         DataField = 'LimiteCredito'
@@ -749,8 +741,8 @@ object FClientes: TFClientes
         TabOrder = 2
       end
       object DBComboBox1: TDBComboBox
-        Left = 129
-        Top = 128
+        Left = 110
+        Top = 133
         Width = 49
         Height = 21
         DataField = 'PRECIO'
@@ -766,8 +758,8 @@ object FClientes: TFClientes
         TabOrder = 4
       end
       object DBEdit1: TDBEdit
-        Left = 129
-        Top = 101
+        Left = 110
+        Top = 106
         Width = 145
         Height = 21
         DataField = 'DiasCredito'
@@ -775,8 +767,8 @@ object FClientes: TFClientes
         TabOrder = 3
       end
       object DBCheckBox1: TDBCheckBox
-        Left = 129
-        Top = 155
+        Left = 110
+        Top = 160
         Width = 121
         Height = 17
         Caption = 'Cr'#233'dito Suspendido'
@@ -785,8 +777,8 @@ object FClientes: TFClientes
         TabOrder = 5
       end
       object DBEdit25: TDBEdit
-        Left = 129
-        Top = 181
+        Left = 110
+        Top = 186
         Width = 121
         Height = 21
         DataField = 'Promociones'
@@ -794,8 +786,8 @@ object FClientes: TFClientes
         TabOrder = 6
       end
       object DBEdit26: TDBEdit
-        Left = 129
-        Top = 208
+        Left = 110
+        Top = 213
         Width = 121
         Height = 21
         DataField = 'Almanaques'
@@ -803,8 +795,8 @@ object FClientes: TFClientes
         TabOrder = 7
       end
       object VendedorDBEdit: TDBEdit
-        Left = 129
-        Top = 52
+        Left = 110
+        Top = 57
         Width = 41
         Height = 21
         DataField = 'Vendedor'
@@ -812,8 +804,8 @@ object FClientes: TFClientes
         TabOrder = 1
       end
       object VendedorBitBtn: TBitBtn
-        Left = 169
-        Top = 51
+        Left = 150
+        Top = 56
         Width = 49
         Height = 24
         Caption = 'F3...'
@@ -829,10 +821,10 @@ object FClientes: TFClientes
     end
   end
   object Panel1: TPanel
-    Left = 648
+    Left = 488
     Top = 0
     Width = 146
-    Height = 468
+    Height = 454
     Align = alRight
     Color = clBlack
     Font.Charset = DEFAULT_CHARSET
@@ -845,7 +837,7 @@ object FClientes: TFClientes
     TabOrder = 1
     object Label34: TLabel
       Left = 50
-      Top = 254
+      Top = 328
       Width = 46
       Height = 13
       Caption = 'Grabar?'
@@ -856,9 +848,22 @@ object FClientes: TFClientes
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object Label1: TLabel
+      Left = 41
+      Top = 66
+      Width = 48
+      Height = 13
+      Caption = 'Nro. Cta'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
     object SiBitBtn: TBitBtn
       Left = 33
-      Top = 198
+      Top = 272
       Width = 80
       Height = 50
       Caption = 'Si'
@@ -892,7 +897,7 @@ object FClientes: TFClientes
     end
     object NoBitBtn: TBitBtn
       Left = 33
-      Top = 274
+      Top = 348
       Width = 80
       Height = 50
       Caption = 'No'
@@ -908,12 +913,13 @@ object FClientes: TFClientes
       OnClick = NoBitBtnClick
     end
     object DBNavigator1: TDBNavigator
-      Left = 13
-      Top = 518
-      Width = 120
+      Left = 1
+      Top = 421
+      Width = 144
       Height = 32
       DataSource = DataSource
       VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete]
+      Align = alBottom
       Hints.Strings = (
         'Primer registro'
         'Registro anterior'
@@ -931,7 +937,7 @@ object FClientes: TFClientes
     end
     object ImprimirBitBtn: TBitBtn
       Left = 33
-      Top = 19
+      Top = 154
       Width = 80
       Height = 50
       Caption = 'Imprimir'
@@ -945,10 +951,11 @@ object FClientes: TFClientes
       OnClick = ImprimirBitBtnClick
     end
     object BuscarBitBtn: TBitBtn
-      Left = 33
-      Top = 400
-      Width = 80
+      Left = 1
+      Top = 1
+      Width = 144
       Height = 50
+      Align = alTop
       Caption = 'Buscar F5'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
@@ -959,21 +966,36 @@ object FClientes: TFClientes
       TabOrder = 4
       OnClick = BuscarBitBtnClick
     end
+    object CodigoDBEdit: TDBEdit
+      Left = 32
+      Top = 85
+      Width = 76
+      Height = 21
+      DataField = 'CODIGO'
+      DataSource = DataSource
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 5
+    end
   end
   object DataSource: TDataSource
     DataSet = Tabla
-    Left = 38
-    Top = 74
+    Left = 54
+    Top = 394
   end
   object DSUsuarios: TDataSource
     DataSet = UsuarioT
-    Left = 118
-    Top = 74
+    Left = 126
+    Top = 394
   end
   object CuentaDataSource: TDataSource
     DataSet = CuentaT
-    Left = 198
-    Top = 74
+    Left = 310
+    Top = 394
   end
   object Tabla: TIBTable
     Database = DM.BaseDatos
@@ -1190,8 +1212,8 @@ object FClientes: TFClientes
     StoreDefs = True
     TableName = 'Cliente'
     UniDirectional = False
-    Left = 40
-    Top = 160
+    Left = 176
+    Top = 400
   end
   object UsuarioT: TIBTable
     Database = DM.BaseDatos
@@ -1229,8 +1251,8 @@ object FClientes: TFClientes
     StoreDefs = True
     TableName = 'Usuario'
     UniDirectional = False
-    Left = 112
-    Top = 160
+    Left = 216
+    Top = 408
   end
   object CuentaT: TIBTable
     Database = DM.BaseDatos
@@ -1286,7 +1308,7 @@ object FClientes: TFClientes
     StoreDefs = True
     TableName = 'Cuenta'
     UniDirectional = False
-    Left = 200
-    Top = 160
+    Left = 264
+    Top = 400
   end
 end

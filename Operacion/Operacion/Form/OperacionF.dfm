@@ -44,8 +44,8 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label28: TLabel
-      Left = 7
-      Top = 23
+      Left = 4
+      Top = 25
       Width = 48
       Height = 13
       Caption = 'Contado'
@@ -57,8 +57,8 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label29: TLabel
-      Left = 417
-      Top = 22
+      Left = 995
+      Top = 26
       Width = 44
       Height = 13
       Caption = 'Cheque'
@@ -71,8 +71,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Label30: TLabel
-      Left = 420
-      Top = 46
+      Left = 998
+      Top = 50
       Width = 41
       Height = 13
       Caption = 'Tarjeta'
@@ -85,8 +85,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Label32: TLabel
-      Left = 591
-      Top = 5
+      Left = 1169
+      Top = 9
       Width = 15
       Height = 13
       Caption = 'N'#186
@@ -99,8 +99,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Label33: TLabel
-      Left = 641
-      Top = 5
+      Left = 1219
+      Top = 9
       Width = 41
       Height = 13
       Caption = 'Detalle'
@@ -113,8 +113,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Label34: TLabel
-      Left = 722
-      Top = 5
+      Left = 1300
+      Top = 9
       Width = 37
       Height = 13
       Caption = 'Vence'
@@ -127,8 +127,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Label31: TLabel
-      Left = 30
-      Top = 46
+      Left = 26
+      Top = 49
       Width = 25
       Height = 13
       Caption = 'Otro'
@@ -141,8 +141,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Label2: TLabel
-      Left = 171
-      Top = 46
+      Left = 343
+      Top = 4
       Width = 48
       Height = 13
       Caption = 'Pagare?'
@@ -155,11 +155,11 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Label4: TLabel
-      Left = 275
-      Top = 46
-      Width = 78
+      Left = 204
+      Top = 3
+      Width = 71
       Height = 13
-      Caption = 'Presupuesto?'
+      Caption = 'Presupuesto'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -169,11 +169,50 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Label7: TLabel
-      Left = 6
-      Top = 3
+      Left = 4
+      Top = 4
       Width = 49
       Height = 13
       Caption = 'REMITO'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label8: TLabel
+      Left = 167
+      Top = 25
+      Width = 31
+      Height = 13
+      Caption = 'Email'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label10: TLabel
+      Left = 175
+      Top = 48
+      Width = 23
+      Height = 13
+      Caption = 'DNI'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label11: TLabel
+      Left = 433
+      Top = 26
+      Width = 44
+      Height = 13
+      Caption = 'Enviar?'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -209,8 +248,8 @@ object OperacionForm: TOperacionForm
       TabOrder = 1
     end
     object NroChequeEdit: TEdit
-      Left = 570
-      Top = 18
+      Left = 1148
+      Top = 22
       Width = 49
       Height = 21
       Color = clWhite
@@ -224,8 +263,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object NroTarjetaEdit: TEdit
-      Left = 570
-      Top = 42
+      Left = 1148
+      Top = 46
       Width = 49
       Height = 21
       Color = clWhite
@@ -239,8 +278,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object DetChequeEdit: TEdit
-      Left = 618
-      Top = 18
+      Left = 1196
+      Top = 22
       Width = 84
       Height = 21
       Color = clWhite
@@ -254,8 +293,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object DetTarjetaEdit: TEdit
-      Left = 618
-      Top = 42
+      Left = 1196
+      Top = 46
       Width = 165
       Height = 21
       Color = clWhite
@@ -269,8 +308,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object FECheque: TEdit
-      Left = 465
-      Top = 18
+      Left = 1043
+      Top = 22
       Width = 106
       Height = 21
       TabOrder = 6
@@ -279,8 +318,8 @@ object OperacionForm: TOperacionForm
       OnChange = FEChequeChange
     end
     object FETarjeta: TEdit
-      Left = 465
-      Top = 42
+      Left = 1043
+      Top = 46
       Width = 106
       Height = 21
       TabOrder = 7
@@ -289,8 +328,8 @@ object OperacionForm: TOperacionForm
       OnChange = FETarjetaChange
     end
     object DiaChequeDateTimePicker: TDateTimePicker
-      Left = 701
-      Top = 18
+      Left = 1279
+      Top = 22
       Width = 82
       Height = 21
       Date = 43830.000000000000000000
@@ -299,8 +338,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object FEContado: TEdit
-      Left = 60
-      Top = 19
+      Left = 55
+      Top = 22
       Width = 106
       Height = 21
       TabOrder = 9
@@ -309,8 +348,8 @@ object OperacionForm: TOperacionForm
       OnExit = FEContadoExit
     end
     object FEOtro: TEdit
-      Left = 59
-      Top = 42
+      Left = 55
+      Top = 45
       Width = 106
       Height = 21
       TabOrder = 10
@@ -319,8 +358,8 @@ object OperacionForm: TOperacionForm
       OnChange = FEOtroChange
     end
     object PagareCheckBox: TCheckBox
-      Left = 225
-      Top = 44
+      Left = 397
+      Top = 2
       Width = 14
       Height = 17
       Color = clBlack
@@ -335,16 +374,16 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Presupuesto: TCheckBox
-      Left = 359
-      Top = 44
+      Left = 281
+      Top = 2
       Width = 17
       Height = 17
       TabOrder = 12
       Visible = False
     end
     object PedidoCheckBox: TCheckBox
-      Left = 60
-      Top = 3
+      Left = 55
+      Top = 4
       Width = 14
       Height = 16
       Color = clBlack
@@ -356,6 +395,36 @@ object OperacionForm: TOperacionForm
       ParentColor = False
       ParentFont = False
       TabOrder = 13
+    end
+    object EmailEdit: TEdit
+      Left = 202
+      Top = 22
+      Width = 211
+      Height = 21
+      TabOrder = 14
+    end
+    object CuitEdit: TEdit
+      Left = 202
+      Top = 45
+      Width = 113
+      Height = 21
+      TabOrder = 15
+    end
+    object EnviarEmailCheckBox: TCheckBox
+      Left = 419
+      Top = 24
+      Width = 14
+      Height = 17
+      Color = clBlack
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 16
+      OnClick = EnviarEmailCheckBoxClick
     end
   end
   object Panel1: TPanel
@@ -370,7 +439,7 @@ object OperacionForm: TOperacionForm
     TabOrder = 2
     object Label1: TLabel
       Left = 4
-      Top = 6
+      Top = 5
       Width = 44
       Height = 13
       Caption = 'Cliente:'
@@ -383,7 +452,7 @@ object OperacionForm: TOperacionForm
     end
     object ClienteLabel: TLabel
       Left = 92
-      Top = 6
+      Top = 5
       Width = 80
       Height = 13
       Caption = 'Consumidor Final'
@@ -396,7 +465,7 @@ object OperacionForm: TOperacionForm
     end
     object Label9: TLabel
       Left = 647
-      Top = 6
+      Top = 5
       Width = 40
       Height = 13
       Caption = 'Fecha:'
@@ -410,7 +479,7 @@ object OperacionForm: TOperacionForm
     end
     object Label16: TLabel
       Left = 319
-      Top = 6
+      Top = 5
       Width = 59
       Height = 13
       Caption = 'Vendedor:'
@@ -424,7 +493,7 @@ object OperacionForm: TOperacionForm
     end
     object VendedorLabel: TLabel
       Left = 404
-      Top = 6
+      Top = 5
       Width = 9
       Height = 13
       Caption = '...'
@@ -438,7 +507,7 @@ object OperacionForm: TOperacionForm
     end
     object Label3: TLabel
       Left = 265
-      Top = 6
+      Top = 5
       Width = 41
       Height = 13
       Caption = 'Precio:'
@@ -451,7 +520,7 @@ object OperacionForm: TOperacionForm
     end
     object PrecioLabel: TLabel
       Left = 304
-      Top = 6
+      Top = 5
       Width = 3
       Height = 13
       Font.Charset = DEFAULT_CHARSET
@@ -461,22 +530,9 @@ object OperacionForm: TOperacionForm
       Font.Style = []
       ParentFont = False
     end
-    object CUITLabel: TLabel
-      Left = 196
-      Top = 6
-      Width = 9
-      Height = 13
-      Caption = '...'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-    end
     object Label5: TLabel
       Left = 559
-      Top = 7
+      Top = 5
       Width = 38
       Height = 13
       Caption = 'PERC:'
@@ -490,7 +546,7 @@ object OperacionForm: TOperacionForm
     end
     object Label6: TLabel
       Left = 636
-      Top = 7
+      Top = 5
       Width = 8
       Height = 13
       Caption = '%'
@@ -504,7 +560,7 @@ object OperacionForm: TOperacionForm
     end
     object ClienteEdit: TEdit
       Left = 72
-      Top = 2
+      Top = 1
       Width = 16
       Height = 21
       Color = clBlack
@@ -520,7 +576,7 @@ object OperacionForm: TOperacionForm
     end
     object VendedorEdit: TEdit
       Left = 378
-      Top = 2
+      Top = 1
       Width = 22
       Height = 21
       Color = clBlack
@@ -536,7 +592,7 @@ object OperacionForm: TOperacionForm
     end
     object FechaDateTimePicker: TDateTimePicker
       Left = 688
-      Top = 2
+      Top = 1
       Width = 103
       Height = 21
       Date = 43466.000000000000000000
@@ -546,7 +602,7 @@ object OperacionForm: TOperacionForm
     end
     object PercEdit: TEdit
       Left = 598
-      Top = 3
+      Top = 1
       Width = 37
       Height = 21
       TabOrder = 3
@@ -593,8 +649,8 @@ object OperacionForm: TOperacionForm
     ParentBackground = False
     TabOrder = 0
     object ProcesarBitBtn: TBitBtn
-      Left = 709
-      Top = 5
+      Left = 710
+      Top = 4
       Width = 80
       Height = 50
       Hint = 'F12 - PROCESAR VENTA'

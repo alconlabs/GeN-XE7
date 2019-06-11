@@ -62,7 +62,6 @@ type
     FEOtro: TEdit;
     PagareCheckBox: TCheckBox;
     Presupuesto: TCheckBox;
-    CUITLabel: TLabel;
     ComprobanteEdit: TEdit;
     Label5: TLabel;
     PercEdit: TEdit;
@@ -71,6 +70,12 @@ type
     Label7: TLabel;
     PedidoCheckBox: TCheckBox;
     TotalLabel: TLabel;
+    Label8: TLabel;
+    EmailEdit: TEdit;
+    Label10: TLabel;
+    CuitEdit: TEdit;
+    EnviarEmailCheckBox: TCheckBox;
+    Label11: TLabel;
     procedure ClienteBitBtnClick(Sender: TObject);
     procedure RJustifyEdit(var ThisEdit: TEdit);
     procedure TraeNombreCliente;
@@ -97,7 +102,8 @@ type
     procedure PercEditExit(Sender: TObject);
     procedure DescuentoBitBtnClick(Sender: TObject);
     procedure Nuevo;
-    procedure TraerRemito(codigo:string);
+    procedure TraerRemito(codigo: string);
+    procedure EnviarEmailCheckBoxClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -221,7 +227,8 @@ begin
   reparaciones := 0;
   ClienteEdit.Text := '0';
   ClienteLabel.Caption := 'Consumidor Final';
-  CUITLabel.Caption:='';
+  CuitEdit.Text:='';
+  EmailEdit.Text:='';
   ComprobanteEdit.Text:='';
   FEContado.Text := '0';
   FECheque.Text := '0';
@@ -229,6 +236,8 @@ begin
   FEOtro.Text := '0';
   Cuenta := 1;
   LbSaldo.Caption:='0.00';
+  envEmail:=False;
+  EnviarEmailCheckBox.Checked:=False;
 //  PedidoCheckBox.Checked:=False;
 end;
 
@@ -477,13 +486,14 @@ If ClienteEdit.Text <> '' then
         // Label19.Caption := Tabla.FieldByName('TERMINOS').AsString;
         // Label23.Caption := DateToStr(IncDay(now,Tabla.FieldByName('DIASCREDITO').AsInteger));
         VendedorEdit.Text := Tabla.FieldByName('VENDEDOR').AsString;
-        CUITLabel.Caption := Tabla.FieldByName('CUIT').AsString;
-        if CUITLabel.Caption =''  then
-          CUITLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
-          if CUITLabel.Caption =''  then
-            CUITLabel.Caption := '20222222223';
+        CuitEdit.Text := Tabla.FieldByName('CUIT').AsString;
+        if CuitEdit.Text =''  then
+          CuitEdit.Text := Tabla.FieldByName('DOCUMENTO').AsString;
+          if CuitEdit.Text =''  then
+            CuitEdit.Text := '20222222223';
         // DocumentoLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
         // CUENTA CLIENTE
+        EmailEdit.Text := Tabla.FieldByName('EMAIL').AsString;
         CtaNombre := Tabla.FieldByName('CTANOMBRE').AsString;
         CtaTipo := Tabla.FieldByName('CTATIPO').AsString;
         CtaAnticipo := Tabla.FieldByName('CTAANTICIPO').AsString;
@@ -546,8 +556,9 @@ begin
       begin
         ClienteLabel.Caption := Tabla.FieldByName('Nombre').AsString;
         Label3.Caption := Tabla.FieldByName('Direccion').AsString;
-        CUITLabel.Caption := Tabla.FieldByName('CUIT').AsString;
-        if CUITLabel.Caption='' then CUITLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
+        CUITEdit.Text := Tabla.FieldByName('CUIT').AsString;
+        if CUITEdit.Text='' then CUITEdit.Text := Tabla.FieldByName('DOCUMENTO').AsString;
+        EmailEdit.Text := Tabla.FieldByName('EMAIL').AsString;
         CtaNombre := Tabla.FieldByName('CtaNombre').AsString;
         CtaTipo := Tabla.FieldByName('CtaTipo').AsString;
         CtaAnticipo := Tabla.FieldByName('CtaAnticipo').AsString;
@@ -613,6 +624,11 @@ DescuentoForm := TDescuentoForm.Create(self);
     end;
     DescuentoForm.Free;
   end;
+end;
+
+procedure TOperacionForm.EnviarEmailCheckBoxClick(Sender: TObject);
+begin
+  envEmail:=EnviarEmailCheckBox.Checked;
 end;
 
 function TOperacionForm.NetoGravado;
@@ -713,7 +729,7 @@ begin
       if Compra then
         ProcCompra(cbTipo.Text, ClienteEdit.Text,
           FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-          VendedorEdit.Text, ComprobanteEdit.Text, CtaNombre, CUITLabel.Caption, PagareCheckBox.Checked,
+          VendedorEdit.Text, ComprobanteEdit.Text, CtaNombre, CuitEdit.Text, PagareCheckBox.Checked,
           costo, Impuesto, StrToFloat(FECheque.Text),
           StrToFloat(FECheque.Text), StrToFloat(FEContado.Text), Total,
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
@@ -731,7 +747,7 @@ begin
       if Presupuesto.Checked then
         ProcPresup(cbTipo.Text, ClienteEdit.Text,
           FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-          VendedorEdit.Text, CUITLabel.Caption, CtaNombre, Presupuesto.Checked,
+          VendedorEdit.Text, CuitEdit.Text, CtaNombre, Presupuesto.Checked,
           PagareCheckBox.Checked, costo, Comision, Impuesto,
           StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
@@ -740,7 +756,7 @@ begin
       if codRem<>'' then
         FactRem(codRem,cbTipo.Text, ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-        VendedorEdit.Text, CUITLabel.Caption, CtaNombre, Presupuesto.Checked,
+        VendedorEdit.Text, CuitEdit.Text, CtaNombre, Presupuesto.Checked,
         PagareCheckBox.Checked, impr, costo, Comision, Impuesto,
         StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
         subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
@@ -748,7 +764,7 @@ begin
       else
         ok := ProcVTA(cbTipo.Text, ClienteEdit.Text,
           FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-          VendedorEdit.Text, CUITLabel.Caption, CtaNombre, Presupuesto.Checked,
+          VendedorEdit.Text, CuitEdit.Text, CtaNombre, Presupuesto.Checked,
           PagareCheckBox.Checked, impr, costo, Comision, Impuesto,
           StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),

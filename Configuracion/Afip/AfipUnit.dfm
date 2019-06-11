@@ -88,6 +88,8 @@ object AfipForm: TAfipForm
       Caption = '0 - OpenSSL'
       TabOrder = 5
       OnClick = OpensslButtonClick
+      ExplicitLeft = 6
+      ExplicitTop = 124
     end
     object ProbarButton: TButton
       Left = 1

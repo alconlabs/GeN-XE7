@@ -194,6 +194,19 @@ object BuscaFacturaForm: TBuscaFacturaForm
       ExplicitTop = 243
       ExplicitWidth = 80
     end
+    object Label11: TLabel
+      Left = 3
+      Top = 107
+      Width = 77
+      Height = 13
+      Caption = 'Enviar email?'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
     object SiBitBtn: TBitBtn
       Left = 1
       Top = 348
@@ -264,6 +277,22 @@ object BuscaFacturaForm: TBuscaFacturaForm
       ParentFont = False
       TabOrder = 2
       OnClick = todoBitBtnClick
+    end
+    object EnviarEmailCheckBox: TCheckBox
+      Left = 81
+      Top = 106
+      Width = 14
+      Height = 17
+      Color = clBlack
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 3
+      OnClick = EnviarEmailCheckBoxClick
     end
   end
   object DBGrid1: TDBGrid

@@ -92,7 +92,7 @@ begin
       subj_cn := Empresa;
       subj_cuit := CUIT;
       ruta := Path + 'db\';
-      if dm.existeOpenSSL() then
+      if dm.ExisteOpenSSL then
       begin
         key:=' genrsa -out "'+ruta+'MiClavePrivada" 2048';
         csr:=' req -new -key "'+ruta+'MiClavePrivada" -subj "/C=AR/O='+subj_o+'/CN='+subj_cn+'/serialNumber=CUIT '+subj_cuit+'" -out "'+ruta+'MiPedido.CSR"';

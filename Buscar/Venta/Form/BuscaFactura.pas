@@ -23,6 +23,8 @@ type
     Image1: TImage;
     TipoRadioGroup: TRadioGroup;
     todoBitBtn: TBitBtn;
+    EnviarEmailCheckBox: TCheckBox;
+    Label11: TLabel;
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure DBGrid1DblClick(Sender: TObject);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
@@ -37,6 +39,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure FacturarBitBtnClick(Sender: TObject);
     procedure TipoRadioGroupClick(Sender: TObject);
+    procedure EnviarEmailCheckBoxClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -141,6 +144,7 @@ begin
       end;
     ImprimirDataModule.Free;
   end;
+  envEmail:=False;
   Close;
 end;
 
@@ -167,6 +171,11 @@ procedure TBuscaFacturaForm.DBGrid1KeyDown(Sender: TObject; var Key: Word;
 begin
   IF Key = VK_DOWN then
     DBGrid1.SetFocus;
+end;
+
+procedure TBuscaFacturaForm.EnviarEmailCheckBoxClick(Sender: TObject);
+begin
+  envEmail:=EnviarEmailCheckBox.Checked;
 end;
 
 procedure TBuscaFacturaForm.FacturarBitBtnClick(Sender: TObject);
