@@ -493,7 +493,8 @@ If ClienteEdit.Text <> '' then
             CuitEdit.Text := '20222222223';
         // DocumentoLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
         // CUENTA CLIENTE
-        EmailEdit.Text := Tabla.FieldByName('EMAIL').AsString;
+        if ClienteEdit.Text<>'0' then
+          EmailEdit.Text := Tabla.FieldByName('EMAIL').AsString;
         CtaNombre := Tabla.FieldByName('CTANOMBRE').AsString;
         CtaTipo := Tabla.FieldByName('CTATIPO').AsString;
         CtaAnticipo := Tabla.FieldByName('CTAANTICIPO').AsString;

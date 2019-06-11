@@ -723,7 +723,7 @@ object OperacionForm: TOperacionForm
       OnClick = AgregarBitBtnClick
     end
     object NuevoBitBtn: TBitBtn
-      Left = 235
+      Left = 234
       Top = 4
       Width = 80
       Height = 50
