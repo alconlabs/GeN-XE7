@@ -657,8 +657,6 @@ object FClientes: TFClientes
     object TabSheet5: TTabSheet
       Caption = 'Parametros'
       ImageIndex = 4
-      ExplicitLeft = 3
-      ExplicitTop = 27
       object Label13: TLabel
         Left = 2
         Top = 34

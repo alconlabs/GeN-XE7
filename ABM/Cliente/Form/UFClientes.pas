@@ -169,6 +169,7 @@ begin
   CuentaT.Open;
   Tabla.Open;
   Tabla.Insert;
+  Tabla.FieldByName('CODIGO').AsInteger := dm.UltimoRegistro('Cliente', 'CODIGO');
   for i := 1 to 3 do IVADBComboBox.Items.Add(OperacionDM.tipoIVA[i]);
 end;
 

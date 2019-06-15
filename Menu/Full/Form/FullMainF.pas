@@ -193,7 +193,7 @@ var
   FullMainForm: TFullMainForm;
 
 const
-  version='201906111945';
+  version='201906151826';
 
 implementation
 
@@ -249,7 +249,7 @@ begin
     end;
   end;
   WebBrowser1.Navigate(path + 'hlp\index.htm');
-  ShellExecute(0,'open','http://gamerzone.com.ar',nil,nil,SW_SHOWMINIMIZED);
+  ShellExecute(0,'open','https://www.gamerzone.com.ar/',nil,nil,SW_SHOWMINIMIZED);
   if LoginOk <> True then
   begin
     ShowMessage('el usuario no coincide con la clave...');

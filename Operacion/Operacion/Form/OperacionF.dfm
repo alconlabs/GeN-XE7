@@ -182,8 +182,8 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label8: TLabel
-      Left = 167
-      Top = 25
+      Left = 246
+      Top = 26
       Width = 31
       Height = 13
       Caption = 'Email'
@@ -195,8 +195,8 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label10: TLabel
-      Left = 175
-      Top = 48
+      Left = 254
+      Top = 49
       Width = 23
       Height = 13
       Caption = 'DNI'
@@ -208,8 +208,8 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label11: TLabel
-      Left = 433
-      Top = 26
+      Left = 512
+      Top = 27
       Width = 44
       Height = 13
       Caption = 'Enviar?'
@@ -397,22 +397,22 @@ object OperacionForm: TOperacionForm
       TabOrder = 13
     end
     object EmailEdit: TEdit
-      Left = 202
-      Top = 22
+      Left = 281
+      Top = 23
       Width = 211
       Height = 21
       TabOrder = 14
     end
     object CuitEdit: TEdit
-      Left = 202
-      Top = 45
+      Left = 281
+      Top = 46
       Width = 113
       Height = 21
       TabOrder = 15
     end
     object EnviarEmailCheckBox: TCheckBox
-      Left = 419
-      Top = 24
+      Left = 498
+      Top = 25
       Width = 14
       Height = 17
       Color = clBlack
