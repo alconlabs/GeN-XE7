@@ -30,6 +30,8 @@ object OperacionForm: TOperacionForm
     Color = clBlack
     ParentBackground = False
     TabOrder = 1
+    ExplicitLeft = -1
+    ExplicitTop = 24
     object Label40: TLabel
       Left = 28
       Top = 126
@@ -44,8 +46,8 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label28: TLabel
-      Left = 4
-      Top = 25
+      Left = 2
+      Top = 33
       Width = 48
       Height = 13
       Caption = 'Contado'
@@ -127,8 +129,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Label31: TLabel
-      Left = 26
-      Top = 49
+      Left = 1014
+      Top = 5
       Width = 25
       Height = 13
       Caption = 'Otro'
@@ -141,8 +143,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Label2: TLabel
-      Left = 343
-      Top = 4
+      Left = 205
+      Top = 3
       Width = 48
       Height = 13
       Caption = 'Pagare?'
@@ -155,11 +157,11 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Label4: TLabel
-      Left = 204
+      Left = 93
       Top = 3
-      Width = 71
+      Width = 78
       Height = 13
-      Caption = 'Presupuesto'
+      Caption = 'Presupuesto?'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -170,10 +172,10 @@ object OperacionForm: TOperacionForm
     end
     object Label7: TLabel
       Left = 4
-      Top = 4
-      Width = 49
+      Top = 3
+      Width = 56
       Height = 13
-      Caption = 'REMITO'
+      Caption = 'REMITO?'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -182,8 +184,8 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label8: TLabel
-      Left = 246
-      Top = 26
+      Left = 170
+      Top = 25
       Width = 31
       Height = 13
       Caption = 'Email'
@@ -195,8 +197,8 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label10: TLabel
-      Left = 254
-      Top = 49
+      Left = 178
+      Top = 50
       Width = 23
       Height = 13
       Caption = 'DNI'
@@ -208,8 +210,8 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label11: TLabel
-      Left = 512
-      Top = 27
+      Left = 422
+      Top = 24
       Width = 44
       Height = 13
       Caption = 'Enviar?'
@@ -221,8 +223,8 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object TipoRadioGroup: TRadioGroup
-      Left = 819
-      Top = 42
+      Left = 855
+      Top = 0
       Width = 137
       Height = 104
       Caption = 'Tipo'
@@ -338,8 +340,8 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object FEContado: TEdit
-      Left = 55
-      Top = 22
+      Left = 53
+      Top = 30
       Width = 106
       Height = 21
       TabOrder = 9
@@ -348,8 +350,8 @@ object OperacionForm: TOperacionForm
       OnExit = FEContadoExit
     end
     object FEOtro: TEdit
-      Left = 55
-      Top = 45
+      Left = 1043
+      Top = 1
       Width = 106
       Height = 21
       TabOrder = 10
@@ -358,8 +360,8 @@ object OperacionForm: TOperacionForm
       OnChange = FEOtroChange
     end
     object PagareCheckBox: TCheckBox
-      Left = 397
-      Top = 2
+      Left = 252
+      Top = 1
       Width = 14
       Height = 17
       Color = clBlack
@@ -374,16 +376,16 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object Presupuesto: TCheckBox
-      Left = 281
-      Top = 2
+      Left = 171
+      Top = 1
       Width = 17
       Height = 17
       TabOrder = 12
       Visible = False
     end
     object PedidoCheckBox: TCheckBox
-      Left = 55
-      Top = 4
+      Left = 60
+      Top = 1
       Width = 14
       Height = 16
       Color = clBlack
@@ -397,22 +399,22 @@ object OperacionForm: TOperacionForm
       TabOrder = 13
     end
     object EmailEdit: TEdit
-      Left = 281
-      Top = 23
+      Left = 205
+      Top = 22
       Width = 211
       Height = 21
       TabOrder = 14
     end
     object CuitEdit: TEdit
-      Left = 281
-      Top = 46
-      Width = 113
+      Left = 205
+      Top = 47
+      Width = 124
       Height = 21
       TabOrder = 15
     end
     object EnviarEmailCheckBox: TCheckBox
-      Left = 498
-      Top = 25
+      Left = 472
+      Top = 23
       Width = 14
       Height = 17
       Color = clBlack

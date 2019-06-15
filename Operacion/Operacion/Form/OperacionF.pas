@@ -597,6 +597,7 @@ var
  PR,CAN,DSC : Double;
 begin
 DescuentoForm := TDescuentoForm.Create(self);
+DescuentoForm.DescuentoEdit.Text := FloatToStr(Saldo) ;
   try
     DescuentoForm.ShowModal;
   finally
