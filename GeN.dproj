@@ -1,11 +1,11 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{13101A61-52C0-46F9-8F94-698B1AA4BF2D}</ProjectGuid>
+        <ProjectGuid>{A9D7052A-5D4B-42D5-93EF-0A855FB234DA}</ProjectGuid>
         <ProjectVersion>18.6</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
         <MainSource>GeN.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -15,6 +15,11 @@
     </PropertyGroup>
     <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
         <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
@@ -41,29 +46,42 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
-        <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=ERP;FileVersion=1.0.0.70;InternalName=GeN;LegalCopyright=Civeloo 2019;LegalTrademarks=Civeloo 2019;OriginalFilename=GeN.exe;ProductName=GeN;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <VerInfo_Locale>3082</VerInfo_Locale>
-        <SanitizedProjectName>GeN</SanitizedProjectName>
-        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
-        <DCC_DcuOutput>\DeGsoft\GeN</DCC_DcuOutput>
-        <DCC_ExeOutput>\DeGsoft\GeN</DCC_ExeOutput>
+        <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
+        <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
         <DCC_E>false</DCC_E>
         <DCC_N>false</DCC_N>
         <DCC_S>false</DCC_S>
         <DCC_F>false</DCC_F>
         <DCC_K>false</DCC_K>
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Build>70</VerInfo_Build>
-        <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
+        <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
-        <VerInfo_Locale>1033</VerInfo_Locale>
-        <DCC_UsePackage>FireDACSqliteDriver;FireDACDSDriver;DBXSqliteDriver;FireDACPgDriver;fmx;IndySystem;frxe21;TeeDB;tethering;vclib;DBXInterBaseDriver;DataSnapClient;DataSnapServer;DataSnapCommon;frx21;DataSnapProviderClient;DBXSybaseASEDriver;DbxCommonDriver;vclimg;dbxcds;DatasnapConnectorsFreePascal;MetropolisUILiveTile;vcldb;vcldsnap;fmxFireDAC;DBXDb2Driver;DBXOracleDriver;CustomIPTransport;vclribbon;dsnap;IndyIPServer;fmxase;vcl;IndyCore;DBXMSSQLDriver;IndyIPCommon;CloudService;FmxTeeUI;FireDACIBDriver;CodeSiteExpressPkg;DataSnapFireDAC;FireDACDBXDriver;soapserver;inetdbxpress;dsnapxml;FireDACInfxDriver;FireDACDb2Driver;adortl;FireDACASADriver;bindcompfmx;FireDACODBCDriver;RESTBackendComponents;emsclientfiredac;rtl;dbrtl;DbxClientDriver;FireDACCommon;bindcomp;inetdb;frxTee21;Tee;DBXOdbcDriver;frxDB21;vclFireDAC;xmlrtl;DataSnapNativeClient;svnui;ibxpress;IndyProtocols;DBXMySQLDriver;FireDACCommonDriver;bindengine;vclactnband;bindcompdbx;soaprtl;FMXTee;TeeUI;bindcompvcl;vclie;FireDACADSDriver;vcltouch;emsclient;VCLRESTComponents;FireDACMSSQLDriver;FireDAC;VclSmp;DBXInformixDriver;Intraweb;DataSnapConnectors;DataSnapServerMidas;dsnapcon;DBXFirebirdDriver;inet;fmxobj;FireDACMySQLDriver;soapmidas;vclx;svn;DBXSybaseASADriver;FireDACOracleDriver;fmxdae;RESTComponents;FireDACMSAccDriver;dbexpress;DataSnapIndy10ServerTransport;IndyIPClient;$(DCC_UsePackage)</DCC_UsePackage>
+        <SanitizedProjectName>GeN</SanitizedProjectName>
+        <VerInfo_Locale>11274</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <Custom_Styles>&quot;Windows10 SlateGray|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows10SlateGray.vsf&quot;</Custom_Styles>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_UsePackage>DBXSqliteDriver;IndyIPCommon;RESTComponents;bindcompdbx;DBXInterBaseDriver;vcl;IndyIPServer;vclactnband;vclFireDAC;IndySystem;tethering;svnui;dsnapcon;FireDACADSDriver;FireDACMSAccDriver;fmxFireDAC;vclimg;TeeDB;FireDAC;vcltouch;vcldb;bindcompfmx;svn;FireDACSqliteDriver;FireDACPgDriver;ibmonitor;inetdb;FMXTee;soaprtl;DbxCommonDriver;FmxTeeUI;ibxpress;fmx;FireDACIBDriver;fmxdae;xmlrtl;soapmidas;ibxbindings;fmxobj;vclwinx;vclib;rtl;Tee;DbxClientDriver;CustomIPTransport;vcldsnap;dbexpress;IndyCore;vclx;bindcomp;appanalytics;dsnap;FireDACCommon;IndyIPClient;bindcompvcl;RESTBackendComponents;TeeUI;VCLRESTComponents;soapserver;dbxcds;VclSmp;adortl;vclie;bindengine;DBXMySQLDriver;CloudService;dsnapxml;FireDACMySQLDriver;dbrtl;IndyProtocols;inetdbxpress;FireDACCommonODBC;FireDACCommonDriver;inet;fmxase;$(DCC_UsePackage)</DCC_UsePackage>
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <BT_BuildType>Debug</BT_BuildType>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
+        <PF_KeyStore>C:\Users\Usuario\Desktop\Civeloo.pfx</PF_KeyStore>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <PF_KeyStorePass>85190DA36405559EA3757169D17BE32C819C055DA057979397B50FF08E723CD8DB05A38FE3431C4DC1CC572EFA9CC37ABAF83612047422E0166545C2E5F1228CC90AB967EE98A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
+        <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
+        <UWP_DelphiLogo44>GeN-Logo-44x44.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>GeN-Logo-150x150.png</UWP_DelphiLogo150>
+        <PF_UWPPublisher>CN=7FC7B8E8-6456-4AA2-ADAA-9303120AAF8B</PF_UWPPublisher>
+        <PF_UWPPackageName>57502Civeloo.CivelooGeN</PF_UWPPackageName>
+        <PF_UWPPackageDisplayName>Civeloo GeN</PF_UWPPackageDisplayName>
+        <PF_UWPPublisherDisplayName>Civeloo</PF_UWPPublisherDisplayName>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <DCC_UsePackage>DBXSqliteDriver;IndyIPCommon;RESTComponents;bindcompdbx;DBXInterBaseDriver;vcl;IndyIPServer;vclactnband;vclFireDAC;IndySystem;tethering;dsnapcon;FireDACADSDriver;FireDACMSAccDriver;fmxFireDAC;vclimg;TeeDB;FireDAC;vcltouch;vcldb;bindcompfmx;FireDACSqliteDriver;FireDACPgDriver;ibmonitor;inetdb;FMXTee;soaprtl;DbxCommonDriver;FmxTeeUI;ibxpress;fmx;FireDACIBDriver;fmxdae;xmlrtl;soapmidas;ibxbindings;fmxobj;vclwinx;vclib;rtl;Tee;DbxClientDriver;CustomIPTransport;vcldsnap;dbexpress;IndyCore;vclx;bindcomp;appanalytics;dsnap;FireDACCommon;IndyIPClient;bindcompvcl;RESTBackendComponents;TeeUI;VCLRESTComponents;soapserver;dbxcds;VclSmp;adortl;vclie;bindengine;DBXMySQLDriver;CloudService;dsnapxml;FireDACMySQLDriver;dbrtl;IndyProtocols;inetdbxpress;FireDACCommonODBC;FireDACCommonDriver;inet;fmxase;$(DCC_UsePackage)</DCC_UsePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -74,13 +92,16 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <DCC_DcuOutput>C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\bin\</DCC_DcuOutput>
-        <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=;FileVersion=1.0.0.72;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=GeN;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <DCC_ExeOutput>C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\bin\</DCC_ExeOutput>
-        <VerInfo_Locale>11274</VerInfo_Locale>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
-        <VerInfo_Build>72</VerInfo_Build>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
+        <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.1;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <PF_KeyStorePass>8519479B645855D8A342711DD129E36881D0051BA043979397B40FAB8E363C94DB04A3D7E3401C39C1CC5752FACFC338BAF83613042722C3164B45C2E5BA22DBC90AF35DEE98A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
+        <UWP_DelphiLogo44>GeN-Logo-44x44.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>GeN-Logo-150x150.png</UWP_DelphiLogo150>
+        <VerInfo_Build>1</VerInfo_Build>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -89,7 +110,16 @@
         <DCC_DebugInformation>0</DCC_DebugInformation>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-        <VerInfo_Locale>1033</VerInfo_Locale>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
+        <UWP_DelphiLogo44>GeN-Logo-44x44.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>GeN-Logo-150x150.png</UWP_DelphiLogo150>
+        <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <PF_KeyStore>..\Civeloo.pfx</PF_KeyStore>
+        <PF_KeyStorePass>8519479B5F86078CCF7BE531A45A7BA5819E0544A01C97EF97BC0FF08E723CD8DB42A384E34B1C30C1EA5730FA9DC338BAE2360A044B22FC162B45DFE5E522CFC948F34CD576FAD0BFE4AF4607021D58F7C9330C</PF_KeyStorePass>
+        <BT_BuildType>AppStore</BT_BuildType>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -100,15 +130,19 @@
         </DCCReference>
         <DCCReference Include="ABM\Cliente\Form\UFClientes.pas">
             <Form>FClientes</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="ABM\Categoria\Form\UFCategorias.pas">
             <Form>FCategorias</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\Proveedor\Form\UFBuscaProve.pas">
             <Form>FBuscaProve</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\Cliente\Form\UFBuscaCliente.pas">
             <Form>FBuscaCliente</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Operacion\AporteCapital\Form\AporteCapitalF.pas">
             <Form>AporteCapitalForm</Form>
@@ -145,9 +179,11 @@
         </DCCReference>
         <DCCReference Include="ABM\ImpuestoServicio\Form\ImpuestosServicios.pas">
             <Form>ImpuestosServiciosFrom</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="DataModule\ImprimirDM.pas">
             <Form>ImprimirDataModule</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Exportar\Excel\Hoja_Calculo.pas"/>
@@ -165,6 +201,7 @@
         </DCCReference>
         <DCCReference Include="ABM\Empresa\Form\EmpresaF.pas">
             <Form>EmpresaForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Operacion\DevolucionProveedorCelular\Form\DevolucionProveedorCelularF.pas">
             <Form>DevolucionesForm</Form>
@@ -182,6 +219,7 @@
         </DCCReference>
         <DCCReference Include="ABM\CuentaContable\Form\CuentaContableF.pas">
             <Form>CuentasContablesForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Operacion\PagoProveedor\Form\CtaCteProveedores.pas">
             <Form>CtaCteProveedoresForm</Form>
@@ -206,6 +244,7 @@
         </DCCReference>
         <DCCReference Include="ABM\Color\Form\Color.pas">
             <Form>ColorForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Operacion\GestionCobranzaJudicial\Form\CobranzaJudicialF.pas">
             <Form>CobranzaJudicialForm</Form>
@@ -218,69 +257,87 @@
         </DCCReference>
         <DCCReference Include="ABM\Cobrador\Form\CobradorF.pas">
             <Form>CobradorForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Listados\CartonCobranza\Form\CartonCobranzaF.pas">
             <Form>CartonCobranzaForm</Form>
         </DCCReference>
         <DCCReference Include="ABM\Capitulo\Form\CapituloF.pas">
             <Form>CapituloForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Listados\Caja\Form\CajaLF.pas">
             <Form>CajaLForm</Form>
         </DCCReference>
         <DCCReference Include="ABM\Caja\Form\CajaF.pas">
             <Form>ABMCajaForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\Socio\Form\BuscaSocioF.pas">
             <Form>BuscaSocioForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\Vendedor\Form\BuscarVendedor.pas">
             <Form>BuscarVendedorForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\TipoGasto\Form\BuscarTipoGastoF.pas">
             <Form>BuscarTipoGastoForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\RubroContable\Form\BuscarRubroContableF.pas">
             <Form>BuscarRubroContableForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\PlanProcesado\Form\BuscarPlanFacturado.pas">
             <Form>BuscarPlanFacturadoForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\Plan\Form\BuscarPlan.pas">
             <Form>BuscarPlanForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\ImpuestoServicio\Form\BuscarImpuestosServicios.pas">
             <Form>BuscarImpuestosServiciosForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\CuentaContable\Form\BuscarCuentaF.pas">
             <Form>BuscarCuentaForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\Cobrador\Form\BuscarCobrador.pas">
             <Form>BuscarCobradorForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\Cheque\Form\BuscarCheques.pas">
             <Form>BuscarChequesForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\Capitulo\Form\BuscarCapituloF.pas">
             <Form>BuscarCapituloForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\Articulo\Form\UFBuscaArticulos.pas">
             <Form>FBuscaArticulo</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="ABM\Cuota\Form\Cuotas.pas">
             <Form>CuotaForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Operacion\AnularVenta\Form\AnularVtaF.pas">
             <Form>FAnulaReimp</Form>
         </DCCReference>
         <DCCReference Include="ABM\TipoGasto\Form\TipoGastoF.pas">
             <Form>TipoGastoForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Menu\Stock\Form\StockF.pas">
             <Form>StockForm</Form>
         </DCCReference>
         <DCCReference Include="ABM\Socio\Form\SocioF.pas">
             <Form>SocioForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="SubOperacion\ManoObra\Form\servicio.pas">
             <Form>ServForm</Form>
@@ -293,9 +350,11 @@
         </DCCReference>
         <DCCReference Include="ABM\Rubro\Form\RubroF.pas">
             <Form>RubroForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="ABM\RubroContable\Form\RubroContableFormF.pas">
             <Form>RubroContableForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Operacion\RetiroCaja\Form\RetiroCajaF.pas">
             <Form>RetiroCajaForm</Form>
@@ -314,6 +373,7 @@
         </DCCReference>
         <DCCReference Include="ABM\Proveedor\Form\ProveedorF.pas">
             <Form>ProveedorForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Operacion\Presupuesto\Form\PresupuestoF.pas">
             <Form>PresupuestoForm</Form>
@@ -323,6 +383,7 @@
         </DCCReference>
         <DCCReference Include="ABM\Plan\Form\PlanF.pas">
             <Form>PlanForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Listados\Pedidos\Form\PedidoLF.pas">
             <Form>PedidoLForm</Form>
@@ -341,6 +402,7 @@
         </DCCReference>
         <DCCReference Include="DataModule\OperacionDM.pas">
             <Form>OperacionDataModule</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Operacion\NotaCreditoPlan\Form\NotaCreditoPlanF.pas">
@@ -354,30 +416,36 @@
         </DCCReference>
         <DCCReference Include="ABM\ArticuloCelular\Form\ArticuloCelularF.pas">
             <Form>ArticuloCelularForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Operacion\VaciarBase\Form\VaciarBaseF.pas">
             <Form>VaciarBaseForm</Form>
         </DCCReference>
         <DCCReference Include="ABM\Usuarios\Form\UsuariosF.pas">
             <Form>UsuariosForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Exportar\Excel\Unit1.pas">
             <Form>Form1</Form>
         </DCCReference>
         <DCCReference Include="ABM\SubCategoria\Form\UFSubCategorias.pas">
             <Form>FSubCategorias</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="SubOperacion\SelecionarPrecio\Form\UFSelProdFact.pas">
             <Form>FSelProdFact</Form>
         </DCCReference>
         <DCCReference Include="Buscar\Orden\Form\UFSelOrden.pas">
             <Form>FSelOrden</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="ABM\Articulo\Form\UFProductos.pas">
             <Form>FProductos</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\Cobranza\Form\VerCobranza.pas">
             <Form>VerCobranzaForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Operacion\Operacion\Form\OperacionF.pas">
             <Form>OperacionForm</Form>
@@ -387,30 +455,37 @@
         </DCCReference>
         <DCCReference Include="AcercaDe\form\main.pas">
             <Form>mainForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="SubOperacion\Login\Form\LoginF.pas">
             <Form>FLogin</Form>
         </DCCReference>
         <DCCReference Include="Menu\Full\Form\FullMainF.pas">
             <Form>FullMainForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="buscar\compra\form\BuscaCompra.pas">
             <Form>BuscaCompraForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\Venta\Form\BuscaFactura.pas">
             <Form>BuscaFacturaForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="operacion\devolucion\form\UFDevoluciones.pas">
             <Form>FDevoluciones</Form>
         </DCCReference>
         <DCCReference Include="buscar\articulocelular\form\BuscarArticulosCelularF.pas">
             <Form>BuscaArticuloCelularForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="ABM\Marca\Form\MarcaF.pas">
             <Form>MarcaForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="abm\ingresosbrutos\form\IngresosBrutosF.pas">
             <Form>IngresosBrutosForm</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="DataModule\AfipDM.pas">
             <Form>AfipDataModule</Form>
@@ -419,11 +494,9 @@
         </DCCReference>
         <DCCReference Include="Operacion\PagoIVA\Form\PagoIVAF.pas">
             <Form>PagoIVAForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="SubOperacion\Descuento\Form\DescuentoF.pas">
             <Form>DescuentoForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="ABM\Vendedor\Form\VendedorF.pas">
             <Form>VendedorForm</Form>
@@ -468,9 +541,1398 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="..\..\..\..\User\Documents\Embarcadero\Studio\Projects\Bin\GeN\bin\GeN.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png" Configuration="Debug" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>Assest\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\DetalleCtaCte.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>DetalleCtaCte.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\CTicket.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CTicket.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\CuentaCaja.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CuentaCaja.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\cobrador.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>cobrador.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\RendicionCobrador.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>RendicionCobrador.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\articulo.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>articulo.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="GeN-Logo-150x150.png" Configuration="Release" Class="UWP_DelphiLogo150">
+                    <Platform Name="Win32">
+                        <RemoteDir>Assets\</RemoteDir>
+                        <RemoteName>Logo150x150.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-aut.png" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>conf-sis-fe-conf-aut.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\proveedor_buscar.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>proveedor_buscar.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_forma_pago.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_forma_pago.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-ossl.png" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>conf-sis-fe-conf-ossl.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\conf-sis.png" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>conf-sis.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\C.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>C.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\db\msvcr80.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\db\</RemoteDir>
+                        <RemoteName>msvcr80.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\A.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>A.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\plan.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>plan.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\FacturaC.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>FacturaC.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\NotaCredito.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>NotaCredito.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\boton_stock.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>boton_stock.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_operaciones_anularventa.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_operaciones_anularventa.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\boton_licencia.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>boton_licencia.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\Presupuesto.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Presupuesto.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_listado_caja.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_listado_caja.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_login.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_login.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\RendicionCliente.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>RendicionCliente.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\Compra.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Compra.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\ProveedoresDetalle.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ProveedoresDetalle.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\db\icudt30.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\db\</RemoteDir>
+                        <RemoteName>icudt30.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\SociosDetalle.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>SociosDetalle.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png" Configuration="Debug" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>Assest\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\Articulos.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Articulos.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\vendedor.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>vendedor.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\backgrundROPA.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>backgrundROPA.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\conf-sis-fe-conf.png" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>conf-sis-fe-conf.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\codebar.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>codebar.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-grab.png" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>conf-sis-fe-conf-grab.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-csr-emp.png" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>conf-sis-fe-conf-csr-emp.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\CCuadruplicado.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CCuadruplicado.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\PlanillaCobrador.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>PlanillaCobrador.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_menu_abm.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_menu_abm.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_listado.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_listado.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\caja.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>caja.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\ContratoLeasing.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ContratoLeasing.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\NCTElectronica.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>NCTElectronica.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\gen.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>gen.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\barcode.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>barcode.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\ListaPrecios.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ListaPrecios.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\CuentaCajaFecha.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CuentaCajaFecha.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\operaciones.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>operaciones.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\boton_creditos.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>boton_creditos.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_operaciones_comprar.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_operaciones_comprar.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\forma_pago.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>forma_pago.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\Cobrador.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Cobrador.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\Proveedores.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Proveedores.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\Cheques.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Cheques.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\ComprobanteCuadruplicado.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ComprobanteCuadruplicado.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\ClientesDetalle.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ClientesDetalle.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\LibroDiario.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>LibroDiario.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\EstadoCtaProv.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>EstadoCtaProv.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\vender.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>vender.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\db\msvcp80.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\db\</RemoteDir>
+                        <RemoteName>msvcp80.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\servidor.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>servidor.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="GeN-Logo-44x44.png" Configuration="Release" Class="UWP_DelphiLogo44">
+                    <Platform Name="Win32">
+                        <RemoteDir>Assets\</RemoteDir>
+                        <RemoteName>Logo44x44.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_preview_ticket.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_preview_ticket.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\backgrundROPA.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>backgrundROPA.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_abm_vendedor.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_abm_vendedor.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\Carton.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Carton.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\CNCredito.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CNCredito.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\COriginal.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>COriginal.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\empresa.bmp" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>empresa.bmp</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\login.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>login.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\ClientesTotal_000.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ClientesTotal_000.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Release\AppxManifest.xml" Configuration="Release" Class="ProjectUWPManifest">
+                    <Platform Name="Win32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\ListaPreciosCompleta.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ListaPreciosCompleta.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\db\ib_util.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\db\</RemoteDir>
+                        <RemoteName>ib_util.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\rubro.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>rubro.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\boton_imprimir_exportar.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>boton_imprimir_exportar.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\logo.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>logo.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_buscar_venta.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_buscar_venta.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="GeN-Logo-150x150.png" Configuration="Debug" Class="UWP_DelphiLogo150">
+                    <Platform Name="Win32">
+                        <RemoteDir>Assets\</RemoteDir>
+                        <RemoteName>Logo150x150.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\pedidos.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>pedidos.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_buscar_articulo.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_buscar_articulo.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\ComprobanteCuadruplicado_000.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ComprobanteCuadruplicado_000.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\gen.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>gen.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\logo.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>logo.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\db\icuin30.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\db\</RemoteDir>
+                        <RemoteName>icuin30.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\bin\icuin30.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>icuin30.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\boton_compra_venta.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>boton_compra_venta.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_cantidad_precio.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_cantidad_precio.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_operaciones.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_operaciones.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\Clientes.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Clientes.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-csr-emp-abm.png" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>conf-sis-fe-conf-csr-emp-abm.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\CDuplicado.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CDuplicado.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_configuracion_empresa.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_configuracion_empresa.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\PreciosTodos.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>PreciosTodos.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\articulo_buscar.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>articulo_buscar.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_buscar_proveedor.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_buscar_proveedor.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\LibroIVAVentas.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>LibroIVAVentas.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-csr-ped.png" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>conf-sis-fe-conf-csr-ped.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_listado_precios.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_listado_precios.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\excel.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>excel.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\menu.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>menu.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_operaciones_ctacte.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_operaciones_ctacte.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\db\DeG" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\db\</RemoteDir>
+                        <RemoteName>DeG</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\PagoVendedor.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>PagoVendedor.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\cuentacorriente.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>cuentacorriente.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\proveedor.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>proveedor.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_abm_articulo.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_abm_articulo.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\clientes.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>clientes.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\bin\fbembed.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>fbembed.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\stock.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>stock.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_listado_ganancias.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_listado_ganancias.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\db\GeN.FDB" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\db\</RemoteDir>
+                        <RemoteName>GeN.FDB</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\RetencionIngresosBrutos.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>RetencionIngresosBrutos.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\Thumbs.db" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>Thumbs.db</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\db\gds32.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\db\</RemoteDir>
+                        <RemoteName>gds32.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\crearpedido.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>crearpedido.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\cOriginalLogo.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>cOriginalLogo.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\COriginalsLogo.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>COriginalsLogo.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_abm_cobrador.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_abm_cobrador.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\B.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>B.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Release\GeN.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>GeN.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\boton_vigilancia.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>boton_vigilancia.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_abm_cliente.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_abm_cliente.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\FacturaDuplicadoMediaHoja.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>FacturaDuplicadoMediaHoja.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\CPTriplicado..fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CPTriplicado..fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\EstadoCuenta.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>EstadoCuenta.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Debug\GeN.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>GeN.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_operaciones_vender.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_operaciones_vender.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\db\aliases.conf" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\db\</RemoteDir>
+                        <RemoteName>aliases.conf</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\cliente.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>cliente.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\TElectronica.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>TElectronica.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\PlanesCuotas.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>PlanesCuotas.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\LibroBancos.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>LibroBancos.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\Entrega.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Entrega.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\PagoCobrador.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>PagoCobrador.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_abm_plan.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_abm_plan.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\index.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>index.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\ServVenta.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ServVenta.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_abm_rubro.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_abm_rubro.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\anularventa.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>anularventa.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\boton_express.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>boton_express.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\bin\ib_util.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>ib_util.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\aumentarxporcentaje.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>aumentarxporcentaje.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\FacturaDuplicado.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>FacturaDuplicado.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\bin\intl\fbintl.conf" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\intl\</RemoteDir>
+                        <RemoteName>fbintl.conf</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\bin\intl\fbintl.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\intl\</RemoteDir>
+                        <RemoteName>fbintl.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_operaciones_crearpedido.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_operaciones_crearpedido.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\FacturaCuadruplicado.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>FacturaCuadruplicado.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-csr-ped-afip.png" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>conf-sis-fe-conf-csr-ped-afip.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\CPCuadruplicado.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CPCuadruplicado.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\db\fbembed.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\db\</RemoteDir>
+                        <RemoteName>fbembed.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\bin\msvcr80.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <Enabled>false</Enabled>
+                        <RemoteName>msvcr80.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\boton_contable.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>boton_contable.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\splashscreenROPA.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>splashscreenROPA.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\NCTicket.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>NCTicket.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\ProveedoresTotal.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ProveedoresTotal.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_servidor.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_servidor.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\conf-sis-fe.png" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>conf-sis-fe.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_listado_pedido.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_listado_pedido.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\FElectronica.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>FElectronica.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\GeN_Icon.ico" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>GeN_Icon.ico</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\comprar.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>comprar.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="GeN-Logo-44x44.png" Configuration="Debug" Class="UWP_DelphiLogo44">
+                    <Platform Name="Win32">
+                        <RemoteDir>Assets\</RemoteDir>
+                        <RemoteName>Logo44x44.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\bin\gds32.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>gds32.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\gananciaxvta.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>gananciaxvta.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\ClientesTotal.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ClientesTotal.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_abm_proveedor_contabilidad.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_abm_proveedor_contabilidad.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\tutorial.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>tutorial.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\fe.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>fe.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\splashscreenROPA.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>splashscreenROPA.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\CPOriginal.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CPOriginal.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\VendedoresDetalle.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>VendedoresDetalle.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\boton_ayuda.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>boton_ayuda.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-crt.png" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>conf-sis-fe-conf-crt.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\PresupuestoMediaHoja.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>PresupuestoMediaHoja.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_menu_configuracion.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_menu_configuracion.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\configuracion.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>configuracion.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_abm_proveedor.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_abm_proveedor.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\LibroIVACompras.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>LibroIVACompras.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\bin\icudt30.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>icudt30.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\NCElectronica.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>NCElectronica.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\cantidad_precio.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>cantidad_precio.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_operaciones_aumentarporporcentaje.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_operaciones_aumentarporporcentaje.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\Precios.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Precios.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\boton_cobranza.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>boton_cobranza.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\DeudoresPorCredito.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>DeudoresPorCredito.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\FacturaSimple.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>FacturaSimple.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\ean.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ean.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_listado_clientes.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_listado_clientes.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\categoria.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>categoria.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\GananciaXvta.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>GananciaXvta.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\CTriplicado..fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CTriplicado..fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\bin\icuuc30.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>icuuc30.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\precios.htm" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\</RemoteDir>
+                        <RemoteName>precios.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\CPDuplicado.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CPDuplicado.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\img\boton_completo.gif" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>boton_completo.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\GeN\db\icuuc30.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\db\</RemoteDir>
+                        <RemoteName>icuuc30.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_menu.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_menu.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ayuda\img\gen_abm.jpg" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\hlp\img\</RemoteDir>
+                        <RemoteName>gen_abm.jpg</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -516,7 +1978,6 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <DeployClass Name="AndroidLibnativeX86File"/>
                 <DeployClass Name="AndroidServiceOutput">
                     <Platform Name="Android">
                         <RemoteDir>library\lib\armeabi-v7a</RemoteDir>
@@ -934,11 +2395,11 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSDevice64" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSDevice32" Name="$(PROJECTNAME).app"/>
-                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Linux64" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="Android" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="OSX64" Name="$(PROJECTNAME).app"/>
@@ -946,8 +2407,8 @@
             </Deployment>
             <Platforms>
                 <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
             </Platforms>
-            <ModelSupport>False</ModelSupport>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>

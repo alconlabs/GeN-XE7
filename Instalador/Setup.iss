@@ -2,11 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GeN"
-#define MyAppVersion "201906151826"
+#define MyAppVersion "201906290949"
 #define MyAppPublisher "Civeloo"
 #define MyAppURL "http://www.civeloo.com/"
 #define MyAppExeName "GeN.exe"
-
+#define MyAppPath "C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN"
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
@@ -22,10 +22,10 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppPublisher}\{#MyAppName}
 DefaultGroupName={#MyAppPublisher}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\bin\LICENSE-2.0.txt
+LicenseFile={#MyAppPath}\bin\LICENSE-2.0.txt
 OutputDir=C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Instalador
 OutputBaseFilename=Instalar{#MyAppName}
-SetupIconFile=C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\bin\DeGsoft.ico
+SetupIconFile={#MyAppPath}\bin\DeGsoft.ico
 Compression=lzma
 SolidCompression=true
 VersionInfoVersion=19
@@ -36,8 +36,8 @@ VersionInfoCopyright={#MyAppPublisher}
 VersionInfoProductName={#MyAppName}
 VersionInfoProductVersion=19
 VersionInfoProductTextVersion={#MyAppVersion}
-SignTool=signtool
-SignedUninstaller=yes
+;SignTool=signtool
+;SignedUninstaller=yes
 
 [Languages]
 Name: spanish; MessagesFile: compiler:Languages\Spanish.isl
@@ -48,11 +48,11 @@ Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription
 
 [Files]
 ;Source: C:\Civeloo\GeN\bin\GeN.exe; DestDir: {app}; Flags: ignoreversion
-Source: C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\bin\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\db\*; DestDir: {app}\db\; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\hlp\*; DestDir: {app}\hlp\; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\img\*; DestDir: {app}\img\; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\rpt\*; DestDir: {app}\rpt\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: {#MyAppPath}\bin\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: {#MyAppPath}\db\*; DestDir: {app}\db\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: {#MyAppPath}\hlp\*; DestDir: {app}\hlp\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: {#MyAppPath}\img\*; DestDir: {app}\img\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: {#MyAppPath}\rpt\*; DestDir: {app}\rpt\; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

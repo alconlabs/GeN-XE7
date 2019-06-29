@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GeN"
-#define MyAppVersion "201906151826"
+#define MyAppVersion "201906290949"
 #define MyAppPublisher "Civeloo"
 #define MyAppURL "http://www.civeloo.com/"
 #define MyAppExeName "GeN.exe"
@@ -36,8 +36,8 @@ VersionInfoCopyright={#MyAppPublisher}
 VersionInfoProductName={#MyAppName}
 VersionInfoProductVersion=19
 VersionInfoProductTextVersion={#MyAppVersion}
-SignTool=signtool
-SignedUninstaller=yes
+;SignTool=signtool
+;SignedUninstaller=yes
 
 [Languages]
 Name: spanish; MessagesFile: compiler:Languages\Spanish.isl

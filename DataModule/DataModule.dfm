@@ -1,10 +1,10 @@
 object DM: TDM
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 420
-  Width = 653
+  Height = 230
+  Width = 256
   object BaseDatos: TIBDatabase
-    DatabaseName = 'C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN\db\GeN.FDB'
+    DatabaseName = 'I:\GitHub\GeN-XE7\Bin\GeN\db\GeN.FDB'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'

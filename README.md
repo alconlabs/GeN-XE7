@@ -22,6 +22,9 @@ https://sourceforge.net/projects/gen-xe7/files/InstalarGeN.exe/download
 Actualización
 https://sourceforge.net/projects/gen-xe7/files/ActualizarGeN.exe/download
 
+Microsoft Store
+https://www.microsoft.com/es-ar/p/civeloo-gen/9njsr4plfshh
+
 * Authors and Contributors
 @degsoft
 

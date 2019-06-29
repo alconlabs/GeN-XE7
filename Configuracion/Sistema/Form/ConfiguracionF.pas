@@ -17,7 +17,6 @@ type
     Tabla: TIBTable;
     Panel1: TPanel;
     BitBtn1: TBitBtn;
-    Label38: TLabel;
     BitBtn2: TBitBtn;
     PageControl1: TPageControl;
     TabSheet3: TTabSheet;

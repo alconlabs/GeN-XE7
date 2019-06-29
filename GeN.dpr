@@ -114,17 +114,18 @@ uses
   AfipUnit in 'Configuracion\Afip\AfipUnit.pas' {AfipForm},
   LoginCms1 in 'DataModule\LoginCms1.pas',
   service in 'DataModule\service.pas',
-  RestDM in 'DataModule\RestDM.pas' {RestDataModule: TDataModule};
+  RestDM in 'DataModule\RestDM.pas' {RestDataModule: TDataModule},
+  Vcl.Themes,
+  Vcl.Styles;
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.Title := 'GeN';
+  TStyleManager.TrySetStyle('Windows10 SlateGray');
+  Application.Title := 'Civeloo GeN';
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFullMainForm, FullMainForm);
-  Application.CreateForm(TRestDataModule, RestDataModule);
   Application.Run;
-
 end.

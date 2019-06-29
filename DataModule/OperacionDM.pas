@@ -570,14 +570,17 @@ begin
     tarj := T.FieldByName('TARJETA').AsFloat;
     impu := T.FieldByName('IMPUESTO').AsFloat;
     aIva := T.FieldByName('ALICIVA').AsInteger;
-    i10 := DM.TraerValor2('AlicIva', 'IMPORTE', IntToStr(aIva), 'ID', '4');
-    if i10=0 then i10 := T.FieldByName('IVA1').AsFloat;
-    n10 := DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '4');
-    if n10=0 then n10 := T.FieldByName('SUBTOTAL').AsFloat;
-    i21 := DM.TraerValor2('AlicIva', 'IMPORTE', IntToStr(aIva), 'ID', '5');
-    if i21=0 then i21 := T.FieldByName('IVA2').AsFloat;
-    n21 := DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '5');
-    if n21=0 then n21 := T.FieldByName('SUBTOTAL').AsFloat;
+    if (let='A') and (let='B') then
+    begin
+      i10 := DM.TraerValor2('AlicIva', 'IMPORTE', IntToStr(aIva), 'ID', '4');
+      if i10=0 then i10 := T.FieldByName('IVA1').AsFloat;
+      n10 := DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '4');
+      if n10=0 then n10 := T.FieldByName('SUBTOTAL').AsFloat;
+      i21 := DM.TraerValor2('AlicIva', 'IMPORTE', IntToStr(aIva), 'ID', '5');
+      if i21=0 then i21 := T.FieldByName('IVA2').AsFloat;
+      n21 := DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '5');
+      if n21=0 then n21 := T.FieldByName('SUBTOTAL').AsFloat;
+    end;
     comv := T.FieldByName('COSTO').AsFloat;
     deud := T.FieldByName('DEUDA').AsFloat;
     com := T.FieldByName('COMISION').AsFloat;

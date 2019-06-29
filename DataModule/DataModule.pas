@@ -10,7 +10,7 @@ uses
   FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, IBX.IBScript, System.Net.HTTPClient, System.StrUtils,
-  ShellApi, System.Variants;
+  ShellApi, System.Variants, ShlObj, System.IOUtils;
 
 type
 
@@ -43,6 +43,7 @@ type
     procedure IniciarModificacionTabla(nombreTabla:string);
     procedure AgregarCampoModificacionTabla(nombreCampo: string;tipo: TFieldType;tamaño: Integer);
     procedure TerminarModificacionTabla;
+    procedure ObtenerSO;
   public
   const
     NumThreads: Integer = 4;
@@ -77,6 +78,7 @@ type
     procedure ActualizarValor(tabla, campo, codigo, valor: string);
     procedure EnviarEmail(email,asunto,cuerpo,adjunto: String);
     function ExisteThunderbird():boolean;
+    function CopyDir(const Source, Target: string): Boolean;
   end;
 
 const
@@ -101,7 +103,7 @@ var
   Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa,
   PuntoVenta, Titular, CUIT, IngresosBrutos, reporte, catIVA: string;
   Permiso: Integer;
-  LoginOK, Cancelar, envEmail: boolean;
+  LoginOK, Cancelar, envEmail, microsoftStore: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
   webUrl, webRes, webUsr, webPsw, webUpd,
   afipUrl, afipRes, afipUsr, afipPsw,
@@ -311,6 +313,7 @@ end;
 
 procedure TDM.DataModuleCreate(Sender: TObject);
 begin
+  ObtenerSO;
   GetBuildInfo;//(v1,v2,v3,v4);
   Usuario := '0';
   Oculto := '0';
@@ -318,19 +321,27 @@ begin
     U := ExtractFileDrive(Application.ExeName);
   Maquina := GetVolumeID(U);
   connection;
-  Descargar('https://raw.githubusercontent.com/DeGsoft/GeN-XE7/master/Instalador/Update.iss'
-  , Path+'Update.iss');
+//  if not microsoftStore then
+//  Descargar('https://raw.githubusercontent.com/DeGsoft/GeN-XE7/master/Instalador/Update.iss'
+//  , Path+'Update.iss');
   ActualizarBase;
   TraerConfig;
 end;
 
 procedure TDM.connection;
+var
+  origen, destino: string;
 begin
   FormatearFecha;
   if BaseDatos.Connected = True then BaseDatos.Close;
   // Obtiene la ruta y el nombre de la base de datos
-  Path := ExtractFilePath(Application.ExeName);
-  Path := StringReplace(Path, 'bin\', '', [rfReplaceAll]);
+  Path := TPath.GetDocumentsPath()+'\Civeloo\GeN\';
+  if  not FileExists(Path+'db\GeN.FDB') then
+  begin
+    origen := ExtractFilePath(Application.ExeName);
+    origen := StringReplace(origen, 'bin\', '', [rfReplaceAll]);
+    CopyDir(origen, Path);
+  end;
   LeerINI;
   U := ExtractFileDrive(Application.ExeName);
   if bd <> '' then Path := bd;
@@ -930,6 +941,27 @@ begin
       result:=false;
     end;
   end;
+end;
+
+function TDM.CopyDir;
+var
+  SHFileOpStruct: TSHFileOpStruct;
+begin
+  ZeroMemory(@SHFileOpStruct, SizeOf(SHFileOpStruct));
+  with SHFileOpStruct do
+  begin
+    wFunc  := FO_COPY;
+    fFlags := FOF_NO_UI;
+//    fFlags := FOF_NOCOPYSECURITYATTRIBS;
+    pFrom  := PChar(Source + #0);
+    pTo    := PChar(Target)
+  end;
+  Result := (0 = ShFileOperation(SHFileOpStruct));
+end;
+
+procedure TDM.ObtenerSO;
+begin
+  microsoftStore := (AnsiPos(trim('WindowsApps'),trim(ExtractFilePath(Application.ExeName)))<>0);
 end;
 
 end.
