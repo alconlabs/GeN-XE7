@@ -2,11 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GeN"
-#define MyAppVersion "201906290949"
+#define MyAppVersion "201907022009"
 #define MyAppPublisher "Civeloo"
 #define MyAppURL "http://www.civeloo.com/"
 #define MyAppExeName "GeN.exe"
-#define MyAppPath "C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Bin\GeN"
+#define MyAppPath "C:\GitHub\GeN-XE7\Bin\GeN"
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
@@ -23,7 +23,7 @@ DefaultDirName={pf}\{#MyAppPublisher}\{#MyAppName}
 DefaultGroupName={#MyAppPublisher}\{#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile={#MyAppPath}\bin\LICENSE-2.0.txt
-OutputDir=C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Instalador
+OutputDir=C:\GitHub\GeN-XE7\Instalador
 OutputBaseFilename=Instalar{#MyAppName}
 SetupIconFile={#MyAppPath}\bin\DeGsoft.ico
 Compression=lzma

@@ -2,9 +2,9 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2019/06/20 10:47:47.000.373,=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/06/20 10:48:32.000.179,I:\GitHub\GeN-XE7\Unit1.dfm=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>2019/06/20 10:48:32.000.179,I:\GitHub\GeN-XE7\Unit1.pas=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/06/20 10:48:57.000.355,I:\GitHub\GeN-XE7\GeN.dproj=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2019/06/20 10:48:32.000.179,C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.dfm=I:\GitHub\GeN-XE7\Unit1.dfm</Transaction>
+    <Transaction>2019/06/20 10:48:32.000.179,C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.pas=I:\GitHub\GeN-XE7\Unit1.pas</Transaction>
+    <Transaction>2019/06/20 10:48:57.000.355,C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Project1.dproj=I:\GitHub\GeN-XE7\GeN.dproj</Transaction>
     <Transaction>2019/06/20 10:51:02.000.353,=I:\GitHub\GeN-XE7\Menu\Full\Form\FullMainF.pas</Transaction>
     <Transaction>2019/06/20 10:52:00.000.122,=I:\GitHub\GeN-XE7\DataModule\DataModule.pas</Transaction>
     <Transaction>2019/06/20 10:52:10.000.605,I:\GitHub\GeN-XE7\Unit1.pas=</Transaction>
@@ -53,11 +53,11 @@
     <Transaction>2019/06/20 11:08:40.000.700,=I:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscaFactura.pas</Transaction>
     <Transaction>2019/06/20 11:10:26.000.121,=I:\GitHub\GeN-XE7\Configuracion\Afip\AfipUnit.pas</Transaction>
     <Transaction>2019/06/20 11:28:17.000.201,=I:\GitHub\GeN-XE7\DataModule\AfipDM.pas</Transaction>
-    <Transaction>2019/06/20 11:29:00.000.266,=I:\GitHub\GeN-XE7\DataModule\RestDM.pas</Transaction>
     <Transaction>2019/06/20 11:29:00.000.045,=I:\GitHub\GeN-XE7\DataModule\ImprimirDM.pas</Transaction>
+    <Transaction>2019/06/20 11:29:00.000.266,=I:\GitHub\GeN-XE7\DataModule\RestDM.pas</Transaction>
     <Transaction>2019/06/20 11:29:00.000.061,=I:\GitHub\GeN-XE7\DataModule\LoginCms1.pas</Transaction>
     <Transaction>2019/06/20 11:29:00.000.285,=I:\GitHub\GeN-XE7\DataModule\service.pas</Transaction>
     <Transaction>2019/06/20 11:29:00.000.143,=I:\GitHub\GeN-XE7\DataModule\OperacionDM.pas</Transaction>
   </Transactions>
-	<BT_BuildType>AppStore</BT_BuildType>
+	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>

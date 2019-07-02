@@ -653,15 +653,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\ClientesTotal_000.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ClientesTotal_000.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="Win32\Release\AppxManifest.xml" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\</RemoteDir>
             <RemoteName>AppxManifest.xml</RemoteName>
@@ -746,15 +737,6 @@
         <DeployFile Include="ayuda\img\gen_buscar_articulo.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_buscar_articulo.jpg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\ComprobanteCuadruplicado_000.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ComprobanteCuadruplicado_000.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>

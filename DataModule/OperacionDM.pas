@@ -546,7 +546,8 @@ begin
     Exit;
   end;
   FormatSettings.ShortDateFormat := 'mm';
-  If (DateToStr(now) <> DateToStr(T.Fields[2].AsDateTime)) then
+//  If (DateToStr(now) > DateToStr(T.Fields[2].AsDateTime+1)) then
+  If ((now-30) > (T.Fields[2].AsDateTime)) then
   begin
     MessageDlg(' no se puede anular por ser de un periodo anterior', mtError,
       [mbOK], 0);
