@@ -45,7 +45,7 @@ type
   public
     { Public declarations }
     Codigo, CodProve, Tipo: String;
-    Cancela, anular: boolean;
+    salir, Cancela, anular: boolean;
   end;
 
 var
@@ -93,12 +93,15 @@ end;
 procedure TBuscaFacturaForm.FormKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+  if Key = VK_Escape then
+  begin
+    salir := True;
+    Close;
+  end;
   if not DBGrid1.Focused = True then
   begin
     ActualizarGrilla(ventaEdit.Text,LetraEdit.Text);
   end;
-  if Key = VK_Escape then
-    Close;
 end;
 
 procedure TBuscaFacturaForm.FormShow(Sender: TObject);

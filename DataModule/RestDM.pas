@@ -8,10 +8,11 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, REST.Response.Adapter, REST.Client, Data.DB,
   IBX.IBCustomDataSet, IBX.IBQuery, Data.Bind.Components, Data.Bind.ObjectScope,
-  System.JSON, REST.Types, DataModule;
+  System.JSON, REST.Types, DataModule, Winapi.ShellAPI, REST.Utils, Winapi.Windows,
+  Vcl.DdeMan, FMX.Dialogs;
 
 type
-  TRestDataModule = class(TDataModule)
+  TDMR = class(TDataModule)
     RESTResponseCategories: TRESTResponse;
     RESTResponse1: TRESTResponse;
     RESTClientCategories: TRESTClient;
@@ -31,8 +32,23 @@ type
     procedure ResetRESTComponentsToDefaults;
     procedure GetRESTCategories(resource: string);
     procedure IniciarREST;
+
+    procedure IniciarObtenerToken;
+    procedure EjecutarObtenerToken;
+    procedure IniciarObtenerRest(u,r:string;m:TRESTRequestMethod);
+    function GetURL(service: string): string;
+    procedure AbrirEnBrowser(LURL:string);
+    procedure ObtenerAuthCode;
+    procedure ObtenerAccessToken;
+    procedure ObtenerRefreshToken;
+    procedure ObtenerConsultaRest(r,q:string);
+
   public
     { Public declarations }
+    JSONValue1 : TJSONValue;
+    authCode, accessToken :string;
+    procedure ObtenerOrderRecent;
+
     procedure GetREST(resource: string);
     function existeEnTJSONArray(tabla: string ; streams: TJSONArray): string;
     procedure importCategories(borrar : Boolean);
@@ -43,18 +59,24 @@ type
     procedure CrearOrden;
   end;
 
+const
+  clientId = '5480711421985209';
+  clientSecret = 'jXCjaf3TmYxUaA84GRVFEMDBgvTPLLFZ';
+  url = 'https://api.mercadolibre.com/';
+  redirectUri = 'https://www.mercadolibre.com';
+
 var
-  RestDataModule: TRestDataModule;
+  DMR: TDMR;
 
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses OperacionDM;
+uses OperacionDM, udmMercadoLibre;
 
 {$R *.dfm}
 
-procedure TRestDataModule.GetREST;
+procedure TDMR.GetREST;
 begin
   IniciarREST;
   RESTRequest1.Resource := resource;
@@ -63,7 +85,7 @@ begin
   O.Open;
 end;
 
-procedure TRestDataModule.ResetRESTComponentsToDefaults;
+procedure TDMR.ResetRESTComponentsToDefaults;
 begin
   /// reset all of the rest-components for a complete
   /// new request
@@ -78,7 +100,7 @@ begin
   RESTResponseDataSetAdapter1.ResetToDefaults;
 end;
 
-procedure TRestDataModule.GetRESTCategories;
+procedure TDMR.GetRESTCategories;
 begin
   FDMemTableCategories.Close;
   RESTClientCategories.ResetToDefaults;
@@ -92,12 +114,12 @@ begin
     FDMemTableCategories.Open;
 end;
 
-procedure TRestDataModule.DataModuleCreate(Sender: TObject);
+procedure TDMR.DataModuleCreate(Sender: TObject);
 begin
   JAline_items := TJSONArray.Create();
 end;
 
-function TRestDataModule.existeEnTJSONArray;
+function TDMR.existeEnTJSONArray;
 var
   stream: TJSONObject;
   id: TJSONString;
@@ -119,7 +141,7 @@ begin
   result :='0';
 end;
 
-procedure TRestDataModule.importCategories;
+procedure TDMR.importCategories;
 var
   id,name,parent: string;
   i,p: integer;
@@ -192,7 +214,7 @@ begin
   end;
 end;
 
-procedure TRestDataModule.PostREST;
+procedure TDMR.PostREST;
 begin
   IniciarREST;
   RESTRequest1.Resource := resource;
@@ -205,7 +227,7 @@ begin
   RESTRequest1.Execute;
 end;
 
-procedure TRestDataModule.PutREST;
+procedure TDMR.PutREST;
 begin
   ResetRESTComponentsToDefaults;
   RESTClient1.BaseURL := webUrl;
@@ -220,7 +242,7 @@ begin
   RESTRequest1.Execute;
 end;
 
-procedure TRestDataModule.IniciarREST;
+procedure TDMR.IniciarREST;
 begin
   ResetRESTComponentsToDefaults;
   RESTClient1.BaseURL := webUrl;
@@ -229,7 +251,7 @@ begin
   RESTRequest1.Params.AddItem('consumer_secret', webPsw, TRESTRequestParameterKind.pkGETorPOST);
 end;
 
-procedure TRestDataModule.CrearOrden;
+procedure TDMR.CrearOrden;
 var
   Jbilling, Jshipping, Jshipping_lines, Jorder : TJSONObject;
   JAbilling, JAshipping, JAshipping_lines : TJSONArray;
@@ -334,11 +356,244 @@ begin
 
 end;
 
-function TRestDataModule.Jline_items;
+function TDMR.Jline_items;
 begin
   Result := TJSONObject.Create();
   Result.AddPair(TJSONPair.Create('product_id', codigo) );
   Result.AddPair(TJSONPair.Create('quantity', cantidad) );
+end;
+
+
+function TDMR.GetURL;
+var
+  DDEClient: TDDEClientConv;
+  s, URL, Title : string;
+ begin
+   s := '';
+   try
+     DDEClient := TDDEClientConv.Create(nil);
+     with DDEClient do
+     begin
+       if SetLink('IExplore','WWW_GetWindowInfo') then
+//         s := RequestData('0xFFFFFFFF,sURL,sTitle')
+         s := RequestData('0xFFFFFFFF')
+     end;
+  if s <> '' then
+     begin
+       delete(s,1,1);
+       URL := copy(s,1,pos('","',s)-1);
+       delete(s,1,pos('","',s)+2);
+       Title := copy(s,1,pos('"',s) - 1);
+       result:=URL;
+//       result:=s;
+     end;
+     exit;
+   except
+//     MessageDlg('URL attempt failed!',mtError,[mbOK],0);
+   end;
+end;
+
+//procedure TDMR.ResetRESTComponentsToDefaults;
+//begin
+//  /// reset all of the rest-components for a complete
+//  /// new request
+//  ///
+//  /// --> we do not clear the private data from the
+//  /// individual authenticators.
+//  ///
+//  RESTRequest1.ResetToDefaults;
+//  RESTClient1.ResetToDefaults;
+////  RESTResponse1.ResetToDefaults;
+////  RESTResponseDataSetAdapter1.ResetToDefaults;
+//end;
+
+procedure TDMR.ObtenerAuthCode;
+var
+  LURL: string;
+begin
+//https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=5480711421985209
+  LURL := 'https://auth.mercadolibre.com.ar/authorization';
+  LURL := LURL + '?response_type=' + URIEncode('code');
+  LURL := LURL + '&client_id=' + URIEncode(clientId);
+  ShellExecute(0,'open',pchar(LURL),nil,nil,SW_SHOWNORMAL);
+  authCode := Trim(InputBox('Por favor copiar y pegar de la barra de direcciones', 'https://www.mercadolibre.com/?code=', ''));
+end;
+
+procedure TDMR.IniciarObtenerToken;
+begin
+  IniciarObtenerRest(url,'oauth/token?',rmPOST);
+//  ResetRESTComponentsToDefaults;
+//  RESTClient1.BaseURL := url;
+//  with RESTRequest1 do
+//  begin
+//    Method := rmPOST;
+//    Resource := 'oauth/token?';
+//    Params.AddItem('client_id', clientId, TRESTRequestParameterKind.pkGETorPOST);
+//    Params.AddItem('client_secret', clientSecret, TRESTRequestParameterKind.pkGETorPOST);
+//    Params.AddItem('redirect_uri', redirectUri, TRESTRequestParameterKind.pkGETorPOST);
+//  end;
+end;
+
+//procedure TDMR.DataModuleCreate(Sender: TObject);
+//begin
+////  with DM do
+////  begin
+//    refreshToken := DM.dbMain.ExecSQLScalar('SELECT refresh FROM token');
+////  end;
+//end;
+
+procedure TDMR.EjecutarObtenerToken;
+var
+  LToken: string;
+begin
+  with RESTRequest1 do
+  begin
+    Execute;
+    if Response.GetSimpleValue('access_token', LToken) then
+      accessToken := LToken;
+    if Response.GetSimpleValue('refresh_token', LToken) then
+      dmML.refreshToken := LToken;
+  end;
+end;
+
+procedure TDMR.ObtenerAccessToken;
+//var
+//  LToken: string;
+begin
+  if authCode='' then ObtenerAuthCode;
+  IniciarObtenerToken;
+//  ResetRESTComponentsToDefaults;
+//  RESTClient1.BaseURL := url;
+  with RESTRequest1 do
+  begin
+//  Method := rmPOST;
+//  Resource := 'oauth/token?';
+    Params.AddItem('grant_type', 'authorization_code', TRESTRequestParameterKind.pkGETorPOST);
+//  Params.AddItem('client_id', clientId, TRESTRequestParameterKind.pkGETorPOST);
+//  Params.AddItem('client_secret', clientSecret, TRESTRequestParameterKind.pkGETorPOST);
+    Params.AddItem('code', authCode, TRESTRequestParameterKind.pkGETorPOST);
+    Params.AddItem('redirect_uri', redirectUri, TRESTRequestParameterKind.pkGETorPOST);
+//  Execute;
+//  if Response.GetSimpleValue('access_token', LToken) then
+//    AccessToken := LToken;
+//  if Response.GetSimpleValue('refresh_token', LToken) then
+//    RefreshToken := LToken;
+  end;
+  EjecutarObtenerToken;
+end;
+
+procedure TDMR.ObtenerRefreshToken;
+//var
+//  LToken: string;
+begin
+  with dmML do
+  begin
+  //https://api.mercadolibre.com/oauth/token?grant_type=refresh_token&client_id=APP_ID&client_secret=SECRET_KEY&refresh_token=REFRESH_TOKEN
+    if refreshToken='' then ObtenerAccessToken;
+    IniciarObtenerToken;
+  //  ResetRESTComponentsToDefaults;
+  //  RESTClient1.BaseURL := url;
+    with RESTRequest1 do
+    begin
+  //  Method := rmPOST;
+  //  Resource := 'oauth/token?';
+      Params.AddItem('grant_type', 'refresh_token', TRESTRequestParameterKind.pkGETorPOST);
+  //  Params.AddItem('client_id', clientId, TRESTRequestParameterKind.pkGETorPOST);
+  //  Params.AddItem('client_secret', clientSecret, TRESTRequestParameterKind.pkGETorPOST);
+      Params.AddItem('refresh_token', refreshToken, TRESTRequestParameterKind.pkGETorPOST);
+  //  Params.AddItem('redirect_uri', redirectUri, TRESTRequestParameterKind.pkGETorPOST);
+  //  Execute;
+  //  if Response.GetSimpleValue('access_token', LToken) then
+  //    AccessToken := LToken;
+  //  if Response.GetSimpleValue('refresh_token', LToken) then
+  //    RefreshToken := LToken;
+    end;
+      EjecutarObtenerToken;
+  end;
+end;
+
+procedure TDMR.IniciarObtenerRest;
+begin
+  ResetRESTComponentsToDefaults;
+  RESTClient1.BaseURL := u;
+  with RESTRequest1 do
+  begin
+    Method := m;
+    Resource := r;
+    Params.AddItem('client_id', clientId, TRESTRequestParameterKind.pkGETorPOST);
+//    Params.AddItem('site_id', 'MLA', TRESTRequestParameterKind.pkGETorPOST);
+    Params.AddItem('client_secret', clientSecret, TRESTRequestParameterKind.pkGETorPOST);
+//    Params.AddItem('redirect_uri', redirectUri, TRESTRequestParameterKind.pkGETorPOST);
+  end;
+end;
+
+procedure TDMR.ObtenerConsultaRest;
+begin
+  if  accessToken='' then ObtenerRefreshToken;
+//  r:='users/me?';
+  IniciarObtenerRest(url,r,rmGET);
+////$ curl https://api.mercadolibre.com/users/me?access_token=$ACCESS_TOKEN
+//  ResetRESTComponentsToDefaults;
+//  with RESTClient1 do
+//  begin
+//    BaseURL := 'https://api.mercadolibre.com/';
+//  end;
+  with RESTRequest1 do
+  begin
+//  Method := rmGET;
+//  Resource := 'users/me?';
+//  Params.AddItem('accept', 'json', TRESTRequestParameterKind.pkHTTPHEADER);
+  Params.AddItem('accept', 'application/json', TRESTRequestParameterKind.pkHTTPHEADER, [TRESTRequestParameterOption.poDoNotEncode]);//orders/recent
+  Params.AddItem('access_token', accessToken, TRESTRequestParameterKind.pkGETorPOST);
+  if q<>''then Params.AddItem('q', q, TRESTRequestParameterKind.pkGETorPOST);
+////  OAuth2Authenticator1.AccessToken := 'APP_USR-5480711421985209-061218-6833fd7ab8853a5234718fc204b7d270-242069506';
+////  OAuth2Authenticator1.AccessTokenParamName := 'access_token';
+  Execute;
+  end;
+end;
+
+procedure TDMR.ObtenerOrderRecent;
+var
+  order_items, buyer, item, shipping : TJSONValue;
+  i : string;
+begin
+  with dmML do
+  begin
+    try
+      i:='0';
+      ObtenerConsultaRest('orders/search/recent?seller=242069506','');
+      JSONValue1 := TJSONObject.ParseJSONValue(RESTRequest1.Response.Content);
+      if JSONVAlue1 is TJSONObject then
+      begin
+        order_id := JSONValue1.GetValue<Integer>('results['+i+'].id');
+        order_status := JSONValue1.GetValue<String>('results['+i+'].status');
+        order_items := JSONValue1.GetValue<TJSONValue>('results['+i+'].order_items[0]');
+    //      ShowMessage( JSONValue1.GetValue<TJSONValue>('results['+i+'].order_items').ToString );
+    //      order_items := JSONValue1.GetValue<TJSONValue>('results['+i+'].order_items[0]');
+        item := order_items.GetValue<TJSONValue>('item');
+        item_id := item.GetValue<string>('id');
+        item_title := item.GetValue<string>('title');
+        order_items_quantity := order_items.GetValue<Integer>('quantity');
+        buyer := JSONValue1.GetValue<TJSONValue>('results['+i+'].buyer');
+        buyer_id := buyer.GetValue<Integer>('id');
+        shipping := JSONValue1.GetValue<TJSONValue>('results['+i+'].shipping');
+//ShowMessage( JSONValue1.GetValue<TJSONValue>('results['+i+'].shipping').ToString );
+        if shipping.GetValue<TJSONValue>('id').ToString<>'null' then
+          shipping_id := shipping.GetValue<Integer>('id');
+      end;
+    finally
+      AgregarOrder;
+    end;
+    if shipping_id>0 then
+      AbrirEnBrowser(
+        'https://api.mercadolibre.com/shipment_labels?shipment_ids='+IntToStr(shipping_id)+'&response_type=pdf&access_token='+accessToken
+      );
+  end;
+end;
+
+procedure TDMR.AbrirEnBrowser;
+begin
+  ShellExecute(0,'open',pchar(LURL),nil,nil,SW_SHOWNORMAL);
 end;
 
 end.

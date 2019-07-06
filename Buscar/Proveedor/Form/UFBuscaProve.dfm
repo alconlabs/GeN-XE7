@@ -17,6 +17,7 @@ object FBuscaProve: TFBuscaProve
   Position = poScreenCenter
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
+  OnKeyUp = FormKeyUp
   PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel

@@ -105,7 +105,7 @@ begin
     if (webUpd <> '') then ActualizarCB.checked := StrToBool(webUpd);
   end;
   OperacionDataModule := TOperacionDataModule.Create(self);
-  RestDataModule := TRestDataModule.Create(self);
+  DMR := TDMR.Create(self);
 end;
 
 procedure TMigrarForm.FormShow(Sender: TObject);
@@ -150,7 +150,7 @@ var
   end;
 
 begin
-with RestDataModule do
+with DMR do
   begin
     ProgressBar1.Position := ProgressBar1.Position+1;
 //    with dm do begin

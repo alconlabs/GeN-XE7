@@ -519,7 +519,6 @@ object FBuscaArticulo: TFBuscaArticulo
       Height = 17
       Alignment = taLeftJustify
       Caption = 'Disponible'
-      Checked = True
       Color = clBlack
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -528,7 +527,6 @@ object FBuscaArticulo: TFBuscaArticulo
       Font.Style = []
       ParentColor = False
       ParentFont = False
-      State = cbChecked
       TabOrder = 2
     end
   end

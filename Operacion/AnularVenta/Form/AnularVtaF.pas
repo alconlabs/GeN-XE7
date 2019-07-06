@@ -27,6 +27,7 @@ type
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
+    salir : Boolean;
   public
     { Public declarations }
   end;
@@ -61,6 +62,8 @@ begin
   BuscaFacturaForm.anular := true;
   try
     BuscaFacturaForm.ShowModal;
+    salir := BuscaFacturaForm.salir;
+    if salir then Exit;
   finally
     if BuscaFacturaForm.TipoRadioGroup.ItemIndex=0 then
       begin
@@ -84,6 +87,8 @@ end;
 procedure TFAnulaReimp.FormShow(Sender: TObject);
 begin
   buscarBitBtn.Click;
+  if salir then
+    PostMessage(Self.Handle, WM_CLOSE, 0, 0);
 end;
 
 procedure TFAnulaReimp.BitBtn2Click(Sender: TObject);

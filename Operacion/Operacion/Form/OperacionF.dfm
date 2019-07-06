@@ -3,7 +3,7 @@ object OperacionForm: TOperacionForm
   Top = 220
   BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
   Caption = 'Operacion'
-  ClientHeight = 466
+  ClientHeight = 467
   ClientWidth = 792
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -30,8 +30,6 @@ object OperacionForm: TOperacionForm
     Color = clBlack
     ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = -1
-    ExplicitTop = 24
     object Label40: TLabel
       Left = 28
       Top = 126
@@ -59,7 +57,7 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object Label29: TLabel
-      Left = 995
+      Left = 998
       Top = 26
       Width = 44
       Height = 13
@@ -156,33 +154,6 @@ object OperacionForm: TOperacionForm
       ParentFont = False
       Visible = False
     end
-    object Label4: TLabel
-      Left = 93
-      Top = 3
-      Width = 78
-      Height = 13
-      Caption = 'Presupuesto?'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-      Visible = False
-    end
-    object Label7: TLabel
-      Left = 4
-      Top = 3
-      Width = 56
-      Height = 13
-      Caption = 'REMITO?'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
     object Label8: TLabel
       Left = 170
       Top = 25
@@ -223,10 +194,10 @@ object OperacionForm: TOperacionForm
       ParentFont = False
     end
     object TipoRadioGroup: TRadioGroup
-      Left = 855
-      Top = 0
-      Width = 137
-      Height = 104
+      Left = 684
+      Top = -1
+      Width = 105
+      Height = 72
       Caption = 'Tipo'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -237,10 +208,9 @@ object OperacionForm: TOperacionForm
       Items.Strings = (
         'Venta'
         'Presupuesto'
-        'Financiaci'#243'n')
+        'Remito')
       ParentFont = False
       TabOrder = 0
-      Visible = False
     end
     object ComboBox1: TComboBox
       Left = 90
@@ -375,42 +345,19 @@ object OperacionForm: TOperacionForm
       TabOrder = 11
       Visible = False
     end
-    object Presupuesto: TCheckBox
-      Left = 171
-      Top = 1
-      Width = 17
-      Height = 17
-      TabOrder = 12
-      Visible = False
-    end
-    object PedidoCheckBox: TCheckBox
-      Left = 60
-      Top = 1
-      Width = 14
-      Height = 16
-      Color = clBlack
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-      TabOrder = 13
-    end
     object EmailEdit: TEdit
       Left = 205
       Top = 22
       Width = 211
       Height = 21
-      TabOrder = 14
+      TabOrder = 12
     end
     object CuitEdit: TEdit
       Left = 205
       Top = 47
       Width = 124
       Height = 21
-      TabOrder = 15
+      TabOrder = 13
     end
     object EnviarEmailCheckBox: TCheckBox
       Left = 472
@@ -425,7 +372,7 @@ object OperacionForm: TOperacionForm
       Font.Style = []
       ParentColor = False
       ParentFont = False
-      TabOrder = 16
+      TabOrder = 14
       OnClick = EnviarEmailCheckBoxClick
     end
   end
@@ -617,7 +564,7 @@ object OperacionForm: TOperacionForm
     Left = 0
     Top = 97
     Width = 584
-    Height = 312
+    Height = 313
     Align = alClient
     ColCount = 11
     FixedCols = 0
@@ -643,7 +590,7 @@ object OperacionForm: TOperacionForm
   end
   object Panel3: TPanel
     Left = 0
-    Top = 409
+    Top = 410
     Width = 792
     Height = 57
     Align = alBottom
@@ -651,7 +598,7 @@ object OperacionForm: TOperacionForm
     ParentBackground = False
     TabOrder = 0
     object ProcesarBitBtn: TBitBtn
-      Left = 710
+      Left = 712
       Top = 4
       Width = 80
       Height = 50
@@ -802,7 +749,7 @@ object OperacionForm: TOperacionForm
     Left = 584
     Top = 97
     Width = 208
-    Height = 312
+    Height = 313
     Align = alRight
     Color = clWhite
     Font.Charset = DEFAULT_CHARSET

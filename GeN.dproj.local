@@ -53,11 +53,14 @@
     <Transaction>2019/06/20 11:08:40.000.700,=I:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscaFactura.pas</Transaction>
     <Transaction>2019/06/20 11:10:26.000.121,=I:\GitHub\GeN-XE7\Configuracion\Afip\AfipUnit.pas</Transaction>
     <Transaction>2019/06/20 11:28:17.000.201,=I:\GitHub\GeN-XE7\DataModule\AfipDM.pas</Transaction>
-    <Transaction>2019/06/20 11:29:00.000.045,=I:\GitHub\GeN-XE7\DataModule\ImprimirDM.pas</Transaction>
-    <Transaction>2019/06/20 11:29:00.000.266,=I:\GitHub\GeN-XE7\DataModule\RestDM.pas</Transaction>
-    <Transaction>2019/06/20 11:29:00.000.061,=I:\GitHub\GeN-XE7\DataModule\LoginCms1.pas</Transaction>
     <Transaction>2019/06/20 11:29:00.000.285,=I:\GitHub\GeN-XE7\DataModule\service.pas</Transaction>
+    <Transaction>2019/06/20 11:29:00.000.045,=I:\GitHub\GeN-XE7\DataModule\ImprimirDM.pas</Transaction>
+    <Transaction>2019/06/20 11:29:00.000.061,=I:\GitHub\GeN-XE7\DataModule\LoginCms1.pas</Transaction>
+    <Transaction>2019/06/20 11:29:00.000.266,=I:\GitHub\GeN-XE7\DataModule\RestDM.pas</Transaction>
     <Transaction>2019/06/20 11:29:00.000.143,=I:\GitHub\GeN-XE7\DataModule\OperacionDM.pas</Transaction>
+    <Transaction>2019/07/03 14:40:34.000.545,=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
+    <Transaction>2019/07/03 14:46:09.000.804,C:\GitHub\GeN-XE7\Unit2.dfm=C:\GitHub\GeN-XE7\DataModule\udmMercadoLibre.dfm</Transaction>
+    <Transaction>2019/07/03 14:46:09.000.804,C:\GitHub\GeN-XE7\Unit2.pas=C:\GitHub\GeN-XE7\DataModule\udmMercadoLibre.pas</Transaction>
   </Transactions>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>

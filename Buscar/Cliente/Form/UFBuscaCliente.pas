@@ -36,10 +36,12 @@ type
       Shift: TShiftState);
     Procedure Buscar;
     procedure Image1Click(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
     { Public declarations }
+    salir : Boolean;
   end;
 
 var
@@ -68,6 +70,16 @@ procedure TFBuscaCliente.FormKeyDown(Sender: TObject; var Key: Word;
 begin
   IF Key = VK_DOWN then
     DBGrid1.SetFocus;
+end;
+
+procedure TFBuscaCliente.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if Key = VK_Escape then
+  begin
+    salir := True;
+    Close;
+  end;
 end;
 
 procedure TFBuscaCliente.SiBitBtnClick(Sender: TObject);

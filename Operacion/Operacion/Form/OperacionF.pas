@@ -58,17 +58,13 @@ type
     cbTipo: TComboBox;
     Label31: TLabel;
     Label2: TLabel;
-    Label4: TLabel;
     FEOtro: TEdit;
     PagareCheckBox: TCheckBox;
-    Presupuesto: TCheckBox;
     ComprobanteEdit: TEdit;
     Label5: TLabel;
     PercEdit: TEdit;
     Label6: TLabel;
     DescuentoBitBtn: TBitBtn;
-    Label7: TLabel;
-    PedidoCheckBox: TCheckBox;
     TotalLabel: TLabel;
     Label8: TLabel;
     EmailEdit: TEdit;
@@ -106,6 +102,7 @@ type
     procedure EnviarEmailCheckBoxClick(Sender: TObject);
   private
     { Private declarations }
+    salir : Boolean;
   public
   { Public declarations }
     OK, Proveedor, FPagoOK, Compra, Pedido: Boolean;
@@ -156,6 +153,7 @@ end;
 procedure TOperacionForm.TraerArticulo;
 var
   TASA : String;
+  p,c :Double;
 begin
   if Cuenta > 1 then SGFact.RowCount := SGFact.RowCount + 1;
   Tabla.Close;
@@ -163,7 +161,8 @@ begin
   if codigoArticulo <> '' then Tabla.Open;
   if Tabla.RecordCount < 1 then
     begin
-      MessageDlg('¡El código no existe!', mtError, [mbOK], 0);
+//      MessageDlg('¡El código no existe!', mtError, [mbOK], 0);
+      ShowMessage('¡El código no existe!');
       AgregarBitBtn.SetFocus;
     end
   else
@@ -176,6 +175,9 @@ begin
       TASA := Tabla.FieldByName('TASA').AsString;
       if TASA='105' then TASA := '10.5';
       {iva}SGFact.Cells[6, Cuenta] := TASA;
+      {tot}SGFact.Cells[5, Cuenta] :=
+        Format('%8.2f', [StrToFloat(SGFact.Cells[4, Cuenta]) *
+        StrToFloat(SGFact.Cells[3, Cuenta])]);
       Cuenta := Cuenta + 1;
       FEContado.Text:='0';
       CalculaTotales;
@@ -238,7 +240,6 @@ begin
   LbSaldo.Caption:='0.00';
   envEmail:=False;
   EnviarEmailCheckBox.Checked:=False;
-//  PedidoCheckBox.Checked:=False;
 end;
 
 procedure TOperacionForm.NuevoBitBtnClick(Sender: TObject);
@@ -315,28 +316,33 @@ begin
     //PRECIO
     if (SGFact.Cells[4, i] = '') then SGFact.Cells[4, i] := '0';
     PR := StrToFloat(SGFact.Cells[4, i]);
+    //TOTAL
+    if (SGFact.Cells[5, i] = '') then SGFact.Cells[5, i] := '0';
+    TOT := StrToFloat(SGFact.Cells[5, i]);
 //    if not((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then PR := OperacionDataModule.CalcularIVA((PR),TIVA);
     if esB then PR := OperacionDataModule.CalcularIVA((PR),TIVA);//es B
     //DESCUENTO
     if (SGFact.Cells[7, i] = '') then SGFact.Cells[7, i] := '0';
     des := (SGFact.Cells[7, i]);
-      if Pos( '%', des ) >0 then
-        begin
-          DSC := StrToFloat( StringReplace(des, '%', '', [rfReplaceAll, rfIgnoreCase]) )/100;
-          PRD := PR-(PR*DSC);
-          DSC := PR-PRD;
-        end
-      else DSC := StrToFloat(des);
-    //TOTAL
-    TOT := (PR*CAN)-DSC;
-    SGFact.Cells[5, i] := FloatToStr(TOT);
+//      if Pos( '%', des ) >0 then
+//        begin
+//          DSC := StrToFloat( StringReplace(des, '%', '', [rfReplaceAll, rfIgnoreCase]) )/100;
+//          PRD := PR-(PR*DSC);
+//          DSC := PR-PRD;
+//        end
+//      else
+        DSC := StrToFloat(des);
+//    //TOTAL
+//    TOT := (PR*CAN);//-DSC;
+    NG := (PR*CAN)-DSC;
+//    SGFact.Cells[5, i] := FloatToStr(TOT);
     //IVA
-    if esA then IVA := OperacionDataModule.CalcularIVA((TOT),TIVA)-TOT
-    else if esB then IVA := OperacionDataModule.SacarIVA((TOT),TIVA);
+    if esA then IVA := OperacionDataModule.CalcularIVA((NG),TIVA)-NG
+    else if esB then IVA := OperacionDataModule.SacarIVA((NG),TIVA);
     SGFact.Cells[10, i] := FloatToStr(IVA);
     // NG
-    if esB then NG := TOT - IVA
-    else NG := TOT;
+    if esB then NG := NG - IVA;
+//    else NG := TOT;
     SGFact.Cells[8, i] := FloatToStr(NG);
     //
     if (SGFact.Cells[9, i] = '') then SGFact.Cells[9, i] := '0';
@@ -551,10 +557,11 @@ begin
     FBuscaProve := TFBuscaProve.Create(self);
     try
       FBuscaProve.ShowModal;
-    finally
-      ClienteEdit.Text := FBuscaProve.Tabla.FieldByName('CODIGO').AsString;
+      salir := FBuscaProve.salir;
+      if salir then Exit;
       with FBuscaProve do
       begin
+        ClienteEdit.Text := Tabla.FieldByName('CODIGO').AsString;
         ClienteLabel.Caption := Tabla.FieldByName('Nombre').AsString;
         Label3.Caption := Tabla.FieldByName('Direccion').AsString;
         CUITEdit.Text := Tabla.FieldByName('CUIT').AsString;
@@ -572,6 +579,7 @@ begin
         else
           cbTipo.ItemIndex := 11;
       end;
+    finally
       FBuscaProve.Free;
     end;
   end
@@ -580,7 +588,9 @@ begin
     FBuscaCliente := TFBuscaCliente.Create(self);
     try
       FBuscaCliente.ShowModal;
-      ClienteEdit.Text := FBuscaCliente.Tabla.FieldByName('CODIGO').AsString;
+        salir := FBuscaCliente.salir;
+        if salir then Exit;
+        ClienteEdit.Text := FBuscaCliente.Tabla.FieldByName('CODIGO').AsString;
 //      with FBuscaCliente do
         TraeNombreCliente;
     finally
@@ -594,32 +604,42 @@ end;
 
 procedure TOperacionForm.DescuentoBitBtnClick(Sender: TObject);
 var
- PR,CAN,DSC : Double;
+ p,c,d
+ ,t,td : Double;
+ de : string;
 begin
+  p:=0;
+  c:=0;
+  d:=0;
+  t:=0;
+  td:=0;
+  de:='';
 DescuentoForm := TDescuentoForm.Create(self);
 DescuentoForm.DescuentoEdit.Text := FloatToStr(Saldo) ;
   try
     DescuentoForm.ShowModal;
   finally
-    if DescuentoForm.DescuentoEdit.Text <> '0'  then
+    if DescuentoForm.DescuentoEdit.Text <> ''  then
     begin
-//      desc:=DescuentoForm.DescuentoEdit.Text;
-//      if Pos( '%', desc ) >0 then
-//      begin
-//        DSC := StrToFloat( StringReplace(desc, '%', '', [rfReplaceAll, rfIgnoreCase]) )/100;
-//        TOT := StrToFloat(SGFact.Cells[5, SGFact.Row]);
-//        TOTD := TOT-(TOT*DSC);
-//        DSC := TOT-TOTD;
-//      end
-//      else DSC := StrToFloat(desc);
-//      SGFact.Cells[7, SGFact.Row] := Format('%8.2f', [DSC]);
-      SGFact.Cells[7, SGFact.Row] := DescuentoForm.DescuentoEdit.Text;
+      //descuento por %
+      de := DescuentoForm.DescuentoEdit.Text;
+      if Pos( '%', de ) >0 then
+      begin
+        d := StrToFloat( StringReplace(de, '%', '', [rfReplaceAll, rfIgnoreCase]) )/100;
+        t := StrToFloat(SGFact.Cells[5, SGFact.Row]);
+        td := t-(t*d);
+        d := t-td;
+      end
+      else
+        d := StrToFloat(de);
+      SGFact.Cells[7, SGFact.Row] := Format('%8.2f', [d]);
+//      SGFact.Cells[7, SGFact.Row] := DescuentoForm.DescuentoEdit.Text;
       if cbTipo.ItemIndex<>1 then
       begin
-        PR:=StrToFloat(SGFact.Cells[4, SGFact.Row]);
-        CAN:=StrToFloat(SGFact.Cells[3, SGFact.Row]);
-        DSC:=StrToFloat(SGFact.Cells[7, SGFact.Row]);
-        {total}SGFact.Cells[5, SGFact.Row] := FloatToStr((PR*CAN)-DSC);
+        p:=StrToFloat(SGFact.Cells[4, SGFact.Row]);
+        c:=StrToFloat(SGFact.Cells[3, SGFact.Row]);
+        d:=StrToFloat(SGFact.Cells[7, SGFact.Row]);
+        {total}SGFact.Cells[5, SGFact.Row] := FloatToStr((p*c));
       end;
       FEContado.Text:='0';
       CalculaTotales;
@@ -670,6 +690,7 @@ begin
   else
   begin
     FBuscaArticulo := TFBuscaArticulo.Create(self);
+    FBuscaArticulo.EnStockCheckBox.Checked := True;
     FBuscaArticulo.Precio := Precio;
     if (TipoRadioGroup.ItemIndex = 0) and
       (dm.ConfigQuery.FieldByName('CodigoBarra').AsString = 'SI') then
@@ -749,7 +770,7 @@ begin
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
           Saldo, Pagado, NG105, NG21, IVA105, IVA21, perc, Total - Saldo)
       else
-      if PedidoCheckBox.Checked then
+      if TipoRadioGroup.ItemIndex=2 then
       ProcOPER('PED', 'X', ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
         VendedorEdit.Text, '', CtaNombre, False, PagareCheckBox.Checked, impr, costo,
@@ -758,10 +779,10 @@ begin
         StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text), Saldo, Pagado,
         Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
       else
-      if Presupuesto.Checked then
+      if TipoRadioGroup.ItemIndex=1 then
         ProcPresup(cbTipo.Text, ClienteEdit.Text,
           FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-          VendedorEdit.Text, CuitEdit.Text, CtaNombre, Presupuesto.Checked,
+          VendedorEdit.Text, CuitEdit.Text, CtaNombre, True,
           PagareCheckBox.Checked, costo, Comision, Impuesto,
           StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
@@ -770,7 +791,7 @@ begin
       if codRem<>'' then
         FactRem(codRem,cbTipo.Text, ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-        VendedorEdit.Text, CuitEdit.Text, CtaNombre, Presupuesto.Checked,
+        VendedorEdit.Text, CuitEdit.Text, CtaNombre, TipoRadioGroup.ItemIndex=1,
         PagareCheckBox.Checked, impr, costo, Comision, Impuesto,
         StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
         subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
@@ -778,7 +799,7 @@ begin
       else
         ok := ProcVTA(cbTipo.Text, ClienteEdit.Text,
           FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-          VendedorEdit.Text, CuitEdit.Text, CtaNombre, Presupuesto.Checked,
+          VendedorEdit.Text, CuitEdit.Text, CtaNombre, TipoRadioGroup.ItemIndex=1,
           PagareCheckBox.Checked, impr, costo, Comision, Impuesto,
           StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
@@ -788,13 +809,18 @@ begin
     screen.Cursor := crDefault;
 //    if ok then ClienteBitBtn.Click;
   end;
-  if (codRem = '') then
-  begin
-    Nuevo;
-    ClienteBitBtn.Click;
-  end
+  if TipoRadioGroup.ItemIndex=1 then
+    close
   else
-    Close;
+  begin
+    if (codRem = '') then
+    begin
+      Nuevo;
+      ClienteBitBtn.Click;
+    end
+    else
+      Close;
+  end;
 end;
 
 procedure TOperacionForm.CheckBox1Click(Sender: TObject);
@@ -805,7 +831,6 @@ end;
 procedure TOperacionForm.FormShow(Sender: TObject);
 begin
   Nuevo;
-
   // si es venta
 //  if TipoRadioGroup.ItemIndex = 0 then
 //    AgregarBitBtn.Click
@@ -835,11 +860,11 @@ begin
       OperacionForm.Caption := 'COMPRA';
       ClienteBitBtn.Caption := 'Proveedor';
       Label1.Caption := ClienteBitBtn.Caption+':';
-      PedidoCheckBox.Enabled := False;
+      TipoRadioGroup.ItemIndex:=0;
 //      ClienteBitBtn.Click;
     end
   else
-  if PedidoCheckBox.Checked then
+  if TipoRadioGroup.ItemIndex=2 then
     begin
       OperacionForm.Caption := 'PEDIDO';
       cbTipo.ItemIndex := 29;
@@ -848,6 +873,8 @@ begin
     TraerRemito(codRem)
   else
     ClienteBitBtn.Click;
+  if salir then
+    PostMessage(Self.Handle, WM_CLOSE, 0, 0);
 end;
 
 procedure TOperacionForm.FormKeyUp(Sender: TObject; var Key: Word;
@@ -872,9 +899,9 @@ begin
       else if Key = VK_F8 then
         NuevoBitBtn.Click
       else if Key = VK_F12 then
-        ProcesarBitBtn.Click;
-//      else if Key = VK_Escape then
-//        Close
+        ProcesarBitBtn.Click
+      else if Key = VK_Escape then
+        Close;
 end;
 
 procedure TOperacionForm.FEContadoChange(Sender: TObject);
@@ -954,6 +981,7 @@ begin
     Key := #0; { eat enter key }
     Perform(WM_NEXTDLGCTL, 0, 0); { move to next control }
   end;
+
 end;
 
 procedure TOperacionForm.CantidadBitBtnClick(Sender: TObject);

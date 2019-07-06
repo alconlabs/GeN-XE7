@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2019/07/03 15:24:13.000.563,=C:\Users\DeGsoft\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/07/03 15:26:04.682,=C:\Users\DeGsoft\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/07/03 15:27:59.686,C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\uMercadoLibreEnvios.fmx=C:\Users\DeGsoft\Documents\Embarcadero\Studio\Projects\Unit1.fmx</Transaction>
+    <Transaction>2019/07/03 15:27:59.686,C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\uMercadoLibreEnvios.pas=C:\Users\DeGsoft\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/07/03 15:28:10.275,C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\MercadoLibreEnvios.dproj=C:\Users\DeGsoft\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2019/07/03 15:29:00.647,=C:\GitHub\GeN-XE7\DataModule\udmMercadoLibre.pas</Transaction>
+    <Transaction>2019/07/03 15:29:23.789,=C:\GitHub\GeN-XE7\DataModule\RestDM.pas</Transaction>
+  </Transactions>
+</BorlandProject>

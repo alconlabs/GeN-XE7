@@ -839,7 +839,9 @@ begin
   //Factura electronica
   if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
   begin
-    WSFE(fech, let, '1', '96', cui, comp,  FloatToStr(sbt), FloatToStr(impu), floattostr(tot), '0', '0', FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
+    WSFE(fech, let, '1', '96', cui, comp,  FloatToStr(sbt), FloatToStr(impu),
+     floattostr(tot), '0', '0', FloatToStr(n10), FloatToStr(n21), FloatToStr(i10),
+     FloatToStr(i21));
     if cae = '' then exit;
   end;
   //actualiza el nro de factura
@@ -1669,7 +1671,7 @@ begin
     + ' Where "Articulo".CODIGO = ' + codigo;
   Q.ExecSQL;
   if webUpd='True' then
-    with RestDataModule do
+    with DMR do
     begin
       JAline_items.AddElement( Jline_items( codigo, cantidad ) );
     end;

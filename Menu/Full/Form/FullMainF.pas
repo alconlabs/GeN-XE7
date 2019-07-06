@@ -185,6 +185,7 @@ type
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
+    sinGrabar: boolean;
   public
     { Public declarations }
   end;
@@ -214,7 +215,8 @@ uses LoginF, CrearCreditoF, CtaCteF, BuscaFactura,
 
 procedure TFullMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  DM.DejarUsuario;
+  If not sinGrabar then
+    DM.DejarUsuario;
 end;
 
 procedure TFullMainForm.FormShow(Sender: TObject);
@@ -429,7 +431,7 @@ end;
 procedure TFullMainForm.REMITOClick(Sender: TObject);
 begin
   OperacionForm := TOperacionForm.Create(self);
-  OperacionForm.PedidoCheckBox.Checked := True;
+  OperacionForm.TipoRadioGroup.ItemIndex := 2;
   try
     OperacionForm.ShowModal;
   finally
@@ -956,6 +958,8 @@ begin
   finally
     VaciarBaseForm.Free;
   end;
+  sinGrabar := True;
+  Close;
 end;
 
 procedure TFullMainForm.VendedoresClick(Sender: TObject);
@@ -1022,7 +1026,7 @@ end;
 procedure TFullMainForm.CrearPedido1Click(Sender: TObject);
 begin
 OperacionForm := TOperacionForm.Create(self);
-  OperacionForm.PedidoCheckBox.Checked := True;
+  OperacionForm.TipoRadioGroup.ItemIndex := 2;
   try
     OperacionForm.ShowModal;
   finally

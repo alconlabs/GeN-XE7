@@ -414,56 +414,32 @@ begin
 end;
 
 procedure TDM.VaciarBase;
-//Var
-//  IniFile: TIniFile;
-  // Path, BaseDeDatos: string;
 begin
-//  IniFile := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'DeG');
-//  FormatSettings.ShortDateFormat := 'mm/dd/yyyy';
-//  // Obtiene la ruta y el nombre de la base de datos
-//  if Path = '' then
-//  begin
-//    Path := IniFile.ReadString('BD', 'Path', '');
-//  end;
-//  if Path = '' then
-//    Path := ExtractFilePath(Application.ExeName);
-//  if BaseDeDatos = '' then
-//    BaseDeDatos := IniFile.ReadString('BD', 'DBase', '');
-//  if BaseDeDatos = '' then
-//    BaseDeDatos := Path + 'GeN.FDB';
-//  if BaseDeDatos = '' then
-//    ShowMessage('Error al cargar Base de Datos')
-//  else
-//  begin
-  Consulta.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
-    + ' USER ''SYSDBA'' PASSWORD ''masterkey''; ' + Consulta.Script.Text;
-  Consulta.ExecuteScript;
-//  Consulta.Transaction.CommitRetaining;
-  ShowMessage('Base de Datos Restaurada con éxito!!!');
-//  end;
-  webUrl := '';
-  webRes := '';
-  webUsr := '';
-  webPsw := '';
-  webUpd := '';
-  afipUrl := '';
-  afipRes := '';
-  afipUsr := '';
-  afipPsw := '';
-//  operNCC := '0';
-  openSSL := '';
-  NroA := '0';
-  NroNCA := '0';
-  NroB := '0';
-  NroNCB := '0';
-  NroC := '0';
-  NroNCC := '0';
-  thunderbird := '';
-  EscribirINI;
-  // IniFile.WriteString('Licencia', 'Dia', inttostr(1));
-  // IniFile.WriteString('Licencia', 'Fecha', datetostr(date));
-//  IniFile.Destroy;
-  TraerConfig;
+  BaseDatos.Close;
+  TDirectory.Delete(Path, True);
+//  Consulta.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
+//    + ' USER ''SYSDBA'' PASSWORD ''masterkey''; ' + Consulta.Script.Text;
+//  Consulta.ExecuteScript;
+//  ShowMessage('Base de Datos Restaurada con éxito!!!');
+//  webUrl := '';
+//  webRes := '';
+//  webUsr := '';
+//  webPsw := '';
+//  webUpd := '';
+//  afipUrl := '';
+//  afipRes := '';
+//  afipUsr := '';
+//  afipPsw := '';
+//  openSSL := '';
+//  NroA := '0';
+//  NroNCA := '0';
+//  NroB := '0';
+//  NroNCB := '0';
+//  NroC := '0';
+//  NroNCC := '0';
+//  thunderbird := '';
+//  EscribirINI;
+//  TraerConfig;
 end;
 
 function TDM.TextoAfecha;
