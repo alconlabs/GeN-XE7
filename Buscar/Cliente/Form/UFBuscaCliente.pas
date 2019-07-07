@@ -53,8 +53,8 @@ implementation
 
 Procedure TFBuscaCliente.Buscar;
 begin
-  Tabla.SQL.Text := ' select * from "Cliente" where   ("Cliente".NOMBRE LIKE ' +
-    QuotedStr(DescripcionEdit.Text + '%') + ')';
+  Tabla.SQL.Text := ' select * from "Cliente" where '+
+  ' upper("Cliente".NOMBRE) LIKE '+QuotedStr(UpperCase(DescripcionEdit.Text)+'%');
   Tabla.Open;
 end;
 

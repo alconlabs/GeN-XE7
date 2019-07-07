@@ -219,7 +219,8 @@ begin
     '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +}
   Tabla.SQL.Text:= articulos
     +' WHERE ' + '(CODIGOBARRA like ' + QuotedStr(CodigoEdit.Text + '%') + ')' +
-    'AND ("Articulo".DESCRIPCION Containing '+QuotedStr(DescripcionEdit.Text)+')'+
+//    'AND ("Articulo".DESCRIPCION Containing '+QuotedStr(DescripcionEdit.Text)+')'+
+    'AND (upper("Articulo".DESCRIPCION) Containing '+QuotedStr(UpperCase(DescripcionEdit.Text))+')'+
     'AND ("Marca".DESCRIPCION like '+QuotedStr(MarcaEdit.Text + '%')+')'+
     'AND ("Rubro".DESCRIPCION like '+QuotedStr(RubroEdit.Text + '%')+')'+
     'AND ("Categoria".DESCRIPCION like '+QuotedStr(CategoriaEdit.Text + '%')+')'+

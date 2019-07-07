@@ -3,9 +3,9 @@
 interface
 
 uses
-  System.SysUtils, System.Classes, DataModule, Windows, System.Variants, FMX.Dialogs, ComObj,
-  IPPeerClient, REST.Client, Data.Bind.Components, Data.Bind.ObjectScope
-  , JSON, REST.Types, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  System.SysUtils, System.Classes, DataModule, Windows, System.Variants,
+  ComObj, IPPeerClient, REST.Client, Data.Bind.Components, Data.Bind.ObjectScope,
+  JSON, REST.Types, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, REST.Response.Adapter,
   Xml.xmldom, Xml.XMLIntf, Soap.InvokeRegistry, Soap.Rio, Soap.SOAPHTTPClient,

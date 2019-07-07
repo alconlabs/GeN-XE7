@@ -33,7 +33,7 @@ object FClientes: TFClientes
       Caption = 'Informaci'#243'n General'
       object Label2: TLabel
         Left = 50
-        Top = 93
+        Top = 39
         Width = 44
         Height = 13
         Caption = 'Nombre'
@@ -96,7 +96,7 @@ object FClientes: TFClientes
       end
       object Label12: TLabel
         Left = 63
-        Top = 66
+        Top = 93
         Width = 31
         Height = 13
         Caption = 'Email'
@@ -124,7 +124,7 @@ object FClientes: TFClientes
       end
       object Label23: TLabel
         Left = 71
-        Top = 39
+        Top = 66
         Width = 23
         Height = 13
         Caption = 'DNI'
@@ -152,7 +152,7 @@ object FClientes: TFClientes
       end
       object DBEdit2: TDBEdit
         Left = 103
-        Top = 93
+        Top = 39
         Width = 226
         Height = 21
         DataField = 'NOMBRE'
@@ -166,7 +166,7 @@ object FClientes: TFClientes
         Height = 21
         DataField = 'Direccion'
         DataSource = DataSource
-        TabOrder = 1
+        TabOrder = 4
       end
       object DBEdit10: TDBEdit
         Left = 103
@@ -175,7 +175,7 @@ object FClientes: TFClientes
         Height = 21
         DataField = 'Telefono'
         DataSource = DataSource
-        TabOrder = 2
+        TabOrder = 3
       end
       object DBEdit6: TDBEdit
         Left = 103
@@ -184,16 +184,16 @@ object FClientes: TFClientes
         Height = 21
         DataField = 'Provincia'
         DataSource = DataSource
-        TabOrder = 3
+        TabOrder = 7
       end
       object DBEdit13: TDBEdit
         Left = 103
-        Top = 66
+        Top = 93
         Width = 226
         Height = 21
         DataField = 'Email'
         DataSource = DataSource
-        TabOrder = 4
+        TabOrder = 2
       end
       object DBEdit8: TDBEdit
         Left = 103
@@ -202,16 +202,16 @@ object FClientes: TFClientes
         Height = 21
         DataField = 'Ciudad'
         DataSource = DataSource
-        TabOrder = 5
+        TabOrder = 6
       end
       object DBEdit19: TDBEdit
         Left = 103
-        Top = 39
+        Top = 66
         Width = 122
         Height = 21
         DataField = 'Documento'
         DataSource = DataSource
-        TabOrder = 6
+        TabOrder = 1
       end
       object DBEdit17: TDBEdit
         Left = 103
@@ -220,7 +220,7 @@ object FClientes: TFClientes
         Height = 21
         DataField = 'CP'
         DataSource = DataSource
-        TabOrder = 7
+        TabOrder = 5
       end
     end
     object TabSheet2: TTabSheet

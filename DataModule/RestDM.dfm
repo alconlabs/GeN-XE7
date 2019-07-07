@@ -29,8 +29,6 @@ object DMR: TDMR
     Left = 328
   end
   object Q: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
@@ -38,8 +36,6 @@ object DMR: TDMR
     Top = 48
   end
   object T: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
@@ -113,8 +109,6 @@ object DMR: TDMR
     Top = 192
   end
   object D: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
