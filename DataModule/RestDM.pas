@@ -9,7 +9,31 @@ uses
   FireDAC.Comp.Client, REST.Response.Adapter, REST.Client, Data.DB,
   IBX.IBCustomDataSet, IBX.IBQuery, Data.Bind.Components, Data.Bind.ObjectScope,
   System.JSON, REST.Types, Winapi.ShellAPI, REST.Utils, Winapi.Windows,
-  Vcl.DdeMan, Dialogs, DataModule;
+  Vcl.DdeMan, Dialogs, DataModule, Vcl.Forms;
+
+type
+  TTRest = class(TThread)
+    vClient: TRESTClient;
+    vRequest: TRESTRequest;
+//    vResponse: TRESTResponse;
+    vJSONValue: TJsonValue;
+    vJSONArray1: TJSONArray;
+    max, min, pprom: Double;
+    i: byte;
+    precios: array[1..5] of Double;
+    j,c: integer;
+    r: string;
+    url,res,
+    item, sku, id: string;
+public
+    constructor Create(
+      vUrl, vResource, vAccept//, vClientId, vClientSecret, vAccessToken, vSeller_id, vQ, vLimit
+      : string;
+      vMethod : TRESTRequestMethod
+    );
+    procedure Execute; override;
+    procedure GetResponse;
+  end;
 
 type
   TDMR = class(TDataModule)
@@ -33,15 +57,7 @@ type
     procedure GetRESTCategories(resource: string);
     procedure IniciarREST;
 
-    procedure IniciarObtenerToken;
-    procedure EjecutarObtenerToken;
-    procedure IniciarObtenerRest(u,r:string;m:TRESTRequestMethod);
-    function GetURL(service: string): string;
-    procedure AbrirEnBrowser(LURL:string);
-    procedure ObtenerAuthCode;
-    procedure ObtenerAccessToken;
-    procedure ObtenerRefreshToken;
-    procedure ObtenerConsultaRest(r,q:string);
+    function Obtener(resource:string):TJSONValue;
 
   public
     { Public declarations }
@@ -57,6 +73,20 @@ type
     var JAline_items : TJSONArray;
     function Jline_items( codigo, cantidad : String ): TJSONObject;
     procedure CrearOrden;
+
+    procedure ObtenerConsultaRest(r,q:string);
+    procedure IniciarObtenerRest(u,r:string;m:TRESTRequestMethod);
+    procedure ObtenerSeller;
+    procedure ImprimirEtiqueta(i:string);
+    procedure ObtenerPack(order_id:string);
+    procedure ObtenerMessages(order_id,user_id:string);
+    procedure IniciarObtenerToken;
+    procedure EjecutarObtenerToken;
+    function GetURL(service: string): string;
+    procedure ObtenerAuthCode;
+    procedure ObtenerAccessToken;
+    procedure ObtenerRefreshToken;
+    procedure AbrirEnBrowser(LURL:string);
   end;
 
 const
@@ -66,6 +96,7 @@ const
   redirectUri = 'https://www.mercadolibre.com';
 
 var
+  tRest: TTRest;
   DMR: TDMR;
 
 implementation
@@ -75,6 +106,79 @@ implementation
 uses udmMercadoLibre, OperacionDM;
 
 {$R *.dfm}
+
+{ THilo }
+constructor TTRest.Create;//(//CreateSuspended : boolean;
+// vUrl, vClientId, vClientSecret, vResource, vAccessToken, vAccept, vSeller_id, vQ, vLimit : string);
+begin
+  inherited Create(True); // llamamos al constructor del padre (TThread)
+  vClient := TRESTClient.Create(nil);
+  vRequest := TRESTRequest.Create(nil);
+//  vResponse := TRESTResponse.Create(nil);
+//  vMemo1 := TMemo.Create(nil);
+  vJSONValue := TJSONValue.Create;
+  vClient.BaseURL := vUrl;//'https://api.mercadolibre.com/sites/MLA/'; //Supongamos que RUTA_URI es una constante con la ruta
+  with vRequest do
+  begin
+    Client := vClient;
+    Resource := vResource;//'search?';
+    Method := vMethod;// rmPOST;
+    if vAccept<>'' then Params.AddItem('accept', vAccept, TRESTRequestParameterKind.pkHTTPHEADER, [TRESTRequestParameterOption.poDoNotEncode]);//orders/recent
+//    if vQ<>'' then Params.AddItem('q', vQ, TRESTRequestParameterKind.pkGETorPOST);
+//    if vSeller_id<>'' then Params.AddItem('seller_id', vSeller_id, TRESTRequestParameterKind.pkGETorPOST);
+//    if vLimit<>'' then Params.AddItem('limit', vLimit, TRESTRequestParameterKind.pkGETorPOST);
+//    if vAccessToken<>'' then Params.AddItem('access_token', vAccessToken, TRESTRequestParameterKind.pkGETorPOST);
+//    if vClientId<>'' then Params.AddItem('client_id', vClientId, TRESTRequestParameterKind.pkGETorPOST);
+//    if vClientSecret<>'' then Params.AddItem('client_secret', vClientSecret, TRESTRequestParameterKind.pkGETorPOST);
+//    Params.AddItem('site_id', 'MLA', TRESTRequestParameterKind.pkGETorPOST);
+//    Params.AddItem('redirect_uri', redirectUri, TRESTRequestParameterKind.pkGETorPOST);
+  //  RESTRequest1.Params.AddItem('price', preMinE.Text+'-'+preMaxE.Text, TRESTRequestParameterKind.pkGETorPOST);
+  //  RESTRequest1.Params.AddItem('sort', 'price_desc', TRESTRequestParameterKind.pkGETorPOST);
+  //  RESTRequest1.Params.AddItem('consumer_key', webUsr, TRESTRequestParameterKind.pkGETorPOST);
+  //  RESTRequest1.Params.AddItem('consumer_secret', webPsw, TRESTRequestParameterKind.pkGETorPOST);
+//    Response := vResponse;
+  end;
+end;
+
+procedure TTRest.Execute;
+begin
+  inherited;
+  FreeOnTerminate := True;
+  while not Terminated do
+    Synchronize(GetResponse);
+//  Synchronize(ObtenerConsultaRest);
+end;
+
+procedure TTRest.GetResponse;
+begin
+  try
+    with vRequest do
+    begin
+      Execute;
+      if not ( ( Response.Content = #$FEFF'[]' ) or ( Response.Content  =  '[]' ) ) then
+        begin
+          max:= 0; min:= 0; pprom:= 0;
+          if Response.Content <> '' then
+          begin
+            try
+//              vMemo1.Text := vResponse.Content;
+              vJSONValue := TJSONObject.ParseJSONValue(Response.Content);
+            except
+              on E:Exception do begin
+                ShowMessage('Ha ocurrido un Error!'+#13+E.Message);
+              end;
+            end;
+          end;
+        end;
+    end;
+  finally
+     vClient.Free;
+//     vResponse.Free;
+     vRequest.Free;
+     tRest.Terminate;
+     Application.ProcessMessages;
+   end;
+end;
 
 procedure TDMR.GetREST;
 begin
@@ -454,6 +558,7 @@ begin
       accessToken := LToken;
     if Response.GetSimpleValue('refresh_token', LToken) then
       dmML.refreshToken := LToken;
+    dmML.ActualizarRefreshToken;
   end;
 end;
 
@@ -519,6 +624,7 @@ begin
   RESTClient1.BaseURL := u;
   with RESTRequest1 do
   begin
+//    Method := rmPOST;
     Method := m;
     Resource := r;
     Params.AddItem('client_id', clientId, TRESTRequestParameterKind.pkGETorPOST);
@@ -555,46 +661,186 @@ end;
 
 procedure TDMR.ObtenerOrderRecent;
 var
-  order_items, buyer, item, shipping : TJSONValue;
-  i : string;
+  j, order_items, buyer, item, shipping : TJSONValue;
+  i, io, order_id,order_status,buyer_id,shipping_id,item_id,item_title,
+  order_items_quantity : string;
+  n, r, l, ro, no : Integer;
 begin
   with dmML do
   begin
     try
       i:='0';
-      ObtenerConsultaRest('orders/search/recent?seller=242069506','');
-      JSONValue1 := TJSONObject.ParseJSONValue(RESTRequest1.Response.Content);
-      if JSONVAlue1 is TJSONObject then
+      if seller_id='' then ObtenerSeller;
+      ObtenerConsultaRest('orders/search/recent?seller='+seller_id,'');
+      j := TJSONObject.ParseJSONValue(RESTRequest1.Response.Content);
+      if j is TJSONObject then
       begin
-        order_id := JSONValue1.GetValue<Integer>('results['+i+'].id');
-        order_status := JSONValue1.GetValue<String>('results['+i+'].status');
-        order_items := JSONValue1.GetValue<TJSONValue>('results['+i+'].order_items[0]');
-    //      ShowMessage( JSONValue1.GetValue<TJSONValue>('results['+i+'].order_items').ToString );
-    //      order_items := JSONValue1.GetValue<TJSONValue>('results['+i+'].order_items[0]');
-        item := order_items.GetValue<TJSONValue>('item');
-        item_id := item.GetValue<string>('id');
-        item_title := item.GetValue<string>('title');
-        order_items_quantity := order_items.GetValue<Integer>('quantity');
-        buyer := JSONValue1.GetValue<TJSONValue>('results['+i+'].buyer');
-        buyer_id := buyer.GetValue<Integer>('id');
-        shipping := JSONValue1.GetValue<TJSONValue>('results['+i+'].shipping');
-//ShowMessage( JSONValue1.GetValue<TJSONValue>('results['+i+'].shipping').ToString );
-        if shipping.GetValue<TJSONValue>('id').ToString<>'null' then
-          shipping_id := shipping.GetValue<Integer>('id');
+        r:=TJSONArray(j.GetValue<TJSONValue>('results')).Size;
+        if r>0 then
+          for n := 0 to r-1 do
+          begin
+            i:=IntToStr(n);
+            order_id := j.GetValue<string>('results['+i+'].id');
+            order_status := j.GetValue<string>('results['+i+'].status');
+            buyer := j.GetValue<TJSONValue>('results['+i+'].buyer');
+            buyer_id := buyer.GetValue<string>('id');
+            shipping := j.GetValue<TJSONValue>('results['+i+'].shipping');
+    //ShowMessage( j.GetValue<TJSONValue>('results['+i+'].shipping').ToString );
+            if shipping.GetValue<TJSONValue>('id').ToString<>'null' then
+              shipping_id := shipping.GetValue<string>('id');
+//            order_items := j.GetValue<TJSONValue>('results['+i+'].order_items[0]');
+            ro:=TJSONArray(j.GetValue<TJSONValue>('results['+i+'].order_items')).Size;
+            if ro>0 then
+              for no := 0 to ro-1 do
+              begin
+                io:=IntToStr(no);
+                order_items := j.GetValue<TJSONValue>('results['+i+'].order_items['+io+']');
+                item := order_items.GetValue<TJSONValue>('item');
+                item_id := item.GetValue<string>('id');
+                item_title := item.GetValue<string>('title');
+                order_items_quantity := order_items.GetValue<string>('quantity');
+                AgregarOrder_items(order_id,item_id,item_title);
+              end;
+            AgregarOrder(order_id,order_status,buyer_id,shipping_id);
+            ObtenerPack(order_id);
+            ObtenerMessages(order_id,seller_id);
+          end;
       end;
     finally
-      AgregarOrder;
+    //
     end;
-    if shipping_id>0 then
-      AbrirEnBrowser(
-        'https://api.mercadolibre.com/shipment_labels?shipment_ids='+IntToStr(shipping_id)+'&response_type=pdf&access_token='+accessToken
-      );
   end;
 end;
 
 procedure TDMR.AbrirEnBrowser;
 begin
   ShellExecute(0,'open',pchar(LURL),nil,nil,SW_SHOWNORMAL);
+end;
+
+procedure TDMR.ObtenerSeller;
+begin
+  with dmML do
+  begin
+    try
+      ObtenerConsultaRest('users/me?','');
+      JSONValue1 := TJSONObject.ParseJSONValue(RESTRequest1.Response.Content);
+      if JSONVAlue1 is TJSONObject then
+      begin
+        seller_id := JSONValue1.GetValue<string>('id');
+      end;
+    finally
+      AgregarSeller(seller_id);
+    end;
+  end;
+end;
+
+procedure TDMR.ImprimirEtiqueta;
+begin
+  if  accessToken='' then ObtenerRefreshToken;
+  if i<>'' then
+    AbrirEnBrowser(
+      'https://api.mercadolibre.com/shipment_labels?shipment_ids='+i+'&response_type=pdf&access_token='+accessToken
+    );
+end;
+
+function TDMR.Obtener;//(resource:string):TJSONValue;
+begin
+//Para conocer el pack_id, deberás obtener el campo “pack_id” en la respuesta de /orders/<order_id>
+  with dmML do
+  begin
+    try
+//curl -X GET “https://api.mercadolibre.com/messages/packs/$pack_id/sellers/$user_id?access_token=$ACCESS_TOKEN”
+      tRest := TTRest.Create(
+        url,
+        resource+'?'+'client_id='+clientId+
+        '&client_secret='+clientSecret+'&access_token='+accessToken,
+        'application/json',
+        rmGET
+      );
+      with tRest do
+    begin
+      vJSONValue := result;
+      FreeOnTerminate := True;
+      Start;//Resume;
+    end;
+
+    while not tRest.Terminated do
+    begin
+      Application.ProcessMessages;
+      result := tRest.vJSONValue;
+    end;
+    finally
+    //
+    end;
+  end;
+end;
+
+procedure TDMR.ObtenerPack;
+var
+  j : TJSONValue;
+  pack_id : string;
+begin
+//Para conocer el pack_id, deberás obtener el campo “pack_id” en la respuesta de /orders/<order_id>
+//    try
+//      ObtenerConsultaRest('/orders/'+order_id,'');
+//      tRest := TTRest.Create(
+//        url, '/orders/'+order_id
+//        +'?'+'client_id='+clientId+'&client_secret='+clientSecret+
+//        '&access_token='+accessToken, 'application/json',
+//        rmGET
+//      );
+//      with tRest do
+//    begin
+//      vJSONValue := JSONValue;
+//      FreeOnTerminate := True;
+//      Start;//Resume;
+//    end;
+//
+//    while not tRest.Terminated do
+//    begin
+//      Application.ProcessMessages;
+//      JSONValue := tRest.vJSONValue;
+//    end;
+//      if JSONValue is TJSONArray then
+//        pack_id := JSONValue.GetValue<string>('pack_id');
+      j := Obtener('/orders/'+order_id);
+      if j is TJSONObject then
+          pack_id := j.GetValue<string>('pack_id');
+      if pack_id<>'' then
+        with dmML do
+        begin
+          AgregarPack(order_id,pack_id);
+        end;
+end;
+
+procedure TDMR.ObtenerMessages;//(order_id,pack_id, user_id:string);
+var
+  j, results, text :TJSONValue;
+  id, message_id, message_text, i, s :string;
+  r,n :Integer;
+begin
+//curl -X GET “https://api.mercadolibre.com/messages/packs/$pack_id/sellers/$user_id?access_token=$ACCESS_TOKEN”
+//  if pack_id<>'' then
+//    id := pack_id;
+//  else
+    id := order_id;
+//  j := Obtener('/messages/packs/'+id+'/sellers/'+user_id);
+  j := Obtener('/messages/orders/'+id);
+//  s := j.ToString;
+  if j is TJSONObject then
+  begin
+    results := j.GetValue<TJSONValue>('results');
+    r:=TJSONArray(results).Size;
+    if r>0 then
+      for n := 0 to r-1 do
+      begin
+        i:=IntToStr(n);
+        message_id := j.GetValue<string>('results['+i+'].message_id');
+        text := j.GetValue<TJSONValue>('results['+i+'].text');
+        message_text := text.GetValue<string>('plain');
+        dmML.AgregarMessages(order_id,message_text,message_id);
+      end;
+  end;
 end;
 
 end.

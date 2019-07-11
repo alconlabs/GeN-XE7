@@ -1,14 +1,5 @@
-﻿[RESTResponse1]
-Coordinates=10,10,96,285
-
-[RESTResponseCategories]
+﻿[RESTResponseCategories]
 Coordinates=116,10,144,285
-
-[RESTClient1]
-Coordinates=10,305,76,69
-
-[RESTRequest1]
-Coordinates=415,10,111,105
 
 [RESTRequestCategories]
 Coordinates=270,10,135,105
@@ -36,4 +27,13 @@ Coordinates=96,305,40,51
 
 [RESTClientCategories]
 Coordinates=536,10,123,69
+
+[RESTClient1]
+Coordinates=10,305,76,69
+
+[RESTRequest1]
+Coordinates=415,10,111,105
+
+[RESTResponse1]
+Coordinates=10,10,96,285
 
