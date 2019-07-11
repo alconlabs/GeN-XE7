@@ -31,7 +31,7 @@ type
     procedure EscribirINI;
   private
     { Private declarations }
-    bd : string;
+    bd, ejecutable : string;
     procedure ActualizarImprimir(reporte:string);
     procedure ActualizarBase;
     function ExisteEnTabla(TB_NAME, FLD_NAME: string):Boolean;
@@ -44,6 +44,8 @@ type
     procedure AgregarCampoModificacionTabla(nombreCampo: string;tipo: TFieldType;tamaño: Integer);
     procedure TerminarModificacionTabla;
     procedure ObtenerSO;
+    procedure ActualizarVersion;
+    function EsMismaVersion:Boolean;
   public
   const
     NumThreads: Integer = 4;
@@ -79,6 +81,7 @@ type
     procedure EnviarEmail(email,asunto,cuerpo,adjunto: String);
     function ExisteThunderbird():boolean;
     function CopyDir(const Source, Target: string): Boolean;
+    function Actualizar:Boolean;
   end;
 
 const
@@ -87,6 +90,7 @@ const
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
     'ClientesL', 'CompraL', 'VentaL', 'Empresa', 'Configuracion', 'Backup',
     'Migrar', 'Licencia');
+  version='201907022009';
 
 type
   TCompartido = record
@@ -329,19 +333,17 @@ begin
 end;
 
 procedure TDM.connection;
-var
-  origen, destino: string;
+//var
+//  origen, destino: string;
 begin
   FormatearFecha;
   if BaseDatos.Connected = True then BaseDatos.Close;
   // Obtiene la ruta y el nombre de la base de datos
   Path := TPath.GetDocumentsPath()+'\Civeloo\GeN\';
+  ejecutable := ExtractFilePath(Application.ExeName);
+  ejecutable := StringReplace(ejecutable, 'bin\', '', [rfReplaceAll]);
   if  not FileExists(Path+'db\GeN.FDB') then
-  begin
-    origen := ExtractFilePath(Application.ExeName);
-    origen := StringReplace(origen, 'bin\', '', [rfReplaceAll]);
-    CopyDir(origen, Path);
-  end;
+    CopyDir(ejecutable, Path);
   LeerINI;
   U := ExtractFileDrive(Application.ExeName);
   if bd <> '' then Path := bd;
@@ -595,7 +597,15 @@ end;
 procedure TDM.ActualizarBase;
 begin
   if ExisteEnTabla('Version', '') then
-//  if True then
+  begin
+//    GetBuildInfo;
+    if not EsMismaVersion then
+    begin
+      CopyDir(ejecutable+'hlp', Path);
+      CopyDir(ejecutable+'rpt', Path);
+      ActualizarVersion;
+    end;
+  end
   else
   begin
     CrearTabla('Version', 'V1', 'VARCHAR(255)');
@@ -717,9 +727,9 @@ end;
 function TDM.TraerValor;
 begin
   Query.SQL.Text :=
-    'SELECT '+campo
-    +' FROM "'+tabla+'"'
-    +' WHERE CODIGO='+codigo;
+    'SELECT '+campo+' FROM "'+tabla+'"';
+    if codigo<>'' then
+      Query.SQL.Text := Query.SQL.Text + ' WHERE CODIGO='+codigo;
   Query.Open;
   result := Query.Fields.Fields[0].AsString;
 end;
@@ -938,6 +948,52 @@ end;
 procedure TDM.ObtenerSO;
 begin
   microsoftStore := (AnsiPos(trim('WindowsApps'),trim(ExtractFilePath(Application.ExeName)))<>0);
+end;
+
+function TDM.Actualizar;
+var
+  actualiza :string;
+begin
+  result := False;
+    if not microsoftStore then
+    begin
+      actualiza := Copy(ReadTextFile(
+          Descargar('https://raw.githubusercontent.com/DeGsoft/GeN-XE7/master/Instalador/Update.iss'
+          , path+'Update.iss')
+          ), 23, 12);
+      if actualiza <>'' then
+        if TextoAfecha(actualiza) > TextoAfecha(version) then
+          if MessageDlg('Nueva actualización disponible, descargar?',
+            mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
+          begin
+            ShellExecute(0,'open',
+            'https://sourceforge.net/projects/gen-xe7/files/ActualizarGeN.exe/download'
+            ,nil,nil,SW_NORMAL);
+            result := True;
+          end
+    end;
+end;
+
+procedure TDM.ActualizarVersion;
+begin
+  ActualizarValor('Version', 'V1', '', FloatToStr(v1));
+  ActualizarValor('Version', 'V2', '', FloatToStr(v2));
+  ActualizarValor('Version', 'V3', '', FloatToStr(v3));
+  ActualizarValor('Version', 'V4', '', FloatToStr(v4));
+end;
+
+function TDM.EsMismaVersion;
+var
+  vv1,       // Major Version
+  vv2,       // Minor Version
+  vv3,       // Release
+  vv4: Word; // Build Number
+begin
+  vv1 := StrToInt(TraerValor('Version','V1',''));
+  vv2 := StrToInt(TraerValor('Version','V2',''));
+  vv3 := StrToInt(TraerValor('Version','V3',''));
+  vv4 := StrToInt(TraerValor('Version','V4',''));
+  result := ((V1=vv1) and (V2=vv2) and (V3=vv3));
 end;
 
 end.

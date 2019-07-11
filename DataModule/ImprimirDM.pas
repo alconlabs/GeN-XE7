@@ -119,17 +119,24 @@ begin
     ' "Articulo".DESCRIPCION, "Articulo".UNIDAD, "Articulo".IVA as AIVA';
   ventaItemSql :=
     ' "VentaItem".ARTICULO, "VentaItem".CANTIDAD, "VentaItem".COSTO AS VIDESCUENTO,'
-    +' "VentaItem".PRECIO, "VentaItem".OPERACION, ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT, "VentaItem".SERVICIO, "VentaItem".DESCRIPCION AS DESCR, "VentaItem".IMPUESTO as VIIMPUESTO';
+    +' "VentaItem".PRECIO, "VentaItem".OPERACION,'
+    +' ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT,'
+    +' "VentaItem".SERVICIO, "VentaItem".DESCRIPCION AS DESCR,'
+    +' "VentaItem".IMPUESTO as VIIMPUESTO';
   ivaVtaSql := ' "LibroIVAventa".NG1, "LibroIVAventa".IVA1, "LibroIVAventa".NG2, "LibroIVAventa".IVA2, "LibroIVAventa".NG3';
-  presupuestoTSql:= ' "Presupuesto".CODIGO, "Presupuesto".LETRA, "Presupuesto".FECHA, "Presupuesto".COMPROBANTE,'
+  presupuestoTSql:= ' "Presupuesto".CODIGO, "Presupuesto".LETRA, "Presupuesto".DESCRIPCION as VDESC,'
+    +' "Presupuesto".FECHA, "Presupuesto".COMPROBANTE, "Presupuesto".COMPROBANTE AS CB,'
     + ' "Presupuesto".IVA3, "Presupuesto".TOTAL, "Presupuesto".CONTADO, "Presupuesto".CLIENTE,'
-    + ' "Presupuesto".SUBTOTAL, "Presupuesto".DESCUENTO, "Presupuesto".IMPUESTO,'
+    + ' "Presupuesto".SUBTOTAL, "Presupuesto".DESCUENTO, "Presupuesto".IMPUESTO, "Presupuesto".TERMINOS,'
     + ' "Presupuesto".IVA2, "Presupuesto".IVA1, "Presupuesto".EXCENTO, "Presupuesto".SALDO,'
     + ' "Presupuesto".PAGADO' + ' FROM "Presupuesto"';
   presupuestoSql := clienteSql + ',' + articuloSql + ',' +
-    ' "PresupuestoItem".ARTICULO, "PresupuestoItem".CANTIDAD, "PresupuestoItem".PRECIO,'
-    + ' "PresupuestoItem".OPERACION, ("PresupuestoItem".PRECIO * "PresupuestoItem".CANTIDAD ) as PREXCANT,'
-    + ' "PresupuestoItem".SERVICIO, "PresupuestoItem".IMPUESTO as VIIMPUESTO, "PresupuestoItem".DESCRIPCION AS DESCR,'
+    ' "PresupuestoItem".ARTICULO, "PresupuestoItem".CANTIDAD,'
+    +' "PresupuestoItem".PRECIO, "PresupuestoItem".COSTO AS VIDESCUENTO,'
+    + ' "PresupuestoItem".OPERACION,'
+    +' ("PresupuestoItem".PRECIO * "PresupuestoItem".CANTIDAD ) as PREXCANT,'
+    + ' "PresupuestoItem".SERVICIO, "PresupuestoItem".IMPUESTO as VIIMPUESTO,'
+    +' "PresupuestoItem".DESCRIPCION AS DESCR,'
     + presupuestoTSql +
     ' INNER JOIN "PresupuestoItem" ON ("Presupuesto".CODIGO = "PresupuestoItem".OPERACION)'
     + ' INNER JOIN "Articulo" ON ("PresupuestoItem".ARTICULO = "Articulo".CODIGO)'

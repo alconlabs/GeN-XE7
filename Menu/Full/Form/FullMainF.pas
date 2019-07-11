@@ -193,9 +193,6 @@ type
 var
   FullMainForm: TFullMainForm;
 
-const
-  version='201907022009';
-
 implementation
 
 uses LoginF, CrearCreditoF, CtaCteF, BuscaFactura,
@@ -220,7 +217,6 @@ begin
 end;
 
 procedure TFullMainForm.FormShow(Sender: TObject);
-var actualiza :string;
 begin
   // CONECTAR BASE DE DATOS
   // CONTROL DE USUARIOS
@@ -284,23 +280,8 @@ begin
     ' - [USUARIO: ' + Usuario + '] MODULO COMPLETO ';
   with DM do
   begin
-    if not microsoftStore then
-    begin
-      actualiza := Copy(ReadTextFile(
-          Descargar('https://raw.githubusercontent.com/DeGsoft/GeN-XE7/master/Instalador/Update.iss'
-          , path+'Update.iss')
-          ), 23, 12);
-      if actualiza <>'' then
-        if TextoAfecha(actualiza) > TextoAfecha(version) then
-          if MessageDlg('Nueva actualización disponible, descargar?',
-            mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
-          begin
-            ShellExecute(Handle,'open',
-            'https://sourceforge.net/projects/gen-xe7/files/ActualizarGeN.exe/download'
-            ,nil,nil,SW_NORMAL);
-            Close;
-          end;
-    end;
+    if Actualizar then
+      Close;
     FormatearFecha;
   end;
 end;
