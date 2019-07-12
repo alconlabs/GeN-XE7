@@ -748,7 +748,7 @@ begin
           else
             if reporte = 'COriginal' then reporte:='CNCredito';
       with ImprimirDataModule do
-        Impr(oper(cod, 'NC'+let, let), reporte);
+        Impr(oper(cod, 'NC'+let, let), 'NC'+let);//reporte);
       ImprimirDataModule.Free;
     end;
   end;
@@ -797,10 +797,9 @@ begin
   if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
-    ImprimirDataModule.Impr(ImprimirDataModule.pre(nro, let), 'Presupuesto');
+    ImprimirDataModule.Impr(ImprimirDataModule.pre(nro, let), 'P'+let);//'Presupuesto');
     ImprimirDataModule.Free;
   end;
-
 end;
 
 function TOperacionDataModule.ProcVTA; // PROCESA UNA VENTA

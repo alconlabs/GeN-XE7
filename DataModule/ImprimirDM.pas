@@ -142,12 +142,12 @@ begin
     + ' INNER JOIN "Articulo" ON ("PresupuestoItem".ARTICULO = "Articulo".CODIGO)'
     + ' INNER JOIN "Cliente" ON ("Presupuesto".CLIENTE = "Cliente".CODIGO)';
   OperacionItemSql:=
-    '  "OperacionItem".ARTICULO,' + '  "OperacionItem".CANTIDAD,' +
+    '  "OperacionItem".ARTICULO,  "OperacionItem".CANTIDAD, "OperacionItem".COSTO AS VIDESCUENTO,' +
     '  "OperacionItem".PRECIO,' + '  "OperacionItem".OPERACION,' +
     '  ("OperacionItem".PRECIO * "OperacionItem".CANTIDAD ) as PREXCANT, "OperacionItem".IMPUESTO as VIIMPUESTO,' +
     '  "OperacionItem".SERVICIO,' + '  "OperacionItem".DESCRIPCION AS DESCR';
   OperacionSql:=
-    ' "Operacion".CODIGO,' + '  "Operacion".LETRA,' + '  "Operacion".FECHA,' +
+    ' "Operacion".CODIGO,' + '  "Operacion".LETRA,' + '  "Operacion".FECHA, "Operacion".COMPROBANTE AS CB,' +
     ' "Operacion".COMPROBANTE, "Operacion".TERMINOS, "Operacion".DESCRIPCION as VDESC,' +
     ' "Operacion".TOTAL,' + '  "Operacion".CONTADO,' + '  "Operacion".CLIENTE,'+
     ' "Operacion".SUBTOTAL,' + ' "Operacion".DESCUENTO,' +
@@ -185,11 +185,28 @@ end;
 
 procedure TImprimirDataModule.Impr;
 var
-  Pict, Pict2, Pict3, Pict4: TfrxPictureView;
-  tipo_cbte: Integer;
-  oExportfilter: TfrxCustomExportFilter;
-  archivoPDF: string;
+  Pict, Pict2, Pict3, Pict4 :TfrxPictureView;
+  tipo_cbte :Integer;
+  oExportfilter :TfrxCustomExportFilter;
+  archivoPDF,
+  ctipo,nctipo :string;
 begin
+//  if ((rpt='A') or (rpt='B') or (rpt='C')) then
+//  begin
+    ctipo := 'FACTURA';
+    nctipo := '';
+//  end;
+  if ((rpt='NCA') or (rpt='NCB') or (rpt='NCC')) then
+  begin
+    ctipo := 'NOTA DE CREDITO';
+    rpt := StringReplace(rpt, 'NC', '', [rfReplaceAll]);
+  end
+  else
+  if ((rpt='PA') or (rpt='PB') or (rpt='PC')) then
+  begin
+    ctipo := 'PRESUPUESTO';
+    rpt := StringReplace(rpt, 'P', '', [rfReplaceAll]);
+  end;
   if not(rpt='CTicket') and ((reporte='TElectronica') or (reporte='CTicket')) then rpt := reporte;
   Query.sql.Text := 'SELECT '+
     QuotedStr(PuntoVenta) + ' As PtoVta,' +
@@ -210,7 +227,9 @@ begin
     QuotedStr(dm.ConfigQuery.FieldByName('WEB').AsString) + ' As EWEB,' +
     QuotedStr(FormatDateTime('dd/mm/yyyy', dm.ConfigQuery.FieldByName('FECHA')
     .AsDateTime)) + ' As EFECHA,' + QuotedStr(dm.ConfigQuery.FieldByName('IIBB')
-    .AsString) + ' As EIIBB,' + vsql;
+    .AsString) + ' As EIIBB, '
+    +QuotedStr(ctipo)+' as CTIPO, '+QuotedStr(nctipo)+' as NCTIPO,'
+    + vsql;
   Query.Open;
   with frxReport1 do
   begin
