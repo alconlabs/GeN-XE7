@@ -128,6 +128,5 @@ begin
   Application.Title := 'Civeloo GeN';
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFullMainForm, FullMainForm);
-  Application.CreateForm(TdmML, dmML);
   Application.Run;
 end.

@@ -220,7 +220,6 @@ end;
 
 procedure TDMR.DataModuleCreate(Sender: TObject);
 begin
-  dmML := TdmML.Create(self);
   JAline_items := TJSONArray.Create();
 end;
 
