@@ -191,11 +191,13 @@ var
   archivoPDF,
   ctipo,nctipo :string;
 begin
-//  if ((rpt='A') or (rpt='B') or (rpt='C')) then
-//  begin
+  ctipo := 'REMITO';
+  if ((rpt='A') or (rpt='B') or (rpt='C')) then
+  begin
     ctipo := 'FACTURA';
     nctipo := '';
-//  end;
+  end
+  else
   if ((rpt='NCA') or (rpt='NCB') or (rpt='NCC')) then
   begin
     ctipo := 'NOTA DE CREDITO';

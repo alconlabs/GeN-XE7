@@ -117,7 +117,8 @@ uses
   RestDM in 'DataModule\RestDM.pas' {DMR: TDataModule},
   Vcl.Themes,
   Vcl.Styles,
-  udmMercadoLibre in 'DataModule\udmMercadoLibre.pas' {dmML: TDataModule};
+  udmMercadoLibre in 'DataModule\udmMercadoLibre.pas' {dmML: TDataModule},
+  EditorReporteUnit in 'Report\EditorReporteUnit.pas' {fEditorReporte};
 
 {$R *.res}
 

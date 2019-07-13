@@ -14,7 +14,7 @@ uses
   Vcl.Grids, Vcl.DBGrids;
 
 type
-  TForm1 = class(TForm)
+  TfEditorReporte = class(TForm)
     frxBarCodeObject1: TfrxBarCodeObject;
     frxPDFExport1: TfrxPDFExport;
     frxDBDataset1: TfrxDBDataset;
@@ -36,7 +36,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  fEditorReporte: TForm;
 
 implementation
 
