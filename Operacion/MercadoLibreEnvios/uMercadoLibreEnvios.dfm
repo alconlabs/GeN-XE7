@@ -2,9 +2,9 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'fMercadoLibreEnvios'
-  ClientHeight = 460
-  ClientWidth = 632
-  Color = clBtnFace
+  ClientHeight = 406
+  ClientWidth = 267
+  Color = clCream
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -12,128 +12,216 @@ object Form1: TForm1
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object BitBtn1: TBitBtn
-    Left = 554
-    Top = 434
+  object Label1: TLabel
+    Left = 25
+    Top = 8
+    Width = 92
+    Height = 16
+    Caption = 'Para preparar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clGrayText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 25
+    Top = 27
+    Width = 48
+    Height = 13
+    Caption = '49 ventas'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clGrayText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object bActualizar: TBitBtn
+    Left = 211
+    Top = 383
     Width = 75
     Height = 25
     Caption = 'Actualizar'
     TabOrder = 0
-    OnClick = BitBtn1Click
-  end
-  object StringGridBindSourceDB1: TStringGrid
-    Left = 0
-    Top = 0
-    Width = 273
-    Height = 460
-    Align = alLeft
-    ColCount = 1
-    FixedCols = 0
-    RowCount = 2
-    TabOrder = 1
-    OnClick = StringGridBindSourceDB1Click
-    ExplicitHeight = 337
+    Visible = False
+    OnClick = bActualizarClick
   end
   object bImprimirEtiqueta: TButton
-    Left = 279
-    Top = 434
+    Left = -26
+    Top = 383
     Width = 75
     Height = 25
     Caption = 'Imprimir'
-    TabOrder = 2
+    TabOrder = 1
+    Visible = False
     OnClick = bImprimirEtiquetaClick
   end
-  object sgOrder_items: TStringGrid
-    Left = 279
-    Top = 0
-    Width = 353
-    Height = 137
-    ColCount = 1
-    FixedCols = 0
-    RowCount = 2
-    TabOrder = 3
-    ColWidths = (
-      347)
-  end
   object ProgressBar1: TProgressBar
-    Left = 224
-    Top = 176
+    Left = 55
+    Top = 383
     Width = 150
     Height = 16
     Min = 1
     Position = 1
-    TabOrder = 4
+    TabOrder = 2
     Visible = False
   end
-  object sgMessages: TStringGrid
-    Left = 279
-    Top = 143
-    Width = 353
-    Height = 194
-    ColCount = 1
-    FixedCols = 0
-    RowCount = 2
+  object Panel1: TPanel
+    Left = 8
+    Top = 54
+    Width = 250
+    Height = 70
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 3
+    object Label3: TLabel
+      Left = 17
+      Top = 17
+      Width = 98
+      Height = 13
+      Caption = 'Mensajes nuevos'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clMaroon
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label4: TLabel
+      Left = 17
+      Top = 33
+      Width = 42
+      Height = 13
+      Caption = '6 ventas'
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clGrayText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+    end
+  end
+  object Panel2: TPanel
+    Left = 8
+    Top = 139
+    Width = 250
+    Height = 70
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 4
+    object Label5: TLabel
+      Left = 17
+      Top = 17
+      Width = 141
+      Height = 13
+      Caption = 'Para la colecta | Ma'#241'ana'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clMaroon
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label6: TLabel
+      Left = 17
+      Top = 33
+      Width = 42
+      Height = 13
+      Caption = '2 ventas'
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clGrayText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+    end
+  end
+  object Panel3: TPanel
+    Left = 8
+    Top = 222
+    Width = 250
+    Height = 70
+    Color = clWhite
+    ParentBackground = False
     TabOrder = 5
-    OnClick = sgMessagesClick
-    ColWidths = (
-      348)
+    object Label7: TLabel
+      Left = 17
+      Top = 15
+      Width = 172
+      Height = 13
+      Caption = 'Mercado Env'#237'os Flex | Ma'#241'ana'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clMaroon
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label8: TLabel
+      Left = 17
+      Top = 33
+      Width = 42
+      Height = 13
+      Caption = '2 ventas'
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clGrayText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+    end
   end
-  object Memo1: TMemo
-    Left = 279
-    Top = 343
-    Width = 353
-    Height = 89
-    ScrollBars = ssVertical
+  object Panel4: TPanel
+    Left = 8
+    Top = 307
+    Width = 250
+    Height = 70
+    Color = clWhite
+    ParentBackground = False
     TabOrder = 6
-  end
-  object BindSourceDB1: TBindSourceDB
-    DataSet = dmML.tOrders
-    ScopeMappings = <>
-    Left = 32
-    Top = 16
-  end
-  object BindingsList1: TBindingsList
-    Methods = <>
-    OutputConverters = <>
-    Left = 20
-    Top = 5
-    object LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource
-      Category = 'Quick Bindings'
-      DataSource = BindSourceDB1
-      GridControl = StringGridBindSourceDB1
-      Columns = <>
+    object Label11: TLabel
+      Left = 17
+      Top = 17
+      Width = 146
+      Height = 13
+      Caption = 'Acordar con el comprador'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clMaroon
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
-    object LinkGridToDataSourceBindSourceDB2: TLinkGridToDataSource
-      Category = 'Quick Bindings'
-      DataSource = BindSourceDB2
-      GridControl = sgOrder_items
-      Columns = <>
-      DefaultColumnWidth = 350
+    object Label12: TLabel
+      Left = 17
+      Top = 33
+      Width = 48
+      Height = 13
+      Caption = '46 ventas'
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clGrayText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
     end
-    object LinkGridToDataSourceBindSourceDB3: TLinkGridToDataSource
-      Category = 'Quick Bindings'
-      DataSource = BindSourceDB3
-      GridControl = sgMessages
-      Columns = <>
-      DefaultColumnWidth = 350
-    end
-  end
-  object BindSourceDB2: TBindSourceDB
-    DataSet = dmML.tOrder_items
-    ScopeMappings = <>
-    Left = 288
   end
   object Timer1: TTimer
     OnTimer = Timer1Timer
-    Left = 288
-    Top = 168
-  end
-  object BindSourceDB3: TBindSourceDB
-    DataSet = dmML.tMessages
-    ScopeMappings = <>
-    Left = 304
-    Top = 224
+    Left = 112
+    Top = 376
   end
 end

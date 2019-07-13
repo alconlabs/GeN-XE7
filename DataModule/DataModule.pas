@@ -90,7 +90,7 @@ const
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
     'ClientesL', 'CompraL', 'VentaL', 'Empresa', 'Configuracion', 'Backup',
     'Migrar', 'Licencia');
-  version='201907121225';
+  version='201907131203';
 
 type
   TCompartido = record

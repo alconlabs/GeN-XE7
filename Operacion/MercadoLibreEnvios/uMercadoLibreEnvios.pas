@@ -11,27 +11,31 @@ uses
 
 type
   TForm1 = class(TForm)
-    BitBtn1: TBitBtn;
-    BindSourceDB1: TBindSourceDB;
-    StringGridBindSourceDB1: TStringGrid;
-    LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource;
-    BindingsList1: TBindingsList;
+    bActualizar: TBitBtn;
     bImprimirEtiqueta: TButton;
-    sgOrder_items: TStringGrid;
-    BindSourceDB2: TBindSourceDB;
-    LinkGridToDataSourceBindSourceDB2: TLinkGridToDataSource;
     ProgressBar1: TProgressBar;
     Timer1: TTimer;
-    sgMessages: TStringGrid;
-    BindSourceDB3: TBindSourceDB;
-    LinkGridToDataSourceBindSourceDB3: TLinkGridToDataSource;
-    Memo1: TMemo;
-    procedure BitBtn1Click(Sender: TObject);
+    Label1: TLabel;
+    Label2: TLabel;
+    Panel1: TPanel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Panel2: TPanel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Panel3: TPanel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Panel4: TPanel;
+    Label11: TLabel;
+    Label12: TLabel;
+    procedure bActualizarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure bImprimirEtiquetaClick(Sender: TObject);
     procedure StringGridBindSourceDB1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure sgMessagesClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -65,7 +69,7 @@ begin
   end;
 end;
 
-procedure TForm1.BitBtn1Click(Sender: TObject);
+procedure TForm1.bActualizarClick(Sender: TObject);
 begin
   with dmr do
   begin
@@ -91,12 +95,18 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  DMR := TDMR.Create(self);
+  dmML := TdmML.Create(Self);
+  DMR := TDMR.Create(Self);
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+  bActualizar.Click;
 end;
 
 procedure TForm1.sgMessagesClick(Sender: TObject);
 begin
-  Memo1.Text := dmML.tMessages.FieldByName('message_text').AsString;
+//  Memo1.Text := dmML.tMessages.FieldByName('message_text').AsString;
 end;
 
 procedure TForm1.StringGridBindSourceDB1Click(Sender: TObject);
@@ -105,7 +115,7 @@ begin
   begin
     tOrder_items.Open('SELECT item_title FROM order_items WHERE order_id='+dmML.tOrders.FieldByName('order_id').AsString);
     tMessages.Open('SELECT message_text FROM messages WHERE order_id='+dmML.tOrders.FieldByName('order_id').AsString);
-    Memo1.Text:='';
+//    Memo1.Text:='';
   end;
 end;
 
