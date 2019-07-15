@@ -64,7 +64,7 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS seller ('
-    +'seller_id INTEGER PRIMARY KEY'
+    +'seller_id TEXT PRIMARY KEY'
     +')');
 
     if ExecSQLScalar('SELECT COUNT(refresh) FROM token')=0 then
@@ -72,11 +72,11 @@ begin
                    'VALUES(:N)', ['']);
 
 //    ExecSQL('CREATE TABLE IF NOT EXISTS buyers ('
-//    +'buyer_id INTEGER PRIMARY KEY'
+//    +'buyer_id TEXT PRIMARY KEY'
 //    +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS orders ('
-    +'id INTEGER PRIMARY KEY'
+    +'id TEXT PRIMARY KEY'
     +', comments TEXT'
     +', status TEXT'
     +', status_detail TEXT'
@@ -88,7 +88,7 @@ begin
     +', hidden_for_seller TEXT'
     +', currency_id TEXT'
     +', order_items TEXT'
-    +', total_amount REAL'
+    +', total_amount TEXT'
     +', mediations TEXT'
     +', payments TEXT'
     +', shipping TEXT'
@@ -103,52 +103,52 @@ begin
     +', pack_id TEXT'
     +', order_request TEXT'
     +', fulfilled TEXT'
-    +', total_amount_with_shipping REAL'
-    +', paid_amount REAL'
+    +', total_amount_with_shipping TEXT'
+    +', paid_amount TEXT'
     +', coupon TEXT'
     +', taxes TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS coupon {'
-    +'order_id INTEGER'
+    +'order_id TEXT'
     +', id TEXT'
-    +', amount REAL'
+    +', amount TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS order_request ('
-    +'order_id INTEGER'
+    +'order_id TEXT'
     +', return TEXT'
     +', change TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS feedback ('
-    +'order_id INTEGER'
+    +'order_id TEXT'
     +', sale TEXT'
     +', purchase TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS status_detail ('
-    +'order_id INTEGER'
+    +'order_id TEXT'
     +', code TEXT'
     +', description TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS order_items ('
-    +'order_id INTEGER'
+    +'order_id TEXT'
     +', item_id TEXT'
-    +', quantity INTEGER'
-    +', sale_fee REAL'
+    +', quantity TEXT'
+    +', sale_fee TEXT'
     +', listing_type_id TEXT'
     +', base_currency_id TEXT'
-    +', unit_price REAL'
-    +', full_unit_price REAL'
+    +', unit_price TEXT'
+    +', full_unit_price TEXT'
     +', base_exchange_rate TEXT'
     +', currency_id TEXT'
     +', manufacturing_days TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS items ('
-    +'order_id INTEGER'
+    +'order_id TEXT'
     +', id TEXT'
     +', title TEXT'
     +', category_id TEXT'
@@ -160,21 +160,257 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS messages ('
-    +'order_id INTEGER'
-    +', pack_id INTEGER'
+    +'order_id TEXT'
+    +', pack_id TEXT'
     +', message_id TEXT'
     +', message_text TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS packs ('
-    +' order_id INTEGER PRIMARY KEY'
-    +', pack_id INTEGER'
+    +' order_id TEXT PRIMARY KEY'
+    +', pack_id TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS despachados ('
-    +' order_id INTEGER PRIMARY KEY'
+    +' order_id TEXT PRIMARY KEY'
     +', embalado TEXT'
     +', enviado TEXT'
+    +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS payments {' +
+    +' id TEXT'
+    +', order_id TEXT'
+    +', payer_id TEXT'
+    +', collector TEXT'
+    +', card_id TEXT'
+    +', site_id TEXT'
+    +', reason TEXT',
+    +', payment_method_id TEXT'
+    +', currency_id TEXT'
+    +', installments TEXT'
+    +', issuer_id TEXT'
+    +', atm_transfer_reference TEXT'
+    +', coupon_id TEXT'
+    +', activation_uri TEXT'
+    +', operation_type TEXT'
+    +', payment_type TEXT'
+    +', available_actions TEXT'
+    +', status TEXT'
+    +', status_code TEXT'
+    +', status_detail TEXT'
+    +', transaction_amount TEXT'
+    +', taxes_amount TEXT'
+    +', shipping_cost TEXT'
+    +', coupon_amount TEXT'
+    +', overpaid_amount TEXT'
+    +', total_paid_amount TEXT'
+    +', installment_amount TEXT'
+    +', deferred_period TEXT'
+    +', date_approved TEXT'
+    +', authorization_code TEXT'
+    +', transaction_order_id TEXT'
+    +', date_created TEXT'
+    +', date_last_modified TEXT'
+    +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS atm_transfer_reference {'
+    +'payments_id TEXT'
+    +', company_id TEXT'
+    +', transaction_id TEXT'
+    +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS available_actions {' +
+    +' payments_id TEXT'
+    +', refund"' +
+    +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS collector {' +
+    +'payments_id TEXT'
+    +', id TEXT'
+    +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS shipping": {' +
+    +'order_id TEXT'
+    +', id TEXT'
+    +', site_id TEXT'
+    +', shipment_type TEXT'
+    +', mode TEXT'
+    +', shipping_mode TEXT'
+    +', status TEXT'
+    +', substatus TEXT'
+    +', date_created TEXT'
+    +', receiver_address TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS receiver_address {'
+      +', id TEXT'
+      +', address_line TEXT'
+      +', street_name TEXT'
+      +', street_number TEXT'
+      +', comment TEXT'
+      +', zip_code TEXT'
+      +', city TEXT'
+          +')');
+ExecSQL('CREATE TABLE IF NOT EXISTS city {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+      +', state TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS state {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+      +', country TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS country {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+      +', neighborhood TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS neighborhood {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+      +', municipality TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS municipality {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+      +', types TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS types {'
+        +'agency_addressname TEXT'
+    +')');
+      +', latitude TEXT'
+      +', longitude TEXT'
+      +', geolocation_type TEXT'
+      +', agency TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS agency {'
+        +', carrier_id TEXT'
+        +', agency_id TEXT'
+        +', description TEXT'
+        +', phone TEXT'
+        +', open_hours TEXT'
+    +')');
+      +', receiver_name TEXT'
+      +', receiver_phone TEXT'
+    +')');
+    +', sender_address TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS sender_address {'
+      +', id TEXT'
+      +', address_line TEXT'
+      +', street_name TEXT'
+      +', street_number TEXT'
+      +', comment TEXT'
+      +', zip_code TEXT'
+      +', city TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS city {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+      +', state TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS state {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+      +', country TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS country {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+      +', neighborhood TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS neighborhood {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+      +', municipality TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS municipality {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+      +', agency TEXT'
+      +', types TEXT'
+      +', latitude TEXT'
+      +', longitude TEXT'
+      +', geolocation_type TEXT'
+    +')');
+    +', currency_id TEXT'
+    +', date_first_printed TEXT'
+    +', service_id TEXT'
+    +', shipping_items TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS shipping_items {'
+        +'id TEXT'
+        +', description TEXT'
+        +', quantity TEXT'
+        +', dimensions TEXT'
+        +', dimensions_source TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS dimensions_source {'
+          +'id TEXT'
+          +', origin TEXT'
+    +')');
+    +')');
+    +')');
+    +', receiver_id TEXT'
+    +', sender_id TEXT'
+    +', shipping_option TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS shipping_option {'
+      +', id TEXT'
+      +', shipping_method_id TEXT'
+      +', name TEXT'
+      +', currency_id TEXT'
+      +', list_cost TEXT'
+      +', cost TEXT'
+      +', delivery_type TEXT'
+      +', estimated_schedule_limit TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS estimated_schedule_limit {'
+        +'date TEXT'
+    +')');
+      +', estimated_delivery_time TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_time {'
+        +'type TEXT'
+        +', date TEXT'
+        +', unit TEXT'
+        +', offset TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS offset {'
+          +', date TEXT'
+          +', shipping TEXT'
+      +')');
+        +', time_frame TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS time_frame {'
+          +'from TEXT'
+          +', to TEXT'
+      +')');
+        +', pay_before TEXT'
+        +', shipping TEXT'
+        +', handling TEXT'
+        +', schedule TEXT'
+    +')');
+      +', estimated_delivery_limit TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_limit {'
+        +'date TEXT'
+        +', offset TEXT'
+    +')');
+      +', estimated_delivery_final TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_final {'
+        +'date TEXT'
+        +', offset TEXT'
+    +')');
+      +', estimated_delivery_final TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_final {'
+        +'date TEXT'
+        +', offset TEXT'
+    +')');
+      +', estimated_handling_limit TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS estimated_handling_limit {'
+        +'date TEXT'
+    +')');
+    +', logistic_type TEXT'
+    +', picking_type TEXT'
+    +', cost_components TEXT'
+ExecSQL('CREATE TABLE IF NOT EXISTS cost_components {'
+      +', special_discount TEXT'
+      +', loyal_discount TEXT'
+      +', compensation TEXT'
+      +', gap_discount TEXT'
+      +', ratio TEXT'
+    +')');
+    +', cost TEXT'
     +')');
 
     refreshToken := ExecSQLScalar('SELECT refresh FROM token');

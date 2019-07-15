@@ -5,7 +5,8 @@ object dmML: TdmML
   Width = 293
   object dbMain: TFDConnection
     Params.Strings = (
-      'DriverID=SQLite')
+      'ConnectionDef=MercadoLibreVentas')
+    Connected = True
     Left = 8
   end
   object tOrders: TFDQuery
