@@ -16,7 +16,7 @@ type
     ProgressBar1: TProgressBar;
     Timer1: TTimer;
     Label1: TLabel;
-    Label2: TLabel;
+    lVentas: TLabel;
     Panel1: TPanel;
     Label3: TLabel;
     Label4: TLabel;
@@ -90,6 +90,7 @@ ProgressBar1.Visible:=False;
   begin
     tOrders.Close;
     tOrders.Open;
+    lVentas.Caption:=IntToStr(tOrders.RowsAffected)+' ventas';
   end;
 end;
 

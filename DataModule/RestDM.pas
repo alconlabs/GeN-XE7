@@ -661,7 +661,7 @@ end;
 procedure TDMR.ObtenerOrderRecent;
 var
   j, order_items, buyer, item, shipping : TJSONValue;
-  i, io, order_id,order_status,buyer_id,shipping_id,item_id,item_title,
+  i, io, order_id,order_status,buyer_id,shipping_id,item_id,item_title,seller_sku,
   order_items_quantity : string;
   n, r, l, ro, no : Integer;
 begin
@@ -697,6 +697,7 @@ begin
                 item := order_items.GetValue<TJSONValue>('item');
                 item_id := item.GetValue<string>('id');
                 item_title := item.GetValue<string>('title');
+                seller_sku := item.GetValue<string>('seller_sku');
                 order_items_quantity := order_items.GetValue<string>('quantity');
                 AgregarOrder_items(order_id,item_id,item_title);
               end;

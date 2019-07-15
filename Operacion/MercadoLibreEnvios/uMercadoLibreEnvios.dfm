@@ -28,12 +28,12 @@ object Form1: TForm1
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label2: TLabel
+  object lVentas: TLabel
     Left = 25
     Top = 27
-    Width = 48
+    Width = 42
     Height = 13
-    Caption = '49 ventas'
+    Caption = '0 ventas'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clGrayText
     Font.Height = -11
