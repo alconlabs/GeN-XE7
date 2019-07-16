@@ -23,5 +23,5 @@
     <Transaction>2019/07/06 19:34:19.000.325,=C:\GitHub\GeN-XE7\DataModule\AfipDM.pas</Transaction>
     <Transaction>2019/07/06 19:36:15.000.092,=C:\GitHub\GeN-XE7\DataModule\service.pas</Transaction>
     <Transaction>2019/07/06 19:36:32.000.845,=C:\GitHub\GeN-XE7\DataModule\LoginCms1.pas</Transaction>
-  </Transactions>
+  </Transactions>  <BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>

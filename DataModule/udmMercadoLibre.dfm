@@ -6,7 +6,6 @@ object dmML: TdmML
   object dbMain: TFDConnection
     Params.Strings = (
       'ConnectionDef=MercadoLibreVentas')
-    Connected = True
     Left = 8
   end
   object tOrders: TFDQuery
