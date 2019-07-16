@@ -240,58 +240,20 @@ begin
     +', substatus TEXT'
     +', date_created TEXT'
     +', receiver_address TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS receiver_address {'
-      +', id TEXT'
-      +', address_line TEXT'
-      +', street_name TEXT'
-      +', street_number TEXT'
-      +', comment TEXT'
-      +', zip_code TEXT'
-      +', city TEXT'
-          +')');
-ExecSQL('CREATE TABLE IF NOT EXISTS city {'
-        +'id TEXT'
-        +', name TEXT'
-    +')');
-      +', state TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS state {'
-        +'id TEXT'
-        +', name TEXT'
-    +')');
-      +', country TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS country {'
-        +'id TEXT'
-        +', name TEXT'
-    +')');
-      +', neighborhood TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS neighborhood {'
-        +'id TEXT'
-        +', name TEXT'
-    +')');
-      +', municipality TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS municipality {'
-        +'id TEXT'
-        +', name TEXT'
-    +')');
-      +', types TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS types {'
-        +'agency_addressname TEXT'
-    +')');
-      +', latitude TEXT'
-      +', longitude TEXT'
-      +', geolocation_type TEXT'
-      +', agency TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS agency {'
-        +', carrier_id TEXT'
-        +', agency_id TEXT'
-        +', description TEXT'
-        +', phone TEXT'
-        +', open_hours TEXT'
-    +')');
-      +', receiver_name TEXT'
-      +', receiver_phone TEXT'
-    +')');
     +', sender_address TEXT'
+    +', currency_id TEXT'
+    +', date_first_printed TEXT'
+    +', service_id TEXT'
+    +', shipping_items TEXT'
+    +', receiver_id TEXT'
+    +', sender_id TEXT'
+    +', shipping_option TEXT'
+    +', logistic_type TEXT'
+    +', picking_type TEXT'
+    +', cost_components TEXT'
+    +', cost TEXT'
+    +')');
+
 ExecSQL('CREATE TABLE IF NOT EXISTS sender_address {'
       +', id TEXT'
       +', address_line TEXT'
@@ -300,40 +262,129 @@ ExecSQL('CREATE TABLE IF NOT EXISTS sender_address {'
       +', comment TEXT'
       +', zip_code TEXT'
       +', city TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS city {'
-        +'id TEXT'
-        +', name TEXT'
-    +')');
       +', state TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS state {'
-        +'id TEXT'
-        +', name TEXT'
-    +')');
       +', country TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS country {'
-        +'id TEXT'
-        +', name TEXT'
-    +')');
       +', neighborhood TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS neighborhood {'
-        +'id TEXT'
-        +', name TEXT'
-    +')');
       +', municipality TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS municipality {'
-        +'id TEXT'
-        +', name TEXT'
-    +')');
       +', agency TEXT'
       +', types TEXT'
       +', latitude TEXT'
       +', longitude TEXT'
       +', geolocation_type TEXT'
     +')');
-    +', currency_id TEXT'
-    +', date_first_printed TEXT'
-    +', service_id TEXT'
-    +', shipping_items TEXT'
+
+ExecSQL('CREATE TABLE IF NOT EXISTS city {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+
+ExecSQL('CREATE TABLE IF NOT EXISTS state {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+
+ExecSQL('CREATE TABLE IF NOT EXISTS country {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+
+ExecSQL('CREATE TABLE IF NOT EXISTS neighborhood {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+
+ExecSQL('CREATE TABLE IF NOT EXISTS municipality {'
+        +'id TEXT'
+        +', name TEXT'
+    +')');
+
+ExecSQL('CREATE TABLE IF NOT EXISTS receiver_address {'
+      +', id TEXT'
+      +', address_line TEXT'
+      +', street_name TEXT'
+      +', street_number TEXT'
+      +', comment TEXT'
+      +', zip_code TEXT'
+      +', city TEXT'
+      +', state TEXT'
+      +', country TEXT'
+      +', neighborhood TEXT'
+      +', municipality TEXT'
+      +', types TEXT'
+      +', receiver_name TEXT'
+      +', receiver_phone TEXT'
+    +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS shipping_option {'
+      +', id TEXT'
+      +', shipping_method_id TEXT'
+      +', name TEXT'
+      +', currency_id TEXT'
+      +', list_cost TEXT'
+      +', cost TEXT'
+      +', delivery_type TEXT'
+      +', estimated_schedule_limit TEXT'
+      +', estimated_delivery_time TEXT'
+      +', estimated_delivery_limit TEXT'
+      +', estimated_delivery_final TEXT'
+      +', estimated_delivery_final TEXT'
+      +', estimated_handling_limit TEXT'
+      +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS estimated_handling_limit {'
+        +'date TEXT'
+    +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_final {'
+        +'date TEXT'
+        +', offset TEXT'
+    +')');
+
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_final {'
+        +'date TEXT'
+        +', offset TEXT'
+    +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_limit {'
+        +'date TEXT'
+        +', offset TEXT'
+    +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS estimated_schedule_limit {'
+        +'date TEXT'
+    +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_time {'
+        +'type TEXT'
+        +', date TEXT'
+        +', unit TEXT'
+        +', offset TEXT'
+        +', time_frame TEXT'
+        +', pay_before TEXT'
+        +', shipping TEXT'
+        +', handling TEXT'
+        +', schedule TEXT'
+    +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS offset {'
+          +', date TEXT'
+          +', shipping TEXT'
+      +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS time_frame {'
+          +'from TEXT'
+          +', to TEXT'
+      +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS cost_components {'
+      +', special_discount TEXT'
+      +', loyal_discount TEXT'
+      +', compensation TEXT'
+      +', gap_discount TEXT'
+      +', ratio TEXT'
+    +')');
+
 ExecSQL('CREATE TABLE IF NOT EXISTS shipping_items {'
         +'id TEXT'
         +', description TEXT'
@@ -344,73 +395,15 @@ ExecSQL('CREATE TABLE IF NOT EXISTS dimensions_source {'
           +'id TEXT'
           +', origin TEXT'
     +')');
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS city {'
+        +'id TEXT'
+        +', name TEXT'
     +')');
-    +')');
-    +', receiver_id TEXT'
-    +', sender_id TEXT'
-    +', shipping_option TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS shipping_option {'
-      +', id TEXT'
-      +', shipping_method_id TEXT'
-      +', name TEXT'
-      +', currency_id TEXT'
-      +', list_cost TEXT'
-      +', cost TEXT'
-      +', delivery_type TEXT'
-      +', estimated_schedule_limit TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS estimated_schedule_limit {'
-        +'date TEXT'
-    +')');
-      +', estimated_delivery_time TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_time {'
-        +'type TEXT'
-        +', date TEXT'
-        +', unit TEXT'
-        +', offset TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS offset {'
-          +', date TEXT'
-          +', shipping TEXT'
-      +')');
-        +', time_frame TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS time_frame {'
-          +'from TEXT'
-          +', to TEXT'
-      +')');
-        +', pay_before TEXT'
-        +', shipping TEXT'
-        +', handling TEXT'
-        +', schedule TEXT'
-    +')');
-      +', estimated_delivery_limit TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_limit {'
-        +'date TEXT'
-        +', offset TEXT'
-    +')');
-      +', estimated_delivery_final TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_final {'
-        +'date TEXT'
-        +', offset TEXT'
-    +')');
-      +', estimated_delivery_final TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_final {'
-        +'date TEXT'
-        +', offset TEXT'
-    +')');
-      +', estimated_handling_limit TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS estimated_handling_limit {'
-        +'date TEXT'
-    +')');
-    +', logistic_type TEXT'
-    +', picking_type TEXT'
-    +', cost_components TEXT'
-ExecSQL('CREATE TABLE IF NOT EXISTS cost_components {'
-      +', special_discount TEXT'
-      +', loyal_discount TEXT'
-      +', compensation TEXT'
-      +', gap_discount TEXT'
-      +', ratio TEXT'
-    +')');
-    +', cost TEXT'
+
+    ExecSQL('CREATE TABLE IF NOT EXISTS state {'
+        +'id TEXT'
+        +', name TEXT'
     +')');
 
     refreshToken := ExecSQLScalar('SELECT refresh FROM token');
