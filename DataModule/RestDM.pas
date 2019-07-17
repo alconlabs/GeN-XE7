@@ -58,7 +58,8 @@ type
     procedure IniciarREST;
 
     function Obtener(resource:string):TJSONValue;
-
+    procedure ObtenerOrder_items(order_id:string;order_items:TJSONValue);
+    procedure ObtenerShipping(j:TJSONValue);
   public
     { Public declarations }
     JSONValue1 : TJSONValue;
@@ -692,42 +693,52 @@ begin
               tOrdersstatus.AsString := j.GetValue<string>('results['+i+'].status');
               buyer := j.GetValue<TJSONValue>('results['+i+'].buyer');
               tOrdersbuyer.AsString := buyer.GetValue<string>('id');
-              shipping := j.GetValue<TJSONValue>('results['+i+'].shipping');
+//              shipping := j.GetValue<TJSONValue>('results['+i+'].shipping');
       //ShowMessage( j.GetValue<TJSONValue>('results['+i+'].shipping').ToString );
-              if shipping.GetValue<TJSONValue>('id').ToString<>'null' then
-                tOrdersshipping.AsString := shipping.GetValue<string>('id');
+//              if shipping.GetValue<TJSONValue>('id').ToString<>'null' then
+//                tOrdersshipping.AsString := shipping.GetValue<string>('id');
+            ObtenerShipping(
+              j.GetValue<TJSONValue>('results['+i+'].shipping')
+            );
+
   //            order_items := j.GetValue<TJSONValue>('results['+i+'].order_items[0]');
-              ro:=TJSONArray(j.GetValue<TJSONValue>('results['+i+'].order_items')).Size;
+//              ro:=TJSONArray(j.GetValue<TJSONValue>('results['+i+'].order_items')).Size;
+            ObtenerOrder_items(order_id,
+              j.GetValue<TJSONValue>('results['+i+'].order_items')
+            );
+            ObtenerMessages(order_id,seller_id);
+
+
               tOrders.Post;
             end;
-//            with tOrder_items do
-            begin
-            if ro>0 then
-              for no := 0 to ro-1 do
-              begin
-                io:=IntToStr(no);
-                order_items := j.GetValue<TJSONValue>('results['+i+'].order_items['+io+']');
-                item := order_items.GetValue<TJSONValue>('item');
-                item_id := item.GetValue<string>('id');
-                order_id := j.GetValue<string>('results['+i+'].id');
-                if CantidadRegistros('order_items','order_id='+QuotedStr(order_id)+' AND item_id='+QuotedStr(item_id))>0 then
-                  tOrder_items.Edit
-                else
-                begin
-                  tOrder_items.Insert;
-                  tOrder_itemsorder_id.AsString := order_id;
-                end;
-                tOrder_itemsitem_id.AsString := item_id;
-                tOrder_itemstitle.AsString := item.GetValue<string>('title');
-                tOrder_itemsseller_sku.AsString := item.GetValue<string>('seller_sku');
-                tOrder_itemsquantity.AsString := order_items.GetValue<string>('quantity');
-//                AgregarOrder_items(order_id,item_id,item_title);
-                tOrder_items.Post;
-              end;
-            end;
+////            with tOrder_items do
+//            begin
+//            if ro>0 then
+//              for no := 0 to ro-1 do
+//              begin
+//                io:=IntToStr(no);
+//                order_items := j.GetValue<TJSONValue>('results['+i+'].order_items['+io+']');
+//                item := order_items.GetValue<TJSONValue>('item');
+//                item_id := item.GetValue<string>('id');
+////                order_id := j.GetValue<string>('results['+i+'].id');
+//                if CantidadRegistros('order_items','id='+QuotedStr(order_id+'_'+item_id))>0 then
+//                  tOrder_items.Edit
+//                else
+//                begin
+//                  tOrder_items.Insert;
+//                  tOrder_itemsid.AsString := order_id+'_'+item_id;
+//                end;
+//                tOrder_itemsorder_id.AsString := order_id;
+//                tOrder_itemsitem_id.AsString := item_id;
+//                tOrder_itemstitle.AsString := item.GetValue<string>('title');
+//                tOrder_itemsseller_sku.AsString := item.GetValue<string>('seller_sku');
+//                tOrder_itemsquantity.AsString := order_items.GetValue<string>('quantity');
+////                AgregarOrder_items(order_id,item_id,item_title);
+//                tOrder_items.Post;
+//              end;
+//            end;
 //            AgregarOrder(order_id,order_status,buyer_id,shipping_id);
 //            ObtenerPack(order_id);
-            ObtenerMessages(order_id,seller_id);
           end;
       end;
     finally
@@ -862,10 +873,14 @@ begin
           begin
             i:=IntToStr(n);
             message_id := j.GetValue<string>('results['+i+'].message_id');
-            if CantidadRegistros('messages','order_id='+QuotedStr(order_id)+' AND message_id='+QuotedStr(message_id))>0 then
+            id := order_id+'_'+message_id;
+            if CantidadRegistros('messages','id='+QuotedStr(id))>0 then
               tMessages.Edit
             else
+            begin
               tMessages.Insert;
+              tMessagesid.AsString := id;
+            end;
             tMessagesorder_id.AsString := order_id;
             tMessagesmessage_id.AsString := message_id;
             texto := j.GetValue<TJSONValue>('results['+i+'].text');
@@ -874,6 +889,71 @@ begin
             tMessages.Post;
           end;
   end;
+end;
+
+procedure TDMR.obtenerOrder_items;
+var
+  item,j : TJSONValue;
+  io, item_id : string;
+  ro, no : Integer;
+begin
+//  order_items := j.GetValue<TJSONValue>('results['+i+'].order_items[0]');
+//  ro:=TJSONArray(j.GetValue<TJSONValue>('results['+i+'].order_items')).Size;
+  ro := TJSONArray(order_items).Size;
+  with dmML do
+    if ro>0 then
+      for no := 0 to ro-1 do
+      begin
+        io:=IntToStr(no);
+        j := order_items.GetValue<TJSONValue>('['+io+']');
+        item := j.GetValue<TJSONValue>('item');
+        item_id := item.GetValue<string>('id');
+    //                order_id := j.GetValue<string>('results['+i+'].id');
+        if CantidadRegistros('order_items','id='+QuotedStr(order_id+'_'+item_id))>0 then
+          tOrder_items.Edit
+        else
+        begin
+          tOrder_items.Insert;
+          tOrder_itemsid.AsString := order_id+'_'+item_id;
+        end;
+        tOrder_itemsorder_id.AsString := order_id;
+        tOrder_itemsitem_id.AsString := item_id;
+        tOrder_itemstitle.AsString := item.GetValue<string>('title');
+        tOrder_itemsseller_sku.AsString := item.GetValue<string>('seller_sku');
+        tOrder_itemsquantity.AsString := j.GetValue<string>('quantity');
+        tOrder_items.Post;
+      end;
+end;
+
+procedure TDMR.obtenerShipping;
+var
+  shipping : TJSONValue;
+  io, id : string;
+  ro, no : Integer;
+begin
+//              shipping := j.GetValue<TJSONValue>('results['+i+'].shipping');
+      //ShowMessage( j.GetValue<TJSONValue>('results['+i+'].shipping').ToString );
+//              if shipping.GetValue<TJSONValue>('id').ToString<>'null' then
+//                tOrdersshipping.AsString := shipping.GetValue<string>('id');
+  ro := TJSONArray(j).Size;
+  with dmML do
+    with tShipping do
+      if ro>0 then
+        for no := 0 to ro-1 do
+        begin
+          io:=IntToStr(no);
+          shipping := j.GetValue<TJSONValue>('['+io+']');
+          id := shipping.GetValue<string>('id');
+          if CantidadRegistros('shipping','id='+QuotedStr(id))>0 then
+            Edit
+          else
+          begin
+            Insert;
+            tShippingid.AsString := id;
+          end;
+          tShippingstatus.AsString := shipping.GetValue<string>('status');
+          Post;
+        end;
 end;
 
 end.

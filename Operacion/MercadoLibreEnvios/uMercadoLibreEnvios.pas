@@ -22,13 +22,13 @@ type
     lMensajes: TLabel;
     Panel2: TPanel;
     Label5: TLabel;
-    Label6: TLabel;
+    lMEnvios: TLabel;
     Panel3: TPanel;
     Label7: TLabel;
-    Label8: TLabel;
+    lMEFlex: TLabel;
     Panel4: TPanel;
     Label11: TLabel;
-    Label12: TLabel;
+    lAcordar: TLabel;
     procedure bActualizarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure bImprimirEtiquetaClick(Sender: TObject);

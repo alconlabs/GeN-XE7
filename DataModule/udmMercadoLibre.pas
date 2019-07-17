@@ -45,6 +45,7 @@ type
     tOrderscoupon: TWideMemoField;
     tOrderstaxes: TWideMemoField;
     FDQuery1: TFDQuery;
+    tOrder_itemsid: TWideMemoField;
     tOrder_itemsorder_id: TWideMemoField;
     tOrder_itemsitem_id: TWideMemoField;
     tOrder_itemstitle: TWideMemoField;
@@ -63,6 +64,7 @@ type
     tOrder_itemsbase_exchange_rate: TWideMemoField;
     tOrder_itemscurrency_id: TWideMemoField;
     tOrder_itemsmanufacturing_days: TWideMemoField;
+    tMessagesid: TWideMemoField;
     tMessagesorder_id: TWideMemoField;
     tMessagespack_id: TWideMemoField;
     tMessagesmessage_id: TWideMemoField;
@@ -95,6 +97,29 @@ type
     tMessagesconversation_status_date: TWideMemoField;
     tMessagesconversation_substatus: TWideMemoField;
     tMessagesconversation_is_blocking_allowed: TWideMemoField;
+    tShipping: TFDQuery;
+    tShippingid: TWideMemoField;
+    tShippingorder_id: TWideMemoField;
+    tShippingsite_id: TWideMemoField;
+    tShippingshipment_type: TWideMemoField;
+    tShippingmode: TWideMemoField;
+    tShippingshipping_mode: TWideMemoField;
+    tShippingstatus: TWideMemoField;
+    tShippingsubstatus: TWideMemoField;
+    tShippingdate_created: TWideMemoField;
+    tShippingreceiver_address: TWideMemoField;
+    tShippingsender_address: TWideMemoField;
+    tShippingcurrency_id: TWideMemoField;
+    tShippingdate_first_printed: TWideMemoField;
+    tShippingservice_id: TWideMemoField;
+    tShippingshipping_items: TWideMemoField;
+    tShippingreceiver_id: TWideMemoField;
+    tShippingsender_id: TWideMemoField;
+    tShippingshipping_option: TWideMemoField;
+    tShippinglogistic_type: TWideMemoField;
+    tShippingpicking_type: TWideMemoField;
+    tShippingcost_components: TWideMemoField;
+    tShippingcost: TWideMemoField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -188,31 +213,34 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS coupon ('
-      +'order_id TEXT'
-      +', id TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', order_id TEXT'
       +', amount TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS order_request ('
-      +'order_id TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', order_id TEXT'
       +', return TEXT'
       +', change TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS feedback ('
-      +'order_id TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', order_id TEXT'
       +', sale TEXT'
       +', purchase TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS status_detail ('
-      +'order_id TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', order_id TEXT'
       +', code TEXT'
       +', description TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS order_items ('
-      +'order_item_id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', order_id TEXT'
       +', item_id TEXT'
       +', title TEXT'
@@ -246,7 +274,8 @@ begin
 //    +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS messages ('
-      +'order_id TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', order_id TEXT'
       +', pack_id TEXT'
       +', message_id TEXT'
       +', date_received TEXT'
@@ -281,7 +310,8 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS packs ('
-      +' order_id TEXT PRIMARY KEY'
+      +'id TEXT PRIMARY KEY'
+      +', order_id TEXT'
       +', pack_id TEXT'
     +')');
 
@@ -292,7 +322,7 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS payments ('
-      +' id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', order_id TEXT'
       +', payer_id TEXT'
       +', collector TEXT'
@@ -328,24 +358,26 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS atm_transfer_reference ('
-      +'payments_id TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', payments_id TEXT'
       +', company_id TEXT'
       +', transaction_id TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS available_actions ('
-      +'payments_id TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', payments_id TEXT'
       +', refund TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS collector ('
-      +'payments_id TEXT'
-      +', id TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', payments_id TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS shipping ('
-      +'order_id TEXT'
-      +', id TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', order_id TEXT'
       +', site_id TEXT'
       +', shipment_type TEXT'
       +', mode TEXT'
@@ -369,7 +401,7 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS sender_address ('
-      +'id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', address_line TEXT'
       +', street_name TEXT'
       +', street_number TEXT'
@@ -388,32 +420,32 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS city ('
-      +'id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', name TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS state ('
-      +'id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', name TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS country ('
-      +'id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', name TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS neighborhood ('
-      +'id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', name TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS municipality ('
-      +'id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', name TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS receiver_address ('
-      +'id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', address_line TEXT'
       +', street_name TEXT'
       +', street_number TEXT'
@@ -430,7 +462,7 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS shipping_option ('
-      +'id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', shipping_method_id TEXT'
       +', name TEXT'
       +', currency_id TEXT'
@@ -445,25 +477,30 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS estimated_handling_limit ('
-      +'date TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', date TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_final ('
-      +'date TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', date TEXT'
       +', offset TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_limit ('
-      +'date TEXT'
+      +'id TEXT PRIMARY KEY'
+      +',date TEXT'
       +', offset TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS estimated_schedule_limit ('
-      +'date TEXT'
+      +'id TEXT PRIMARY KEY'
+      +',date TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS estimated_delivery_time ('
-      +'type TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', type TEXT'
       +', date TEXT'
       +', unit TEXT'
       +', offset TEXT'
@@ -475,17 +512,20 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS offset ('
-      +'date TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', date TEXT'
       +', shipping TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS time_frame ('
-      +'time_frame_from TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', time_frame_from TEXT'
       +', time_frame_to TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS cost_components ('
-      +'special_discount TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', special_discount TEXT'
       +', loyal_discount TEXT'
       +', compensation TEXT'
       +', gap_discount TEXT'
@@ -493,7 +533,7 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS shipping_items ('
-      +'id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', description TEXT'
       +', quantity TEXT'
       +', dimensions TEXT'
@@ -501,12 +541,12 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS dimensions_source ('
-      +'id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', origin TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS buyer ('
-      +'id TEXT'
+      +'id TEXT PRIMARY KEY'
       +', nickname TEXT'
       +', email TEXT'
       +', phone TEXT'
@@ -517,20 +557,23 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS phone ('
-      +'area_code TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', area_code TEXT'
       +', extension TEXT'
       +', number TEXT'
       +', verified TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS alternative_phone ('
-      +'area_code TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', area_code TEXT'
       +', extension TEXT'
       +', number TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS billing_info ('
-      +'doc_type TEXT'
+      +'id TEXT PRIMARY KEY'
+      +', doc_type TEXT'
       +', doc_number TEXT'
     +')');
 

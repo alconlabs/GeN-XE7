@@ -13,7 +13,7 @@ object dmML: TdmML
     Connection = dbMain
     SQL.Strings = (
       'SELECT * FROM orders')
-    Left = 64
+    Left = 72
     object tOrdersid: TWideMemoField
       FieldName = 'id'
       Origin = 'id'
@@ -165,8 +165,13 @@ object dmML: TdmML
     Connection = dbMain
     SQL.Strings = (
       'SELECT * FROM order_items')
-    Left = 64
+    Left = 72
     Top = 48
+    object tOrder_itemsid: TWideMemoField
+      FieldName = 'id'
+      Origin = 'id'
+      BlobType = ftWideMemo
+    end
     object tOrder_itemsorder_id: TWideMemoField
       FieldName = 'order_id'
       Origin = 'order_id'
@@ -262,8 +267,14 @@ object dmML: TdmML
     Connection = dbMain
     SQL.Strings = (
       'SELECT * FROM messages')
-    Left = 64
+    Left = 72
     Top = 96
+    object tMessagesid: TWideMemoField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      BlobType = ftWideMemo
+    end
     object tMessagesorder_id: TWideMemoField
       FieldName = 'order_id'
       Origin = 'order_id'
@@ -427,7 +438,125 @@ object dmML: TdmML
   end
   object FDQuery1: TFDQuery
     Connection = dbMain
-    Left = 64
+    Left = 8
+    Top = 48
+  end
+  object tShipping: TFDQuery
+    Connection = dbMain
+    SQL.Strings = (
+      'SELECT * FROM shipping')
+    Left = 72
     Top = 144
+    object tShippingid: TWideMemoField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      BlobType = ftWideMemo
+    end
+    object tShippingorder_id: TWideMemoField
+      FieldName = 'order_id'
+      Origin = 'order_id'
+      BlobType = ftWideMemo
+    end
+    object tShippingsite_id: TWideMemoField
+      FieldName = 'site_id'
+      Origin = 'site_id'
+      BlobType = ftWideMemo
+    end
+    object tShippingshipment_type: TWideMemoField
+      FieldName = 'shipment_type'
+      Origin = 'shipment_type'
+      BlobType = ftWideMemo
+    end
+    object tShippingmode: TWideMemoField
+      FieldName = 'mode'
+      Origin = 'mode'
+      BlobType = ftWideMemo
+    end
+    object tShippingshipping_mode: TWideMemoField
+      FieldName = 'shipping_mode'
+      Origin = 'shipping_mode'
+      BlobType = ftWideMemo
+    end
+    object tShippingstatus: TWideMemoField
+      FieldName = 'status'
+      Origin = 'status'
+      BlobType = ftWideMemo
+    end
+    object tShippingsubstatus: TWideMemoField
+      FieldName = 'substatus'
+      Origin = 'substatus'
+      BlobType = ftWideMemo
+    end
+    object tShippingdate_created: TWideMemoField
+      FieldName = 'date_created'
+      Origin = 'date_created'
+      BlobType = ftWideMemo
+    end
+    object tShippingreceiver_address: TWideMemoField
+      FieldName = 'receiver_address'
+      Origin = 'receiver_address'
+      BlobType = ftWideMemo
+    end
+    object tShippingsender_address: TWideMemoField
+      FieldName = 'sender_address'
+      Origin = 'sender_address'
+      BlobType = ftWideMemo
+    end
+    object tShippingcurrency_id: TWideMemoField
+      FieldName = 'currency_id'
+      Origin = 'currency_id'
+      BlobType = ftWideMemo
+    end
+    object tShippingdate_first_printed: TWideMemoField
+      FieldName = 'date_first_printed'
+      Origin = 'date_first_printed'
+      BlobType = ftWideMemo
+    end
+    object tShippingservice_id: TWideMemoField
+      FieldName = 'service_id'
+      Origin = 'service_id'
+      BlobType = ftWideMemo
+    end
+    object tShippingshipping_items: TWideMemoField
+      FieldName = 'shipping_items'
+      Origin = 'shipping_items'
+      BlobType = ftWideMemo
+    end
+    object tShippingreceiver_id: TWideMemoField
+      FieldName = 'receiver_id'
+      Origin = 'receiver_id'
+      BlobType = ftWideMemo
+    end
+    object tShippingsender_id: TWideMemoField
+      FieldName = 'sender_id'
+      Origin = 'sender_id'
+      BlobType = ftWideMemo
+    end
+    object tShippingshipping_option: TWideMemoField
+      FieldName = 'shipping_option'
+      Origin = 'shipping_option'
+      BlobType = ftWideMemo
+    end
+    object tShippinglogistic_type: TWideMemoField
+      FieldName = 'logistic_type'
+      Origin = 'logistic_type'
+      BlobType = ftWideMemo
+    end
+    object tShippingpicking_type: TWideMemoField
+      FieldName = 'picking_type'
+      Origin = 'picking_type'
+      BlobType = ftWideMemo
+    end
+    object tShippingcost_components: TWideMemoField
+      FieldName = 'cost_components'
+      Origin = 'cost_components'
+      BlobType = ftWideMemo
+    end
+    object tShippingcost: TWideMemoField
+      FieldName = 'cost'
+      Origin = 'cost'
+      BlobType = ftWideMemo
+    end
   end
 end

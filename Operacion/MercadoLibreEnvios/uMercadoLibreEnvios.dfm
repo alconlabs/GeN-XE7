@@ -97,7 +97,7 @@ object Form1: TForm1
       Top = 33
       Width = 42
       Height = 13
-      Caption = '6 ventas'
+      Caption = '0 ventas'
       Color = clWhite
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clGrayText
@@ -129,12 +129,12 @@ object Form1: TForm1
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Label6: TLabel
+    object lMEnvios: TLabel
       Left = 17
       Top = 33
       Width = 42
       Height = 13
-      Caption = '2 ventas'
+      Caption = '0 ventas'
       Color = clWhite
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clGrayText
@@ -166,12 +166,12 @@ object Form1: TForm1
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Label8: TLabel
+    object lMEFlex: TLabel
       Left = 17
       Top = 33
       Width = 42
       Height = 13
-      Caption = '2 ventas'
+      Caption = '0 ventas'
       Color = clWhite
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clGrayText
@@ -203,12 +203,12 @@ object Form1: TForm1
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Label12: TLabel
+    object lAcordar: TLabel
       Left = 17
       Top = 33
-      Width = 48
+      Width = 42
       Height = 13
-      Caption = '46 ventas'
+      Caption = '0 ventas'
       Color = clWhite
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clGrayText
