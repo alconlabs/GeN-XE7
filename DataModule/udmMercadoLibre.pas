@@ -15,6 +15,86 @@ type
     tOrders: TFDQuery;
     tOrder_items: TFDQuery;
     tMessages: TFDQuery;
+    tOrdersid: TWideMemoField;
+    tOrderscomments: TWideMemoField;
+    tOrdersstatus: TWideMemoField;
+    tOrdersstatus_detail: TWideMemoField;
+    tOrdersdate_created: TWideMemoField;
+    tOrdersdate_closed: TWideMemoField;
+    tOrderslast_updated: TWideMemoField;
+    tOrdersexpiration_date: TWideMemoField;
+    tOrdersdate_last_updated: TWideMemoField;
+    tOrdershidden_for_seller: TWideMemoField;
+    tOrderscurrency_id: TWideMemoField;
+    tOrdersorder_items: TWideMemoField;
+    tOrderstotal_amount: TWideMemoField;
+    tOrdersmediations: TWideMemoField;
+    tOrderspayments: TWideMemoField;
+    tOrdersshipping: TWideMemoField;
+    tOrdersorder_request: TWideMemoField;
+    tOrderspickup_id: TWideMemoField;
+    tOrdersbuyer: TWideMemoField;
+    tOrdersseller: TWideMemoField;
+    tOrdersfeedback: TWideMemoField;
+    tOrderstags: TWideMemoField;
+    tOrdersmanufacturing_ending_date: TWideMemoField;
+    tOrderspack_id: TWideMemoField;
+    tOrdersfulfilled: TWideMemoField;
+    tOrderstotal_amount_with_shipping: TWideMemoField;
+    tOrderspaid_amount: TWideMemoField;
+    tOrderscoupon: TWideMemoField;
+    tOrderstaxes: TWideMemoField;
+    FDQuery1: TFDQuery;
+    tOrder_itemsorder_id: TWideMemoField;
+    tOrder_itemsitem_id: TWideMemoField;
+    tOrder_itemstitle: TWideMemoField;
+    tOrder_itemscategory_id: TWideMemoField;
+    tOrder_itemsvariation_id: TWideMemoField;
+    tOrder_itemsseller_custom_field: TWideMemoField;
+    tOrder_itemswarranty: TWideMemoField;
+    tOrder_itemscondition: TWideMemoField;
+    tOrder_itemsseller_sku: TWideMemoField;
+    tOrder_itemsquantity: TWideMemoField;
+    tOrder_itemssale_fee: TWideMemoField;
+    tOrder_itemslisting_type_id: TWideMemoField;
+    tOrder_itemsbase_currency_id: TWideMemoField;
+    tOrder_itemsunit_price: TWideMemoField;
+    tOrder_itemsfull_unit_price: TWideMemoField;
+    tOrder_itemsbase_exchange_rate: TWideMemoField;
+    tOrder_itemscurrency_id: TWideMemoField;
+    tOrder_itemsmanufacturing_days: TWideMemoField;
+    tMessagesorder_id: TWideMemoField;
+    tMessagespack_id: TWideMemoField;
+    tMessagesmessage_id: TWideMemoField;
+    tMessagesdate_received: TWideMemoField;
+    tMessagesdate: TWideMemoField;
+    tMessagesdate_available: TWideMemoField;
+    tMessagesdate_notified: TWideMemoField;
+    tMessagesdate_read: TWideMemoField;
+    tMessagesfrom_user_id: TWideMemoField;
+    tMessagesfrom_email: TWideMemoField;
+    tMessagesfrom_name: TWideMemoField;
+    tMessagesto_user_id: TWideMemoField;
+    tMessagesto_email: TWideMemoField;
+    tMessagessubject: TWideMemoField;
+    tMessagestext_plain: TWideMemoField;
+    tMessagesattachments: TWideStringField;
+    tMessagesattachments_validations_invalid_size: TWideMemoField;
+    tMessagesattachments_validations_invalid_extension: TWideMemoField;
+    tMessagesattachments_validations_forbidden: TWideMemoField;
+    tMessagesattachments_validations_internal_error: TWideMemoField;
+    tMessagessite_id: TWideMemoField;
+    tMessagesresource: TWideMemoField;
+    tMessagesresource_id: TWideMemoField;
+    tMessagesstatus: TWideMemoField;
+    tMessagesmoderation_status: TWideMemoField;
+    tMessagesmoderation_date_moderated: TWideMemoField;
+    tMessagesmoderation_source: TWideMemoField;
+    tMessagesconversation_first_message: TWideMemoField;
+    tMessagesconversation_status: TWideMemoField;
+    tMessagesconversation_status_date: TWideMemoField;
+    tMessagesconversation_substatus: TWideMemoField;
+    tMessagesconversation_is_blocking_allowed: TWideMemoField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -132,8 +212,16 @@ begin
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS order_items ('
-      +'order_id TEXT'
+      +'order_item_id TEXT'
+      +', order_id TEXT'
       +', item_id TEXT'
+      +', title TEXT'
+      +', category_id TEXT'
+      +', variation_id TEXT'
+      +', seller_custom_field TEXT'
+      +', warranty TEXT'
+      +', condition TEXT'
+      +', seller_sku TEXT'
       +', quantity TEXT'
       +', sale_fee TEXT'
       +', listing_type_id TEXT'
@@ -145,23 +233,51 @@ begin
       +', manufacturing_days TEXT'
     +')');
 
-    ExecSQL('CREATE TABLE IF NOT EXISTS items ('
-      +'order_id TEXT'
-      +', id TEXT'
-      +', title TEXT'
-      +', category_id TEXT'
-      +', variation_id TEXT'
-      +', seller_custom_field TEXT'
-      +', warranty TEXT'
-      +', condition TEXT'
-      +', seller_sku TEXT'
-    +')');
+//    ExecSQL('CREATE TABLE IF NOT EXISTS items ('
+//      +'order_id TEXT'
+//      +', id TEXT'
+//      +', title TEXT'
+//      +', category_id TEXT'
+//      +', variation_id TEXT'
+//      +', seller_custom_field TEXT'
+//      +', warranty TEXT'
+//      +', condition TEXT'
+//      +', seller_sku TEXT'
+//    +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS messages ('
       +'order_id TEXT'
       +', pack_id TEXT'
       +', message_id TEXT'
-      +', message_text TEXT'
+      +', date_received TEXT'
+      +', date TEXT'
+      +', date_available TEXT'
+      +', date_notified TEXT'
+      +', date_read TEXT'
+      +', from_user_id TEXT'
+      +', from_email TEXT'
+      +', from_name TEXT'
+      +', to_user_id TEXT'
+      +', to_email TEXT'
+      +', subject TEXT'
+      +', text_plain TEXT'
+      +', attachments'
+      +', attachments_validations_invalid_size TEXT'
+      +', attachments_validations_invalid_extension TEXT'
+      +', attachments_validations_forbidden TEXT'
+      +', attachments_validations_internal_error TEXT'
+      +', site_id TEXT'
+      +', resource TEXT'
+      +', resource_id TEXT'
+      +', status TEXT'
+      +', moderation_status TEXT'
+      +', moderation_date_moderated TEXT'
+      +', moderation_source TEXT'
+      +', conversation_first_message TEXT'
+      +', conversation_status TEXT'
+      +', conversation_status_date TEXT'
+      +', conversation_substatus TEXT'
+      +', conversation_is_blocking_allowed TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS packs ('
@@ -421,7 +537,12 @@ begin
     refreshToken := ExecSQLScalar('SELECT refresh FROM token');
     seller_id :=  ExecSQLScalar('SELECT seller_id FROM seller');
   end;
-  tOrders.Open('SELECT embalado, order_status AS estado, buyer_id AS comprador, orders.order_id, shipping_id FROM orders LEFT JOIN despachados ON orders.order_id = despachados.order_id ORDER BY buyer_id');
+  FDQuery1.Open('SELECT embalado, orders.status AS estado, orders.buyer AS comprador'
+  +', orders.id, shipping FROM orders LEFT JOIN despachados'
+  +' ON orders.id = despachados.order_id ORDER BY orders.buyer');
+  tOrders.Open('SELECT * FROM orders');
+  tOrder_items.Open('SELECT * FROM order_items');
+  tMessages.Open('SELECT * FROM messages');
 end;
 
 procedure TdmML.AgregarOrder;

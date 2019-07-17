@@ -19,7 +19,7 @@ type
     lVentas: TLabel;
     Panel1: TPanel;
     Label3: TLabel;
-    Label4: TLabel;
+    lMensajes: TLabel;
     Panel2: TPanel;
     Label5: TLabel;
     Label6: TLabel;
@@ -72,10 +72,12 @@ end;
 procedure TForm1.bActualizarClick(Sender: TObject);
 begin
   with dmr do
+    with dmML do
   begin
 //    ObtenerConsultaRest('users/me?','');
 ProgressBar1.Visible:=True;
 Timer1.Enabled:=True;
+    FDQuery1.Close;
     ObtenerOrderRecent;
 Timer1.Enabled:=False;
 ProgressBar1.StepBy(100);
@@ -85,12 +87,12 @@ ProgressBar1.Visible:=False;
 //    AuthCodeEdit.Text := authCode;
 //    AccessTokenEdit.Text := accessToken;
 //    RefreshTokenEdit.Text := refreshToken;
-  end;
-  with dmML do
-  begin
-    tOrders.Close;
-    tOrders.Open;
-    lVentas.Caption:=IntToStr(tOrders.RowsAffected)+' ventas';
+
+//    FDQuery1.Close;
+    FDQuery1.Open;
+    lVentas.Caption := IntToStr(FDQuery1.RowsAffected)+' ventas';
+    lMensajes.Caption := IntToStr(dbMain.ExecSQLScalar('SELECT COUNT(messages.order_id)'
+    +' FROM messages'))+' ventas';
   end;
 end;
 

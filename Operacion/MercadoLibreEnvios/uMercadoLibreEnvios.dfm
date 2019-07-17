@@ -92,7 +92,7 @@ object Form1: TForm1
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Label4: TLabel
+    object lMensajes: TLabel
       Left = 17
       Top = 33
       Width = 42
