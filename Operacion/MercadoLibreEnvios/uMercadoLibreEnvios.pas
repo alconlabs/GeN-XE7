@@ -93,6 +93,15 @@ ProgressBar1.Visible:=False;
     lVentas.Caption := IntToStr(FDQuery1.RowsAffected)+' ventas';
     lMensajes.Caption := IntToStr(dbMain.ExecSQLScalar('SELECT COUNT(messages.order_id)'
     +' FROM messages'))+' ventas';
+    lMEnvios.Caption := IntToStr(dbMain.ExecSQLScalar(
+    'SELECT COUNT(shipping_mode) FROM shipping WHERE shipping_mode=:M'
+    ,['"me2"']))+' ventas';
+    lMEFlex.Caption := IntToStr(dbMain.ExecSQLScalar(
+    'SELECT COUNT(shipping_mode) FROM shipping WHERE shipping_mode=:M'
+    ,['"me1"']))+' ventas';
+    lAcordar.Caption := IntToStr(dbMain.ExecSQLScalar(
+    'SELECT COUNT(shipping_mode) FROM shipping WHERE shipping_mode=:M'
+    ,['"custom"']))+' ventas';
   end;
 end;
 
