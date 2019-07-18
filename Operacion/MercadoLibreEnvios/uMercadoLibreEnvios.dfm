@@ -48,7 +48,6 @@ object Form1: TForm1
     Height = 25
     Caption = 'Actualizar'
     TabOrder = 0
-    Visible = False
     OnClick = bActualizarClick
   end
   object bImprimirEtiqueta: TButton
@@ -219,8 +218,8 @@ object Form1: TForm1
       ParentFont = False
     end
   end
-  object Timer1: TTimer
-    OnTimer = Timer1Timer
+  object tProgressBar: TTimer
+    OnTimer = tProgressBarTimer
     Left = 112
     Top = 376
   end

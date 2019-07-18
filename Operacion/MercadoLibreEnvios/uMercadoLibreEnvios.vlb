@@ -50,9 +50,9 @@ Coordinates=451,129,115,36
 [ProgressBar1]
 Coordinates=35,501,93,58
 
-[Timer1]
-Coordinates=730,78,54,36
-
 [bActualizar]
 Coordinates=10,10,56,58
+
+[tProgressBar]
+Coordinates=730,78,54,36
 

@@ -14,7 +14,7 @@ type
     bActualizar: TBitBtn;
     bImprimirEtiqueta: TButton;
     ProgressBar1: TProgressBar;
-    Timer1: TTimer;
+    tProgressBar: TTimer;
     Label1: TLabel;
     lVentas: TLabel;
     Panel1: TPanel;
@@ -33,11 +33,12 @@ type
     procedure FormCreate(Sender: TObject);
     procedure bImprimirEtiquetaClick(Sender: TObject);
     procedure StringGridBindSourceDB1Click(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
+    procedure tProgressBarTimer(Sender: TObject);
     procedure sgMessagesClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    procedure actualizarEtiquetas;
   public
     { Public declarations }
   end;
@@ -76,33 +77,15 @@ begin
   begin
 //    ObtenerConsultaRest('users/me?','');
 ProgressBar1.Visible:=True;
-Timer1.Enabled:=True;
+tProgressBar.Enabled:=True;
     FDQuery1.Close;
     ObtenerOrderRecent;
-Timer1.Enabled:=False;
+tProgressBar.Enabled:=False;
 ProgressBar1.StepBy(100);
 sleep(100);
 ProgressBar1.Visible:=False;
-//obtenerSeller;
-//    AuthCodeEdit.Text := authCode;
-//    AccessTokenEdit.Text := accessToken;
-//    RefreshTokenEdit.Text := refreshToken;
-
-//    FDQuery1.Close;
-    FDQuery1.Open;
-    lVentas.Caption := IntToStr(FDQuery1.RowsAffected)+' ventas';
-    lMensajes.Caption := IntToStr(dbMain.ExecSQLScalar('SELECT COUNT(messages.order_id)'
-    +' FROM messages'))+' ventas';
-    lMEnvios.Caption := IntToStr(dbMain.ExecSQLScalar(
-    'SELECT COUNT(shipping_mode) FROM shipping WHERE shipping_mode=:M'
-    ,['"me2"']))+' ventas';
-    lMEFlex.Caption := IntToStr(dbMain.ExecSQLScalar(
-    'SELECT COUNT(shipping_mode) FROM shipping WHERE shipping_mode=:M'
-    ,['"me1"']))+' ventas';
-    lAcordar.Caption := IntToStr(dbMain.ExecSQLScalar(
-    'SELECT COUNT(shipping_mode) FROM shipping WHERE shipping_mode=:M'
-    ,['"custom"']))+' ventas';
   end;
+    actualizarEtiquetas;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -113,7 +96,8 @@ end;
 
 procedure TForm1.FormShow(Sender: TObject);
 begin
-  bActualizar.Click;
+//  bActualizar.Click;
+  actualizarEtiquetas;
 end;
 
 procedure TForm1.sgMessagesClick(Sender: TObject);
@@ -131,9 +115,33 @@ begin
   end;
 end;
 
-procedure TForm1.Timer1Timer(Sender: TObject);
+procedure TForm1.tProgressBarTimer(Sender: TObject);
 begin
   ProgressBar1.StepIt
+end;
+
+procedure TForm1.actualizarEtiquetas;
+var
+  v, sql, s, g :string;
+begin
+  with dmml do
+  begin
+    sql:='SELECT COUNT(*) FROM orders';
+    s:=' INNER JOIN shipping ON orders.id = shipping.order_id';
+    g:=' GROUP BY order_id';
+    v:=' ventas';
+    lVentas.Caption := IntToStr(dbMain.ExecSQLScalar(sql))+' ventas';
+    lMEnvios.Caption := IntToStr(dbMain.ExecSQLScalar(
+    sql+s+' WHERE shipping_mode=:M',['"me2"']))+v;
+    lMEFlex.Caption := IntToStr(dbMain.ExecSQLScalar(
+    sql+s+' WHERE shipping_mode=:M',['"me1"']))+v;
+    lAcordar.Caption := IntToStr(dbMain.ExecSQLScalar(
+    sql+s+' WHERE shipping_mode=:M',['"custom"']))+v;
+    FDQuery1.Open(sql
+    +' INNER JOIN messages ON orders.id = messages.order_id'
+    +g);
+    lMensajes.Caption := IntToStr(FDQuery1.RowsAffected)+v;
+  end;
 end;
 
 end.
