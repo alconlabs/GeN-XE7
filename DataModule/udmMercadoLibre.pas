@@ -586,6 +586,7 @@ begin
   tOrders.Open('SELECT * FROM orders');
   tOrder_items.Open('SELECT * FROM order_items');
   tMessages.Open('SELECT * FROM messages');
+  tShipping.Open('SELECT * FROM shipping');
 end;
 
 procedure TdmML.AgregarOrder;

@@ -58,8 +58,8 @@ type
     procedure IniciarREST;
 
     function Obtener(resource:string):TJSONValue;
-    procedure ObtenerOrder_items(order_id:string;order_items:TJSONValue);
-    procedure ObtenerShipping(j:TJSONValue);
+    procedure ObtenerOrder_items(order_id:string;j:TJSONValue);
+    procedure ObtenerShipping(order_id:string;j:TJSONValue);
   public
     { Public declarations }
     JSONValue1 : TJSONValue;
@@ -697,7 +697,7 @@ begin
       //ShowMessage( j.GetValue<TJSONValue>('results['+i+'].shipping').ToString );
 //              if shipping.GetValue<TJSONValue>('id').ToString<>'null' then
 //                tOrdersshipping.AsString := shipping.GetValue<string>('id');
-            ObtenerShipping(
+            ObtenerShipping(order_id,
               j.GetValue<TJSONValue>('results['+i+'].shipping')
             );
 
@@ -707,8 +707,6 @@ begin
               j.GetValue<TJSONValue>('results['+i+'].order_items')
             );
             ObtenerMessages(order_id,seller_id);
-
-
               tOrders.Post;
             end;
 ////            with tOrder_items do
@@ -891,22 +889,22 @@ begin
   end;
 end;
 
-procedure TDMR.obtenerOrder_items;
+procedure TDMR.ObtenerOrder_items;
 var
-  item,j : TJSONValue;
+  item, order_items : TJSONValue;
   io, item_id : string;
   ro, no : Integer;
 begin
 //  order_items := j.GetValue<TJSONValue>('results['+i+'].order_items[0]');
 //  ro:=TJSONArray(j.GetValue<TJSONValue>('results['+i+'].order_items')).Size;
-  ro := TJSONArray(order_items).Size;
+  ro := TJSONArray(j).Size;
   with dmML do
     if ro>0 then
       for no := 0 to ro-1 do
       begin
         io:=IntToStr(no);
-        j := order_items.GetValue<TJSONValue>('['+io+']');
-        item := j.GetValue<TJSONValue>('item');
+        order_items := j.GetValue<TJSONValue>('['+io+']');
+        item := order_items.GetValue<TJSONValue>('item');
         item_id := item.GetValue<string>('id');
     //                order_id := j.GetValue<string>('results['+i+'].id');
         if CantidadRegistros('order_items','id='+QuotedStr(order_id+'_'+item_id))>0 then
@@ -920,12 +918,12 @@ begin
         tOrder_itemsitem_id.AsString := item_id;
         tOrder_itemstitle.AsString := item.GetValue<string>('title');
         tOrder_itemsseller_sku.AsString := item.GetValue<string>('seller_sku');
-        tOrder_itemsquantity.AsString := j.GetValue<string>('quantity');
+        tOrder_itemsquantity.AsString := order_items.GetValue<string>('quantity');
         tOrder_items.Post;
       end;
 end;
 
-procedure TDMR.obtenerShipping;
+procedure TDMR.ObtenerShipping;
 var
   shipping : TJSONValue;
   io, id : string;
@@ -935,14 +933,15 @@ begin
       //ShowMessage( j.GetValue<TJSONValue>('results['+i+'].shipping').ToString );
 //              if shipping.GetValue<TJSONValue>('id').ToString<>'null' then
 //                tOrdersshipping.AsString := shipping.GetValue<string>('id');
-  ro := TJSONArray(j).Size;
+//  ro := TJSONArray(j).Size;
   with dmML do
     with tShipping do
-      if ro>0 then
-        for no := 0 to ro-1 do
-        begin
-          io:=IntToStr(no);
-          shipping := j.GetValue<TJSONValue>('['+io+']');
+    begin
+//      if ro>0 then
+//        for no := 0 to ro-1 do
+//        begin
+//          io:=IntToStr(no);
+          shipping := j.GetValue<TJSONValue>();//('['+io+']');
           id := shipping.GetValue<string>('id');
           if CantidadRegistros('shipping','id='+QuotedStr(id))>0 then
             Edit
@@ -951,9 +950,29 @@ begin
             Insert;
             tShippingid.AsString := id;
           end;
+          tShippingorder_id.AsString := order_id;
+//          tShippingsite_id.AsString := shipping.GetValue<string>('site_id');
+          tShippingshipment_type.AsString := shipping.GetValue<string>('shipment_type');
+//          tShippingmode.AsString := shipping.GetValue<TJSONValue>('mode').ToString;
+          tShippingshipping_mode.AsString := shipping.GetValue<string>('shipping_mode');
           tShippingstatus.AsString := shipping.GetValue<string>('status');
+          tShippingsubstatus.AsString := shipping.GetValue<string>('substatus');
+          tShippingdate_created.AsString := shipping.GetValue<string>('date_created');
+//          tShippingreceiver_address.AsString := shipping.GetValue<string>('receiver_address');
+//          tShippingsender_address.AsString := shipping.GetValue<string>('sender_address');
+          tShippingcurrency_id.AsString := shipping.GetValue<string>('currency_id');
+          tShippingdate_first_printed.AsString := shipping.GetValue<string>('date_first_printed');
+          tShippingservice_id.AsString := shipping.GetValue<string>('service_id');
+//          tShippingshipping_items.AsString := shipping.GetValue<string>('shipping_items');
+//          tShippingreceiver_id.AsString := shipping.GetValue<string>('receiver_id');
+          tShippingsender_id.AsString := shipping.GetValue<string>('sender_id');
+//          tShippingshipping_option.AsString := shipping.GetValue<string>('shipping_option');
+//          tShippinglogistic_type.AsString := shipping.GetValue<string>('logistic_type');
+          tShippingpicking_type.AsString := shipping.GetValue<string>('picking_type');
+//          tShippingcost_components.AsString := shipping.GetValue<string>('cost_components');
+          tShippingcost.AsString := shipping.GetValue<string>('cost');
           Post;
-        end;
+    end;
 end;
 
 end.
