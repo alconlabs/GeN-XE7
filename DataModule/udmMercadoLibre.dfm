@@ -559,4 +559,52 @@ object dmML: TdmML
       BlobType = ftWideMemo
     end
   end
+  object tBuyer: TFDQuery
+    Connection = dbMain
+    SQL.Strings = (
+      'SELECT * FROM buyer')
+    Left = 72
+    Top = 192
+    object tBuyerid: TWideMemoField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      BlobType = ftWideMemo
+    end
+    object tBuyernickname: TWideMemoField
+      FieldName = 'nickname'
+      Origin = 'nickname'
+      BlobType = ftWideMemo
+    end
+    object tBuyeremail: TWideMemoField
+      FieldName = 'email'
+      Origin = 'email'
+      BlobType = ftWideMemo
+    end
+    object tBuyerphone: TWideMemoField
+      FieldName = 'phone'
+      Origin = 'phone'
+      BlobType = ftWideMemo
+    end
+    object tBuyeralternative_phone: TWideMemoField
+      FieldName = 'alternative_phone'
+      Origin = 'alternative_phone'
+      BlobType = ftWideMemo
+    end
+    object tBuyerfirst_name: TWideMemoField
+      FieldName = 'first_name'
+      Origin = 'first_name'
+      BlobType = ftWideMemo
+    end
+    object tBuyerlast_name: TWideMemoField
+      FieldName = 'last_name'
+      Origin = 'last_name'
+      BlobType = ftWideMemo
+    end
+    object tBuyerbilling_info: TWideMemoField
+      FieldName = 'billing_info'
+      Origin = 'billing_info'
+      BlobType = ftWideMemo
+    end
+  end
 end

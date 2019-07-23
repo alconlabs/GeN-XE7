@@ -136,6 +136,10 @@
         </DCCReference>
         <DCCReference Include="..\..\DataModule\service.pas"/>
         <DCCReference Include="..\..\DataModule\LoginCms1.pas"/>
+        <DCCReference Include="uOrders.pas">
+            <Form>fOrders</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

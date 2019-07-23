@@ -12,7 +12,6 @@ uses
 type
   TForm1 = class(TForm)
     bActualizar: TBitBtn;
-    bImprimirEtiqueta: TButton;
     ProgressBar1: TProgressBar;
     tProgressBar: TTimer;
     Label1: TLabel;
@@ -20,7 +19,7 @@ type
     Panel1: TPanel;
     Label3: TLabel;
     lMensajes: TLabel;
-    Panel2: TPanel;
+    pColecta: TPanel;
     Label5: TLabel;
     lMEnvios: TLabel;
     Panel3: TPanel;
@@ -31,11 +30,13 @@ type
     lAcordar: TLabel;
     procedure bActualizarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure bImprimirEtiquetaClick(Sender: TObject);
     procedure StringGridBindSourceDB1Click(Sender: TObject);
     procedure tProgressBarTimer(Sender: TObject);
     procedure sgMessagesClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure pColectaClick(Sender: TObject);
+    procedure lMEnviosClick(Sender: TObject);
+    procedure Label5Click(Sender: TObject);
   private
     { Private declarations }
     procedure actualizarEtiquetas;
@@ -50,25 +51,7 @@ implementation
 
 {$R *.dfm}
 
-uses RestDM, udmMercadoLibre;
-
-procedure TForm1.bImprimirEtiquetaClick(Sender: TObject);
-var
-  buyer_id:string;
-begin
-  with dmml do
-  begin
-    DMR.ImprimirEtiqueta(tOrders.FieldByName('shipping_id').AsString);
-    buyer_id := tOrders.FieldByName('comprador').AsString;
-    while buyer_id=tOrders.FieldByName('comprador').AsString do
-    begin
-      AgregarDespachados(tOrders.FieldByName('order_id').AsString,'SI');
-      tOrders.Next;
-    end;
-    tOrders.Close;
-    tOrders.Open;
-  end;
-end;
+uses RestDM, udmMercadoLibre, uOrders;
 
 procedure TForm1.bActualizarClick(Sender: TObject);
 begin
@@ -98,6 +81,35 @@ procedure TForm1.FormShow(Sender: TObject);
 begin
 //  bActualizar.Click;
   actualizarEtiquetas;
+end;
+
+procedure TForm1.Label5Click(Sender: TObject);
+begin
+  pColectaClick(Sender);
+end;
+
+procedure TForm1.lMEnviosClick(Sender: TObject);
+begin
+  pColectaClick(Sender);
+end;
+
+procedure TForm1.pColectaClick(Sender: TObject);
+begin
+  fOrders := TfOrders.Create(Self);
+  fOrders.FDQuery1.Open('SELECT order_items.title AS TITULO, order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD, order_items.seller_sku AS SKU, buyer.first_name AS NOMBRE, buyer.last_name AS APELLIDO, buyer.nickname AS NIK, "imprimir" AS ETIQUETA'
++', shipping, buyer, order_items.order_id'
++' FROM orders'
++' INNER JOIN order_items ON orders.id = order_items.order_id'
++' INNER JOIN shipping ON orders.id = shipping.order_id'
++' INNER JOIN buyer ON orders.buyer = buyer.id'
++' WHERE shipping_mode='+QuotedStr('me2')
+//+' GROUP BY orders.buyer'
+);
+  try
+    forders.ShowModal;
+  finally
+    fOrders.Free;
+  end;
 end;
 
 procedure TForm1.sgMessagesClick(Sender: TObject);
@@ -132,11 +144,11 @@ begin
     v:=' ventas';
     lVentas.Caption := IntToStr(dbMain.ExecSQLScalar(sql))+' ventas';
     lMEnvios.Caption := IntToStr(dbMain.ExecSQLScalar(
-    sql+s+' WHERE shipping_mode=:M',['"me2"']))+v;
+    sql+s+' WHERE shipping_mode=:M',['me2']))+v;
     lMEFlex.Caption := IntToStr(dbMain.ExecSQLScalar(
-    sql+s+' WHERE shipping_mode=:M',['"me1"']))+v;
+    sql+s+' WHERE shipping_mode=:M',['me1']))+v;
     lAcordar.Caption := IntToStr(dbMain.ExecSQLScalar(
-    sql+s+' WHERE shipping_mode=:M',['"custom"']))+v;
+    sql+s+' WHERE shipping_mode=:M',['custom']))+v;
     FDQuery1.Open(sql
     +' INNER JOIN messages ON orders.id = messages.order_id'
     +g);

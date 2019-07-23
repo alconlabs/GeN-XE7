@@ -120,6 +120,15 @@ type
     tShippingpicking_type: TWideMemoField;
     tShippingcost_components: TWideMemoField;
     tShippingcost: TWideMemoField;
+    tBuyer: TFDQuery;
+    tBuyerid: TWideMemoField;
+    tBuyernickname: TWideMemoField;
+    tBuyeremail: TWideMemoField;
+    tBuyerphone: TWideMemoField;
+    tBuyeralternative_phone: TWideMemoField;
+    tBuyerfirst_name: TWideMemoField;
+    tBuyerlast_name: TWideMemoField;
+    tBuyerbilling_info: TWideMemoField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -246,11 +255,13 @@ begin
       +', title TEXT'
       +', category_id TEXT'
       +', variation_id TEXT'
+      +', variation_attributes TEXT'
       +', seller_custom_field TEXT'
       +', warranty TEXT'
       +', condition TEXT'
       +', seller_sku TEXT'
       +', quantity TEXT'
+      +', differential_pricing_id TEXT'
       +', sale_fee TEXT'
       +', listing_type_id TEXT'
       +', base_currency_id TEXT'
@@ -587,6 +598,116 @@ begin
   tOrder_items.Open('SELECT * FROM order_items');
   tMessages.Open('SELECT * FROM messages');
   tShipping.Open('SELECT * FROM shipping');
+  tBuyer.Open('SELECT * FROM buyer');
+
+// order_items.title AS TITULO, order_items.full_unit_price AS PRECIO,
+// order_items.quantity AS CANTIDAD, order_items.seller_sku AS SKU,
+// buyer.first_name AS NOMBRE, buyer.last_name AS APELLIDO, buyer.nickname AS NIK,
+// "imprimir" AS ETIQUETA, shipping, buyer, order_items.order_id'
+  with tOrders do
+  begin
+    Open('SELECT * FROM orders WHERE id=:I',['1']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tOrdersid.AsString:='1';
+    end;
+    tOrdersshipping.AsString:='1';
+    tOrdersbuyer.AsString:='1';
+    tOrderstotal_amount:='999';
+    Post;
+  end;
+  with tOrder_items do
+  begin
+    Open('SELECT * FROM order_items WHERE id=:I',['1']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tOrder_itemsorder_id.AsString:='1';
+    end;
+    tOrder_itemstitle.AsString:='Arduino';
+    tOrder_itemsseller_sku.AsString:='1';
+    tOrder_itemsfull_unit_price.AsString:='999';
+    tOrder_itemsquantity.AsString:='1';
+    Post;
+  end;
+  with tShipping do
+  begin
+    Open('SELECT * FROM shipping WHERE id=:I',['1']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tShippingorder_id.AsString:='1';
+    end;
+    tShippingmode.AsString:='me2';
+    Post;
+  end;
+  with tBuyer do
+  begin
+    Open('SELECT * FROM buyer WHERE id=:I',['1']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tBuyerid.AsString:='1';
+    end;
+    tBuyerfirst_name.AsString:='Juan';
+    tBuyerlast_name.AsString:='Perez';
+    tBuyernickname.AsString:='JuanPerez1';
+    Post;
+  end;
+  //#2
+  with tOrders do
+  begin
+    Open('SELECT * FROM orders WHERE id=:I',['2']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tOrdersid.AsString:='2';
+    end;
+    tOrdersshipping.AsString:='1';
+    tOrdersbuyer.AsString:='1';
+    tOrderstotal_amount:='999';
+    Post;
+  end;
+  with tOrder_items do
+  begin
+    Open('SELECT * FROM order_items WHERE id=:I',['2']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tOrder_itemsorder_id.AsString:='2';
+    end;
+    tOrder_itemstitle.AsString:='Arduino2';
+    tOrder_itemsseller_sku.AsString:='2';
+    tOrder_itemsfull_unit_price.AsString:='992';
+    tOrder_itemsquantity.AsString:='1';
+    Post;
+  end;
+  with tShipping do
+  begin
+    Open('SELECT * FROM shipping WHERE id=:I',['2']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tShippingorder_id.AsString:='2';
+    end;
+    tShippingmode.AsString:='custom';
+    Post;
+  end;
 end;
 
 procedure TdmML.AgregarOrder;

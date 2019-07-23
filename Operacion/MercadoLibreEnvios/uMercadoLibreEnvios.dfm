@@ -50,16 +50,6 @@ object Form1: TForm1
     TabOrder = 0
     OnClick = bActualizarClick
   end
-  object bImprimirEtiqueta: TButton
-    Left = -26
-    Top = 383
-    Width = 75
-    Height = 25
-    Caption = 'Imprimir'
-    TabOrder = 1
-    Visible = False
-    OnClick = bImprimirEtiquetaClick
-  end
   object ProgressBar1: TProgressBar
     Left = 55
     Top = 383
@@ -67,7 +57,7 @@ object Form1: TForm1
     Height = 16
     Min = 1
     Position = 1
-    TabOrder = 2
+    TabOrder = 1
     Visible = False
   end
   object Panel1: TPanel
@@ -77,7 +67,7 @@ object Form1: TForm1
     Height = 70
     Color = clWhite
     ParentBackground = False
-    TabOrder = 3
+    TabOrder = 2
     object Label3: TLabel
       Left = 17
       Top = 17
@@ -107,14 +97,15 @@ object Form1: TForm1
       ParentFont = False
     end
   end
-  object Panel2: TPanel
+  object pColecta: TPanel
     Left = 8
     Top = 139
     Width = 250
     Height = 70
     Color = clWhite
     ParentBackground = False
-    TabOrder = 4
+    TabOrder = 3
+    OnClick = pColectaClick
     object Label5: TLabel
       Left = 17
       Top = 17
@@ -127,6 +118,7 @@ object Form1: TForm1
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = Label5Click
     end
     object lMEnvios: TLabel
       Left = 17
@@ -142,6 +134,7 @@ object Form1: TForm1
       Font.Style = []
       ParentColor = False
       ParentFont = False
+      OnClick = lMEnviosClick
     end
   end
   object Panel3: TPanel
@@ -151,7 +144,7 @@ object Form1: TForm1
     Height = 70
     Color = clWhite
     ParentBackground = False
-    TabOrder = 5
+    TabOrder = 4
     object Label7: TLabel
       Left = 17
       Top = 15
@@ -188,7 +181,7 @@ object Form1: TForm1
     Height = 70
     Color = clWhite
     ParentBackground = False
-    TabOrder = 6
+    TabOrder = 5
     object Label11: TLabel
       Left = 17
       Top = 17

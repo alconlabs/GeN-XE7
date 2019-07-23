@@ -1,9 +1,6 @@
 ﻿[]
-Coordinates=326,119,106,80
-Visible=True
-
-[bImprimirEtiqueta]
 Coordinates=134,501,116,58
+Visible=True
 
 [DMR.RESTClientCategories]
 Coordinates=501,177,176,80

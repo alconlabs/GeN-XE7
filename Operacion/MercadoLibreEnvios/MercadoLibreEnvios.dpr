@@ -10,7 +10,8 @@ uses
   ImprimirDM in '..\..\DataModule\ImprimirDM.pas' {ImprimirDataModule: TDataModule},
   AfipDM in '..\..\DataModule\AfipDM.pas' {AfipDataModule: TDataModule},
   service in '..\..\DataModule\service.pas',
-  LoginCms1 in '..\..\DataModule\LoginCms1.pas';
+  LoginCms1 in '..\..\DataModule\LoginCms1.pas',
+  uOrders in 'uOrders.pas' {fOrders};
 
 {$R *.res}
 
