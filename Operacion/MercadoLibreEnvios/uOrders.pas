@@ -19,6 +19,7 @@ type
     StringGridBindSourceDB1: TStringGrid;
     LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource;
     BindingsList1: TBindingsList;
+    procedure StringGridBindSourceDB1Click(Sender: TObject);
   private
     { Private declarations }
     procedure ImprimirEtiqueta;
@@ -51,6 +52,17 @@ begin
     tOrders.Close;
     tOrders.Open;
   end;
+end;
+
+procedure TfOrders.StringGridBindSourceDB1Click(Sender: TObject);
+begin
+  ShowMessage(
+  'Ordenes relacionadas con el cliente:'+
+  IntToStr(dmml.dbMain.ExecSQLScalar(
+  'SELECT COUNT(*) FROM orders'
+  +' INNER JOIN shipping ON orders.id = shipping.order_id'
+  +' WHERE buyer=:B',[FDQuery1.FieldByName('buyer').AsString]))
+  );
 end;
 
 end.

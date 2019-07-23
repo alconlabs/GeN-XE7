@@ -3,7 +3,7 @@ object fOrders: TfOrders
   Top = 0
   Caption = 'Ordenes'
   ClientHeight = 452
-  ClientWidth = 656
+  ClientWidth = 674
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,23 +17,24 @@ object fOrders: TfOrders
     Tag = 8
     Left = 0
     Top = 0
-    Width = 656
+    Width = 674
     Height = 452
     Align = alClient
     ColCount = 8
+    DrawingStyle = gdsGradient
     FixedCols = 0
     RowCount = 2
     TabOrder = 0
-    ExplicitWidth = 632
+    OnClick = StringGridBindSourceDB1Click
     ColWidths = (
       200
       64
-      30
+      29
       25
       64
       64
       130
-      64)
+      54)
   end
   object FDQuery1: TFDQuery
     Connection = dmML.dbMain
@@ -47,8 +48,8 @@ object fOrders: TfOrders
       ' INNER JOIN order_items ON orders.id = order_items.order_id'
       ' INNER JOIN buyer ON orders.buyer = buyer.id'
       ' GROUP BY orders.buyer')
-    Left = 592
-    Top = 8
+    Left = 640
+    Top = 6
   end
   object BindSourceDB1: TBindSourceDB
     DataSet = FDQuery1

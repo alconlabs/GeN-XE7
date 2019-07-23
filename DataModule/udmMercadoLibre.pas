@@ -600,10 +600,6 @@ begin
   tShipping.Open('SELECT * FROM shipping');
   tBuyer.Open('SELECT * FROM buyer');
 
-// order_items.title AS TITULO, order_items.full_unit_price AS PRECIO,
-// order_items.quantity AS CANTIDAD, order_items.seller_sku AS SKU,
-// buyer.first_name AS NOMBRE, buyer.last_name AS APELLIDO, buyer.nickname AS NIK,
-// "imprimir" AS ETIQUETA, shipping, buyer, order_items.order_id'
   with tOrders do
   begin
     Open('SELECT * FROM orders WHERE id=:I',['1']);
@@ -616,7 +612,7 @@ begin
     end;
     tOrdersshipping.AsString:='1';
     tOrdersbuyer.AsString:='1';
-    tOrderstotal_amount:='999';
+    tOrderstotal_amount.AsString:='999';
     Post;
   end;
   with tOrder_items do
@@ -627,8 +623,9 @@ begin
     else
     begin
       Insert;
-      tOrder_itemsorder_id.AsString:='1';
+      tOrder_itemsid.AsString:='1';
     end;
+    tOrder_itemsorder_id.AsString:='1';
     tOrder_itemstitle.AsString:='Arduino';
     tOrder_itemsseller_sku.AsString:='1';
     tOrder_itemsfull_unit_price.AsString:='999';
@@ -643,9 +640,10 @@ begin
     else
     begin
       Insert;
-      tShippingorder_id.AsString:='1';
+      tShippingid.AsString:='1';
     end;
-    tShippingmode.AsString:='me2';
+    tShippingorder_id.AsString:='1';
+    tShippingshipping_mode.AsString:='me2';
     Post;
   end;
   with tBuyer do
@@ -674,9 +672,9 @@ begin
       Insert;
       tOrdersid.AsString:='2';
     end;
-    tOrdersshipping.AsString:='1';
+    tOrdersshipping.AsString:='2';
     tOrdersbuyer.AsString:='1';
-    tOrderstotal_amount:='999';
+    tOrderstotal_amount.AsString:='999';
     Post;
   end;
   with tOrder_items do
@@ -687,8 +685,9 @@ begin
     else
     begin
       Insert;
-      tOrder_itemsorder_id.AsString:='2';
+      tOrder_itemsid.AsString:='2';
     end;
+    tOrder_itemsorder_id.AsString:='2';
     tOrder_itemstitle.AsString:='Arduino2';
     tOrder_itemsseller_sku.AsString:='2';
     tOrder_itemsfull_unit_price.AsString:='992';
@@ -703,9 +702,10 @@ begin
     else
     begin
       Insert;
-      tShippingorder_id.AsString:='2';
+      tShippingid.AsString:='2';
     end;
-    tShippingmode.AsString:='custom';
+    tShippingorder_id.AsString:='2';
+    tShippingshipping_mode.AsString:='custom';
     Post;
   end;
 end;

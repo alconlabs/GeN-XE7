@@ -103,7 +103,7 @@ begin
 +' INNER JOIN shipping ON orders.id = shipping.order_id'
 +' INNER JOIN buyer ON orders.buyer = buyer.id'
 +' WHERE shipping_mode='+QuotedStr('me2')
-//+' GROUP BY orders.buyer'
++' GROUP BY orders.buyer'
 );
   try
     forders.ShowModal;
