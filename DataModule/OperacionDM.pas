@@ -86,6 +86,7 @@ type
     procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impIva, impTotal, asocTipo, asocNro, n10, n21, i10, i21:string);
     function ObtenerNroComp(tipo:string):string;
     procedure ActualizarNroComp(tipo,comp: string);
+    procedure ActualizarLibroIVAVentas;
   end;
 
 var
@@ -1955,5 +1956,76 @@ begin
     +IntToStr(cod)+', '+IntToStr(id)+', '+FloatToStr(bImp)+', '+FloatToStr(imp)+')';
   Q.ExecSQL;
 end;
+
+procedure TOperacionDataModule.ActualizarLibroIVAVentas;
+var
+  cod,let,DocTipo,CantIva,AlicIVA,DocNro:string;
+  iva1,iva2:Double;
+begin
+//  DM.tlibroivaventa.open;
+  with DM do
+    with tLibroIVAventa do
+    begin
+      Open;
+      while not Eof do
+      begin
+        Edit;
+//        cod:=tLibroIVAventaFACTURA.AsString;
+        let:=TraerValor('Venta', 'LETRA', cod);
+        Q.SQL.Text:=
+        'SELECT'
+        +' "CbteTipo".CODIGO AS CbteTipo,'
+        +' "Venta".COMPROBANTE AS CbteDesde,'
+        +' "Venta".COMPROBANTE AS CbteHasta,'
+        +' "Cliente".NOMBRE AS NomCli,'
+        +' "Cliente".DOCUMENTO AS DNI,'
+        +' "Cliente".CUIT AS CUIT,'
+        +' "Venta".IMPUESTO AS ImpIVA,'
+        +' "Venta".IVA1,'
+        +' "Venta".IVA2,'
+        +' "Venta".SUBTOTAL AS ImpNeto,'
+        +' "AlicIva".ID AS AlicIva'
+        +' FROM "Venta"'
+        +' INNER JOIN "CbteTipo" ON "CbteTipo".LETRA = "Venta".LETRA'
+        +' INNER JOIN "Cliente" ON "Cliente".CODIGO = "Venta".CLIENTE'
+        +' LEFT JOIN "AlicIva" ON "Venta".ALICIVA = "AlicIva".CODIGO'
+        +' WHERE "Venta".CODIGO='+tLibroIVAventaFACTURA.AsString;
+        Q.Open;
+        tLibroIVAventaCbteTipo.AsString:=Q.FieldByName('CbteTipo').AsString;
+        tLibroIVAventaPtoVta.AsString:=PuntoVenta;
+        tLibroIVAventaCbteDesde.AsString:=Q.FieldByName('CbteDesde').AsString;
+        tLibroIVAventaCbteHasta.AsString:=Q.FieldByName('CbteHasta').AsString;
+        DocNro:=Q.FieldByName('CUIT').AsString;
+        if DocNro='' then DocNro:=Q.FieldByName('DNI').AsString;
+        if DocNro.Length < 11  then DocTipo :='96' else DocTipo := '80';
+        tLibroIVAventaDocTipo.AsString:=DocTipo;
+        tLibroIVAventaNomCli.AsString:=Q.FieldByName('NomCli').AsString;
+        tLibroIVAventaMonId.AsString:='PES';
+        tLibroIVAventaMonCotiz.AsString:='1';
+        iva1:=Q.FieldByName('IVA1').Asfloat;
+        iva2:=Q.FieldByName('IVA2').Asfloat;
+        if ((iva1>0) and (iva2>0)) then CantIva:='2' else CantIva:='1';
+        tLibroIVAventaCantIva.AsString:=CantIva;
+        tLibroIVAventaOpcion.AsString:='0';
+  //      tLibroIVAventaFchVtoPago.AsString:=Q.FieldByName('').AsString;
+        AlicIVA:=Q.FieldByName('AlicIVA').AsString;
+        if AlicIVA='' then
+        begin
+          if iva1>0 then AlicIVA:='4' else if iva2>0 then AlicIVA:='5';
+        end;
+        tLibroIVAventaAlicIVA.AsString:=AlicIVA;
+        tLibroIVAventaImpNeto.AsString:=Q.FieldByName('ImpNeto').AsString;
+  //      tLibroIVAventaNoGrabado.AsString:=Q.FieldByName('').AsString;
+  //      tLibroIVAventaImpOpEx.AsString:=Q.FieldByName('').AsString;
+        tLibroIVAventaImpIVA.AsString:=Q.FieldByName('ImpIVA').AsString;
+  //      tLibroIVAventaGenerales.AsString:=Q.FieldByName('').AsString;
+  //      tLibroIVAventaNoCat.AsString:=Q.FieldByName('').AsString;
+  //      tLibroIVAventaImpTrib.AsString:=Q.FieldByName('').AsString;
+        Post;
+        Next;
+      end;
+    end;
+end;
+
 
 end.

@@ -4,7 +4,6 @@ object DM: TDM
   Height = 249
   Width = 404
   object BaseDatos: TIBDatabase
-    Connected = True
     DatabaseName = 'C:\Users\DeGsoft\Documents\Civeloo\GeN\db\GeN.FDB'
     Params.Strings = (
       'user_name=SYSDBA'
@@ -1009,7 +1008,6 @@ object DM: TDM
   object FDConnection1: TFDConnection
     Params.Strings = (
       'ConnectionDef=GeN')
-    Connected = True
     LoginPrompt = False
     Left = 184
   end
@@ -2002,5 +2000,300 @@ object DM: TDM
     Connection = FDConnection1
     Left = 184
     Top = 168
+  end
+  object tLibroIVAventa: TIBTable
+    Database = BaseDatos
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'CODIGO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'FECHA'
+        DataType = ftDateTime
+      end
+      item
+        Name = 'FACTURA'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'CLIENTE'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'CUIT'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'CONDICION'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'NG1'
+        DataType = ftFloat
+      end
+      item
+        Name = 'NG2'
+        DataType = ftFloat
+      end
+      item
+        Name = 'NG3'
+        DataType = ftFloat
+      end
+      item
+        Name = 'IVA1'
+        DataType = ftFloat
+      end
+      item
+        Name = 'IVA2'
+        DataType = ftFloat
+      end
+      item
+        Name = 'IVA3'
+        DataType = ftFloat
+      end
+      item
+        Name = 'OEIIBB'
+        DataType = ftFloat
+      end
+      item
+        Name = 'IDERPYPAC'
+        DataType = ftFloat
+      end
+      item
+        Name = 'ITF'
+        DataType = ftFloat
+      end
+      item
+        Name = 'CBTETIPO'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'PTOVTA'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'CBTEDESDE'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'CBTEHASTA'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'DOCTIPO'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'NOMCLI'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'MONID'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'MONCOTIZ'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'CANTIVA'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'OPCION'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'FCHVTOPAGO'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'ALICIVA'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'IMPNETO'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'NOGRABADO'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'IMPOPEX'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'IMPIVA'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'GENERALES'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'NOCAT'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'IMPTRIB'
+        DataType = ftWideString
+        Size = 255
+      end>
+    StoreDefs = True
+    TableName = 'LibroIVAventa'
+    UniDirectional = False
+    Left = 248
+    object tLibroIVAventaCODIGO: TIntegerField
+      FieldName = 'CODIGO'
+    end
+    object tLibroIVAventaFECHA: TDateTimeField
+      FieldName = 'FECHA'
+    end
+    object tLibroIVAventaFACTURA: TIBStringField
+      FieldName = 'FACTURA'
+      Size = 50
+    end
+    object tLibroIVAventaCLIENTE: TIBStringField
+      FieldName = 'CLIENTE'
+      Size = 50
+    end
+    object tLibroIVAventaCUIT: TIBStringField
+      FieldName = 'CUIT'
+      Size = 50
+    end
+    object tLibroIVAventaCONDICION: TIBStringField
+      FieldName = 'CONDICION'
+      Size = 50
+    end
+    object tLibroIVAventaNG1: TFloatField
+      FieldName = 'NG1'
+    end
+    object tLibroIVAventaNG2: TFloatField
+      FieldName = 'NG2'
+    end
+    object tLibroIVAventaNG3: TFloatField
+      FieldName = 'NG3'
+    end
+    object tLibroIVAventaIVA1: TFloatField
+      FieldName = 'IVA1'
+    end
+    object tLibroIVAventaIVA2: TFloatField
+      FieldName = 'IVA2'
+    end
+    object tLibroIVAventaIVA3: TFloatField
+      FieldName = 'IVA3'
+    end
+    object tLibroIVAventaOEIIBB: TFloatField
+      FieldName = 'OEIIBB'
+    end
+    object tLibroIVAventaIDERPYPAC: TFloatField
+      FieldName = 'IDERPYPAC'
+    end
+    object tLibroIVAventaITF: TFloatField
+      FieldName = 'ITF'
+    end
+    object tLibroIVAventaCBTETIPO: TIBStringField
+      FieldName = 'CBTETIPO'
+      Size = 255
+    end
+    object tLibroIVAventaPTOVTA: TIBStringField
+      FieldName = 'PTOVTA'
+      Size = 255
+    end
+    object tLibroIVAventaCBTEDESDE: TIBStringField
+      FieldName = 'CBTEDESDE'
+      Size = 255
+    end
+    object tLibroIVAventaCBTEHASTA: TIBStringField
+      FieldName = 'CBTEHASTA'
+      Size = 255
+    end
+    object tLibroIVAventaDOCTIPO: TIBStringField
+      FieldName = 'DOCTIPO'
+      Size = 255
+    end
+    object tLibroIVAventaNOMCLI: TIBStringField
+      FieldName = 'NOMCLI'
+      Size = 255
+    end
+    object tLibroIVAventaMONID: TIBStringField
+      FieldName = 'MONID'
+      Size = 255
+    end
+    object tLibroIVAventaMONCOTIZ: TIBStringField
+      FieldName = 'MONCOTIZ'
+      Size = 255
+    end
+    object tLibroIVAventaCANTIVA: TIBStringField
+      FieldName = 'CANTIVA'
+      Size = 255
+    end
+    object tLibroIVAventaOPCION: TIBStringField
+      FieldName = 'OPCION'
+      Size = 255
+    end
+    object tLibroIVAventaFCHVTOPAGO: TIBStringField
+      FieldName = 'FCHVTOPAGO'
+      Size = 255
+    end
+    object tLibroIVAventaALICIVA: TIBStringField
+      FieldName = 'ALICIVA'
+      Size = 255
+    end
+    object tLibroIVAventaIMPNETO: TIBStringField
+      FieldName = 'IMPNETO'
+      Size = 255
+    end
+    object tLibroIVAventaNOGRABADO: TIBStringField
+      FieldName = 'NOGRABADO'
+      Size = 255
+    end
+    object tLibroIVAventaIMPOPEX: TIBStringField
+      FieldName = 'IMPOPEX'
+      Size = 255
+    end
+    object tLibroIVAventaIMPIVA: TIBStringField
+      FieldName = 'IMPIVA'
+      Size = 255
+    end
+    object tLibroIVAventaGENERALES: TIBStringField
+      FieldName = 'GENERALES'
+      Size = 255
+    end
+    object tLibroIVAventaNOCAT: TIBStringField
+      FieldName = 'NOCAT'
+      Size = 255
+    end
+    object tLibroIVAventaIMPTRIB: TIBStringField
+      FieldName = 'IMPTRIB'
+      Size = 255
+    end
   end
 end

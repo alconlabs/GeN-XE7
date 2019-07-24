@@ -194,9 +194,10 @@ object CuentasForm: TCuentasForm
     Color = clBlack
     ParentBackground = False
     TabOrder = 1
+    ExplicitLeft = 646
     object Image1: TImage
-      Left = 41
-      Top = 308
+      Left = 37
+      Top = 69
       Width = 80
       Height = 50
       Hint = 'EXPORTAR A EXCEL EN FORMATO CSV'
@@ -381,6 +382,14 @@ object CuentasForm: TCuentasForm
         TabOrder = 1
         OnCloseUp = DTP2CloseUp
       end
+    end
+    object BSiap: TButton
+      Left = 40
+      Top = 312
+      Width = 80
+      Height = 50
+      Caption = 'SIAP'
+      TabOrder = 3
     end
   end
   object DS: TDataSource

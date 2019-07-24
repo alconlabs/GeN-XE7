@@ -39,6 +39,7 @@ type
     DTP1: TDateTimePicker;
     DTP2: TDateTimePicker;
     Image1: TImage;
+    BSiap: TButton;
     procedure FormCreate(Sender: TObject);
     procedure DTP1CloseUp(Sender: TObject);
     procedure DTP2CloseUp(Sender: TObject);
@@ -72,6 +73,8 @@ var
 implementation
 
 {$R *.dfm}
+
+uses OperacionDM;
 
 Procedure TCuentasForm.EnvioRamTerminado;
 begin
@@ -114,6 +117,12 @@ end;
 
 procedure TCuentasForm.BitBtn1Click(Sender: TObject);
 begin
+  OperacionDataModule := TOperacionDataModule.Create(self);
+  try
+    OperacionDataModule.ActualizarLibroIVAVentas;
+  finally
+    OperacionDataModule.Free;
+  end;
   Tabla.SQL.Text := 'SELECT ' + '  ' +
     QuotedStr(DM.ConfigQuery.FieldByName('Nombre').AsString) + ' AS Empresa, ' +
     '  ' + QuotedStr(DateToStr(DTP1.Date)) + ' AS Desde,  ' + '  ' +

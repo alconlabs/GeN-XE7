@@ -25,6 +25,41 @@ type
     IBScript1: TIBScript;
     FDTable1: TFDTable;
     FDQuery1: TFDQuery;
+    tLibroIVAventa: TIBTable;
+    tLibroIVAventaCODIGO: TIntegerField;
+    tLibroIVAventaFECHA: TDateTimeField;
+    tLibroIVAventaFACTURA: TIBStringField;
+    tLibroIVAventaCLIENTE: TIBStringField;
+    tLibroIVAventaCUIT: TIBStringField;
+    tLibroIVAventaCONDICION: TIBStringField;
+    tLibroIVAventaNG1: TFloatField;
+    tLibroIVAventaNG2: TFloatField;
+    tLibroIVAventaNG3: TFloatField;
+    tLibroIVAventaIVA1: TFloatField;
+    tLibroIVAventaIVA2: TFloatField;
+    tLibroIVAventaIVA3: TFloatField;
+    tLibroIVAventaOEIIBB: TFloatField;
+    tLibroIVAventaIDERPYPAC: TFloatField;
+    tLibroIVAventaITF: TFloatField;
+    tLibroIVAventaCBTETIPO: TIBStringField;
+    tLibroIVAventaPTOVTA: TIBStringField;
+    tLibroIVAventaCBTEDESDE: TIBStringField;
+    tLibroIVAventaCBTEHASTA: TIBStringField;
+    tLibroIVAventaDOCTIPO: TIBStringField;
+    tLibroIVAventaNOMCLI: TIBStringField;
+    tLibroIVAventaMONID: TIBStringField;
+    tLibroIVAventaMONCOTIZ: TIBStringField;
+    tLibroIVAventaCANTIVA: TIBStringField;
+    tLibroIVAventaOPCION: TIBStringField;
+    tLibroIVAventaFCHVTOPAGO: TIBStringField;
+    tLibroIVAventaALICIVA: TIBStringField;
+    tLibroIVAventaIMPNETO: TIBStringField;
+    tLibroIVAventaNOGRABADO: TIBStringField;
+    tLibroIVAventaIMPOPEX: TIBStringField;
+    tLibroIVAventaIMPIVA: TIBStringField;
+    tLibroIVAventaGENERALES: TIBStringField;
+    tLibroIVAventaNOCAT: TIBStringField;
+    tLibroIVAventaIMPTRIB: TIBStringField;
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
     procedure LeerINI;
@@ -47,6 +82,7 @@ type
     procedure ActualizarVersion;
     function EsMismaVersion:Boolean;
     procedure CrearCbtetipo;
+    procedure ActualizarTLibroIVAVentas;
   public
   const
     NumThreads: Integer = 4;
@@ -203,18 +239,6 @@ end;
 procedure TDM.TraerConfig;
 begin
   if (ConfigQuery.Active) then ConfigQuery.Close;
-{
-SELECT
-	"Config".CODIGO, "Config".NROFACTURA, "Config"."FechaInicio", "Config".PP1, "Config".PP2, "Config".PP3, "Config".PP4, "Config".PP5, "Config".PP6, "Config".PP7, "Config".PP8, "Config".PP9, "Config".PP, "Config"."CtaCompra", "Config"."CtaMercaderia", "Config"."CtaIIBB", "Config"."CtaImpuesto", "Config"."CtaDeudor", "Config"."CtaVenta", "Config"."CtaCaja", "Config"."CtaAnticipoAProveedor", "Config"."CtaBanco", "Config"."CtaCMV", "Config"."CtaComisionVendedor", "Config"."CtaComisionVendedorAPagar", "Config"."CtaDeudorEnGestionJudicial", "Config"."CtaDeudorIncobrable", "Config"."CtaDeudorMoroso", "Config"."CtaDeudorPorVenta", "Config"."CtaDocumentoACobrar", "Config"."CtaHonorarioLegal", "Config"."CtaHonorarioLegalApagar", "Config"."CtaIVARemanente", "Config"."CtaIVAAPagar", "Config"."CtaIVACreditoFiscal", "Config"."CtaIVADebitoFiscal", "Config"."CtaLiquidacionDeIVA", "Config"."CtaMerRecJudicialmente", "Config"."CtaMercaderiaDeReventa", "Config"."CtaObligacionAPagar", "Config"."CtaPagoDeHonorario", "Config"."CtaTarjetaDeCredito", "Config"."CtaProveedor", "Config"."CtaRecuperoJudicial", "Config"."CtaServicioAPAgar", "Config"."CtaServicio", "Config"."CtaValorAlCobro", "Config"."CtaValorADepositar", "Config"."Cuenta", "Config"."Precio", "Config"."Comprobante", "Config"."Empresa", "Config"."ImprimirTipo", "Config"."Imprimir", "Config"."ImprimirFiscal", "Config"."ImprimirMostrar", "Config"."CodigoBarra", "Config"."GesCobTemprana", "Config"."GesCobExtraJudicial", "Config"."GesCobJudicial", "Config".CMV, "Config".CTACAPITALSOC,
-  	"Empresa".CODIGO AS PtoVta, "Empresa".NOMBRE, "Empresa".TITULAR, "Empresa".DIRECCION, "Empresa".DIRECCIONCOMERCIAL, "Empresa".PAIS, "Empresa".PROVINCIA, "Empresa".DEPARTAMENTO, "Empresa".CIUDAD, "Empresa".CP, "Empresa".CODIGOAREA, "Empresa".CELULAR, "Empresa".TELEFONO, "Empresa".FAX, "Empresa".EMAIL, "Empresa".SUSPENDIDO, "Empresa".EXCENTO, "Empresa".FECHA, "Empresa".LIMITECREDITO, "Empresa".DIASCREDITO, "Empresa".DOCUMENTO, "Empresa".RAZONSOCIAL, "Empresa".CUIT, "Empresa".IIBB, "Empresa".RUBRO, "Empresa".IVA, "Empresa".MSN, "Empresa".WEB, "Empresa".ZONA, "Empresa".CTA, "Empresa".CTANOMBRE, "Empresa".CTATIPO, "Empresa".CTAANTICIPO, "Empresa".PAGARE,
-  	"Imprimir".DESCRIPCION, "Imprimir".REPORTE
-FROM "Config"
- INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".CODIGO)
- INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)
-}
-//  ConfigQuery.SQL.Text := 'SELECT * FROM "Config"' +
-//    ' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".CODIGO)' +
-//    ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)';
 
 ConfigQuery.SQL.Text := 'SELECT '
 +'"Config".CODIGO, "Config".NROFACTURA, "Config"."FechaInicio", "Config".PP1, '
@@ -604,7 +628,8 @@ begin
     begin
       CopyDir(ejecutable+'hlp', Path);
       CopyDir(ejecutable+'rpt', Path);
-      crearcbtetipo;
+      CrearCbtetipo;
+      ActualizartLibroIVAVentas;
       ActualizarVersion;
     end;
   end
@@ -1115,6 +1140,29 @@ procedure TDM.CrearCbtetipo;
        Free; // destroy the temporary TTable when done
      end;
    end;
+ end;
+
+ procedure TDM.ActualizarTLibroIVAVentas;
+ begin
+//  ActualizarTabla('LibroIVAventa', 'CbteTipo', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'PtoVta', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'CbteDesde', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'CbteHasta', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'DocTipo', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'NomCli', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'MonId', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'MonCotiz', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'CantIva', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'Opcion', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'FchVtoPago', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'AlicIVA', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'ImpNeto', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'NoGrabado', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'ImpOpEx', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'ImpIVA', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'Generales', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'NoCat', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'ImpTrib', 'VARCHAR(255)');
  end;
 
 end.
