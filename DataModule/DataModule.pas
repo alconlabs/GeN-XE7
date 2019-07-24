@@ -10,7 +10,7 @@ uses
   FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, IBX.IBScript, System.Net.HTTPClient, System.StrUtils,
-  ShellApi, System.Variants, ShlObj, System.IOUtils;
+  ShellApi, System.Variants, ShlObj, System.IOUtils, IBX.IBTable;
 
 type
 
@@ -46,6 +46,7 @@ type
     procedure ObtenerSO;
     procedure ActualizarVersion;
     function EsMismaVersion:Boolean;
+    procedure CrearCbtetipo;
   public
   const
     NumThreads: Integer = 4;
@@ -603,6 +604,7 @@ begin
     begin
       CopyDir(ejecutable+'hlp', Path);
       CopyDir(ejecutable+'rpt', Path);
+      crearcbtetipo;
       ActualizarVersion;
     end;
   end
@@ -993,7 +995,126 @@ begin
   vv2 := StrToInt(TraerValor('Version','V2',''));
   vv3 := StrToInt(TraerValor('Version','V3',''));
   vv4 := StrToInt(TraerValor('Version','V4',''));
-  result := ((V1=vv1) and (V2=vv2) and (V3=vv3));
+  result := ( (V1=vv1) and (V2=vv2) and (V3=vv3) and (V4=vv4) );
 end;
+
+procedure TDM.CrearCbtetipo;
+ var
+   TableFound: Boolean;
+ begin
+   with TFDTable.Create(nil) do // create a temporary TTable component
+   begin
+     try
+       { set properties of the temporary TTable component }
+       Active := False;
+//       DatabaseName := ;
+       Connection := FDConnection1;
+       TableName := '"CbteTipo"';
+//       TableType := ttDefault;
+       { define fields for the new table }
+       FieldDefs.Clear;
+       FieldDefs.Add('CODIGO', ftInteger);
+       FieldDefs.Add('LETRA', ftString, 10, False);
+       FieldDefs.Add('DESCRIPCION', ftString, 255, False);
+//       FieldDefs.Add('V4', ftString, 255, False);
+//       with FieldDefs.AddFieldDef do begin
+//         Name := 'V1';
+//         DataType := ftString;
+//         Size := 255;
+//         Required := False;
+//       end;
+       { define indexes for the new table }
+//       IndexDefs.Clear;
+//       with IndexDefs.AddIndexDef do begin
+//         Name := '';
+//         Fields := 'First';
+//         Options := [ixPrimary];
+//       end;
+       TableFound := Exists; // check whether the table already exists
+//       if TableFound then
+//         if MessageDlg('Overwrite existing table ' + nombre + '?',
+//              mtConfirmation, mbYesNoCancel, 0) = mrYes then
+//           TableFound := False;
+        if not TableFound then
+        begin
+          CreateTable(False); // create the table
+          Open;
+//          Insert;
+//          Fields.Fields[0].Value := FloatToStr(v1);
+        InsertRecord([1,'A','FACTURAS A']);
+        InsertRecord([2,'NDA','NOTAS DE DEBITO A']);
+        InsertRecord([3,'NCA','NOTAS DE CREDITO A']);
+        InsertRecord([4,'RA','RECIBOS A']);
+        InsertRecord([5,'NVA','NOTAS DE VENTA AL CONTADO A']);
+        InsertRecord([6,'B','FACTURAS B']);
+        InsertRecord([7,'NDB','NOTAS DE DEBITO B']);
+        InsertRecord([8,'NCB','NOTAS DE CREDITO B']);
+        InsertRecord([9,'RB','RECIBOS B']);
+        InsertRecord([10,'NVB','NOTAS DE VENTA AL CONTADO B']);
+        InsertRecord([11,'C',' Factura C ']);
+        InsertRecord([12,'NDC','Nota de Débito C ']);
+        InsertRecord([13,'NCC',' Nota de Crédito C ']);
+        InsertRecord([15,'RC','Recibo C ']);
+        InsertRecord([17,'','LIQUIDACION DE SERVICIOS PUBLICOS CLASE A']);
+        InsertRecord([18,'','LIQUIDACION DE SERVICIOS PUBLICOS CLASE B']);
+        InsertRecord([19,'','FACTURAS DE EXPORTACION']);
+        InsertRecord([20,'','NOTAS DE DEBITO POR OPERACIONES CON EL EXTERIOR']);
+        InsertRecord([21,'','NOTAS DE CREDITO POR OPERACIONES CON EL EXTERIOR']);
+        InsertRecord([22,'','FACTURAS - PERMISO EXPORTACION SIMPLIFICADO - DTO. 855/97']);
+        InsertRecord([23,'','CPTES "A" DE COMPRA PRIMARIA PARA EL SECTOR PESQUERO MARITIMO']);
+        InsertRecord([24,'','CPTES "A" DE COSIGNACION PRIMARIA PARA EL SECTOR PESQUERO MARITIMO']);
+        InsertRecord([27,'','LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE A']);
+        InsertRecord([28,'','LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B']);
+        InsertRecord([29,'','LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C']);
+        InsertRecord([33,'','LIQUIDACION PRIMARIA DE GRANOS']);
+        InsertRecord([34,'','COMPROBANTES A DEL APARTADO A INCISO F R G N 1415']);
+        InsertRecord([35,'','COMPROBANTES B DEL ANEXO I, APARTADO A, INC. F), RG N° 1415']);
+        InsertRecord([37,'','NOTAS DE DEBITO O DOCUMENTO EQUIVALENTE QUE CUMPLAN CON LA R.G. N° 1415']);
+        InsertRecord([38,'','NOTAS DE CREDITO O DOCUMENTO EQUIVALENTE QUE CUMPLAN CON LA R.G. N° 1415']);
+        InsertRecord([39,'','OTROS COMPROBANTES A QUE CUMPLEN CON LA R G 1415']);
+        InsertRecord([40,'','OTROS COMPROBANTES B QUE CUMPLAN CON LA R.G. 1415']);
+        InsertRecord([43,'','NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B']);
+        InsertRecord([44,'','NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C']);
+        InsertRecord([45,'','NOTA DE DEBITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE A']);
+        InsertRecord([46,'','NOTA DE DEBITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B']);
+        InsertRecord([47,'','NOTA DE DEBITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C']);
+        InsertRecord([48,'','NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE A']);
+        InsertRecord([51,'M','FACTURAS M']);
+        InsertRecord([52,'NDM','NOTAS DE DEBITO M']);
+        InsertRecord([53,'NCM','NOTAS DE CREDITO M']);
+        InsertRecord([54,'RM','RECIBOS M']);
+        InsertRecord([55,'','NOTAS DE VENTA AL CONTADO M']);
+        InsertRecord([56,'','COMPROBANTES M DEL ANEXO I APARTADO A INC F R G N 1415']);
+        InsertRecord([57,'','OTROS COMPROBANTES M QUE CUMPLAN CON LA R G N 1415']);
+        InsertRecord([58,'','CUENTAS DE VENTA Y LIQUIDO PRODUCTO M']);
+        InsertRecord([59,'','LIQUIDACIONES M']);
+        InsertRecord([60,'','CUENTAS DE VENTA Y LIQUIDO PRODUCTO A']);
+        InsertRecord([61,'','CUENTAS DE VENTA Y LIQUIDO PRODUCTO B']);
+        InsertRecord([63,'','LIQUIDACIONES A']);
+        InsertRecord([64,'','LIQUIDACIONES B']);
+        InsertRecord([68,'','LIQUIDACION C']);
+        InsertRecord([81,'','TIQUE FACTURA A CONTROLADORES FISCALES']);
+        InsertRecord([82,'','TIQUE - FACTURA B']);
+        InsertRecord([83,'','TIQUE']);
+        InsertRecord([90,'','NOTA DE CREDITO OTROS COMP QUE NO CUMPLEN CON LA R G 1415 Y SUS MODIF']);
+        InsertRecord([99,'','OTROS COMP QUE NO CUMPLEN CON LA R G 1415 Y SUS MODIF']);
+        InsertRecord([110,'','TIQUE NOTA DE CREDITO']);
+        InsertRecord([112,'','TIQUE NOTA DE CREDITO A']);
+        InsertRecord([113,'','TIQUE NOTA DE CREDITO B']);
+        InsertRecord([115,'','TIQUE NOTA DE DEBITO A']);
+        InsertRecord([116,'','TIQUE NOTA DE DEBITO B']);
+        InsertRecord([118,'','TIQUE FACTURA M']);
+        InsertRecord([119,'','TIQUE NOTA DE CREDITO M']);
+        InsertRecord([120,'','TIQUE NOTA DE DEBITO M']);
+        InsertRecord([331,'','LIQUIDACION SECUNDARIA DE GRANOS']);
+        InsertRecord([332,'','CERTIFICADO DE DEPOSITO DE GRANOS EN PLANTA']);
+//          Post;
+        end;
+
+     finally
+       Free; // destroy the temporary TTable when done
+     end;
+   end;
+ end;
 
 end.

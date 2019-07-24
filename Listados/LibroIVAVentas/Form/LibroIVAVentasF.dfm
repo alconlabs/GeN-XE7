@@ -366,8 +366,8 @@ object CuentasForm: TCuentasForm
         Top = 39
         Width = 113
         Height = 21
-        Date = 42005.873243958300000000
-        Time = 42005.873243958300000000
+        Date = 43466.000000000000000000
+        Time = 0.873243958296370700
         TabOrder = 0
         OnCloseUp = DTP1CloseUp
       end
@@ -376,8 +376,8 @@ object CuentasForm: TCuentasForm
         Top = 85
         Width = 113
         Height = 21
-        Date = 37668.873295891200000000
-        Time = 37668.873295891200000000
+        Date = 43830.000000000000000000
+        Time = 0.873295891200541500
         TabOrder = 1
         OnCloseUp = DTP2CloseUp
       end

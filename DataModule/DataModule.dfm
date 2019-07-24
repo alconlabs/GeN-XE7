@@ -1,10 +1,11 @@
 object DM: TDM
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 230
-  Width = 256
+  Height = 249
+  Width = 404
   object BaseDatos: TIBDatabase
-    DatabaseName = 'I:\GitHub\GeN-XE7\Bin\GeN\db\GeN.FDB'
+    Connected = True
+    DatabaseName = 'C:\Users\DeGsoft\Documents\Civeloo\GeN\db\GeN.FDB'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'
@@ -1008,6 +1009,7 @@ object DM: TDM
   object FDConnection1: TFDConnection
     Params.Strings = (
       'ConnectionDef=GeN')
+    Connected = True
     LoginPrompt = False
     Left = 184
   end

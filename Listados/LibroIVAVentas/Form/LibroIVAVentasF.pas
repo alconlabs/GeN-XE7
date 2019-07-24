@@ -118,15 +118,16 @@ begin
     QuotedStr(DM.ConfigQuery.FieldByName('Nombre').AsString) + ' AS Empresa, ' +
     '  ' + QuotedStr(DateToStr(DTP1.Date)) + ' AS Desde,  ' + '  ' +
     QuotedStr(DateToStr(DTP2.Date)) + ' AS Hasta, ' +
-    '  "LibroIVAventa".CODIGO,  ' + '  "LibroIVAventa".FECHA,    ' +
-    '  "LibroIVAventa".FACTURA,   ' + '  "LibroIVAventa".CLIENTE,  ' +
-    '  "LibroIVAventa".CUIT,      ' + '  "LibroIVAventa".CONDICION, ' +
-    '  "LibroIVAventa".NG1,      ' + '  "LibroIVAventa".NG2,      ' +
-    '  "LibroIVAventa".NG3,     ' + '  "LibroIVAventa".IVA1,    ' +
-    '  "LibroIVAventa".IVA2,    ' + '  "LibroIVAventa".IVA3,     ' +
-    '  "LibroIVAventa".OEIIBB,    ' + '  "LibroIVAventa".IDERPYPAC,  ' +
-    '  "LibroIVAventa".ITF     ' + 'FROM                    ' +
-    '  "LibroIVAventa"    ' + 'WHERE                ' +
+    '  "LibroIVAventa".CODIGO, "LibroIVAventa".FECHA,    ' +
+    '  "LibroIVAventa".FACTURA, "LibroIVAventa".CLIENTE,  ' +
+    '  "LibroIVAventa".CUIT, "LibroIVAventa".CONDICION, ' +
+    '  "LibroIVAventa".NG1, "LibroIVAventa".NG2,      ' +
+    '  "LibroIVAventa".NG3, "LibroIVAventa".IVA1,    ' +
+    '  "LibroIVAventa".IVA2, "LibroIVAventa".IVA3,     ' +
+    '  "LibroIVAventa".OEIIBB, "LibroIVAventa".IDERPYPAC,  ' +
+    '  "LibroIVAventa".ITF'
+    +' FROM "LibroIVAventa"'
+    + 'WHERE                ' +
     '  ("LibroIVAventa".FECHA >= ' + QuotedStr(DateToStr(DTP1.Date)) + ' ) AND '
     + '  ("LibroIVAventa".FECHA <= ' + QuotedStr(DateToStr(DTP2.Date)) + ' )   '
     + 'ORDER BY  ' + '  "LibroIVAventa".CODIGO' + '';
