@@ -2,7 +2,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   Left = 0
   Top = 0
   Caption = 'Mercado Libre Envios'
-  ClientHeight = 451
+  ClientHeight = 404
   ClientWidth = 267
   Color = clCream
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   TextHeight = 13
   object lPreparar: TLabel
     Left = 25
-    Top = 8
+    Top = 9
     Width = 92
     Height = 16
     Caption = 'Para preparar'
@@ -31,7 +31,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   end
   object lVentas: TLabel
     Left = 25
-    Top = 27
+    Top = 28
     Width = 42
     Height = 13
     Caption = '0 ventas'
@@ -43,10 +43,11 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
     ParentFont = False
   end
   object ProgressBar1: TProgressBar
-    Left = 55
-    Top = 407
-    Width = 150
-    Height = 16
+    Left = 0
+    Top = 0
+    Width = 267
+    Height = 5
+    Align = alTop
     Min = 1
     Position = 1
     TabOrder = 0
@@ -211,7 +212,13 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   end
   object tProgressBar: TTimer
     OnTimer = tProgressBarTimer
-    Left = 112
-    Top = 400
+    Left = 128
+    Top = 8
+  end
+  object Timer1: TTimer
+    Enabled = False
+    OnTimer = Timer1Timer
+    Left = 232
+    Top = 8
   end
 end

@@ -607,4 +607,27 @@ object dmML: TdmML
       BlobType = ftWideMemo
     end
   end
+  object tDespachados: TFDQuery
+    Connection = dbMain
+    SQL.Strings = (
+      'SELECT * FROM despachados')
+    Left = 72
+    Top = 240
+    object tDespachadosorder_id: TWideMemoField
+      FieldName = 'order_id'
+      Origin = 'order_id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      BlobType = ftWideMemo
+    end
+    object tDespachadosembalado: TWideMemoField
+      FieldName = 'embalado'
+      Origin = 'embalado'
+      BlobType = ftWideMemo
+    end
+    object tDespachadosenviado: TWideMemoField
+      FieldName = 'enviado'
+      Origin = 'enviado'
+      BlobType = ftWideMemo
+    end
+  end
 end

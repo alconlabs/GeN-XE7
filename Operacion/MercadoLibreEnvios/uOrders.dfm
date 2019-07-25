@@ -3,7 +3,7 @@ object fOrders: TfOrders
   Top = 0
   Caption = 'Ordenes'
   ClientHeight = 452
-  ClientWidth = 674
+  ClientWidth = 727
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object fOrders: TfOrders
     Tag = 8
     Left = 0
     Top = 0
-    Width = 674
+    Width = 727
     Height = 452
     Align = alClient
     ColCount = 8
@@ -26,6 +26,7 @@ object fOrders: TfOrders
     RowCount = 2
     TabOrder = 0
     OnClick = StringGridBindSourceDB1Click
+    ExplicitWidth = 674
     ColWidths = (
       200
       70

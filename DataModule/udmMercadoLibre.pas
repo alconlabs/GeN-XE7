@@ -129,11 +129,16 @@ type
     tBuyerfirst_name: TWideMemoField;
     tBuyerlast_name: TWideMemoField;
     tBuyerbilling_info: TWideMemoField;
+    tDespachados: TFDQuery;
+    tDespachadosorder_id: TWideMemoField;
+    tDespachadosembalado: TWideMemoField;
+    tDespachadosenviado: TWideMemoField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
     dBname, path : string;
     procedure IniciarVariables;
+    procedure OrdenesPrueba;
   public
     { Public declarations }
     refreshToken, seller_id, sqlOrder_items, sqlCountShipping, sqlCountMessages,
@@ -600,6 +605,7 @@ begin
   tMessages.Open('SELECT * FROM messages');
   tShipping.Open('SELECT * FROM shipping');
   tBuyer.Open('SELECT * FROM buyer');
+  tDespachados.Open('SELECT * FROM despachados');
 
   sqlOrderFrom:=' FROM orders'
     +' INNER JOIN order_items ON orders.id = order_items.order_id'
@@ -610,7 +616,8 @@ begin
   sqlOrderWhere:=' WHERE' //' (NOT(shipping.status='ready_to_ship')) AND'
     +' (NOT(shipping.status=''shipped''))'
     +' AND (NOT(shipping.status=''delivered''))'
-    +' AND (NOT(shipping.status=''not_delivered''))';
+    +' AND (NOT(shipping.status=''not_delivered''))'
+    +' AND (NOT(despachados.embalado=''S''))';
 
   sqlOrder_items:= 'SELECT order_items.title AS TITULO'
     +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
@@ -627,163 +634,10 @@ begin
   sqlCountMessages:='SELECT COUNT(*)'
     +sqlOrderFrom
     +' INNER JOIN messages ON orders.id = messages.order_id'
-    +sqlOrderWhere;
+    +sqlOrderWhere
     +' GROUP BY orders.id';
 
-  with tOrders do
-  begin
-    Open('SELECT * FROM orders WHERE id=:I',['1']);
-    if RowsAffected>0 then
-      Edit
-    else
-    begin
-      Insert;
-      tOrdersid.AsString:='1';
-    end;
-    tOrdersshipping.AsString:='1';
-    tOrdersbuyer.AsString:='1';
-    tOrderstotal_amount.AsString:='999';
-    Post;
-  end;
-  with tOrder_items do
-  begin
-    Open('SELECT * FROM order_items WHERE id=:I',['1']);
-    if RowsAffected>0 then
-      Edit
-    else
-    begin
-      Insert;
-      tOrder_itemsid.AsString:='1';
-    end;
-    tOrder_itemsorder_id.AsString:='1';
-    tOrder_itemstitle.AsString:='Arduino';
-    tOrder_itemsseller_sku.AsString:='1';
-    tOrder_itemsfull_unit_price.AsString:='999';
-    tOrder_itemsquantity.AsString:='1';
-    Post;
-  end;
-  with tShipping do
-  begin
-    Open('SELECT * FROM shipping WHERE id=:I',['1']);
-    if RowsAffected>0 then
-      Edit
-    else
-    begin
-      Insert;
-      tShippingid.AsString:='1';
-    end;
-    tShippingorder_id.AsString:='1';
-    tShippingstatus.AsString:='';
-    tShippingshipping_mode.AsString:='me2';
-    Post;
-  end;
-  with tMessages do
-  begin
-    Open('SELECT * FROM messages WHERE id=:I',['1']);
-    if RowsAffected>0 then
-      Edit
-    else
-    begin
-      Insert;
-      tMessagesid.AsString:='1';
-    end;
-    tMessagesorder_id.AsString:='1';
-    tMessagestext_plain.AsString:='blablablablablablablablablablablablablablabla';
-    Post;
-  end;
-  with tBuyer do
-  begin
-    Open('SELECT * FROM buyer WHERE id=:I',['1']);
-    if RowsAffected>0 then
-      Edit
-    else
-    begin
-      Insert;
-      tBuyerid.AsString:='1';
-    end;
-    tBuyerfirst_name.AsString:='Juan';
-    tBuyerlast_name.AsString:='Perez';
-    tBuyernickname.AsString:='JuanPerez1';
-    Post;
-  end;
-  //#2
-  with tOrders do
-  begin
-    Open('SELECT * FROM orders WHERE id=:I',['2']);
-    if RowsAffected>0 then
-      Edit
-    else
-    begin
-      Insert;
-      tOrdersid.AsString:='2';
-    end;
-    tOrdersshipping.AsString:='2';
-    tOrdersbuyer.AsString:='1';
-    tOrderstotal_amount.AsString:='999';
-    Post;
-  end;
-  with tOrder_items do
-  begin
-    Open('SELECT * FROM order_items WHERE id=:I',['2']);
-    if RowsAffected>0 then
-      Edit
-    else
-    begin
-      Insert;
-      tOrder_itemsid.AsString:='2';
-    end;
-    tOrder_itemsorder_id.AsString:='2';
-    tOrder_itemstitle.AsString:='Arduino2';
-    tOrder_itemsseller_sku.AsString:='2';
-    tOrder_itemsfull_unit_price.AsString:='992';
-    tOrder_itemsquantity.AsString:='1';
-    Post;
-  end;
-  with tShipping do
-  begin
-    Open('SELECT * FROM shipping WHERE id=:I',['2']);
-    if RowsAffected>0 then
-      Edit
-    else
-    begin
-      Insert;
-      tShippingid.AsString:='2';
-    end;
-    tShippingorder_id.AsString:='2';
-    tShippingstatus.AsString:='';
-    tShippingshipping_mode.AsString:='custom';
-    Post;
-  end;
-  with tMessages do
-  begin
-    Open('SELECT * FROM messages WHERE id=:I',['2']);
-    if RowsAffected>0 then
-      Edit
-    else
-    begin
-      Insert;
-      tMessagesid.AsString:='2';
-    end;
-    tMessagesorder_id.AsString:='2';
-    tMessagestext_plain.AsString:='blebleblebleblebleblebleblebleblebleblebleble';
-    Post;
-  end;
-  with tMessages do
-  begin
-    Open('SELECT * FROM messages WHERE id=:I',['3']);
-    if RowsAffected>0 then
-      Edit
-    else
-    begin
-      Insert;
-      tMessagesid.AsString:='3';
-    end;
-    tMessagesorder_id.AsString:='2';
-    tMessagestext_plain.AsString:='brrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrr';
-    Post;
-  end;
-
-
+//    OrdenesPrueba;
 end;
 
 procedure TdmML.AgregarOrder;
@@ -899,6 +753,194 @@ procedure TdmML.AgregarDespachados;
 begin
   Agregar('despachados', 'order_id, embalado', order_id+','+QuotedStr(embalado),
   'order_id='+order_id);
+end;
+
+procedure TdmML.OrdenesPrueba;
+begin
+    with tOrders do
+  begin
+    Open('SELECT * FROM orders WHERE id=:I',['1']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tOrdersid.AsString:='1';
+    end;
+    tOrdersshipping.AsString:='1';
+    tOrdersbuyer.AsString:='1';
+    tOrderstotal_amount.AsString:='999';
+    Post;
+  end;
+  with tOrder_items do
+  begin
+    Open('SELECT * FROM order_items WHERE id=:I',['1']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tOrder_itemsid.AsString:='1';
+    end;
+    tOrder_itemsorder_id.AsString:='1';
+    tOrder_itemstitle.AsString:='Arduino';
+    tOrder_itemsseller_sku.AsString:='1';
+    tOrder_itemsfull_unit_price.AsString:='999';
+    tOrder_itemsquantity.AsString:='1';
+    Post;
+  end;
+  with tShipping do
+  begin
+    Open('SELECT * FROM shipping WHERE id=:I',['1']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tShippingid.AsString:='1';
+    end;
+    tShippingorder_id.AsString:='1';
+    tShippingstatus.AsString:='';
+    tShippingshipping_mode.AsString:='me2';
+    Post;
+  end;
+  with tMessages do
+  begin
+    Open('SELECT * FROM messages WHERE id=:I',['1']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tMessagesid.AsString:='1';
+    end;
+    tMessagesorder_id.AsString:='1';
+    tMessagestext_plain.AsString:='blablablablablablablablablablablablablablabla';
+    Post;
+  end;
+  with tBuyer do
+  begin
+    Open('SELECT * FROM buyer WHERE id=:I',['1']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tBuyerid.AsString:='1';
+    end;
+    tBuyerfirst_name.AsString:='Juan';
+    tBuyerlast_name.AsString:='Perez';
+    tBuyernickname.AsString:='JuanPerez1';
+    Post;
+  end;
+  with tDespachados do
+  begin
+    Open('SELECT * FROM despachados WHERE order_id=:I',['1']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tDespachadosorder_id.AsString := '1';
+    end;
+//    if tDespachadosembalado.AsString = '' then
+      tDespachadosembalado.AsString := 'N';
+//    if tDespachadosenviado.AsString = '' then
+      tDespachadosenviado.AsString := 'N';
+    Post;
+  end;
+  //#2
+  with tOrders do
+  begin
+    Open('SELECT * FROM orders WHERE id=:I',['2']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tOrdersid.AsString:='2';
+    end;
+    tOrdersshipping.AsString:='2';
+    tOrdersbuyer.AsString:='1';
+    tOrderstotal_amount.AsString:='999';
+    Post;
+  end;
+  with tOrder_items do
+  begin
+    Open('SELECT * FROM order_items WHERE id=:I',['2']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tOrder_itemsid.AsString:='2';
+    end;
+    tOrder_itemsorder_id.AsString:='2';
+    tOrder_itemstitle.AsString:='Arduino2';
+    tOrder_itemsseller_sku.AsString:='2';
+    tOrder_itemsfull_unit_price.AsString:='992';
+    tOrder_itemsquantity.AsString:='1';
+    Post;
+  end;
+  with tShipping do
+  begin
+    Open('SELECT * FROM shipping WHERE id=:I',['2']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tShippingid.AsString:='2';
+    end;
+    tShippingorder_id.AsString:='2';
+    tShippingstatus.AsString:='';
+    tShippingshipping_mode.AsString:='custom';
+    Post;
+  end;
+  with tMessages do
+  begin
+    Open('SELECT * FROM messages WHERE id=:I',['2']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tMessagesid.AsString:='2';
+    end;
+    tMessagesorder_id.AsString:='2';
+    tMessagestext_plain.AsString:='blebleblebleblebleblebleblebleblebleblebleble';
+    Post;
+  end;
+  with tMessages do
+  begin
+    Open('SELECT * FROM messages WHERE id=:I',['3']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tMessagesid.AsString:='3';
+    end;
+    tMessagesorder_id.AsString:='2';
+    tMessagestext_plain.AsString:='brrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrr';
+    Post;
+  end;
+  with tDespachados do
+  begin
+    Open('SELECT * FROM despachados WHERE order_id=:I',['2']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tDespachadosorder_id.AsString := '2';
+    end;
+//    if tDespachadosembalado.AsString = '' then
+      tDespachadosembalado.AsString := 'N';
+//    if tDespachadosenviado.AsString = '' then
+      tDespachadosenviado.AsString := 'N';
+    Post;
+  end;
 end;
 
 end.

@@ -61,6 +61,7 @@ type
     procedure ObtenerOrder_items(order_id:string;j:TJSONValue);
     function ObtenerShipping(order_id:string;j:TJSONValue):string;
     function ObtenerBuyer(j:TJSONValue):string;
+    procedure ObtenerDespachados(order_id:string);
   public
     { Public declarations }
     JSONValue1 : TJSONValue;
@@ -715,9 +716,8 @@ begin
                 tOrdersseller.AsString := j.GetValue<TJSONValue>('results['+i+'].seller').ToString;//{},
                 tOrdersfeedback.AsString := j.GetValue<TJSONValue>('results['+i+'].feedback').ToString;//{},
                 tOrderstags.AsString := j.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
-
                 ObtenerMessages(order_id,seller_id);
-
+                ObtenerDespachados(order_id);
               tOrders.Post;
               Application.ProcessMessages;
             end;
@@ -998,6 +998,25 @@ begin
       tBuyerbilling_info.AsString := buyer.GetValue<TJSONValue>('billing_info').ToString;
       Post;
       result := id;
+    end;
+end;
+
+procedure TDMR.ObtenerDespachados;
+begin
+  with dmML do
+    with tDespachados do
+    begin
+      Open('SELECT * FROM despachados WHERE order_id=:I',[order_id]);
+      if RowsAffected>0 then
+        Edit
+      else
+      begin
+        Insert;
+        tDespachadosorder_id.AsString := order_id;
+      end;
+      if tDespachadosembalado.AsString = '' then tDespachadosembalado.AsString := 'N';
+      if tDespachadosenviado.AsString = '' then tDespachadosenviado.AsString := 'N';
+      Post;
     end;
 end;
 

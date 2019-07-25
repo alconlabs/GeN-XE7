@@ -27,6 +27,7 @@ type
     pAcordar: TPanel;
     Label11: TLabel;
     lAcordar: TLabel;
+    Timer1: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure StringGridBindSourceDB1Click(Sender: TObject);
     procedure tProgressBarTimer(Sender: TObject);
@@ -42,6 +43,7 @@ type
     procedure lMEFlexClick(Sender: TObject);
     procedure Label11Click(Sender: TObject);
     procedure lAcordarClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
     procedure actualizarEtiquetas;
@@ -68,10 +70,12 @@ procedure TfMercadoLibreEnvios.FormShow(Sender: TObject);
 begin
 //  bActualizar.Click;
   actualizarEtiquetas;
+  Timer1.Enabled:=True;
 end;
 
 procedure TfMercadoLibreEnvios.lPrepararClick(Sender: TObject);
 begin
+  Timer1.Interval:=((1000*60)*10);
   with dmr do
     with dmML do
   begin
@@ -147,6 +151,7 @@ begin
       ShowModal;
     finally
       Free;
+      actualizarEtiquetas;
     end;
   end;
 end;
@@ -164,6 +169,7 @@ begin
         ShowModal;
       finally
         Free;
+        actualizarEtiquetas;
       end;
     end;
 end;
@@ -179,6 +185,11 @@ begin
   begin
     tOrder_items.Open('SELECT item_title FROM order_items WHERE order_id='+dmML.tOrders.FieldByName('order_id').AsString);
   end;
+end;
+
+procedure TfMercadoLibreEnvios.Timer1Timer(Sender: TObject);
+begin
+  lPrepararClick(Sender);
 end;
 
 procedure TfMercadoLibreEnvios.tProgressBarTimer(Sender: TObject);

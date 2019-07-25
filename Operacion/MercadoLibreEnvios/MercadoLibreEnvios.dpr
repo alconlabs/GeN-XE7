@@ -21,6 +21,7 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  Application.Title := 'Civeloo Mercado Libre Envios';
   TStyleManager.TrySetStyle('Windows10 SlateGray');
   Application.CreateForm(TfMercadoLibreEnvios, fMercadoLibreEnvios);
   Application.Run;

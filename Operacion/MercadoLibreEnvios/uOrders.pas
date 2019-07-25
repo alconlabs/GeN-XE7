@@ -70,6 +70,7 @@ begin
       Free;
     end;
   end;
+  Close;
 end;
 
 end.

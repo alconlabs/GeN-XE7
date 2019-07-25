@@ -47,6 +47,8 @@ uses udmMercadoLibre, RestDM;
 procedure TfOrder_items.bImprimirClick(Sender: TObject);
 begin
   DMR.ImprimirEtiqueta(qOrder_items.FieldByName('shipping').AsString);
+  dmML.AgregarDespachados(qOrder_items.FieldByName('order_id').AsString,'S');
+  Close;
 end;
 
 procedure TfOrder_items.FormShow(Sender: TObject);
