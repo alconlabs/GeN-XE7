@@ -1,8 +1,8 @@
-object Form1: TForm1
+object fMercadoLibreEnvios: TfMercadoLibreEnvios
   Left = 0
   Top = 0
-  Caption = 'fMercadoLibreEnvios'
-  ClientHeight = 406
+  Caption = 'Mercado Libre Envios'
+  ClientHeight = 451
   ClientWidth = 267
   Color = clCream
   Font.Charset = DEFAULT_CHARSET
@@ -15,7 +15,7 @@ object Form1: TForm1
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
+  object lPreparar: TLabel
     Left = 25
     Top = 8
     Width = 92
@@ -27,6 +27,7 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = lPrepararClick
   end
   object lVentas: TLabel
     Left = 25
@@ -41,23 +42,14 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
   end
-  object bActualizar: TBitBtn
-    Left = 211
-    Top = 383
-    Width = 75
-    Height = 25
-    Caption = 'Actualizar'
-    TabOrder = 0
-    OnClick = bActualizarClick
-  end
   object ProgressBar1: TProgressBar
     Left = 55
-    Top = 383
+    Top = 407
     Width = 150
     Height = 16
     Min = 1
     Position = 1
-    TabOrder = 1
+    TabOrder = 0
     Visible = False
   end
   object Panel1: TPanel
@@ -67,13 +59,13 @@ object Form1: TForm1
     Height = 70
     Color = clWhite
     ParentBackground = False
-    TabOrder = 2
+    TabOrder = 1
     object Label3: TLabel
       Left = 17
       Top = 17
-      Width = 98
+      Width = 54
       Height = 13
-      Caption = 'Mensajes nuevos'
+      Caption = 'Mensajes'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clMaroon
       Font.Height = -11
@@ -104,14 +96,14 @@ object Form1: TForm1
     Height = 70
     Color = clWhite
     ParentBackground = False
-    TabOrder = 3
+    TabOrder = 2
     OnClick = pColectaClick
     object Label5: TLabel
       Left = 17
       Top = 17
-      Width = 141
+      Width = 86
       Height = 13
-      Caption = 'Para la colecta | Ma'#241'ana'
+      Caption = 'Para la colecta '
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clMaroon
       Font.Height = -11
@@ -137,30 +129,32 @@ object Form1: TForm1
       OnClick = lMEnviosClick
     end
   end
-  object Panel3: TPanel
+  object pFlex: TPanel
     Left = 8
-    Top = 222
+    Top = 230
     Width = 250
     Height = 70
     Color = clWhite
     ParentBackground = False
-    TabOrder = 4
+    TabOrder = 3
+    OnClick = pFlexClick
     object Label7: TLabel
       Left = 17
-      Top = 15
-      Width = 172
+      Top = 18
+      Width = 117
       Height = 13
-      Caption = 'Mercado Env'#237'os Flex | Ma'#241'ana'
+      Caption = 'Mercado Env'#237'os Flex '
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clMaroon
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = Label7Click
     end
     object lMEFlex: TLabel
       Left = 17
-      Top = 33
+      Top = 36
       Width = 42
       Height = 13
       Caption = '0 ventas'
@@ -172,16 +166,18 @@ object Form1: TForm1
       Font.Style = []
       ParentColor = False
       ParentFont = False
+      OnClick = lMEFlexClick
     end
   end
-  object Panel4: TPanel
+  object pAcordar: TPanel
     Left = 8
-    Top = 307
+    Top = 320
     Width = 250
     Height = 70
     Color = clWhite
     ParentBackground = False
-    TabOrder = 5
+    TabOrder = 4
+    OnClick = pAcordarClick
     object Label11: TLabel
       Left = 17
       Top = 17
@@ -194,6 +190,7 @@ object Form1: TForm1
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = Label11Click
     end
     object lAcordar: TLabel
       Left = 17
@@ -209,11 +206,12 @@ object Form1: TForm1
       Font.Style = []
       ParentColor = False
       ParentFont = False
+      OnClick = lAcordarClick
     end
   end
   object tProgressBar: TTimer
     OnTimer = tProgressBarTimer
     Left = 112
-    Top = 376
+    Top = 400
   end
 end

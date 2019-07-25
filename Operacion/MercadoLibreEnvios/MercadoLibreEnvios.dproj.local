@@ -26,6 +26,9 @@
     <Transaction>2019/07/19 15:41:38.000.447,=C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\Unit2.pas</Transaction>
     <Transaction>2019/07/19 15:46:21.000.060,C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\Unit2.dfm=C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\uOrders.dfm</Transaction>
     <Transaction>2019/07/19 15:46:21.000.060,C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\Unit2.pas=C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\uOrders.pas</Transaction>
+    <Transaction>2019/07/25 09:56:52.920,=C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\Unit2.pas</Transaction>
+    <Transaction>2019/07/25 09:58:37.550,C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\uOrder_items.pas=C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\Unit2.pas</Transaction>
+    <Transaction>2019/07/25 09:58:37.550,C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\uOrder_items.dfm=C:\GitHub\GeN-XE7\Operacion\MercadoLibreEnvios\Unit2.dfm</Transaction>
   </Transactions>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>

@@ -2,7 +2,7 @@ program MercadoLibreEnvios;
 
 uses
   Vcl.Forms,
-  uMercadoLibreEnvios in 'uMercadoLibreEnvios.pas' {Form1},
+  uMercadoLibreEnvios in 'uMercadoLibreEnvios.pas' {fMercadoLibreEnvios},
   RestDM in '..\..\DataModule\RestDM.pas' {DMR: TDataModule},
   udmMercadoLibre in '..\..\DataModule\udmMercadoLibre.pas' {dmML: TDataModule},
   OperacionDM in '..\..\DataModule\OperacionDM.pas' {OperacionDataModule: TDataModule},
@@ -11,13 +11,17 @@ uses
   AfipDM in '..\..\DataModule\AfipDM.pas' {AfipDataModule: TDataModule},
   service in '..\..\DataModule\service.pas',
   LoginCms1 in '..\..\DataModule\LoginCms1.pas',
-  uOrders in 'uOrders.pas' {fOrders};
+  uOrders in 'uOrders.pas' {fOrders},
+  uOrder_items in 'uOrder_items.pas' {fOrder_items},
+  Vcl.Themes,
+  Vcl.Styles;
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  TStyleManager.TrySetStyle('Windows10 SlateGray');
+  Application.CreateForm(TfMercadoLibreEnvios, fMercadoLibreEnvios);
   Application.Run;
 end.

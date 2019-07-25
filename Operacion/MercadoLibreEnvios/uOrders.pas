@@ -14,7 +14,7 @@ uses
 
 type
   TfOrders = class(TForm)
-    FDQuery1: TFDQuery;
+    qOrders: TFDQuery;
     BindSourceDB1: TBindSourceDB;
     StringGridBindSourceDB1: TStringGrid;
     LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource;
@@ -34,7 +34,7 @@ implementation
 
 {$R *.dfm}
 
-uses udmMercadoLibre, RestDM;
+uses udmMercadoLibre, RestDM, uOrder_items;
 
 procedure TfOrders.ImprimirEtiqueta;
 var
@@ -56,13 +56,26 @@ end;
 
 procedure TfOrders.StringGridBindSourceDB1Click(Sender: TObject);
 begin
-  ShowMessage(
-  'Ordenes relacionadas con el cliente:'+
-  IntToStr(dmml.dbMain.ExecSQLScalar(
-  'SELECT COUNT(*) FROM orders'
+  fOrder_items := TfOrder_items.Create(Self);
+  with fOrder_items do
+  begin
+    qOrder_items.Open('SELECT order_items.title AS TITULO, order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD, order_items.seller_sku AS SKU, buyer.first_name AS NOMBRE, buyer.last_name AS APELLIDO, buyer.nickname AS NIK, "imprimir" AS ETIQUETA'
+  +', shipping, buyer, order_items.order_id'
+  +' FROM orders'
+  +' INNER JOIN order_items ON orders.id = order_items.order_id'
   +' INNER JOIN shipping ON orders.id = shipping.order_id'
-  +' WHERE buyer=:B',[FDQuery1.FieldByName('buyer').AsString]))
+  +' INNER JOIN buyer ON orders.buyer = buyer.id'
+  //+' WHERE shipping_mode='+QuotedStr('me2')
+  +' WHERE buyer=:B',[qOrders.FieldByName('buyer').AsString]
+  //+' GROUP BY orders.buyer'
   );
+    Panel1.Caption:=qOrder_items.FieldByName('NOMBRE').AsString+' '+qOrder_items.FieldByName('APELLIDO').AsString+' ['+qOrder_items.FieldByName('NIK').AsString+'] ';
+    try
+      ShowModal;
+    finally
+      Free;
+    end;
+  end;
 end;
 
 end.

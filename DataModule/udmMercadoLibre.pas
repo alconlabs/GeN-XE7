@@ -136,7 +136,7 @@ type
     procedure IniciarVariables;
   public
     { Public declarations }
-    refreshToken, seller_id
+    refreshToken, seller_id, sqlOrder_items
 //    order_id, order_items_quantity, buyer_id, order_status, item_title, item_id,
 //    shipping_id, pack_id, message_id, message_text
     : string;
@@ -600,6 +600,16 @@ begin
   tShipping.Open('SELECT * FROM shipping');
   tBuyer.Open('SELECT * FROM buyer');
 
+  sqlOrder_items:= 'SELECT order_items.title AS TITULO'
+    +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
+    +', order_items.seller_sku AS SKU, buyer.first_name AS NOMBRE'
+    +', buyer.last_name AS APELLIDO, buyer.nickname AS NIK, "imprimir" AS ETIQUETA'
+    +', shipping, buyer, order_items.order_id'
+    +' FROM orders'
+    +' INNER JOIN order_items ON orders.id = order_items.order_id'
+    +' INNER JOIN shipping ON orders.id = shipping.order_id'
+    +' INNER JOIN buyer ON orders.buyer = buyer.id';
+
   with tOrders do
   begin
     Open('SELECT * FROM orders WHERE id=:I',['1']);
@@ -644,6 +654,20 @@ begin
     end;
     tShippingorder_id.AsString:='1';
     tShippingshipping_mode.AsString:='me2';
+    Post;
+  end;
+  with tMessages do
+  begin
+    Open('SELECT * FROM messages WHERE id=:I',['1']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tMessagesid.AsString:='1';
+    end;
+    tMessagesorder_id.AsString:='1';
+    tMessagestext_plain.AsString:='blablablablablablablablablablablablablablabla';
     Post;
   end;
   with tBuyer do
@@ -708,6 +732,36 @@ begin
     tShippingshipping_mode.AsString:='custom';
     Post;
   end;
+  with tMessages do
+  begin
+    Open('SELECT * FROM messages WHERE id=:I',['2']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tMessagesid.AsString:='2';
+    end;
+    tMessagesorder_id.AsString:='2';
+    tMessagestext_plain.AsString:='blebleblebleblebleblebleblebleblebleblebleble';
+    Post;
+  end;
+  with tMessages do
+  begin
+    Open('SELECT * FROM messages WHERE id=:I',['3']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tMessagesid.AsString:='3';
+    end;
+    tMessagesorder_id.AsString:='2';
+    tMessagestext_plain.AsString:='brrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrr';
+    Post;
+  end;
+
+
 end;
 
 procedure TdmML.AgregarOrder;

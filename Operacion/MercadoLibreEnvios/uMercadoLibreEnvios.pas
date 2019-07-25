@@ -10,11 +10,10 @@ uses
   Data.Bind.Grid, Data.Bind.DBScope, Vcl.ExtCtrls, Vcl.ComCtrls;
 
 type
-  TForm1 = class(TForm)
-    bActualizar: TBitBtn;
+  TfMercadoLibreEnvios = class(TForm)
     ProgressBar1: TProgressBar;
     tProgressBar: TTimer;
-    Label1: TLabel;
+    lPreparar: TLabel;
     lVentas: TLabel;
     Panel1: TPanel;
     Label3: TLabel;
@@ -22,13 +21,12 @@ type
     pColecta: TPanel;
     Label5: TLabel;
     lMEnvios: TLabel;
-    Panel3: TPanel;
+    pFlex: TPanel;
     Label7: TLabel;
     lMEFlex: TLabel;
-    Panel4: TPanel;
+    pAcordar: TPanel;
     Label11: TLabel;
     lAcordar: TLabel;
-    procedure bActualizarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure StringGridBindSourceDB1Click(Sender: TObject);
     procedure tProgressBarTimer(Sender: TObject);
@@ -37,6 +35,13 @@ type
     procedure pColectaClick(Sender: TObject);
     procedure lMEnviosClick(Sender: TObject);
     procedure Label5Click(Sender: TObject);
+    procedure lPrepararClick(Sender: TObject);
+    procedure pFlexClick(Sender: TObject);
+    procedure pAcordarClick(Sender: TObject);
+    procedure Label7Click(Sender: TObject);
+    procedure lMEFlexClick(Sender: TObject);
+    procedure Label11Click(Sender: TObject);
+    procedure lAcordarClick(Sender: TObject);
   private
     { Private declarations }
     procedure actualizarEtiquetas;
@@ -45,7 +50,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  fMercadoLibreEnvios: TfMercadoLibreEnvios;
 
 implementation
 
@@ -53,88 +58,137 @@ implementation
 
 uses RestDM, udmMercadoLibre, uOrders;
 
-procedure TForm1.bActualizarClick(Sender: TObject);
-begin
-  with dmr do
-    with dmML do
-  begin
-//    ObtenerConsultaRest('users/me?','');
-ProgressBar1.Visible:=True;
-tProgressBar.Enabled:=True;
-    FDQuery1.Close;
-    ObtenerOrderRecent;
-tProgressBar.Enabled:=False;
-ProgressBar1.StepBy(100);
-sleep(100);
-ProgressBar1.Visible:=False;
-  end;
-    actualizarEtiquetas;
-end;
-
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TfMercadoLibreEnvios.FormCreate(Sender: TObject);
 begin
   dmML := TdmML.Create(Self);
   DMR := TDMR.Create(Self);
 end;
 
-procedure TForm1.FormShow(Sender: TObject);
+procedure TfMercadoLibreEnvios.FormShow(Sender: TObject);
 begin
 //  bActualizar.Click;
   actualizarEtiquetas;
 end;
 
-procedure TForm1.Label5Click(Sender: TObject);
+procedure TfMercadoLibreEnvios.lPrepararClick(Sender: TObject);
+begin
+  with dmr do
+    with dmML do
+  begin
+    ProgressBar1.Visible:=True;
+    tProgressBar.Enabled:=True;
+    FDQuery1.Close;
+    ObtenerOrderRecent;
+    tProgressBar.Enabled:=False;
+    ProgressBar1.StepBy(100);
+    sleep(100);
+    ProgressBar1.Visible:=False;
+  end;
+    actualizarEtiquetas;
+end;
+
+procedure TfMercadoLibreEnvios.Label11Click(Sender: TObject);
+begin
+  pAcordarClick(Sender);
+end;
+
+procedure TfMercadoLibreEnvios.Label5Click(Sender: TObject);
 begin
   pColectaClick(Sender);
 end;
 
-procedure TForm1.lMEnviosClick(Sender: TObject);
+procedure TfMercadoLibreEnvios.Label7Click(Sender: TObject);
+begin
+  pFlexClick(Sender);
+end;
+
+procedure TfMercadoLibreEnvios.lAcordarClick(Sender: TObject);
+begin
+  pAcordarClick(Sender);
+end;
+
+procedure TfMercadoLibreEnvios.lMEFlexClick(Sender: TObject);
+begin
+  pFlexClick(Sender);
+end;
+
+procedure TfMercadoLibreEnvios.lMEnviosClick(Sender: TObject);
 begin
   pColectaClick(Sender);
 end;
 
-procedure TForm1.pColectaClick(Sender: TObject);
+procedure TfMercadoLibreEnvios.pAcordarClick(Sender: TObject);
 begin
   fOrders := TfOrders.Create(Self);
-  fOrders.FDQuery1.Open('SELECT order_items.title AS TITULO, order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD, order_items.seller_sku AS SKU, buyer.first_name AS NOMBRE, buyer.last_name AS APELLIDO, buyer.nickname AS NIK, "imprimir" AS ETIQUETA'
-+', shipping, buyer, order_items.order_id'
-+' FROM orders'
-+' INNER JOIN order_items ON orders.id = order_items.order_id'
-+' INNER JOIN shipping ON orders.id = shipping.order_id'
-+' INNER JOIN buyer ON orders.buyer = buyer.id'
-+' WHERE shipping_mode='+QuotedStr('me2')
-+' GROUP BY orders.buyer'
-);
-  try
-    forders.ShowModal;
-  finally
-    fOrders.Free;
+    with fOrders do
+    begin
+      qOrders.Open(dmml.sqlOrder_items
+        +' WHERE shipping_mode='+QuotedStr('custom')
+        +' GROUP BY orders.buyer'
+      );
+      try
+        ShowModal;
+      finally
+        Free;
+      end;
+    end;
+end;
+
+procedure TfMercadoLibreEnvios.pColectaClick(Sender: TObject);
+begin
+  fOrders := TfOrders.Create(Self);
+  with fOrders do
+  begin
+    qOrders.Open(dmml.sqlOrder_items
+      +' WHERE shipping_mode='+QuotedStr('me2')
+      +' GROUP BY orders.buyer'
+    );
+    try
+      ShowModal;
+    finally
+      Free;
+    end;
   end;
 end;
 
-procedure TForm1.sgMessagesClick(Sender: TObject);
+procedure TfMercadoLibreEnvios.pFlexClick(Sender: TObject);
+begin
+  fOrders := TfOrders.Create(Self);
+    with fOrders do
+    begin
+      qOrders.Open(dmml.sqlOrder_items
+        +' WHERE shipping_mode='+QuotedStr('me1')
+        +' GROUP BY orders.buyer'
+      );
+      try
+        ShowModal;
+      finally
+        Free;
+      end;
+    end;
+end;
+
+procedure TfMercadoLibreEnvios.sgMessagesClick(Sender: TObject);
 begin
 //  Memo1.Text := dmML.tMessages.FieldByName('message_text').AsString;
 end;
 
-procedure TForm1.StringGridBindSourceDB1Click(Sender: TObject);
+procedure TfMercadoLibreEnvios.StringGridBindSourceDB1Click(Sender: TObject);
 begin
   with dmml do
   begin
     tOrder_items.Open('SELECT item_title FROM order_items WHERE order_id='+dmML.tOrders.FieldByName('order_id').AsString);
-    tMessages.Open('SELECT message_text FROM messages WHERE order_id='+dmML.tOrders.FieldByName('order_id').AsString);
-//    Memo1.Text:='';
   end;
 end;
 
-procedure TForm1.tProgressBarTimer(Sender: TObject);
+procedure TfMercadoLibreEnvios.tProgressBarTimer(Sender: TObject);
 begin
   ProgressBar1.StepIt
 end;
 
-procedure TForm1.actualizarEtiquetas;
+procedure TfMercadoLibreEnvios.actualizarEtiquetas;
 var
-  v, sql, s, g :string;
+  v, sql, s, g, e :string;
 begin
   with dmml do
   begin
@@ -142,13 +196,14 @@ begin
     s:=' INNER JOIN shipping ON orders.id = shipping.order_id';
     g:=' GROUP BY order_id';
     v:=' ventas';
+    e:=' shipping.status<>''shipped'' AND ';
     lVentas.Caption := IntToStr(dbMain.ExecSQLScalar(sql))+' ventas';
     lMEnvios.Caption := IntToStr(dbMain.ExecSQLScalar(
-    sql+s+' WHERE shipping_mode=:M',['me2']))+v;
+    sql+s+' WHERE'+E+'shipping_mode=:M',['me2']))+v;
     lMEFlex.Caption := IntToStr(dbMain.ExecSQLScalar(
-    sql+s+' WHERE shipping_mode=:M',['me1']))+v;
+    sql+s+' WHERE'+E+'shipping_mode=:M',['me1']))+v;
     lAcordar.Caption := IntToStr(dbMain.ExecSQLScalar(
-    sql+s+' WHERE shipping_mode=:M',['custom']))+v;
+    sql+s+' WHERE'+E+'shipping_mode=:M',['custom']))+v;
     FDQuery1.Open(sql
     +' INNER JOIN messages ON orders.id = messages.order_id'
     +g);

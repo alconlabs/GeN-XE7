@@ -1,5 +1,5 @@
 ﻿[]
-Coordinates=134,501,116,58
+Coordinates=10,10,56,58
 Visible=True
 
 [DMR.RESTClientCategories]
@@ -47,9 +47,9 @@ Coordinates=451,129,115,36
 [ProgressBar1]
 Coordinates=35,501,93,58
 
-[bActualizar]
-Coordinates=10,10,56,58
-
 [tProgressBar]
 Coordinates=730,78,54,36
+
+[fOrders.qOrders]
+Visible=False
 

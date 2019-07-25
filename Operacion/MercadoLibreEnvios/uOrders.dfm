@@ -28,15 +28,15 @@ object fOrders: TfOrders
     OnClick = StringGridBindSourceDB1Click
     ColWidths = (
       200
-      64
-      29
-      25
-      64
-      64
+      70
+      40
+      40
+      70
+      70
       130
-      54)
+      70)
   end
-  object FDQuery1: TFDQuery
+  object qOrders: TFDQuery
     Connection = dmML.dbMain
     SQL.Strings = (
       
@@ -48,20 +48,20 @@ object fOrders: TfOrders
       ' INNER JOIN order_items ON orders.id = order_items.order_id'
       ' INNER JOIN buyer ON orders.buyer = buyer.id'
       ' GROUP BY orders.buyer')
-    Left = 640
-    Top = 6
+    Left = 584
+    Top = 54
   end
   object BindSourceDB1: TBindSourceDB
-    DataSet = FDQuery1
+    DataSet = qOrders
     ScopeMappings = <>
     Left = 24
-    Top = 16
+    Top = 24
   end
   object BindingsList1: TBindingsList
     Methods = <>
     OutputConverters = <>
     Left = 12
-    Top = 13
+    Top = 21
     object LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource
       Category = 'Quick Bindings'
       DataSource = BindSourceDB1
@@ -73,20 +73,23 @@ object fOrders: TfOrders
         end
         item
           MemberName = 'PRECIO'
+          Width = 70
         end
         item
           MemberName = 'CANTIDAD'
-          Width = 30
+          Width = 40
         end
         item
           MemberName = 'SKU'
-          Width = 25
+          Width = 40
         end
         item
           MemberName = 'NOMBRE'
+          Width = 70
         end
         item
           MemberName = 'APELLIDO'
+          Width = 70
         end
         item
           MemberName = 'NIK'
@@ -94,6 +97,7 @@ object fOrders: TfOrders
         end
         item
           MemberName = 'ETIQUETA'
+          Width = 70
         end>
     end
   end
