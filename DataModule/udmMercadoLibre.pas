@@ -136,7 +136,8 @@ type
     procedure IniciarVariables;
   public
     { Public declarations }
-    refreshToken, seller_id, sqlOrder_items
+    refreshToken, seller_id, sqlOrder_items, sqlCountShipping, sqlCountMessages,
+    sqlOrderFrom, sqlOrderWhere
 //    order_id, order_items_quantity, buyer_id, order_status, item_title, item_id,
 //    shipping_id, pack_id, message_id, message_text
     : string;
@@ -600,15 +601,34 @@ begin
   tShipping.Open('SELECT * FROM shipping');
   tBuyer.Open('SELECT * FROM buyer');
 
+  sqlOrderFrom:=' FROM orders'
+    +' INNER JOIN order_items ON orders.id = order_items.order_id'
+    +' INNER JOIN shipping ON orders.id = shipping.order_id'
+    +' INNER JOIN buyer ON orders.buyer = buyer.id'
+    +' LEFT JOIN despachados ON orders.id = despachados.order_id';
+
+  sqlOrderWhere:=' WHERE' //' (NOT(shipping.status='ready_to_ship')) AND'
+    +' (NOT(shipping.status=''shipped''))'
+    +' AND (NOT(shipping.status=''delivered''))'
+    +' AND (NOT(shipping.status=''not_delivered''))';
+
   sqlOrder_items:= 'SELECT order_items.title AS TITULO'
     +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
     +', order_items.seller_sku AS SKU, buyer.first_name AS NOMBRE'
     +', buyer.last_name AS APELLIDO, buyer.nickname AS NIK, "imprimir" AS ETIQUETA'
     +', shipping, buyer, order_items.order_id'
-    +' FROM orders'
-    +' INNER JOIN order_items ON orders.id = order_items.order_id'
-    +' INNER JOIN shipping ON orders.id = shipping.order_id'
-    +' INNER JOIN buyer ON orders.buyer = buyer.id';
+    +sqlOrderFrom
+    +sqlOrderWhere;
+
+  sqlCountShipping:='SELECT COUNT(*)'
+    +sqlOrderFrom
+    +sqlOrderWhere;
+
+  sqlCountMessages:='SELECT COUNT(*)'
+    +sqlOrderFrom
+    +' INNER JOIN messages ON orders.id = messages.order_id'
+    +sqlOrderWhere;
+    +' GROUP BY orders.id';
 
   with tOrders do
   begin
@@ -653,6 +673,7 @@ begin
       tShippingid.AsString:='1';
     end;
     tShippingorder_id.AsString:='1';
+    tShippingstatus.AsString:='';
     tShippingshipping_mode.AsString:='me2';
     Post;
   end;
@@ -729,6 +750,7 @@ begin
       tShippingid.AsString:='2';
     end;
     tShippingorder_id.AsString:='2';
+    tShippingstatus.AsString:='';
     tShippingshipping_mode.AsString:='custom';
     Post;
   end;

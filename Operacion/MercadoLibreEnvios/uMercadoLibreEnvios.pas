@@ -123,7 +123,7 @@ begin
     with fOrders do
     begin
       qOrders.Open(dmml.sqlOrder_items
-        +' WHERE shipping_mode='+QuotedStr('custom')
+        +' AND shipping_mode='+QuotedStr('custom')
         +' GROUP BY orders.buyer'
       );
       try
@@ -140,7 +140,7 @@ begin
   with fOrders do
   begin
     qOrders.Open(dmml.sqlOrder_items
-      +' WHERE shipping_mode='+QuotedStr('me2')
+      +' AND shipping_mode='+QuotedStr('me2')
       +' GROUP BY orders.buyer'
     );
     try
@@ -157,7 +157,7 @@ begin
     with fOrders do
     begin
       qOrders.Open(dmml.sqlOrder_items
-        +' WHERE shipping_mode='+QuotedStr('me1')
+        +' AND shipping_mode='+QuotedStr('me1')
         +' GROUP BY orders.buyer'
       );
       try
@@ -188,25 +188,19 @@ end;
 
 procedure TfMercadoLibreEnvios.actualizarEtiquetas;
 var
-  v, sql, s, g, e :string;
+  v:string;
 begin
   with dmml do
   begin
-    sql:='SELECT COUNT(*) FROM orders';
-    s:=' INNER JOIN shipping ON orders.id = shipping.order_id';
-    g:=' GROUP BY order_id';
     v:=' ventas';
-    e:=' shipping.status<>''shipped'' AND ';
-    lVentas.Caption := IntToStr(dbMain.ExecSQLScalar(sql))+' ventas';
+    lVentas.Caption := IntToStr(dbMain.ExecSQLScalar(sqlCountShipping))+' ventas';
     lMEnvios.Caption := IntToStr(dbMain.ExecSQLScalar(
-    sql+s+' WHERE'+E+'shipping_mode=:M',['me2']))+v;
+      sqlCountShipping +' AND shipping_mode=:M',['me2']))+v;
     lMEFlex.Caption := IntToStr(dbMain.ExecSQLScalar(
-    sql+s+' WHERE'+E+'shipping_mode=:M',['me1']))+v;
+      sqlCountShipping +' AND shipping_mode=:M',['me1']))+v;
     lAcordar.Caption := IntToStr(dbMain.ExecSQLScalar(
-    sql+s+' WHERE'+E+'shipping_mode=:M',['custom']))+v;
-    FDQuery1.Open(sql
-    +' INNER JOIN messages ON orders.id = messages.order_id'
-    +g);
+      sqlCountShipping +' AND shipping_mode=:M',['custom']))+v;
+    FDQuery1.Open(sqlCountMessages);
     lMensajes.Caption := IntToStr(FDQuery1.RowsAffected)+v;
   end;
 end;

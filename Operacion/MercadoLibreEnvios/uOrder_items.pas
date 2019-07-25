@@ -28,6 +28,7 @@ type
     LinkPropertyToFieldtext_plain: TLinkPropertyToField;
     procedure StringGridBindSourceDB1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure bImprimirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,7 +42,12 @@ implementation
 
 {$R *.dfm}
 
-uses udmMercadoLibre;
+uses udmMercadoLibre, RestDM;
+
+procedure TfOrder_items.bImprimirClick(Sender: TObject);
+begin
+  DMR.ImprimirEtiqueta(qOrder_items.FieldByName('shipping').AsString);
+end;
 
 procedure TfOrder_items.FormShow(Sender: TObject);
 begin

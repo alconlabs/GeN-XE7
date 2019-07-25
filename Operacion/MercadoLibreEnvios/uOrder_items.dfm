@@ -27,10 +27,8 @@ object fOrder_items: TfOrder_items
     RowCount = 2
     TabOrder = 0
     OnClick = StringGridBindSourceDB1Click
-    ExplicitTop = -6
-    ExplicitHeight = 432
     ColWidths = (
-      306
+      200
       100
       40
       100)
@@ -43,7 +41,6 @@ object fOrder_items: TfOrder_items
     Align = alBottom
     Caption = 'Panel1'
     TabOrder = 1
-    ExplicitTop = 509
     object bImprimir: TButton
       Left = 584
       Top = 5
@@ -51,6 +48,7 @@ object fOrder_items: TfOrder_items
       Height = 50
       Caption = 'IMPRIMIR ETIQUETA'
       TabOrder = 0
+      OnClick = bImprimirClick
     end
   end
   object Memo1: TMemo
@@ -62,7 +60,6 @@ object fOrder_items: TfOrder_items
     Lines.Strings = (
       'Memo1')
     TabOrder = 2
-    ExplicitTop = 432
   end
   object sgMessage: TStringGrid
     Tag = 1
@@ -77,7 +74,6 @@ object fOrder_items: TfOrder_items
     RowCount = 2
     ScrollBars = ssVertical
     TabOrder = 3
-    ExplicitHeight = 432
     ColWidths = (
       300)
   end
