@@ -60,72 +60,56 @@ object fEditorReporte: TfEditorReporte
     UserName = 'frxDBDataset1'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'PTOVTA=PTOVTA'
-      'EMPRESA=EMPRESA'
-      'ETITULAR=ETITULAR'
-      'EIVA=EIVA'
-      'ECODIGOAREA=ECODIGOAREA'
-      'ETELEFONO=ETELEFONO'
-      'EDIRECCIONCOMERCIAL=EDIRECCIONCOMERCIAL'
-      'ECP=ECP'
-      'ECIUDAD=ECIUDAD'
-      'EDEPARTAMENTO=EDEPARTAMENTO'
-      'EPROVINCIA=EPROVINCIA'
-      'ECUIT=ECUIT'
-      'EIIBB=EIIBB'
-      'EFECHA=EFECHA'
-      'CTIPO=CTIPO'
-      'NCTIPO=NCTIPO'
-      'NOMBRE=NOMBRE'
-      'TITULAR=TITULAR'
-      'DIRECCION=DIRECCION'
-      'DIRECCIONCOMERCIAL=DIRECCIONCOMERCIAL'
-      'CIVA=CIVA'
-      'CCUIT=CCUIT'
-      'DESCRIPCION=DESCRIPCION'
-      'UNIDAD=UNIDAD'
-      'AIVA=AIVA'
-      'ARTICULO=ARTICULO'
-      'CANTIDAD=CANTIDAD'
-      'VIDESCUENTO=VIDESCUENTO'
-      'PRECIO=PRECIO'
-      'OPERACION=OPERACION'
-      'PREXCANT=PREXCANT'
-      'SERVICIO=SERVICIO'
-      'DESCR=DESCR'
-      'VIIMPUESTO=VIIMPUESTO'
       'CODIGO=CODIGO'
-      'LETRA=LETRA'
       'FECHA=FECHA'
-      'COMPROBANTE=COMPROBANTE'
-      'TERMINOS=TERMINOS'
-      'IVA3=IVA3'
-      'TOTAL=TOTAL'
-      'CONTADO=CONTADO'
+      'FACTURA=FACTURA'
       'CLIENTE=CLIENTE'
-      'SUBTOTAL=SUBTOTAL'
-      'DESCUENTO=DESCUENTO'
-      'IMPUESTO=IMPUESTO'
-      'IVA2=IVA2'
+      'CUIT=CUIT'
+      'CONDICION=CONDICION'
+      'NG1=NG1'
+      'NG2=NG2'
+      'NG3=NG3'
       'IVA1=IVA1'
-      'EXCENTO=EXCENTO'
-      'SALDO=SALDO'
-      'PAGADO=PAGADO'
-      'CB=CB')
-    DataSet = VentasFDQuery1
+      'IVA2=IVA2'
+      'IVA3=IVA3'
+      'OEIIBB=OEIIBB'
+      'IDERPYPAC=IDERPYPAC'
+      'ITF=ITF'
+      'CBTETIPO=CBTETIPO'
+      'PTOVTA=PTOVTA'
+      'CBTEDESDE=CBTEDESDE'
+      'CBTEHASTA=CBTEHASTA'
+      'DOCTIPO=DOCTIPO'
+      'NOMCLI=NOMCLI'
+      'MONID=MONID'
+      'MONCOTIZ=MONCOTIZ'
+      'CANTIVA=CANTIVA'
+      'OPCION=OPCION'
+      'FCHVTOPAGO=FCHVTOPAGO'
+      'ALICIVA=ALICIVA'
+      'IMPNETO=IMPNETO'
+      'NOGRABADO=NOGRABADO'
+      'IMPOPEX=IMPOPEX'
+      'IMPIVA=IMPIVA'
+      'GENERALES=GENERALES'
+      'NOCAT=NOCAT'
+      'IMPTRIB=IMPTRIB')
+    DataSet = tLibroIVAventa
     BCDToCurrency = False
     Left = 24
     Top = 16
   end
   object frxCSVExport1: TfrxCSVExport
+    FileName = '.csv'
     UseFileCache = True
     ShowProgress = True
     OverwritePrompt = False
+    CreationTime = 43670.876897210650000000
     DataOnly = True
     Separator = ','
     OEMCodepage = False
     UTF8 = True
-    OpenAfterExport = False
+    OpenAfterExport = True
     NoSysSymbols = True
     ForcedQuotes = False
     Left = 24
@@ -133,18 +117,17 @@ object fEditorReporte: TfEditorReporte
   end
   object frxReport1: TfrxReport
     Version = '6.2.1'
-    DataSet = frxDBDataset1
-    DataSetName = 'frxDBDataset1'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 39416.849051458300000000
-    ReportOptions.LastChange = 43659.576212430600000000
+    ReportOptions.CreateDate = 43670.750645671300000000
+    ReportOptions.LastChange = 43670.877400601900000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      ''
       'begin'
       ''
       'end.')
@@ -162,190 +145,113 @@ object fEditorReporte: TfEditorReporte
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      PaperWidth = 58.000000000000000000
+      Orientation = poLandscape
+      PaperWidth = 297.000000000000000000
       PaperHeight = 210.000000000000000000
-      PaperSize = 256
-      LeftMargin = 5.000000000000000000
-      RightMargin = 5.000000000000000000
-      TopMargin = 5.000000000000000000
-      BottomMargin = 5.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
       Frame.Typ = []
-      PrintOnPreviousPage = True
-      object PageHeader1: TfrxPageHeader
+      object ReportTitle1: TfrxReportTitle
         FillType = ftBrush
         Frame.Typ = []
-        Height = 45.354360000000000000
         Top = 18.897650000000000000
-        Width = 181.417440000000000000
-        object frxDBDataset1EMPRESA: TfrxMemoView
-          AllowVectorExport = True
-          Width = 177.637768430000000000
-          Height = 45.354360000000000000
-          DataSet = frxDBDataset1
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[frxDBDataset1."EMPRESA"]'
-            '[frxDBDataset1."EWEB"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-      end
-      object PageFooter1: TfrxPageFooter
-        FillType = ftBrush
-        Frame.Typ = []
-        Top = 468.661720000000000000
-        Width = 181.417440000000000000
+        Width = 1046.929810000000000000
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
         Frame.Typ = []
-        Height = 7.559060000000000000
-        Top = 188.976500000000000000
-        Width = 181.417440000000000000
-        RowCount = 1
+        Top = 79.370130000000000000
+        Width = 1046.929810000000000000
+        DataSet = frxDBDataset1
+        DataSetName = 'frxDBDataset1'
+        RowCount = 0
+      end
+      object PageFooter1: TfrxPageFooter
+        FillType = ftBrush
+        Frame.Typ = []
+        Top = 173.858380000000000000
+        Width = 1046.929810000000000000
       end
       object DetailData1: TfrxDetailData
         FillType = ftBrush
         Frame.Typ = []
-        Height = 41.574830000000000000
-        Top = 219.212740000000000000
-        Width = 181.417440000000000000
+        Height = 11.338590000000000000
+        Top = 102.047310000000000000
+        Width = 1046.929810000000000000
         DataSet = frxDBDataset1
         DataSetName = 'frxDBDataset1'
         RowCount = 0
-        object Memo16: TfrxMemoView
+        object frxDBDataset1FECHA: TfrxMemoView
+          IndexTag = 1
           AllowVectorExport = True
-          Left = 3.118120000000000000
-          Top = 1.000000000000000000
-          Width = 173.858184720000000000
-          Height = 37.795300000000000000
-          DataSetName = 'FacturafrxDBDataset'
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Calibri'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[frxDBDataset1."CANTIDAD"] X [frxDBDataset1."PRECIO"]'
-            
-              '[frxDBDataset1."ARTICULO"]-[frxDBDataset1."DESCR"]-[frxDBDataset' +
-              '1."PREXCANT"]')
-          ParentFont = False
-          VAlign = vaCenter
-          Formats = <
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end>
-        end
-      end
-      object GroupFooter1: TfrxGroupFooter
-        FillType = ftBrush
-        Frame.Typ = []
-        Height = 124.724490000000000000
-        Top = 283.464750000000000000
-        Width = 181.417440000000000000
-        object frxDBDataset1DESCUENTO: TfrxMemoView
-          AllowVectorExport = True
-          Left = 3.779530000000000000
-          Width = 173.858233540000000000
-          Height = 94.488250000000000000
+          Width = 1046.929810000000000000
+          Height = 11.338590000000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -7
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
-          HAlign = haCenter
           Memo.UTF8W = (
-            'DESC. [frxDBDataset1."DESCUENTO"]'
-            'TOTAL [frxDBDataset1."TOTAL"]'
-            'PAGADO [frxDBDataset1."PAGADO"]'
-            'SALDO [frxDBDataset1."SALDO"]'
-            ''
-            'Vto.: [frxDBDataset1."TERMINOS"] CAE: [frxDBDataset1."VDESC"]')
-          ParentFont = False
-          VAlign = vaCenter
-          Formats = <
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end>
-        end
-        object BarCode1: TfrxBarCodeView
-          Align = baCenter
-          AllowVectorExport = True
-          Left = 58.708720000000000000
-          Top = 86.929190000000000000
-          Width = 64.000000000000000000
-          Height = 34.015770000000000000
-          BarType = bcCode_2_5_interleaved
-          Expression = '<frxDBDataset1."CB">'
-          Frame.Typ = []
-          Rotation = 0
-          TestLine = False
-          Text = '12345678'
-          WideBarRatio = 2.000000000000000000
-          Zoom = 1.000000000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -8
-          Font.Name = 'Arial'
-          Font.Style = []
-        end
-      end
-      object GroupHeader2: TfrxGroupHeader
-        FillType = ftBrush
-        Frame.Typ = []
-        Height = 41.574830000000000000
-        Top = 124.724490000000000000
-        Width = 181.417440000000000000
-        Condition = 'frxDBDataset1."OPERACION"'
-        object frxDBDataset1ECUIT: TfrxMemoView
-          AllowVectorExport = True
-          Left = 3.118120000000000000
-          Top = 1.000000000000000000
-          Width = 173.858380000000000000
-          Height = 37.795300000000000000
-          DataSet = frxDBDataset1
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[frxDBDataset1."CTIPO"]'
-            'CUIT: [frxDBDataset1."ECUIT"]'
             
-              '[frxDBDataset1."FECHA"] - [frxDBDataset1."LETRA"] - nro.[frxDBDa' +
-              'taset1."COMPROBANTE"]')
+              '[FormatDateTime('#39'yymmdd'#39',<frxDBDataset1."FECHA">)][FormatFloat('#39 +
+              '000'#39',<frxDBDataset1."PTOVTA">)][FormatFloat('#39'0000000000000000000' +
+              '0'#39',<frxDBDataset1."CBTEDESDE">)][FormatFloat('#39'000000000000000000' +
+              '00'#39',<frxDBDataset1."CBTEHASTA">)][FormatFloat('#39'00'#39',<frxDBDataset' +
+              '1."DOCTIPO">)][FormatMaskText('#39'00000000000000000000'#39',<frxDBDatas' +
+              'et1."CUIT">)][FormatMaskText('#39'000000000000000000000000000000'#39',<f' +
+              'rxDBDataset1."NOMCLI">)][FormatFloat('#39'00000000000'#39',<frxDBDataset' +
+              '1."DOCTIPO">)][FormatFloat('#39'000000000000000'#39',<frxDBDataset1."ITF' +
+              '">)][FormatFloat('#39'000000000000000'#39',<frxDBDataset1."NOGRABADO">)]' +
+              '[FormatFloat('#39'000000000000000'#39',<frxDBDataset1."IMPOPEX">)][Forma' +
+              'tFloat('#39'000000000000000'#39',<frxDBDataset1."IMPIVA">)][FormatFloat(' +
+              #39'000000000000000'#39',<frxDBDataset1."GENERALES">)][FormatFloat('#39'000' +
+              '000000000000'#39',<frxDBDataset1."NOCAT">)][FormatFloat('#39'00000000000' +
+              '0000'#39',<frxDBDataset1."OEIIBB">)][FormatFloat('#39'000000000000000'#39',<' +
+              'frxDBDataset1."IMPTRIB">)][FormatFloat('#39'000000000000000'#39',<frxDBD' +
+              'ataset1."IDERPYPAC">)][frxDBDataset1."MONID"][FormatFloat('#39'0000'#39 +
+              ',<frxDBDataset1."MONCOTIZ">)]000000[FormatFloat('#39'000000000000000' +
+              #39',<frxDBDataset1."OPCION">)][FormatFloat('#39'00000000'#39',<frxDBDatase' +
+              't1."FCHVTOPAGO">)]')
           ParentFont = False
-          VAlign = vaCenter
           Formats = <
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
             item
             end
             item
@@ -585,5 +491,13 @@ object fEditorReporte: TfEditorReporte
         '  INNER JOIN "Cliente" ON ("Operacion".CLIENTE = "Cliente".CODIG' +
         'O)')
     Left = 447
+  end
+  object tLibroIVAventa: TFDQuery
+    Active = True
+    Connection = FirebirdConnection
+    SQL.Strings = (
+      'SELECT * from "LibroIVAventa"')
+    Left = 447
+    Top = 48
   end
 end

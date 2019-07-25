@@ -29,6 +29,7 @@ type
     DBGrid1: TDBGrid;
     DataSource1: TDataSource;
     OperacionFDQuery: TFDQuery;
+    tLibroIVAventa: TFDQuery;
   private
     { Private declarations }
   public

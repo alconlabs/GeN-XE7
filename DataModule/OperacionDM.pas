@@ -2007,7 +2007,7 @@ begin
         if ((iva1>0) and (iva2>0)) then CantIva:='2' else CantIva:='1';
         tLibroIVAventaCantIva.AsString:=CantIva;
         tLibroIVAventaOpcion.AsString:='0';
-  //      tLibroIVAventaFchVtoPago.AsString:=Q.FieldByName('').AsString;
+
         AlicIVA:=Q.FieldByName('AlicIVA').AsString;
         if AlicIVA='' then
         begin
@@ -2015,12 +2015,17 @@ begin
         end;
         tLibroIVAventaAlicIVA.AsString:=AlicIVA;
         tLibroIVAventaImpNeto.AsString:=Q.FieldByName('ImpNeto').AsString;
-  //      tLibroIVAventaNoGrabado.AsString:=Q.FieldByName('').AsString;
-  //      tLibroIVAventaImpOpEx.AsString:=Q.FieldByName('').AsString;
+        tLibroIVAventaNoGrabado.AsString:='0';
+        tLibroIVAventaImpOpEx.AsString:='0';
         tLibroIVAventaImpIVA.AsString:=Q.FieldByName('ImpIVA').AsString;
-  //      tLibroIVAventaGenerales.AsString:=Q.FieldByName('').AsString;
-  //      tLibroIVAventaNoCat.AsString:=Q.FieldByName('').AsString;
-  //      tLibroIVAventaImpTrib.AsString:=Q.FieldByName('').AsString;
+        tLibroIVAventaGenerales.AsString:='0';
+        tLibroIVAventaNoCat.AsString:='0';
+        tLibroIVAventaImpTrib.AsString:='0';
+
+        tLibroIVAventaFchVtoPago.AsString:='0';
+        tLibroIVAventaOEIIBB.AsFloat:=0;
+        tLibroIVAventaIDERPYPAC.AsFloat:=0;
+
         Post;
         Next;
       end;
