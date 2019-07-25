@@ -48,6 +48,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
     procedure Image1Click(Sender: TObject);
+    procedure BSiapClick(Sender: TObject);
   private
     Procedure EnvioRamTerminado;
     { Private declarations }
@@ -163,6 +164,28 @@ begin
     ImprimirDataModule.SImpr(Tabla.SQL.Text, 'libroIVAVentas');
     ImprimirDataModule.Free;
   end;
+end;
+
+procedure TCuentasForm.BSiapClick(Sender: TObject);
+begin
+//OperacionDataModule := TOperacionDataModule.Create(self);
+//  try
+//    OperacionDataModule.ActualizarLibroIVAVentas;
+//  finally
+//    OperacionDataModule.Free;
+//  end;
+  Tabla.SQL.Text := 'SELECT *'
+    +' FROM "LibroIVAventa"'
+    +' WHERE'
+    +'  ("LibroIVAventa".FECHA >= ' + QuotedStr(DateToStr(DTP1.Date)) + ' ) AND '
+    +'  ("LibroIVAventa".FECHA <= ' + QuotedStr(DateToStr(DTP2.Date)) + ' )   '
+    +'ORDER BY  ' + '  "LibroIVAventa".CODIGO' + '';
+//  Tabla.Open;
+
+  ImprimirDataModule := TImprimirDataModule.Create(Self);
+  ImprimirDataModule.SImpr(Tabla.SQL.Text, 'LibroIVAVentasSiap');
+  ImprimirDataModule.Free;
+
 end;
 
 end.

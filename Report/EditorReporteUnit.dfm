@@ -32,11 +32,13 @@ object fEditorReporte: TfEditorReporte
     Top = 112
   end
   object frxPDFExport1: TfrxPDFExport
+    FileName = 'LibroIVAventasSiapDetalle.pdf'
     UseFileCache = True
     ShowProgress = True
     OverwritePrompt = False
+    CreationTime = 43671.000829733800000000
     DataOnly = False
-    OpenAfterExport = False
+    OpenAfterExport = True
     PrintOptimized = False
     Outline = False
     Background = False
@@ -104,7 +106,7 @@ object fEditorReporte: TfEditorReporte
     UseFileCache = True
     ShowProgress = True
     OverwritePrompt = False
-    CreationTime = 43670.876897210650000000
+    CreationTime = 43671.005217916670000000
     DataOnly = True
     Separator = ','
     OEMCodepage = False
@@ -124,7 +126,7 @@ object fEditorReporte: TfEditorReporte
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 43670.750645671300000000
-    ReportOptions.LastChange = 43670.877400601900000000
+    ReportOptions.LastChange = 43671.005104710600000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -163,23 +165,44 @@ object fEditorReporte: TfEditorReporte
       object MasterData1: TfrxMasterData
         FillType = ftBrush
         Frame.Typ = []
+        Height = 15.118120000000000000
         Top = 79.370130000000000000
         Width = 1046.929810000000000000
         DataSet = frxDBDataset1
         DataSetName = 'frxDBDataset1'
         RowCount = 0
+        object Memo1: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Width = 1046.929810000000000000
+          Height = 11.338590000000000000
+          DataSet = frxDBDataset1
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            
+              'FECHA;CBTETIPO;PTOVTA;CBTEDESDE;CBTEHASTA;DOCTIPO;CUIT;NOMCLI;IT' +
+              'F;NOGRABADO;NOCAT;IMPOPEX;GENERALES;OEIIBB;IMPTRIB;IDERPYPAC;MON' +
+              'ID;MONCOTIZ;CANTIVA;OPCION;OPCION;FCHVTOPAGO;')
+          ParentFont = False
+        end
       end
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
         Frame.Typ = []
-        Top = 173.858380000000000000
+        Top = 188.976500000000000000
         Width = 1046.929810000000000000
       end
       object DetailData1: TfrxDetailData
         FillType = ftBrush
         Frame.Typ = []
         Height = 11.338590000000000000
-        Top = 102.047310000000000000
+        Top = 117.165430000000000000
         Width = 1046.929810000000000000
         DataSet = frxDBDataset1
         DataSetName = 'frxDBDataset1'
@@ -193,33 +216,35 @@ object fEditorReporte: TfEditorReporte
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -7
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
             
-              '[FormatDateTime('#39'yymmdd'#39',<frxDBDataset1."FECHA">)][FormatFloat('#39 +
-              '000'#39',<frxDBDataset1."PTOVTA">)][FormatFloat('#39'0000000000000000000' +
-              '0'#39',<frxDBDataset1."CBTEDESDE">)][FormatFloat('#39'000000000000000000' +
-              '00'#39',<frxDBDataset1."CBTEHASTA">)][FormatFloat('#39'00'#39',<frxDBDataset' +
-              '1."DOCTIPO">)][FormatMaskText('#39'00000000000000000000'#39',<frxDBDatas' +
-              'et1."CUIT">)][FormatMaskText('#39'000000000000000000000000000000'#39',<f' +
-              'rxDBDataset1."NOMCLI">)][FormatFloat('#39'00000000000'#39',<frxDBDataset' +
-              '1."DOCTIPO">)][FormatFloat('#39'000000000000000'#39',<frxDBDataset1."ITF' +
-              '">)][FormatFloat('#39'000000000000000'#39',<frxDBDataset1."NOGRABADO">)]' +
-              '[FormatFloat('#39'000000000000000'#39',<frxDBDataset1."IMPOPEX">)][Forma' +
-              'tFloat('#39'000000000000000'#39',<frxDBDataset1."IMPIVA">)][FormatFloat(' +
-              #39'000000000000000'#39',<frxDBDataset1."GENERALES">)][FormatFloat('#39'000' +
-              '000000000000'#39',<frxDBDataset1."NOCAT">)][FormatFloat('#39'00000000000' +
-              '0000'#39',<frxDBDataset1."OEIIBB">)][FormatFloat('#39'000000000000000'#39',<' +
-              'frxDBDataset1."IMPTRIB">)][FormatFloat('#39'000000000000000'#39',<frxDBD' +
-              'ataset1."IDERPYPAC">)][frxDBDataset1."MONID"][FormatFloat('#39'0000'#39 +
-              ',<frxDBDataset1."MONCOTIZ">)]000000[FormatFloat('#39'000000000000000' +
-              #39',<frxDBDataset1."OPCION">)][FormatFloat('#39'00000000'#39',<frxDBDatase' +
-              't1."FCHVTOPAGO">)]')
+              '[FormatDateTime('#39'yyyymmdd'#39',<frxDBDataset1."FECHA">)];[FormatFloa' +
+              't('#39'000'#39',<frxDBDataset1."CBTETIPO">)];[FormatFloat('#39'00000'#39',<frxDB' +
+              'Dataset1."PTOVTA">)];[FormatFloat('#39'00000000000000000000'#39',<frxDBD' +
+              'ataset1."CBTEDESDE">)];[FormatFloat('#39'00000000000000000000'#39',<frxD' +
+              'BDataset1."CBTEHASTA">)];[FormatFloat('#39'00'#39',<frxDBDataset1."DOCTI' +
+              'PO">)];[FormatFloat('#39'00000000000000000000'#39',<frxDBDataset1."CUIT"' +
+              '>)];[FormatMaskText('#39'0000000000000000000000000000000'#39',<frxDBData' +
+              'set1."NOMCLI">)];[FormatFloat('#39'000000000000000'#39',<frxDBDataset1."' +
+              'ITF">)];[FormatFloat('#39'000000000000000'#39',<frxDBDataset1."NOGRABADO' +
+              '">)];[FormatFloat('#39'000000000000000'#39',<frxDBDataset1."NOCAT">)];[F' +
+              'ormatFloat('#39'000000000000000'#39',<frxDBDataset1."IMPOPEX">)];[Format' +
+              'Float('#39'000000000000000'#39',<frxDBDataset1."GENERALES">)];[FormatFlo' +
+              'at('#39'000000000000000'#39',<frxDBDataset1."OEIIBB">)];[FormatFloat('#39'00' +
+              '0000000000000'#39',<frxDBDataset1."IMPTRIB">)];[FormatFloat('#39'0000000' +
+              '00000000'#39',<frxDBDataset1."IDERPYPAC">)];[frxDBDataset1."MONID"];' +
+              '[FormatFloat('#39'0000000000'#39',<frxDBDataset1."MONCOTIZ">*1000000)];[' +
+              'frxDBDataset1."CANTIVA"];[frxDBDataset1."OPCION"];[FormatFloat('#39 +
+              '000000000000000'#39',<frxDBDataset1."OPCION">)];[FormatFloat('#39'000000' +
+              '00'#39',<frxDBDataset1."FCHVTOPAGO">)];')
           ParentFont = False
           Formats = <
+            item
+            end
             item
             end
             item

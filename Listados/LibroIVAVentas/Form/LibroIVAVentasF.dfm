@@ -194,7 +194,6 @@ object CuentasForm: TCuentasForm
     Color = clBlack
     ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = 646
     object Image1: TImage
       Left = 37
       Top = 69
@@ -390,6 +389,7 @@ object CuentasForm: TCuentasForm
       Height = 50
       Caption = 'SIAP'
       TabOrder = 3
+      OnClick = BSiapClick
     end
   end
   object DS: TDataSource

@@ -2022,6 +2022,9 @@ begin
         tLibroIVAventaNoCat.AsString:='0';
         tLibroIVAventaImpTrib.AsString:='0';
 
+        if (tLibroIVAventaCUIT.AsString='') or (tLibroIVAventaCUIT.AsString='ANULADA') then
+          tLibroIVAventaCUIT.AsString:='0';
+
         tLibroIVAventaFchVtoPago.AsString:='0';
         tLibroIVAventaOEIIBB.AsFloat:=0;
         tLibroIVAventaIDERPYPAC.AsFloat:=0;
