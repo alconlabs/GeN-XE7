@@ -630,4 +630,31 @@ object dmML: TdmML
       BlobType = ftWideMemo
     end
   end
+  object FDBatchMove2: TFDBatchMove
+    Reader = FDBatchMoveDataSetReader1
+    Writer = FDBatchMoveTextWriter1
+    Mappings = <>
+    LogFileName = 'Data.log'
+    Left = 8
+    Top = 93
+  end
+  object FDBatchMoveDataSetReader1: TFDBatchMoveDataSetReader
+    Left = 8
+    Top = 141
+  end
+  object FDBatchMoveTextWriter1: TFDBatchMoveTextWriter
+    DataDef.Fields = <>
+    DataDef.Delimiter = #0
+    DataDef.Separator = ';'
+    DataDef.RecordFormat = rfCustom
+    DataDef.WithFieldNames = True
+    Left = 8
+    Top = 189
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = 'csv'
+    Filter = 'CSV files only|*.csv'
+    Left = 5
+    Top = 240
+  end
 end

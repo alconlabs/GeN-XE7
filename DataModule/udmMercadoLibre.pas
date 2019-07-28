@@ -7,7 +7,9 @@ uses FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error,
   FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef,
   FireDAC.Stan.ExprFuncs, FireDAC.FMXUI.Wait, System.Classes, Data.DB,
   FireDAC.Comp.Client, System.IOUtils, System.SysUtils, FireDAC.Stan.Param,
-  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet;
+  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FMX.Types, FMX.Dialogs, FireDAC.Comp.BatchMove.Text, FireDAC.Comp.BatchMove,
+  FireDAC.Comp.BatchMove.DataSet;
 
 type
   TdmML = class(TDataModule)
@@ -133,6 +135,10 @@ type
     tDespachadosorder_id: TWideMemoField;
     tDespachadosembalado: TWideMemoField;
     tDespachadosenviado: TWideMemoField;
+    FDBatchMove2: TFDBatchMove;
+    FDBatchMoveDataSetReader1: TFDBatchMoveDataSetReader;
+    FDBatchMoveTextWriter1: TFDBatchMoveTextWriter;
+    SaveDialog1: TSaveDialog;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -142,7 +148,7 @@ type
   public
     { Public declarations }
     refreshToken, seller_id, sqlOrder_items, sqlCountShipping, sqlCountMessages,
-    sqlOrderFrom, sqlOrderWhere
+    sqlOrderFrom, sqlOrderWhere, sqlNoEmbalado, sqlEmbalado
 //    order_id, order_items_quantity, buyer_id, order_status, item_title, item_id,
 //    shipping_id, pack_id, message_id, message_text
     : string;
@@ -597,6 +603,7 @@ begin
     refreshToken := ExecSQLScalar('SELECT refresh FROM token');
     seller_id :=  ExecSQLScalar('SELECT seller_id FROM seller');
   end;
+
   FDQuery1.Open('SELECT embalado, orders.status AS estado, orders.buyer AS comprador'
   +', orders.id, shipping FROM orders LEFT JOIN despachados'
   +' ON orders.id = despachados.order_id ORDER BY orders.buyer');
@@ -617,7 +624,10 @@ begin
     +' (NOT(shipping.status=''shipped''))'
     +' AND (NOT(shipping.status=''delivered''))'
     +' AND (NOT(shipping.status=''not_delivered''))'
-    +' AND (NOT(despachados.embalado=''S''))';
+//    +' AND (NOT(despachados.embalado=''S''))'
+    ;
+  sqlEmbalado:=' AND (despachados.embalado=''S'')';
+  sqlNoEmbalado:=' AND (NOT(despachados.embalado=''S''))';
 
   sqlOrder_items:= 'SELECT order_items.title AS TITULO'
     +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'

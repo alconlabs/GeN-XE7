@@ -13,37 +13,58 @@ type
   TfMercadoLibreEnvios = class(TForm)
     ProgressBar1: TProgressBar;
     tProgressBar: TTimer;
-    lPreparar: TLabel;
-    lVentas: TLabel;
-    Panel1: TPanel;
-    Label3: TLabel;
-    lMensajes: TLabel;
-    pColecta: TPanel;
-    Label5: TLabel;
-    lMEnvios: TLabel;
-    pFlex: TPanel;
-    Label7: TLabel;
-    lMEFlex: TLabel;
-    pAcordar: TPanel;
-    Label11: TLabel;
-    lAcordar: TLabel;
     Timer1: TTimer;
+    pPreparar: TPanel;
+    pPrepararMensajes: TPanel;
+    lTituloPrepararMensajes: TLabel;
+    lVentasPrepararMensajes: TLabel;
+    pPrepararEnvios: TPanel;
+    lTituloPrepararEnvios: TLabel;
+    lVentasPrepararEnvios: TLabel;
+    pPrepararFlex: TPanel;
+    lTituloPrepararFlex: TLabel;
+    lVentasPrepararFlex: TLabel;
+    pPrepararAcordar: TPanel;
+    lTituloPrepararAcordar: TLabel;
+    lVentasPrepararAcordar: TLabel;
+    pTituloPreparar: TPanel;
+    lPreparar: TLabel;
+    lVentasPreparar: TLabel;
+    pDespachar: TPanel;
+    pDespacharDemoradas: TPanel;
+    lDespacharDemoradas: TLabel;
+    lVentasDespacharDemoradas: TLabel;
+    pDespacharMensajes: TPanel;
+    lDespacharMensajes: TLabel;
+    lVentasDespacharMensajes: TLabel;
+    pDespacharFlex: TPanel;
+    lDespacharFlex: TLabel;
+    lVentasDespacharFlex: TLabel;
+    pDespacharColecta: TPanel;
+    lDespacharColecta: TLabel;
+    lVentasDespacharColecta: TLabel;
+    pTituloDespachar: TPanel;
+    lDespachar: TLabel;
+    lVentasDespachar: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure StringGridBindSourceDB1Click(Sender: TObject);
     procedure tProgressBarTimer(Sender: TObject);
     procedure sgMessagesClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure pColectaClick(Sender: TObject);
-    procedure lMEnviosClick(Sender: TObject);
-    procedure Label5Click(Sender: TObject);
+    procedure pPrepararEnviosClick(Sender: TObject);
+    procedure lVentasPrepararEnviosClick(Sender: TObject);
+    procedure lTituloPrepararEnviosClick(Sender: TObject);
     procedure lPrepararClick(Sender: TObject);
-    procedure pFlexClick(Sender: TObject);
-    procedure pAcordarClick(Sender: TObject);
-    procedure Label7Click(Sender: TObject);
-    procedure lMEFlexClick(Sender: TObject);
-    procedure Label11Click(Sender: TObject);
-    procedure lAcordarClick(Sender: TObject);
+    procedure pPrepararFlexClick(Sender: TObject);
+    procedure pPrepararAcordarClick(Sender: TObject);
+    procedure lTituloPrepararFlexClick(Sender: TObject);
+    procedure lVentasPrepararFlexClick(Sender: TObject);
+    procedure lTituloPrepararAcordarClick(Sender: TObject);
+    procedure lVentasPrepararAcordarClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure pDespacharColectaClick(Sender: TObject);
+    procedure lVentasDespacharColectaClick(Sender: TObject);
+    procedure pDespacharFlexClick(Sender: TObject);
   private
     { Private declarations }
     procedure actualizarEtiquetas;
@@ -68,9 +89,8 @@ end;
 
 procedure TfMercadoLibreEnvios.FormShow(Sender: TObject);
 begin
-//  bActualizar.Click;
   actualizarEtiquetas;
-  Timer1.Enabled:=True;
+//  Timer1.Enabled:=True;
 end;
 
 procedure TfMercadoLibreEnvios.lPrepararClick(Sender: TObject);
@@ -91,45 +111,51 @@ begin
     actualizarEtiquetas;
 end;
 
-procedure TfMercadoLibreEnvios.Label11Click(Sender: TObject);
+procedure TfMercadoLibreEnvios.lTituloPrepararAcordarClick(Sender: TObject);
 begin
-  pAcordarClick(Sender);
+  pDespacharColectaClick(Sender);
 end;
 
-procedure TfMercadoLibreEnvios.Label5Click(Sender: TObject);
+procedure TfMercadoLibreEnvios.lTituloPrepararEnviosClick(Sender: TObject);
 begin
-  pColectaClick(Sender);
+  pPrepararEnviosClick(Sender);
 end;
 
-procedure TfMercadoLibreEnvios.Label7Click(Sender: TObject);
+procedure TfMercadoLibreEnvios.lTituloPrepararFlexClick(Sender: TObject);
 begin
-  pFlexClick(Sender);
+  pPrepararFlexClick(Sender);
 end;
 
-procedure TfMercadoLibreEnvios.lAcordarClick(Sender: TObject);
+procedure TfMercadoLibreEnvios.lVentasPrepararAcordarClick(Sender: TObject);
 begin
-  pAcordarClick(Sender);
+  pPrepararAcordarClick(Sender);
 end;
 
-procedure TfMercadoLibreEnvios.lMEFlexClick(Sender: TObject);
+procedure TfMercadoLibreEnvios.lVentasDespacharColectaClick(Sender: TObject);
 begin
-  pFlexClick(Sender);
+  pDespacharColectaClick(Sender);
 end;
 
-procedure TfMercadoLibreEnvios.lMEnviosClick(Sender: TObject);
+procedure TfMercadoLibreEnvios.lVentasPrepararFlexClick(Sender: TObject);
 begin
-  pColectaClick(Sender);
+  pPrepararFlexClick(Sender);
 end;
 
-procedure TfMercadoLibreEnvios.pAcordarClick(Sender: TObject);
+procedure TfMercadoLibreEnvios.lVentasPrepararEnviosClick(Sender: TObject);
+begin
+  pPrepararEnviosClick(Sender);
+end;
+
+procedure TfMercadoLibreEnvios.pPrepararAcordarClick(Sender: TObject);
 begin
   fOrders := TfOrders.Create(Self);
     with fOrders do
+    with dmML do
     begin
-      qOrders.Open(dmml.sqlOrder_items
+      qOrders.Open(sqlOrder_items
+        +sqlNoEmbalado
         +' AND shipping_mode='+QuotedStr('custom')
-        +' GROUP BY orders.buyer'
-      );
+        +' GROUP BY orders.buyer');
       try
         ShowModal;
       finally
@@ -138,15 +164,35 @@ begin
     end;
 end;
 
-procedure TfMercadoLibreEnvios.pColectaClick(Sender: TObject);
+procedure TfMercadoLibreEnvios.pDespacharFlexClick(Sender: TObject);
+begin
+    fOrders := TfOrders.Create(Self);
+    with fOrders do
+    with dmML do
+    begin
+      qOrders.Open(sqlOrder_items
+        +sqlEmbalado
+        +' AND shipping_mode='+QuotedStr('me1')
+        +' GROUP BY orders.buyer');
+      try
+        ShowModal;
+      finally
+        Free;
+        actualizarEtiquetas;
+      end;
+    end;
+end;
+
+procedure TfMercadoLibreEnvios.pPrepararEnviosClick(Sender: TObject);
 begin
   fOrders := TfOrders.Create(Self);
   with fOrders do
+  with dmML do
   begin
-    qOrders.Open(dmml.sqlOrder_items
+    qOrders.Open(sqlOrder_items
+      +sqlNoEmbalado
       +' AND shipping_mode='+QuotedStr('me2')
-      +' GROUP BY orders.buyer'
-    );
+      +' GROUP BY orders.buyer');
     try
       ShowModal;
     finally
@@ -156,15 +202,34 @@ begin
   end;
 end;
 
-procedure TfMercadoLibreEnvios.pFlexClick(Sender: TObject);
+procedure TfMercadoLibreEnvios.pDespacharColectaClick(Sender: TObject);
+begin
+  fOrders := TfOrders.Create(Self);
+  with dmML do
+    with fOrders do
+    begin
+      qOrders.Open(sqlOrder_items+sqlEmbalado
+        +' AND shipping_mode='+QuotedStr('me2')
+        +' GROUP BY orders.buyer');
+      try
+        ShowModal;
+      finally
+        Free;
+        actualizarEtiquetas;
+      end;
+    end;
+end;
+
+procedure TfMercadoLibreEnvios.pPrepararFlexClick(Sender: TObject);
 begin
   fOrders := TfOrders.Create(Self);
     with fOrders do
+    with dmML do
     begin
-      qOrders.Open(dmml.sqlOrder_items
+      qOrders.Open(sqlOrder_items
+        +sqlNoEmbalado
         +' AND shipping_mode='+QuotedStr('me1')
-        +' GROUP BY orders.buyer'
-      );
+        +' GROUP BY orders.buyer');
       try
         ShowModal;
       finally
@@ -201,18 +266,20 @@ procedure TfMercadoLibreEnvios.actualizarEtiquetas;
 var
   v:string;
 begin
-  with dmml do
+  with dmML do
   begin
     v:=' ventas';
-    lVentas.Caption := IntToStr(dbMain.ExecSQLScalar(sqlCountShipping))+' ventas';
-    lMEnvios.Caption := IntToStr(dbMain.ExecSQLScalar(
-      sqlCountShipping +' AND shipping_mode=:M',['me2']))+v;
-    lMEFlex.Caption := IntToStr(dbMain.ExecSQLScalar(
-      sqlCountShipping +' AND shipping_mode=:M',['me1']))+v;
-    lAcordar.Caption := IntToStr(dbMain.ExecSQLScalar(
-      sqlCountShipping +' AND shipping_mode=:M',['custom']))+v;
+    lVentasPreparar.Caption := IntToStr(dbMain.ExecSQLScalar(sqlCountShipping))+v;
+    lVentasPrepararEnvios.Caption := IntToStr(dbMain.ExecSQLScalar(
+      sqlCountShipping+sqlNoEmbalado+' AND shipping_mode=:M',['me2']))+v;
+    lVentasPrepararFlex.Caption := IntToStr(dbMain.ExecSQLScalar(
+      sqlCountShipping+sqlNoEmbalado+' AND shipping_mode=:M',['me1']))+v;
+    lVentasPrepararAcordar.Caption := IntToStr(dbMain.ExecSQLScalar(
+      sqlCountShipping+sqlNoEmbalado+' AND shipping_mode=:M',['custom']))+v;
     FDQuery1.Open(sqlCountMessages);
-    lMensajes.Caption := IntToStr(FDQuery1.RowsAffected)+v;
+    lVentasPrepararMensajes.Caption := IntToStr(FDQuery1.RowsAffected)+v;
+    lDespacharColecta.Caption := IntToStr(dbMain.ExecSQLScalar(
+      sqlCountShipping+sqlEmbalado+' AND shipping_mode=:M',['me2']))+v;
   end;
 end;
 
