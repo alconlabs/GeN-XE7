@@ -5,7 +5,7 @@ object dmML: TdmML
   Width = 293
   object dbMain: TFDConnection
     Params.Strings = (
-      'ConnectionDef=MercadoLibreVentas')
+      'DriverID=SQLite')
     LoginPrompt = False
     Left = 8
   end

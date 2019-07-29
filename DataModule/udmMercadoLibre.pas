@@ -9,7 +9,7 @@ uses FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error,
   FireDAC.Comp.Client, System.IOUtils, System.SysUtils, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
   FMX.Types, FMX.Dialogs, FireDAC.Comp.BatchMove.Text, FireDAC.Comp.BatchMove,
-  FireDAC.Comp.BatchMove.DataSet;
+  FireDAC.Comp.BatchMove.DataSet, FireDAC.Phys.FB, FireDAC.Phys.FBDef;
 
 type
   TdmML = class(TDataModule)

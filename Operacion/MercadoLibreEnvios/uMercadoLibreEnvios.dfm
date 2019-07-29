@@ -4,7 +4,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   Top = 0
   Caption = 'Mercado Libre Envios'
   ClientHeight = 467
-  ClientWidth = 499
+  ClientWidth = 500
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,13 +19,14 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   object ProgressBar1: TProgressBar
     Left = 0
     Top = 0
-    Width = 499
+    Width = 500
     Height = 5
     Align = alTop
     Min = 1
     Position = 1
     TabOrder = 0
     Visible = False
+    ExplicitWidth = 249
   end
   object pPreparar: TPanel
     Left = 0

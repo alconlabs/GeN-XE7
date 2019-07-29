@@ -90,7 +90,7 @@ end;
 procedure TfMercadoLibreEnvios.FormShow(Sender: TObject);
 begin
   actualizarEtiquetas;
-//  Timer1.Enabled:=True;
+  Timer1.Enabled:=True;
 end;
 
 procedure TfMercadoLibreEnvios.lPrepararClick(Sender: TObject);
