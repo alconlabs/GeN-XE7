@@ -5,6 +5,9 @@ object dmML: TdmML
   Width = 293
   object dbMain: TFDConnection
     Params.Strings = (
+      
+        'Database=C:\Users\DeGsoft\Documents\Civeloo\MercadoLibreVentas\d' +
+        'b\db.sdb'
       'DriverID=SQLite')
     LoginPrompt = False
     Left = 8

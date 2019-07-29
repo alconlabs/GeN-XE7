@@ -793,7 +793,7 @@ begin
       tOrder_itemsid.AsString:='1';
     end;
     tOrder_itemsorder_id.AsString:='1';
-    tOrder_itemstitle.AsString:='Arduino';
+    tOrder_itemstitle.AsString:='Articulo Prueba 1';
     tOrder_itemsseller_sku.AsString:='1';
     tOrder_itemsfull_unit_price.AsString:='999';
     tOrder_itemsquantity.AsString:='1';
@@ -839,8 +839,8 @@ begin
       tBuyerid.AsString:='1';
     end;
     tBuyerfirst_name.AsString:='Juan';
-    tBuyerlast_name.AsString:='Perez';
-    tBuyernickname.AsString:='JuanPerez1';
+    tBuyerlast_name.AsString:='Prueba';
+    tBuyernickname.AsString:='JuanPrueba1';
     Post;
   end;
   with tDespachados do
@@ -886,7 +886,7 @@ begin
       tOrder_itemsid.AsString:='2';
     end;
     tOrder_itemsorder_id.AsString:='2';
-    tOrder_itemstitle.AsString:='Arduino2';
+    tOrder_itemstitle.AsString:='Articulo Prueba 2';
     tOrder_itemsseller_sku.AsString:='2';
     tOrder_itemsfull_unit_price.AsString:='992';
     tOrder_itemsquantity.AsString:='1';

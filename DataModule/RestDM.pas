@@ -902,6 +902,7 @@ begin
           end;
           tOrder_itemsorder_id.AsString := order_id;
           tOrder_itemsitem_id.AsString := item_id;
+          tOrder_itemstitle.AsString := item.GetValue<string>('title');
           tOrder_itemsseller_custom_field.AsString := item.GetValue<string>('seller_custom_field');//": null,
           tOrder_itemscondition.AsString := item.GetValue<string>('condition');// "new",
           tOrder_itemscategory_id.AsString := item.GetValue<string>('category_id');// "MLA74083",

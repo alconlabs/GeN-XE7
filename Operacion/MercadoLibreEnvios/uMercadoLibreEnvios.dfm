@@ -4,7 +4,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   Top = 0
   Caption = 'Mercado Libre Envios'
   ClientHeight = 467
-  ClientWidth = 500
+  ClientWidth = 251
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   object ProgressBar1: TProgressBar
     Left = 0
     Top = 0
-    Width = 500
+    Width = 251
     Height = 5
     Align = alTop
     Min = 1
@@ -106,7 +106,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        OnClick = lTituloPrepararEnviosClick
+        OnClick = pPrepararEnviosClick
       end
       object lVentasPrepararEnvios: TLabel
         Left = 17
@@ -122,7 +122,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        OnClick = lVentasPrepararEnviosClick
+        OnClick = pPrepararEnviosClick
       end
     end
     object pPrepararFlex: TPanel
@@ -151,7 +151,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        OnClick = lTituloPrepararFlexClick
+        OnClick = pPrepararFlexClick
       end
       object lVentasPrepararFlex: TLabel
         Left = 17
@@ -167,7 +167,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        OnClick = lVentasPrepararFlexClick
+        OnClick = pPrepararFlexClick
       end
     end
     object pPrepararAcordar: TPanel
@@ -196,7 +196,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        OnClick = lTituloPrepararAcordarClick
+        OnClick = pPrepararAcordarClick
       end
       object lVentasPrepararAcordar: TLabel
         Left = 17
@@ -212,7 +212,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        OnClick = lVentasPrepararAcordarClick
+        OnClick = pPrepararAcordarClick
       end
     end
     object pTituloPreparar: TPanel
@@ -277,7 +277,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       ParentBackground = False
       TabOrder = 0
-      object lDespacharDemoradas: TLabel
+      object lTituloDespacharDemoradas: TLabel
         Left = 17
         Top = 17
         Width = 65
@@ -319,8 +319,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       ParentBackground = False
       TabOrder = 1
-      OnClick = pPrepararEnviosClick
-      object lDespacharMensajes: TLabel
+      object lTituloDespacharMensajes: TLabel
         Left = 17
         Top = 17
         Width = 98
@@ -332,7 +331,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        OnClick = lTituloPrepararEnviosClick
       end
       object lVentasDespacharMensajes: TLabel
         Left = 17
@@ -348,7 +346,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        OnClick = lVentasPrepararEnviosClick
       end
     end
     object pDespacharFlex: TPanel
@@ -365,7 +362,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       ParentBackground = False
       TabOrder = 2
       OnClick = pDespacharFlexClick
-      object lDespacharFlex: TLabel
+      object lTituloDespacharFlex: TLabel
         Left = 17
         Top = 18
         Width = 152
@@ -377,7 +374,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        OnClick = lTituloPrepararFlexClick
+        OnClick = pDespacharFlexClick
       end
       object lVentasDespacharFlex: TLabel
         Left = 17
@@ -393,7 +390,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        OnClick = lVentasPrepararFlexClick
+        OnClick = pDespacharFlexClick
       end
     end
     object pDespacharColecta: TPanel
@@ -410,7 +407,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       ParentBackground = False
       TabOrder = 3
       OnClick = pDespacharColectaClick
-      object lDespacharColecta: TLabel
+      object lTituloDespacharColecta: TLabel
         Left = 17
         Top = 14
         Width = 118
@@ -422,7 +419,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        OnClick = lTituloPrepararAcordarClick
+        OnClick = pDespacharColectaClick
       end
       object lVentasDespacharColecta: TLabel
         Left = 17
@@ -438,7 +435,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        OnClick = lVentasDespacharColectaClick
+        OnClick = pDespacharColectaClick
       end
     end
     object pTituloDespachar: TPanel
