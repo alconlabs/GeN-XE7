@@ -148,7 +148,10 @@ type
   public
     { Public declarations }
     refreshToken, seller_id, sqlOrder_items, sqlCountShipping, sqlCountMessages,
-    sqlOrderFrom, sqlOrderWhere, sqlNoEmbalado, sqlEmbalado
+    sqlOrderFrom, sqlOrderWhere, sqlNoEmbalado, sqlEmbalado, sqlReady_to_ship,
+    sqlShipped, sqlDelivered, sqlNoStatus, sqlPrepararFlex, sqlPrepararEnvios,
+    sqlPrepararAcordar, sqlSMMe1, sqlSMMe2, sqlSMCustom, sqlDespacharColecta,
+    sqlTransitoCamino, sqlDespacharFlex
 //    order_id, order_items_quantity, buyer_id, order_status, item_title, item_id,
 //    shipping_id, pack_id, message_id, message_text
     : string;
@@ -620,14 +623,22 @@ begin
     +' INNER JOIN buyer ON orders.buyer = buyer.id'
     +' LEFT JOIN despachados ON orders.id = despachados.order_id';
 
-  sqlOrderWhere:=' WHERE' //' (NOT(shipping.status='ready_to_ship')) AND'
+  sqlOrderWhere:=' WHERE' //' (NOT(shipping.status=''ready_to_ship'')) AND'
     +' (NOT(shipping.status=''shipped''))'
     +' AND (NOT(shipping.status=''delivered''))'
     +' AND (NOT(shipping.status=''not_delivered''))'
-//    +' AND (NOT(despachados.embalado=''S''))'
+    +' AND (NOT(despachados.embalado=''S''))'
     ;
-  sqlEmbalado:=' AND (despachados.embalado=''S'')';
-  sqlNoEmbalado:=' AND (NOT(despachados.embalado=''S''))';
+
+  sqlReady_to_ship:='(shipping.status=''ready_to_ship'')';
+  sqlShipped:='(shipping.status=''shipped'')';
+  sqlDelivered:='(shipping.status=''delivered'')';
+  sqlNoStatus:='(shipping.status='''')';
+  sqlSMMe1:=' shipping_mode=''me1''';
+  sqlSMMe2:=' shipping_mode=''me2''';
+  sqlSMCustom:=' shipping_mode=''custom''';
+  sqlEmbalado:=' (despachados.embalado=''S'')';
+  sqlNoEmbalado:=' (NOT(despachados.embalado=''S''))';
 
   sqlOrder_items:= 'SELECT order_items.title AS TITULO'
     +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
@@ -635,11 +646,22 @@ begin
     +', buyer.last_name AS APELLIDO, buyer.nickname AS NIK, "imprimir" AS ETIQUETA'
     +', shipping, buyer, order_items.order_id'
     +sqlOrderFrom
-    +sqlOrderWhere;
+//    +sqlOrderWhere
+    ;
 
   sqlCountShipping:='SELECT COUNT(*)'
     +sqlOrderFrom
-    +sqlOrderWhere;
+    +sqlOrderWhere
+    ;
+
+  sqlPrepararEnvios:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlNoEmbalado+' AND '+sqlSMMe2;
+  sqlPrepararFlex:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlNoEmbalado+' AND '+sqlSMMe1;
+  sqlPrepararAcordar:=sqlOrder_items+' WHERE '+sqlNoStatus+' AND '+sqlNoEmbalado+' AND '+sqlSMCustom;
+
+  sqlDespacharColecta:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlEmbalado+' AND '+sqlSMMe2;
+  sqlDespacharFlex:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlEmbalado+' AND '+sqlSMMe1;
+
+  sqlTransitoCamino:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlNoEmbalado+' AND '+sqlSMCustom;
 
   sqlCountMessages:='SELECT COUNT(*)'
     +sqlOrderFrom
