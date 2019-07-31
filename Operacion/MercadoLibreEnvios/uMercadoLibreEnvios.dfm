@@ -26,7 +26,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
     Position = 1
     TabOrder = 0
     Visible = False
-    ExplicitWidth = 251
   end
   object pPreparar: TPanel
     Left = 0
@@ -528,7 +527,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         ParentFont = False
       end
     end
-    object pTransitoMensaje: TPanel
+    object pTransitoMensajes: TPanel
       AlignWithMargins = True
       Left = 6
       Top = 86
@@ -541,7 +540,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       ParentBackground = False
       TabOrder = 1
-      object lTituloTransitoMensaje: TLabel
+      object lTituloTransitoMensajes: TLabel
         Left = 17
         Top = 17
         Width = 98
@@ -554,7 +553,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object lVentasTransitoMensaje: TLabel
+      object lVentasTransitoMensajes: TLabel
         Left = 17
         Top = 33
         Width = 42

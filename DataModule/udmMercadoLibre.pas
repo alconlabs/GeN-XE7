@@ -147,11 +147,13 @@ type
     procedure OrdenesPrueba;
   public
     { Public declarations }
-    refreshToken, seller_id, sqlOrder_items, sqlCountShipping, sqlCountMessages,
-    sqlOrderFrom, sqlOrderWhere, sqlNoEmbalado, sqlEmbalado, sqlReady_to_ship,
-    sqlShipped, sqlDelivered, sqlNoStatus, sqlPrepararFlex, sqlPrepararEnvios,
-    sqlPrepararAcordar, sqlSMMe1, sqlSMMe2, sqlSMCustom, sqlDespacharColecta,
-    sqlTransitoCamino, sqlDespacharFlex
+    refreshToken, seller_id, sqlOrder_items, sqlMessages, sqlOrderFrom,
+    sqlOrderWhere, sqlNoEmbalado, sqlEmbalado, sqlReady_to_ship, sqlShipped,
+    sqlDelivered, sqlNoStatus, sqlDelayed,
+    sqlPreparar, sqlPrepararFlex, sqlPrepararEnvios, sqlPrepararAcordar, PrepararMensajes,
+    sqlSMMe1, sqlSMMe2, sqlSMCustom,
+    sqlDespachar, sqlDespacharDemoradas, sqlDespacharColecta, sqlDespacharFlex, sqlDespacharMensajes,
+    sqlTransito, sqlTransitoCamino, sqlTransitoEsperandoRetiro
 //    order_id, order_items_quantity, buyer_id, order_status, item_title, item_id,
 //    shipping_id, pack_id, message_id, message_text
     : string;
@@ -166,6 +168,7 @@ type
     procedure InsertarRegistros(tabla,campos,valores:string);
     procedure Agregar(tabla,campos,valores,codigo:string);
     procedure AgregarDespachados(order_id,embalado:string);
+    function CantidadVentas(sql:string):String;
   end;
 
 var
@@ -639,6 +642,7 @@ begin
   sqlSMCustom:=' shipping_mode=''custom''';
   sqlEmbalado:=' (despachados.embalado=''S'')';
   sqlNoEmbalado:=' (NOT(despachados.embalado=''S''))';
+  sqlDelayed:='(shipping.substatus=''delayed'')';
 
   sqlOrder_items:= 'SELECT order_items.title AS TITULO'
     +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
@@ -649,25 +653,25 @@ begin
 //    +sqlOrderWhere
     ;
 
-  sqlCountShipping:='SELECT COUNT(*)'
+  sqlMessages:=
     +sqlOrderFrom
-    +sqlOrderWhere
-    ;
+    +' INNER JOIN messages ON orders.id = messages.order_id';
 
+  sqlPreparar:=+sqlOrderFrom+sqlOrderWhere;
   sqlPrepararEnvios:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlNoEmbalado+' AND '+sqlSMMe2;
   sqlPrepararFlex:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlNoEmbalado+' AND '+sqlSMMe1;
   sqlPrepararAcordar:=sqlOrder_items+' WHERE '+sqlNoStatus+' AND '+sqlNoEmbalado+' AND '+sqlSMCustom;
+  PrepararMensajes:=sqlMessages+sqlOrderWhere+' GROUP BY orders.id';
 
+  sqlDespachar:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlEmbalado;
+  sqlDespacharDemoradas:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlDelayed+' AND '+sqlEmbalado;
   sqlDespacharColecta:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlEmbalado+' AND '+sqlSMMe2;
   sqlDespacharFlex:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlEmbalado+' AND '+sqlSMMe1;
+  sqlDespacharMensajes:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlEmbalado;
 
+  sqlTransito:= sqlOrder_items+' WHERE '+sqlShipped+' OR '+sqlDelivered;
   sqlTransitoCamino:=sqlOrder_items+' WHERE '+sqlShipped;
-
-  sqlCountMessages:='SELECT COUNT(*)'
-    +sqlOrderFrom
-    +' INNER JOIN messages ON orders.id = messages.order_id'
-    +sqlOrderWhere
-    +' GROUP BY orders.id';
+  sqlTransitoEsperandoRetiro:=sqlOrder_items+' WHERE '+sqlDelivered;
 
 //    OrdenesPrueba;
 end;
@@ -973,6 +977,12 @@ begin
       tDespachadosenviado.AsString := 'N';
     Post;
   end;
+end;
+
+function TdmML.CantidadVentas;
+begin
+  FDQuery1.Open(sql);
+  result := IntToStr(FDQuery1.RowsAffected)+' ventas';
 end;
 
 end.

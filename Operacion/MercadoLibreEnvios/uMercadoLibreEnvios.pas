@@ -50,9 +50,9 @@ type
     pTransitoCamino: TPanel;
     lTituloTransitoCamino: TLabel;
     lVentasTransitoCamino: TLabel;
-    pTransitoMensaje: TPanel;
-    lTituloTransitoMensaje: TLabel;
-    lVentasTransitoMensaje: TLabel;
+    pTransitoMensajes: TPanel;
+    lTituloTransitoMensajes: TLabel;
+    lVentasTransitoMensajes: TLabel;
     pTransitoEsperandoRetiro: TPanel;
     lTituloTransitoEsperandoRetiro: TLabel;
     lVentasTransitoEsperandoRetiro: TLabel;
@@ -226,31 +226,23 @@ begin
 end;
 
 procedure TfMercadoLibreEnvios.actualizarEtiquetas;
-var
-  v:string;
 begin
   with dmML do
   begin
-    v:=' ventas';
-    lVentasPreparar.Caption := IntToStr(dbMain.ExecSQLScalar(sqlCountShipping))+v;
-//    lVentasPrepararEnvios.Caption := IntToStr(dbMain.ExecSQLScalar(
-    FDQuery1.Open(sqlPrepararEnvios);
-    lVentasPrepararEnvios.Caption := IntToStr(FDQuery1.RowsAffected)+v;
-//    lVentasPrepararFlex.Caption := IntToStr(dbMain.ExecSQLScalar(sqlCountPrepararFlex)+v;
-    FDQuery1.Open(sqlPrepararFlex);
-    lVentasPrepararFlex.Caption := IntToStr(FDQuery1.RowsAffected)+v;
-//    lVentasPrepararAcordar.Caption := IntToStr(dbMain.ExecSQLScalar(
-    FDQuery1.Open(sqlPrepararAcordar);
-    lVentasPrepararAcordar.Caption := IntToStr(FDQuery1.RowsAffected)+v;
-//
-    FDQuery1.Open(sqlCountMessages);
-    lVentasPrepararMensajes.Caption := IntToStr(FDQuery1.RowsAffected)+v;
-//    lVentasDespacharColecta.Caption := IntToStr(dbMain.ExecSQLScalar(
-    FDQuery1.Open(sqlDespacharColecta);
-    lVentasDespacharColecta.Caption := IntToStr(FDQuery1.RowsAffected)+v;
-//    lVentasTransitoCamino.Caption := IntToStr(dbMain.ExecSQLScalar(
-    FDQuery1.Open(sqlTransitoCamino);
-    lVentasTransitoCamino.Caption := IntToStr(FDQuery1.RowsAffected)+v;
+    lVentasPreparar.Caption := CantidadVentas(sqlPreparar);
+    lVentasPrepararEnvios.Caption:=CantidadVentas(sqlPrepararEnvios);
+    lVentasPrepararFlex.Caption := CantidadVentas(sqlPrepararFlex);
+    lVentasPrepararAcordar.Caption := CantidadVentas(sqlPrepararAcordar);
+    lVentasPrepararMensajes.Caption := CantidadVentas(sqlPrepararMensajes);
+    lVentasDespachar.Caption := CantidadVentas(sqlDespachar);
+    lVentasDespacharDemoradas.Caption := CantidadVentas(sqlDespacharDemoradas);
+    lVentasDespacharColecta.Caption := CantidadVentas(sqlDespacharColecta);
+    lVentasDespacharFlex.Caption := CantidadVentas(sqlDespacharFlex);
+    lVentasDespacharMensajes.Caption := CantidadVentas(sqlDespacharMensajes);
+    lVentasTransito.Caption := CantidadVentas(sqlTransito);
+    lVentasTransitoCamino.Caption := CantidadVentas(sqlTransitoCamino);
+    lVentasTransitoEsperandoRetiro.Caption := CantidadVentas(sqlTransitoEsperandoRetiro);
+//    lVentasTransitoMensajes.Caption := CantidadVentas(sqlTransitoMensajes);
   end;
 end;
 
