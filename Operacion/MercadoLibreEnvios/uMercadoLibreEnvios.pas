@@ -46,6 +46,19 @@ type
     pTituloDespachar: TPanel;
     lDespachar: TLabel;
     lVentasDespachar: TLabel;
+    Panel1: TPanel;
+    pTransitoCamino: TPanel;
+    lTituloTransitoCamino: TLabel;
+    lVentasTransitoCamino: TLabel;
+    pTransitoMensaje: TPanel;
+    lTituloTransitoMensaje: TLabel;
+    lVentasTransitoMensaje: TLabel;
+    pTransitoEsperandoRetiro: TPanel;
+    lTituloTransitoEsperandoRetiro: TLabel;
+    lVentasTransitoEsperandoRetiro: TLabel;
+    Panel6: TPanel;
+    lTransito: TLabel;
+    lVentasTransito: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure StringGridBindSourceDB1Click(Sender: TObject);
     procedure tProgressBarTimer(Sender: TObject);
@@ -110,10 +123,9 @@ begin
   with dmML do
     with fOrders do
     begin
-      qOrders.Open(sqlOrder_items
-        +sqlNoEmbalado
-        +' AND shipping_mode='+QuotedStr('custom')
-        +' GROUP BY orders.buyer');
+      qOrders.Open(sqlPrepararAcordar
+        +' GROUP BY orders.buyer'
+        );
       try
         ShowModal;
       finally
@@ -128,9 +140,7 @@ begin
   with dmML do
     with fOrders do
     begin
-      qOrders.Open(sqlOrder_items
-        +sqlEmbalado
-        +' AND shipping_mode='+QuotedStr('me1')
+      qOrders.Open(sqlDespacharFlex
         +' GROUP BY orders.buyer');
       try
         ShowModal;
@@ -147,9 +157,7 @@ begin
   with dmML do
     with fOrders do
     begin
-      qOrders.Open(sqlOrder_items
-        +sqlNoEmbalado
-        +' AND shipping_mode='+QuotedStr('me2')
+      qOrders.Open(sqlPrepararEnvios
         +' GROUP BY orders.buyer');
     try
       ShowModal;
@@ -166,8 +174,7 @@ begin
   with dmML do
     with fOrders do
     begin
-      qOrders.Open(sqlOrder_items+sqlEmbalado
-        +' AND shipping_mode='+QuotedStr('me2')
+      qOrders.Open(sqlDespacharColecta
         +' GROUP BY orders.buyer');
       try
         ShowModal;
@@ -184,9 +191,7 @@ begin
   with dmML do
     with fOrders do
     begin
-      qOrders.Open(sqlOrder_items
-        +sqlNoEmbalado
-        +' AND shipping_mode='+QuotedStr('me1')
+      qOrders.Open(sqlPrepararFlex
         +' GROUP BY orders.buyer');
       try
         ShowModal;
@@ -228,16 +233,24 @@ begin
   begin
     v:=' ventas';
     lVentasPreparar.Caption := IntToStr(dbMain.ExecSQLScalar(sqlCountShipping))+v;
-    lVentasPrepararEnvios.Caption := IntToStr(dbMain.ExecSQLScalar(
-      sqlCountShipping+sqlNoEmbalado+' AND shipping_mode=:M',['me2']))+v;
-    lVentasPrepararFlex.Caption := IntToStr(dbMain.ExecSQLScalar(
-      sqlCountShipping+sqlNoEmbalado+' AND shipping_mode=:M',['me1']))+v;
-    lVentasPrepararAcordar.Caption := IntToStr(dbMain.ExecSQLScalar(
-      sqlCountShipping+sqlNoEmbalado+' AND shipping_mode=:M',['custom']))+v;
+//    lVentasPrepararEnvios.Caption := IntToStr(dbMain.ExecSQLScalar(
+    FDQuery1.Open(sqlPrepararEnvios);
+    lVentasPrepararEnvios.Caption := IntToStr(FDQuery1.RowsAffected)+v;
+//    lVentasPrepararFlex.Caption := IntToStr(dbMain.ExecSQLScalar(sqlCountPrepararFlex)+v;
+    FDQuery1.Open(sqlPrepararFlex);
+    lVentasPrepararFlex.Caption := IntToStr(FDQuery1.RowsAffected)+v;
+//    lVentasPrepararAcordar.Caption := IntToStr(dbMain.ExecSQLScalar(
+    FDQuery1.Open(sqlPrepararAcordar);
+    lVentasPrepararAcordar.Caption := IntToStr(FDQuery1.RowsAffected)+v;
+//
     FDQuery1.Open(sqlCountMessages);
     lVentasPrepararMensajes.Caption := IntToStr(FDQuery1.RowsAffected)+v;
-    lVentasDespacharColecta.Caption := IntToStr(dbMain.ExecSQLScalar(
-      sqlCountShipping+sqlEmbalado+' AND shipping_mode=:M',['me2']))+v;
+//    lVentasDespacharColecta.Caption := IntToStr(dbMain.ExecSQLScalar(
+    FDQuery1.Open(sqlDespacharColecta);
+    lVentasDespacharColecta.Caption := IntToStr(FDQuery1.RowsAffected)+v;
+//    lVentasTransitoCamino.Caption := IntToStr(dbMain.ExecSQLScalar(
+    FDQuery1.Open(sqlTransitoCamino);
+    lVentasTransitoCamino.Caption := IntToStr(FDQuery1.RowsAffected)+v;
   end;
 end;
 

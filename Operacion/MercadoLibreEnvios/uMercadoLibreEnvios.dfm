@@ -4,7 +4,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   Top = 0
   Caption = 'Mercado Libre Envios'
   ClientHeight = 467
-  ClientWidth = 251
+  ClientWidth = 750
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,14 +19,14 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   object ProgressBar1: TProgressBar
     Left = 0
     Top = 0
-    Width = 251
+    Width = 750
     Height = 5
     Align = alTop
     Min = 1
     Position = 1
     TabOrder = 0
     Visible = False
-    ExplicitWidth = 249
+    ExplicitWidth = 251
   end
   object pPreparar: TPanel
     Left = 0
@@ -465,6 +465,181 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         ParentFont = False
       end
       object lVentasDespachar: TLabel
+        Left = 17
+        Top = 35
+        Width = 42
+        Height = 13
+        Caption = '0 ventas'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+    end
+  end
+  object Panel1: TPanel
+    Left = 500
+    Top = 5
+    Width = 250
+    Height = 462
+    Align = alLeft
+    TabOrder = 3
+    object pTransitoCamino: TPanel
+      AlignWithMargins = True
+      Left = 6
+      Top = 166
+      Width = 238
+      Height = 70
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alTop
+      ParentBackground = False
+      TabOrder = 0
+      object lTituloTransitoCamino: TLabel
+        Left = 17
+        Top = 17
+        Width = 58
+        Height = 13
+        Caption = 'En Camino'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lVentasTransitoCamino: TLabel
+        Left = 17
+        Top = 33
+        Width = 42
+        Height = 13
+        Caption = '0 ventas'
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object pTransitoMensaje: TPanel
+      AlignWithMargins = True
+      Left = 6
+      Top = 86
+      Width = 238
+      Height = 70
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alTop
+      ParentBackground = False
+      TabOrder = 1
+      object lTituloTransitoMensaje: TLabel
+        Left = 17
+        Top = 17
+        Width = 98
+        Height = 13
+        Caption = 'Mensajes nuevos'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lVentasTransitoMensaje: TLabel
+        Left = 17
+        Top = 33
+        Width = 42
+        Height = 13
+        Caption = '0 ventas'
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object pTransitoEsperandoRetiro: TPanel
+      AlignWithMargins = True
+      Left = 6
+      Top = 246
+      Width = 238
+      Height = 70
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alTop
+      ParentBackground = False
+      TabOrder = 2
+      object lTituloTransitoEsperandoRetiro: TLabel
+        Left = 17
+        Top = 18
+        Width = 179
+        Height = 13
+        Caption = 'Esperando retiro del comprador'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lVentasTransitoEsperandoRetiro: TLabel
+        Left = 17
+        Top = 36
+        Width = 42
+        Height = 13
+        Caption = '0 ventas'
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        OnClick = pDespacharFlexClick
+      end
+    end
+    object Panel6: TPanel
+      AlignWithMargins = True
+      Left = 6
+      Top = 6
+      Width = 238
+      Height = 70
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alTop
+      BevelOuter = bvNone
+      TabOrder = 3
+      object lTransito: TLabel
+        Left = 17
+        Top = 16
+        Width = 72
+        Height = 16
+        Caption = 'En Transito'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lVentasTransito: TLabel
         Left = 17
         Top = 35
         Width = 42

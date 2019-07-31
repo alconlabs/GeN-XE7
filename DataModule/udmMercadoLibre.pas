@@ -661,7 +661,7 @@ begin
   sqlDespacharColecta:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlEmbalado+' AND '+sqlSMMe2;
   sqlDespacharFlex:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlEmbalado+' AND '+sqlSMMe1;
 
-  sqlTransitoCamino:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlNoEmbalado+' AND '+sqlSMCustom;
+  sqlTransitoCamino:=sqlOrder_items+' WHERE '+sqlShipped;
 
   sqlCountMessages:='SELECT COUNT(*)'
     +sqlOrderFrom
