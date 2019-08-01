@@ -22,7 +22,7 @@ type
     procedure StringGridBindSourceDB1Click(Sender: TObject);
   private
     { Private declarations }
-    procedure ImprimirEtiqueta;
+//    procedure ImprimirEtiqueta;
   public
     { Public declarations }
   end;
@@ -36,40 +36,41 @@ implementation
 
 uses udmMercadoLibre, RestDM, uOrder_items;
 
-procedure TfOrders.ImprimirEtiqueta;
-var
-  buyer_id:string;
-begin
-  with dmml do
-  begin
-    DMR.ImprimirEtiqueta(FDQuery1.FieldByName('shipping').AsString);
-    buyer_id := FDQuery1.FieldByName('buyer').AsString;
-    while buyer_id=FDQuery1.FieldByName('buyer').AsString do
-    begin
-      AgregarDespachados(FDQuery1.FieldByName('order_id').AsString,'SI');
-      FDQuery1.Next;
-    end;
-    tOrders.Close;
-    tOrders.Open;
-  end;
-end;
+//procedure TfOrders.ImprimirEtiqueta;
+//var
+//  buyer_id:string;
+//begin
+//  with dmml do
+//  begin
+//    DMR.ImprimirEtiqueta(FDQuery1.FieldByName('shipping').AsString);
+//    buyer_id := FDQuery1.FieldByName('buyer').AsString;
+//    while buyer_id=FDQuery1.FieldByName('buyer').AsString do
+//    begin
+//      AgregarDespachados(FDQuery1.FieldByName('order_id').AsString,'SI');
+//      FDQuery1.Next;
+//    end;
+//    tOrders.Close;
+//    tOrders.Open;
+//  end;
+//end;
 
 procedure TfOrders.StringGridBindSourceDB1Click(Sender: TObject);
 begin
   fOrder_items := TfOrder_items.Create(Self);
-  with fOrder_items do
-  begin
-    qOrder_items.Open(dmML.sqlOrder_items
-  +' AND buyer=:B',[qOrders.FieldByName('buyer').AsString]
-  //+' GROUP BY orders.buyer'
-  );
-    Panel1.Caption:=qOrder_items.FieldByName('NOMBRE').AsString+' '+qOrder_items.FieldByName('APELLIDO').AsString+' ['+qOrder_items.FieldByName('NIK').AsString+'] ';
-    try
-      ShowModal;
-    finally
-      Free;
+  with dmML do
+    with fOrder_items do
+    begin
+      qOrder_items.Open(sqlOrder_items+sqlOrderWhere
+    +' AND buyer=:B',[qOrders.FieldByName('buyer').AsString]
+    //+' GROUP BY orders.buyer'
+    );
+      Panel1.Caption:=qOrder_items.FieldByName('NOMBRE').AsString+' '+qOrder_items.FieldByName('APELLIDO').AsString+' ['+qOrder_items.FieldByName('NIK').AsString+'] ';
+      try
+        ShowModal;
+      finally
+        Free;
+      end;
     end;
-  end;
   Close;
 end;
 

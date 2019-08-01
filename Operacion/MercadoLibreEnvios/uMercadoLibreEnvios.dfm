@@ -655,13 +655,13 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   end
   object tProgressBar: TTimer
     OnTimer = tProgressBarTimer
-    Left = 136
-    Top = 8
+    Left = 336
+    Top = 416
   end
   object Timer1: TTimer
     Enabled = False
     OnTimer = Timer1Timer
-    Left = 168
-    Top = 8
+    Left = 368
+    Top = 416
   end
 end
