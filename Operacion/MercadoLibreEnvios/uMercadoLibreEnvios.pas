@@ -242,7 +242,7 @@ begin
     lVentasTransito.Caption := CantidadVentas(sqlTransito);
     lVentasTransitoCamino.Caption := CantidadVentas(sqlTransitoCamino);
     lVentasTransitoEsperandoRetiro.Caption := CantidadVentas(sqlTransitoEsperandoRetiro);
-//    lVentasTransitoMensajes.Caption := CantidadVentas(sqlTransitoMensajes);
+    lVentasTransitoMensajes.Caption := CantidadVentas(sqlTransitoMensajes);
   end;
 end;
 

@@ -148,12 +148,12 @@ type
   public
     { Public declarations }
     refreshToken, seller_id, sqlOrder_items, sqlMessages, sqlOrderFrom,
-    sqlOrderWhere, sqlNoEmbalado, sqlEmbalado, sqlReady_to_ship, sqlShipped,
-    sqlDelivered, sqlNoStatus, sqlDelayed,
-    sqlPreparar, sqlPrepararFlex, sqlPrepararEnvios, sqlPrepararAcordar, PrepararMensajes,
-    sqlSMMe1, sqlSMMe2, sqlSMCustom,
+    sqlOrderWhere, whereNoEmbalado, whereEmbalado, whereReady_to_ship, whereShipped,
+    whereDelivered, whereNoStatus, whereDelayed, groupOrder,
+    sqlPreparar, sqlPrepararFlex, sqlPrepararEnvios, sqlPrepararAcordar, sqlPrepararMensajes,
+    whereSMMe1, whereSMMe2, whereSMCustom, whereNoLeido,
     sqlDespachar, sqlDespacharDemoradas, sqlDespacharColecta, sqlDespacharFlex, sqlDespacharMensajes,
-    sqlTransito, sqlTransitoCamino, sqlTransitoEsperandoRetiro
+    sqlTransito, sqlTransitoCamino, sqlTransitoEsperandoRetiro, sqlTransitoMensajes
 //    order_id, order_items_quantity, buyer_id, order_status, item_title, item_id,
 //    shipping_id, pack_id, message_id, message_text
     : string;
@@ -633,16 +633,18 @@ begin
     +' AND (NOT(despachados.embalado=''S''))'
     ;
 
-  sqlReady_to_ship:='(shipping.status=''ready_to_ship'')';
-  sqlShipped:='(shipping.status=''shipped'')';
-  sqlDelivered:='(shipping.status=''delivered'')';
-  sqlNoStatus:='(shipping.status='''')';
-  sqlSMMe1:=' shipping_mode=''me1''';
-  sqlSMMe2:=' shipping_mode=''me2''';
-  sqlSMCustom:=' shipping_mode=''custom''';
-  sqlEmbalado:=' (despachados.embalado=''S'')';
-  sqlNoEmbalado:=' (NOT(despachados.embalado=''S''))';
-  sqlDelayed:='(shipping.substatus=''delayed'')';
+  whereReady_to_ship:='(shipping.status=''ready_to_ship'')';
+  whereShipped:='(shipping.status=''shipped'')';
+  whereDelivered:='(shipping.status=''delivered'')';
+  whereNoStatus:='(shipping.status='''')';
+  whereSMMe1:=' shipping_mode=''me1''';
+  whereSMMe2:=' shipping_mode=''me2''';
+  whereSMCustom:=' shipping_mode=''custom''';
+  whereEmbalado:=' (despachados.embalado=''S'')';
+  whereNoEmbalado:=' (NOT(despachados.embalado=''S''))';
+  whereDelayed:='(shipping.substatus=''delayed'')';
+  groupOrder:=' GROUP BY orders.id';
+  whereNoLeido:=' (messages.date_read='''')';
 
   sqlOrder_items:= 'SELECT order_items.title AS TITULO'
     +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
@@ -654,24 +656,25 @@ begin
     ;
 
   sqlMessages:=
-    +sqlOrderFrom
+    sqlOrder_items
     +' INNER JOIN messages ON orders.id = messages.order_id';
 
-  sqlPreparar:=+sqlOrderFrom+sqlOrderWhere;
-  sqlPrepararEnvios:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlNoEmbalado+' AND '+sqlSMMe2;
-  sqlPrepararFlex:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlNoEmbalado+' AND '+sqlSMMe1;
-  sqlPrepararAcordar:=sqlOrder_items+' WHERE '+sqlNoStatus+' AND '+sqlNoEmbalado+' AND '+sqlSMCustom;
-  PrepararMensajes:=sqlMessages+sqlOrderWhere+' GROUP BY orders.id';
+  sqlPreparar:=sqlOrder_items+sqlOrderWhere;
+  sqlPrepararEnvios:=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe2;
+  sqlPrepararFlex:=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe1;
+  sqlPrepararAcordar:=sqlOrder_items+' WHERE '+whereNoStatus+' AND '+whereNoEmbalado+' AND '+whereSMCustom;
+  sqlPrepararMensajes:=sqlMessages+sqlOrderWhere+' AND '+whereNoLeido+groupOrder;
 
-  sqlDespachar:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlEmbalado;
-  sqlDespacharDemoradas:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlDelayed+' AND '+sqlEmbalado;
-  sqlDespacharColecta:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlEmbalado+' AND '+sqlSMMe2;
-  sqlDespacharFlex:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlEmbalado+' AND '+sqlSMMe1;
-  sqlDespacharMensajes:=sqlOrder_items+' WHERE '+sqlReady_to_ship+' AND '+sqlEmbalado;
+  sqlDespachar:=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereEmbalado;
+  sqlDespacharDemoradas:=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereDelayed+' AND '+whereEmbalado;
+  sqlDespacharColecta:=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereEmbalado+' AND '+whereSMMe2;
+  sqlDespacharFlex:=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereEmbalado+' AND '+whereSMMe1;
+  sqlDespacharMensajes:=sqlMessages+' WHERE '+whereNoLeido+' AND ('+whereReady_to_ship+' AND '+whereEmbalado+')'+groupOrder;
 
-  sqlTransito:= sqlOrder_items+' WHERE '+sqlShipped+' OR '+sqlDelivered;
-  sqlTransitoCamino:=sqlOrder_items+' WHERE '+sqlShipped;
-  sqlTransitoEsperandoRetiro:=sqlOrder_items+' WHERE '+sqlDelivered;
+  sqlTransito:=sqlOrder_items+' WHERE '+whereShipped+' OR '+whereDelivered;
+  sqlTransitoCamino:=sqlOrder_items+' WHERE '+whereShipped;
+  sqlTransitoEsperandoRetiro:=sqlOrder_items+' WHERE '+whereDelivered;
+  sqlTransitoMensajes:=sqlMessages+' WHERE '+whereNoLeido+' AND ('+whereShipped+' OR '+whereDelivered+')'+groupOrder;
 
 //    OrdenesPrueba;
 end;
