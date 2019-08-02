@@ -90,7 +90,7 @@ object fOrder_items: TfOrder_items
       ' INNER JOIN buyer ON orders.buyer = buyer.id'
       ' GROUP BY orders.buyer')
     Left = 448
-    Top = 94
+    Top = 65534
   end
   object BindSourceDB1: TBindSourceDB
     DataSet = qOrder_items
@@ -109,19 +109,23 @@ object fOrder_items: TfOrder_items
       GridControl = StringGridBindSourceDB1
       Columns = <
         item
-          MemberName = 'TITULO'
+          MemberName = 'title'
+          Header = 'TITULO'
           Width = 200
         end
         item
-          MemberName = 'PRECIO'
+          MemberName = 'full_unit_price'
+          Header = 'PRECIO'
           Width = 100
         end
         item
-          MemberName = 'CANTIDAD'
+          MemberName = 'quantity'
+          Header = 'CANTIDAD'
           Width = 40
         end
         item
-          MemberName = 'SKU'
+          MemberName = 'seller_sku'
+          Header = 'SKU'
           Width = 100
         end>
     end

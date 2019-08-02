@@ -159,17 +159,7 @@ type
     procedure OrdenesPrueba;
   public
     { Public declarations }
-    refreshToken, seller_id, sqlOrder_items, sqlMessages, sqlOrderFrom,
-    sqlOrderWhere, whereNoEmbalado, whereEmbalado, whereReady_to_ship, whereShipped,
-    whereDelivered, whereNoStatus, whereEtiquetaLista, whereEqtiquetaImpresa, whereDelayed,
-    groupOrder,
-    sqlPreparar, sqlPrepararFlex, sqlPrepararEnvios, sqlPrepararAcordar, sqlPrepararMensajes,
-    whereSMMe1, whereSMMe2, whereSMCustom, whereNoLeido, whereEsperandoRetiro,
-    sqlDespachar, sqlDespacharDemoradas, sqlDespacharColecta, sqlDespacharFlex, sqlDespacharMensajes,
-    sqlTransito, sqlTransitoCamino, sqlTransitoEsperandoRetiro, sqlTransitoMensajes
-//    order_id, order_items_quantity, buyer_id, order_status, item_title, item_id,
-//    shipping_id, pack_id, message_id, message_text
-    : string;
+    refreshToken, seller_id : string;
     procedure AgregarOrder(order_id,order_status,buyer_id,shipping_id:string);
     procedure AgregarOrder_items(order_id,item_id,item_title:string);
     procedure ActualizarRefreshToken;
@@ -186,6 +176,57 @@ type
 
 var
   dmML: TdmML;
+
+const
+  sqlOrderFrom=' FROM orders'
+    +' INNER JOIN order_items ON orders.id = order_items.order_id'
+    +' INNER JOIN shipping ON orders.id = shipping.order_id'
+    +' INNER JOIN buyer ON orders.buyer = buyer.id'
+    +' LEFT JOIN despachados ON orders.id = despachados.order_id'
+    +' LEFT JOIN messages ON orders.id = messages.order_id';
+  sqlOrderWhere=' WHERE' //' (NOT(shipping.status=''ready_to_ship'')) AND'
+    +' (NOT(shipping.status=''shipped''))'
+    +' AND (NOT(shipping.status=''delivered''))'
+    +' AND (NOT(shipping.status=''not_delivered''))'
+    +' AND (NOT(despachados.embalado=''S''))';
+  sqlOrder_items='SELECT '
+    +'order_items.title AS TITULO'
+    +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
+    +', order_items.seller_sku AS SKU, buyer.first_name AS NOMBRE'
+    +', buyer.last_name AS APELLIDO, buyer.nickname AS NIK, "imprimir" AS ETIQUETA'
+    +', shipping, buyer, order_items.order_id, messages.text_plain'
+    +sqlOrderFrom;
+  whereReady_to_ship='(shipping.status=''ready_to_ship'')';
+  whereShipped='(shipping.status=''shipped'')';
+  whereDelivered='(shipping.status=''delivered'')';
+  whereNoStatus='(shipping.status='''')';
+  whereSMMe1=' shipping.mode=''me1''';
+  whereSMMe2=' shipping.mode=''me2''';
+  whereSMCustom=' shipping.mode=''custom''';
+  whereEmbalado=' (despachados.embalado=''S'')';
+  whereNoEmbalado=' (NOT(despachados.embalado=''S''))';
+  whereDelayed='(shipping.substatus=''delayed'')';
+  whereEqtiquetaImpresa='(shipping.substatus=''printed'')';
+  whereEtiquetaLista='(shipping.substatus=''ready_to_print'')';
+  whereNoLeido=' (messages.date_read='''')';
+  whereEsperandoRetiro=' (shipping.substatus=''waiting_for_withdrawal'')';
+  whereEnCamino=' (shipping.substatus='''')';
+  groupOrder=' GROUP BY orders.id';
+  sqlMessages=sqlOrder_items;//+' INNER JOIN messages ON orders.id = messages.order_id';
+  sqlPreparar=sqlOrder_items+sqlOrderWhere;
+  sqlPrepararEnvios=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe2;
+  sqlPrepararFlex=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe1;
+  sqlPrepararAcordar=sqlOrder_items+' WHERE '+whereNoStatus+' AND '+whereNoEmbalado+' AND '+whereSMCustom;
+  sqlPrepararMensajes=sqlMessages+sqlOrderWhere+' AND '+whereNoLeido+groupOrder;
+  sqlDespachar=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereEmbalado;
+  sqlDespacharDemoradas=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereDelayed+' AND '+whereEmbalado;
+  sqlDespacharColecta=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereEmbalado+' AND '+whereSMMe2;
+  sqlDespacharFlex=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereEmbalado+' AND '+whereSMMe1;
+  sqlDespacharMensajes=sqlMessages+' WHERE '+whereNoLeido+' AND ('+whereReady_to_ship+' AND '+whereEmbalado+')'+groupOrder;
+  sqlTransito=sqlOrder_items+' WHERE '+whereShipped;
+  sqlTransitoCamino=sqlOrder_items+' WHERE '+whereShipped+' AND '+whereEnCamino;
+  sqlTransitoEsperandoRetiro=sqlOrder_items+' WHERE '+whereEsperandoRetiro;
+  sqlTransitoMensajes=sqlMessages+' WHERE '+whereNoLeido+' AND ('+whereShipped+')'+groupOrder;
 
 implementation
 
@@ -645,67 +686,7 @@ begin
   tBuyer.Open('SELECT * FROM buyer');
   tDespachados.Open('SELECT * FROM despachados');
 
-  sqlOrderFrom:=' FROM orders'
-    +' INNER JOIN order_items ON orders.id = order_items.order_id'
-    +' INNER JOIN shipping ON orders.id = shipping.order_id'
-    +' INNER JOIN buyer ON orders.buyer = buyer.id'
-    +' LEFT JOIN despachados ON orders.id = despachados.order_id';
-
-  sqlOrderWhere:=' WHERE' //' (NOT(shipping.status=''ready_to_ship'')) AND'
-    +' (NOT(shipping.status=''shipped''))'
-    +' AND (NOT(shipping.status=''delivered''))'
-    +' AND (NOT(shipping.status=''not_delivered''))'
-    +' AND (NOT(despachados.embalado=''S''))'
-    ;
-
-  whereReady_to_ship:='(shipping.status=''ready_to_ship'')';
-  whereShipped:='(shipping.status=''shipped'')';
-  whereDelivered:='(shipping.status=''delivered'')';
-  whereNoStatus:='(shipping.status='''')';
-  whereSMMe1:=' shipping.mode=''me1''';
-  whereSMMe2:=' shipping.mode=''me2''';
-  whereSMCustom:=' shipping.mode=''custom''';
-  whereEmbalado:=' (despachados.embalado=''S'')';
-  whereNoEmbalado:=' (NOT(despachados.embalado=''S''))';
-  whereDelayed:='(shipping.substatus=''delayed'')';
-  whereEqtiquetaImpresa:='(shipping.substatus=''printed'')';
-  whereEtiquetaLista:='(shipping.substatus=''ready_to_print'')';
-  whereNoLeido:=' (messages.date_read='''')';
-  whereEsperandoRetiro:=' (shipping.substatus=''waiting_for_withdrawal'')';
-
-  groupOrder:=' GROUP BY orders.id';
-
-  sqlOrder_items:= 'SELECT order_items.title AS TITULO'
-    +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
-    +', order_items.seller_sku AS SKU, buyer.first_name AS NOMBRE'
-    +', buyer.last_name AS APELLIDO, buyer.nickname AS NIK, "imprimir" AS ETIQUETA'
-    +', shipping, buyer, order_items.order_id'
-    +sqlOrderFrom
-//    +sqlOrderWhere
-    ;
-
-  sqlMessages:=
-    sqlOrder_items
-    +' INNER JOIN messages ON orders.id = messages.order_id';
-
-  sqlPreparar:=sqlOrder_items+sqlOrderWhere;
-  sqlPrepararEnvios:=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe2;
-  sqlPrepararFlex:=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe1;
-  sqlPrepararAcordar:=sqlOrder_items+' WHERE '+whereNoStatus+' AND '+whereNoEmbalado+' AND '+whereSMCustom;
-  sqlPrepararMensajes:=sqlMessages+sqlOrderWhere+' AND '+whereNoLeido+groupOrder;
-
-  sqlDespachar:=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereEmbalado;
-  sqlDespacharDemoradas:=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereDelayed+' AND '+whereEmbalado;
-  sqlDespacharColecta:=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereEmbalado+' AND '+whereSMMe2;
-  sqlDespacharFlex:=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereEmbalado+' AND '+whereSMMe1;
-  sqlDespacharMensajes:=sqlMessages+' WHERE '+whereNoLeido+' AND ('+whereReady_to_ship+' AND '+whereEmbalado+')'+groupOrder;
-
-  sqlTransito:=sqlOrder_items+' WHERE '+whereShipped;
-  sqlTransitoCamino:=sqlOrder_items+' WHERE '+whereShipped;
-  sqlTransitoEsperandoRetiro:=sqlOrder_items+' WHERE '+whereEsperandoRetiro;
-  sqlTransitoMensajes:=sqlMessages+' WHERE '+whereNoLeido+' AND ('+whereShipped+')'+groupOrder;
-
-//    OrdenesPrueba;
+  OrdenesPrueba;
 end;
 
 procedure TdmML.AgregarOrder;
@@ -868,7 +849,7 @@ begin
       tShippingid.AsString:='1';
     end;
     tShippingorder_id.AsString:='1';
-    tShippingstatus.AsString:='';
+    tShippingstatus.AsString:='ready_to_ship';
     tShippingmode.AsString:='me2';
     Post;
   end;

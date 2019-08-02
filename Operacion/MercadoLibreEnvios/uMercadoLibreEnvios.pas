@@ -211,7 +211,11 @@ procedure TfMercadoLibreEnvios.StringGridBindSourceDB1Click(Sender: TObject);
 begin
   with dmml do
   begin
-    tOrder_items.Open('SELECT item_title FROM order_items WHERE order_id='+dmML.tOrders.FieldByName('order_id').AsString);
+    tOrder_items.Open(
+//    'SELECT item_title FROM order_items WHERE order_id='+dmML.tOrders.FieldByName('order_id').AsString);
+    sqlOrder_items
+    +' WHERE order_id='+dmML.tOrders.FieldByName('order_id').AsString
+    );
   end;
 end;
 

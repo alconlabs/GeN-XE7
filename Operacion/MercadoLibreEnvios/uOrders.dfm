@@ -68,27 +68,33 @@ object fOrders: TfOrders
       GridControl = StringGridBindSourceDB1
       Columns = <
         item
-          MemberName = 'TITULO'
+          MemberName = 'title'
+          Header = 'TITULO'
           Width = 200
         end
         item
-          MemberName = 'PRECIO'
+          MemberName = 'full_unit_price'
+          Header = 'PRECIO'
           Width = 70
         end
         item
-          MemberName = 'CANTIDAD'
+          MemberName = 'quantity'
+          Header = 'CANTIDAD'
           Width = 40
         end
         item
-          MemberName = 'SKU'
+          MemberName = 'seller_sku'
+          Header = 'SKU'
           Width = 40
         end
         item
-          MemberName = 'NOMBRE'
+          MemberName = 'first_name'
+          Header = 'NOMBRE'
           Width = 70
         end
         item
-          MemberName = 'APELLIDO'
+          MemberName = 'last_name'
+          Header = 'APELLIDO'
           Width = 70
         end
         item

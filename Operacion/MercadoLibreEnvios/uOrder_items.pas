@@ -47,13 +47,20 @@ uses udmMercadoLibre, RestDM;
 procedure TfOrder_items.bImprimirClick(Sender: TObject);
 begin
   DMR.ImprimirEtiqueta(qOrder_items.FieldByName('shipping').AsString);
-  dmML.AgregarDespachados(qOrder_items.FieldByName('order_id').AsString,'S');
+  qOrder_items.First;
+  while not qOrder_items.Eof do
+  begin
+    dmML.AgregarDespachados(qOrder_items.FieldByName('order_id').AsString,'S');
+    qOrder_items.Next;
+  end;
   Close;
 end;
 
 procedure TfOrder_items.FormShow(Sender: TObject);
 begin
-  dmML.tMessages.Open('SELECT * FROM messages INNER JOIN orders ON messages.order_id = orders.id WHERE buyer='+qOrder_items.FieldByName('buyer').AsString);
+  dmML.tMessages.Open(sqlMessages
+//  'SELECT * FROM messages INNER JOIN orders ON messages.order_id = orders.id WHERE buyer='+qOrder_items.FieldByName('buyer').AsString);
+  +' WHERE buyer='+qOrder_items.FieldByName('buyer').AsString);
 end;
 
 procedure TfOrder_items.StringGridBindSourceDB1Click(Sender: TObject);
