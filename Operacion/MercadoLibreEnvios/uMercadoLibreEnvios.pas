@@ -213,7 +213,7 @@ begin
   begin
     tOrder_items.Open(
 //    'SELECT item_title FROM order_items WHERE order_id='+dmML.tOrders.FieldByName('order_id').AsString);
-    sqlOrder_items
+    sqlItems
     +' WHERE order_id='+dmML.tOrders.FieldByName('order_id').AsString
     );
   end;

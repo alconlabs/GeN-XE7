@@ -182,20 +182,25 @@ const
     +' INNER JOIN order_items ON orders.id = order_items.order_id'
     +' INNER JOIN shipping ON orders.id = shipping.order_id'
     +' INNER JOIN buyer ON orders.buyer = buyer.id'
-    +' LEFT JOIN despachados ON orders.id = despachados.order_id'
-    +' LEFT JOIN messages ON orders.id = messages.order_id';
+    +' LEFT JOIN despachados ON orders.id = despachados.order_id';
+//    +' LEFT JOIN messages ON orders.id = messages.order_id';
   sqlOrderWhere=' WHERE' //' (NOT(shipping.status=''ready_to_ship'')) AND'
     +' (NOT(shipping.status=''shipped''))'
     +' AND (NOT(shipping.status=''delivered''))'
     +' AND (NOT(shipping.status=''not_delivered''))'
-    +' AND (NOT(despachados.embalado=''S''))';
+//    +' AND (NOT(despachados.embalado=''S''))'
+    ;
   sqlOrder_items='SELECT '
-    +'order_items.title AS TITULO'
-    +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
-    +', order_items.seller_sku AS SKU, buyer.first_name AS NOMBRE'
-    +', buyer.last_name AS APELLIDO, buyer.nickname AS NIK, "imprimir" AS ETIQUETA'
-    +', shipping, buyer, order_items.order_id, messages.text_plain'
-    +sqlOrderFrom;
+//    +'order_items.title AS TITULO'
+//    +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
+//    +', order_items.seller_sku AS SKU, buyer.first_name AS NOMBRE'
+//    +', buyer.last_name AS APELLIDO, buyer.nickname AS NIK, "imprimir" AS ETIQUETA'
+//    +', shipping, buyer, order_items.order_id';
+    +'order_items.title'
+    +', order_items.full_unit_price, order_items.quantity'
+    +', order_items.seller_sku, buyer.first_name'
+    +', buyer.last_name, buyer.nickname, "imprimir" AS ETIQUETA'
+    +', orders.shipping, orders.buyer, order_items.order_id';
   whereReady_to_ship='(shipping.status=''ready_to_ship'')';
   whereShipped='(shipping.status=''shipped'')';
   whereDelivered='(shipping.status=''delivered'')';
@@ -212,20 +217,21 @@ const
   whereEsperandoRetiro=' (shipping.substatus=''waiting_for_withdrawal'')';
   whereEnCamino=' (shipping.substatus='''')';
   groupOrder=' GROUP BY orders.id';
-  sqlMessages=sqlOrder_items;//+' INNER JOIN messages ON orders.id = messages.order_id';
-  sqlPreparar=sqlOrder_items+sqlOrderWhere;
-  sqlPrepararEnvios=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe2;
-  sqlPrepararFlex=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe1;
-  sqlPrepararAcordar=sqlOrder_items+' WHERE '+whereNoStatus+' AND '+whereNoEmbalado+' AND '+whereSMCustom;
-  sqlPrepararMensajes=sqlMessages+sqlOrderWhere+' AND '+whereNoLeido+groupOrder;
-  sqlDespachar=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereEmbalado;
-  sqlDespacharDemoradas=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereDelayed+' AND '+whereEmbalado;
-  sqlDespacharColecta=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereEmbalado+' AND '+whereSMMe2;
-  sqlDespacharFlex=sqlOrder_items+' WHERE '+whereReady_to_ship+' AND '+whereEmbalado+' AND '+whereSMMe1;
-  sqlDespacharMensajes=sqlMessages+' WHERE '+whereNoLeido+' AND ('+whereReady_to_ship+' AND '+whereEmbalado+')'+groupOrder;
-  sqlTransito=sqlOrder_items+' WHERE '+whereShipped;
-  sqlTransitoCamino=sqlOrder_items+' WHERE '+whereShipped+' AND '+whereEnCamino;
-  sqlTransitoEsperandoRetiro=sqlOrder_items+' WHERE '+whereEsperandoRetiro;
+  sqlMessages=sqlOrder_items+', messages.*'+sqlOrderFrom+' INNER JOIN messages ON orders.id = messages.order_id';
+  sqlItems=sqlOrder_items+sqlOrderFrom;
+  sqlPreparar=sqlItems+sqlOrderWhere+' AND '+whereNoEmbalado;
+  sqlPrepararEnvios=sqlItems+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe2;
+  sqlPrepararFlex=sqlItems+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe1;
+  sqlPrepararAcordar=sqlItems+' WHERE '+whereNoStatus+' AND '+whereNoEmbalado+' AND '+whereSMCustom;
+  sqlPrepararMensajes=sqlMessages+sqlOrderWhere+' AND '+whereNoLeido+' AND '+whereNoEmbalado+groupOrder;
+  sqlDespachar=sqlItems+' WHERE ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado;
+  sqlDespacharDemoradas=sqlItems+' WHERE ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereDelayed+' AND '+whereEmbalado;
+  sqlDespacharColecta=sqlItems+' WHERE ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado+' AND NOT'+whereSMMe1;
+  sqlDespacharFlex=sqlItems+' WHERE ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado+' AND '+whereSMMe1;
+  sqlDespacharMensajes=sqlMessages+' WHERE '+whereNoLeido+' AND ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado+''+groupOrder;
+  sqlTransito=sqlItems+' WHERE '+whereShipped;
+  sqlTransitoCamino=sqlItems+' WHERE '+whereShipped+' AND '+whereEnCamino;
+  sqlTransitoEsperandoRetiro=sqlItems+' WHERE '+whereEsperandoRetiro;
   sqlTransitoMensajes=sqlMessages+' WHERE '+whereNoLeido+' AND ('+whereShipped+')'+groupOrder;
 
 implementation
@@ -806,7 +812,7 @@ end;
 
 procedure TdmML.OrdenesPrueba;
 begin
-    with tOrders do
+  with tOrders do
   begin
     Open('SELECT * FROM orders WHERE id=:I',['1']);
     if RowsAffected>0 then
@@ -865,6 +871,7 @@ begin
     end;
     tMessagesorder_id.AsString:='1';
     tMessagestext_plain.AsString:='blablablablablablablablablablablablablablabla';
+    tMessagesdate_read.AsString:='';
     Post;
   end;
   with tBuyer do
@@ -958,6 +965,7 @@ begin
     end;
     tMessagesorder_id.AsString:='2';
     tMessagestext_plain.AsString:='blebleblebleblebleblebleblebleblebleblebleble';
+    tMessagesdate_read.AsString:='';
     Post;
   end;
   with tMessages do
@@ -972,6 +980,7 @@ begin
     end;
     tMessagesorder_id.AsString:='2';
     tMessagestext_plain.AsString:='brrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrr';
+    tMessagesdate_read.AsString:='';
     Post;
   end;
   with tDespachados do
@@ -983,6 +992,100 @@ begin
     begin
       Insert;
       tDespachadosorder_id.AsString := '2';
+    end;
+//    if tDespachadosembalado.AsString = '' then
+      tDespachadosembalado.AsString := 'N';
+//    if tDespachadosenviado.AsString = '' then
+      tDespachadosenviado.AsString := 'N';
+    Post;
+  end;
+//#3
+  with tOrders do
+  begin
+    Open('SELECT * FROM orders WHERE id=:I',['3']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tOrdersid.AsString:='3';
+    end;
+    tOrdersshipping.AsString:='3';
+    tOrdersbuyer.AsString:='3';
+    tOrderstotal_amount.AsString:='999';
+    Post;
+  end;
+  with tOrder_items do
+  begin
+    Open('SELECT * FROM order_items WHERE id=:I',['3']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tOrder_itemsid.AsString:='3';
+    end;
+    tOrder_itemsorder_id.AsString:='3';
+    tOrder_itemstitle.AsString:='Articulo Prueba 3';
+    tOrder_itemsseller_sku.AsString:='1';
+    tOrder_itemsfull_unit_price.AsString:='999';
+    tOrder_itemsquantity.AsString:='3';
+    Post;
+  end;
+  with tShipping do
+  begin
+    Open('SELECT * FROM shipping WHERE id=:I',['3']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tShippingid.AsString:='3';
+    end;
+    tShippingorder_id.AsString:='3';
+    tShippingstatus.AsString:='ready_to_ship';
+    tShippingmode.AsString:='me1';
+    Post;
+  end;
+  with tMessages do
+  begin
+    Open('SELECT * FROM messages WHERE id=:I',['3']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tMessagesid.AsString:='3';
+    end;
+    tMessagesorder_id.AsString:='3';
+    tMessagestext_plain.AsString:='blablablablablablablablablablablablablablabla';
+    tMessagesdate_read.AsString:='';
+    Post;
+  end;
+  with tBuyer do
+  begin
+    Open('SELECT * FROM buyer WHERE id=:I',['3']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tBuyerid.AsString:='3';
+    end;
+    tBuyerfirst_name.AsString:='Juan';
+    tBuyerlast_name.AsString:='Prueba3';
+    tBuyernickname.AsString:='JuanPrueba3';
+    Post;
+  end;
+  with tDespachados do
+  begin
+    Open('SELECT * FROM despachados WHERE order_id=:I',['3']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tDespachadosorder_id.AsString := '3';
     end;
 //    if tDespachadosembalado.AsString = '' then
       tDespachadosembalado.AsString := 'N';

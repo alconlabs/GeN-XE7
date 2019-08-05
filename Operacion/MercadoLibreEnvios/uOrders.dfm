@@ -2,8 +2,8 @@ object fOrders: TfOrders
   Left = 0
   Top = 0
   Caption = 'Ordenes'
-  ClientHeight = 452
-  ClientWidth = 727
+  ClientHeight = 572
+  ClientWidth = 792
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,14 +11,15 @@ object fOrders: TfOrders
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   PixelsPerInch = 96
   TextHeight = 13
   object StringGridBindSourceDB1: TStringGrid
     Tag = 8
     Left = 0
     Top = 0
-    Width = 727
-    Height = 452
+    Width = 792
+    Height = 572
     Align = alClient
     ColCount = 8
     DrawingStyle = gdsGradient
@@ -26,8 +27,10 @@ object fOrders: TfOrders
     RowCount = 2
     TabOrder = 0
     OnClick = StringGridBindSourceDB1Click
+    ExplicitWidth = 754
+    ExplicitHeight = 452
     ColWidths = (
-      200
+      300
       70
       40
       40
@@ -70,7 +73,7 @@ object fOrders: TfOrders
         item
           MemberName = 'title'
           Header = 'TITULO'
-          Width = 200
+          Width = 300
         end
         item
           MemberName = 'full_unit_price'
@@ -98,7 +101,8 @@ object fOrders: TfOrders
           Width = 70
         end
         item
-          MemberName = 'NIK'
+          MemberName = 'nickname'
+          Header = 'NIK'
           Width = 130
         end
         item

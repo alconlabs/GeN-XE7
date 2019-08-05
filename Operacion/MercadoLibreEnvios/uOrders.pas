@@ -60,11 +60,11 @@ begin
   with dmML do
     with fOrder_items do
     begin
-      qOrder_items.Open(sqlOrder_items+sqlOrderWhere
+      qOrder_items.Open(sqlItems+sqlOrderWhere
     +' AND buyer=:B',[qOrders.FieldByName('buyer').AsString]
     //+' GROUP BY orders.buyer'
     );
-      Panel1.Caption:=qOrder_items.FieldByName('NOMBRE').AsString+' '+qOrder_items.FieldByName('APELLIDO').AsString+' ['+qOrder_items.FieldByName('NIK').AsString+'] ';
+      Panel1.Caption:=qOrder_items.FieldByName('first_name').AsString+' '+qOrder_items.FieldByName('last_name').AsString+' ['+qOrder_items.FieldByName('nickname').AsString+'] ';
       try
         ShowModal;
       finally

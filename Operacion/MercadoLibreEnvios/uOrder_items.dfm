@@ -11,6 +11,7 @@ object fOrder_items: TfOrder_items
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnShow = FormShow
   PixelsPerInch = 120
   TextHeight = 16
@@ -28,7 +29,7 @@ object fOrder_items: TfOrder_items
     TabOrder = 0
     OnClick = StringGridBindSourceDB1Click
     ColWidths = (
-      200
+      300
       100
       40
       100)
@@ -110,8 +111,8 @@ object fOrder_items: TfOrder_items
       Columns = <
         item
           MemberName = 'title'
-          Header = 'TITULO'
-          Width = 200
+          Header = 'PRODUCTO'
+          Width = 300
         end
         item
           MemberName = 'full_unit_price'
