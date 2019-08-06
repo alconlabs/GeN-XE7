@@ -27,7 +27,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
     Position = 1
     TabOrder = 0
     Visible = False
-    ExplicitWidth = 750
   end
   object pPreparar: TPanel
     Left = 0
@@ -50,7 +49,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 238
+      OnClick = pPrepararMensajesClick
       object lTituloPrepararMensajes: TLabel
         Left = 17
         Top = 17
@@ -96,7 +95,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       ParentCtl3D = False
       TabOrder = 1
       OnClick = pPrepararEnviosClick
-      ExplicitWidth = 238
       object lTituloPrepararEnvios: TLabel
         Left = 17
         Top = 17
@@ -142,7 +140,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       ParentBackground = False
       TabOrder = 2
       OnClick = pPrepararFlexClick
-      ExplicitWidth = 238
       object lTituloPrepararFlex: TLabel
         Left = 17
         Top = 18
@@ -188,7 +185,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       ParentBackground = False
       TabOrder = 3
       OnClick = pPrepararAcordarClick
-      ExplicitWidth = 238
       object lTituloPrepararAcordar: TLabel
         Left = 17
         Top = 17
@@ -233,7 +229,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 4
-      ExplicitWidth = 238
       object lPreparar: TLabel
         Left = 17
         Top = 16
@@ -270,7 +265,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
     Height = 567
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 263
     object pDespacharDemoradas: TPanel
       AlignWithMargins = True
       Left = 6
@@ -284,7 +278,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 238
+      OnClick = pDespacharDemoradasClick
       object lTituloDespacharDemoradas: TLabel
         Left = 17
         Top = 17
@@ -327,7 +321,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       ParentBackground = False
       TabOrder = 1
-      ExplicitWidth = 238
+      OnClick = pDespacharMensajesClick
       object lTituloDespacharMensajes: TLabel
         Left = 17
         Top = 17
@@ -371,7 +365,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       ParentBackground = False
       TabOrder = 2
       OnClick = pDespacharFlexClick
-      ExplicitWidth = 238
       object lTituloDespacharFlex: TLabel
         Left = 17
         Top = 18
@@ -417,7 +410,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       ParentBackground = False
       TabOrder = 3
       OnClick = pDespacharColectaClick
-      ExplicitWidth = 800
       object lTituloDespacharColecta: TLabel
         Left = 17
         Top = 14
@@ -462,7 +454,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 4
-      ExplicitWidth = 238
       object lDespachar: TLabel
         Left = 17
         Top = 16
@@ -498,7 +489,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
     Height = 567
     Align = alRight
     TabOrder = 3
-    ExplicitLeft = 526
     object pTransitoCamino: TPanel
       AlignWithMargins = True
       Left = 6
@@ -512,7 +502,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 238
+      OnClick = pTransitoCaminoClick
       object lTituloTransitoCamino: TLabel
         Left = 17
         Top = 17
@@ -555,7 +545,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       ParentBackground = False
       TabOrder = 1
-      ExplicitWidth = 238
+      OnClick = pTransitoMensajesClick
       object lTituloTransitoMensajes: TLabel
         Left = 17
         Top = 17
@@ -598,7 +588,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       ParentBackground = False
       TabOrder = 2
-      ExplicitWidth = 238
+      OnClick = pTransitoEsperandoRetiroClick
       object lTituloTransitoEsperandoRetiro: TLabel
         Left = 17
         Top = 18
@@ -642,7 +632,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 3
-      ExplicitWidth = 238
       object lTransito: TLabel
         Left = 17
         Top = 16

@@ -685,7 +685,7 @@ begin
             begin
               i:=IntToStr(n);
                 order_id := j.GetValue<string>('results['+i+'].id');
-                Open('SELECT * FROM orders WHERE id=:I',[order_id]);
+                Open(sqlOrders+' WHERE id=:I',[order_id]);
                 if RowsAffected>0 then
                   Edit
                 else
@@ -863,7 +863,7 @@ begin
             message_id := j.GetValue<string>('results['+i+'].message_id');
             id := order_id+'_'+message_id;
 //            if CantidadRegistros('messages','id='+QuotedStr(id))>0 then
-            Open('SELECT * FROM messages WHERE id=:I',[id]);
+            Open(sqlMessages+' WHERE id=:I',[id]);
             if RowsAffected>0 then
               Edit
             else
@@ -931,7 +931,7 @@ begin
           item := order_items.GetValue<TJSONValue>('item');
           item_id := item.GetValue<string>('id');
           id := order_id+'_'+item_id;
-          Open('SELECT * FROM order_items WHERE id=:I',[id]);
+          Open(sqlOrder_items+' WHERE id=:I',[id]);
           if RowsAffected>0 then
             Edit
           else
@@ -974,54 +974,54 @@ begin
   begin
     shipping := j.GetValue<TJSONValue>();//('Results');
   with dmML do
-    with tShipping do
+    with tShipments do
     begin
       id := shipping.GetValue<string>('id');
-      Open('SELECT * FROM shipping WHERE id=:I',[id]);
+      Open(sqlShipments+' WHERE id=:I',[id]);
       if RowsAffected>0 then
         Edit
       else
       begin
         Insert;
-        tShippingid.AsString := id;
+        tShipmentsid.AsString := id;
       end;
-      tShippingmode.AsString := shipping.GetValue<string>('mode');
-      tShippingcreated_by.AsString := shipping.GetValue<string>('created_by');
-      tShippingorder_id.AsString := shipping.GetValue<string>('order_id');
-      tShippingorder_cost.AsString := shipping.GetValue<string>('order_cost');
-      tShippingbase_cost.AsString := shipping.GetValue<string>('base_cost');
-      tShippingsite_id.AsString := shipping.GetValue<string>('site_id');
-      tShippingstatus.AsString := shipping.GetValue<string>('status');
-      tShippingsubstatus.AsString := shipping.GetValue<string>('substatus');
-      tShippingstatus_history.AsString := shipping.GetValue<TJSONValue>('status_history').ToString;
-      if tShippingsubstatus.AsString<>'' then
-        tShippingsubstatus_history.AsString := shipping.GetValue<TJSONValue>('substatus_history').ToString;
-      tShippingdate_created.AsString := shipping.GetValue<string>('date_created');
-      tShippinglast_updated.AsString := shipping.GetValue<string>('last_updated');
-      tShippingtracking_number.AsString := shipping.GetValue<string>('tracking_number');
-      tShippingtracking_method.AsString := shipping.GetValue<string>('tracking_method');
-      tShippingservice_id.AsString := shipping.GetValue<string>('service_id');
-      tShippingcarrier_info.AsString := shipping.GetValue<string>('carrier_info');
-      tShippingsender_id.AsString := shipping.GetValue<string>('sender_id');
-      tShippingsender_address.AsString := shipping.GetValue<TJSONValue>('sender_address').ToString;
-      tShippingreceiver_id.AsString := shipping.GetValue<string>('receiver_id');
-      tShippingreceiver_address.AsString := shipping.GetValue<TJSONValue>('receiver_address').ToString;
-      tShippingshipping_items.AsString := shipping.GetValue<TJSONValue>('shipping_items').ToString;
-      tShippingshipping_option.AsString := shipping.GetValue<TJSONValue>('shipping_option').ToString;
-      tShippingcomments.AsString := shipping.GetValue<string>('comments');
-      tShippingdate_first_printed.AsString := shipping.GetValue<string>('date_first_printed');
-      tShippingmarket_place.AsString := shipping.GetValue<string>('market_place');
-      tShippingreturn_details.AsString := shipping.GetValue<string>('return_details');
-      tShippingtags.AsString := shipping.GetValue<TJSONValue>('tags').ToString;
-      if tShippingtags.AsString<>'[]' then
+      tShipmentsmode.AsString := shipping.GetValue<string>('mode');
+      tShipmentscreated_by.AsString := shipping.GetValue<string>('created_by');
+      tShipmentsorder_id.AsString := shipping.GetValue<string>('order_id');
+      tShipmentsorder_cost.AsString := shipping.GetValue<string>('order_cost');
+      tShipmentsbase_cost.AsString := shipping.GetValue<string>('base_cost');
+      tShipmentssite_id.AsString := shipping.GetValue<string>('site_id');
+      tShipmentsstatus.AsString := shipping.GetValue<string>('status');
+      tShipmentssubstatus.AsString := shipping.GetValue<string>('substatus');
+      tShipmentsstatus_history.AsString := shipping.GetValue<TJSONValue>('status_history').ToString;
+      if tShipmentssubstatus.AsString<>'' then
+        tShipmentssubstatus_history.AsString := shipping.GetValue<TJSONValue>('substatus_history').ToString;
+      tShipmentsdate_created.AsString := shipping.GetValue<string>('date_created');
+      tShipmentslast_updated.AsString := shipping.GetValue<string>('last_updated');
+      tShipmentstracking_number.AsString := shipping.GetValue<string>('tracking_number');
+      tShipmentstracking_method.AsString := shipping.GetValue<string>('tracking_method');
+      tShipmentsservice_id.AsString := shipping.GetValue<string>('service_id');
+      tShipmentscarrier_info.AsString := shipping.GetValue<string>('carrier_info');
+      tShipmentssender_id.AsString := shipping.GetValue<string>('sender_id');
+      tShipmentssender_address.AsString := shipping.GetValue<TJSONValue>('sender_address').ToString;
+      tShipmentsreceiver_id.AsString := shipping.GetValue<string>('receiver_id');
+      tShipmentsreceiver_address.AsString := shipping.GetValue<TJSONValue>('receiver_address').ToString;
+      tShipmentsshipping_items.AsString := shipping.GetValue<TJSONValue>('shipping_items').ToString;
+      tShipmentsshipping_option.AsString := shipping.GetValue<TJSONValue>('shipping_option').ToString;
+      tShipmentscomments.AsString := shipping.GetValue<string>('comments');
+      tShipmentsdate_first_printed.AsString := shipping.GetValue<string>('date_first_printed');
+      tShipmentsmarket_place.AsString := shipping.GetValue<string>('market_place');
+      tShipmentsreturn_details.AsString := shipping.GetValue<string>('return_details');
+      tShipmentstags.AsString := shipping.GetValue<TJSONValue>('tags').ToString;
+      if tShipmentstags.AsString<>'[]' then
       begin
-        tShippingdelay.AsString := shipping.GetValue<TJSONValue>('delay').ToString;
-        tShippingtype.AsString := shipping.GetValue<TJSONValue>('type').ToString;
-        tShippinglogistic_type.AsString := shipping.GetValue<string>('logistic_type');
-        tShippingapplication_id.AsString := shipping.GetValue<string>('application_id');
+        tShipmentsdelay.AsString := shipping.GetValue<TJSONValue>('delay').ToString;
+        tShipmentstype.AsString := shipping.GetValue<TJSONValue>('type').ToString;
+        tShipmentslogistic_type.AsString := shipping.GetValue<string>('logistic_type');
+        tShipmentsapplication_id.AsString := shipping.GetValue<string>('application_id');
       end;
-      tShippingreturn_tracking_number.AsString := shipping.GetValue<string>('return_tracking_number');
-      tShippingcost_components.AsString := shipping.GetValue<TJSONValue>('cost_components').ToString;
+      tShipmentsreturn_tracking_number.AsString := shipping.GetValue<string>('return_tracking_number');
+      tShipmentscost_components.AsString := shipping.GetValue<TJSONValue>('cost_components').ToString;
       Post;
       result := id;
     end;
@@ -1038,7 +1038,7 @@ begin
     begin
       buyer := j.GetValue<TJSONValue>();//('['+io+']');
       id := buyer.GetValue<string>('id');
-      Open('SELECT * FROM buyer WHERE id=:I',[id]);
+      Open(sqlBuyer+' WHERE id=:I',[id]);
       if RowsAffected>0 then
         Edit
       else
@@ -1064,7 +1064,7 @@ begin
   with dmML do
     with tDespachados do
     begin
-      Open('SELECT * FROM despachados WHERE order_id=:I',[order_id]);
+      Open(sqlDespachados+' WHERE order_id=:I',[order_id]);
       if RowsAffected>0 then
         Edit
       else

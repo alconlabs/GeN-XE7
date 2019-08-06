@@ -31,6 +31,7 @@ type
     procedure bImprimirClick(Sender: TObject);
   private
     { Private declarations }
+    procedure ActualizarEtiquetaComprador;
   public
     { Public declarations }
   end;
@@ -58,14 +59,24 @@ end;
 
 procedure TfOrder_items.FormShow(Sender: TObject);
 begin
-  dmML.tMessages.Open(sqlMessages
-//  'SELECT * FROM messages INNER JOIN orders ON messages.order_id = orders.id WHERE buyer='+qOrder_items.FieldByName('buyer').AsString);
-  +' WHERE buyer='+qOrder_items.FieldByName('buyer').AsString);
+//  dmML.tMessages.Open(sqlMensajes+' WHERE buyer='+qOrder_items.FieldByName('buyer').AsString);
+  ActualizarEtiquetaComprador;
 end;
 
 procedure TfOrder_items.StringGridBindSourceDB1Click(Sender: TObject);
 begin
-  dmML.tMessages.Open('SELECT * FROM messages WHERE order_id='+qOrder_items.FieldByName('order_id').AsString);
+  if qOrder_items.RowsAffected>0 then
+  begin
+    dmML.tMessages.Open('SELECT * FROM messages WHERE order_id='+qOrder_items.FieldByName('order_id').AsString);
+    ActualizarEtiquetaComprador;
+  end
+  else
+    Close;
+end;
+
+procedure TfOrder_items.ActualizarEtiquetaComprador;
+begin
+    Panel1.Caption:=qOrder_items.FieldByName('first_name').AsString+' '+qOrder_items.FieldByName('last_name').AsString+' ['+qOrder_items.FieldByName('nickname').AsString+'] ';
 end;
 
 end.

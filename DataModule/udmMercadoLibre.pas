@@ -99,7 +99,7 @@ type
     tMessagesconversation_status_date: TWideMemoField;
     tMessagesconversation_substatus: TWideMemoField;
     tMessagesconversation_is_blocking_allowed: TWideMemoField;
-    tShipping: TFDQuery;
+    tShipments: TFDQuery;
     tBuyer: TFDQuery;
     tBuyerid: TWideMemoField;
     tBuyernickname: TWideMemoField;
@@ -117,40 +117,40 @@ type
     FDBatchMoveDataSetReader1: TFDBatchMoveDataSetReader;
     FDBatchMoveTextWriter1: TFDBatchMoveTextWriter;
     SaveDialog1: TSaveDialog;
-    tShippingid: TWideMemoField;
-    tShippingmode: TWideMemoField;
-    tShippingcreated_by: TWideMemoField;
-    tShippingorder_id: TWideMemoField;
-    tShippingorder_cost: TWideMemoField;
-    tShippingbase_cost: TWideMemoField;
-    tShippingsite_id: TWideMemoField;
-    tShippingstatus: TWideMemoField;
-    tShippingsubstatus: TWideMemoField;
-    tShippingstatus_history: TWideMemoField;
-    tShippingsubstatus_history: TWideMemoField;
-    tShippingdate_created: TWideMemoField;
-    tShippinglast_updated: TWideMemoField;
-    tShippingtracking_number: TWideMemoField;
-    tShippingtracking_method: TWideMemoField;
-    tShippingservice_id: TWideMemoField;
-    tShippingcarrier_info: TWideMemoField;
-    tShippingsender_id: TWideMemoField;
-    tShippingsender_address: TWideMemoField;
-    tShippingreceiver_id: TWideMemoField;
-    tShippingreceiver_address: TWideMemoField;
-    tShippingshipping_items: TWideMemoField;
-    tShippingshipping_option: TWideMemoField;
-    tShippingcomments: TWideMemoField;
-    tShippingdate_first_printed: TWideMemoField;
-    tShippingmarket_place: TWideMemoField;
-    tShippingreturn_details: TWideMemoField;
-    tShippingtags: TWideMemoField;
-    tShippingdelay: TWideMemoField;
-    tShippingtype: TWideMemoField;
-    tShippinglogistic_type: TWideMemoField;
-    tShippingapplication_id: TWideMemoField;
-    tShippingreturn_tracking_number: TWideMemoField;
-    tShippingcost_components: TWideMemoField;
+    tShipmentsid: TWideMemoField;
+    tShipmentsmode: TWideMemoField;
+    tShipmentscreated_by: TWideMemoField;
+    tShipmentsorder_id: TWideMemoField;
+    tShipmentsorder_cost: TWideMemoField;
+    tShipmentsbase_cost: TWideMemoField;
+    tShipmentssite_id: TWideMemoField;
+    tShipmentsstatus: TWideMemoField;
+    tShipmentssubstatus: TWideMemoField;
+    tShipmentsstatus_history: TWideMemoField;
+    tShipmentssubstatus_history: TWideMemoField;
+    tShipmentsdate_created: TWideMemoField;
+    tShipmentslast_updated: TWideMemoField;
+    tShipmentstracking_number: TWideMemoField;
+    tShipmentstracking_method: TWideMemoField;
+    tShipmentsservice_id: TWideMemoField;
+    tShipmentscarrier_info: TWideMemoField;
+    tShipmentssender_id: TWideMemoField;
+    tShipmentssender_address: TWideMemoField;
+    tShipmentsreceiver_id: TWideMemoField;
+    tShipmentsreceiver_address: TWideMemoField;
+    tShipmentsshipping_items: TWideMemoField;
+    tShipmentsshipping_option: TWideMemoField;
+    tShipmentscomments: TWideMemoField;
+    tShipmentsdate_first_printed: TWideMemoField;
+    tShipmentsmarket_place: TWideMemoField;
+    tShipmentsreturn_details: TWideMemoField;
+    tShipmentstags: TWideMemoField;
+    tShipmentsdelay: TWideMemoField;
+    tShipmentstype: TWideMemoField;
+    tShipmentslogistic_type: TWideMemoField;
+    tShipmentsapplication_id: TWideMemoField;
+    tShipmentsreturn_tracking_number: TWideMemoField;
+    tShipmentscost_components: TWideMemoField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -178,19 +178,25 @@ var
   dmML: TdmML;
 
 const
+  sqlOrders='SELECT * FROM orders';
+  sqlOrder_items='SELECT * FROM order_items';
+  sqlMessages='SELECT * FROM messages';
+  sqlShipments='SELECT * FROM shipments';
+  sqlBuyer='SELECT * FROM buyer';
+  sqlDespachados='SELECT * FROM despachados';
   sqlOrderFrom=' FROM orders'
     +' INNER JOIN order_items ON orders.id = order_items.order_id'
-    +' INNER JOIN shipping ON orders.id = shipping.order_id'
+    +' INNER JOIN shipments ON orders.id = shipments.order_id'
     +' INNER JOIN buyer ON orders.buyer = buyer.id'
     +' LEFT JOIN despachados ON orders.id = despachados.order_id';
 //    +' LEFT JOIN messages ON orders.id = messages.order_id';
-  sqlOrderWhere=' WHERE' //' (NOT(shipping.status=''ready_to_ship'')) AND'
-    +' (NOT(shipping.status=''shipped''))'
-    +' AND (NOT(shipping.status=''delivered''))'
-    +' AND (NOT(shipping.status=''not_delivered''))'
+  sqlOrderWhere=' WHERE' //' (NOT(shipments.status=''ready_to_ship'')) AND'
+    +' (NOT(shipments.status=''shipped''))'
+    +' AND (NOT(shipments.status=''delivered''))'
+    +' AND (NOT(shipments.status=''not_delivered''))'
 //    +' AND (NOT(despachados.embalado=''S''))'
     ;
-  sqlOrder_items='SELECT '
+  sqlSelectOrderItems='SELECT '
 //    +'order_items.title AS TITULO'
 //    +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
 //    +', order_items.seller_sku AS SKU, buyer.first_name AS NOMBRE'
@@ -201,38 +207,38 @@ const
     +', order_items.seller_sku, buyer.first_name'
     +', buyer.last_name, buyer.nickname, "imprimir" AS ETIQUETA'
     +', orders.shipping, orders.buyer, order_items.order_id';
-  whereReady_to_ship='(shipping.status=''ready_to_ship'')';
-  whereShipped='(shipping.status=''shipped'')';
-  whereDelivered='(shipping.status=''delivered'')';
-  whereNoStatus='(shipping.status='''')';
-  whereSMMe1=' shipping.mode=''me1''';
-  whereSMMe2=' shipping.mode=''me2''';
-  whereSMCustom=' shipping.mode=''custom''';
+  whereReady_to_ship='(shipments.status=''ready_to_ship'')';
+  whereShipped='(shipments.status=''shipped'')';
+  whereDelivered='(shipments.status=''delivered'')';
+  whereNoStatus='(shipments.status='''')';
+  whereSMMe1=' shipments.mode=''me1''';
+  whereSMMe2=' shipments.mode=''me2''';
+  whereSMCustom=' shipments.mode=''custom''';
   whereEmbalado=' (despachados.embalado=''S'')';
   whereNoEmbalado=' (NOT(despachados.embalado=''S''))';
-  whereDelayed='(shipping.substatus=''delayed'')';
-  whereEqtiquetaImpresa='(shipping.substatus=''printed'')';
-  whereEtiquetaLista='(shipping.substatus=''ready_to_print'')';
+  whereDelayed='(shipments.substatus=''delayed'')';
+  whereEqtiquetaImpresa='(shipments.substatus=''printed'')';
+  whereEtiquetaLista='(shipments.substatus=''ready_to_print'')';
   whereNoLeido=' (messages.date_read='''')';
-  whereEsperandoRetiro=' (shipping.substatus=''waiting_for_withdrawal'')';
-  whereEnCamino=' (shipping.substatus='''')';
+  whereEsperandoRetiro=' (shipments.substatus=''waiting_for_withdrawal'')';
+  whereEnCamino=' (shipments.substatus='''')';
   groupOrder=' GROUP BY orders.id';
-  sqlMessages=sqlOrder_items+', messages.*'+sqlOrderFrom+' INNER JOIN messages ON orders.id = messages.order_id';
-  sqlItems=sqlOrder_items+sqlOrderFrom;
+  sqlMensajes=sqlSelectOrderItems+', messages.*'+sqlOrderFrom+' INNER JOIN messages ON orders.id = messages.order_id'+' WHERE '+whereNoLeido;
+  sqlItems=sqlSelectOrderItems+sqlOrderFrom;
   sqlPreparar=sqlItems+sqlOrderWhere+' AND '+whereNoEmbalado;
   sqlPrepararEnvios=sqlItems+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe2;
   sqlPrepararFlex=sqlItems+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe1;
   sqlPrepararAcordar=sqlItems+' WHERE '+whereNoStatus+' AND '+whereNoEmbalado+' AND '+whereSMCustom;
-  sqlPrepararMensajes=sqlMessages+sqlOrderWhere+' AND '+whereNoLeido+' AND '+whereNoEmbalado+groupOrder;
+  sqlPrepararMensajes=sqlMensajes+' AND ('+whereNoStatus+' OR '+whereReady_to_ship+') AND '+whereNoEmbalado+groupOrder;
   sqlDespachar=sqlItems+' WHERE ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado;
   sqlDespacharDemoradas=sqlItems+' WHERE ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereDelayed+' AND '+whereEmbalado;
   sqlDespacharColecta=sqlItems+' WHERE ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado+' AND NOT'+whereSMMe1;
   sqlDespacharFlex=sqlItems+' WHERE ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado+' AND '+whereSMMe1;
-  sqlDespacharMensajes=sqlMessages+' WHERE '+whereNoLeido+' AND ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado+''+groupOrder;
+  sqlDespacharMensajes=sqlMensajes+' AND ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado+''+groupOrder;
   sqlTransito=sqlItems+' WHERE '+whereShipped;
   sqlTransitoCamino=sqlItems+' WHERE '+whereShipped+' AND '+whereEnCamino;
   sqlTransitoEsperandoRetiro=sqlItems+' WHERE '+whereEsperandoRetiro;
-  sqlTransitoMensajes=sqlMessages+' WHERE '+whereNoLeido+' AND ('+whereShipped+')'+groupOrder;
+  sqlTransitoMensajes=sqlMensajes+' AND ('+whereShipped+')'+groupOrder;
 
 implementation
 
@@ -244,8 +250,8 @@ procedure TdmML.DataModuleCreate(Sender: TObject);
 begin
   with dbMain do
   begin
-    path := TPath.GetDocumentsPath()+'\Civeloo\MercadoLibreEnvios\db';
-    dBname := path+'\db.sdb';
+    path := TPath.GetDocumentsPath()+'\Civeloo\GeN\db';
+    dBname := path+'\ml.sdb';
     if not FileExists(DBName) then
       ForceDirectories(path);
     Params.Values['database'] := DBName;
@@ -269,34 +275,34 @@ begin
 
     ExecSQL('CREATE TABLE IF NOT EXISTS orders ('
       +'id TEXT PRIMARY KEY'
-      +', comments TEXT'
-      +', status TEXT'
-      +', status_detail TEXT'
       +', date_created TEXT'
       +', date_closed TEXT'
       +', last_updated TEXT'
-      +', expiration_date TEXT'
-      +', date_last_updated TEXT'
-      +', hidden_for_seller TEXT'
-      +', currency_id TEXT'
-      +', order_items TEXT'
-      +', total_amount TEXT'
-      +', mediations TEXT'
-      +', payments TEXT'
-      +', shipping TEXT'
-      +', order_request TEXT'
-      +', pickup_id TEXT'
-      +', buyer TEXT'
-      +', seller TEXT'
-      +', feedback TEXT'
-      +', tags TEXT'
       +', manufacturing_ending_date TEXT'
+      +', feedback TEXT'
+      +', mediations TEXT'
+      +', comments TEXT'
       +', pack_id TEXT'
+      +', pickup_id TEXT'
+      +', order_request TEXT'
       +', fulfilled TEXT'
+      +', total_amount TEXT'
       +', total_amount_with_shipping TEXT'
       +', paid_amount TEXT'
       +', coupon TEXT'
+      +', expiration_date TEXT'
+      +', order_items TEXT'
+      +', currency_id TEXT'
+      +', payments TEXT'
+      +', shipping TEXT'
+      +', status TEXT'
+      +', status_detail TEXT'
+      +', tags TEXT'
+      +', buyer TEXT'
+      +', seller TEXT'
       +', taxes TEXT'
+      +', date_last_updated TEXT'
+      +', hidden_for_seller TEXT'
     +')');
 
     ExecSQL('CREATE TABLE IF NOT EXISTS coupon ('
@@ -464,7 +470,7 @@ begin
       +', payments_id TEXT'
     +')');
 
-    ExecSQL('CREATE TABLE IF NOT EXISTS shipping ('
+    ExecSQL('CREATE TABLE IF NOT EXISTS shipments ('
       +'id TEXT PRIMARY KEY'
       +', mode TEXT'
       +', created_by TEXT'
@@ -685,14 +691,14 @@ begin
   FDQuery1.Open('SELECT embalado, orders.status AS estado, orders.buyer AS comprador'
   +', orders.id, shipping FROM orders LEFT JOIN despachados'
   +' ON orders.id = despachados.order_id ORDER BY orders.buyer');
-  tOrders.Open('SELECT * FROM orders');
-  tOrder_items.Open('SELECT * FROM order_items');
-  tMessages.Open('SELECT * FROM messages');
-  tShipping.Open('SELECT * FROM shipping');
-  tBuyer.Open('SELECT * FROM buyer');
-  tDespachados.Open('SELECT * FROM despachados');
+  tOrders.Open(sqlOrders);
+  tOrder_items.Open(sqlOrder_items);
+  tMessages.Open(sqlMessages);
+  tShipments.Open(sqlShipments);
+  tBuyer.Open(sqlBuyer);
+  tDespachados.Open(sqlDespachados);
 
-  OrdenesPrueba;
+//  OrdenesPrueba;
 end;
 
 procedure TdmML.AgregarOrder;
@@ -844,19 +850,19 @@ begin
     tOrder_itemsquantity.AsString:='1';
     Post;
   end;
-  with tShipping do
+  with tShipments do
   begin
-    Open('SELECT * FROM shipping WHERE id=:I',['1']);
+    Open('SELECT * FROM shipments WHERE id=:I',['1']);
     if RowsAffected>0 then
       Edit
     else
     begin
       Insert;
-      tShippingid.AsString:='1';
+      tShipmentsid.AsString:='1';
     end;
-    tShippingorder_id.AsString:='1';
-    tShippingstatus.AsString:='ready_to_ship';
-    tShippingmode.AsString:='me2';
+    tShipmentsorder_id.AsString:='1';
+    tShipmentsstatus.AsString:='ready_to_ship';
+    tShipmentsmode.AsString:='me2';
     Post;
   end;
   with tMessages do
@@ -938,19 +944,19 @@ begin
     tOrder_itemsquantity.AsString:='1';
     Post;
   end;
-  with tShipping do
+  with tShipments do
   begin
-    Open('SELECT * FROM shipping WHERE id=:I',['2']);
+    Open('SELECT * FROM shipments WHERE id=:I',['2']);
     if RowsAffected>0 then
       Edit
     else
     begin
       Insert;
-      tShippingid.AsString:='2';
+      tShipmentsid.AsString:='2';
     end;
-    tShippingorder_id.AsString:='2';
-    tShippingstatus.AsString:='';
-    tShippingmode.AsString:='custom';
+    tShipmentsorder_id.AsString:='2';
+    tShipmentsstatus.AsString:='';
+    tShipmentsmode.AsString:='custom';
     Post;
   end;
   with tMessages do
@@ -1032,19 +1038,19 @@ begin
     tOrder_itemsquantity.AsString:='3';
     Post;
   end;
-  with tShipping do
+  with tShipments do
   begin
-    Open('SELECT * FROM shipping WHERE id=:I',['3']);
+    Open('SELECT * FROM shipments WHERE id=:I',['3']);
     if RowsAffected>0 then
       Edit
     else
     begin
       Insert;
-      tShippingid.AsString:='3';
+      tShipmentsid.AsString:='3';
     end;
-    tShippingorder_id.AsString:='3';
-    tShippingstatus.AsString:='ready_to_ship';
-    tShippingmode.AsString:='me1';
+    tShipmentsorder_id.AsString:='3';
+    tShipmentsstatus.AsString:='ready_to_ship';
+    tShipmentsmode.AsString:='me1';
     Post;
   end;
   with tMessages do

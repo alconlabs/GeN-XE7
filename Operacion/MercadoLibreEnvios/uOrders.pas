@@ -56,21 +56,26 @@ uses udmMercadoLibre, RestDM, uOrder_items;
 
 procedure TfOrders.StringGridBindSourceDB1Click(Sender: TObject);
 begin
-  fOrder_items := TfOrder_items.Create(Self);
-  with dmML do
-    with fOrder_items do
-    begin
-      qOrder_items.Open(sqlItems+sqlOrderWhere
-    +' AND buyer=:B',[qOrders.FieldByName('buyer').AsString]
-    //+' GROUP BY orders.buyer'
-    );
-      Panel1.Caption:=qOrder_items.FieldByName('first_name').AsString+' '+qOrder_items.FieldByName('last_name').AsString+' ['+qOrder_items.FieldByName('nickname').AsString+'] ';
-      try
-        ShowModal;
-      finally
-        Free;
+  if qOrders.RowsAffected>0 then
+  begin
+    fOrder_items := TfOrder_items.Create(Self);
+    with dmML do
+      with fOrder_items do
+      begin
+  //      qOrder_items.Open(sqlItems+sqlOrderWhere
+        qOrder_items.Open(qOrders.SQL.Text+' OR '+whereSMCustom
+      +' AND buyer=:B',[qOrders.FieldByName('buyer').AsString]
+  //    +' GROUP BY orders.buyer'
+      );
+        tMessages.Open(sqlMensajes+' AND buyer='+qOrder_items.FieldByName('buyer').AsString);
+  //      Panel1.Caption:=qOrder_items.FieldByName('first_name').AsString+' '+qOrder_items.FieldByName('last_name').AsString+' ['+qOrder_items.FieldByName('nickname').AsString+'] ';
+        try
+          ShowModal;
+        finally
+          Free;
+        end;
       end;
-    end;
+  end;
   Close;
 end;
 

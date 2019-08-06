@@ -27,8 +27,6 @@ object fOrders: TfOrders
     RowCount = 2
     TabOrder = 0
     OnClick = StringGridBindSourceDB1Click
-    ExplicitWidth = 754
-    ExplicitHeight = 452
     ColWidths = (
       300
       70

@@ -29,7 +29,7 @@ object fOrder_items: TfOrder_items
     TabOrder = 0
     OnClick = StringGridBindSourceDB1Click
     ColWidths = (
-      300
+      330
       100
       40
       100)
@@ -41,6 +41,12 @@ object fOrder_items: TfOrder_items
     Height = 59
     Align = alBottom
     Caption = 'Panel1'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
     TabOrder = 1
     object bImprimir: TButton
       Left = 584
@@ -48,6 +54,12 @@ object fOrder_items: TfOrder_items
       Width = 200
       Height = 50
       Caption = 'IMPRIMIR ETIQUETA'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
       TabOrder = 0
       OnClick = bImprimirClick
     end
@@ -112,7 +124,7 @@ object fOrder_items: TfOrder_items
         item
           MemberName = 'title'
           Header = 'PRODUCTO'
-          Width = 300
+          Width = 330
         end
         item
           MemberName = 'full_unit_price'
