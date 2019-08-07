@@ -81,15 +81,6 @@ object DM: TDM
       ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)')
     Left = 96
   end
-  object Query: TIBQuery
-    Database = BaseDatos
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 96
-    Top = 48
-  end
   object Consulta: TIBScript
     AutoDDL = False
     Terminator = ';'
@@ -2295,5 +2286,14 @@ object DM: TDM
       FieldName = 'IMPTRIB'
       Size = 255
     end
+  end
+  object Query: TIBQuery
+    Database = BaseDatos
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    Left = 96
+    Top = 48
   end
 end

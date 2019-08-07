@@ -22,9 +22,9 @@ type
     procedure StringGridBindSourceDB1Click(Sender: TObject);
   private
     { Private declarations }
-//    procedure ImprimirEtiqueta;
   public
     { Public declarations }
+    vsqlOrder_items:string;
   end;
 
 var
@@ -62,8 +62,7 @@ begin
     with dmML do
       with fOrder_items do
       begin
-  //      qOrder_items.Open(sqlItems+sqlOrderWhere
-        qOrder_items.Open(qOrders.SQL.Text+' OR '+whereSMCustom
+        qOrder_items.Open(vsqlOrder_items
       +' AND buyer=:B',[qOrders.FieldByName('buyer').AsString]
   //    +' GROUP BY orders.buyer'
       );

@@ -186,7 +186,7 @@ const
   sqlDespachados='SELECT * FROM despachados';
   sqlOrderFrom=' FROM orders'
     +' INNER JOIN order_items ON orders.id = order_items.order_id'
-    +' INNER JOIN shipments ON orders.id = shipments.order_id'
+    +' INNER JOIN shipments ON orders.shipping = shipments.id'
     +' INNER JOIN buyer ON orders.buyer = buyer.id'
     +' LEFT JOIN despachados ON orders.id = despachados.order_id';
 //    +' LEFT JOIN messages ON orders.id = messages.order_id';
@@ -207,13 +207,13 @@ const
     +', order_items.seller_sku, buyer.first_name'
     +', buyer.last_name, buyer.nickname, "imprimir" AS ETIQUETA'
     +', orders.shipping, orders.buyer, order_items.order_id';
-  whereReady_to_ship='(shipments.status=''ready_to_ship'')';
+  whereReady_to_ship=' (shipments.status=''ready_to_ship'')';
   whereShipped='(shipments.status=''shipped'')';
   whereDelivered='(shipments.status=''delivered'')';
   whereNoStatus='(shipments.status='''')';
   whereSMMe1=' shipments.mode=''me1''';
   whereSMMe2=' shipments.mode=''me2''';
-  whereSMCustom=' shipments.mode=''custom''';
+  whereSMCustom=' shipments.mode=''custom'' ';
   whereEmbalado=' (despachados.embalado=''S'')';
   whereNoEmbalado=' (NOT(despachados.embalado=''S''))';
   whereDelayed='(shipments.substatus=''delayed'')';
@@ -227,6 +227,7 @@ const
   sqlItems=sqlSelectOrderItems+sqlOrderFrom;
   sqlPreparar=sqlItems+sqlOrderWhere+' AND '+whereNoEmbalado;
   sqlPrepararEnvios=sqlItems+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe2;
+  sqlPrepararEnviosItems=sqlItems+' WHERE ('+whereReady_to_ship+' OR '+whereNoStatus+') AND '+whereNoEmbalado+' AND ('+whereSMMe2+' OR '+whereSMCustom+')';
   sqlPrepararFlex=sqlItems+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe1;
   sqlPrepararAcordar=sqlItems+' WHERE '+whereNoStatus+' AND '+whereNoEmbalado+' AND '+whereSMCustom;
   sqlPrepararMensajes=sqlMensajes+' AND ('+whereNoStatus+' OR '+whereReady_to_ship+') AND '+whereNoEmbalado+groupOrder;
@@ -922,7 +923,7 @@ begin
       Insert;
       tOrdersid.AsString:='2';
     end;
-    tOrdersshipping.AsString:='2';
+    tOrdersshipping.AsString:='0';
     tOrdersbuyer.AsString:='1';
     tOrderstotal_amount.AsString:='999';
     Post;
@@ -946,15 +947,15 @@ begin
   end;
   with tShipments do
   begin
-    Open('SELECT * FROM shipments WHERE id=:I',['2']);
+    Open('SELECT * FROM shipments WHERE id=:I',['0']);
     if RowsAffected>0 then
       Edit
     else
     begin
       Insert;
-      tShipmentsid.AsString:='2';
+      tShipmentsid.AsString:='0';
     end;
-    tShipmentsorder_id.AsString:='2';
+//    tShipmentsorder_id.AsString:='2';
     tShipmentsstatus.AsString:='';
     tShipmentsmode.AsString:='custom';
     Post;
@@ -1105,6 +1106,12 @@ function TdmML.CantidadVentas;
 begin
   FDQuery1.Open(sql);
   result := IntToStr(FDQuery1.RowsAffected)+' ventas';
+end;
+
+function SelecSql():string;
+begin
+
+  result:='';
 end;
 
 end.

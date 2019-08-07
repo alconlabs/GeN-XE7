@@ -80,7 +80,7 @@ type
   private
     { Private declarations }
     procedure actualizarEtiquetas;
-    procedure AbrirfOrders(sql:string);
+    procedure AbrirfOrders(sql,sql1:string);
     procedure AbrirfOrder_items(sql:string);
   public
     { Public declarations }
@@ -127,161 +127,57 @@ end;
 
 procedure TfMercadoLibreEnvios.pPrepararAcordarClick(Sender: TObject);
 begin
-  AbrirfOrders(sqlPrepararAcordar);
-//  fOrders := TfOrders.Create(Self);
-//  with dmML do
-//    with fOrders do
-//    begin
-//      qOrders.Open(sqlPrepararAcordar
-//        +' GROUP BY orders.buyer'
-//        );
-//      try
-//        ShowModal;
-//      finally
-//        Free;
-//      end;
-//    end;
+  AbrirfOrders(sqlPrepararAcordar,'');
 end;
 
 procedure TfMercadoLibreEnvios.pDespacharFlexClick(Sender: TObject);
 begin
-  AbrirfOrders(sqlDespacharFlex);
-//  fOrders := TfOrders.Create(Self);
-//  with dmML do
-//    with fOrders do
-//    begin
-//      qOrders.Open(sqlDespacharFlex
-//        +' GROUP BY orders.buyer');
-//      try
-//        ShowModal;
-//      finally
-//        Free;
-//        actualizarEtiquetas;
-//      end;
-//    end;
+  AbrirfOrders(sqlDespacharFlex,'');
 end;
 
 procedure TfMercadoLibreEnvios.pDespacharMensajesClick(Sender: TObject);
 begin
   AbrirfOrder_items(sqlDespacharMensajes);
-//  fOrder_items := TfOrder_items.Create(Self);
-//  with dmML do
-//    with fOrder_items do
-//    begin
-//      bImprimir.Visible:=False;
-//      qOrder_items.Open(sqlDespacharMensajes);
-//      tMessages.Open(sqlDespacharMensajes);
-//      try
-//        ShowModal;
-//      finally
-//        Free;
-//      end;
-//    end;
 end;
 
 procedure TfMercadoLibreEnvios.pPrepararEnviosClick(Sender: TObject);
 begin
-  AbrirfOrders(sqlPrepararEnvios);
-//  fOrders := TfOrders.Create(Self);
-//  with dmML do
-//    with fOrders do
-//    begin
-//      qOrders.Open(sqlPrepararEnvios
-//        +' GROUP BY orders.buyer');
-//    try
-//      ShowModal;
-//    finally
-//      Free;
-//      actualizarEtiquetas;
-//    end;
-//  end;
+  AbrirfOrders(sqlPrepararEnvios,sqlPrepararEnviosItems);
 end;
 
 procedure TfMercadoLibreEnvios.pDespacharColectaClick(Sender: TObject);
 begin
-    AbrirfOrders(sqlDespacharColecta);
-//  fOrders := TfOrders.Create(Self);
-//  with dmML do
-//    with fOrders do
-//    begin
-//      qOrders.Open(sqlDespacharColecta
-//        +' GROUP BY orders.buyer');
-//      try
-//        ShowModal;
-//      finally
-//        Free;
-//        actualizarEtiquetas;
-//      end;
-//    end;
+    AbrirfOrders(sqlDespacharColecta,'');
 end;
 
 procedure TfMercadoLibreEnvios.pDespacharDemoradasClick(Sender: TObject);
 begin
-  AbrirfOrders(sqlDespacharDemoradas);
+  AbrirfOrders(sqlDespacharDemoradas,'');
 end;
 
 procedure TfMercadoLibreEnvios.pPrepararFlexClick(Sender: TObject);
 begin
-  AbrirfOrders(sqlPrepararFlex);
-//  fOrders := TfOrders.Create(Self);
-//  with dmML do
-//    with fOrders do
-//    begin
-//      qOrders.Open(sqlPrepararFlex
-//        +' GROUP BY orders.buyer');
-//      try
-//        ShowModal;
-//      finally
-//        Free;
-//        actualizarEtiquetas;
-//      end;
-//    end;
+  AbrirfOrders(sqlPrepararFlex,'');
 end;
 
 procedure TfMercadoLibreEnvios.pPrepararMensajesClick(Sender: TObject);
 begin
   AbrirfOrder_items(sqlPrepararMensajes);
-//  fOrder_items := TfOrder_items.Create(Self);
-//  with dmML do
-//    with fOrder_items do
-//    begin
-//      bImprimir.Visible:=False;
-//      qOrder_items.Open(sqlPrepararMensajes);
-//      tMessages.Open(sqlPrepararMensajes);
-//      try
-//        ShowModal;
-//      finally
-//        Free;
-//      end;
-//    end;
 end;
 
 procedure TfMercadoLibreEnvios.pTransitoCaminoClick(Sender: TObject);
 begin
-  AbrirfOrders(sqlTransitoCamino);
+  AbrirfOrders(sqlTransitoCamino,'');
 end;
 
 procedure TfMercadoLibreEnvios.pTransitoEsperandoRetiroClick(Sender: TObject);
 begin
-    AbrirfOrders(sqlTransitoEsperandoRetiro);
+    AbrirfOrders(sqlTransitoEsperandoRetiro,'');
 end;
 
 procedure TfMercadoLibreEnvios.pTransitoMensajesClick(Sender: TObject);
 begin
   AbrirfOrder_items(sqlTransitoMensajes);
-//  fOrder_items := TfOrder_items.Create(Self);
-//  with dmML do
-//    with fOrder_items do
-//    begin
-//      bImprimir.Visible:=False;
-//      qOrder_items.Open(sqlTransitoMensajes);
-//      tMessages.Open(sqlTransitoMensajes);
-//      try
-//        ShowModal;
-//      finally
-//        Free;
-//      end;
-//    end;
 end;
 
 procedure TfMercadoLibreEnvios.sgMessagesClick(Sender: TObject);
@@ -338,6 +234,8 @@ begin
   with dmML do
     with fOrders do
     begin
+      vsqlOrder_items:=sql1;
+      if vsqlOrder_items='' then vsqlOrder_items:=sql;
       qOrders.Open(sql
 //        +' GROUP BY orders.buyer'
         );

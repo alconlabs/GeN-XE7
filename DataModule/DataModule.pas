@@ -18,7 +18,6 @@ type
     BaseDatos: TIBDatabase;
     Transaccion: TIBTransaction;
     ConfigQuery: TIBQuery;
-    Query: TIBQuery;
     Consulta: TIBScript;
     FDConnection1: TFDConnection;
     OpenDialog1: TOpenDialog;
@@ -60,6 +59,7 @@ type
     tLibroIVAventaGENERALES: TIBStringField;
     tLibroIVAventaNOCAT: TIBStringField;
     tLibroIVAventaIMPTRIB: TIBStringField;
+    Query: TIBQuery;
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
     procedure LeerINI;
@@ -806,7 +806,7 @@ end;
 procedure TDM.ActualizarValor;
 begin
   Query.SQL.Text :=
-    'update  "'+tabla+'" set '+campo+'='+valor;
+    'update "'+tabla+'" set '+campo+'='+valor;
   if codigo<>'' then Query.SQL.Text := Query.SQL.Text+' where CODIGO='+codigo;
   Query.ExecSQL;
   Query.Transaction.Commit;
@@ -1145,24 +1145,24 @@ procedure TDM.CrearCbtetipo;
  procedure TDM.ActualizarTLibroIVAVentas;
  begin
 //  ActualizarTabla('LibroIVAventa', 'CbteTipo', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'PtoVta', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'CbteDesde', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'CbteHasta', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'DocTipo', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'NomCli', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'MonId', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'MonCotiz', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'CantIva', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'Opcion', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'FchVtoPago', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'AlicIVA', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'ImpNeto', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'NoGrabado', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'ImpOpEx', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'ImpIVA', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'Generales', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'NoCat', 'VARCHAR(255)');
-  ActualizarTabla('LibroIVAventa', 'ImpTrib', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'PTOVTA', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'CBTEDESDE', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'CBTEHASTA', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'DOCTIPO', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'NOMCLI', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'MONID', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'MONCOTIZ', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'CANTIVA', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'OPCION', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'FCHVTOPAGO', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'ALICIVA', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'IMPNETO', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'NOGRABADO', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'IMPOPEX', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'IMPIVA', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'GENERALES', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'NOCAT', 'VARCHAR(255)');
+  ActualizarTabla('LibroIVAventa', 'IMPTRIB', 'VARCHAR(255)');
  end;
 
 end.

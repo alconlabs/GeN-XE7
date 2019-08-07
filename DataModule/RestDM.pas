@@ -59,7 +59,7 @@ type
 
     function Obtener(resource:string):TJSONValue;
     procedure ObtenerOrder_items(order_id:string;j:TJSONValue);
-    function ObtenerShipping(id:string):string;
+    procedure ObtenerShipping(id:string);
     function ObtenerBuyer(j:TJSONValue):string;
     procedure ObtenerDespachados(order_id:string);
   public
@@ -665,7 +665,7 @@ end;
 procedure TDMR.ObtenerOrderRecent;
 var
   j, order_items, buyer, item, shipping : TJSONValue;
-  i, io, order_id,order_status,buyer_id,shipping_id,item_id,item_title,seller_sku,
+  i, io, order_id,order_status,buyer_id,item_id,item_title,seller_sku,
   order_items_quantity : string;
   n, r, l, ro, no : Integer;
 begin
@@ -712,9 +712,10 @@ begin
 
 //                shipping := j.GetValue<TJSONValue>('results['+i+'].shipping');
 //                id := shipping.GetValue<string>('id');
-                shipping_id:=(j.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
+                tOrdersshipping.AsString:=(j.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
 //                tOrdersshipping.AsString := ObtenerShipping(order_id, j.GetValue<TJSONValue>('results['+i+'].shipping'));
-                tOrdersshipping.AsString:=ObtenerShipping(shipping_id);
+                if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
+                ObtenerShipping(tOrdersshipping.AsString);
                 tOrdersorder_request.AsString := j.GetValue<TJSONValue>('results['+i+'].order_request').ToString;//{},
                 tOrderspickup_id.AsString := j.GetValue<string>('results['+i+'].pickup_id');//null,
 //                tOrdersbuyer.AsString := j.GetValue<TJSONValue>('results['+i+'].buyer');//{},
@@ -963,67 +964,89 @@ begin
         end;
 end;
 
-function TDMR.ObtenerShipping;
+procedure TDMR.ObtenerShipping;
 var
   j, shipping : TJSONValue;
   r : Integer;
   s:string;
 begin
-  j := Obtener('/shipments/'+id);
-  if j is TJSONObject then
-  begin
-    shipping := j.GetValue<TJSONValue>();//('Results');
   with dmML do
-    with tShipments do
+  begin
+    if id='0' then
     begin
-      id := shipping.GetValue<string>('id');
-      Open(sqlShipments+' WHERE id=:I',[id]);
-      if RowsAffected>0 then
-        Edit
-      else
+      with tShipments do
+        begin
+          Open('SELECT * FROM shipments WHERE id=:I',['0']);
+          if RowsAffected>0 then
+            Edit
+          else
+          begin
+            Insert;
+            tShipmentsid.AsString:='0';
+          end;
+  //        tShipmentsorder_id.AsString:='0';
+          tShipmentsstatus.AsString:='';
+          tShipmentsmode.AsString:='custom';
+          Post;
+        end;
+      end
+    else
+    begin
+      j := Obtener('/shipments/'+id);
+      if j is TJSONObject then
       begin
-        Insert;
-        tShipmentsid.AsString := id;
+        shipping := j.GetValue<TJSONValue>();//('Results');
+        with tShipments do
+        begin
+          id := shipping.GetValue<string>('id');
+          Open(sqlShipments+' WHERE id=:I',[id]);
+          if RowsAffected>0 then
+            Edit
+          else
+          begin
+            Insert;
+            tShipmentsid.AsString := id;
+          end;
+          tShipmentsmode.AsString := shipping.GetValue<string>('mode');
+          tShipmentscreated_by.AsString := shipping.GetValue<string>('created_by');
+          tShipmentsorder_id.AsString := shipping.GetValue<string>('order_id');
+          tShipmentsorder_cost.AsString := shipping.GetValue<string>('order_cost');
+          tShipmentsbase_cost.AsString := shipping.GetValue<string>('base_cost');
+          tShipmentssite_id.AsString := shipping.GetValue<string>('site_id');
+          tShipmentsstatus.AsString := shipping.GetValue<string>('status');
+          tShipmentssubstatus.AsString := shipping.GetValue<string>('substatus');
+          tShipmentsstatus_history.AsString := shipping.GetValue<TJSONValue>('status_history').ToString;
+          if tShipmentssubstatus.AsString<>'' then
+            tShipmentssubstatus_history.AsString := shipping.GetValue<TJSONValue>('substatus_history').ToString;
+          tShipmentsdate_created.AsString := shipping.GetValue<string>('date_created');
+          tShipmentslast_updated.AsString := shipping.GetValue<string>('last_updated');
+          tShipmentstracking_number.AsString := shipping.GetValue<string>('tracking_number');
+          tShipmentstracking_method.AsString := shipping.GetValue<string>('tracking_method');
+          tShipmentsservice_id.AsString := shipping.GetValue<string>('service_id');
+          tShipmentscarrier_info.AsString := shipping.GetValue<string>('carrier_info');
+          tShipmentssender_id.AsString := shipping.GetValue<string>('sender_id');
+          tShipmentssender_address.AsString := shipping.GetValue<TJSONValue>('sender_address').ToString;
+          tShipmentsreceiver_id.AsString := shipping.GetValue<string>('receiver_id');
+          tShipmentsreceiver_address.AsString := shipping.GetValue<TJSONValue>('receiver_address').ToString;
+          tShipmentsshipping_items.AsString := shipping.GetValue<TJSONValue>('shipping_items').ToString;
+          tShipmentsshipping_option.AsString := shipping.GetValue<TJSONValue>('shipping_option').ToString;
+          tShipmentscomments.AsString := shipping.GetValue<string>('comments');
+          tShipmentsdate_first_printed.AsString := shipping.GetValue<string>('date_first_printed');
+          tShipmentsmarket_place.AsString := shipping.GetValue<string>('market_place');
+          tShipmentsreturn_details.AsString := shipping.GetValue<string>('return_details');
+          tShipmentstags.AsString := shipping.GetValue<TJSONValue>('tags').ToString;
+          if tShipmentstags.AsString<>'[]' then
+          begin
+            tShipmentsdelay.AsString := shipping.GetValue<TJSONValue>('delay').ToString;
+            tShipmentstype.AsString := shipping.GetValue<TJSONValue>('type').ToString;
+            tShipmentslogistic_type.AsString := shipping.GetValue<string>('logistic_type');
+            tShipmentsapplication_id.AsString := shipping.GetValue<string>('application_id');
+          end;
+          tShipmentsreturn_tracking_number.AsString := shipping.GetValue<string>('return_tracking_number');
+          tShipmentscost_components.AsString := shipping.GetValue<TJSONValue>('cost_components').ToString;
+          Post;
+        end;
       end;
-      tShipmentsmode.AsString := shipping.GetValue<string>('mode');
-      tShipmentscreated_by.AsString := shipping.GetValue<string>('created_by');
-      tShipmentsorder_id.AsString := shipping.GetValue<string>('order_id');
-      tShipmentsorder_cost.AsString := shipping.GetValue<string>('order_cost');
-      tShipmentsbase_cost.AsString := shipping.GetValue<string>('base_cost');
-      tShipmentssite_id.AsString := shipping.GetValue<string>('site_id');
-      tShipmentsstatus.AsString := shipping.GetValue<string>('status');
-      tShipmentssubstatus.AsString := shipping.GetValue<string>('substatus');
-      tShipmentsstatus_history.AsString := shipping.GetValue<TJSONValue>('status_history').ToString;
-      if tShipmentssubstatus.AsString<>'' then
-        tShipmentssubstatus_history.AsString := shipping.GetValue<TJSONValue>('substatus_history').ToString;
-      tShipmentsdate_created.AsString := shipping.GetValue<string>('date_created');
-      tShipmentslast_updated.AsString := shipping.GetValue<string>('last_updated');
-      tShipmentstracking_number.AsString := shipping.GetValue<string>('tracking_number');
-      tShipmentstracking_method.AsString := shipping.GetValue<string>('tracking_method');
-      tShipmentsservice_id.AsString := shipping.GetValue<string>('service_id');
-      tShipmentscarrier_info.AsString := shipping.GetValue<string>('carrier_info');
-      tShipmentssender_id.AsString := shipping.GetValue<string>('sender_id');
-      tShipmentssender_address.AsString := shipping.GetValue<TJSONValue>('sender_address').ToString;
-      tShipmentsreceiver_id.AsString := shipping.GetValue<string>('receiver_id');
-      tShipmentsreceiver_address.AsString := shipping.GetValue<TJSONValue>('receiver_address').ToString;
-      tShipmentsshipping_items.AsString := shipping.GetValue<TJSONValue>('shipping_items').ToString;
-      tShipmentsshipping_option.AsString := shipping.GetValue<TJSONValue>('shipping_option').ToString;
-      tShipmentscomments.AsString := shipping.GetValue<string>('comments');
-      tShipmentsdate_first_printed.AsString := shipping.GetValue<string>('date_first_printed');
-      tShipmentsmarket_place.AsString := shipping.GetValue<string>('market_place');
-      tShipmentsreturn_details.AsString := shipping.GetValue<string>('return_details');
-      tShipmentstags.AsString := shipping.GetValue<TJSONValue>('tags').ToString;
-      if tShipmentstags.AsString<>'[]' then
-      begin
-        tShipmentsdelay.AsString := shipping.GetValue<TJSONValue>('delay').ToString;
-        tShipmentstype.AsString := shipping.GetValue<TJSONValue>('type').ToString;
-        tShipmentslogistic_type.AsString := shipping.GetValue<string>('logistic_type');
-        tShipmentsapplication_id.AsString := shipping.GetValue<string>('application_id');
-      end;
-      tShipmentsreturn_tracking_number.AsString := shipping.GetValue<string>('return_tracking_number');
-      tShipmentscost_components.AsString := shipping.GetValue<TJSONValue>('cost_components').ToString;
-      Post;
-      result := id;
     end;
   end;
 end;
