@@ -104,7 +104,7 @@ end;
 procedure TfMercadoLibreEnvios.FormShow(Sender: TObject);
 begin
   actualizarEtiquetas;
-  Timer1.Enabled:=True;
+//  Timer1.Enabled:=True;
 end;
 
 procedure TfMercadoLibreEnvios.lPrepararClick(Sender: TObject);
@@ -204,7 +204,7 @@ end;
 
 procedure TfMercadoLibreEnvios.tProgressBarTimer(Sender: TObject);
 begin
-  ProgressBar1.StepIt
+  ProgressBar1.StepIt;
 end;
 
 procedure TfMercadoLibreEnvios.actualizarEtiquetas;
@@ -236,9 +236,7 @@ begin
     begin
       vsqlOrder_items:=sql1;
       if vsqlOrder_items='' then vsqlOrder_items:=sql;
-      qOrders.Open(sql
-//        +' GROUP BY orders.buyer'
-        );
+      qOrders.Open(sql + groupBuyer);
       try
         ShowModal;
       finally
@@ -256,7 +254,7 @@ begin
     begin
       bImprimir.Visible:=False;
       qOrder_items.Open(sql);
-      tMessages.Open(sql);
+      tMessages.Open(sql + groupText_plain);
       try
         ShowModal;
       finally

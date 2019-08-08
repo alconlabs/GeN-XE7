@@ -178,6 +178,30 @@ var
   dmML: TdmML;
 
 const
+  whereReady_to_ship=' (shipments.status=''ready_to_ship'')';
+  whereShipped='(shipments.status=''shipped'')';
+  whereDelivered='(shipments.status=''delivered'')';
+  whereNoStatus='(shipments.status='''')';
+  whereCancelled=' (shipments.status=''cancelled'')';
+  whereSMMe1=' shipments.mode=''me1''';
+  whereSMMe2=' shipments.mode=''me2''';
+  whereSMCustom=' shipments.mode=''custom'' ';
+  whereNoMode=' shipments.mode='''' ';
+  whereEmbalado=' (despachados.embalado=''S'')';
+  whereNoEmbalado=' (NOT(despachados.embalado=''S''))';
+  whereDelayed='(shipments.substatus=''delayed'')';
+  whereEqtiquetaImpresa='(shipments.substatus=''printed'')';
+  whereEtiquetaLista='(shipments.substatus=''ready_to_print'')';
+  whereNoLeido=' (messages.date_read='''')';
+  whereEsperandoRetiro=' (shipments.substatus=''waiting_for_withdrawal'')';
+  whereEnCamino=' (shipments.substatus='''')';
+  whereEnvio=' ('+whereSMMe1+' OR '+whereSMMe2+')';
+  whereSinEnviar=' ('+whereReady_to_ship+' OR '+whereNoStatus+')';
+  whereNoSubject=' (messages.subject='''')';
+  orderMessages=' ORDER BY messages.id DESC';
+  groupOrder=' GROUP BY orders.id';
+  groupBuyer=' GROUP BY orders.buyer';
+  groupText_plain=' GROUP BY messages.text_plain';
   sqlOrders='SELECT * FROM orders';
   sqlOrder_items='SELECT * FROM order_items';
   sqlMessages='SELECT * FROM messages';
@@ -190,11 +214,13 @@ const
     +' INNER JOIN buyer ON orders.buyer = buyer.id'
     +' LEFT JOIN despachados ON orders.id = despachados.order_id';
 //    +' LEFT JOIN messages ON orders.id = messages.order_id';
-  sqlOrderWhere=' WHERE' //' (NOT(shipments.status=''ready_to_ship'')) AND'
-    +' (NOT(shipments.status=''shipped''))'
-    +' AND (NOT(shipments.status=''delivered''))'
-    +' AND (NOT(shipments.status=''not_delivered''))'
-//    +' AND (NOT(despachados.embalado=''S''))'
+  sqlOrderWhere=' WHERE'
+  +' ('+whereReady_to_ship+' OR '+whereNoStatus+')'
+  +' AND (NOT'+whereCancelled+')'
+//    +' (NOT(shipments.status=''shipped''))'
+//    +' AND (NOT(shipments.status=''delivered''))'
+//    +' AND (NOT(shipments.status=''not_delivered''))'
+  +' AND '+whereNoEmbalado+''
     ;
   sqlSelectOrderItems='SELECT '
 //    +'order_items.title AS TITULO'
@@ -207,39 +233,24 @@ const
     +', order_items.seller_sku, buyer.first_name'
     +', buyer.last_name, buyer.nickname, "imprimir" AS ETIQUETA'
     +', orders.shipping, orders.buyer, order_items.order_id';
-  whereReady_to_ship=' (shipments.status=''ready_to_ship'')';
-  whereShipped='(shipments.status=''shipped'')';
-  whereDelivered='(shipments.status=''delivered'')';
-  whereNoStatus='(shipments.status='''')';
-  whereSMMe1=' shipments.mode=''me1''';
-  whereSMMe2=' shipments.mode=''me2''';
-  whereSMCustom=' shipments.mode=''custom'' ';
-  whereEmbalado=' (despachados.embalado=''S'')';
-  whereNoEmbalado=' (NOT(despachados.embalado=''S''))';
-  whereDelayed='(shipments.substatus=''delayed'')';
-  whereEqtiquetaImpresa='(shipments.substatus=''printed'')';
-  whereEtiquetaLista='(shipments.substatus=''ready_to_print'')';
-  whereNoLeido=' (messages.date_read='''')';
-  whereEsperandoRetiro=' (shipments.substatus=''waiting_for_withdrawal'')';
-  whereEnCamino=' (shipments.substatus='''')';
-  groupOrder=' GROUP BY orders.id';
-  sqlMensajes=sqlSelectOrderItems+', messages.*'+sqlOrderFrom+' INNER JOIN messages ON orders.id = messages.order_id'+' WHERE '+whereNoLeido;
+  sqlMensajes=sqlSelectOrderItems+', messages.*'+sqlOrderFrom+' INNER JOIN messages ON orders.id = messages.order_id'+' WHERE (NOT'+whereNoSubject+')';
+  sqlMensajesNoLeido=sqlMensajes+' AND '+whereNoLeido;
   sqlItems=sqlSelectOrderItems+sqlOrderFrom;
-  sqlPreparar=sqlItems+sqlOrderWhere+' AND '+whereNoEmbalado;
-  sqlPrepararEnvios=sqlItems+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe2;
-  sqlPrepararEnviosItems=sqlItems+' WHERE ('+whereReady_to_ship+' OR '+whereNoStatus+') AND '+whereNoEmbalado+' AND ('+whereSMMe2+' OR '+whereSMCustom+')';
-  sqlPrepararFlex=sqlItems+' WHERE '+whereReady_to_ship+' AND '+whereNoEmbalado+' AND '+whereSMMe1;
-  sqlPrepararAcordar=sqlItems+' WHERE '+whereNoStatus+' AND '+whereNoEmbalado+' AND '+whereSMCustom;
-  sqlPrepararMensajes=sqlMensajes+' AND ('+whereNoStatus+' OR '+whereReady_to_ship+') AND '+whereNoEmbalado+groupOrder;
-  sqlDespachar=sqlItems+' WHERE ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado;
-  sqlDespacharDemoradas=sqlItems+' WHERE ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereDelayed+' AND '+whereEmbalado;
-  sqlDespacharColecta=sqlItems+' WHERE ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado+' AND NOT'+whereSMMe1;
-  sqlDespacharFlex=sqlItems+' WHERE ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado+' AND '+whereSMMe1;
-  sqlDespacharMensajes=sqlMensajes+' AND ((NOT'+whereDelivered+') OR '+whereReady_to_ship+') AND '+whereEmbalado+''+groupOrder;
+  sqlPreparar=sqlItems+sqlOrderWhere;
+  sqlPrepararEnvios=sqlPreparar+' AND '+whereEnvio;
+  sqlPrepararEnviosItems=sqlPreparar;
+  sqlPrepararFlex=sqlPreparar+' AND '+whereSMCustom;
+  sqlPrepararAcordar=sqlPreparar+' AND '+whereNoMode;
+  sqlPrepararMensajes=sqlMensajesNoLeido+' AND '+whereSinEnviar+' AND '+whereNoEmbalado;//+groupOrder;
+  sqlDespachar=sqlItems+' WHERE '+whereSinEnviar+' AND '+whereEmbalado;
+  sqlDespacharDemoradas=sqlDespachar+' AND '+whereDelayed;
+  sqlDespacharColecta=sqlDespachar+' AND (NOT'+whereSMCustom+')';
+  sqlDespacharFlex=sqlDespachar+' AND '+whereSMCustom;
+  sqlDespacharMensajes=sqlMensajesNoLeido+' AND '+whereSinEnviar+' AND '+whereEmbalado;//+''+groupOrder;
   sqlTransito=sqlItems+' WHERE '+whereShipped;
-  sqlTransitoCamino=sqlItems+' WHERE '+whereShipped+' AND '+whereEnCamino;
-  sqlTransitoEsperandoRetiro=sqlItems+' WHERE '+whereEsperandoRetiro;
-  sqlTransitoMensajes=sqlMensajes+' AND ('+whereShipped+')'+groupOrder;
+  sqlTransitoCamino=sqlTransito+' AND '+whereEnCamino;
+  sqlTransitoEsperandoRetiro=sqlTransito+' AND '+whereEsperandoRetiro;
+  sqlTransitoMensajes=sqlMensajesNoLeido+' AND '+whereShipped;//+''+groupOrder;
 
 implementation
 
@@ -877,6 +888,7 @@ begin
       tMessagesid.AsString:='1';
     end;
     tMessagesorder_id.AsString:='1';
+    tMessagessubject.AsString:='Articulo Prueba 1';
     tMessagestext_plain.AsString:='blablablablablablablablablablablablablablabla';
     tMessagesdate_read.AsString:='';
     Post;
@@ -957,7 +969,7 @@ begin
     end;
 //    tShipmentsorder_id.AsString:='2';
     tShipmentsstatus.AsString:='';
-    tShipmentsmode.AsString:='custom';
+    tShipmentsmode.AsString:='';
     Post;
   end;
   with tMessages do
@@ -971,6 +983,7 @@ begin
       tMessagesid.AsString:='2';
     end;
     tMessagesorder_id.AsString:='2';
+    tMessagessubject.AsString:='Articulo Prueba 2';
     tMessagestext_plain.AsString:='blebleblebleblebleblebleblebleblebleblebleble';
     tMessagesdate_read.AsString:='';
     Post;
@@ -986,6 +999,7 @@ begin
       tMessagesid.AsString:='3';
     end;
     tMessagesorder_id.AsString:='2';
+    tMessagessubject.AsString:='Articulo Prueba 2';
     tMessagestext_plain.AsString:='brrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrrbrr';
     tMessagesdate_read.AsString:='';
     Post;
@@ -1050,8 +1064,8 @@ begin
       tShipmentsid.AsString:='3';
     end;
     tShipmentsorder_id.AsString:='3';
-    tShipmentsstatus.AsString:='ready_to_ship';
-    tShipmentsmode.AsString:='me1';
+    tShipmentsstatus.AsString:='';
+    tShipmentsmode.AsString:='custom';
     Post;
   end;
   with tMessages do
@@ -1065,6 +1079,7 @@ begin
       tMessagesid.AsString:='3';
     end;
     tMessagesorder_id.AsString:='3';
+    tMessagessubject.AsString:='Articulo Prueba 3';
     tMessagestext_plain.AsString:='blablablablablablablablablablablablablablabla';
     tMessagesdate_read.AsString:='';
     Post;
@@ -1100,18 +1115,26 @@ begin
       tDespachadosenviado.AsString := 'N';
     Post;
   end;
+
+  with tOrder_items do
+  begin
+    Open('SELECT * FROM order_items');
+//    First;
+    while not Eof do
+    begin
+      Edit;
+      if tOrder_itemsseller_sku.AsString='' then tOrder_itemsseller_sku.AsString:=tOrder_itemsseller_custom_field.AsString;
+      Post;
+      Next;
+    end;
+  end;
+
 end;
 
 function TdmML.CantidadVentas;
 begin
   FDQuery1.Open(sql);
   result := IntToStr(FDQuery1.RowsAffected)+' ventas';
-end;
-
-function SelecSql():string;
-begin
-
-  result:='';
 end;
 
 end.

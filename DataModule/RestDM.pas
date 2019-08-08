@@ -943,23 +943,24 @@ begin
           tOrder_itemsorder_id.AsString := order_id;
           tOrder_itemsitem_id.AsString := item_id;
           tOrder_itemstitle.AsString := item.GetValue<string>('title');
-          tOrder_itemsseller_custom_field.AsString := item.GetValue<string>('seller_custom_field');//": null,
-          tOrder_itemscondition.AsString := item.GetValue<string>('condition');// "new",
-          tOrder_itemscategory_id.AsString := item.GetValue<string>('category_id');// "MLA74083",
-          tOrder_itemsvariation_id.AsString := item.GetValue<string>('variation_id');// null,
+          tOrder_itemsseller_custom_field.AsString := item.GetValue<string>('seller_custom_field');
+          tOrder_itemscondition.AsString := item.GetValue<string>('condition');
+          tOrder_itemscategory_id.AsString := item.GetValue<string>('category_id');
+          tOrder_itemsvariation_id.AsString := item.GetValue<string>('variation_id');
 //          tOrder_itemsvariation_attributes.AsString := item.GetValue<TJSONValue>('variation_attributes');// [],
-          tOrder_itemsseller_sku.AsString := item.GetValue<string>('seller_sku');// "80",
-          tOrder_itemswarranty.AsString := item.GetValue<string>('warranty');// null,
+          tOrder_itemsseller_sku.AsString := item.GetValue<string>('seller_sku');
+          if tOrder_itemsseller_sku.AsString='' then tOrder_itemsseller_sku.AsString:=tOrder_itemsseller_custom_field.AsString;
+          tOrder_itemswarranty.AsString := item.GetValue<string>('warranty');
           tOrder_itemsquantity.AsString := order_items.GetValue<string>('quantity');// 1,
-//          tOrder_itemsdifferential_pricing_id.AsString := order_items.GetValue<TJSONValue>('differential_pricing_id');// null,
-          tOrder_itemssale_fee.AsString := order_items.GetValue<string>('sale_fee');// 69.39,
-          tOrder_itemslisting_type_id.AsString := order_items.GetValue<string>('listing_type_id');// "gold_special",
-          tOrder_itemsbase_currency_id.AsString := order_items.GetValue<string>('base_currency_id');// null,
-          tOrder_itemsunit_price.AsString := order_items.GetValue<string>('unit_price');// 456.87,
-          tOrder_itemsfull_unit_price.AsString := order_items.GetValue<string>('full_unit_price');// 456.87,
-          tOrder_itemsbase_exchange_rate.AsString := order_items.GetValue<string>('base_exchange_rate');// null,
-          tOrder_itemscurrency_id.AsString := order_items.GetValue<string>('currency_id');// "ARS",
-          tOrder_itemsmanufacturing_days.AsString := order_items.GetValue<string>('manufacturing_days');// null
+//          tOrder_itemsdifferential_pricing_id.AsString := order_items.GetValue<TJSONValue>('differential_pricing_id');
+          tOrder_itemssale_fee.AsString := order_items.GetValue<string>('sale_fee');
+          tOrder_itemslisting_type_id.AsString := order_items.GetValue<string>('listing_type_id');
+          tOrder_itemsbase_currency_id.AsString := order_items.GetValue<string>('base_currency_id');
+          tOrder_itemsunit_price.AsString := order_items.GetValue<string>('unit_price');
+          tOrder_itemsfull_unit_price.AsString := order_items.GetValue<string>('full_unit_price');
+          tOrder_itemsbase_exchange_rate.AsString := order_items.GetValue<string>('base_exchange_rate');
+          tOrder_itemscurrency_id.AsString := order_items.GetValue<string>('currency_id');
+          tOrder_itemsmanufacturing_days.AsString := order_items.GetValue<string>('manufacturing_days');
           Post;
         end;
 end;
@@ -986,7 +987,7 @@ begin
           end;
   //        tShipmentsorder_id.AsString:='0';
           tShipmentsstatus.AsString:='';
-          tShipmentsmode.AsString:='custom';
+          tShipmentsmode.AsString:='';
           Post;
         end;
       end

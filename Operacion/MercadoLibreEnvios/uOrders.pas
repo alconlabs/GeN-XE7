@@ -66,7 +66,7 @@ begin
       +' AND buyer=:B',[qOrders.FieldByName('buyer').AsString]
   //    +' GROUP BY orders.buyer'
       );
-        tMessages.Open(sqlMensajes+' AND buyer='+qOrder_items.FieldByName('buyer').AsString);
+        tMessages.Open(sqlMensajes+' AND buyer='+qOrder_items.FieldByName('buyer').AsString  + groupText_plain );
   //      Panel1.Caption:=qOrder_items.FieldByName('first_name').AsString+' '+qOrder_items.FieldByName('last_name').AsString+' ['+qOrder_items.FieldByName('nickname').AsString+'] ';
         try
           ShowModal;

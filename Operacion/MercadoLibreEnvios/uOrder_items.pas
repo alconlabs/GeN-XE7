@@ -67,7 +67,7 @@ procedure TfOrder_items.StringGridBindSourceDB1Click(Sender: TObject);
 begin
   if qOrder_items.RowsAffected>0 then
   begin
-    dmML.tMessages.Open('SELECT * FROM messages WHERE order_id='+qOrder_items.FieldByName('order_id').AsString);
+    dmML.tMessages.Open(sqlMensajes+' AND order_items.order_id='+qOrder_items.FieldByName('order_id').AsString + groupText_plain);
     ActualizarEtiquetaComprador;
   end
   else
