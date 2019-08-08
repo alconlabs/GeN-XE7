@@ -718,4 +718,72 @@ object dmML: TdmML
     Left = 5
     Top = 240
   end
+  object tShipping_option: TFDQuery
+    Connection = dbMain
+    SQL.Strings = (
+      'select * from shipping_option')
+    Left = 112
+    Top = 144
+    object tShipping_optionid: TWideMemoField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      BlobType = ftWideMemo
+    end
+    object tShipping_optionshipping_method_id: TWideMemoField
+      FieldName = 'shipping_method_id'
+      Origin = 'shipping_method_id'
+      BlobType = ftWideMemo
+    end
+    object tShipping_optionname: TWideMemoField
+      FieldName = 'name'
+      Origin = 'name'
+      BlobType = ftWideMemo
+    end
+    object tShipping_optioncurrency_id: TWideMemoField
+      FieldName = 'currency_id'
+      Origin = 'currency_id'
+      BlobType = ftWideMemo
+    end
+    object tShipping_optionlist_cost: TWideMemoField
+      FieldName = 'list_cost'
+      Origin = 'list_cost'
+      BlobType = ftWideMemo
+    end
+    object tShipping_optioncost: TWideMemoField
+      FieldName = 'cost'
+      Origin = 'cost'
+      BlobType = ftWideMemo
+    end
+    object tShipping_optiondelivery_type: TWideMemoField
+      FieldName = 'delivery_type'
+      Origin = 'delivery_type'
+      BlobType = ftWideMemo
+    end
+    object tShipping_optionestimated_schedule_limit: TWideMemoField
+      FieldName = 'estimated_schedule_limit'
+      Origin = 'estimated_schedule_limit'
+      BlobType = ftWideMemo
+    end
+    object tShipping_optionestimated_delivery_time: TWideMemoField
+      FieldName = 'estimated_delivery_time'
+      Origin = 'estimated_delivery_time'
+      BlobType = ftWideMemo
+    end
+    object tShipping_optionestimated_delivery_limit: TWideMemoField
+      FieldName = 'estimated_delivery_limit'
+      Origin = 'estimated_delivery_limit'
+      BlobType = ftWideMemo
+    end
+    object tShipping_optionestimated_delivery_final: TWideMemoField
+      FieldName = 'estimated_delivery_final'
+      Origin = 'estimated_delivery_final'
+      BlobType = ftWideMemo
+    end
+    object tShipping_optionestimated_handling_limit: TWideMemoField
+      FieldName = 'estimated_handling_limit'
+      Origin = 'estimated_handling_limit'
+      BlobType = ftWideMemo
+    end
+  end
 end

@@ -62,6 +62,7 @@ type
     procedure ObtenerShipping(id:string);
     function ObtenerBuyer(j:TJSONValue):string;
     procedure ObtenerDespachados(order_id:string);
+    function ObtenerShipping_option(j:TJSONValue):string;
   public
     { Public declarations }
     JSONValue1 : TJSONValue;
@@ -976,21 +977,35 @@ begin
     if id='0' then
     begin
       with tShipments do
+      begin
+        Open('SELECT * FROM shipments WHERE id=:I',['0']);
+        if RowsAffected>0 then
+          Edit
+        else
         begin
-          Open('SELECT * FROM shipments WHERE id=:I',['0']);
-          if RowsAffected>0 then
-            Edit
-          else
-          begin
-            Insert;
-            tShipmentsid.AsString:='0';
-          end;
-  //        tShipmentsorder_id.AsString:='0';
-          tShipmentsstatus.AsString:='';
-          tShipmentsmode.AsString:='';
-          Post;
+          Insert;
+          tShipmentsid.AsString:='0';
         end;
-      end
+//        tShipmentsorder_id.AsString:='0';
+        tShipmentsstatus.AsString:='';
+        tShipmentsmode.AsString:='';
+        tShipmentsshipping_option.AsString:='0';
+        Post;
+      end;
+      with tShipping_option do
+      begin
+        Open(sqlShipping_option+' WHERE id=:I',['0']);
+        if RowsAffected>0 then
+          Edit
+        else
+        begin
+          Insert;
+          tShipping_optionid.AsString := '0';
+        end;
+        tShipping_optionshipping_method_id.AsString:='';
+        Post;
+      end;
+    end
     else
     begin
       j := Obtener('/shipments/'+id);
@@ -1030,7 +1045,8 @@ begin
           tShipmentsreceiver_id.AsString := shipping.GetValue<string>('receiver_id');
           tShipmentsreceiver_address.AsString := shipping.GetValue<TJSONValue>('receiver_address').ToString;
           tShipmentsshipping_items.AsString := shipping.GetValue<TJSONValue>('shipping_items').ToString;
-          tShipmentsshipping_option.AsString := shipping.GetValue<TJSONValue>('shipping_option').ToString;
+//          tShipmentsshipping_option.AsString := shipping.GetValue<TJSONValue>('shipping_option').ToString
+          tShipmentsshipping_option.AsString := ObtenerShipping_option(shipping.GetValue<TJSONValue>('shipping_option'));
           tShipmentscomments.AsString := shipping.GetValue<string>('comments');
           tShipmentsdate_first_printed.AsString := shipping.GetValue<string>('date_first_printed');
           tShipmentsmarket_place.AsString := shipping.GetValue<string>('market_place');
@@ -1100,6 +1116,27 @@ begin
       if tDespachadosenviado.AsString = '' then tDespachadosenviado.AsString := 'N';
       Post;
     end;
+end;
+
+function TDMR.ObtenerShipping_option;
+var id : string;
+begin
+  with dmML do
+    with tShipping_option do
+    begin
+      id := j.GetValue<string>('id');
+      Open(sqlShipping_option+' WHERE id=:I',[id]);
+      if RowsAffected>0 then
+        Edit
+      else
+      begin
+        Insert;
+        tShipping_optionid.AsString := id;
+      end;
+      tShipping_optionshipping_method_id.AsString:=j.GetValue<string>('shipping_method_id');
+      Post;
+    end;
+    result:=id;
 end;
 
 end.

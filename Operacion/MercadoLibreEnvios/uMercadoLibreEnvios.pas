@@ -60,12 +60,9 @@ type
     lTransito: TLabel;
     lVentasTransito: TLabel;
     procedure FormCreate(Sender: TObject);
-//    procedure StringGridBindSourceDB1Click(Sender: TObject);
     procedure tProgressBarTimer(Sender: TObject);
-    procedure sgMessagesClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure pPrepararEnviosClick(Sender: TObject);
-    procedure lPrepararClick(Sender: TObject);
     procedure pPrepararFlexClick(Sender: TObject);
     procedure pPrepararAcordarClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -77,6 +74,7 @@ type
     procedure pDespacharDemoradasClick(Sender: TObject);
     procedure pTransitoEsperandoRetiroClick(Sender: TObject);
     procedure pTransitoCaminoClick(Sender: TObject);
+    procedure Preparar;
   private
     { Private declarations }
     procedure actualizarEtiquetas;
@@ -103,26 +101,8 @@ end;
 
 procedure TfMercadoLibreEnvios.FormShow(Sender: TObject);
 begin
-  actualizarEtiquetas;
-//  Timer1.Enabled:=True;
-end;
-
-procedure TfMercadoLibreEnvios.lPrepararClick(Sender: TObject);
-begin
-  Timer1.Interval:=((1000*60)*10);
-  with dmr do
-    with dmML do
-      begin
-        ProgressBar1.Visible:=True;
-        tProgressBar.Enabled:=True;
-        FDQuery1.Close;
-        ObtenerOrderRecent;
-        tProgressBar.Enabled:=False;
-        ProgressBar1.StepBy(100);
-        sleep(100);
-        ProgressBar1.Visible:=False;
-      end;
-  actualizarEtiquetas;
+//  actualizarEtiquetas;
+  Timer1.Enabled:=True;
 end;
 
 procedure TfMercadoLibreEnvios.pPrepararAcordarClick(Sender: TObject);
@@ -147,7 +127,7 @@ end;
 
 procedure TfMercadoLibreEnvios.pDespacharColectaClick(Sender: TObject);
 begin
-    AbrirfOrders(sqlDespacharColecta,'');
+    AbrirfOrders(sqlDespacharEnvios,'');
 end;
 
 procedure TfMercadoLibreEnvios.pDespacharDemoradasClick(Sender: TObject);
@@ -180,26 +160,9 @@ begin
   AbrirfOrder_items(sqlTransitoMensajes);
 end;
 
-procedure TfMercadoLibreEnvios.sgMessagesClick(Sender: TObject);
-begin
-//  Memo1.Text := dmML.tMessages.FieldByName('message_text').AsString;
-end;
-
-//procedure TfMercadoLibreEnvios.StringGridBindSourceDB1Click(Sender: TObject);
-//begin
-//  with dmml do
-//  begin
-//    tOrder_items.Open(
-////    'SELECT item_title FROM order_items WHERE order_id='+dmML.tOrders.FieldByName('order_id').AsString);
-//    sqlItems
-//    +' WHERE order_id='+dmML.tOrders.FieldByName('order_id').AsString
-//    );
-//  end;
-//end;
-
 procedure TfMercadoLibreEnvios.Timer1Timer(Sender: TObject);
 begin
-  lPrepararClick(Sender);
+  Preparar;
 end;
 
 procedure TfMercadoLibreEnvios.tProgressBarTimer(Sender: TObject);
@@ -218,7 +181,7 @@ begin
     lVentasPrepararMensajes.Caption := CantidadVentas(sqlPrepararMensajes);
     lVentasDespachar.Caption := CantidadVentas(sqlDespachar);
     lVentasDespacharDemoradas.Caption := CantidadVentas(sqlDespacharDemoradas);
-    lVentasDespacharColecta.Caption := CantidadVentas(sqlDespacharColecta);
+    lVentasDespacharColecta.Caption := CantidadVentas(sqlDespacharEnvios);
     lVentasDespacharFlex.Caption := CantidadVentas(sqlDespacharFlex);
     lVentasDespacharMensajes.Caption := CantidadVentas(sqlDespacharMensajes);
     lVentasTransito.Caption := CantidadVentas(sqlTransito);
@@ -261,6 +224,24 @@ begin
         Free;
       end;
     end;
+end;
+
+procedure TfMercadoLibreEnvios.Preparar;
+begin
+  Timer1.Interval:=((1000*60)*10);
+  with dmr do
+    with dmML do
+      begin
+        ProgressBar1.Visible:=True;
+        tProgressBar.Enabled:=True;
+        FDQuery1.Close;
+        ObtenerOrderRecent;
+        tProgressBar.Enabled:=False;
+        ProgressBar1.StepBy(100);
+        sleep(100);
+        ProgressBar1.Visible:=False;
+      end;
+  actualizarEtiquetas;
 end;
 
 end.

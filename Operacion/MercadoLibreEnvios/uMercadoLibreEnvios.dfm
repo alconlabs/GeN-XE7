@@ -241,7 +241,6 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        OnClick = lPrepararClick
       end
       object lVentasPreparar: TLabel
         Left = 17

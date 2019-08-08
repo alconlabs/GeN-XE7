@@ -151,6 +151,19 @@ type
     tShipmentsapplication_id: TWideMemoField;
     tShipmentsreturn_tracking_number: TWideMemoField;
     tShipmentscost_components: TWideMemoField;
+    tShipping_option: TFDQuery;
+    tShipping_optionid: TWideMemoField;
+    tShipping_optionshipping_method_id: TWideMemoField;
+    tShipping_optionname: TWideMemoField;
+    tShipping_optioncurrency_id: TWideMemoField;
+    tShipping_optionlist_cost: TWideMemoField;
+    tShipping_optioncost: TWideMemoField;
+    tShipping_optiondelivery_type: TWideMemoField;
+    tShipping_optionestimated_schedule_limit: TWideMemoField;
+    tShipping_optionestimated_delivery_time: TWideMemoField;
+    tShipping_optionestimated_delivery_limit: TWideMemoField;
+    tShipping_optionestimated_delivery_final: TWideMemoField;
+    tShipping_optionestimated_handling_limit: TWideMemoField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -183,10 +196,16 @@ const
   whereDelivered='(shipments.status=''delivered'')';
   whereNoStatus='(shipments.status='''')';
   whereCancelled=' (shipments.status=''cancelled'')';
-  whereSMMe1=' shipments.mode=''me1''';
-  whereSMMe2=' shipments.mode=''me2''';
-  whereSMCustom=' shipments.mode=''custom'' ';
-  whereNoMode=' shipments.mode='''' ';
+  whereSMMe1=' (shipments.mode=''me1'')';
+  whereSMMe2=' (shipments.mode=''me2'')';
+  whereSMCustom=' (shipments.mode=''custom'')';
+  whereFlex=' ('//' shipments.tracking_number=shipments.id';
+  +'(shipping_option.shipping_method_id=''506245'')'
+  +' OR (shipping_option.shipping_method_id=''506345'')'
+  +' OR (shipping_option.shipping_method_id=''506445'')'
+  +' OR (shipping_option.shipping_method_id=''507045'')'
+  +')';
+  whereNoMode=' (shipments.mode='''')';
   whereEmbalado=' (despachados.embalado=''S'')';
   whereNoEmbalado=' (NOT(despachados.embalado=''S''))';
   whereDelayed='(shipments.substatus=''delayed'')';
@@ -206,11 +225,13 @@ const
   sqlOrder_items='SELECT * FROM order_items';
   sqlMessages='SELECT * FROM messages';
   sqlShipments='SELECT * FROM shipments';
+  sqlShipping_option='SELECT * FROM  shipping_option';
   sqlBuyer='SELECT * FROM buyer';
   sqlDespachados='SELECT * FROM despachados';
   sqlOrderFrom=' FROM orders'
     +' INNER JOIN order_items ON orders.id = order_items.order_id'
     +' INNER JOIN shipments ON orders.shipping = shipments.id'
+    +' LEFT JOIN shipping_option ON shipments.shipping_option = shipping_option.id'
     +' INNER JOIN buyer ON orders.buyer = buyer.id'
     +' LEFT JOIN despachados ON orders.id = despachados.order_id';
 //    +' LEFT JOIN messages ON orders.id = messages.order_id';
@@ -237,15 +258,15 @@ const
   sqlMensajesNoLeido=sqlMensajes+' AND '+whereNoLeido;
   sqlItems=sqlSelectOrderItems+sqlOrderFrom;
   sqlPreparar=sqlItems+sqlOrderWhere;
-  sqlPrepararEnvios=sqlPreparar+' AND '+whereEnvio;
+  sqlPrepararEnvios=sqlPreparar+' AND '+whereEnvio+' AND (NOT'+whereFlex+')';
   sqlPrepararEnviosItems=sqlPreparar;
-  sqlPrepararFlex=sqlPreparar+' AND '+whereSMCustom;
+  sqlPrepararFlex=sqlPreparar+' AND '+whereFlex;
   sqlPrepararAcordar=sqlPreparar+' AND '+whereNoMode;
   sqlPrepararMensajes=sqlMensajesNoLeido+' AND '+whereSinEnviar+' AND '+whereNoEmbalado;//+groupOrder;
   sqlDespachar=sqlItems+' WHERE '+whereSinEnviar+' AND '+whereEmbalado;
   sqlDespacharDemoradas=sqlDespachar+' AND '+whereDelayed;
-  sqlDespacharColecta=sqlDespachar+' AND (NOT'+whereSMCustom+')';
-  sqlDespacharFlex=sqlDespachar+' AND '+whereSMCustom;
+  sqlDespacharEnvios=sqlDespachar+' AND (NOT'+whereFlex+')';
+  sqlDespacharFlex=sqlDespachar+' AND '+whereFlex;
   sqlDespacharMensajes=sqlMensajesNoLeido+' AND '+whereSinEnviar+' AND '+whereEmbalado;//+''+groupOrder;
   sqlTransito=sqlItems+' WHERE '+whereShipped;
   sqlTransitoCamino=sqlTransito+' AND '+whereEnCamino;
@@ -875,6 +896,20 @@ begin
     tShipmentsorder_id.AsString:='1';
     tShipmentsstatus.AsString:='ready_to_ship';
     tShipmentsmode.AsString:='me2';
+    tShipmentsshipping_option.AsString:='0';
+    Post;
+  end;
+  with tShipping_option do
+  begin
+    Open(sqlShipping_option+' WHERE id=:I',['0']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tShipping_optionid.AsString := '0';
+    end;
+    tShipping_optionshipping_method_id.AsString:='';
     Post;
   end;
   with tMessages do
@@ -970,6 +1005,20 @@ begin
 //    tShipmentsorder_id.AsString:='2';
     tShipmentsstatus.AsString:='';
     tShipmentsmode.AsString:='';
+    tShipmentsshipping_option.AsString:='0';
+    Post;
+  end;
+  with tShipping_option do
+  begin
+    Open(sqlShipping_option+' WHERE id=:I',['0']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tShipping_optionid.AsString := '0';
+    end;
+    tShipping_optionshipping_method_id.AsString:='';
     Post;
   end;
   with tMessages do
@@ -1065,7 +1114,21 @@ begin
     end;
     tShipmentsorder_id.AsString:='3';
     tShipmentsstatus.AsString:='';
-    tShipmentsmode.AsString:='custom';
+    tShipmentsmode.AsString:='me2';
+    tShipmentsshipping_option.AsString:='507045';
+    Post;
+  end;
+  with tShipping_option do
+  begin
+    Open(sqlShipping_option+' WHERE id=:I',['507045']);
+    if RowsAffected>0 then
+      Edit
+    else
+    begin
+      Insert;
+      tShipping_optionid.AsString := '507045';
+    end;
+    tShipping_optionshipping_method_id.AsString:='507045';
     Post;
   end;
   with tMessages do
