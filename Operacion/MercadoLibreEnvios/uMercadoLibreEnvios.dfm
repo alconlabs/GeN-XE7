@@ -660,6 +660,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
     end
   end
   object tProgressBar: TTimer
+    Enabled = False
     OnTimer = tProgressBarTimer
     Left = 336
     Top = 416

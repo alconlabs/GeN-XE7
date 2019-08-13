@@ -659,7 +659,7 @@ begin
 ////  OAuth2Authenticator1.AccessToken := 'APP_USR-5480711421985209-061218-6833fd7ab8853a5234718fc204b7d270-242069506';
 ////  OAuth2Authenticator1.AccessTokenParamName := 'access_token';
   Execute;
-  Application.ProcessMessages;
+//  Application.ProcessMessages;
   end;
 end;
 
@@ -667,8 +667,8 @@ procedure TDMR.ObtenerOrderRecent;
 var
   j, order_items, buyer, item, shipping : TJSONValue;
   i, io, order_id,order_status,buyer_id,item_id,item_title,seller_sku,
-  order_items_quantity : string;
-  n, r, l, ro, no : Integer;
+  order_items_quantity, last_updated : string;
+  n, r, l, ro, no, p, t, paging_total: Integer;
 begin
   with dmML do
     with tOrders do
@@ -676,15 +676,24 @@ begin
       try
         i:='0';
         if seller_id='' then ObtenerSeller;
-        ObtenerConsultaRest('orders/search/recent?seller='+seller_id,'');
-        j := TJSONObject.ParseJSONValue(RESTRequest1.Response.Content);
-        if j is TJSONObject then
-        begin
-          r:=TJSONArray(j.GetValue<TJSONValue>('results')).Size;
-          if r>0 then
-            for n := 0 to r-1 do
-            begin
-              i:=IntToStr(n);
+        repeat
+          Inc(p);
+//                  ObtenerConsultaRest('orders/search/recent?seller='+seller_id,'');
+          ObtenerConsultaRest('orders/search/recent?seller='+seller_id
+          +'&order.date_created.from=2019-08-10T00:00:00.000-00:00'
+          +'&offset='+IntToStr(p)
+          ,'');
+          j := TJSONObject.ParseJSONValue(RESTRequest1.Response.Content);
+          if j is TJSONObject then
+          begin
+            paging_total := j.GetValue<Integer>('paging.total');
+            if paging_total>0 then
+              t := paging_total;
+            r:=TJSONArray(j.GetValue<TJSONValue>('results')).Size;
+            if r>0 then
+              for n := 0 to r-1 do
+              begin
+                i:=IntToStr(n);
                 order_id := j.GetValue<string>('results['+i+'].id');
                 Open(sqlOrders+' WHERE id=:I',[order_id]);
                 if RowsAffected>0 then
@@ -693,43 +702,52 @@ begin
                 begin
                   Insert;
                   tOrdersid.AsString := order_id;
+                  //                tOrdersid.AsString := j.GetValue<TJSONValue>('results['+i+'].id').ToString;//2054151756,
+                  tOrderscomments.AsString := j.GetValue<string>('results['+i+'].comments');//null,
+                  tOrdersstatus.AsString := j.GetValue<string>('results['+i+'].status');//"paid",
+                  tOrdersstatus_detail.AsString := j.GetValue<TJSONValue>('results['+i+'].status_detail').ToString;//{},
+                  tOrdersdate_created.AsString := j.GetValue<string>('results['+i+'].date_created');//"2019-06-13T18:12:24.000-04:00",
+                  tOrdersdate_closed.AsString := j.GetValue<string>('results['+i+'].date_closed');//"2019-06-13T18:12:27.000-04:00",
+                  tOrdersexpiration_date.AsString := j.GetValue<string>('results['+i+'].expiration_date');//"2019-07-11T18:12:27.000-04:00",
+//                  tOrdersdate_last_updated.AsString := j.GetValue<string>('results['+i+'].date_last_updated');//"2019-06-24T12:11:26.353Z",
+                  tOrdershidden_for_seller.AsString := j.GetValue<string>('results['+i+'].hidden_for_seller');//false,
+                  tOrderscurrency_id.AsString := j.GetValue<string>('results['+i+'].currency_id');//"ARS",
+  //                tOrdersorder_items.AsString := j.GetValue<string>('results['+i+'].order_items');//[],
+                  ObtenerOrder_items(order_id, j.GetValue<TJSONValue>('results['+i+'].order_items'));
+                  tOrderstotal_amount.AsString := j.GetValue<string>('results['+i+'].total_amount');//456.87,
+                  tOrdersmediations.AsString := j.GetValue<TJSONValue>('results['+i+'].mediations').ToString;//[],
+                  tOrderspayments.AsString := j.GetValue<TJSONValue>('results['+i+'].payments').ToString;//[],
+  //                tOrdersshipping.AsString := j.GetValue<string>('results['+i+'].shipping');//{},
+  //                shipping := j.GetValue<TJSONValue>('results['+i+'].shipping');
+  //                id := shipping.GetValue<string>('id');
+                  tOrdersshipping.AsString:=(j.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
+  //                tOrdersshipping.AsString := ObtenerShipping(order_id, j.GetValue<TJSONValue>('results['+i+'].shipping'));
+//                  if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
+//                  ObtenerShipping(tOrdersshipping.AsString);
+                  tOrdersorder_request.AsString := j.GetValue<TJSONValue>('results['+i+'].order_request').ToString;//{},
+                  tOrderspickup_id.AsString := j.GetValue<string>('results['+i+'].pickup_id');//null,
+  //                tOrdersbuyer.AsString := j.GetValue<TJSONValue>('results['+i+'].buyer');//{},
+                  tOrdersbuyer.AsString := ObtenerBuyer(j.GetValue<TJSONValue>('results['+i+'].buyer'));
+                  tOrdersseller.AsString := j.GetValue<TJSONValue>('results['+i+'].seller').ToString;//{},
+                  tOrdersfeedback.AsString := j.GetValue<TJSONValue>('results['+i+'].feedback').ToString;//{},
+                  tOrderstags.AsString := j.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
+//                  ObtenerMessages(order_id,seller_id);
+                  tOrdersshipping.AsString:=(j.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
+                  if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
+                  ObtenerDespachados(order_id);
                 end;
-//                tOrdersid.AsString := j.GetValue<TJSONValue>('results['+i+'].id').ToString;//2054151756,
-                tOrderscomments.AsString := j.GetValue<string>('results['+i+'].comments');//null,
-                tOrdersstatus.AsString := j.GetValue<string>('results['+i+'].status');//"paid",
-                tOrdersstatus_detail.AsString := j.GetValue<TJSONValue>('results['+i+'].status_detail').ToString;//{},
-                tOrdersdate_created.AsString := j.GetValue<string>('results['+i+'].date_created');//"2019-06-13T18:12:24.000-04:00",
-                tOrdersdate_closed.AsString := j.GetValue<string>('results['+i+'].date_closed');//"2019-06-13T18:12:27.000-04:00",
-                tOrdersexpiration_date.AsString := j.GetValue<string>('results['+i+'].expiration_date');//"2019-07-11T18:12:27.000-04:00",
-                tOrdersdate_last_updated.AsString := j.GetValue<string>('results['+i+'].date_last_updated');//"2019-06-24T12:11:26.353Z",
-                tOrdershidden_for_seller.AsString := j.GetValue<string>('results['+i+'].hidden_for_seller');//false,
-                tOrderscurrency_id.AsString := j.GetValue<string>('results['+i+'].currency_id');//"ARS",
-//                tOrdersorder_items.AsString := j.GetValue<string>('results['+i+'].order_items');//[],
-                ObtenerOrder_items(order_id, j.GetValue<TJSONValue>('results['+i+'].order_items'));
-                tOrderstotal_amount.AsString := j.GetValue<string>('results['+i+'].total_amount');//456.87,
-                tOrdersmediations.AsString := j.GetValue<TJSONValue>('results['+i+'].mediations').ToString;//[],
-                tOrderspayments.AsString := j.GetValue<TJSONValue>('results['+i+'].payments').ToString;//[],
-//                tOrdersshipping.AsString := j.GetValue<string>('results['+i+'].shipping');//{},
-
-//                shipping := j.GetValue<TJSONValue>('results['+i+'].shipping');
-//                id := shipping.GetValue<string>('id');
-                tOrdersshipping.AsString:=(j.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
-//                tOrdersshipping.AsString := ObtenerShipping(order_id, j.GetValue<TJSONValue>('results['+i+'].shipping'));
-                if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
-                ObtenerShipping(tOrdersshipping.AsString);
-                tOrdersorder_request.AsString := j.GetValue<TJSONValue>('results['+i+'].order_request').ToString;//{},
-                tOrderspickup_id.AsString := j.GetValue<string>('results['+i+'].pickup_id');//null,
-//                tOrdersbuyer.AsString := j.GetValue<TJSONValue>('results['+i+'].buyer');//{},
-                tOrdersbuyer.AsString := ObtenerBuyer(j.GetValue<TJSONValue>('results['+i+'].buyer'));
-                tOrdersseller.AsString := j.GetValue<TJSONValue>('results['+i+'].seller').ToString;//{},
-                tOrdersfeedback.AsString := j.GetValue<TJSONValue>('results['+i+'].feedback').ToString;//{},
-                tOrderstags.AsString := j.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
-                ObtenerMessages(order_id,seller_id);
-                ObtenerDespachados(order_id);
-              tOrders.Post;
-              Application.ProcessMessages;
-            end;
-        end;
+                last_updated:=j.GetValue<string>('results['+i+'].date_last_updated');
+                if tOrdersdate_last_updated.AsString <> last_updated then
+                  begin
+                    tOrdersdate_last_updated.AsString := last_updated;
+                    ObtenerShipping(tOrdersshipping.AsString);
+                    ObtenerMessages(order_id,seller_id);
+                  end;
+                tOrders.Post;
+              end;
+          end;
+          Application.ProcessMessages;
+        until ((p=t) or (p>t));
       finally
       //
       end;
@@ -773,6 +791,7 @@ begin
   with dmML do
   begin
     try
+    if  accessToken='' then ObtenerRefreshToken;
 //curl -X GET “https://api.mercadolibre.com/messages/packs/$pack_id/sellers/$user_id?access_token=$ACCESS_TOKEN”
       tRest := TTRest.Create(
         url,
@@ -838,82 +857,93 @@ begin
 end;
 
 procedure TDMR.ObtenerMessages;//(order_id,pack_id, user_id:string);
-var
-  j, results, texto :TJSONValue;
-  id, message_id, message_text, i, s :string;
-  r,n :Integer;
+//var
+//  j, results, texto :TJSONValue;
+//  id, message_id, message_text, i, s :string;
+//  r,n :Integer;
 begin
 //curl -X GET “https://api.mercadolibre.com/messages/packs/$pack_id/sellers/$user_id?access_token=$ACCESS_TOKEN”
 //  if pack_id<>'' then
 //    id := pack_id;
 //  else
-    id := order_id;
+//    id := order_id;
 //  j := Obtener('/messages/packs/'+id+'/sellers/'+user_id);
-  j := Obtener('/messages/orders/'+id);
-//  s := j.ToString;
-  if j is TJSONObject then
-  begin
-    results := j.GetValue<TJSONValue>('results');
-    r:=TJSONArray(results).Size;
-    if r>0 then
-      with dmml do
-      with tMessages do
-//        with tMessages do
-          for n := 0 to r-1 do
-          begin
-            i:=IntToStr(n);
-            message_id := j.GetValue<string>('results['+i+'].message_id');
-            id := order_id+'_'+message_id;
-//            if CantidadRegistros('messages','id='+QuotedStr(id))>0 then
-            Open(sqlMessages+' WHERE id=:I',[id]);
-            if RowsAffected>0 then
-              Edit
-            else
-            begin
-              tMessages.Insert;
-              tMessagesid.AsString := id;
-            end;
-            tMessagesorder_id.AsString := order_id;
-            tMessagesmessage_id.AsString := message_id;
-            texto := j.GetValue<TJSONValue>('results['+i+'].text');
-            tMessagestext_plain.AsString := texto.GetValue<string>('plain');
-//            tMessagesid.AsString := j.GetValue<string>('results['+i+'].id');
-//            tMessagesorder_id.AsString := j.GetValue<string>('results['+i+'].order_id');
-//            tMessagespack_id.AsString := j.GetValue<string>('results['+i+'].pack_id');
-//            tMessagesmessage_id.AsString := j.GetValue<string>('results['+i+'].message_id');
-            tMessagesdate_received.AsString := j.GetValue<string>('results['+i+'].date_received');
-            tMessagesdate.AsString := j.GetValue<string>('results['+i+'].date');
-            tMessagesdate_available.AsString := j.GetValue<string>('results['+i+'].date_available');
-            tMessagesdate_notified.AsString := j.GetValue<string>('results['+i+'].date_notified');
-            tMessagesdate_read.AsString := j.GetValue<string>('results['+i+'].date_read');
-//            tMessagesfrom_user_id.AsString := j.GetValue<string>('results['+i+'].from_user_id');
-//            tMessagesfrom_email.AsString := j.GetValue<string>('results['+i+'].from_email');
-//            tMessagesfrom_name.AsString := j.GetValue<string>('results['+i+'].from_name');
-//            tMessagesto_user_id.AsString := j.GetValue<string>('results['+i+'].to_user_id');
-//            tMessagesto_email.AsString := j.GetValue<string>('results['+i+'].to_email');
-            tMessagessubject.AsString := j.GetValue<string>('results['+i+'].subject');
-//            tMessagestext_plain.AsString := j.GetValue<string>('results['+i+'].text_plain');
-//            tMessagesattachments.AsString := j.GetValue<string>('results['+i+'].attachments');
-//            tMessagesattachments_validations_invalid_size.AsString := j.GetValue<string>('results['+i+'].attachments_validations_invalid_size');
-//            tMessagesattachments_validations_invalid_extension.AsString := j.GetValue<string>('results['+i+'].attachments_validations_invalid_extension');
-//            tMessagesattachments_validations_forbidden.AsString := j.GetValue<string>('results['+i+'].attachments_validations_forbidden');
-//            tMessagesattachments_validations_internal_error.AsString := j.GetValue<string>('results['+i+'].attachments_validations_internal_error');
-            tMessagessite_id.AsString := j.GetValue<string>('results['+i+'].site_id');
-            tMessagesresource.AsString := j.GetValue<string>('results['+i+'].resource');
-            tMessagesresource_id.AsString := j.GetValue<string>('results['+i+'].resource_id');
-            tMessagesstatus.AsString := j.GetValue<string>('results['+i+'].status');
-//            tMessagesmoderation_status.AsString := j.GetValue<string>('results['+i+'].moderation_status');
-//            tMessagesmoderation_date_moderated.AsString := j.GetValue<string>('results['+i+'].moderation_date_moderated');
-//            tMessagesmoderation_source.AsString := j.GetValue<string>('results['+i+'].moderation_source');
-            tMessagesconversation_first_message.AsString := j.GetValue<string>('results['+i+'].conversation_first_message');
-//            tMessagesconversation_status.AsString := j.GetValue<TJSONValue>('results['+i+'].conversation_status').ToString;
-//            tMessagesconversation_status_date.AsString := j.GetValue<string>('results['+i+'].conversation_status_date');
-//            tMessagesconversation_substatus.AsString := j.GetValue<string>('results['+i+'].conversation_substatus');
-//            tMessagesconversation_is_blocking_allowed.AsString := j.GetValue<string>('results['+i+'].conversation_is_blocking_allowed');
-
-            tMessages.Post;
-          end;
+//  j := Obtener('/messages/orders/'+id);
+with dmML do
+begin
+  try
+    tObtenerMensajes := TTObtenerMensajes.Create(Obtener('/messages/orders/'+order_id));
+    with tObtenerMensajes do
+    begin
+      FreeOnTerminate := True;
+      Start;
+    end;
+  finally
+    //
   end;
+end;
+//  if j is TJSONObject then
+//  begin
+//    results := j.GetValue<TJSONValue>('results');
+//    r:=TJSONArray(results).Size;
+//    if r>0 then
+//      with dmml do
+//      with tMessages do
+////        with tMessages do
+//          for n := 0 to r-1 do
+//          begin
+//            i:=IntToStr(n);
+//            message_id := j.GetValue<string>('results['+i+'].message_id');
+//            id := order_id+'_'+message_id;
+////            if CantidadRegistros('messages','id='+QuotedStr(id))>0 then
+//            Open(sqlMessages+' WHERE id=:I',[id]);
+//            if RowsAffected>0 then
+////              Edit
+//            else
+//            begin
+//              tMessages.Insert;
+//              tMessagesid.AsString := id;
+////              tMessagesorder_id.AsString := order_id;
+//              tMessagesmessage_id.AsString := message_id;
+//              texto := j.GetValue<TJSONValue>('results['+i+'].text');
+//              tMessagestext_plain.AsString := texto.GetValue<string>('plain');
+//  //            tMessagesid.AsString := j.GetValue<string>('results['+i+'].id');
+//  //            tMessagesorder_id.AsString := j.GetValue<string>('results['+i+'].order_id');
+//  //            tMessagespack_id.AsString := j.GetValue<string>('results['+i+'].pack_id');
+//  //            tMessagesmessage_id.AsString := j.GetValue<string>('results['+i+'].message_id');
+//              tMessagesdate_received.AsString := j.GetValue<string>('results['+i+'].date_received');
+//              tMessagesdate.AsString := j.GetValue<string>('results['+i+'].date');
+//              tMessagesdate_available.AsString := j.GetValue<string>('results['+i+'].date_available');
+//              tMessagesdate_notified.AsString := j.GetValue<string>('results['+i+'].date_notified');
+//              tMessagesdate_read.AsString := j.GetValue<string>('results['+i+'].date_read');
+//  //            tMessagesfrom_user_id.AsString := j.GetValue<string>('results['+i+'].from_user_id');
+//  //            tMessagesfrom_email.AsString := j.GetValue<string>('results['+i+'].from_email');
+//  //            tMessagesfrom_name.AsString := j.GetValue<string>('results['+i+'].from_name');
+//  //            tMessagesto_user_id.AsString := j.GetValue<string>('results['+i+'].to_user_id');
+//  //            tMessagesto_email.AsString := j.GetValue<string>('results['+i+'].to_email');
+//              tMessagessubject.AsString := j.GetValue<string>('results['+i+'].subject');
+//  //            tMessagestext_plain.AsString := j.GetValue<string>('results['+i+'].text_plain');
+//  //            tMessagesattachments.AsString := j.GetValue<string>('results['+i+'].attachments');
+//  //            tMessagesattachments_validations_invalid_size.AsString := j.GetValue<string>('results['+i+'].attachments_validations_invalid_size');
+//  //            tMessagesattachments_validations_invalid_extension.AsString := j.GetValue<string>('results['+i+'].attachments_validations_invalid_extension');
+//  //            tMessagesattachments_validations_forbidden.AsString := j.GetValue<string>('results['+i+'].attachments_validations_forbidden');
+//  //            tMessagesattachments_validations_internal_error.AsString := j.GetValue<string>('results['+i+'].attachments_validations_internal_error');
+//              tMessagessite_id.AsString := j.GetValue<string>('results['+i+'].site_id');
+//              tMessagesresource.AsString := j.GetValue<string>('results['+i+'].resource');
+//              tMessagesresource_id.AsString := j.GetValue<string>('results['+i+'].resource_id');
+//              tMessagesstatus.AsString := j.GetValue<string>('results['+i+'].status');
+//  //            tMessagesmoderation_status.AsString := j.GetValue<string>('results['+i+'].moderation_status');
+//  //            tMessagesmoderation_date_moderated.AsString := j.GetValue<string>('results['+i+'].moderation_date_moderated');
+//  //            tMessagesmoderation_source.AsString := j.GetValue<string>('results['+i+'].moderation_source');
+//              tMessagesconversation_first_message.AsString := j.GetValue<string>('results['+i+'].conversation_first_message');
+//  //            tMessagesconversation_status.AsString := j.GetValue<TJSONValue>('results['+i+'].conversation_status').ToString;
+//  //            tMessagesconversation_status_date.AsString := j.GetValue<string>('results['+i+'].conversation_status_date');
+//  //            tMessagesconversation_substatus.AsString := j.GetValue<string>('results['+i+'].conversation_substatus');
+//  //            tMessagesconversation_is_blocking_allowed.AsString := j.GetValue<string>('results['+i+'].conversation_is_blocking_allowed');
+//              tMessages.Post;
+//            end;
+//          end;
+//  end;
 end;
 
 procedure TDMR.ObtenerOrder_items;
@@ -980,30 +1010,30 @@ begin
       begin
         Open('SELECT * FROM shipments WHERE id=:I',['0']);
         if RowsAffected>0 then
-          Edit
+//          Edit
         else
         begin
           Insert;
           tShipmentsid.AsString:='0';
+          //        tShipmentsorder_id.AsString:='0';
+          tShipmentsstatus.AsString:='';
+          tShipmentsmode.AsString:='';
+          tShipmentsshipping_option.AsString:='0';
+          Post;
         end;
-//        tShipmentsorder_id.AsString:='0';
-        tShipmentsstatus.AsString:='';
-        tShipmentsmode.AsString:='';
-        tShipmentsshipping_option.AsString:='0';
-        Post;
       end;
       with tShipping_option do
       begin
         Open(sqlShipping_option+' WHERE id=:I',['0']);
         if RowsAffected>0 then
-          Edit
+//          Edit
         else
         begin
           Insert;
           tShipping_optionid.AsString := '0';
+          tShipping_optionshipping_method_id.AsString:='';
+          Post;
         end;
-        tShipping_optionshipping_method_id.AsString:='';
-        Post;
       end;
     end
     else
@@ -1022,45 +1052,48 @@ begin
           begin
             Insert;
             tShipmentsid.AsString := id;
+            tShipmentsmode.AsString := shipping.GetValue<string>('mode');
+            tShipmentscreated_by.AsString := shipping.GetValue<string>('created_by');
+            tShipmentsorder_id.AsString := shipping.GetValue<string>('order_id');
+            tShipmentsorder_cost.AsString := shipping.GetValue<string>('order_cost');
+            tShipmentsbase_cost.AsString := shipping.GetValue<string>('base_cost');
+            tShipmentssite_id.AsString := shipping.GetValue<string>('site_id');
+            tShipmentsstatus.AsString := shipping.GetValue<string>('status');
+            tShipmentssubstatus.AsString := shipping.GetValue<string>('substatus');
+            tShipmentsstatus_history.AsString := shipping.GetValue<TJSONValue>('status_history').ToString;
+            if tShipmentssubstatus.AsString<>'' then
+              tShipmentssubstatus_history.AsString := shipping.GetValue<TJSONValue>('substatus_history').ToString;
+            tShipmentsdate_created.AsString := shipping.GetValue<string>('date_created');
+            tShipmentslast_updated.AsString := shipping.GetValue<string>('last_updated');
+            tShipmentstracking_number.AsString := shipping.GetValue<string>('tracking_number');
+            tShipmentstracking_method.AsString := shipping.GetValue<string>('tracking_method');
+            tShipmentsservice_id.AsString := shipping.GetValue<string>('service_id');
+            tShipmentscarrier_info.AsString := shipping.GetValue<TJSONValue>('carrier_info').ToString;
+            tShipmentssender_id.AsString := shipping.GetValue<string>('sender_id');
+            tShipmentssender_address.AsString := shipping.GetValue<TJSONValue>('sender_address').ToString;
+            tShipmentsreceiver_id.AsString := shipping.GetValue<string>('receiver_id');
+            tShipmentsreceiver_address.AsString := shipping.GetValue<TJSONValue>('receiver_address').ToString;
+            tShipmentsshipping_items.AsString := shipping.GetValue<TJSONValue>('shipping_items').ToString;
+  //          tShipmentsshipping_option.AsString := shipping.GetValue<TJSONValue>('shipping_option').ToString
+            tShipmentsshipping_option.AsString := ObtenerShipping_option(shipping.GetValue<TJSONValue>('shipping_option'));
+            tShipmentscomments.AsString := shipping.GetValue<string>('comments');
+            tShipmentsdate_first_printed.AsString := shipping.GetValue<string>('date_first_printed');
+            tShipmentsmarket_place.AsString := shipping.GetValue<string>('market_place');
+            tShipmentsreturn_details.AsString := shipping.GetValue<string>('return_details');
+            tShipmentstags.AsString := shipping.GetValue<TJSONValue>('tags').ToString;
+            if tShipmentstags.AsString<>'[]' then
+            begin
+              tShipmentsdelay.AsString := shipping.GetValue<TJSONValue>('delay').ToString;
+              tShipmentstype.AsString := shipping.GetValue<TJSONValue>('type').ToString;
+              tShipmentslogistic_type.AsString := shipping.GetValue<string>('logistic_type');
+              tShipmentsapplication_id.AsString := shipping.GetValue<string>('application_id');
+            end;
+            tShipmentsreturn_tracking_number.AsString := shipping.GetValue<string>('return_tracking_number');
+            tShipmentscost_components.AsString := shipping.GetValue<TJSONValue>('cost_components').ToString;
           end;
-          tShipmentsmode.AsString := shipping.GetValue<string>('mode');
-          tShipmentscreated_by.AsString := shipping.GetValue<string>('created_by');
-          tShipmentsorder_id.AsString := shipping.GetValue<string>('order_id');
-          tShipmentsorder_cost.AsString := shipping.GetValue<string>('order_cost');
-          tShipmentsbase_cost.AsString := shipping.GetValue<string>('base_cost');
-          tShipmentssite_id.AsString := shipping.GetValue<string>('site_id');
           tShipmentsstatus.AsString := shipping.GetValue<string>('status');
-          tShipmentssubstatus.AsString := shipping.GetValue<string>('substatus');
-          tShipmentsstatus_history.AsString := shipping.GetValue<TJSONValue>('status_history').ToString;
           if tShipmentssubstatus.AsString<>'' then
             tShipmentssubstatus_history.AsString := shipping.GetValue<TJSONValue>('substatus_history').ToString;
-          tShipmentsdate_created.AsString := shipping.GetValue<string>('date_created');
-          tShipmentslast_updated.AsString := shipping.GetValue<string>('last_updated');
-          tShipmentstracking_number.AsString := shipping.GetValue<string>('tracking_number');
-          tShipmentstracking_method.AsString := shipping.GetValue<string>('tracking_method');
-          tShipmentsservice_id.AsString := shipping.GetValue<string>('service_id');
-          tShipmentscarrier_info.AsString := shipping.GetValue<string>('carrier_info');
-          tShipmentssender_id.AsString := shipping.GetValue<string>('sender_id');
-          tShipmentssender_address.AsString := shipping.GetValue<TJSONValue>('sender_address').ToString;
-          tShipmentsreceiver_id.AsString := shipping.GetValue<string>('receiver_id');
-          tShipmentsreceiver_address.AsString := shipping.GetValue<TJSONValue>('receiver_address').ToString;
-          tShipmentsshipping_items.AsString := shipping.GetValue<TJSONValue>('shipping_items').ToString;
-//          tShipmentsshipping_option.AsString := shipping.GetValue<TJSONValue>('shipping_option').ToString
-          tShipmentsshipping_option.AsString := ObtenerShipping_option(shipping.GetValue<TJSONValue>('shipping_option'));
-          tShipmentscomments.AsString := shipping.GetValue<string>('comments');
-          tShipmentsdate_first_printed.AsString := shipping.GetValue<string>('date_first_printed');
-          tShipmentsmarket_place.AsString := shipping.GetValue<string>('market_place');
-          tShipmentsreturn_details.AsString := shipping.GetValue<string>('return_details');
-          tShipmentstags.AsString := shipping.GetValue<TJSONValue>('tags').ToString;
-          if tShipmentstags.AsString<>'[]' then
-          begin
-            tShipmentsdelay.AsString := shipping.GetValue<TJSONValue>('delay').ToString;
-            tShipmentstype.AsString := shipping.GetValue<TJSONValue>('type').ToString;
-            tShipmentslogistic_type.AsString := shipping.GetValue<string>('logistic_type');
-            tShipmentsapplication_id.AsString := shipping.GetValue<string>('application_id');
-          end;
-          tShipmentsreturn_tracking_number.AsString := shipping.GetValue<string>('return_tracking_number');
-          tShipmentscost_components.AsString := shipping.GetValue<TJSONValue>('cost_components').ToString;
           Post;
         end;
       end;
@@ -1080,21 +1113,21 @@ begin
       id := buyer.GetValue<string>('id');
       Open(sqlBuyer+' WHERE id=:I',[id]);
       if RowsAffected>0 then
-        Edit
+//        Edit
       else
       begin
         Insert;
         tBuyerid.AsString := id;
+//        tBuyerid.AsString := buyer.GetValue<string>('id');
+        tBuyernickname.AsString := buyer.GetValue<string>('nickname');
+        tBuyeremail.AsString := buyer.GetValue<string>('email');
+        tBuyerphone.AsString := buyer.GetValue<TJSONValue>('phone').ToString;
+        tBuyeralternative_phone.AsString := buyer.GetValue<TJSONValue>('alternative_phone').ToString;
+        tBuyerfirst_name.AsString := buyer.GetValue<string>('first_name');
+        tBuyerlast_name.AsString := buyer.GetValue<string>('last_name');
+        tBuyerbilling_info.AsString := buyer.GetValue<TJSONValue>('billing_info').ToString;
+        Post;
       end;
-      tBuyerid.AsString := buyer.GetValue<string>('id');
-      tBuyernickname.AsString := buyer.GetValue<string>('nickname');
-      tBuyeremail.AsString := buyer.GetValue<string>('email');
-      tBuyerphone.AsString := buyer.GetValue<TJSONValue>('phone').ToString;
-      tBuyeralternative_phone.AsString := buyer.GetValue<TJSONValue>('alternative_phone').ToString;
-      tBuyerfirst_name.AsString := buyer.GetValue<string>('first_name');
-      tBuyerlast_name.AsString := buyer.GetValue<string>('last_name');
-      tBuyerbilling_info.AsString := buyer.GetValue<TJSONValue>('billing_info').ToString;
-      Post;
       result := id;
     end;
 end;
@@ -1106,25 +1139,26 @@ begin
     begin
       Open(sqlDespachados+' WHERE order_id=:I',[order_id]);
       if RowsAffected>0 then
-        Edit
+//        Edit
       else
       begin
         Insert;
         tDespachadosorder_id.AsString := order_id;
+        if tDespachadosembalado.AsString = '' then tDespachadosembalado.AsString := 'N';
+        if tDespachadosenviado.AsString = '' then tDespachadosenviado.AsString := 'N';
+        Post;
       end;
-      if tDespachadosembalado.AsString = '' then tDespachadosembalado.AsString := 'N';
-      if tDespachadosenviado.AsString = '' then tDespachadosenviado.AsString := 'N';
-      Post;
     end;
 end;
 
 function TDMR.ObtenerShipping_option;
-var id : string;
+var id,s : string;
 begin
   with dmML do
     with tShipping_option do
     begin
       id := j.GetValue<string>('id');
+      if id='' then id:='0';
       Open(sqlShipping_option+' WHERE id=:I',[id]);
       if RowsAffected>0 then
         Edit
@@ -1133,7 +1167,10 @@ begin
         Insert;
         tShipping_optionid.AsString := id;
       end;
-      tShipping_optionshipping_method_id.AsString:=j.GetValue<string>('shipping_method_id');
+      s:=j.GetValue<TJSONValue>().ToString;
+      if id<>'0' then
+        tShipping_optionshipping_method_id.AsString:=j.GetValue<string>('shipping_method_id')
+      else tShipping_optionshipping_method_id.AsString:='';
       Post;
     end;
     result:=id;
