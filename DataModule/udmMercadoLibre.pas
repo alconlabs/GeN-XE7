@@ -281,7 +281,7 @@ const
     +'order_items.title'
     +', order_items.full_unit_price, order_items.quantity'
     +', order_items.seller_sku, buyer.first_name'
-    +', buyer.last_name, buyer.nickname, "imprimir" AS ETIQUETA'
+    +', buyer.last_name, buyer.nickname, "Ver" AS ITEMS'
     +', orders.shipping, orders.buyer, order_items.order_id';
   sqlMensajes=sqlSelectOrderItems+', messages.*'+sqlOrderFrom+' INNER JOIN messages ON orders.id = messages.order_id'+' WHERE (NOT'+whereNoSubject+')';
   sqlMensajesNoLeido=sqlMensajes+' AND '+whereNoLeido;

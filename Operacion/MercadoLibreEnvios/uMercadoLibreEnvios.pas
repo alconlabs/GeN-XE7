@@ -78,7 +78,7 @@ type
   private
     { Private declarations }
     procedure actualizarEtiquetas;
-    procedure AbrirfOrders(sql,sql1:string);
+    procedure AbrirfOrders(sql,sql1:string;imprimir:BOOL);
     procedure AbrirfOrder_items(sql:string);
   public
     { Public declarations }
@@ -107,12 +107,12 @@ end;
 
 procedure TfMercadoLibreEnvios.pPrepararAcordarClick(Sender: TObject);
 begin
-  AbrirfOrders(sqlPrepararAcordar,'');
+  AbrirfOrders(sqlPrepararAcordar,'',False);
 end;
 
 procedure TfMercadoLibreEnvios.pDespacharFlexClick(Sender: TObject);
 begin
-  AbrirfOrders(sqlDespacharFlex,'');
+  AbrirfOrders(sqlDespacharFlex,'',True);
 end;
 
 procedure TfMercadoLibreEnvios.pDespacharMensajesClick(Sender: TObject);
@@ -122,22 +122,22 @@ end;
 
 procedure TfMercadoLibreEnvios.pPrepararEnviosClick(Sender: TObject);
 begin
-  AbrirfOrders(sqlPrepararEnvios,sqlPrepararEnviosItems);
+  AbrirfOrders(sqlPrepararEnvios,sqlPrepararEnviosItems,True);
 end;
 
 procedure TfMercadoLibreEnvios.pDespacharColectaClick(Sender: TObject);
 begin
-    AbrirfOrders(sqlDespacharEnvios,'');
+    AbrirfOrders(sqlDespacharEnvios,'',True);
 end;
 
 procedure TfMercadoLibreEnvios.pDespacharDemoradasClick(Sender: TObject);
 begin
-  AbrirfOrders(sqlDespacharDemoradas,'');
+  AbrirfOrders(sqlDespacharDemoradas,'',True);
 end;
 
 procedure TfMercadoLibreEnvios.pPrepararFlexClick(Sender: TObject);
 begin
-  AbrirfOrders(sqlPrepararFlex,'');
+  AbrirfOrders(sqlPrepararFlex,'',True);
 end;
 
 procedure TfMercadoLibreEnvios.pPrepararMensajesClick(Sender: TObject);
@@ -147,12 +147,12 @@ end;
 
 procedure TfMercadoLibreEnvios.pTransitoCaminoClick(Sender: TObject);
 begin
-  AbrirfOrders(sqlTransitoCamino,'');
+  AbrirfOrders(sqlTransitoCamino,'',False);
 end;
 
 procedure TfMercadoLibreEnvios.pTransitoEsperandoRetiroClick(Sender: TObject);
 begin
-    AbrirfOrders(sqlTransitoEsperandoRetiro,'');
+  AbrirfOrders(sqlTransitoEsperandoRetiro,'',False);
 end;
 
 procedure TfMercadoLibreEnvios.pTransitoMensajesClick(Sender: TObject);
@@ -197,6 +197,7 @@ begin
   with dmML do
     with fOrders do
     begin
+      verImprimir:=imprimir;
       vsqlOrder_items:=sql1;
       if vsqlOrder_items='' then vsqlOrder_items:=sql;
       qOrders.Open(sql + groupBuyer);
@@ -237,7 +238,6 @@ begin
         FDQuery1.Close;
         Application.ProcessMessages;
         ObtenerOrderRecent;
-//ObtenerMessages('2110960953','30341176');
         tProgressBar.Enabled:=False;
         ProgressBar1.StepBy(100);
         sleep(100);

@@ -35,7 +35,7 @@ object fOrders: TfOrders
       70
       70
       130
-      70)
+      35)
   end
   object qOrders: TFDQuery
     Connection = dmML.dbMain
@@ -104,8 +104,9 @@ object fOrders: TfOrders
           Width = 130
         end
         item
-          MemberName = 'ETIQUETA'
-          Width = 70
+          MemberName = 'items'
+          Header = 'ITEMS'
+          Width = 35
         end>
     end
   end
