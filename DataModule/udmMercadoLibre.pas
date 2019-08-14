@@ -10,17 +10,32 @@ uses FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
   FMX.Types, FMX.Dialogs, FireDAC.Comp.BatchMove.Text, FireDAC.Comp.BatchMove,
   FireDAC.Comp.BatchMove.DataSet, FireDAC.Phys.FB, FireDAC.Phys.FBDef, System.JSON,
-  FireDAC.VCLUI.Wait;
+  FireDAC.VCLUI.Wait, Vcl.Forms, REST.Types;
 
 type
   TTObtenerMensajes = class(TThread)
 //  private
     vQuery: TFDQuery;
-    j: TJsonValue;
+//    vJ: TJsonValue;
+    vOrder_id: string;
   public
-    constructor Create(vJSONValue :TJSONValue);// vConnection: TFDConnection);
+    constructor Create(order_id:string);// vConnection: TFDConnection);
     procedure Execute; override;
     procedure AgregarMensajes;
+  end;
+
+type
+  TTObtenerEnvio = class(TThread)
+//  private
+    vQuery: TFDQuery;
+//    vJ: TJsonValue;
+    vId:string;
+    jEnvio: TJsonValue;
+    e: string;
+  public
+    constructor Create(id:string);// vConnection: TFDConnection);
+    procedure Execute; override;
+    procedure ObtenerEnvio;
   end;
 
 type
@@ -197,11 +212,11 @@ type
     procedure Agregar(tabla,campos,valores,codigo:string);
     procedure AgregarDespachados(order_id,embalado:string);
     function CantidadVentas(sql:string):String;
-    procedure ActualizarMensajes;
+    function ObtenerShipping_option(j:TJSONValue):string;
+    procedure ObtenerDespachados(order_id:string);
   end;
 
 var
-  tObtenerMensajes: TTObtenerMensajes;
   dmML: TdmML;
 
 const
@@ -290,6 +305,8 @@ const
 implementation
 
 {%CLASSGROUP 'FMX.Controls.TControl'}
+
+uses RestDM;
 
 {$R *.dfm}
 
@@ -1217,23 +1234,29 @@ end;
 procedure TTObtenerMensajes.AgregarMensajes;
 var
 //  j, results,
-  texto :TJSONValue;
-  id, message_id, message_text, i, s :string;
+  jMensajes, texto :TJSONValue;
+  id, message_id, message_text, i, e:string;
   r,n :Integer;
 begin
-  if j is TJSONObject then
+jMensajes := TJSONValue.Create;
+jMensajes:=nil;
+  jMensajes:=DMR.Obtener('/messages/orders/'+vOrder_id+'?');
+  if jMensajes<>nil then
+  if jMensajes is TJSONObject then
   begin
-    r:=TJSONArray(j.GetValue<TJSONValue>('results')).Size;
+e:=jMensajes.ToString;
+    r:=TJSONArray(jMensajes.GetValue<TJSONValue>('results')).Size;
     if r>0 then
       with vQuery do
           for n := 0 to r-1 do
           begin
             i:=IntToStr(n);
-//            message_id := j.GetValue<string>('results['+i+'].message_id');
-              id := j.GetValue<string>('results['+i+'].message_id');
+//            message_id := jMensajes.GetValue<string>('results['+i+'].message_id');
+              id := jMensajes.GetValue<string>('results['+i+'].message_id');
 //            id := order_id+'_'+message_id;
 //            if CantidadRegistros('messages','id='+QuotedStr(id))>0 then
             Open(sqlMessages+' WHERE id=:I',[id]);
+//            vQuery.Transaction.StartTransaction;
             if RowsAffected>0 then
 //              Edit
             else
@@ -1243,45 +1266,48 @@ begin
 //              FieldByName('order_id').AsString := order_id;
 //              FieldByName('message_id').AsString := message_id;
               FieldByName('message_id').AsString := id;
-              texto := j.GetValue<TJSONValue>('results['+i+'].text');
+              texto := jMensajes.GetValue<TJSONValue>('results['+i+'].text');
               FieldByName('text_plain').AsString := texto.GetValue<string>('plain');
-  //            FieldByName('id').AsString := j.GetValue<string>('results['+i+'].id');
-  //            FieldByName('order_id').AsString := j.GetValue<string>('results['+i+'].order_id');
-  //            FieldByName('pack_id').AsString := j.GetValue<string>('results['+i+'].pack_id');
-  //            FieldByName('message_id').AsString := j.GetValue<string>('results['+i+'].message_id');
-              FieldByName('date_received').AsString := j.GetValue<string>('results['+i+'].date_received');
-              FieldByName('date').AsString := j.GetValue<string>('results['+i+'].date');
-              FieldByName('date_available').AsString := j.GetValue<string>('results['+i+'].date_available');
-              FieldByName('date_notified').AsString := j.GetValue<string>('results['+i+'].date_notified');
-              FieldByName('date_read').AsString := j.GetValue<string>('results['+i+'].date_read');
-  //            FieldByName('from_user_id').AsString := j.GetValue<string>('results['+i+'].from_user_id');
-  //            FieldByName('from_email').AsString := j.GetValue<string>('results['+i+'].from_email');
-  //            FieldByName('from_name').AsString := j.GetValue<string>('results['+i+'].from_name');
-  //            FieldByName('to_user_id').AsString := j.GetValue<string>('results['+i+'].to_user_id');
-  //            FieldByName('to_email').AsString := j.GetValue<string>('results['+i+'].to_email');
-              FieldByName('subject').AsString := j.GetValue<string>('results['+i+'].subject');
-  //            FieldByName('text_plain').AsString := j.GetValue<string>('results['+i+'].text_plain');
-  //            FieldByName('attachments').AsString := j.GetValue<string>('results['+i+'].attachments');
-  //            FieldByName('attachments_validations_invalid_size').AsString := j.GetValue<string>('results['+i+'].attachments_validations_invalid_size');
-  //            FieldByName('attachments_validations_invalid_extension').AsString := j.GetValue<string>('results['+i+'].attachments_validations_invalid_extension');
-  //            FieldByName('attachments_validations_forbidden').AsString := j.GetValue<string>('results['+i+'].attachments_validations_forbidden');
-  //            FieldByName('attachments_validations_internal_error').AsString := j.GetValue<string>('results['+i+'].attachments_validations_internal_error');
-              FieldByName('site_id').AsString := j.GetValue<string>('results['+i+'].site_id');
-              FieldByName('resource').AsString := j.GetValue<string>('results['+i+'].resource');
-              FieldByName('resource_id').AsString := j.GetValue<string>('results['+i+'].resource_id');
-              FieldByName('status').AsString := j.GetValue<string>('results['+i+'].status');
-  //            FieldByName('moderation_status').AsString := j.GetValue<string>('results['+i+'].moderation_status');
-  //            FieldByName('moderation_date_moderated').AsString := j.GetValue<string>('results['+i+'].moderation_date_moderated');
-  //            FieldByName('moderation_source').AsString := j.GetValue<string>('results['+i+'].moderation_source');
-              FieldByName('conversation_first_message').AsString := j.GetValue<string>('results['+i+'].conversation_first_message');
-  //            FieldByName('conversation_status').AsString := j.GetValue<TJSONValue>('results['+i+'].conversation_status').ToString;
-  //            FieldByName('conversation_status_date').AsString := j.GetValue<string>('results['+i+'].conversation_status_date');
-  //            FieldByName('conversation_substatus').AsString := j.GetValue<string>('results['+i+'].conversation_substatus');
-  //            FieldByName('conversation_is_blocking_allowed').AsString := j.GetValue<string>('results['+i+'].conversation_is_blocking_allowed');
+  //            FieldByName('id').AsString := jMensajes.GetValue<string>('results['+i+'].id');
+  //            FieldByName('order_id').AsString := jMensajes.GetValue<string>('results['+i+'].order_id');
+  //            FieldByName('pack_id').AsString := jMensajes.GetValue<string>('results['+i+'].pack_id');
+  //            FieldByName('message_id').AsString := jMensajes.GetValue<string>('results['+i+'].message_id');
+              FieldByName('date_received').AsString := jMensajes.GetValue<string>('results['+i+'].date_received');
+              FieldByName('date').AsString := jMensajes.GetValue<string>('results['+i+'].date');
+              FieldByName('date_available').AsString := jMensajes.GetValue<string>('results['+i+'].date_available');
+              FieldByName('date_notified').AsString := jMensajes.GetValue<string>('results['+i+'].date_notified');
+              FieldByName('date_read').AsString := jMensajes.GetValue<string>('results['+i+'].date_read');
+  //            FieldByName('from_user_id').AsString := jMensajes.GetValue<string>('results['+i+'].from_user_id');
+  //            FieldByName('from_email').AsString := jMensajes.GetValue<string>('results['+i+'].from_email');
+  //            FieldByName('from_name').AsString := jMensajes.GetValue<string>('results['+i+'].from_name');
+  //            FieldByName('to_user_id').AsString := jMensajes.GetValue<string>('results['+i+'].to_user_id');
+  //            FieldByName('to_email').AsString := jMensajes.GetValue<string>('results['+i+'].to_email');
+              FieldByName('subject').AsString := jMensajes.GetValue<string>('results['+i+'].subject');
+  //            FieldByName('text_plain').AsString := jMensajes.GetValue<string>('results['+i+'].text_plain');
+  //            FieldByName('attachments').AsString := jMensajes.GetValue<string>('results['+i+'].attachments');
+  //            FieldByName('attachments_validations_invalid_size').AsString := jMensajes.GetValue<string>('results['+i+'].attachments_validations_invalid_size');
+  //            FieldByName('attachments_validations_invalid_extension').AsString := jMensajes.GetValue<string>('results['+i+'].attachments_validations_invalid_extension');
+  //            FieldByName('attachments_validations_forbidden').AsString := jMensajes.GetValue<string>('results['+i+'].attachments_validations_forbidden');
+  //            FieldByName('attachments_validations_internal_error').AsString := jMensajes.GetValue<string>('results['+i+'].attachments_validations_internal_error');
+              FieldByName('site_id').AsString := jMensajes.GetValue<string>('results['+i+'].site_id');
+              FieldByName('resource').AsString := jMensajes.GetValue<string>('results['+i+'].resource');
+              FieldByName('resource_id').AsString := jMensajes.GetValue<string>('results['+i+'].resource_id');
+              FieldByName('status').AsString := jMensajes.GetValue<string>('results['+i+'].status');
+  //            FieldByName('moderation_status').AsString := jMensajes.GetValue<string>('results['+i+'].moderation_status');
+  //            FieldByName('moderation_date_moderated').AsString := jMensajes.GetValue<string>('results['+i+'].moderation_date_moderated');
+  //            FieldByName('moderation_source').AsString := jMensajes.GetValue<string>('results['+i+'].moderation_source');
+              FieldByName('conversation_first_message').AsString := jMensajes.GetValue<string>('results['+i+'].conversation_first_message');
+  //            FieldByName('conversation_status').AsString := jMensajes.GetValue<TJSONValue>('results['+i+'].conversation_status').ToString;
+  //            FieldByName('conversation_status_date').AsString := jMensajes.GetValue<string>('results['+i+'].conversation_status_date');
+  //            FieldByName('conversation_substatus').AsString := jMensajes.GetValue<string>('results['+i+'].conversation_substatus');
+  //            FieldByName('conversation_is_blocking_allowed').AsString := jMensajes.GetValue<string>('results['+i+'].conversation_is_blocking_allowed');
               Post;
+//              vQuery.Transaction.CommitRetaining;
+              Application.ProcessMessages;
             end;
           end;
   end;
+  Terminate;
 end;
 
 constructor TTObtenerMensajes.Create;
@@ -1289,8 +1315,8 @@ begin
   inherited Create(True); // llamamos al constructor del padre (TThread)
   vQuery := TFDQuery.Create(nil);
   vQuery.Connection:=dmML.dbMain;
-  j := TJSONValue.Create;
-  j := vJSONValue;
+//  vJ := TJSONValue.Create;
+  vOrder_id := order_id;
 end;
 
 procedure TTObtenerMensajes.Execute;
@@ -1299,6 +1325,168 @@ begin
   FreeOnTerminate := True;
   while not Terminated do
     Synchronize(AgregarMensajes);
+end;
+
+constructor TTObtenerEnvio.Create;
+begin
+  vQuery := TFDQuery.Create(nil);
+  vQuery.Connection:=dmML.dbMain;
+  vId := id;
+  jEnvio := TJSONValue.Create;
+  jEnvio:=nil;
+  inherited Create(True); // llamamos al constructor del padre (TThread)
+end;
+
+procedure TTObtenerEnvio.Execute;
+begin
+  inherited;
+  FreeOnTerminate := True;
+  while not Terminated do
+    Synchronize(ObtenerEnvio);
+end;
+
+procedure TTObtenerEnvio.ObtenerEnvio;
+//var
+//  tRestEnvio:TTRest;
+begin
+      jEnvio:=DMR.Obtener('/shipments/'+vId+'?');
+//      with dmr do
+//      begin
+//        try
+//          if  accessToken='' then ObtenerRefreshToken;
+//  //            Inc(tI);
+//          tRestEnvio := TTRest.Create(
+//            url,
+//            '/shipments/'+vId+'?'+''+'client_id='+clientId+
+//            '&client_secret='+clientSecret+'&access_token='+accessToken,
+//            'application/json',
+//            rmGET
+//          );
+//    //      with tRest do
+//    //      begin
+//    //        tRest[tI].vJSONValue := result;
+////            tRestEnvio.FreeOnTerminate := True;
+////            tRestEnvio.Start;
+//    //      end;
+//
+//          while not tRestEnvio.termino do
+//          begin
+//            Application.ProcessMessages;
+//          end;
+//
+//          finally
+//            jEnvio := tRestEnvio.vJSONValue;
+//          end;
+//      end;
+      if (jEnvio<>nil) then
+      if jEnvio.Owned then
+      if jEnvio is TJSONObject then
+      begin
+e:=jEnvio.ToString;
+//        shipping := j.GetValue<TJSONValue>();//('Results');
+        with vQuery do
+        begin
+//          vId := jEnvio.GetValue<string>('id');
+          Open(sqlShipments+' WHERE id=:I',[vId]);
+          if RowsAffected>0 then
+            Edit
+          else
+          begin
+            Insert;
+            FieldByName('id').AsString := vId;
+            FieldByName('mode').AsString := jEnvio.GetValue<string>('mode');
+            FieldByName('created_by').AsString := jEnvio.GetValue<string>('created_by');
+            FieldByName('order_id').AsString := jEnvio.GetValue<string>('order_id');
+            FieldByName('order_cost').AsString := jEnvio.GetValue<string>('order_cost');
+            FieldByName('base_cost').AsString := jEnvio.GetValue<string>('base_cost');
+            FieldByName('site_id').AsString := jEnvio.GetValue<string>('site_id');
+            FieldByName('status').AsString := jEnvio.GetValue<string>('status');
+            FieldByName('substatus').AsString := jEnvio.GetValue<string>('substatus');
+            FieldByName('status_history').AsString := jEnvio.GetValue<TJSONValue>('status_history').ToString;
+            if FieldByName('substatus').AsString<>'' then
+              FieldByName('substatus_history').AsString := jEnvio.GetValue<TJSONValue>('substatus_history').ToString;
+            FieldByName('date_created').AsString := jEnvio.GetValue<string>('date_created');
+            FieldByName('last_updated').AsString := jEnvio.GetValue<string>('last_updated');
+            FieldByName('tracking_number').AsString := jEnvio.GetValue<string>('tracking_number');
+            FieldByName('tracking_method').AsString := jEnvio.GetValue<string>('tracking_method');
+            FieldByName('service_id').AsString := jEnvio.GetValue<string>('service_id');
+            FieldByName('carrier_info').AsString := jEnvio.GetValue<TJSONValue>('carrier_info').ToString;
+            FieldByName('sender_id').AsString := jEnvio.GetValue<string>('sender_id');
+            FieldByName('sender_address').AsString := jEnvio.GetValue<TJSONValue>('sender_address').ToString;
+            FieldByName('receiver_id').AsString := jEnvio.GetValue<string>('receiver_id');
+            FieldByName('receiver_address').AsString := jEnvio.GetValue<TJSONValue>('receiver_address').ToString;
+            FieldByName('shipping_items').AsString := jEnvio.GetValue<TJSONValue>('shipping_items').ToString;
+  //          FieldByName('shipping_option').AsString := jEnvio.GetValue<TJSONValue>('shipping_option').ToString
+            FieldByName('shipping_option').AsString := dmML.ObtenerShipping_option(jEnvio.GetValue<TJSONValue>('shipping_option'));
+            FieldByName('comments').AsString := jEnvio.GetValue<string>('comments');
+            FieldByName('date_first_printed').AsString := jEnvio.GetValue<string>('date_first_printed');
+            FieldByName('market_place').AsString := jEnvio.GetValue<string>('market_place');
+            FieldByName('return_details').AsString := jEnvio.GetValue<string>('return_details');
+            FieldByName('tags').AsString := jEnvio.GetValue<TJSONValue>('tags').ToString;
+            if FieldByName('tags').AsString<>'[]' then
+            begin
+              FieldByName('delay').AsString := jEnvio.GetValue<TJSONValue>('delay').ToString;
+              FieldByName('type').AsString := jEnvio.GetValue<TJSONValue>('type').ToString;
+              FieldByName('logistic_type').AsString := jEnvio.GetValue<string>('logistic_type');
+              FieldByName('application_id').AsString := jEnvio.GetValue<string>('application_id');
+            end;
+            FieldByName('return_tracking_number').AsString := jEnvio.GetValue<string>('return_tracking_number');
+            FieldByName('cost_components').AsString := jEnvio.GetValue<TJSONValue>('cost_components').ToString;
+          end;
+
+          FieldByName('status').AsString := jEnvio.GetValue<string>('status');
+          if FieldByName('substatus').AsString<>'' then
+            FieldByName('substatus_history').AsString := jEnvio.GetValue<TJSONValue>('substatus_history').ToString;
+          Post;
+          Application.ProcessMessages;
+        end;
+      end;
+      jEnvio.Free;
+//      TTObtenerEnvio.Terminate;
+end;
+
+procedure TdmML.ObtenerDespachados;
+begin
+  with dmML do
+    with tDespachados do
+    begin
+      Open(sqlDespachados+' WHERE order_id=:I',[order_id]);
+      if RowsAffected>0 then
+//        Edit
+      else
+      begin
+        Insert;
+        tDespachadosorder_id.AsString := order_id;
+        if tDespachadosembalado.AsString = '' then tDespachadosembalado.AsString := 'N';
+        if tDespachadosenviado.AsString = '' then tDespachadosenviado.AsString := 'N';
+        Post;
+      end;
+    end;
+end;
+
+function TdmML.ObtenerShipping_option;
+var id,s : string;
+begin
+//  with dmML do
+    with tShipping_option do
+    begin
+      id := j.GetValue<string>('id');
+      if id='' then id:='0';
+      Open(sqlShipping_option+' WHERE id=:I',[id]);
+      if RowsAffected>0 then
+        Edit
+      else
+      begin
+        Insert;
+        tShipping_optionid.AsString := id;
+      end;
+      s:=j.GetValue<TJSONValue>().ToString;
+      if id<>'0' then
+        tShipping_optionshipping_method_id.AsString:=j.GetValue<string>('shipping_method_id')
+      else tShipping_optionshipping_method_id.AsString:='';
+      Post;
+    end;
+    result:=id;
 end;
 
 end.

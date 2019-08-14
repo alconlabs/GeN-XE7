@@ -230,19 +230,20 @@ procedure TfMercadoLibreEnvios.Preparar;
 begin
   Timer1.Interval:=((1000*60)*10);
   with dmr do
-//    with dmML do
-//      begin
-//        ProgressBar1.Visible:=True;
-//        tProgressBar.Enabled:=True;
-//        FDQuery1.Close;
-//        ObtenerOrderRecent;
-ObtenerMessages('2110960953','30341176');
-//        tProgressBar.Enabled:=False;
-//        ProgressBar1.StepBy(100);
-//        sleep(100);
-//        ProgressBar1.Visible:=False;
-//      end;
-//  actualizarEtiquetas;
+    with dmML do
+      begin
+        ProgressBar1.Visible:=True;
+        tProgressBar.Enabled:=True;
+        FDQuery1.Close;
+        Application.ProcessMessages;
+        ObtenerOrderRecent;
+//ObtenerMessages('2110960953','30341176');
+        tProgressBar.Enabled:=False;
+        ProgressBar1.StepBy(100);
+        sleep(100);
+        ProgressBar1.Visible:=False;
+      end;
+  actualizarEtiquetas;
 end;
 
 end.
