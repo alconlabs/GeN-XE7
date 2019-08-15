@@ -670,9 +670,10 @@ procedure TDMR.ObtenerOrderRecent;
 var
   jOrderRecent, order_items, buyer, item, shipping : TJSONValue;
   i, io, order_id,order_status,buyer_id,item_id,item_title,seller_sku,
-  order_items_quantity, last_updated,sj : string;
+  order_items_quantity, last_updated,sj, hoy : string;
   n, r, l, ro, no, p, t, paging_total: Integer;
 begin
+  hoy := formatdatetime('yyyy-mm-dd', now);
   with dmML do
     with tOrders do
     begin
@@ -685,7 +686,7 @@ begin
           ObtenerConsultaRest('orders/search/recent?seller='+seller_id
 //          jOrderRecent:=Obtener('orders/search/recent?seller='+seller_id
 //          +'&order.date_created.from=2019-08-13T00:00:00.000-00:00'
-          +'&order.date_last_updated.from=2019-08-14T00:00:00.000-00:00'
+          +'&order.date_last_updated.from='+hoy+'T00:00:00.000-00:00'
           +'&offset='+IntToStr(p)
 //          +'&'
           ,'');
