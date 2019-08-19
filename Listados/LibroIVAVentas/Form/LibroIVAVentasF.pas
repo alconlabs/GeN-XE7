@@ -85,7 +85,6 @@ end;
 
 procedure TCuentasForm.FormCreate(Sender: TObject);
 begin
-  // DM := TDM.Create(Self);
   DM.ConfigQuery.Open;
   DTP2.DateTime := Now;
 end;
@@ -120,7 +119,7 @@ procedure TCuentasForm.BitBtn1Click(Sender: TObject);
 begin
   OperacionDataModule := TOperacionDataModule.Create(self);
   try
-    OperacionDataModule.ActualizarLibroIVAVentas;
+    OperacionDataModule.ActualizarSiapVtaComp;
   finally
     OperacionDataModule.Free;
   end;
@@ -168,24 +167,21 @@ end;
 
 procedure TCuentasForm.BSiapClick(Sender: TObject);
 begin
-//OperacionDataModule := TOperacionDataModule.Create(self);
-//  try
-//    OperacionDataModule.ActualizarLibroIVAVentas;
-//  finally
-//    OperacionDataModule.Free;
-//  end;
-  Tabla.SQL.Text := 'SELECT *'
-    +' FROM "LibroIVAventa"'
-    +' WHERE'
-    +'  ("LibroIVAventa".FECHA >= ' + QuotedStr(DateToStr(DTP1.Date)) + ' ) AND '
-    +'  ("LibroIVAventa".FECHA <= ' + QuotedStr(DateToStr(DTP2.Date)) + ' )   '
-    +'ORDER BY  ' + '  "LibroIVAventa".CODIGO' + '';
-//  Tabla.Open;
-
   ImprimirDataModule := TImprimirDataModule.Create(Self);
-  ImprimirDataModule.SImpr(Tabla.SQL.Text, 'LibroIVAVentasSiap');
-  ImprimirDataModule.Free;
-
+  try
+    with ImprimirDataModule do
+    begin
+      frxDBDataset1.DataSet:=qReporte;
+      qReporte.Open('SELECT * FROM SiapVtaComp where'
+        +' CbteFch >= '+FormatDateTime('yyyymmdd',DTP1.Date)
+        +' and CbteFch <= '+FormatDateTime('yyyymmdd',DTP2.Date)
+      );
+      ExportarReporteTXT('SiapVtaComp');
+      ExportarReporteTXT('SiapVtaCompAlicuota');
+    end;
+  finally
+    ImprimirDataModule.Free;
+  end;
 end;
 
 end.

@@ -19,6 +19,7 @@ type
     frxDBDataset1: TfrxDBDataset;
     frxCSVExport1: TfrxCSVExport;
     frxReport1: TfrxReport;
+    qReporte: TFDQuery;
     Function VTA(nro, let: string): string;
     Function OPER(nro, tipo, let: string): string;
     Function PRE(nro, let: string): string;
@@ -36,6 +37,7 @@ type
     { Public declarations }
     clienteSql, articuloSql, ventaItemSql, ivaVtaSql, presupuestoSql, presupuestoTSql, vtaSql, ventaTSql, OperSql, OperacionSql, OperacionItemSql: string;
     function CodigoBarraElectronico(cuit,tipo,pvta,cae,vto:string):string;
+    procedure ExportarReporteTXT(vRpt: string);
   end;
 
 var
@@ -468,6 +470,21 @@ var
 begin
   cb := cuit+'0'+tipo+'0000'+pvta+cae+vto;
   result := DigitoVerificador(cb);
+end;
+
+procedure TImprimirDataModule.ExportarReporteTXT;
+begin
+    with frxReport1 do
+    begin
+      LoadFromFile(path + 'rpt\' + vRpt + '.fr3');
+      try
+        PrepareReport(True);
+        frxCSVExport1.FileName := vRpt+'.txt';
+        Export(frxCSVExport1);
+      finally
+//        Free;
+      end;
+  end;
 end;
 
 end.

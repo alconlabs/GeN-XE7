@@ -11,7 +11,8 @@ uses
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client,
   FireDAC.Comp.DataSet, frxClass, frxExportCSV, frxDBSet, frxExportBaseDialog,
   frxExportPDF, frxBarcode, IBX.IBCustomDataSet, IBX.IBQuery, IBX.IBDatabase,
-  Vcl.Grids, Vcl.DBGrids;
+  Vcl.Grids, Vcl.DBGrids, FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef,
+  FireDAC.Stan.ExprFuncs;
 
 type
   TfEditorReporte = class(TForm)
@@ -30,6 +31,8 @@ type
     DataSource1: TDataSource;
     OperacionFDQuery: TFDQuery;
     tLibroIVAventa: TFDQuery;
+    sdb: TFDConnection;
+    qSdb: TFDQuery;
   private
     { Private declarations }
   public

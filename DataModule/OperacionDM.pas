@@ -15,7 +15,8 @@ interface
 
 uses
   SysUtils, Classes, DB, DataModule, ImprimirDM, Dialogs, Controls, DateUtils,
-  IBX.IBCustomDataSet, IBX.IBQuery, Math, AfipDM, System.JSON, RestDM, System.Ansistrings;
+  IBX.IBCustomDataSet, IBX.IBQuery, Math, AfipDM, System.JSON, RestDM,
+  System.Ansistrings, System.MaskUtils;
 
 type
   matriz = array of array of string;
@@ -86,7 +87,7 @@ type
     procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impIva, impTotal, asocTipo, asocNro, n10, n21, i10, i21:string);
     function ObtenerNroComp(tipo:string):string;
     procedure ActualizarNroComp(tipo,comp: string);
-    procedure ActualizarLibroIVAVentas;
+    procedure ActualizarSiapVtaComp;
   end;
 
 var
@@ -1957,83 +1958,99 @@ begin
   Q.ExecSQL;
 end;
 
-procedure TOperacionDataModule.ActualizarLibroIVAVentas;
+procedure TOperacionDataModule.ActualizarSiapVtaComp;
 var
   cod,let,DocTipo,CantIva,AlicIVA,DocNro:string;
   iva1,iva2:Double;
 begin
 //  DM.tlibroivaventa.open;
   with DM do
-    with tLibroIVAventa do
+  begin
+    Q.SQL.Text:=
+      'SELECT'
+      +' "Venta".CODIGO,'
+      +' "Venta".LETRA,'
+      +' "Venta".FECHA,'
+      +' "Venta".TOTAL,'
+//      +' "CbteTipo".CODIGO AS CbteTipo,'
+      +' "Venta".COMPROBANTE AS CbteDesde,'
+      +' "Venta".COMPROBANTE AS CbteHasta,'
+      +' "Cliente".NOMBRE AS NomCli,'
+      +' "Cliente".DOCUMENTO AS DNI,'
+      +' "Cliente".CUIT AS CUIT,'
+      +' "Venta".IMPUESTO AS ImpIVA,'
+      +' "Venta".IVA1,'
+      +' "Venta".IVA2,'
+      +' "Venta".SUBTOTAL AS ImpNeto,'
+      +' "AlicIva".ID AS AlicIva'
+      +' FROM "Venta"'
+//      +' INNER JOIN "CbteTipo" ON "CbteTipo".LETRA = "Venta".LETRA'
+      +' LEFT JOIN "Cliente" ON "Cliente".CODIGO = "Venta".CLIENTE'
+      +' LEFT JOIN "AlicIva" ON "Venta".ALICIVA = "AlicIva".CODIGO'
+      //        +' WHERE "Venta".CODIGO='+tSiapVtaComp.FieldByName('').AsString
+    +';';
+    Q.Open;
+//    Q.First;
+    while not Q.Eof do
     begin
-      Open;
-      while not Eof do
+      with tSiapVtaComp do
       begin
-        Edit;
-//        cod:=tLibroIVAventaFACTURA.AsString;
-        let:=TraerValor('Venta', 'LETRA', cod);
-        Q.SQL.Text:=
-        'SELECT'
-        +' "CbteTipo".CODIGO AS CbteTipo,'
-        +' "Venta".COMPROBANTE AS CbteDesde,'
-        +' "Venta".COMPROBANTE AS CbteHasta,'
-        +' "Cliente".NOMBRE AS NomCli,'
-        +' "Cliente".DOCUMENTO AS DNI,'
-        +' "Cliente".CUIT AS CUIT,'
-        +' "Venta".IMPUESTO AS ImpIVA,'
-        +' "Venta".IVA1,'
-        +' "Venta".IVA2,'
-        +' "Venta".SUBTOTAL AS ImpNeto,'
-        +' "AlicIva".ID AS AlicIva'
-        +' FROM "Venta"'
-        +' INNER JOIN "CbteTipo" ON "CbteTipo".LETRA = "Venta".LETRA'
-        +' INNER JOIN "Cliente" ON "Cliente".CODIGO = "Venta".CLIENTE'
-        +' LEFT JOIN "AlicIva" ON "Venta".ALICIVA = "AlicIva".CODIGO'
-        +' WHERE "Venta".CODIGO='+tLibroIVAventaFACTURA.AsString;
-        Q.Open;
-        tLibroIVAventaCbteTipo.AsString:=Q.FieldByName('CbteTipo').AsString;
-        tLibroIVAventaPtoVta.AsString:=PuntoVenta;
-        tLibroIVAventaCbteDesde.AsString:=Q.FieldByName('CbteDesde').AsString;
-        tLibroIVAventaCbteHasta.AsString:=Q.FieldByName('CbteHasta').AsString;
-        DocNro:=Q.FieldByName('CUIT').AsString;
-        if DocNro='' then DocNro:=Q.FieldByName('DNI').AsString;
-        if DocNro.Length < 11  then DocTipo :='96' else DocTipo := '80';
-        tLibroIVAventaDocTipo.AsString:=DocTipo;
-        tLibroIVAventaNomCli.AsString:=Q.FieldByName('NomCli').AsString;
-        tLibroIVAventaMonId.AsString:='PES';
-        tLibroIVAventaMonCotiz.AsString:='1';
-        iva1:=Q.FieldByName('IVA1').Asfloat;
-        iva2:=Q.FieldByName('IVA2').Asfloat;
-        if ((iva1>0) and (iva2>0)) then CantIva:='2' else CantIva:='1';
-        tLibroIVAventaCantIva.AsString:=CantIva;
-        tLibroIVAventaOpcion.AsString:='0';
-
-        AlicIVA:=Q.FieldByName('AlicIVA').AsString;
-        if AlicIVA='' then
-        begin
-          if iva1>0 then AlicIVA:='4' else if iva2>0 then AlicIVA:='5';
+        cod:=Q.FieldByName('CODIGO').AsString;
+        Open('SELECT * FROM SiapVtaComp WHERE Codigo='+cod);
+        if RowsAffected>0 then
+          Edit
+        else
+          begin
+            Insert;
+            tSiapVtaCompCodigo.AsInteger:=StrToInt(cod);
+          end;
+          tSiapVtaCompCbteFch.AsString:=FormatDateTime('yyyymmdd',(Q.FieldByName('FECHA').AsDateTime));
+          let:=ObtenerValor('CbteTipo', 'Codigo', 'Letra',QuotedStr(Q.FieldByName('LETRA').AsString));
+          tSiapVtaCompCbteTipo.AsString:=FormatFloat('000',StrToFloat(let));
+          tSiapVtaCompPtoVta.AsString:=FormatFloat('00000',StrToFloat(PuntoVenta));
+          tSiapVtaCompCbteDesde.AsString:=FormatFloat('00000000000000000000',(Q.FieldByName('CbteDesde').AsFloat));
+          tSiapVtaCompCbteHasta.AsString:=FormatFloat('00000000000000000000',(Q.FieldByName('CbteHasta').AsFloat));
+          DocNro:=Q.FieldByName('CUIT').AsString;
+          if DocNro='' then DocNro:=Q.FieldByName('DNI').AsString;
+          if DocNro.Length < 11  then DocTipo :='96' else DocTipo := '80';
+          if (DocNro='') then
+            begin
+              DocNro:='20222222223';
+              DocTipo := '80';
+            end;
+          tSiapVtaCompDocTipo.AsString:=DocTipo;
+          tSiapVtaCompDocNro.AsString:=FormatFloat('00000000000000000000',StrToFloat(DocNro));
+          tSiapVtaCompDocNomb.AsString:=FormatMaskText('000000000000000000000000000000',(Q.FieldByName('NomCli').AsString));
+          tSiapVtaCompMonId.AsString:='PES';
+          tSiapVtaCompMonCotiz.AsString:=FormatFloat('0000000000',(1*1000000));
+          iva1:=Q.FieldByName('IVA1').Asfloat;
+          iva2:=Q.FieldByName('IVA2').Asfloat;
+          if ((iva1>0) and (iva2>0)) then CantIva:='2' else CantIva:='1';
+          tSiapVtaCompIvaCant.AsString:=CantIva;
+          tSiapVtaCompCodOper.AsString:='0';
+          tSiapVtaCompFchVtoPago.AsString:=FormatFloat('00000000',(0*100));
+          AlicIVA:=Q.FieldByName('AlicIVA').AsString;
+          if AlicIVA='' then
+            begin
+              if iva1>0 then AlicIVA:='4' else if iva2>0 then AlicIVA:='5';
+            end;
+          tSiapVtaCompIvaId.AsString:=FormatFloat('0000',(StrToInt(AlicIVA)));
+          tSiapVtaCompImpNeto.AsString:=FormatFloat('000000000000000',(Q.FieldByName('ImpNeto').AsFloat*100));
+          tSiapVtaCompImpNoGra.AsString:=FormatFloat('000000000000000',(0*100));
+          tSiapVtaCompImpOpEx.AsString:=FormatFloat('000000000000000',(0*100));
+          tSiapVtaCompImpIVA.AsString:=FormatFloat('000000000000000',(Q.FieldByName('ImpIVA').AsFloat*100));
+          tSiapVtaCompImpPercGral.AsString:=FormatFloat('000000000000000',(0*100));
+          tSiapVtaCompImpPercNoCat.AsString:=FormatFloat('000000000000000',(0*100));
+          tSiapVtaCompImpPercIIBB.AsString:=FormatFloat('000000000000000',(0*100));
+          tSiapVtaCompImpPercMuni.AsString:=FormatFloat('000000000000000',(0*100));
+          tSiapVtaCompImpImpInt.AsString:=FormatFloat('000000000000000',(0*100));
+          tSiapVtaCompImpOtrTrib.AsString:=FormatFloat('000000000000000',(0*100));
+          tSiapVtaCompImpTotal.AsString:=FormatFloat('000000000000000',(Q.FieldByName('TOTAL').AsFloat*100));
+          Post;
+          Q.Next;
         end;
-        tLibroIVAventaAlicIVA.AsString:=AlicIVA;
-        tLibroIVAventaImpNeto.AsString:=Q.FieldByName('ImpNeto').AsString;
-        tLibroIVAventaNoGrabado.AsString:='0';
-        tLibroIVAventaImpOpEx.AsString:='0';
-        tLibroIVAventaImpIVA.AsString:=Q.FieldByName('ImpIVA').AsString;
-        tLibroIVAventaGenerales.AsString:='0';
-        tLibroIVAventaNoCat.AsString:='0';
-        tLibroIVAventaImpTrib.AsString:='0';
-
-        if (tLibroIVAventaCUIT.AsString='') or (tLibroIVAventaCUIT.AsString='ANULADA') then
-          tLibroIVAventaCUIT.AsString:='0';
-
-        tLibroIVAventaFchVtoPago.AsString:='0';
-        tLibroIVAventaOEIIBB.AsFloat:=0;
-        tLibroIVAventaIDERPYPAC.AsFloat:=0;
-
-        Post;
-        Next;
       end;
-    end;
+  end;
 end;
-
 
 end.

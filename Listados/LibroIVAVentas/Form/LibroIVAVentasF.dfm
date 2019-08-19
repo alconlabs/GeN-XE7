@@ -377,7 +377,7 @@ object CuentasForm: TCuentasForm
         Width = 113
         Height = 21
         Date = 43830.000000000000000000
-        Time = 0.873295891200541500
+        Time = 0.873295891200541600
         TabOrder = 1
         OnCloseUp = DTP2CloseUp
       end
@@ -388,6 +388,12 @@ object CuentasForm: TCuentasForm
       Width = 80
       Height = 50
       Caption = 'SIAP'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold, fsItalic]
+      ParentFont = False
       TabOrder = 3
       OnClick = BSiapClick
     end
