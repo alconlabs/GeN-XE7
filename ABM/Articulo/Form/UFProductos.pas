@@ -45,7 +45,6 @@ type
     BitBtn13: TBitBtn;
     IVADBCBLabel: TLabel;
     Label19: TLabel;
-    Label30: TLabel;
     Label10: TLabel;
     Label5: TLabel;
     DBText1: TDBText;
@@ -133,7 +132,10 @@ type
     PaintBox1: TImage;
     DBEdit2: TDBEdit;
     Label35: TLabel;
-    IVADBComboBox: TDBComboBox;
+    IVAT: TIBTable;
+    DSTIVA: TDataSource;
+    IVADBComboBox: TDBLookupComboBox;
+    Label8: TLabel;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -161,6 +163,7 @@ type
     procedure PrecioCtaCteDBEditExit(Sender: TObject);
     procedure IVADBComboBoxExit(Sender: TObject);
     procedure GanaciaDBEditExit(Sender: TObject);
+    procedure IVADBComboBoxEnter(Sender: TObject);
   private
     { Private declarations }
     tasa: Double;
@@ -330,6 +333,7 @@ begin
   RubroT.Active := True;
   MarcaT.Active := True;
   CategoriaT.Active := True;
+  IVAT.Active := True;
 //  with DM do
 //  begin
     //ConfigQuery.Open;
@@ -380,10 +384,25 @@ begin
   end;
 end;
 
-procedure TFProductos.IVADBComboBoxExit(Sender: TObject);
+procedure TFProductos.IVADBComboBoxEnter(Sender: TObject);
 begin
-if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
-  else tasa:=StrToFloat(IVADBComboBox.Text);
+  with IVAT do
+  begin
+    Close;
+    Open;
+    Last;
+  end;
+end;
+
+procedure TFProductos.IVADBComboBoxExit(Sender: TObject);
+var
+  t:string;
+begin
+//if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
+//  else
+  tasa:=StrToFloat(IVADBComboBox.Text);
+  if tasa=10.5 then t:='105' else t:=FloatToStr(tasa);
+  Tabla.FieldByName('Tasa').AsInteger := StrToInt(t);
   Calcular;
   BitBtn1.SetFocus;
 end;
@@ -413,6 +432,7 @@ begin
   Tabla.FieldByName('Precio').AsInteger := 0;
   PrecioCtaCteDBEdit.Field.AsFloat := 0;
   Tabla.FieldByName('IIBB').AsInteger := 0;
+  CodigoDBEdit.Text:=IntToStr(DM.UltimoRegistro('Articulo', 'CODIGO'));
 end;
 
 procedure TFProductos.RubroBitBtnClick(Sender: TObject);
@@ -504,7 +524,7 @@ end;
 
 procedure TFProductos.PrecioCtaCteDBEditExit(Sender: TObject);
 begin
-  Calcular;
+//  Calcular;
   BitBtn1.SetFocus;
 end;
 
@@ -625,7 +645,7 @@ begin
   costo := StrToFloat(CostoDBEdit.Text);
   flete := costo * (StrToFloat(FleteDBEdit.Text) / 100);
   costo := costo + flete;
-  with OperacionDataModule do
+  with DM do
   begin
    if GanaciaDBEdit.Text = '0' then
      PrecioCtaCteDBEdit.Text := FloatToStr(costo * PrecioCtaCte)

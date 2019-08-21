@@ -240,7 +240,7 @@ begin
     jsRequest := TJSONObject.Create();
     if cuit='' then cuit := afipUsr;
     if DocNro='' then
-      if StrToFloat( ImpTotal )<1000 then begin
+      if StrToFloat( ImpTotal )<10000 then begin
         DocTipo:='99';
         DocNro:='0';
       end
@@ -251,7 +251,8 @@ begin
         //      DocNro:='23000000000';
       end
     else
-      if DocNro.Length < 11  then DocTipo := '96' else DocTipo := '80';
+      if DocNro.Length>1 then
+        if DocNro.Length < 11  then DocTipo := '96' else DocTipo := '80';
     ptovta:=IntToStr(dm.ObtenerConfig('Empresa'));
     jsRequest.AddPair('ptovta', ptovta);
     jsRequest.AddPair('tipocbte', tipocbte);

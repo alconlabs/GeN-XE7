@@ -31,6 +31,10 @@ object FProductos: TFProductos
     TabStop = False
     object TabSheet1: TTabSheet
       Caption = 'Detalles'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label2: TLabel
         Left = 14
         Top = 82
@@ -73,14 +77,6 @@ object FProductos: TFProductos
         Width = 23
         Height = 13
         Caption = 'Flete'
-      end
-      object Label30: TLabel
-        Left = 590
-        Top = 113
-        Width = 8
-        Height = 13
-        Caption = '%'
-        Visible = False
       end
       object Label10: TLabel
         Left = 56
@@ -131,11 +127,17 @@ object FProductos: TFProductos
         Visible = False
       end
       object Label28: TLabel
-        Left = 590
+        Left = 592
         Top = 61
-        Width = 8
+        Width = 10
         Height = 13
         Caption = '%'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
       object Label21: TLabel
         Left = 687
@@ -166,11 +168,17 @@ object FProductos: TFProductos
         FocusControl = GanaciaDBEdit
       end
       object Label34: TLabel
-        Left = 590
+        Left = 592
         Top = 86
-        Width = 8
+        Width = 10
         Height = 13
         Caption = '%'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
       object IVADBText: TDBText
         Left = 519
@@ -318,6 +326,19 @@ object FProductos: TFProductos
         Visible = False
         OnClick = PaintBox1Click
       end
+      object Label8: TLabel
+        Left = 592
+        Top = 113
+        Width = 10
+        Height = 13
+        Caption = '%'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
       object DescripcionDBEdit: TDBEdit
         Left = 15
         Top = 101
@@ -337,7 +358,7 @@ object FProductos: TFProductos
         TabOrder = 2
       end
       object DBLookupComboBox4: TDBLookupComboBox
-        Left = 90
+        Left = 89
         Top = 140
         Width = 231
         Height = 21
@@ -430,25 +451,28 @@ object FProductos: TFProductos
         TabOrder = 10
         OnClick = CodigoBarraBitBtnClick
       end
-      object IVADBComboBox: TDBComboBox
+      object IVADBComboBox: TDBLookupComboBox
         Left = 519
         Top = 113
-        Width = 67
+        Width = 65
         Height = 21
-        DataField = 'Tasa'
+        DataField = 'IVA'
         DataSource = DataSource
-        Items.Strings = (
-          '21'
-          '105'
-          '0')
+        KeyField = 'CODIGO'
+        ListField = 'TASA'
+        ListSource = DSTIVA
         TabOrder = 6
-        Visible = False
+        OnEnter = IVADBComboBoxEnter
         OnExit = IVADBComboBoxExit
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Notas'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -463,6 +487,10 @@ object FProductos: TFProductos
     object TabSheet2: TTabSheet
       Caption = 'Informaci'#243'n Adicional'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label6: TLabel
         Left = 351
         Top = 116
@@ -721,6 +749,10 @@ object FProductos: TFProductos
     object TabSheet4: TTabSheet
       Caption = 'Precios'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label11: TLabel
         Left = 185
         Top = 221
@@ -841,6 +873,10 @@ object FProductos: TFProductos
     object TabSheet5: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label50: TLabel
         Left = 185
         Top = 51
@@ -1148,12 +1184,11 @@ object FProductos: TFProductos
     FieldDefs = <
       item
         Name = 'CODIGO'
-        Attributes = [faRequired]
         DataType = ftInteger
       end
       item
         Name = 'DESCRIPCION'
-        DataType = ftWideString
+        DataType = ftString
         Size = 255
       end
       item
@@ -1218,12 +1253,12 @@ object FProductos: TFProductos
       end
       item
         Name = 'UBICACION'
-        DataType = ftWideString
+        DataType = ftString
         Size = 255
       end
       item
         Name = 'UNIDAD'
-        DataType = ftWideString
+        DataType = ftString
         Size = 50
       end
       item
@@ -1236,7 +1271,7 @@ object FProductos: TFProductos
       end
       item
         Name = 'NOTAS'
-        DataType = ftWideString
+        DataType = ftString
         Size = 255
       end
       item
@@ -1277,12 +1312,12 @@ object FProductos: TFProductos
       end
       item
         Name = 'PROCEDENCIA'
-        DataType = ftWideString
+        DataType = ftString
         Size = 255
       end
       item
         Name = 'CODIGOBARRA'
-        DataType = ftWideString
+        DataType = ftString
         Size = 255
       end
       item
@@ -1307,7 +1342,7 @@ object FProductos: TFProductos
       end
       item
         Name = 'STOCK'
-        DataType = ftWideString
+        DataType = ftString
         Size = 255
       end
       item
@@ -1332,7 +1367,7 @@ object FProductos: TFProductos
       end
       item
         Name = 'PREPARADO'
-        DataType = ftWideString
+        DataType = ftString
         Size = 255
       end
       item
@@ -1353,7 +1388,7 @@ object FProductos: TFProductos
       end
       item
         Name = 'ESTADO'
-        DataType = ftWideString
+        DataType = ftString
         Size = 255
       end
       item
@@ -1483,5 +1518,20 @@ object FProductos: TFProductos
       'select * from "Config"')
     Left = 96
     Top = 425
+  end
+  object IVAT: TIBTable
+    Database = DM.BaseDatos
+    Transaction = DM.Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    TableName = 'Iva'
+    UniDirectional = False
+    Left = 352
+    Top = 369
+  end
+  object DSTIVA: TDataSource
+    DataSet = IVAT
+    Left = 392
+    Top = 369
   end
 end

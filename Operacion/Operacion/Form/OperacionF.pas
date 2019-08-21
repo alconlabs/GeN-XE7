@@ -121,7 +121,6 @@ type
     codRem : String;
     procedure TraerImpresora;
     procedure QuitarArticulos;
-
   end;
 
 type
@@ -277,11 +276,12 @@ end;
 procedure TOperacionForm.CalculaTotales;
 var
   i: Integer;
-  NG,DSC,NGD,IVA,CONT,PR,PRD,TOT,CAN,TIVA : Double;
+  NG,NE,DSC,NGD,IVA,CONT,PR,PRD,TOT,CAN,TIVA : Double;
   des : string;
   esA, esB, esC : Boolean;
 begin
   // Calcula los totales de la factura
+  with dm do begin
   //  subtotal := 0;
   //  Impuesto := 0;
   desc := 0;
@@ -305,6 +305,7 @@ begin
   if (cbTipo.ItemIndex<6) then esA:=true;
   if (cbTipo.ItemIndex>5) and (cbTipo.ItemIndex<11) then esB:=true;
 //  if (cbTipo.ItemIndex>10) and (cbTipo.ItemIndex<15) then esC:=true;
+  VaciarMtIVA;
   For i := 1 to SGFact.RowCount - 1 do
   begin
     //CANTIDAD
@@ -320,7 +321,7 @@ begin
     if (SGFact.Cells[5, i] = '') then SGFact.Cells[5, i] := '0';
     TOT := StrToFloat(SGFact.Cells[5, i]);
 //    if not((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then PR := OperacionDataModule.CalcularIVA((PR),TIVA);
-    if esB then PR := OperacionDataModule.CalcularIVA((PR),TIVA);//es B
+    if esB then PR := CalcularIVA((PR),TIVA);//es B
     //DESCUENTO
     if (SGFact.Cells[7, i] = '') then SGFact.Cells[7, i] := '0';
     des := (SGFact.Cells[7, i]);
@@ -337,8 +338,8 @@ begin
     NG := (PR*CAN)-DSC;
 //    SGFact.Cells[5, i] := FloatToStr(TOT);
     //IVA
-    if esA then IVA := OperacionDataModule.CalcularIVA((NG),TIVA)-NG
-    else if esB then IVA := OperacionDataModule.SacarIVA((NG),TIVA);
+    if esA then IVA := CalcularIVA((NG),TIVA)-NG
+    else if esB then IVA := SacarIVA((NG),TIVA);
     SGFact.Cells[10, i] := FloatToStr(IVA);
     // NG
     if esB then NG := NG - IVA;
@@ -353,6 +354,7 @@ begin
     if SGFact.Cells[9, i] <> '0' then reparaciones := reparaciones + StrToFloat(SGFact.Cells[9, i]);
 
   // Calcula el monto para cobrar el impuesto de ventas
+    AgregarMtIva(TIVA,NG,IVA);
     if ((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then
     begin
       NGO:= NGO + NG;
@@ -371,6 +373,11 @@ begin
           IVA105 := IVA105 + IVA;
         end
         else
+        if TIVA = 0 then
+        begin
+          NE := NE + NG;
+        end
+        else
          begin
           NGO := NGO + NG;
           IVAO := IVAO + IVA;
@@ -378,7 +385,7 @@ begin
     end;
       desc:= desc + DSC;
     end;
-
+  Exento := RoundTo(NE,-2);
   NG21 := RoundTo(NG21,-2);
   NG105 := RoundTo(NG105,-2);
   NGO := RoundTo(NGO,-2);
@@ -388,7 +395,7 @@ begin
   perc := RoundTo(perc,-2);
   desc:=  RoundTo((desc),-2);
 
-  subtotal:= RoundTo((NG21 + NG105 + NGO),-2);
+  subtotal:= RoundTo((NG21 + NG105 + NGO + Exento),-2);
 
   perc := (subtotal * StrToFloat(PercEdit.Text) / 100);
 
@@ -415,6 +422,7 @@ begin
   Saldo := Total - Pagado;
   TotalLabel.Caption := FloatToStr(Total);
   LbSaldo.Caption := FloatToStr(Saldo);
+  end;
 end;
 
 procedure TOperacionForm.cbTipoChange(Sender: TObject);
@@ -768,7 +776,7 @@ begin
           costo, Impuesto, StrToFloat(FECheque.Text),
           StrToFloat(FECheque.Text), StrToFloat(FEContado.Text), Total,
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
-          Saldo, Pagado, NG105, NG21, IVA105, IVA21, perc, Total - Saldo)
+          Saldo, Pagado, NG105, NG21, NGO, IVA105, IVA21, IVAO, Exento, perc, Total - Saldo)
       else
       if TipoRadioGroup.ItemIndex=2 then
       ProcOPER('PED', 'X', ClienteEdit.Text,

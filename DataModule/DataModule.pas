@@ -90,6 +90,7 @@ type
     tSiapVtaCompImpImpInt: TWideMemoField;
     tSiapVtaCompImpOtrTrib: TWideMemoField;
     tSiapVtaCompImpTotal: TWideMemoField;
+    mtIVA: TFDMemTable;
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
     procedure LeerINI;
@@ -114,6 +115,7 @@ type
     procedure CrearCbtetipo;
     procedure CrearTablaSiapVtaComp;
     procedure ConectarSDB;
+    procedure CrearMtIva;
   public
   const
     NumThreads: Integer = 4;
@@ -151,6 +153,12 @@ type
     function CopyDir(const Source, Target: string): Boolean;
     function Actualizar:Boolean;
     function ObtenerValor(tabla, campo, codigo, valor: string):string;
+    procedure AgregarMtIva(tasa,neto,imp:Double);
+    procedure VaciarMtIva;
+    function CalcularIVA(monto,porcentaje:Double):Double;
+    function SacarIVA(monto,porcentaje:Double):Double;
+    function TraerAlicuota(tasa:string):string;
+    function TraerValorX(tabla, campo, codigo, valor: string):string;
   end;
 
 const
@@ -387,6 +395,7 @@ begin
 //  , Path+'Update.iss');
   ActualizarBase;
   TraerConfig;
+  CrearMtIva;
 end;
 
 procedure TDM.connection;
@@ -806,6 +815,16 @@ begin
     result := Query.Fields.Fields[0].AsFloat
   else
     result := 0;
+end;
+
+function TDM.TraerValorX;
+begin
+  Query.SQL.Text :=
+    'SELECT '+campo+' FROM "'+tabla+'"';
+    if codigo<>'' then
+      Query.SQL.Text := Query.SQL.Text + ' WHERE '+codigo+'='+valor;
+  Query.Open;
+  result := Query.Fields.Fields[0].AsString;
 end;
 
 procedure TDM.AgregarValor;
@@ -1246,6 +1265,43 @@ sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapVtaComp ('//Siap Comprobantes de Ven
   +'ImpOtrTrib TEXT,'//Otros Tributos
   +'ImpTotal TEXT'//Totales (cálculo automático)
 +')');
+
+sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapCmpComp ('//Siap Comprobantes de Compras
+  +'Codigo INTEGER,'
+  +'CbteFch TEXT,'//FECHA Formato dd/mm/aaaa	L8
+  +'CbteTipo TEXT,'//COMPROBANTES Tipo	L3
+  +'PtoVta TEXT,'//COMPROBANTES PV	L5
+  +'CbteNro TEXT,'//COMPROBANTES Número		L20
+  +'DespNro TEXT,'//COMPROBANTES Número Despacho  de Importación	L16
+  +'DocTipo TEXT,'//PROVEEDOR Código de Documento del vendedor	L2
+  +'DocNro TEXT,'//PROVEEDOR Número de identificaión del vendedor	L20
+  +'DocNomb TEXT,'//PROVEEDOR Apellido y Nombre del vendedor	L30
+  +'ImpTotal TEXT'//Totales (cálculo automático)	L15
+  +'ImpNoGra TEXT,'//Monto que no integra el precio neto gravado	L15
+  +'ImpOpEx TEXT,'//Operaciones Exentas	L15
+  +'ImpPercIva TEXT,'//PERCEPCIONES Percepc y retenc. IVA	L15
+  +'ImpPercNac TEXT,'//PERCEPCIONES Perc. otros imp. Nac.	L15
+  +'ImpPercIIBB TEXT,'//PERCEPCIONES IIBB	L15
+  +'ImpPercMuni TEXT,'//PERCEPCIONES Municipales	L15
+  +'ImpImpInt TEXT,'//Impuestos Internos	L15
+  +'MonId TEXT,'//Código de Moneda	L3
+  +'MonCotiz TEXT,'//Tipo de cambio	L10
+  +'IvaCant TEXT,'//Cantidad alícuotas I.V.A.	L1
+  +'CodOper TEXT,'//Código de operación	L1
+  +'ImpCredFisc TEXT,'//Credito Fiscal Computable	L15
+  +'ImpOtrTrib TEXT,'//Otros Tributos	L15
+  +'CUIT TEXT,'//CUIT emisor/corredor	L11
+  +'Denom TEXT,'//Denominación emisor/corredor	L30
+  +'ImpIvaCom TEXT,'//IVA comisión	L15
+
+  +'IvaId1 TEXT,'//Código alícuota IVA 1
+  +'IvaId2 TEXT,'//Código alícuota IVA 2
+  +'IvaBaseImp1 TEXT,'//Neto Gravado alícuota 1 Importe Total
+  +'IvaAlic1 TEXT,'//IVA alícuota 1
+  +'IvaBaseImp2 TEXT,'//Neto Gravado alícuota 2 Importe Total
+  +'IvaAlic2 TEXT,'//IVA alícuota 2
++')');
+
  end;
 
  procedure TDM.ConectarSDB;
@@ -1279,6 +1335,97 @@ begin
       vQuery.Free;
     end;
   end;
+end;
+
+procedure TDM.CrearMtIva;
+begin
+  with mtIVA do
+  begin
+//   with TFDTable.Create(nil) do // create a temporary TTable component
+//   begin
+     try
+//       { set properties of the temporary TTable component }
+       Active := False;
+//       DatabaseName := ;
+//       Connection := sdb;
+//       Table := 'IVA';
+//       TableType := ttDefault;
+//       { define fields for the new table }
+       FieldDefs.Clear;
+       FieldDefs.Add('Tasa', ftCurrency);
+       FieldDefs.Add('Neto', ftCurrency);
+       FieldDefs.Add('Imp', ftCurrency);
+       { define indexes for the new table }
+//       IndexDefs.Clear;
+//       with IndexDefs.AddIndexDef do begin
+//         Name := '';
+//         Fields := 'First';
+//         Options := [ixPrimary];
+//       end;
+//       TableFound := Exists; // check whether the table already exists
+//       if TableFound then
+//         if MessageDlg('Overwrite existing table ' + nombre + '?',
+//              mtConfirmation, mbYesNoCancel, 0) = mrYes then
+//           TableFound := False;
+//        if not TableFound then
+//        begin
+          CreateDataSet; // create the table
+          Open;
+//          Insert;
+//          Fields.Fields[0].Value := FloatToStr(v1);
+//        end;
+     finally
+
+     end;
+  end;
+end;
+
+procedure TDM.AgregarMtIva;
+begin
+  with mtIVA do
+    begin
+      if Locate('Tasa',tasa,[]) then
+        Edit
+      else
+      begin
+        Insert;
+        FieldByName('Tasa').AsFloat := tasa;
+      end;
+      FieldByName('Neto').AsFloat := FieldByName('Neto').AsFloat + neto;
+      FieldByName('Imp').AsFloat := FieldByName('Imp').AsFloat + imp;
+      Post;
+    end;
+end;
+
+procedure TDM.VaciarMtIva;
+begin
+  with mtIVA do
+  begin
+    First;
+    while RecordCount>0 do
+    begin
+      Delete;
+      Next;
+    end;
+  end;
+end;
+
+function  TDM.CalcularIVA;
+begin
+  if porcentaje = 105 then porcentaje := 10.5;
+//  Result := monto + (monto * (porcentaje / 100));
+  Result := monto*(porcentaje/100+1);
+end;
+
+function  TDM.SacarIVA;
+begin
+  if porcentaje = 105 then porcentaje := 10.5;
+  Result := monto-monto/(porcentaje/100+1);
+end;
+
+function TDM.TraerAlicuota;
+begin
+  result := TraerValorX('Iva','CODIGO','Tasa',tasa);
 end;
 
 end.

@@ -116,10 +116,15 @@ begin
 end;
 
 procedure TCuentasForm.BitBtn1Click(Sender: TObject);
+var
+  where : string;
 begin
+  where := ' WHERE'
+  +' (FECHA >= ' + QuotedStr(DateToStr(DTP1.Date)) + ' ) AND '
+  +' (FECHA <= ' + QuotedStr(DateToStr(DTP2.Date)) + ' )   ';
   OperacionDataModule := TOperacionDataModule.Create(self);
   try
-    OperacionDataModule.ActualizarSiapVtaComp;
+    OperacionDataModule.ActualizarSiapVtaComp(where);
   finally
     OperacionDataModule.Free;
   end;
@@ -136,9 +141,7 @@ begin
     '  "LibroIVAventa".OEIIBB, "LibroIVAventa".IDERPYPAC,  ' +
     '  "LibroIVAventa".ITF'
     +' FROM "LibroIVAventa"'
-    + 'WHERE                ' +
-    '  ("LibroIVAventa".FECHA >= ' + QuotedStr(DateToStr(DTP1.Date)) + ' ) AND '
-    + '  ("LibroIVAventa".FECHA <= ' + QuotedStr(DateToStr(DTP2.Date)) + ' )   '
+    + where
     + 'ORDER BY  ' + '  "LibroIVAventa".CODIGO' + '';
   Tabla.Open;
 end;
