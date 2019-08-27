@@ -18,7 +18,8 @@ uses
   IBX.IBCustomDataSet, IBX.IBQuery, Math, AfipDM, System.JSON, RestDM,
   System.Ansistrings, System.MaskUtils, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.DApt.Intf, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FireDAC.Stan.Async, FireDAC.DApt;
 
 
 type
@@ -27,10 +28,12 @@ type
   TOperacionDataModule = class(TDataModule)
     Q: TIBQuery;
     T: TIBQuery;
+    qODM: TFDQuery;
     procedure fd(Sender: TObject);
   private
     { Private declarations }
     procedure AgregarAlicIva(cod,id: integer; bImp,imp: double);
+    function InsertarAlicIva:Integer;
   public
     { Public declarations }
     comp, a, pagare, cae, vto, mensaje//, ptovta, tipocbte
@@ -38,15 +41,23 @@ type
     i: integer;
     IIBB, cmv: Double;
     jsResponse: TJSONValue;
-    function ProcVTA(let, cod, fech, ven, cui, ctan: string; pre, pgr,impr: Boolean;
+    function ProcVTA
+//    (let, cod, fech, ven, cui, ctan: string; pre, pgr,impr: Boolean;
+//      cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
+//      int, n10, n21, i10, i21, deud, ulc: Double):Boolean;
+     (pvta, com,
+      let, cod, fech, cui, ven, ctan: string; pre, pgr, impr: Boolean;
       cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
-      int, n10, n21, i10, i21, deud, ulc: Double):Boolean;
+      int, n10, n21, i10, i21, deud, ulc,
+      n3, i3, exc, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib
+     : Double):Boolean;
     Procedure ProcOPER(tipo, let, cod, fech, ven, cui, ctan: string;
       pre, pgr, impr: Boolean; cost, comv, impu, cheq, ch3q, cont, tot, sbt, des,
       tarj, otr, sal, pag, int, n10, n21, i10, i21, deud, ulc: Double);
-    Procedure ProcCompra(let, cod, fech, ven, com, ctan,cui: string; pgr: Boolean;
+    Procedure ProcCompra(pvta, let, cod, fech, ven, com, ctan,cui: string; pgr: Boolean;
       cost, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag, n10,
-      n21, n3, i10, i21, i3, exc, perc, deud: Double);
+      n21, n3, i10, i21, i3, exc, deud , noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib
+      : Double);
     Procedure ProcPlan(let, cod, ven, cui, ctan, cuoimp, cuocant, cob: string;
       fecha: TDateTime; pre, pgr: Boolean; cost, comv, impu, cheq, ch3q, cont,
       tot, sbt, des, tarj, otr, sal, pag, inte, n10, n21, i10, i21, deud,
@@ -70,7 +81,7 @@ type
     Procedure LibroDiario(oper, nro, let, cod, fech: string; pgr: Boolean;
       tot, pag, cheq, ch3q, cont, tarj, impu, deud, cmv, comv: Double);
     Procedure LibroIVAvta(fec, nro, cod, cui, n10, n21, i10, i21, tot: string);
-    Procedure LibroIVACompra(fec, nro, cod, com, n10, n21, n3, i10, i21, i3, exc, perc, tot: string);
+    Procedure LibroIVACompra(fec, nro, cod, com, n10, n21, n3, i10, i21, i3, per, ret, tot: string);
     Function MesLetra(fech: TDate): string;
     Function CostMercVend(ulc, cost: Double): Double;
     procedure VarCos(cod, cant: string; cost: Double);
@@ -86,9 +97,8 @@ type
     procedure ActualizarCantidadArticulo(codigo,cantidad:string);
     procedure DataSetToCsv(psRutaFichero : String);
     procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impIva, impTotal, asocTipo, asocNro, n10, n21, i10, i21:string);
-    function ObtenerNroComp(tipo:string):string;
-    procedure ActualizarNroComp(tipo,comp: string);
     procedure ActualizarSiapVtaComp(where:string);
+    procedure ActualizarSiapCmpComp(where:string);
   end;
 
 var
@@ -506,7 +516,7 @@ begin
     ' OEIIBB, IDERPYPAC, ITF) Values ( '
     + quotedstr(fec) + ', ' + quotedstr(nro) + ', ' + quotedstr(cod) + ', ' +quotedstr(com)
     + ', ' + n10 + ', ' + n21 + ', ' + n3 + ', ' + (i10) + ', ' + (i21)+ ', ' + (i3)
-    + ', ' + exc + ', ' + (perc) + ', ' + (tot) + ')';
+    + ', ' + per + ', ' + (ret) + ', ' + (tot) + ')';
   Q.ExecSQL;
 end;
 
@@ -621,9 +631,7 @@ begin
     Q.sql.Text := 'Update "Venta" set ANULADA = ''S'' where CODIGO = ' + nro;
     Q.ExecSQL;
     //AlicuotaIVA
-    aIva := DM.UltimoRegistro('AlicIva', 'CODIGO');
-    if i10>0 then AgregarAlicIva(aIva, 4, n10, i10);
-    if i21>0 then AgregarAlicIva(aIva, 5, n21, i21);
+    aIva := InsertarAlicIva;
     // INSERTA EN LA TABLA OPERACION
     Q.sql.Text :=
     'Insert Into "Operacion" (COMPROBANTE, TERMINOS, CODIGO, TIPO, LETRA'+
@@ -767,9 +775,7 @@ var
 begin
   nro := inttostr(DM.UltimoRegistro('Presupuesto', 'CODIGO'));
   //AlicuotaIVA
-  aIva := DM.UltimoRegistro('AlicIva', 'CODIGO');
-  if i10>0 then AgregarAlicIva(aIva, 4, n10, i10);
-  if i21>0 then AgregarAlicIva(aIva, 5, n21, i21);
+  aIva := InsertarAlicIva;
   // INSERTA EN LA TABLA PRESUPUESTO
   Q.sql.Text := 'Insert Into "Presupuesto" (CODIGO, LETRA, CLIENTE, ' +
     ' SUBTOTAL, DESCUENTO, FECHA,' + ' IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
@@ -809,17 +815,18 @@ end;
 
 function TOperacionDataModule.ProcVTA; // PROCESA UNA VENTA
 var
-  nro, i, aIva : Integer;
+  nro:string;
+  i, aIva : Integer;
 //  nro, comp, a, pagare, cae, vto, mensaje, ptovta, tipocbte: string;
-//  IIBB, cmv: Double;
+  cmv: Double;
 //  jsResponse: TJSONValue;
   ctaCte : boolean;
 begin
   //  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
   DM.FormatearFecha;
   pagare := '0';
-  nro := (DM.UltimoRegistro('Venta', 'CODIGO'));
-  comp:=ObtenerNroComp(let);
+  nro := IntToStr(DM.UltimoRegistro('Venta', 'CODIGO'));
+  comp:=dm.ObtenerNroComp(let);
   if pgr then
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
@@ -837,9 +844,7 @@ begin
   else
     IIBB := (tot - impu) * (Q.FieldByName('PORCENTAJE').AsFloat/100);
   //AlicuotaIVA
-  aIva := DM.UltimoRegistro('AlicIva', 'CODIGO');
-  if i10>0 then AgregarAlicIva(aIva, 4, n10, i10);
-  if i21>0 then AgregarAlicIva(aIva, 5, n21, i21);
+  aIva := InsertarAlicIva;
   //Factura electronica
   if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
   begin
@@ -849,7 +854,7 @@ begin
     if cae = '' then exit;
   end;
   //actualiza el nro de factura
-  if comp<>'' then ActualizarNroComp(let,comp);
+  if comp<>'' then dm.ActualizarNroComp(let,comp);
   // INSERTA EN LA TABLA VENTA
   Q.SQL.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE,' +
     ' SUBTOTAL, DESCUENTO, FECHA,'+
@@ -859,7 +864,7 @@ begin
     ' PAGADO, PAGARE, COSTO,'+
     ' DEUDA, COMISION, DESCRIPCION, ALICIVA'+
     ') Values ('+
-    QuotedStr(comp)+', '+QuotedStr(vto)+', '+IntToStr(nro)+', '+QuotedStr(let)+', '+cod+', '+
+    QuotedStr(comp)+', '+QuotedStr(vto)+', '+(nro)+', '+QuotedStr(let)+', '+cod+', '+
     floattostr(sbt)+', '+floattostr(des)+', '+QuotedStr(fech)+', '+
     floattostr(impu)+', '+floattostr(i10)+', '+floattostr(i21)+', '+
     floattostr(IIBB)+', '+floattostr(tot)+', '+floattostr(cont)+', '+floattostr(cheq)+', '+
@@ -882,8 +887,8 @@ begin
         ctaCte := True;
       Q.SQL.Text :=
         'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, COSTO, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-        +' ( ' +IntToStr(nro)+ ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
-        (mat[7, i]) + ', ' +(mat[4, i]) + ', ' + mat[6, i] + ', ' + IntToStr(nro) + ', ' +
+        +' ( ' +(nro)+ ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
+        (mat[7, i]) + ', ' +(mat[4, i]) + ', ' + mat[6, i] + ', ' + (nro) + ', ' +
         quotedstr(mat[1, i]) + ');';
       Q.ExecSQL;
     end;
@@ -906,7 +911,7 @@ begin
     else
       Q.SQL.Text := 'Insert Into "CtaCte" (CLIENTE, SALDO, OPERACION,' +
         ' DESCUENTO, INTERES, FECHA, RENDIDAS) Values (' + cod + ', ' +
-        floattostr(sal) + ', ' + IntToStr(nro) + ', ' + floattostr(des) + ', ' +
+        floattostr(sal) + ', ' + (nro) + ', ' + floattostr(des) + ', ' +
         floattostr(int) + ', ' + quotedstr(fech) + ', 0' + ')';
       Q.ExecSQL;
     // Insertar en la tabla de CtaCte Item
@@ -919,7 +924,7 @@ begin
         else
           detalle := memo;
         Q.sql.Text := 'Insert Into "CtaCteItem" (OPERACION, CLIENTE,' +
-          ' DESCRIPCION, IMPORTE, ' + ' PAGADO) Values ' + '( '+IntToStr(nro)+',' +
+          ' DESCRIPCION, IMPORTE, ' + ' PAGADO) Values ' + '( '+(nro)+',' +
           cod + ', ' + quotedstr(detalle) + ',' + (mat[5, i]) + ', 0)';
         Q.ExecSQL;
       end;
@@ -933,7 +938,7 @@ begin
       comv := 0;
     Q.sql.Text :=
       'Insert Into "RendidoVendedor" (VENDEDOR, VENTA, IMPORTE, FECHA) Values' +
-      ' (' + quotedstr(ven) + ', '+IntToStr(nro)+', ' + Format('%8.2f', [comv]) + ', '
+      ' (' + quotedstr(ven) + ', '+(nro)+', ' + Format('%8.2f', [comv]) + ', '
       + quotedstr(fech) + ')';
     Q.ExecSQL;
   end;
@@ -949,11 +954,13 @@ begin
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA VENTAS
   if (let = 'A') or (let = 'B') then//  if let <> 'X' then
-    LibroIVAvta(fech, IntToStr(nro), cod, cui, floattostr(n10), floattostr(n21),
+    LibroIVAvta(fech, (nro), cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(tot));
   // Insertar en la tabla LibroDiario
-  LibroDiario('VENTA', IntToStr(nro), let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
+  LibroDiario('VENTA', (nro), let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, comv);
+  //Retenciones y Percepciones
+  dm.AgregarRetPer('VENTA',StrToInt(nro),noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib);
   // Completa la Transaccion
   Q.Transaction.CommitRetaining;
 //  if webUpd='True' then RestDataModule.CrearOrden;
@@ -962,7 +969,7 @@ begin
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
-      Impr(vta(IntToStr(nro), let), let);
+      Impr(vta((nro), let), let);
     ImprimirDataModule.Free;
   end;
   result := true;
@@ -981,9 +988,7 @@ begin
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
   //AlicuotaIVA
-  aIva := DM.UltimoRegistro('AlicIva', 'CODIGO');
-  if i10>0 then AgregarAlicIva(aIva, 4, n10, i10);
-  if i21>0 then AgregarAlicIva(aIva, 5, n21, i21);
+  aIva := InsertarAlicIva;
   // INSERTA EN LA TABLA OPERACION
   Q.sql.Text :=
     'Insert Into "Operacion" (CODIGO, TIPO, LETRA, CLIENTE, VENDEDOR' +
@@ -1080,42 +1085,29 @@ end;
 Procedure TOperacionDataModule.ProcCompra; // PROCESA UNA COMPRA
 var
   nro, a, pultc: string;
-  i, aIva: integer;
-  IIBB, cmv: Double;
+   i, aIva: integer;
+  IIBB, cmv, ret, per: Double;
 begin
   cmv := 0;
-  nro := inttostr(DM.UltimoRegistro('Compra', 'CODIGO'));
-
-  // Insertar en la tabla de AlicuotaIVA
-  aIva := DM.UltimoRegistro('AlicIva', 'CODIGO');
-//  if i10>0 then AlicIva(aIva, 4, n10, i10);
-//  if i21>0 then AlicIva(aIva, 5, n21, i21);
-  with DM do
-    with mtIVA do begin
-      First;
-      while not Eof do begin
-        AgregarAlicIva(aIva,
-          StrToInt(TraerAlicuota(FieldByName('Tasa').Asstring)),
-          FieldByName('Neto').AsFloat,
-          FieldByName('Imp').AsFloat
-        );
-        Next;
-      end;
-      VaciarMtIVA;
-    end;
-
+  nro := IntToStr(DM.UltimoRegistro('Compra', 'CODIGO'));
+  per := noGra+perIIBB+perImpMun+impInt+otrTrib;
+  ret := pagCueIva+pagCueOtr;
+  //AlicuotaIVA
+  aIva := InsertarAlicIva;
   // INSERTA EN LA TABLA COMPRA
   Q.sql.Text := 'Insert Into "Compra" (CODIGO, LETRA, PROVEEDOR, ' +
     ' SUBTOTAL, DESCUENTO, FECHA,' +
     ' IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
     ' TARJETA, OTROS, SALDO, '+
     ' PAGADO, COMPROBANTE, ALICIVA'+
+    ', TERMINOS, IIBB, MINIMP'+
     ') Values (' +
     (nro) + ', ' + quotedstr(let) + ', ' + cod + ', ' + ' ' + floattostr(sbt) + ', ' +
     floattostr(des) + ', ' + quotedstr(fech) + ', ' + floattostr(impu) + ', ' +
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
     floattostr(pag) + ', ' + quotedstr(com) +', '+IntToStr(aIva)
+    + ', ' +pvta+ ', ' +FloatToStr(per)+ ', ' +FloatToStr(ret)
   + ')';
   Q.ExecSQL;
   // Insertar en la tabla de COMPRAITEM
@@ -1123,7 +1115,7 @@ begin
   begin
     Q.sql.Text :=
       'Insert Into "CompraItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-      + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
+      + ' ( ' + (nro) + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
       (mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
       quotedstr(mat[1, i]) + ');';
     Q.ExecSQL;
@@ -1139,7 +1131,7 @@ begin
     else
       Q.sql.Text := 'Insert Into "CtaCte" (PROVEEDOR, SALDO, OPERACION,' +
         ' DESCUENTO, FECHA) Values (' + cod + ', ' + floattostr(sal) + ', ' +
-        nro + ', ' + floattostr(des) + ', ' + // FloatToStr(inte)+', '+
+        (nro) + ', ' + floattostr(des) + ', ' + // FloatToStr(inte)+', '+
         quotedstr(fech) + // ', 0'+
         ')';
     Q.ExecSQL;
@@ -1153,7 +1145,7 @@ begin
         else
           detalle := memo;
         Q.sql.Text := 'Insert Into "CtaCteItem" (OPERACION, PROVEEDOR,' +
-          ' DESCRIPCION, IMPORTE, ' + ' PAGADO) Values ' + '( ' + nro + ',' +
+          ' DESCRIPCION, IMPORTE, ' + ' PAGADO) Values ' + '( ' + (nro) + ',' +
           cod + ', ' + quotedstr(detalle) + ',' + (mat[5, i]) + ', 0)';
         Q.ExecSQL;
       end;
@@ -1169,12 +1161,14 @@ begin
   if let = 'A' then//  if let <> 'X' then
     LibroIVACompra(fech, nro, cod, cui, floattostr(n10), floattostr(n21), floattostr(n3),
       floattostr(i10), floattostr(i21), floattostr(i3),
-      floattostr(exc), floattostr(perc), floattostr(tot)
+      floattostr(per), floattostr(ret), floattostr(tot)
     ); // en blanco
   // Insertar en la tabla LibroDiario
   a := inttostr(DM.UltimoRegistro('LibroDiario', 'ASIENTO')); // GENERAR INDICE
   LibroDiario('COMPRA', nro, let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, 0);
+  //Retenciones y Percepciones
+  dm.AgregarRetPer('COMPRA',StrToInt(nro),noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib);
   // Completa la Transaccion
   Q.Transaction.CommitRetaining;
 end;
@@ -1777,7 +1771,7 @@ begin
   DM.FormatearFecha;
   pagare := '0';
   nro := (DM.UltimoRegistro('Venta', 'CODIGO'));
-  comp := ObtenerNroComp(let);
+  comp := dm.ObtenerNroComp(let);
   if pgr then
     pagare := 'S';
   cmv := CostMercVend(ulc, cost);
@@ -1800,11 +1794,9 @@ begin
     if cae = '' then exit;
   end;
   //actualiza el nro de factura
-  if comp<>'' then ActualizarNroComp(let,comp);
+  if comp<>'' then dm.ActualizarNroComp(let,comp);
   //AlicuotaIVA
-  aIva := DM.UltimoRegistro('AlicIva', 'CODIGO');
-  if i10>0 then AgregarAlicIva(aIva, 4, n10, i10);
-  if i21>0 then AgregarAlicIva(aIva, 5, n21, i21);
+  aIva := InsertarAlicIva;
   // INSERTA EN LA TABLA VENTA
   Q.SQL.Text := 'Insert Into "Venta" ( COMPROBANTE, REMITO, TERMINOS'+
     ', CODIGO, LETRA, CLIENTE ' +
@@ -1928,50 +1920,21 @@ begin
   end;
 end;
 
-function TOperacionDataModule.ObtenerNroComp;
-begin
-  case IndexStr(tipo, ['A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
-    0 : result := NroA;
-    1 : result := NroNCA;
-    2 : result := NroB;
-    3 : result := NroNCB;
-    4 : result := NroC;
-    5 : result := NroNCC;
-    else result := IntToStr( dm.ObtenerConfig('NroFactura') );
-  end;
- if result='' then result:='0';
- result := IntToStr(StrToInt(result)+1);
-end;
-
-procedure TOperacionDataModule.ActualizarNroComp;
-begin
-    case IndexStr(tipo, ['A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
-      0 : NroA := comp;
-      1 : NroNCA := comp;
-      2 : NroB := comp;
-      3 : NroNCB := comp;
-      4 : NroC := comp;
-      5 : NroNCC := comp;
-      else
-      begin
-        Q.SQL.Text := 'Update "Config" Set NroFactura ='+comp;
-        Q.ExecSQL;
-      end;
-    end;
-      DM.EscribirINI;
-end;
-
 procedure TOperacionDataModule.AgregarAlicIva;
 begin
-  Q.SQL.Text := 'Insert Into "AlicIva" (CODIGO, ID, BASEIMP, IMPORTE) Values ('
-    +IntToStr(cod)+', '+IntToStr(id)+', '+FloatToStr(bImp)+', '+FloatToStr(imp)+')';
-  Q.ExecSQL;
+  if bImp>0 then begin
+    Q.SQL.Text := 'Insert Into "AlicIva" (CODIGO, ID, BASEIMP, IMPORTE) Values ('
+      +IntToStr(cod)+', '+IntToStr(id)+', '+FloatToStr(bImp)+', '+FloatToStr(imp)+')';
+    Q.ExecSQL;
+  end;
 end;
 
 procedure TOperacionDataModule.ActualizarSiapVtaComp;
 var
-  cod,let,DocTipo,CantIva,AlicIVA,DocNro:string;
-  iva1,iva2:Double;
+  cod,let,DocTipo,AlicIVA,DocNro:string;
+  impOpEx,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib,noGra
+  : Double;
+  CantIva : Integer;
 begin
 //  DM.tlibroivaventa.open;
   with DM do
@@ -1992,12 +1955,12 @@ begin
       +' "Venta".IVA1,'
       +' "Venta".IVA2,'
       +' "Venta".SUBTOTAL AS ImpNeto,'
-      +' "AlicIva".ID AS AlicIva'
+      +' "Venta".ALICIVA'
+//      +' "AlicIva".ID AS AlicIva'
       +' FROM "Venta"'
 //      +' INNER JOIN "CbteTipo" ON "CbteTipo".LETRA = "Venta".LETRA'
       +' LEFT JOIN "Cliente" ON "Cliente".CODIGO = "Venta".CLIENTE'
-      +' LEFT JOIN "AlicIva" ON "Venta".ALICIVA = "AlicIva".CODIGO'
-      //        +' WHERE "Venta".CODIGO='+tSiapVtaComp.FieldByName('').AsString
+//      +' LEFT JOIN "AlicIva" ON "Venta".ALICIVA = "AlicIva".CODIGO'
       + where
     +';';
     Q.Open;
@@ -2034,34 +1997,216 @@ begin
           tSiapVtaCompDocNomb.AsString:=FormatMaskText('000000000000000000000000000000',(Q.FieldByName('NomCli').AsString));
           tSiapVtaCompMonId.AsString:='PES';
           tSiapVtaCompMonCotiz.AsString:=FormatFloat('0000000000',(1*1000000));
-          iva1:=Q.FieldByName('IVA1').Asfloat;
-          iva2:=Q.FieldByName('IVA2').Asfloat;
-          if ((iva1>0) and (iva2>0)) then CantIva:='2' else CantIva:='1';
-          tSiapVtaCompIvaCant.AsString:=CantIva;
           tSiapVtaCompCodOper.AsString:='0';
           tSiapVtaCompFchVtoPago.AsString:=FormatFloat('00000000',(0*100));
-          AlicIVA:=Q.FieldByName('AlicIVA').AsString;
-          if AlicIVA='' then
-            begin
-              if iva1>0 then AlicIVA:='4' else if iva2>0 then AlicIVA:='5';
-            end;
-          tSiapVtaCompIvaId.AsString:=FormatFloat('0000',(StrToInt(AlicIVA)));
           tSiapVtaCompImpNeto.AsString:=FormatFloat('000000000000000',(Q.FieldByName('ImpNeto').AsFloat*100));
-          tSiapVtaCompImpNoGra.AsString:=FormatFloat('000000000000000',(0*100));
-          tSiapVtaCompImpOpEx.AsString:=FormatFloat('000000000000000',(0*100));
+
+          with qSdb do
+          begin
+            Open('select * from RetPer where Codigo=:C and Tipo=:T',[cod,'VENTA']);
+            if RecordCount>0 then
+            begin
+              noGra := FieldByName('NoGra').AsFloat;
+              pagCueIva := FieldByName('PagCueIva').AsFloat;
+              pagCueOtr := FieldByName('PagCueOtr').AsFloat;
+              perIIBB := FieldByName('PerIIBB').AsFloat;
+              perImpMun := FieldByName('PerImpMun').AsFloat;
+              impInt := FieldByName('ImpInt').AsFloat;
+              otrTrib := FieldByName('OtrTrib').AsFloat;
+            end;
+          end;
+
+          tSiapVtaCompImpNoGra.AsString:=FormatFloat('000000000000000',(noGra*100));
           tSiapVtaCompImpIVA.AsString:=FormatFloat('000000000000000',(Q.FieldByName('ImpIVA').AsFloat*100));
-          tSiapVtaCompImpPercGral.AsString:=FormatFloat('000000000000000',(0*100));
-          tSiapVtaCompImpPercNoCat.AsString:=FormatFloat('000000000000000',(0*100));
-          tSiapVtaCompImpPercIIBB.AsString:=FormatFloat('000000000000000',(0*100));
-          tSiapVtaCompImpPercMuni.AsString:=FormatFloat('000000000000000',(0*100));
-          tSiapVtaCompImpImpInt.AsString:=FormatFloat('000000000000000',(0*100));
-          tSiapVtaCompImpOtrTrib.AsString:=FormatFloat('000000000000000',(0*100));
+          tSiapVtaCompImpPercGral.AsString:=FormatFloat('000000000000000',(pagCueIva*100));
+          tSiapVtaCompImpPercNoCat.AsString:=FormatFloat('000000000000000',(pagCueOtr*100));
+          tSiapVtaCompImpPercIIBB.AsString:=FormatFloat('000000000000000',(perIIBB*100));
+          tSiapVtaCompImpPercMuni.AsString:=FormatFloat('000000000000000',(perImpMun*100));
+          tSiapVtaCompImpImpInt.AsString:=FormatFloat('000000000000000',(impInt*100));
+          tSiapVtaCompImpOtrTrib.AsString:=FormatFloat('000000000000000',(otrTrib*100));
           tSiapVtaCompImpTotal.AsString:=FormatFloat('000000000000000',(Q.FieldByName('TOTAL').AsFloat*100));
+
+          AlicIva := Q.FieldByName('AlicIVA').AsString;
+          if AlicIva<>'' then
+            with T do
+            begin
+              SQL.Text := 'Select *'
+                +' from "AlicIva"'
+                +' inner join "Iva" on "Iva".CODIGO = "AlicIva".ID'
+                +' where  "AlicIva".CODIGO='+AlicIva;
+              Open;
+              while not Eof do
+              begin
+                if (FieldByName('ID').AsString = '3') then
+                begin
+                  impOpEx := FieldByName('BASEIMP').AsFloat;
+                end
+                else
+                begin
+                  Inc(CantIva);
+                  AgregarSiapCmpCompAlicuota(
+                    StrToInt(cod),
+                    FormatFloat('0000',(StrToInt(FieldByName('ID').AsString))),//Código alícuota IVA
+                    FormatFloat('000000000000000',(FieldByName('BASEIMP').Asfloat*100)),//Neto Gravado alícuota  Importe Total
+                    FormatFloat('000000000000000',(FieldByName('IMPORTE').Asfloat*100))//IVA alícuota
+                  );
+                end;
+                Next;
+              end;
+            end;
+
+          tSiapVtaCompIvaCant.AsString:=IntToStr(CantIva);
+          tSiapVtaCompImpOpEx.AsString:=FormatFloat('000000000000000',(impOpEx*100));
           Post;
           Q.Next;
         end;
       end;
   end;
+end;
+
+procedure TOperacionDataModule.ActualizarSiapCmpComp;
+var
+  cod,docTipo,docNro,AlicIva : string;
+  cantIva : integer;
+  noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib,impOpEx
+  :double;
+begin
+  with DM do
+  begin
+    Q.SQL.Text:=
+      'SELECT'
+      +' "Compra".CODIGO,'
+      +' "Compra".LETRA,'
+      +' "Compra".FECHA,'
+      +' "Compra".TOTAL,'
+      +' "Compra".TERMINOS,'
+      +' "Compra".COMPROBANTE,'
+      +' "Proveedor".NOMBRE AS DocNomb,'
+      +' "Proveedor".DOCUMENTO AS DNI,'
+      +' "Proveedor".CUIT,'
+      +' "Compra".IMPUESTO AS ImpIVA,'
+      +' "Compra".IVA1,'
+      +' "Compra".IVA2,'
+      +' "Compra".SUBTOTAL AS ImpNeto,'
+      +' "Compra".AlicIva'
+      +' FROM "Compra"'
+      +' LEFT JOIN "Proveedor" ON "Proveedor".CODIGO = "Compra".Proveedor'
+      + where
+    +';';
+    Q.Open;
+//    sdb.ExecSQL('delete from SiapCmpComp');
+    while not Q.Eof do
+    begin
+      with qODM do
+      begin
+        CantIva:=0;
+        impOpEx:=0;
+        cod:=Q.FieldByName('CODIGO').AsString;
+        Open('SELECT * FROM SiapCmpComp WHERE Codigo='+cod);
+        if RowsAffected>0 then
+          Edit
+        else
+          begin
+            Insert;
+            FieldByName('Codigo').AsInteger:=StrToInt(cod);
+          end;
+          FieldByName('CbteFch').AsString:=FormatDateTime('yyyymmdd',(Q.FieldByName('FECHA').AsDateTime));//FECHA Formato dd/mm/aaaa	L8
+          FieldByName('CbteTipo').AsString:=FormatFloat('000',StrToFloat(TraerCodLetra(QuotedStr(Q.FieldByName('LETRA').AsString))));//COMPROBANTES Tipo	L3
+          FieldByName('PtoVta').AsString:=FormatFloat('00000',StrToFloat(Q.FieldByName('TERMINOS').AsString));//COMPROBANTES PV	L5
+          FieldByName('CbteNro').AsString:=FormatFloat('00000000000000000000',StrToFloat(Q.FieldByName('COMPROBANTE').AsString));  //COMPROBANTES Número		L20
+          FieldByName('DespNro').AsString:=FormatMaskText('0000000000000000','');//COMPROBANTES Número Despacho  de Importación	L16
+          DocNro:=Q.FieldByName('CUIT').AsString;
+          if DocNro='' then DocNro:=Q.FieldByName('DNI').AsString;
+          if DocNro.Length < 11  then DocTipo :='96' else DocTipo := '80';
+          FieldByName('DocTipo').AsString:=DocTipo;//PROVEEDOR Código de Documento del vendedor	L2
+          FieldByName('DocNro').AsString:=FormatFloat('00000000000000000000',StrToFloat(DocNro));//PROVEEDOR Número de identificaión del vendedor	L20
+          FieldByName('DocNomb').AsString:=FormatMaskText('000000000000000000000000000000',(Q.FieldByName('DocNomb').AsString));//PROVEEDOR Apellido y Nombre del vendedor	L30
+          FieldByName('ImpTotal').AsString:=FormatFloat('000000000000000',(Q.FieldByName('TOTAL').AsFloat*100));//Totales (cálculo automático)	L15
+
+          with qSdb do
+          begin
+            Open('select * from RetPer where Codigo=:C and Tipo=:T',[cod,'COMPRA']);
+            if RecordCount>0 then
+            begin
+              noGra := FieldByName('NoGra').AsFloat;
+              pagCueIva := FieldByName('PagCueIva').AsFloat;
+              pagCueOtr := FieldByName('PagCueOtr').AsFloat;
+              perIIBB := FieldByName('PerIIBB').AsFloat;
+              perImpMun := FieldByName('PerImpMun').AsFloat;
+              impInt := FieldByName('ImpInt').AsFloat;
+              otrTrib := FieldByName('OtrTrib').AsFloat;
+            end;
+          end;
+
+          FieldByName('ImpNoGra').AsString:=FormatFloat('000000000000000',(noGra*100));//Monto que no integra el precio neto gravado	L15
+          FieldByName('ImpPercIva').AsString:=FormatFloat('000000000000000',(pagCueIva*100));//PERCEPCIONES Percepc y retenc. IVA	L15
+          FieldByName('ImpPercNac').AsString:=FormatFloat('000000000000000',(pagCueOtr*100));//PERCEPCIONES Perc. otros imp. Nac.	L15
+          FieldByName('ImpPercIIBB').AsString:=FormatFloat('000000000000000',(perIIBB*100));//PERCEPCIONES IIBB	L15
+          FieldByName('ImpPercMuni').AsString:=FormatFloat('000000000000000',(perImpMun*100));//PERCEPCIONES Municipales	L15
+          FieldByName('ImpImpInt').AsString:=FormatFloat('000000000000000',(impInt*100));//Impuestos Internos	L15
+          FieldByName('ImpOtrTrib').AsString:=FormatFloat('000000000000000',(otrTrib*100));//Otros Tributos	L15
+          FieldByName('MonId').AsString:='PES';//Código de Moneda	L3
+          FieldByName('MonCotiz').AsString:=FormatFloat('0000000000',(1*1000000));//Tipo de cambio	L10
+          FieldByName('CodOper').AsString:='0';//Código de operación	L1
+          FieldByName('ImpCredFisc').AsString:=FormatFloat('000000000000000',(Q.FieldByName('ImpIVA').AsFloat*100));// Credito Fiscal Computable	L15
+          FieldByName('CUIT').AsString:=FormatFloat('00000000000',(0*100));//CUIT emisor/corredor	L11
+          FieldByName('Denom').AsString:=FormatMaskText('000000000000000000000000000000','');//Denominación emisor/corredor	L30
+          FieldByName('ImpIvaCom').AsString:=FormatFloat('000000000000000',(0*100));//IVA comisión	L15
+          AlicIva := Q.FieldByName('AlicIVA').AsString;
+          if AlicIva<>'' then
+            with T do
+            begin
+              SQL.Text := 'Select *'
+                +' from "AlicIva"'
+                +' inner join "Iva" on "Iva".CODIGO = "AlicIva".ID'
+                +' where  "AlicIva".CODIGO='+AlicIva;
+              Open;
+              while not Eof do
+              begin
+                if (FieldByName('ID').AsString = '3') then
+                begin
+                  impOpEx := FieldByName('BASEIMP').AsFloat;
+                end
+                else
+                begin
+                  Inc(CantIva);
+                  AgregarSiapCmpCompAlicuota(
+                    StrToInt(cod),
+                    FormatFloat('0000',(StrToInt(FieldByName('ID').AsString))),//Código alícuota IVA
+                    FormatFloat('000000000000000',(FieldByName('BASEIMP').Asfloat*100)),//Neto Gravado alícuota  Importe Total
+                    FormatFloat('000000000000000',(FieldByName('IMPORTE').Asfloat*100))//IVA alícuota
+                  );
+                end;
+                Next;
+              end;
+            end;
+          FieldByName('IvaCant').AsString:=IntToStr(CantIva);//Cantidad alícuotas I.V.A.	L1
+          FieldByName('ImpOpEx').AsString:=FormatFloat('000000000000000',(impOpEx*100));//Operaciones Exentas	L15
+          Post;
+          Q.Next;
+        end;
+      end;
+  end;
+end;
+
+function TOperacionDataModule.InsertarAlicIva;
+begin
+  with DM do
+    with mtIVA do
+      if RecordCount>0 then
+      begin
+        result := UltimoRegistro('AlicIva', 'CODIGO');
+        First;
+        while not Eof do begin
+          AgregarAlicIva(result,
+            StrToInt(TraerAlicuota(FieldByName('Tasa').Asstring)),
+            FieldByName('Neto').AsFloat,
+            FieldByName('Imp').AsFloat
+          );
+          Next;
+        end;
+        VaciarMtIVA;
+      end;
 end;
 
 end.

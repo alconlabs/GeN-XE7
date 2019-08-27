@@ -10,18 +10,15 @@ uses
 
 type
   TOperacionForm = class(TForm)
-    Panel4: TPanel;
+    pPago: TPanel;
     Panel1: TPanel;
-    Label1: TLabel;
     ClienteLabel: TLabel;
-    Label9: TLabel;
     ClienteEdit: TEdit;
     VendedorEdit: TEdit;
     Label16: TLabel;
     VendedorLabel: TLabel;
     FechaDateTimePicker: TDateTimePicker;
     SGFact: TStringGrid;
-    TipoRadioGroup: TRadioGroup;
     Label40: TLabel;
     ComboBox1: TComboBox;
     Label28: TLabel;
@@ -48,7 +45,7 @@ type
     NuevoBitBtn: TBitBtn;
     QuitarBitBtn: TBitBtn;
     CantidadBitBtn: TBitBtn;
-    Label3: TLabel;
+    lPrecio: TLabel;
     PrecioLabel: TLabel;
     Panel2: TPanel;
     SGTotal: TStringGrid;
@@ -61,9 +58,6 @@ type
     FEOtro: TEdit;
     PagareCheckBox: TCheckBox;
     ComprobanteEdit: TEdit;
-    Label5: TLabel;
-    PercEdit: TEdit;
-    Label6: TLabel;
     DescuentoBitBtn: TBitBtn;
     TotalLabel: TLabel;
     Label8: TLabel;
@@ -72,6 +66,9 @@ type
     CuitEdit: TEdit;
     EnviarEmailCheckBox: TCheckBox;
     Label11: TLabel;
+    TipoRadioGroup: TRadioGroup;
+    PuntoVentaEdit: TEdit;
+    bRetPer: TButton;
     procedure ClienteBitBtnClick(Sender: TObject);
     procedure RJustifyEdit(var ThisEdit: TEdit);
     procedure TraeNombreCliente;
@@ -100,6 +97,7 @@ type
     procedure Nuevo;
     procedure TraerRemito(codigo: string);
     procedure EnviarEmailCheckBoxClick(Sender: TObject);
+    procedure bRetPerClick(Sender: TObject);
   private
     { Private declarations }
     salir : Boolean;
@@ -107,11 +105,11 @@ type
   { Public declarations }
     OK, Proveedor, FPagoOK, Compra, Pedido: Boolean;
     Cuenta, DiasCalculo, CuotasTotal, d, numfact, OrdTrans: Integer;
-    CMV, UltCosto, subtotal, Impuesto, NG21, IVA21, NG105, IVA105, NGO, IVAO,
-      desc, perc, costo, reparaciones, Total, IIBB, NGIIBB, Exento,
-      ComisionVendedor,
-      BalanceAnterior, Interes, BalanceTotal, Deuda, Saldo, Pagado,
-      Comision: Double;
+     CMV, UltCosto, subtotal, Impuesto, NG21, IVA21, NG105, IVA105, NGO, IVAO,
+     desc, costo, reparaciones, Total, IIBB, NGIIBB, Exento,
+     ComisionVendedor, BalanceAnterior, Interes, BalanceTotal, Deuda, Saldo, Pagado,
+     Comision, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib
+    : Double;
     CtaNombre, CtaTipo, CtaAnticipo, CtaIIBB, code, Dia, Mes, Ano, TDocumento,
       Tiempo, T2, Precio, ChequeCodCheque, ChequeNumero, ChequeDetalle,
       ChequeCodFactura, ChequeMntCheque, ChequeFecha, ChequeDias, Fecha,
@@ -139,7 +137,8 @@ var
 implementation
 
 uses UFBuscaCliente, BuscarCheques, UFBuscaArticulos,
-  AgregarCantidad, BuscarVendedor, servicio, UFBuscaProve, UFSelProdFact, DescuentoF;
+  AgregarCantidad, BuscarVendedor, servicio, UFBuscaProve, UFSelProdFact, DescuentoF,
+  ufRetPerc;
 {$R *.dfm}
 
 procedure TOperacionForm.QuitarArticulos;
@@ -217,13 +216,11 @@ begin
   subtotal := 0;
   Impuesto := 0;
   desc := 0;
-  perc := 0;
   Total := 0;
   NG21 := 0;
   IVA21 := 0;
   NG105 := 0;
   IVA105 := 0;
-  PercEdit.Text := '0';
   costo := 0;
   reparaciones := 0;
   ClienteEdit.Text := '0';
@@ -273,10 +270,31 @@ begin
   FEContado.SetFocus;
 end;
 
+procedure TOperacionForm.bRetPerClick(Sender: TObject);
+begin
+  fRetPerc := TfRetPerc.Create(Self);
+  with fRetPerc do begin
+    try
+      ShowModal;
+    finally
+      noGra := StrToFloat(eNoGra.Text);
+      pagCueIva := StrToFloat(ePagCueIva.Text);
+      pagCueOtr := StrToFloat(ePagCueOtr.Text);
+      perIIBB := StrToFloat(ePerIIBB.Text);
+      perImpMun := StrToFloat(ePerImpMun.Text);
+      impInt := StrToFloat(eImpInt.Text);
+      otrTrib := StrToFloat(eOtrTrib.Text);
+      Free;
+    end;
+  end;
+  FEContado.Text := '0';
+  CalculaTotales;
+end;
+
 procedure TOperacionForm.CalculaTotales;
 var
   i: Integer;
-  NG,NE,DSC,NGD,IVA,CONT,PR,PRD,TOT,CAN,TIVA : Double;
+  NG,NE,DSC,NGD,IVA,CONT,PR,PRD,TOT,CAN,TIVA,RP : Double;
   des : string;
   esA, esB, esC : Boolean;
 begin
@@ -285,7 +303,6 @@ begin
   //  subtotal := 0;
   //  Impuesto := 0;
   desc := 0;
-  perc := 0;
   Total := 0;
   costo := 0;
   reparaciones := 0;
@@ -304,7 +321,7 @@ begin
   PR:=0;
   if (cbTipo.ItemIndex<6) then esA:=true;
   if (cbTipo.ItemIndex>5) and (cbTipo.ItemIndex<11) then esB:=true;
-//  if (cbTipo.ItemIndex>10) and (cbTipo.ItemIndex<15) then esC:=true;
+  if (cbTipo.ItemIndex>10) and (cbTipo.ItemIndex<15) then esC:=true;
   VaciarMtIVA;
   For i := 1 to SGFact.RowCount - 1 do
   begin
@@ -354,7 +371,7 @@ begin
     if SGFact.Cells[9, i] <> '0' then reparaciones := reparaciones + StrToFloat(SGFact.Cells[9, i]);
 
   // Calcula el monto para cobrar el impuesto de ventas
-    AgregarMtIva(TIVA,NG,IVA);
+    if not esC then AgregarMtIva(TIVA,NG,IVA);
     if ((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then
     begin
       NGO:= NGO + NG;
@@ -385,6 +402,7 @@ begin
     end;
       desc:= desc + DSC;
     end;
+
   Exento := RoundTo(NE,-2);
   NG21 := RoundTo(NG21,-2);
   NG105 := RoundTo(NG105,-2);
@@ -392,21 +410,20 @@ begin
   IVA21 := RoundTo(IVA21,-2);
   IVA105 := RoundTo(IVA105,-2);
   IVAO := RoundTo(IVAO,-2);
-  perc := RoundTo(perc,-2);
   desc:=  RoundTo((desc),-2);
 
-  subtotal:= RoundTo((NG21 + NG105 + NGO + Exento),-2);
+  RP := RoundTo((pagCueIva+ pagCueOtr+ perIIBB+ perImpMun+ impInt+ otrTrib),-2);
 
-  perc := (subtotal * StrToFloat(PercEdit.Text) / 100);
+  subtotal:= RoundTo((NG21 + NG105 + NGO + Exento + Interes),-2);
 
-  Impuesto := RoundTo((IVA21 + IVA105 + IVAO + perc),-2);
+  Impuesto := RoundTo((IVA21 + IVA105 + IVAO),-2);
 
-  Total := RoundTo((subtotal + Impuesto + Interes),-2);
+  Total := RoundTo((subtotal + Impuesto + RP),-2);
 
   // escribe los valores en las celdas
   SGTotal.Cells[1, 0] := Format('%8.2n', [subtotal]);
   SGTotal.Cells[1, 1] := Format('%8.2n', [desc]);
-  SGTotal.Cells[1, 2] := Format('%8.2n', [Impuesto]);
+  SGTotal.Cells[1, 2] := Format('%8.2n', [Impuesto+RP]);
   SGTotal.Cells[1, 3] := Format('%8.2n', [Interes]);
   SGTotal.Cells[1, 4] := Format('%8.2n', [Total]);
 
@@ -415,7 +432,8 @@ begin
   if FETarjeta.Text = '' then FETarjeta.Text := '0';
   if FEOtro.Text = '' then FEOtro.Text := '0';
 
-  if ((CONT = 0) or (CONT > Total)) then FEContado.Text := FloatToStr(Total);
+  if ((CONT = 0) or (CONT > Total)) then
+    FEContado.Text := FloatToStr(Total);
 
   Pagado := StrToFloat(FEContado.Text) + StrToFloat(FECheque.Text) +
     StrToFloat(FETarjeta.Text) + StrToFloat(FEOtro.Text);
@@ -491,7 +509,7 @@ If ClienteEdit.Text <> '' then
     else
       begin
         ClienteLabel.Caption := Tabla.FieldByName('NOMBRE').AsString;
-        Label3.Caption := Tabla.FieldByName('DIRECCION').AsString;
+        lPrecio.Caption := Tabla.FieldByName('DIRECCION').AsString;
         // DireccionLabel.Caption := Tabla.FieldByName('DIRECCIONCOMERCIAL').AsString;
         // Label13.Caption := Tabla.FieldByName('TELEFONO').AsString;
         // Label14.Caption := Tabla.FieldByName('CELULAR').AsString;
@@ -770,13 +788,21 @@ begin
           mat[c, r] := SGFact.Cells[c, r];
         end;
       if Compra then
-        ProcCompra(cbTipo.Text, ClienteEdit.Text,
+      begin
+        if (PuntoVentaEdit.Text='') or (ComprobanteEdit.Text='') then begin
+          ShowMessage('COMPLETAR NRO. DE PUNTO DE VENTA y COMPROBANTE!!!');
+          PuntoVentaEdit.SetFocus;
+          exit
+        end else
+        ProcCompra(PuntoVentaEdit.Text, cbTipo.Text, ClienteEdit.Text,
           FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
           VendedorEdit.Text, ComprobanteEdit.Text, CtaNombre, CuitEdit.Text, PagareCheckBox.Checked,
           costo, Impuesto, StrToFloat(FECheque.Text),
           StrToFloat(FECheque.Text), StrToFloat(FEContado.Text), Total,
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
-          Saldo, Pagado, NG105, NG21, NGO, IVA105, IVA21, IVAO, Exento, perc, Total - Saldo)
+          Saldo, Pagado, NG105, NG21, NGO, IVA105, IVA21, IVAO, Exento, Total - Saldo
+          , noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib)
+      end
       else
       if TipoRadioGroup.ItemIndex=2 then
       ProcOPER('PED', 'X', ClienteEdit.Text,
@@ -805,13 +831,23 @@ begin
         subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
         Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
       else
-        ok := ProcVTA(cbTipo.Text, ClienteEdit.Text,
-          FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-          VendedorEdit.Text, CuitEdit.Text, CtaNombre, TipoRadioGroup.ItemIndex=1,
-          PagareCheckBox.Checked, impr, costo, Comision, Impuesto,
-          StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
-          subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
-          Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);
+        ok := ProcVTA
+//         (cbTipo.Text, ClienteEdit.Text,
+//          FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
+//          VendedorEdit.Text, CuitEdit.Text, CtaNombre, TipoRadioGroup.ItemIndex=1,
+//          PagareCheckBox.Checked, impr, costo, Impuesto,
+//          StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
+//          subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
+//          Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);
+        (PuntoVentaEdit.Text, ComprobanteEdit.Text,
+         cbTipo.Text, ClienteEdit.Text,
+         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
+         VendedorEdit.Text, CuitEdit.Text, CtaNombre, TipoRadioGroup.ItemIndex=1,
+         PagareCheckBox.Checked, impr, costo, Comision, Impuesto,
+         StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
+         subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
+         Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Total - Saldo, UltCosto
+         ,NGO , IVAO, Exento, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib)
     end;
     OperacionDataModule.Free;
     screen.Cursor := crDefault;
@@ -869,18 +905,23 @@ begin
       ClienteBitBtn.Caption := 'Proveedor';
       Label1.Caption := ClienteBitBtn.Caption+':';
       TipoRadioGroup.ItemIndex:=0;
+      pPago.Visible:=False;
+      lPrecio.Visible:=False;
 //      ClienteBitBtn.Click;
-    end
-  else
-  if TipoRadioGroup.ItemIndex=2 then
-    begin
-      OperacionForm.Caption := 'PEDIDO';
-      cbTipo.ItemIndex := 29;
-    end;
-  if codRem<>'' then
-    TraerRemito(codRem)
-  else
-    ClienteBitBtn.Click;
+    end  else
+    if TipoRadioGroup.ItemIndex=2 then
+      begin
+        OperacionForm.Caption := 'PEDIDO';
+        cbTipo.ItemIndex := 29;
+      end else
+      if codRem<>'' then
+        TraerRemito(codRem)
+        else//es vta
+          begin
+            PuntoVentaEdit.Text := PuntoVenta;
+            ClienteBitBtn.Click;
+            ComprobanteEdit.Text := dm.ObtenerNroComp(cbTipo.Text);
+          end;
   if salir then
     PostMessage(Self.Handle, WM_CLOSE, 0, 0);
 end;
@@ -938,7 +979,7 @@ end;
 
 procedure TOperacionForm.FEContadoExit(Sender: TObject);
 begin
-  if FEContado.Text <> '' then CalculaTotales;
+  if FEContado.Text = '' then CalculaTotales;
   ProcesarBitBtn.SetFocus;
 end;
 

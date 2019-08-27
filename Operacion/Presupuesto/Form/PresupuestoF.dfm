@@ -276,8 +276,8 @@ object PresupuestoForm: TPresupuestoForm
       Top = 37
       Width = 82
       Height = 21
-      Date = 40148.506836111110000000
-      Time = 40148.506836111110000000
+      Date = 40148.000000000000000000
+      Time = 0.506836111111624600
       TabOrder = 9
     end
     object FEContado: TEdit
@@ -785,8 +785,8 @@ object PresupuestoForm: TPresupuestoForm
       Top = 50
       Width = 87
       Height = 21
-      Date = 40179.475039594910000000
-      Time = 40179.475039594910000000
+      Date = 40179.000000000000000000
+      Time = 0.475039594908594200
       TabOrder = 4
     end
     object GroupBox4: TGroupBox

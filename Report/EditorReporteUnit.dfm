@@ -63,31 +63,35 @@ object fEditorReporte: TfEditorReporte
     CloseDataSource = False
     FieldAliases.Strings = (
       'Codigo=Codigo'
+      'IvaId=IvaId'
+      'IvaBaseImp=IvaBaseImp'
+      'IvaAlic=IvaAlic'
+      'Codigo_1=Codigo_1'
       'CbteFch=CbteFch'
       'CbteTipo=CbteTipo'
       'PtoVta=PtoVta'
-      'CbteDesde=CbteDesde'
-      'CbteHasta=CbteHasta'
+      'CbteNro=CbteNro'
+      'DespNro=DespNro'
       'DocTipo=DocTipo'
       'DocNro=DocNro'
       'DocNomb=DocNomb'
+      'ImpTotal=ImpTotal'
+      'ImpNoGra=ImpNoGra'
+      'ImpOpEx=ImpOpEx'
+      'ImpPercIva=ImpPercIva'
+      'ImpPercNac=ImpPercNac'
+      'ImpPercIIBB=ImpPercIIBB'
+      'ImpPercMuni=ImpPercMuni'
+      'ImpImpInt=ImpImpInt'
       'MonId=MonId'
       'MonCotiz=MonCotiz'
       'IvaCant=IvaCant'
       'CodOper=CodOper'
-      'FchVtoPago=FchVtoPago'
-      'IvaId=IvaId'
-      'ImpNeto=ImpNeto'
-      'ImpNoGra=ImpNoGra'
-      'ImpOpEx=ImpOpEx'
-      'ImpIva=ImpIva'
-      'ImpPercGral=ImpPercGral'
-      'ImpPercNoCat=ImpPercNoCat'
-      'ImpPercIIBB=ImpPercIIBB'
-      'ImpPercMuni=ImpPercMuni'
-      'ImpImpInt=ImpImpInt'
+      'ImpCredFisc=ImpCredFisc'
       'ImpOtrTrib=ImpOtrTrib'
-      'ImpTotal=ImpTotal')
+      'CUIT=CUIT'
+      'Denom=Denom'
+      'ImpIvaCom=ImpIvaCom')
     DataSet = qSdb
     BCDToCurrency = False
     Left = 24
@@ -98,7 +102,7 @@ object fEditorReporte: TfEditorReporte
     UseFileCache = True
     ShowProgress = True
     OverwritePrompt = False
-    CreationTime = 43697.441401597220000000
+    CreationTime = 43701.371943796290000000
     DataOnly = True
     Separator = ';'
     OEMCodepage = False
@@ -118,7 +122,7 @@ object fEditorReporte: TfEditorReporte
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 43670.750645671300000000
-    ReportOptions.LastChange = 43697.441253912000000000
+    ReportOptions.LastChange = 43701.371837268500000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -162,45 +166,23 @@ object fEditorReporte: TfEditorReporte
       object MasterData1: TfrxMasterData
         FillType = ftBrush
         Frame.Typ = []
-        Height = 11.338590000000000000
         Top = 79.370130000000000000
         Width = 1046.929810000000000000
         DataSet = frxDBDataset1
         DataSetName = 'frxDBDataset1'
         RowCount = 0
-        object Memo1: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Width = 1046.929810000000000000
-          Height = 11.338590000000000000
-          DataSet = frxDBDataset1
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -7
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            
-              'CbteFch;CbteTipo;PtoVta;CbteDesde;CbteHasta;DocTipo;DocNro;DocNo' +
-              'mb;ImpTotal;ImpNoGra;ImpPercNoCat;ImpOpEx;ImpPercGral;ImpPercIIB' +
-              'B;ImpPercMuni;ImpImpInt;MonId;MonCotiz;IvaCant;CodOper;ImpOtrTri' +
-              'b;FchVtoPago;CbteTipo;PtoVta;CbteDesde;ImpNeto;IvaId;ImpIva')
-          ParentFont = False
-        end
       end
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
         Frame.Typ = []
-        Top = 185.196970000000000000
+        Top = 181.417440000000000000
         Width = 1046.929810000000000000
       end
       object DetailData1: TfrxDetailData
         FillType = ftBrush
         Frame.Typ = []
-        Height = 11.338590000000000000
-        Top = 113.385900000000000000
+        Height = 18.897650000000000000
+        Top = 102.047310000000000000
         Width = 1046.929810000000000000
         DataSet = frxDBDataset1
         DataSetName = 'frxDBDataset1'
@@ -209,76 +191,23 @@ object fEditorReporte: TfEditorReporte
           IndexTag = 1
           AllowVectorExport = True
           Width = 1046.929810000000000000
-          Height = 11.338590000000000000
+          Height = 18.897650000000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -7
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
             
-              '[frxDBDataset1."CbteFch"];[frxDBDataset1."CbteTipo"];[frxDBDatas' +
-              'et1."PtoVta"];[frxDBDataset1."CbteDesde"];[frxDBDataset1."CbteHa' +
-              'sta"];[frxDBDataset1."DocTipo"];[frxDBDataset1."DocNro"];[Format' +
-              'MaskText('#39'000000000000000000000000000000'#39',<frxDBDataset1."DocNom' +
-              'b">)];[frxDBDataset1."ImpTotal"];[frxDBDataset1."ImpNoGra"];[frx' +
-              'DBDataset1."ImpPercNoCat"];[frxDBDataset1."ImpOpEx"];[frxDBDatas' +
-              'et1."ImpPercGral"];[frxDBDataset1."ImpPercIIBB"];[frxDBDataset1.' +
-              '"ImpPercMuni"];[frxDBDataset1."ImpImpInt"];[frxDBDataset1."MonId' +
-              '"];[frxDBDataset1."MonCotiz"];[frxDBDataset1."IvaCant"];[frxDBDa' +
-              'taset1."CodOper"];[frxDBDataset1."ImpOtrTrib"];[frxDBDataset1."F' +
-              'chVtoPago"];[frxDBDataset1."CbteTipo"];[frxDBDataset1."PtoVta"];' +
-              '[frxDBDataset1."CbteDesde"];[frxDBDataset1."ImpNeto"];[frxDBData' +
-              'set1."IvaId"];[frxDBDataset1."ImpIva"]')
+              '[frxDBDataset1."CbteTipo"][frxDBDataset1."PtoVta"][frxDBDataset1' +
+              '."CbteNro"][frxDBDataset1."DocTipo"][frxDBDataset1."DocNro"][frx' +
+              'DBDataset1."IvaBaseImp"][frxDBDataset1."IvaId"][frxDBDataset1."I' +
+              'vaAlic"]')
           ParentFont = False
           Formats = <
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
-            item
-            end
             item
             end
             item
@@ -541,9 +470,11 @@ object fEditorReporte: TfEditorReporte
     Active = True
     Connection = sdb
     SQL.Strings = (
+      'select * from SiapCmpCompAlicuota'
       
-        'select * from SiapVtaComp where CbteFch >= 20190701 and CbteFch ' +
-        '<= 20190731')
+        ' inner join SiapCmpComp on SiapCmpComp.Codigo=SiapCmpCompAlicuot' +
+        'a.Codigo'
+      ' Order By SiapCmpCompAlicuota.Codigo')
     Left = 608
     Top = 48
   end

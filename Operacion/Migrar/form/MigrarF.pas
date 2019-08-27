@@ -545,12 +545,14 @@ begin
 //      fila[fecha] := FormatDateTime('mm/dd/yyyy hh:mm:ss', StrToDateTime(fila[fecha]));
       OperacionDataModule.
         ProcVTA(
-         fila[letra]// let
+         PuntoVenta
+        , ''//comprobante
+        , fila[letra]// let
         , fila[cliente]// cod
         , fila[fecha]// fech
         , fila[vendedor]// ven
         , ''// cui
-        , ''// ctan: string;
+        , ''// ctan
         , False// pre
         , StrToBool(fila[pagare])// pgr: Boolean;
         , False// impr
@@ -574,6 +576,16 @@ begin
         , StrToFloat(fila[iva2])// i21
         , StrToFloat(fila[deuda])// deud
         , 0// ulc
+        , 0//NGO
+        , 0//IVAO
+        , 0//Exento
+        , 0//noGra
+        , 0//pagCueIva
+        , 0//pagCueOtr
+        , 0//perIIBB
+        , 0//perImpMun
+        , 0//impInt
+        , 0//otrTrib
         );
     {
           fila[codigo]

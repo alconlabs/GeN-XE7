@@ -560,12 +560,22 @@ begin
       begin
         mat[c, r] := SGFact.Cells[c, r];
       end;
-    ProcVTA(cbTipo.Text, ClienteEdit.Text, FormatDateTime('mm/dd/yyyy hh:mm:ss',
-      FechaDateTimePicker.DateTime), VendedorEdit.Text, DocumentoLabel.Caption,
-      CtaNombre, Presupuesto.Checked, PagareCheckBox.Checked, impr, costo, Comision,
-      Impuesto, StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
-      subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
-      Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);
+    ProcVTA
+//     (cbTipo.Text, ClienteEdit.Text, FormatDateTime('mm/dd/yyyy hh:mm:ss',
+//      FechaDateTimePicker.DateTime), VendedorEdit.Text, DocumentoLabel.Caption,
+//      CtaNombre, Presupuesto.Checked, PagareCheckBox.Checked, impr, costo, Comision,
+//      Impuesto, StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
+//      subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
+//      Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);
+      (PuntoVenta, '',
+       cbTipo.Text, ClienteEdit.Text,
+       FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
+       VendedorEdit.Text, DocumentoLabel.Caption, CtaNombre, TipoRadioGroup.ItemIndex=1,
+       PagareCheckBox.Checked, impr, costo, Comision, Impuesto,
+       StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
+       subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
+       Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Total - Saldo, UltCosto
+       ,NGO , IVAO, Exento, 0, 0, 0, 0, 0, 0, 0)
   end;
   Nuevo;
   { f:= 0;

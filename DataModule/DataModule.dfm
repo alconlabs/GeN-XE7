@@ -2456,4 +2456,9 @@ object DM: TDM
     Left = 344
     Top = 144
   end
+  object qSdb: TFDQuery
+    Connection = sdb
+    Left = 344
+    Top = 192
+  end
 end

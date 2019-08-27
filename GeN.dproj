@@ -100,12 +100,13 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.23;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.28;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <UWP_DelphiLogo44>GeN-Logo-44x44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>GeN-Logo-150x150.png</UWP_DelphiLogo150>
-        <VerInfo_Build>23</VerInfo_Build>
+        <VerInfo_Build>28</VerInfo_Build>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
         <VerInfo_Release>0</VerInfo_Release>
+        <PF_KeyStorePass>85190DA36405559EA3757169D17BE32C819C055DA057979397B50FF08E723CD8DB05A38FE3431C4DC1CC572EFA9CC37ABAF83612047422E0166545C2E5F1228CC90AB967EE98A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -167,8 +168,8 @@
         <DCCReference Include="Listados\Clientes\Form\ListadoClientes.pas">
             <Form>ListadoClientesForm</Form>
         </DCCReference>
-        <DCCReference Include="Listados\LibroIVAVentas\Form\LibroIVAVentasF.pas">
-            <Form>CuentasForm</Form>
+        <DCCReference Include="Listados\Libros\LibrosF.pas">
+            <Form>LibrosForm</Form>
         </DCCReference>
         <DCCReference Include="Listados\LibroIVACompras\Form\LibroIVAComprasF.pas">
             <Form>LibroIVAComprasForm</Form>
@@ -525,6 +526,10 @@
         </DCCReference>
         <DCCReference Include="Report\EditorReporteUnit.pas">
             <Form>fEditorReporte</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="SubOperacion\RetencionesPercepciones\ufRetPerc.pas">
+            <Form>fRetPerc</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

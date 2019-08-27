@@ -3,8 +3,8 @@ object OperacionForm: TOperacionForm
   Top = 220
   BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
   Caption = 'Operacion'
-  ClientHeight = 467
-  ClientWidth = 792
+  ClientHeight = 468
+  ClientWidth = 790
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,14 +20,13 @@ object OperacionForm: TOperacionForm
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Panel4: TPanel
+  object pPago: TPanel
     Left = 0
     Top = 25
-    Width = 792
-    Height = 72
+    Width = 790
+    Height = 73
     Align = alTop
     BevelOuter = bvLowered
-    Color = clBlack
     ParentBackground = False
     TabOrder = 1
     object Label40: TLabel
@@ -37,7 +36,7 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'Impresora:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -50,7 +49,7 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'Contado'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -63,7 +62,7 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'Cheque'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -77,7 +76,7 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'Tarjeta'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -91,7 +90,7 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'N'#186
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -105,7 +104,7 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'Detalle'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -119,7 +118,7 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'Vence'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -133,7 +132,7 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'Otro'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -147,7 +146,7 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'Pagare?'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -161,7 +160,7 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'Email'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -174,7 +173,7 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'DNI'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -187,37 +186,18 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'Enviar?'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-    end
-    object TipoRadioGroup: TRadioGroup
-      Left = 684
-      Top = -1
-      Width = 105
-      Height = 72
-      Caption = 'Tipo'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ItemIndex = 0
-      Items.Strings = (
-        'Venta'
-        'Presupuesto'
-        'Remito')
-      ParentFont = False
-      TabOrder = 0
     end
     object ComboBox1: TComboBox
       Left = 90
       Top = 126
       Width = 321
       Height = 21
-      TabOrder = 1
+      TabOrder = 0
     end
     object NroChequeEdit: TEdit
       Left = 1148
@@ -231,7 +211,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 1
       Visible = False
     end
     object NroTarjetaEdit: TEdit
@@ -246,7 +226,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 3
+      TabOrder = 2
       Visible = False
     end
     object DetChequeEdit: TEdit
@@ -261,7 +241,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 4
+      TabOrder = 3
       Visible = False
     end
     object DetTarjetaEdit: TEdit
@@ -276,7 +256,7 @@ object OperacionForm: TOperacionForm
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 5
+      TabOrder = 4
       Visible = False
     end
     object FECheque: TEdit
@@ -284,7 +264,7 @@ object OperacionForm: TOperacionForm
       Top = 22
       Width = 106
       Height = 21
-      TabOrder = 6
+      TabOrder = 5
       Text = '0'
       Visible = False
       OnChange = FEChequeChange
@@ -294,7 +274,7 @@ object OperacionForm: TOperacionForm
       Top = 46
       Width = 106
       Height = 21
-      TabOrder = 7
+      TabOrder = 6
       Text = '0'
       Visible = False
       OnChange = FETarjetaChange
@@ -306,7 +286,7 @@ object OperacionForm: TOperacionForm
       Height = 21
       Date = 43830.000000000000000000
       Time = 0.506836111111624600
-      TabOrder = 8
+      TabOrder = 7
       Visible = False
     end
     object FEContado: TEdit
@@ -314,7 +294,7 @@ object OperacionForm: TOperacionForm
       Top = 30
       Width = 106
       Height = 21
-      TabOrder = 9
+      TabOrder = 8
       Text = '0'
       OnChange = FEContadoChange
       OnExit = FEContadoExit
@@ -324,7 +304,7 @@ object OperacionForm: TOperacionForm
       Top = 1
       Width = 106
       Height = 21
-      TabOrder = 10
+      TabOrder = 9
       Text = '0'
       Visible = False
       OnChange = FEOtroChange
@@ -334,15 +314,15 @@ object OperacionForm: TOperacionForm
       Top = 1
       Width = 14
       Height = 17
-      Color = clBlack
+      Color = clBtnFace
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentColor = False
       ParentFont = False
-      TabOrder = 11
+      TabOrder = 10
       Visible = False
     end
     object EmailEdit: TEdit
@@ -350,81 +330,75 @@ object OperacionForm: TOperacionForm
       Top = 22
       Width = 211
       Height = 21
-      TabOrder = 12
+      TabOrder = 11
     end
     object CuitEdit: TEdit
       Left = 205
       Top = 47
       Width = 124
       Height = 21
-      TabOrder = 13
+      TabOrder = 12
     end
     object EnviarEmailCheckBox: TCheckBox
       Left = 472
       Top = 23
       Width = 14
       Height = 17
-      Color = clBlack
+      Color = clBtnFace
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentColor = False
       ParentFont = False
-      TabOrder = 14
+      TabOrder = 13
       OnClick = EnviarEmailCheckBoxClick
+    end
+    object TipoRadioGroup: TRadioGroup
+      Left = 685
+      Top = 1
+      Width = 102
+      Height = 71
+      Caption = 'Tipo'
+      Color = clBtnFace
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ItemIndex = 0
+      Items.Strings = (
+        'Venta'
+        'Presupuesto'
+        'Remito')
+      ParentBackground = False
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 14
     end
   end
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 792
+    Width = 790
     Height = 25
     Align = alTop
     BevelOuter = bvLowered
-    Color = clBlack
     ParentBackground = False
     TabOrder = 2
-    object Label1: TLabel
-      Left = 4
-      Top = 5
-      Width = 44
-      Height = 13
-      Caption = 'Cliente:'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
     object ClienteLabel: TLabel
-      Left = 92
-      Top = 5
+      Left = 28
+      Top = 4
       Width = 80
       Height = 13
       Caption = 'Consumidor Final'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-    end
-    object Label9: TLabel
-      Left = 647
-      Top = 5
-      Width = 40
-      Height = 13
-      Caption = 'Fecha:'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-      Visible = False
     end
     object Label16: TLabel
       Left = 319
@@ -433,7 +407,7 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = 'Vendedor:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -447,21 +421,21 @@ object OperacionForm: TOperacionForm
       Height = 13
       Caption = '...'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
       Visible = False
     end
-    object Label3: TLabel
+    object lPrecio: TLabel
       Left = 265
       Top = 5
       Width = 41
       Height = 13
       Caption = 'Precio:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -473,48 +447,19 @@ object OperacionForm: TOperacionForm
       Width = 3
       Height = 13
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-    end
-    object Label5: TLabel
-      Left = 559
-      Top = 5
-      Width = 38
-      Height = 13
-      Caption = 'PERC:'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-      Visible = False
-    end
-    object Label6: TLabel
-      Left = 636
-      Top = 5
-      Width = 8
-      Height = 13
-      Caption = '%'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-      Visible = False
     end
     object ClienteEdit: TEdit
-      Left = 72
+      Left = 3
       Top = 1
-      Width = 16
+      Width = 24
       Height = 21
-      Color = clBlack
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -528,9 +473,8 @@ object OperacionForm: TOperacionForm
       Top = 1
       Width = 22
       Height = 21
-      Color = clBlack
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -540,30 +484,19 @@ object OperacionForm: TOperacionForm
       Visible = False
     end
     object FechaDateTimePicker: TDateTimePicker
-      Left = 688
-      Top = 1
+      Left = 684
+      Top = 0
       Width = 103
-      Height = 21
+      Height = 29
       Date = 43466.000000000000000000
       Time = 0.475039594908594200
       TabOrder = 2
-      Visible = False
-    end
-    object PercEdit: TEdit
-      Left = 598
-      Top = 1
-      Width = 37
-      Height = 21
-      TabOrder = 3
-      Text = '0'
-      Visible = False
-      OnExit = PercEditExit
     end
   end
   object SGFact: TStringGrid
     Left = 0
-    Top = 97
-    Width = 584
+    Top = 98
+    Width = 582
     Height = 313
     Align = alClient
     ColCount = 11
@@ -590,22 +523,21 @@ object OperacionForm: TOperacionForm
   end
   object Panel3: TPanel
     Left = 0
-    Top = 410
-    Width = 792
+    Top = 411
+    Width = 790
     Height = 57
     Align = alBottom
-    Color = clBlack
     ParentBackground = False
     TabOrder = 0
     object ProcesarBitBtn: TBitBtn
-      Left = 712
+      Left = 707
       Top = 4
       Width = 80
       Height = 50
       Hint = 'F12 - PROCESAR VENTA'
       Caption = 'GRABAR'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
+      Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Arial'
       Font.Style = [fsBold]
@@ -622,9 +554,9 @@ object OperacionForm: TOperacionForm
       Width = 85
       Height = 50
       Hint = 'F1 SELECCIONAR CLIENTE'
-      Caption = 'cliente'
+      Caption = 'Cliente'
       Font.Charset = ANSI_CHARSET
-      Font.Color = clPurple
+      Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Arial'
       Font.Style = [fsBold]
@@ -640,9 +572,9 @@ object OperacionForm: TOperacionForm
       Width = 80
       Height = 50
       Hint = 'F3 SELECCIONAR VENDEDOR'
-      Caption = 'vendedor'
+      Caption = 'Vendedor'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clMaroon
+      Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Arial'
       Font.Style = [fsBold]
@@ -659,9 +591,9 @@ object OperacionForm: TOperacionForm
       Width = 80
       Height = 50
       Hint = 'F5 - AGREGAR ARTICULO'
-      Caption = '+ articulo'
+      Caption = '+ Articulo'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlue
+      Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Arial'
       Font.Style = [fsBold]
@@ -677,9 +609,9 @@ object OperacionForm: TOperacionForm
       Width = 80
       Height = 50
       Hint = 'F8 - CREAR ARTICULO'
-      Caption = '* nuevo'
+      Caption = '* Nuevo'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clAqua
+      Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Arial'
       Font.Style = [fsBold]
@@ -696,9 +628,9 @@ object OperacionForm: TOperacionForm
       Width = 80
       Height = 50
       Hint = 'F6 - QUITAR ARTICULO'
-      Caption = '- quitar'
+      Caption = '- Quitar'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
+      Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Arial'
       Font.Style = [fsBold]
@@ -716,7 +648,7 @@ object OperacionForm: TOperacionForm
       Hint = 'F7 - AUMENTAR CANTIDAD DE ARTICULO'
       Caption = 'cantidad'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clFuchsia
+      Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Arial'
       Font.Style = [fsBold]
@@ -732,9 +664,9 @@ object OperacionForm: TOperacionForm
       Width = 90
       Height = 50
       Hint = 'F8 - DESCUENTO SOBRE ARTICULO'
-      Caption = 'descuento'
+      Caption = 'Descuento'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clYellow
+      Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Arial'
       Font.Style = [fsBold]
@@ -744,10 +676,27 @@ object OperacionForm: TOperacionForm
       TabOrder = 7
       OnClick = DescuentoBitBtnClick
     end
+    object bRetPer: TButton
+      Left = 164
+      Top = 4
+      Width = 70
+      Height = 50
+      Hint = 'Retenciones y Percepciones'
+      Caption = 'Ret. y Percep.'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 8
+      WordWrap = True
+      OnClick = bRetPerClick
+    end
   end
   object Panel2: TPanel
-    Left = 584
-    Top = 97
+    Left = 582
+    Top = 98
     Width = 208
     Height = 313
     Align = alRight
@@ -769,7 +718,13 @@ object OperacionForm: TOperacionForm
       ColCount = 2
       DefaultColWidth = 100
       FixedRows = 0
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
       ParentBiDiMode = False
+      ParentFont = False
       ScrollBars = ssNone
       TabOrder = 0
       ColWidths = (
@@ -783,14 +738,14 @@ object OperacionForm: TOperacionForm
         24)
     end
     object GroupBox5: TGroupBox
-      Left = 6
-      Top = 6
-      Width = 196
-      Height = 163
+      Left = 1
+      Top = 0
+      Width = 208
+      Height = 186
       Caption = 'Saldo'
       Color = clWhite
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -800,14 +755,14 @@ object OperacionForm: TOperacionForm
       TabOrder = 1
       object LbSaldo: TLabel
         Left = 3
-        Top = 18
-        Width = 186
-        Height = 43
+        Top = 19
+        Width = 200
+        Height = 15
         Alignment = taRightJustify
         AutoSize = False
         Caption = '0.00'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -815,27 +770,27 @@ object OperacionForm: TOperacionForm
       end
       object TotalLabel: TLabel
         Left = 5
-        Top = 55
-        Width = 186
+        Top = 75
+        Width = 198
         Height = 43
         Alignment = taRightJustify
         AutoSize = False
         Caption = '0.00'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlue
+        Font.Color = clWindowText
         Font.Height = -32
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
       end
       object GroupBox4: TGroupBox
-        Left = 0
-        Top = 101
+        Left = 1
+        Top = 117
         Width = 66
         Height = 62
         Caption = 'Tipo'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
@@ -859,10 +814,10 @@ object OperacionForm: TOperacionForm
         end
       end
       object ComprobanteEdit: TEdit
-        Left = 69
-        Top = 116
-        Width = 122
-        Height = 37
+        Left = 67
+        Top = 153
+        Width = 134
+        Height = 25
         Alignment = taCenter
         AutoSize = False
         BevelInner = bvNone
@@ -872,8 +827,31 @@ object OperacionForm: TOperacionForm
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
+        NumbersOnly = True
+        ParentFont = False
+        TabOrder = 2
+        Text = 'Nro. Comprobante'
+        TextHint = 'Nro. Comprobante'
+      end
+      object PuntoVentaEdit: TEdit
+        Left = 67
+        Top = 122
+        Width = 134
+        Height = 25
+        Alignment = taCenter
+        AutoSize = False
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        NumbersOnly = True
         ParentFont = False
         TabOrder = 1
+        Text = 'Nro. Punto de Venta'
+        TextHint = 'Nro. Comprobante'
       end
     end
   end

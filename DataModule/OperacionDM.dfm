@@ -21,4 +21,9 @@ object OperacionDataModule: TOperacionDataModule
     Left = 120
     Top = 176
   end
+  object qODM: TFDQuery
+    Connection = DM.sdb
+    Left = 120
+    Top = 16
+  end
 end

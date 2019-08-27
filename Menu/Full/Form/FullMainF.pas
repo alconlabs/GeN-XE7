@@ -135,8 +135,6 @@ type
     procedure CuentaCorriente1Click(Sender: TObject);
     procedure AnularVenta1Click(Sender: TObject);
     procedure Cuentas1Click(Sender: TObject);
-    procedure LibroIVAVentas1Click(Sender: TObject);
-    procedure LibroIVACompras1Click(Sender: TObject);
     procedure Productos1Click(Sender: TObject);
     procedure Caja3Click(Sender: TObject);
     procedure Creditos1Click(Sender: TObject);
@@ -199,14 +197,14 @@ uses LoginF, CrearCreditoF, CtaCteF, BuscaFactura,
   AnularVtaF, incremento, CrearPedidoF, RendicionCartonF, PagoComisionCobrador,
   RendicionClienteLF, RendicionClienteF, NotaCreditoPlanF, CartonCobranzaF,
   PagoIVAF, AporteCapitalF, CuentaContableF, CapituloF, RubroContableFormF,
-  TipoGastoF, SocioF, LibroDiarioF, LibroIVAVentasF, LibroIVAComprasF,
+  TipoGastoF, SocioF, LibroDiarioF,
   GestionCobranzaF, CobranzaExtraJudicialF, CobranzaJudicialF,
   CobranzaIncobrableF, CtaCteProveedores, PagoVendedorF,
   UFProductos, ProveedorF, UFClientes, PlanF, VendedorF, CobradorF, RubroF,
   UFCategorias, UFSubCategorias, IngresosBrutosF, UFBuscaArticulos, CajaLF,
   GananciasL, PedidoLF, Precios, ListadoClientes, EstadoCuentaLF, BuscaCompra,
   EmpresaF, UsuariosF, ConfiguracionF, VaciarBaseF, BackUpF, MigrarF, main, OperacionF,
-  PagoF;
+  PagoF, LibrosF;
 
 {$R *.dfm}
 
@@ -552,16 +550,6 @@ begin
   end;
 end;
 
-procedure TFullMainForm.LibroIVACompras1Click(Sender: TObject);
-begin
-  WinExec(PAnsiChar(AnsiString(path + 'LibroIVACompras.exe')), SW_SHOWNORMAL);
-end;
-
-procedure TFullMainForm.LibroIVAVentas1Click(Sender: TObject);
-begin
-  WinExec(PAnsiChar(AnsiString(path + 'LibroIVAVentas.exe')), SW_SHOWNORMAL);
-end;
-
 procedure TFullMainForm.ListadePrecios1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'PreciosL.exe')), SW_SHOWNORMAL);
@@ -640,23 +628,27 @@ end;
 
 procedure TFullMainForm.IVACOMPRAS1Click(Sender: TObject);
 begin
-  // WinExec(PAnsiChar(AnsiString(path + 'LibroIVACompras.exe')), SW_SHOWNORMAL);
-  LibroIVAComprasForm := TLibroIVAComprasForm.Create(self);
-  try
-    LibroIVAComprasForm.ShowModal;
-  finally
-    LibroIVAComprasForm.Free;
+  LibrosForm := TLibrosForm.Create(self);
+    with LibrosForm do begin
+    try
+      Compra := True;
+      ShowModal;
+    finally
+      Free;
+    end;
   end;
 end;
 
 procedure TFullMainForm.IVAVENTAS1Click(Sender: TObject);
 begin
-  // WinExec(PAnsiChar(AnsiString(path + 'LibroIVAVentas.exe')), SW_SHOWNORMAL);
-  CuentasForm := TCuentasForm.Create(self);
-  try
-    CuentasForm.ShowModal;
-  finally
-    CuentasForm.Free;
+  LibrosForm := TLibrosForm.Create(self);
+    with LibrosForm do begin
+    try
+      Venta := True;
+      ShowModal;
+    finally
+      Free;
+    end;
   end;
 end;
 

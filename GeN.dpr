@@ -13,7 +13,7 @@ uses
   ActivacionesLF in 'Listados\Activaciones\Form\ActivacionesLF.pas' {ActivacionesLForm},
   ListarPedidoF in 'Listados\Pedidos\Form\ListarPedidoF.pas' {ListarPedidoForm},
   ListadoClientes in 'Listados\Clientes\Form\ListadoClientes.pas' {ListadoClientesForm},
-  LibroIVAVentasF in 'Listados\LibroIVAVentas\Form\LibroIVAVentasF.pas' {CuentasForm},
+  LibrosF in 'Listados\Libros\LibrosF.pas' {LibrosForm},
   LibroIVAComprasF in 'Listados\LibroIVACompras\Form\LibroIVAComprasF.pas' {LibroIVAComprasForm},
   LibroDiarioF in 'Listados\LibroDiario\Form\LibroDiarioF.pas' {LibroDiarioLForm},
   IngresoDineroF in 'SubOperacion\IngresoDinero\Form\IngresoDineroF.pas' {IngresoDineroForm},
@@ -118,7 +118,8 @@ uses
   Vcl.Themes,
   Vcl.Styles,
   udmMercadoLibre in 'DataModule\udmMercadoLibre.pas' {dmML: TDataModule},
-  EditorReporteUnit in 'Report\EditorReporteUnit.pas' {fEditorReporte};
+  EditorReporteUnit in 'Report\EditorReporteUnit.pas' {fEditorReporte},
+  ufRetPerc in 'SubOperacion\RetencionesPercepciones\ufRetPerc.pas' {fRetPerc};
 
 {$R *.res}
 

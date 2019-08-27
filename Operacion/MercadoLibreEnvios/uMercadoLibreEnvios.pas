@@ -237,7 +237,8 @@ begin
         tProgressBar.Enabled:=True;
         FDQuery1.Close;
         Application.ProcessMessages;
-        ObtenerOrderRecent;
+//        ObtenerOrderRecent;
+        ObtenerOrder;
         tProgressBar.Enabled:=False;
         ProgressBar1.StepBy(100);
         sleep(100);

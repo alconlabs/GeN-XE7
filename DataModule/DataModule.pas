@@ -14,7 +14,6 @@ uses
   FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs;
 
 type
-
   TDM = class(TDataModule)
     BaseDatos: TIBDatabase;
     Transaccion: TIBTransaction;
@@ -91,6 +90,7 @@ type
     tSiapVtaCompImpOtrTrib: TWideMemoField;
     tSiapVtaCompImpTotal: TWideMemoField;
     mtIVA: TFDMemTable;
+    qSdb: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
     procedure LeerINI;
@@ -113,9 +113,12 @@ type
     procedure ActualizarVersion;
     function EsMismaVersion:Boolean;
     procedure CrearCbtetipo;
-    procedure CrearTablaSiapVtaComp;
+    procedure CrearTablasSiap;
     procedure ConectarSDB;
     procedure CrearMtIva;
+    procedure CrearTabalaRetPer;
+    procedure ActualizarTrigger(name,active,body:string);
+    procedure ActualizarTriggerFecha;
   public
   const
     NumThreads: Integer = 4;
@@ -159,6 +162,12 @@ type
     function SacarIVA(monto,porcentaje:Double):Double;
     function TraerAlicuota(tasa:string):string;
     function TraerValorX(tabla, campo, codigo, valor: string):string;
+    function CantidadAlicIva(codigo:string):string;
+    function TraerCodLetra(letra:string):string;
+    function ObtenerNroComp(tipo:string):string;
+    procedure ActualizarNroComp(tipo,comp: string);
+    procedure AgregarRetPer(tipo:string;codigo:Integer;noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib:double);
+    procedure AgregarSiapCmpCompAlicuota(codigo:Integer;ivaId,ivaBaseImp,ivaAlic:String);
   end;
 
 const
@@ -671,7 +680,9 @@ begin
       CopyDir(ejecutable+'hlp', Path);
       CopyDir(ejecutable+'rpt', Path);
       CrearCbtetipo;
-      CrearTablaSiapVtaComp;
+      CrearTablasSiap;
+      CrearTabalaRetPer;
+      ActualizarTriggerFecha;
       ActualizarVersion;
     end;
   end
@@ -1216,7 +1227,7 @@ begin
    end;
 end;
 
- procedure TDM.CrearTablaSiapVtaComp;
+ procedure TDM.CrearTablasSiap;
  begin
 //  ActualizarTabla('LibroIVAventa', 'CBTETIPO', 'VARCHAR(255)');
 //  ActualizarTabla('LibroIVAventa', 'PTOVTA', 'VARCHAR(255)');
@@ -1266,6 +1277,13 @@ sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapVtaComp ('//Siap Comprobantes de Ven
   +'ImpTotal TEXT'//Totales (cálculo automático)
 +')');
 
+sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapVtaCompAlicuota ('//Siap Comprobantes de Compras
+  +'Codigo INTEGER,'
+  +'IvaId TEXT,'//Código alícuota IVA
+  +'IvaBaseImp TEXT,'//Neto Gravado alícuota
+  +'IvaAlic TEXT'//IVA alícuota
++')');
+
 sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapCmpComp ('//Siap Comprobantes de Compras
   +'Codigo INTEGER,'
   +'CbteFch TEXT,'//FECHA Formato dd/mm/aaaa	L8
@@ -1276,7 +1294,7 @@ sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapCmpComp ('//Siap Comprobantes de Com
   +'DocTipo TEXT,'//PROVEEDOR Código de Documento del vendedor	L2
   +'DocNro TEXT,'//PROVEEDOR Número de identificaión del vendedor	L20
   +'DocNomb TEXT,'//PROVEEDOR Apellido y Nombre del vendedor	L30
-  +'ImpTotal TEXT'//Totales (cálculo automático)	L15
+  +'ImpTotal TEXT,'//Totales (cálculo automático)	L15
   +'ImpNoGra TEXT,'//Monto que no integra el precio neto gravado	L15
   +'ImpOpEx TEXT,'//Operaciones Exentas	L15
   +'ImpPercIva TEXT,'//PERCEPCIONES Percepc y retenc. IVA	L15
@@ -1292,14 +1310,23 @@ sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapCmpComp ('//Siap Comprobantes de Com
   +'ImpOtrTrib TEXT,'//Otros Tributos	L15
   +'CUIT TEXT,'//CUIT emisor/corredor	L11
   +'Denom TEXT,'//Denominación emisor/corredor	L30
-  +'ImpIvaCom TEXT,'//IVA comisión	L15
+  +'ImpIvaCom TEXT'//IVA comisión	L15
+//  +'IvaId1 TEXT,'//Código alícuota IVA 1
+//  +'IvaBaseImp1 TEXT,'//Neto Gravado alícuota 1 Importe Total
+//  +'IvaAlic1 TEXT,'//IVA alícuota 1
+//  +'IvaId2 TEXT,'//Código alícuota IVA 2
+//  +'IvaBaseImp2 TEXT,'//Neto Gravado alícuota 2 Importe Total
+//  +'IvaAlic2 TEXT,'//IVA alícuota 2
+//  +'IvaId3 TEXT,'//Código alícuota IVA 3
+//  +'IvaBaseImp3 TEXT,'//Neto Gravado alícuota 3 Importe Total
+//  +'IvaAlic3 TEXT'//IVA alícuota 3
++')');
 
-  +'IvaId1 TEXT,'//Código alícuota IVA 1
-  +'IvaId2 TEXT,'//Código alícuota IVA 2
-  +'IvaBaseImp1 TEXT,'//Neto Gravado alícuota 1 Importe Total
-  +'IvaAlic1 TEXT,'//IVA alícuota 1
-  +'IvaBaseImp2 TEXT,'//Neto Gravado alícuota 2 Importe Total
-  +'IvaAlic2 TEXT,'//IVA alícuota 2
+sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapCmpCompAlicuota ('//Siap Comprobantes de Compras
+  +'Codigo INTEGER,'
+  +'IvaId TEXT,'//Código alícuota IVA
+  +'IvaBaseImp TEXT,'//Neto Gravado alícuota
+  +'IvaAlic TEXT'//IVA alícuota
 +')');
 
  end;
@@ -1426,6 +1453,145 @@ end;
 function TDM.TraerAlicuota;
 begin
   result := TraerValorX('Iva','CODIGO','Tasa',tasa);
+end;
+
+function TDM.CantidadAlicIva;
+begin
+  result := TraerValorX('AlicIVA','Count(CODIGO)','CODIGO',codigo);
+end;
+
+function TDM.TraerCodLetra;
+begin
+  result := ObtenerValor('CbteTipo', 'Codigo', 'Letra',letra);
+end;
+
+function TDM.ObtenerNroComp;
+begin
+  case IndexStr(tipo, ['A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
+    0 : result := NroA;
+    1 : result := NroNCA;
+    2 : result := NroB;
+    3 : result := NroNCB;
+    4 : result := NroC;
+    5 : result := NroNCC;
+    else result := IntToStr( ObtenerConfig('NroFactura') );
+  end;
+ if result='' then result:='0';
+ result := IntToStr(StrToInt(result)+1);
+end;
+
+procedure TDM.ActualizarNroComp;
+begin
+  case IndexStr(tipo, ['A', 'NCA', 'B', 'NCB', 'C','NCC' ]) of
+    0 : NroA := comp;
+    1 : NroNCA := comp;
+    2 : NroB := comp;
+    3 : NroNCB := comp;
+    4 : NroC := comp;
+    5 : NroNCC := comp;
+    else begin
+      with Query do begin
+        SQL.Text := 'Update "Config" Set NroFactura ='+comp;
+        ExecSQL;
+      end;
+    end;
+  end;
+  EscribirINI;
+end;
+
+procedure TDM.CrearTabalaRetPer;
+begin
+  sdb.ExecSQL('CREATE TABLE IF NOT EXISTS RetPer ('
+    +' Codigo INTEGER'
+    +', Tipo  TEXT'
+    +', NoGra REAL'
+    +', PagCueIva REAL'
+    +', PagCueOtr REAL'
+    +', PerIIBB REAL'
+    +', PerImpMun REAL'
+    +', ImpInt REAL'
+    +', OtrTrib REAL'
+  +')');
+end;
+
+procedure TDM.AgregarRetPer;
+begin
+  with qSdb do
+    begin
+      Open('Select * from RetPer where Codigo=:C and Tipo=:T',[codigo,tipo]);
+      if RecordCount>0 then //Locate('Codigo',codigo,[]) then
+        Edit
+      else
+      begin
+        Insert;
+        FieldByName('Codigo').asinteger := codigo;
+      end;
+      FieldByName('Tipo').AsString := tipo;
+      FieldByName('NoGra').AsFloat := noGra;
+      FieldByName('PagCueIva').AsFloat := pagCueIva;
+      FieldByName('PagCueOtr').AsFloat := pagCueOtr;
+      FieldByName('PerIIBB').AsFloat := perIIBB;
+      FieldByName('PerImpMun').AsFloat := perImpMun;
+      FieldByName('ImpInt').AsFloat := impInt;
+      FieldByName('OtrTrib').AsFloat := otrTrib;
+      Post;
+    end;
+end;
+
+procedure TDM.AgregarSiapCmpCompAlicuota;
+begin
+  with qSdb do
+    begin
+      Open('Select * from SiapCmpCompAlicuota where Codigo=:C and IvaId=:I',[codigo,ivaId]);
+      if RecordCount>0 then
+        Edit
+      else
+      begin
+        Insert;
+        FieldByName('Codigo').AsInteger := codigo;
+      end;
+      FieldByName('IvaId').AsString := ivaId;
+      FieldByName('IvaBaseImp').AsString := ivaBaseImp;
+      FieldByName('IvaAlic').AsString := ivaAlic;
+      Post;
+    end;
+end;
+
+procedure TDM.ActualizarTrigger;
+begin
+    IBScript1.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
+      +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
+      +' ALTER TRIGGER "'+name+'"'
+      +active
+      +' POSITION 0'
+      +' AS'
+      +' BEGIN'
+      +'   /* Trigger body */'
+      +body
+      +' END;';
+    IBScript1.ExecuteScript;
+    IBScript1.Transaction.CommitRetaining;
+end;
+
+procedure TDM.ActualizarTriggerFecha;
+var a,b:string;
+begin
+  a:=' ACTIVE BEFORE INSERT';
+  b:=' IF (new."FECHA" IS NULL) THEN new."FECHA" = cast( ''now'' as timestamp);';
+  ActualizarTrigger('CompraFecha_BI',a,b);
+  ActualizarTrigger('ContratoFECHA_BI',a,b);
+  ActualizarTrigger('CtaCteFECHAupdate',a,b);
+  ActualizarTrigger('CtaCteFecha_BI',a,b);
+  ActualizarTrigger('CtaCteItemFECHA_BI',a,b);
+  ActualizarTrigger('FormaPagoFECHA_BI1',a,b);
+  ActualizarTrigger('LibroDiarioFecha_BI',a,b);
+  ActualizarTrigger('LibroIVAcompraFecha_BI',a,b);
+  ActualizarTrigger('LibroIVAventaFecha_BI',a,b);
+  ActualizarTrigger('MovCaja_FECHA',a,b);
+  ActualizarTrigger('OperacionFECHA_BI',a,b);
+  ActualizarTrigger('PresupuestoFecha_BI',a,b);
+  ActualizarTrigger('RendidoVendedorFecha_BI',a,b);
+  ActualizarTrigger('VentaFecha_BI',a,b);
 end;
 
 end.

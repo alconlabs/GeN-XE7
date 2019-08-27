@@ -67,7 +67,6 @@ type
     JSONValue1 : TJSONValue;
     authCode, accessToken :string;
     procedure ObtenerOrderRecent;
-
     procedure GetREST(resource: string);
     function existeEnTJSONArray(tabla: string ; streams: TJSONArray): string;
     procedure importCategories(borrar : Boolean);
@@ -91,6 +90,7 @@ type
     procedure ObtenerRefreshToken;
     procedure AbrirEnBrowser(LURL:string);
     function Obtener(resource:string):TJSONValue;
+    procedure ObtenerOrder;
   end;
 
 const
@@ -685,6 +685,103 @@ begin
 //          ObtenerConsultaRest('orders/search/recent?seller='+seller_id,'');
           ObtenerConsultaRest('orders/search/recent?seller='+seller_id
 //          jOrderRecent:=Obtener('orders/search/recent?seller='+seller_id
+//          +'&order.date_created.from=2019-08-13T00:00:00.000-00:00'
+          +'&order.date_last_updated.from='+hoy+'T00:00:00.000-00:00'
+          +'&offset='+IntToStr(p)
+//          +'&'
+          ,'');
+//          );
+          jOrderRecent := TJSONObject.ParseJSONValue(RESTRequest1.Response.Content);
+          if jOrderRecent is TJSONObject then
+          begin
+            sj:=jOrderRecent.ToString;
+            paging_total := jOrderRecent.GetValue<Integer>('paging.total');
+            if paging_total>0 then
+              t := paging_total;
+            r:=TJSONArray(jOrderRecent.GetValue<TJSONValue>('results')).Size;
+            if r>0 then
+              for n := 0 to r-1 do
+              begin
+                i:=IntToStr(n);
+                order_id := jOrderRecent.GetValue<string>('results['+i+'].id');
+                Open(sqlOrders+' WHERE id=:I',[order_id]);
+                if RowsAffected>0 then
+                  Edit
+                else
+                begin
+                  Insert;
+                  tOrdersid.AsString := order_id;
+                  //                tOrdersid.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].id').ToString;//2054151756,
+                  tOrderscomments.AsString := jOrderRecent.GetValue<string>('results['+i+'].comments');//null,
+                  tOrdersstatus.AsString := jOrderRecent.GetValue<string>('results['+i+'].status');//"paid",
+                  tOrdersstatus_detail.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].status_detail').ToString;//{},
+                  tOrdersdate_created.AsString := jOrderRecent.GetValue<string>('results['+i+'].date_created');//"2019-06-13T18:12:24.000-04:00",
+                  tOrdersdate_closed.AsString := jOrderRecent.GetValue<string>('results['+i+'].date_closed');//"2019-06-13T18:12:27.000-04:00",
+                  tOrdersexpiration_date.AsString := jOrderRecent.GetValue<string>('results['+i+'].expiration_date');//"2019-07-11T18:12:27.000-04:00",
+//                  tOrdersdate_last_updated.AsString := jOrderRecent.GetValue<string>('results['+i+'].date_last_updated');//"2019-06-24T12:11:26.353Z",
+                  tOrdershidden_for_seller.AsString := jOrderRecent.GetValue<string>('results['+i+'].hidden_for_seller');//false,
+                  tOrderscurrency_id.AsString := jOrderRecent.GetValue<string>('results['+i+'].currency_id');//"ARS",
+  //                tOrdersorder_items.AsString := jOrderRecent.GetValue<string>('results['+i+'].order_items');//[],
+                  ObtenerOrder_items(order_id, jOrderRecent.GetValue<TJSONValue>('results['+i+'].order_items'));
+                  tOrderstotal_amount.AsString := jOrderRecent.GetValue<string>('results['+i+'].total_amount');//456.87,
+                  tOrdersmediations.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].mediations').ToString;//[],
+                  tOrderspayments.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].payments').ToString;//[],
+  //                tOrdersshipping.AsString := jOrderRecent.GetValue<string>('results['+i+'].shipping');//{},
+  //                shipping := jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping');
+  //                id := shipping.GetValue<string>('id');
+                  tOrdersshipping.AsString:=(jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
+  //                tOrdersshipping.AsString := ObtenerShipping(order_id, jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping'));
+//                  if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
+//                  ObtenerShipping(tOrdersshipping.AsString);
+                  tOrdersorder_request.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].order_request').ToString;//{},
+                  tOrderspickup_id.AsString := jOrderRecent.GetValue<string>('results['+i+'].pickup_id');//null,
+  //                tOrdersbuyer.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].buyer');//{},
+                  tOrdersbuyer.AsString := ObtenerBuyer(jOrderRecent.GetValue<TJSONValue>('results['+i+'].buyer'));
+                  tOrdersseller.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].seller').ToString;//{},
+                  tOrdersfeedback.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].feedback').ToString;//{},
+                  tOrderstags.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
+//                  ObtenerMessages(order_id,seller_id);
+                  tOrdersshipping.AsString:=(jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
+                  if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
+                  ObtenerDespachados(order_id);
+                end;
+//              ObtenerShipping(tOrdersshipping.AsString);
+//              ObtenerMessages(order_id,seller_id);
+                last_updated:=jOrderRecent.GetValue<string>('results['+i+'].date_last_updated');
+                if tOrdersdate_last_updated.AsString <> last_updated then
+                  begin
+                    tOrdersdate_last_updated.AsString := last_updated;
+                    ObtenerShipping(tOrdersshipping.AsString);
+                    ObtenerMessages(order_id,seller_id);
+                  end;
+                tOrders.Post;
+              end;
+          end;
+          Application.ProcessMessages;
+        until ((p=t) or (p>t));
+      finally
+      //
+      end;
+    end;
+end;
+
+procedure TDMR.ObtenerOrder;
+var
+  jOrderRecent, order_items, buyer, item, shipping : TJSONValue;
+  i, io, order_id,order_status,buyer_id,item_id,item_title,seller_sku,
+  order_items_quantity, last_updated,sj, hoy : string;
+  n, r, l, ro, no, p, t, paging_total: Integer;
+begin
+  hoy := formatdatetime('yyyy-mm-dd', now);
+  with dmML do
+    with tOrders do
+    begin
+      try
+        i:='0';
+        if seller_id='' then ObtenerSeller;
+        repeat
+          Inc(p);
+          ObtenerConsultaRest('orders/search?seller='+seller_id
 //          +'&order.date_created.from=2019-08-13T00:00:00.000-00:00'
           +'&order.date_last_updated.from='+hoy+'T00:00:00.000-00:00'
           +'&offset='+IntToStr(p)

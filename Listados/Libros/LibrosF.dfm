@@ -1,9 +1,9 @@
-object CuentasForm: TCuentasForm
+object LibrosForm: TLibrosForm
   Left = 636
   Top = 160
   BorderIcons = [biSystemMenu, biMaximize]
   BorderStyle = bsSingle
-  Caption = 'Libro IVA Ventas'
+  Caption = 'Cuentas'
   ClientHeight = 468
   ClientWidth = 794
   Color = clBtnFace
@@ -16,6 +16,7 @@ object CuentasForm: TCuentasForm
   Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object DBGrid1: TDBGrid
@@ -31,159 +32,6 @@ object CuentasForm: TCuentasForm
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Alignment = taCenter
-        Expanded = False
-        FieldName = 'FECHA'
-        Title.Alignment = taCenter
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 78
-        Visible = True
-      end
-      item
-        Alignment = taCenter
-        Expanded = False
-        FieldName = 'FACTURA'
-        Title.Alignment = taCenter
-        Title.Caption = 'COMPROBANTE'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 100
-        Visible = True
-      end
-      item
-        Alignment = taCenter
-        Expanded = False
-        FieldName = 'CLIENTE'
-        Title.Alignment = taCenter
-        Title.Caption = 'Cliente'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 210
-        Visible = True
-      end
-      item
-        Alignment = taCenter
-        Expanded = False
-        FieldName = 'CUIT'
-        Title.Alignment = taCenter
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 73
-        Visible = True
-      end
-      item
-        Alignment = taCenter
-        Expanded = False
-        FieldName = 'NG1'
-        Title.Alignment = taCenter
-        Title.Caption = 'NG10,5%'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 54
-        Visible = True
-      end
-      item
-        Alignment = taCenter
-        Expanded = False
-        FieldName = 'NG2'
-        Title.Alignment = taCenter
-        Title.Caption = 'NG21%'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 50
-        Visible = True
-      end
-      item
-        Alignment = taCenter
-        Expanded = False
-        FieldName = 'IVA1'
-        Title.Alignment = taCenter
-        Title.Caption = 'IVA10,5%'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 54
-        Visible = True
-      end
-      item
-        Alignment = taCenter
-        Expanded = False
-        FieldName = 'IVA2'
-        Title.Alignment = taCenter
-        Title.Caption = 'IVA21%'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 52
-        Visible = True
-      end
-      item
-        Alignment = taCenter
-        Expanded = False
-        FieldName = 'OEIIBB'
-        Title.Alignment = taCenter
-        Title.Caption = 'IIBB'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 48
-        Visible = True
-      end
-      item
-        Alignment = taCenter
-        Expanded = False
-        FieldName = 'IDERPYPAC'
-        Title.Alignment = taCenter
-        Title.Caption = 'Pagos a cta'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 76
-        Visible = True
-      end
-      item
-        Alignment = taCenter
-        Expanded = False
-        FieldName = 'ITF'
-        Title.Alignment = taCenter
-        Title.Caption = 'Total'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 99
-        Visible = True
-      end>
   end
   object Panel2: TPanel
     Left = 640
@@ -194,7 +42,7 @@ object CuentasForm: TCuentasForm
     Color = clBlack
     ParentBackground = False
     TabOrder = 1
-    object Image1: TImage
+    object iExp: TImage
       Left = 37
       Top = 69
       Width = 80
@@ -271,9 +119,9 @@ object CuentasForm: TCuentasForm
         9B6FDBA02DAD00B402D00B402F1D00B5006F1D398313F30EEFDBDFA840CF5D01
         6805A03FFFD9}
       ShowHint = True
-      OnClick = Image1Click
+      OnClick = iExpClick
     end
-    object BitBtn1: TBitBtn
+    object bProcesar: TBitBtn
       Left = 41
       Top = 390
       Width = 80
@@ -305,9 +153,9 @@ object CuentasForm: TCuentasForm
       NumGlyphs = 2
       ParentFont = False
       TabOrder = 0
-      OnClick = BitBtn1Click
+      OnClick = bProcesarClick
     end
-    object BitBtn3: TBitBtn
+    object bImprimir: TBitBtn
       Left = 37
       Top = 9
       Width = 80
@@ -320,7 +168,7 @@ object CuentasForm: TCuentasForm
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 1
-      OnClick = BitBtn3Click
+      OnClick = bImprimirClick
     end
     object GroupBox1: TGroupBox
       Left = 7
@@ -377,12 +225,12 @@ object CuentasForm: TCuentasForm
         Width = 113
         Height = 21
         Date = 43830.000000000000000000
-        Time = 0.873295891200541600
+        Time = 0.873295891200541500
         TabOrder = 1
         OnCloseUp = DTP2CloseUp
       end
     end
-    object BSiap: TButton
+    object bSiap: TButton
       Left = 40
       Top = 312
       Width = 80
@@ -395,15 +243,15 @@ object CuentasForm: TCuentasForm
       Font.Style = [fsBold, fsItalic]
       ParentFont = False
       TabOrder = 3
-      OnClick = BSiapClick
+      OnClick = bSiapClick
     end
   end
   object DS: TDataSource
-    DataSet = Tabla
+    DataSet = qLibros
     Left = 320
     Top = 360
   end
-  object Tabla: TIBQuery
+  object qLibros: TIBQuery
     Database = DM.BaseDatos
     Transaction = DM.Transaccion
     BufferChunks = 1000
@@ -411,88 +259,5 @@ object CuentasForm: TCuentasForm
     ParamCheck = True
     Left = 288
     Top = 360
-    object TablaEmpresa: TIBStringField
-      FieldName = 'Empresa'
-      ProviderFlags = []
-      FixedChar = True
-      Size = 9
-    end
-    object TablaDesde: TIBStringField
-      FieldName = 'Desde'
-      ProviderFlags = []
-      FixedChar = True
-      Size = 10
-    end
-    object TablaHasta: TIBStringField
-      FieldName = 'Hasta'
-      ProviderFlags = []
-      FixedChar = True
-      Size = 10
-    end
-    object TablaCODIGO: TIntegerField
-      FieldName = 'CODIGO'
-      Origin = '"LibroIVAventa"."CODIGO"'
-    end
-    object TablaFECHA: TDateTimeField
-      FieldName = 'FECHA'
-      Origin = '"LibroIVAventa"."FECHA"'
-      DisplayFormat = 'dd/mm/yyyy'
-    end
-    object TablaFACTURA: TIBStringField
-      FieldName = 'FACTURA'
-      Origin = '"LibroIVAventa"."FACTURA"'
-      Size = 50
-    end
-    object TablaCLIENTE: TIBStringField
-      FieldName = 'CLIENTE'
-      Origin = '"LibroIVAventa"."CLIENTE"'
-      Size = 50
-    end
-    object TablaCUIT: TIBStringField
-      FieldName = 'CUIT'
-      Origin = '"LibroIVAventa"."CUIT"'
-      Size = 50
-    end
-    object TablaCONDICION: TIBStringField
-      FieldName = 'CONDICION'
-      Origin = '"LibroIVAventa"."CONDICION"'
-      Size = 50
-    end
-    object TablaNG1: TFloatField
-      FieldName = 'NG1'
-      Origin = '"LibroIVAventa"."NG1"'
-    end
-    object TablaNG2: TFloatField
-      FieldName = 'NG2'
-      Origin = '"LibroIVAventa"."NG2"'
-    end
-    object TablaNG3: TFloatField
-      FieldName = 'NG3'
-      Origin = '"LibroIVAventa"."NG3"'
-    end
-    object TablaIVA1: TFloatField
-      FieldName = 'IVA1'
-      Origin = '"LibroIVAventa"."IVA1"'
-    end
-    object TablaIVA2: TFloatField
-      FieldName = 'IVA2'
-      Origin = '"LibroIVAventa"."IVA2"'
-    end
-    object TablaIVA3: TFloatField
-      FieldName = 'IVA3'
-      Origin = '"LibroIVAventa"."IVA3"'
-    end
-    object TablaOEIIBB: TFloatField
-      FieldName = 'OEIIBB'
-      Origin = '"LibroIVAventa"."OEIIBB"'
-    end
-    object TablaIDERPYPAC: TFloatField
-      FieldName = 'IDERPYPAC'
-      Origin = '"LibroIVAventa"."IDERPYPAC"'
-    end
-    object TablaITF: TFloatField
-      FieldName = 'ITF'
-      Origin = '"LibroIVAventa"."ITF"'
-    end
   end
 end
