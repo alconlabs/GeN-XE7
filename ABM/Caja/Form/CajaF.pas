@@ -25,10 +25,10 @@ type
     DetalleBitBtn: TBitBtn;
     FechaBitBtn: TBitBtn;
     DBNavigator1: TDBNavigator;
-    DataSource: TDataSource;
     EmpresaQuery: TIBQuery;
-    Query: TIBQuery;
-    QTemp: TIBQuery;
+    IBQuery2: TIBQuery;
+    DataSource1: TDataSource;
+    IBQuery3: TIBQuery;
     procedure FechaBitBtnClick(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure DetalleBitBtnClick(Sender: TObject);
@@ -113,7 +113,7 @@ begin
   if FPagoOK then
   begin
     // Iniciar la Transaccion
-    DM.Transaccion.StartTransaction;
+    DM.BaseDatos.StartTransaction;
     try
 
       // Insertar en la tabla de Cheque
@@ -187,12 +187,12 @@ begin
         end;
       end;
       // Completa la Transaccion
-      DM.Transaccion.Commit;
+      DM.BaseDatos.Commit;
 
     except
       on E: Exception do
       begin
-        DM.Transaccion.RollbackRetaining;
+        DM.BaseDatos.RollbackRetaining;
         // MessageDlg('No fue posible completar la transacción, por favor contacte al administrador',mtError,[mbOK],0);
       end;
     end;

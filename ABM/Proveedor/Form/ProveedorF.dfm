@@ -24,17 +24,13 @@ object ProveedorForm: TProveedorForm
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 652
+    Width = 719
     Height = 468
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label2: TLabel
         Left = 181
         Top = 64
@@ -173,7 +169,7 @@ object ProveedorForm: TProveedorForm
         Width = 226
         Height = 21
         DataField = 'Nombre'
-        DataSource = DataSource
+        DataSource = DM.dstProveedor
         TabOrder = 0
       end
       object DBEdit3: TDBEdit
@@ -182,7 +178,7 @@ object ProveedorForm: TProveedorForm
         Width = 226
         Height = 21
         DataField = 'DIRECCION'
-        DataSource = DataSource
+        DataSource = DM.dstProveedor
         TabOrder = 1
       end
       object CodigoDBEdit: TDBEdit
@@ -191,7 +187,7 @@ object ProveedorForm: TProveedorForm
         Width = 76
         Height = 21
         DataField = 'CODIGO'
-        DataSource = DataSource
+        DataSource = DM.dstProveedor
         TabOrder = 9
       end
       object DBEdit9: TDBEdit
@@ -200,7 +196,7 @@ object ProveedorForm: TProveedorForm
         Width = 76
         Height = 21
         DataField = 'Celular'
-        DataSource = DataSource
+        DataSource = DM.dstProveedor
         TabOrder = 5
       end
       object DBEdit4: TDBEdit
@@ -209,7 +205,7 @@ object ProveedorForm: TProveedorForm
         Width = 226
         Height = 21
         DataField = 'DIRECCIONCOMERCIAL'
-        DataSource = DataSource
+        DataSource = DM.dstProveedor
         TabOrder = 2
       end
       object DBEdit10: TDBEdit
@@ -218,7 +214,7 @@ object ProveedorForm: TProveedorForm
         Width = 76
         Height = 21
         DataField = 'Telefono'
-        DataSource = DataSource
+        DataSource = DM.dstProveedor
         TabOrder = 3
       end
       object DBEdit12: TDBEdit
@@ -227,7 +223,7 @@ object ProveedorForm: TProveedorForm
         Width = 76
         Height = 21
         DataField = 'Fax'
-        DataSource = DataSource
+        DataSource = DM.dstProveedor
         TabOrder = 4
       end
       object DBEdit6: TDBEdit
@@ -236,7 +232,7 @@ object ProveedorForm: TProveedorForm
         Width = 226
         Height = 21
         DataField = 'Provincia'
-        DataSource = DataSource
+        DataSource = DM.dstProveedor
         TabOrder = 6
       end
       object DBEdit7: TDBEdit
@@ -245,7 +241,7 @@ object ProveedorForm: TProveedorForm
         Width = 226
         Height = 21
         DataField = 'Departamento'
-        DataSource = DataSource
+        DataSource = DM.dstProveedor
         TabOrder = 7
       end
       object DBEdit24: TDBEdit
@@ -254,7 +250,7 @@ object ProveedorForm: TProveedorForm
         Width = 226
         Height = 21
         DataField = 'Ciudad'
-        DataSource = DataSource
+        DataSource = DM.dstProveedor
         TabOrder = 8
         OnExit = DBEdit24Exit
       end
@@ -269,21 +265,16 @@ object ProveedorForm: TProveedorForm
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
-        Width = 644
+        Width = 711
         Height = 440
         Align = alClient
         DataField = 'Notas'
-        DataSource = DataSource
         TabOrder = 0
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label15: TLabel
         Left = 209
         Top = 155
@@ -390,7 +381,6 @@ object ProveedorForm: TProveedorForm
         Width = 201
         Height = 21
         DataField = 'IIBB'
-        DataSource = DataSource
         TabOrder = 1
       end
       object DBEdit22: TDBEdit
@@ -399,7 +389,6 @@ object ProveedorForm: TProveedorForm
         Width = 201
         Height = 21
         DataField = 'CUIT'
-        DataSource = DataSource
         TabOrder = 0
       end
       object IVADBComboBox: TDBComboBox
@@ -408,7 +397,6 @@ object ProveedorForm: TProveedorForm
         Width = 67
         Height = 21
         DataField = 'IVA'
-        DataSource = DataSource
         Items.Strings = (
           'CF'
           'MT'
@@ -424,10 +412,8 @@ object ProveedorForm: TProveedorForm
         Width = 351
         Height = 21
         DataField = 'CtaNombre'
-        DataSource = DataSource
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 3
       end
       object CtaAnticipoDBLookupComboBox: TDBLookupComboBox
@@ -436,10 +422,8 @@ object ProveedorForm: TProveedorForm
         Width = 351
         Height = 21
         DataField = 'CtaAnticipo'
-        DataSource = DataSource
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 5
       end
       object CtaTipoDBLookupComboBox: TDBLookupComboBox
@@ -448,10 +432,8 @@ object ProveedorForm: TProveedorForm
         Width = 351
         Height = 21
         DataField = 'CtaTipo'
-        DataSource = DataSource
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 4
       end
     end
@@ -553,7 +535,6 @@ object ProveedorForm: TProveedorForm
         Width = 209
         Height = 21
         DataField = 'Gerente'
-        DataSource = DataSource
         TabOrder = 0
       end
       object DBEdit13: TDBEdit
@@ -562,7 +543,6 @@ object ProveedorForm: TProveedorForm
         Width = 209
         Height = 21
         DataField = 'Email'
-        DataSource = DataSource
         TabOrder = 6
       end
       object DBEdit23: TDBEdit
@@ -571,7 +551,6 @@ object ProveedorForm: TProveedorForm
         Width = 209
         Height = 21
         DataField = 'MSN'
-        DataSource = DataSource
         TabOrder = 7
       end
       object DBEdit19: TDBEdit
@@ -580,7 +559,6 @@ object ProveedorForm: TProveedorForm
         Width = 209
         Height = 21
         DataField = 'Documento'
-        DataSource = DataSource
         TabOrder = 1
       end
       object DBEdit21: TDBEdit
@@ -589,7 +567,6 @@ object ProveedorForm: TProveedorForm
         Width = 209
         Height = 21
         DataField = 'Rubro'
-        DataSource = DataSource
         TabOrder = 2
       end
       object DBEdit5: TDBEdit
@@ -598,7 +575,6 @@ object ProveedorForm: TProveedorForm
         Width = 97
         Height = 21
         DataField = 'Pais'
-        DataSource = DataSource
         TabOrder = 8
       end
       object DBEdit17: TDBEdit
@@ -607,7 +583,6 @@ object ProveedorForm: TProveedorForm
         Width = 82
         Height = 21
         DataField = 'CP'
-        DataSource = DataSource
         TabOrder = 3
       end
       object DBEdit11: TDBEdit
@@ -616,7 +591,6 @@ object ProveedorForm: TProveedorForm
         Width = 82
         Height = 21
         DataField = 'Extencion'
-        DataSource = DataSource
         TabOrder = 5
       end
       object DBEdit18: TDBEdit
@@ -625,7 +599,6 @@ object ProveedorForm: TProveedorForm
         Width = 82
         Height = 21
         DataField = 'CodigoArea'
-        DataSource = DataSource
         TabOrder = 4
       end
       object DBEdit1: TDBEdit
@@ -634,18 +607,16 @@ object ProveedorForm: TProveedorForm
         Width = 145
         Height = 21
         DataField = 'DiasCredito'
-        DataSource = DataSource
         TabOrder = 9
       end
     end
   end
   object Panel1: TPanel
-    Left = 652
+    Left = 719
     Top = 0
-    Width = 142
+    Width = 75
     Height = 468
     Align = alRight
-    Color = clBlack
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11
@@ -654,25 +625,13 @@ object ProveedorForm: TProveedorForm
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
-    object Label33: TLabel
-      Left = 47
-      Top = 226
-      Width = 46
-      Height = 13
-      Caption = 'Grabar?'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
     object SiBitBtn: TBitBtn
-      Left = 30
-      Top = 170
-      Width = 80
+      Left = 1
+      Top = 367
+      Width = 73
       Height = 50
-      Caption = 'Si'
+      Align = alBottom
+      Caption = 'Grabar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -702,10 +661,11 @@ object ProveedorForm: TProveedorForm
       OnClick = SiBitBtnClick
     end
     object NoBitBtn: TBitBtn
-      Left = 30
-      Top = 246
-      Width = 80
+      Left = 1
+      Top = 417
+      Width = 73
       Height = 50
+      Align = alBottom
       Caption = 'No'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -719,16 +679,17 @@ object ProveedorForm: TProveedorForm
       OnClick = NoBitBtnClick
     end
     object ImprimirBitBtn: TBitBtn
-      Left = 30
-      Top = 6
-      Width = 80
-      Height = 50
+      Left = 1
+      Top = 292
+      Width = 73
+      Height = 25
+      Align = alBottom
       Caption = 'Imprimir'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clPurple
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
+      Font.Style = []
       ParentFont = False
       TabOrder = 2
       OnClick = ImprimirBitBtnClick
@@ -738,7 +699,6 @@ object ProveedorForm: TProveedorForm
       Top = 486
       Width = 120
       Height = 32
-      DataSource = DataSource
       VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete]
       Hints.Strings = (
         'Primer registro'
@@ -756,11 +716,12 @@ object ProveedorForm: TProveedorForm
       TabOrder = 3
     end
     object BuscarBitBtn: TBitBtn
-      Left = 30
-      Top = 415
-      Width = 80
-      Height = 50
-      Caption = 'Buscar F5'
+      Left = 1
+      Top = 267
+      Width = 73
+      Height = 25
+      Align = alBottom
+      Caption = 'Buscar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
       Font.Height = -11
@@ -770,291 +731,25 @@ object ProveedorForm: TProveedorForm
       TabOrder = 4
       OnClick = BuscarBitBtnClick
     end
-  end
-  object Tabla: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    AfterCancel = TablaAfterCancel
-    AfterDelete = TablaAfterDelete
-    AfterInsert = TablaAfterInsert
-    AfterPost = TablaAfterPost
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        Attributes = [faRequired]
-        DataType = ftInteger
-      end
-      item
-        Name = 'NOMBRE'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'TITULAR'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCION'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCIONCOMERCIAL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PAIS'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'PROVINCIA'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'DEPARTAMENTO'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'CIUDAD'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'CP'
-        DataType = ftWideString
-        Size = 20
-      end
-      item
-        Name = 'CODIGOAREA'
-        DataType = ftWideString
-        Size = 10
-      end
-      item
-        Name = 'CELULAR'
-        DataType = ftWideString
-        Size = 20
-      end
-      item
-        Name = 'TELEFONO'
-        DataType = ftWideString
-        Size = 15
-      end
-      item
-        Name = 'EXTENCION'
-        DataType = ftWideString
-        Size = 6
-      end
-      item
-        Name = 'FAX'
-        DataType = ftWideString
-        Size = 15
-      end
-      item
-        Name = 'EMAIL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'TERMINOS'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'VENDEDOR'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PRECIO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'SUSPENDIDO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'EXCENTO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'FECHAINGRESO'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'LIMITECREDITO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'NOTAS'
-        DataType = ftBlob
-        Size = 8
-      end
-      item
-        Name = 'DIASCREDITO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'DOCUMENTO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CUIT'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'IIBB'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'RUBRO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'IVA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'MSN'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CONTACTO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'GERENTE'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'BANCO'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'CTACTE'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'FORMADEPAGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'VENCIMIENTO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ZONA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTANOMBRE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTATIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTAANTICIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PAGARE'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end>
-    IndexDefs = <
-      item
-        Name = 'PK_Proveedor'
-        Fields = 'CODIGO'
-        Options = [ixUnique]
-      end>
-    StoreDefs = True
-    TableName = 'Proveedor'
-    UniDirectional = False
-    Left = 192
-    Top = 338
-  end
-  object DataSource: TDataSource
-    DataSet = Tabla
-    Left = 222
-    Top = 338
-  end
-  object UsuarioT: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Usuario"')
-    Left = 272
-    Top = 338
-  end
-  object DSUsuarios: TDataSource
-    DataSet = UsuarioT
-    Left = 302
-    Top = 338
-  end
-  object CuentaT: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Cuenta"'
-      'order by DESCRIPCION')
-    Left = 352
-    Top = 338
-  end
-  object CuentaDataSource: TDataSource
-    DataSet = CuentaT
-    Left = 382
-    Top = 338
-  end
-  object EmpresaQuery: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Empresa"')
-    Left = 472
-    Top = 338
-  end
-  object Query: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 528
-    Top = 338
+    object bExportar: TButton
+      Left = 1
+      Top = 317
+      Width = 73
+      Height = 25
+      Align = alBottom
+      Caption = 'Exportar'
+      TabOrder = 5
+      OnClick = bExportarClick
+    end
+    object bImportar: TButton
+      Left = 1
+      Top = 342
+      Width = 73
+      Height = 25
+      Align = alBottom
+      Caption = 'Importar'
+      TabOrder = 6
+      OnClick = bImportarClick
+    end
   end
 end

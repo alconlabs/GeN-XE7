@@ -287,7 +287,7 @@ begin
     if PagoStringGrid.Cells[1, 1] <> '' then
     begin
       // Iniciar la Transaccion
-      DM.Transaccion.StartTransaction;
+      DM.BaseDatosFB.StartTransaction;
       try
         // PASAR LOS DATOS A CHEQUES ENTREGADOS
         For i := 1 to PagoStringGrid.RowCount - 1 do
@@ -309,11 +309,11 @@ begin
           Query.ExecSQL;
         end;
         // Completa la Transaccion
-        DM.Transaccion.Commit;
+        DM.BaseDatosFB.Commit;
       except
         on E: Exception do
         begin
-          DM.Transaccion.RollbackRetaining;
+          DM.BaseDatosFB.RollbackRetaining;
           MessageDlg
             ('No fue posible completar la transacción, por favor contacte al administrador',
             mtError, [mbOK], 0);

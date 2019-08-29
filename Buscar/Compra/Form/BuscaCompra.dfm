@@ -259,7 +259,6 @@ object BuscaCompraForm: TBuscaCompraForm
     Width = 692
     Height = 399
     Align = alClient
-    DataSource = DS
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     ReadOnly = True
     TabOrder = 2
@@ -333,56 +332,5 @@ object BuscaCompraForm: TBuscaCompraForm
         Width = 92
         Visible = True
       end>
-  end
-  object DS: TDataSource
-    DataSet = Tabla
-    Left = 110
-    Top = 384
-  end
-  object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT    '#39'proveedor'#39'  As Empresa,'
-      '          "Proveedor".NOMBRE,   "Proveedor".TITULAR,'
-      
-        '          "Proveedor".DIRECCION,   "Proveedor".DIRECCIONCOMERCIA' +
-        'L,'
-      '          "Articulo".DESCRIPCION,   "CompraItem".OPERACION,'
-      '          "CompraItem".ARTICULO,   "CompraItem".CANTIDAD,'
-      '          "CompraItem".PRECIO,'
-      
-        '          ("CompraItem".PRECIO * "CompraItem".CANTIDAD ) as PREX' +
-        'CANT,'
-      
-        '          "CompraItem".SERVICIO,   "CompraItem".DESCRIPCION AS D' +
-        'ESCR,'
-      '          "Compra".CODIGO,   "Compra".LETRA,   "Compra".FECHA,'
-      
-        '          "Compra".COMPROBANTE,   "Compra".IVA3,   "Compra".TOTA' +
-        'L,'
-      
-        '          "Compra".CONTADO,   "Compra".Proveedor,   "Compra".SUB' +
-        'TOTAL,'
-      
-        '          "Compra".DESCUENTO,   "Compra".IMPUESTO,   "Compra".IV' +
-        'A2,'
-      '          "Compra".IVA1,   "Compra".EXCENTO,   "Compra".SALDO,'
-      '          "Compra".PAGADO  FROM   "Compra"'
-      
-        '          INNER JOIN "CompraItem" ON ("Compra".CODIGO = "CompraI' +
-        'tem".OPERACION)'
-      
-        '          INNER JOIN "Articulo" ON ("CompraItem".ARTICULO = "Art' +
-        'iculo".CODIGO)'
-      
-        '          INNER JOIN "Proveedor" ON ("Compra".Proveedor = "Prove' +
-        'edor".CODIGO)'
-      '')
-    Left = 77
-    Top = 382
   end
 end

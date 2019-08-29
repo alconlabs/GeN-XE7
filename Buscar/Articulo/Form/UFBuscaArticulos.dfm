@@ -26,7 +26,7 @@ object FBuscaArticulo: TFBuscaArticulo
     Width = 692
     Height = 393
     Align = alClient
-    DataSource = DataSource
+    DataSource = DM.dsqArticulo
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     ReadOnly = True
     TabOrder = 0
@@ -306,11 +306,11 @@ object FBuscaArticulo: TFBuscaArticulo
     end
     object DBText1: TDBText
       Left = 10
-      Top = 117
+      Top = 116
       Width = 80
       Height = 33
       DataField = 'Disponible'
-      DataSource = DataSource
+      DataSource = DM.dsqArticulo
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -19
@@ -320,11 +320,11 @@ object FBuscaArticulo: TFBuscaArticulo
     end
     object DBText3: TDBText
       Left = 10
-      Top = 173
+      Top = 170
       Width = 80
       Height = 33
       DataField = 'PRECIO'
-      DataSource = DataSource
+      DataSource = DM.dsqArticulo
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -19
@@ -347,11 +347,11 @@ object FBuscaArticulo: TFBuscaArticulo
     end
     object ivaDBText: TDBText
       Left = 10
-      Top = 228
+      Top = 225
       Width = 80
       Height = 20
       DataField = 'precioIVA'
-      DataSource = DataSource
+      DataSource = DM.dsqArticulo
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -19
@@ -529,90 +529,5 @@ object FBuscaArticulo: TFBuscaArticulo
       ParentFont = False
       TabOrder = 2
     end
-  end
-  object DataSource: TDataSource
-    DataSet = Tabla
-    Left = 252
-    Top = 256
-  end
-  object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT'
-      
-        '  ROUND(("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*' +
-        '0.01)),2) as precioIVA, '
-      '  "Articulo".DESCRIPCION,'
-      '  "Articulo".CODIGO,'
-      '  "Articulo".COSTO,'
-      '  "Articulo".ULTCOSTO,'
-      '  "Articulo".PRECIO1,'
-      '  "Articulo".PRECIO2,'
-      '  "Articulo".PRECIO3,'
-      '  "Articulo".PRECIO4,'
-      '  "Articulo".PRECIO5,'
-      '  "Articulo".PRECIO6,'
-      '  "Articulo".PRECIO,'
-      '  "Articulo".PORCENTAJE,'
-      '  "Articulo".ULTPRECIO,'
-      '  "Articulo".UBICACION,'
-      '  "Articulo".UNIDAD,'
-      '  "Articulo".DISPONIBLE,'
-      '  "Articulo".ENPRODUCCION,'
-      '  "Articulo".NOTAS,'
-      '  "Articulo".IVA,'
-      '  "Articulo".TASA,'
-      '  "Articulo".IMPOTROS,'
-      '  "Articulo".IIBB,'
-      '  "Articulo".STOCKMINIMO,'
-      '  "Articulo".STOCKMAXIMO,'
-      '  "Articulo".STOCKVENDIDO,'
-      '  "Articulo".FECHACOMPULT,'
-      '  "Articulo".LISTA,'
-      '  "Articulo".PROCEDENCIA,'
-      '  "Articulo".CODIGOBARRA,'
-      '  "Articulo".GARANTIA,'
-      '  "Articulo".FECHA,'
-      '  "Articulo".PEDIDO,'
-      '  "Articulo".STOCK,'
-      '  "Articulo".EXISTENTE,'
-      '  "Articulo".ACTUAL,'
-      '  "Articulo".MARCADOCONTADO,'
-      '  "Articulo".MARCADOLISTA,'
-      '  "Articulo".MARCADOFINAL,'
-      '  "Articulo".PREPARADO,'
-      '  "Articulo".CTANOMBRE,'
-      '  "Articulo".CTATIPO,'
-      '  "Articulo".CTAANTICIPO,'
-      '  "Articulo".CTAIIBB,'
-      '  "Articulo".ESTADO,'
-      '  "Articulo".VENCE,'
-      '  "Articulo".VENCIMIENTO,'
-      '  "Marca".DESCRIPCION AS MARCA,'
-      '  "Color".DESCRIPCION AS COLOR,'
-      '  "Categoria".DESCRIPCION AS CATEGORIA,'
-      '  "SubCategoria".DESCRIPCION AS SUBCATEGORIA,'
-      '  "Rubro".DESCRIPCION AS RUBRO,'
-      '  "Proveedor".NOMBRE AS PROVEEDOR'
-      'FROM'
-      '  "Articulo"'
-      '  INNER JOIN "Marca" ON ("Articulo".MARCA = "Marca".CODIGO)'
-      '  INNER JOIN "Color" ON ("Articulo".COLOR = "Color".CODIGO)'
-      
-        '  INNER JOIN "Categoria" ON ("Articulo".CATEGORIA = "Categoria".' +
-        'CODIGO)'
-      
-        '  INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCa' +
-        'tegoria".CODIGO)'
-      '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)'
-      
-        '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".' +
-        'CODIGO)')
-    Left = 200
-    Top = 256
   end
 end

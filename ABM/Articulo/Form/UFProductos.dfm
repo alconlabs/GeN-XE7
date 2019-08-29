@@ -31,10 +31,6 @@ object FProductos: TFProductos
     TabStop = False
     object TabSheet1: TTabSheet
       Caption = 'Detalles'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label2: TLabel
         Left = 14
         Top = 82
@@ -104,7 +100,7 @@ object FProductos: TFProductos
         Top = 155
         Width = 106
         Height = 17
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -11
@@ -185,7 +181,7 @@ object FProductos: TFProductos
         Top = 189
         Width = 144
         Height = 29
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -19
@@ -345,7 +341,7 @@ object FProductos: TFProductos
         Width = 332
         Height = 21
         DataField = 'Descripcion'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 0
       end
       object DBEdit1: TDBEdit
@@ -354,7 +350,7 @@ object FProductos: TFProductos
         Width = 73
         Height = 21
         DataField = 'Disponible'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 2
       end
       object DBLookupComboBox4: TDBLookupComboBox
@@ -363,10 +359,9 @@ object FProductos: TFProductos
         Width = 231
         Height = 21
         DataField = 'Proveedor'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'NOMBRE'
-        ListSource = DSQProve
         TabOrder = 1
         OnEnter = DBLookupComboBox4Enter
       end
@@ -395,7 +390,7 @@ object FProductos: TFProductos
         Width = 65
         Height = 21
         DataField = 'ImpOtros'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 4
       end
       object CostoDBEdit: TDBEdit
@@ -404,7 +399,7 @@ object FProductos: TFProductos
         Width = 113
         Height = 21
         DataField = 'Costo'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 3
       end
       object PrecioCtaCteDBEdit: TDBEdit
@@ -413,7 +408,7 @@ object FProductos: TFProductos
         Width = 97
         Height = 21
         DataField = 'PRECIO'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 7
         OnExit = PrecioCtaCteDBEditExit
       end
@@ -423,7 +418,7 @@ object FProductos: TFProductos
         Width = 65
         Height = 21
         DataField = 'PORCENTAJE'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 5
         OnExit = GanaciaDBEditExit
       end
@@ -433,7 +428,7 @@ object FProductos: TFProductos
         Width = 100
         Height = 21
         DataField = 'CodigoBarra'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 9
       end
       object CodigoBarraBitBtn: TBitBtn
@@ -457,10 +452,9 @@ object FProductos: TFProductos
         Width = 65
         Height = 21
         DataField = 'IVA'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'TASA'
-        ListSource = DSTIVA
         TabOrder = 6
         OnEnter = IVADBComboBoxEnter
         OnExit = IVADBComboBoxExit
@@ -469,10 +463,6 @@ object FProductos: TFProductos
     object TabSheet3: TTabSheet
       Caption = 'Notas'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -480,17 +470,13 @@ object FProductos: TFProductos
         Height = 440
         Align = alClient
         DataField = 'Notas'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 0
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'Informaci'#243'n Adicional'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label6: TLabel
         Left = 351
         Top = 116
@@ -588,7 +574,7 @@ object FProductos: TFProductos
         Width = 145
         Height = 21
         DataField = 'Ubicacion'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 5
       end
       object DBEdit5: TDBEdit
@@ -597,7 +583,7 @@ object FProductos: TFProductos
         Width = 96
         Height = 21
         DataField = 'StockMinimo'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 7
         Visible = False
       end
@@ -607,7 +593,7 @@ object FProductos: TFProductos
         Width = 96
         Height = 21
         DataField = 'StockMaximo'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 8
         Visible = False
       end
@@ -617,7 +603,7 @@ object FProductos: TFProductos
         Width = 97
         Height = 21
         DataField = 'StockVendido'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 9
         Visible = False
       end
@@ -627,7 +613,7 @@ object FProductos: TFProductos
         Width = 145
         Height = 21
         DataField = 'FechaCompUlt'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 10
       end
       object DBEdit9: TDBEdit
@@ -636,7 +622,7 @@ object FProductos: TFProductos
         Width = 73
         Height = 21
         DataField = 'Unidad'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 4
       end
       object DBEdit21: TDBEdit
@@ -645,7 +631,7 @@ object FProductos: TFProductos
         Width = 97
         Height = 21
         DataField = 'Procedencia'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 6
       end
       object RubroDBLookupComboBox: TDBLookupComboBox
@@ -654,10 +640,9 @@ object FProductos: TFProductos
         Width = 170
         Height = 21
         DataField = 'Rubro'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = DSRubro
         TabOrder = 1
         OnEnter = RubroDBLookupComboBoxEnter
       end
@@ -683,10 +668,9 @@ object FProductos: TFProductos
         Width = 170
         Height = 21
         DataField = 'Marca'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = MarcaDataSource
         TabOrder = 2
         OnEnter = MarcaDBLookupComboBoxEnter
         OnKeyUp = MarcaDBLookupComboBoxKeyUp
@@ -713,10 +697,9 @@ object FProductos: TFProductos
         Width = 170
         Height = 21
         DataField = 'Categoria'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = DSTCat
         TabOrder = 0
         OnEnter = CategoriaDBLookupComboBoxEnter
       end
@@ -742,17 +725,13 @@ object FProductos: TFProductos
         Width = 197
         Height = 21
         DataField = 'STOCK'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 3
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'Precios'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label11: TLabel
         Left = 185
         Top = 221
@@ -815,12 +794,12 @@ object FProductos: TFProductos
         ParentFont = False
       end
       object Precio1DBEdit: TDBEdit
-        Left = 232
+        Left = 233
         Top = 95
         Width = 96
         Height = 21
         DataField = 'Precio1'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 0
       end
       object Precio2DBEdit: TDBEdit
@@ -829,7 +808,7 @@ object FProductos: TFProductos
         Width = 96
         Height = 21
         DataField = 'Precio2'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 1
       end
       object Precio3DBEdit: TDBEdit
@@ -838,7 +817,7 @@ object FProductos: TFProductos
         Width = 97
         Height = 21
         DataField = 'Precio3'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 2
       end
       object Precio6DBEdit: TDBEdit
@@ -847,7 +826,7 @@ object FProductos: TFProductos
         Width = 97
         Height = 21
         DataField = 'Precio6'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 5
         OnExit = Precio6DBEditExit
       end
@@ -857,7 +836,7 @@ object FProductos: TFProductos
         Width = 97
         Height = 21
         DataField = 'Precio4'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 3
       end
       object Precio5DBEdit: TDBEdit
@@ -866,17 +845,13 @@ object FProductos: TFProductos
         Width = 97
         Height = 21
         DataField = 'Precio5'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         TabOrder = 4
       end
     end
     object TabSheet5: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label50: TLabel
         Left = 185
         Top = 51
@@ -948,10 +923,9 @@ object FProductos: TFProductos
         Width = 351
         Height = 21
         DataField = 'CtaNombre'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 0
       end
       object DBLookupComboBox1: TDBLookupComboBox
@@ -960,10 +934,9 @@ object FProductos: TFProductos
         Width = 351
         Height = 21
         DataField = 'CtaTipo'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 1
       end
       object DBLookupComboBox2: TDBLookupComboBox
@@ -972,10 +945,9 @@ object FProductos: TFProductos
         Width = 351
         Height = 21
         DataField = 'CtaIIBB'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 2
       end
       object DBLookupComboBox7: TDBLookupComboBox
@@ -984,10 +956,9 @@ object FProductos: TFProductos
         Width = 351
         Height = 21
         DataField = 'CtaAnticipo'
-        DataSource = DataSource
+        DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 3
       end
     end
@@ -1084,7 +1055,7 @@ object FProductos: TFProductos
       Width = 86
       Height = 32
       DataField = 'CODIGO'
-      DataSource = DataSource
+      DataSource = DM.dstArticulo
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -19
@@ -1113,7 +1084,7 @@ object FProductos: TFProductos
       Top = 427
       Width = 120
       Height = 36
-      DataSource = DataSource
+      DataSource = DM.dstArticulo
       VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete]
       Hints.Strings = (
         'Primer registro'
@@ -1130,408 +1101,5 @@ object FProductos: TFProductos
       ShowHint = True
       TabOrder = 4
     end
-  end
-  object DataSource: TDataSource
-    AutoEdit = False
-    DataSet = Tabla
-    Left = 75
-    Top = 265
-  end
-  object DSTCat: TDataSource
-    DataSet = CategoriaT
-    Left = 392
-    Top = 425
-  end
-  object DSTSubCat: TDataSource
-    DataSet = SubCategoriaT
-    Left = 544
-    Top = 425
-  end
-  object DSMateriales: TDataSource
-    DataSet = MaterialT
-    Left = 41
-    Top = 368
-  end
-  object DSRubro: TDataSource
-    DataSet = RubroT
-    Left = 616
-    Top = 425
-  end
-  object DSQProve: TDataSource
-    DataSet = ProveedorT
-    Left = 256
-    Top = 368
-  end
-  object MarcaDataSource: TDataSource
-    DataSet = MarcaT
-    Left = 120
-    Top = 368
-  end
-  object CuentaDataSource: TDataSource
-    DataSet = CuentaQuery
-    Left = 190
-    Top = 425
-  end
-  object Tabla: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    AfterCancel = TablaAfterCancel
-    AfterDelete = TablaAfterDelete
-    AfterInsert = TablaAfterInsert
-    AfterPost = TablaAfterPost
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'DESCRIPCION'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'COSTO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'ULTCOSTO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO1'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO2'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO3'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO4'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO5'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO6'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PORCENTAJE'
-        DataType = ftFloat
-      end
-      item
-        Name = 'ULTPRECIO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'MARCA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'COLOR'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CATEGORIA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'SUBCATEGORIA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'UBICACION'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'UNIDAD'
-        DataType = ftString
-        Size = 50
-      end
-      item
-        Name = 'DISPONIBLE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ENPRODUCCION'
-        DataType = ftInteger
-      end
-      item
-        Name = 'NOTAS'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'IVA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'TASA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'IMPOTROS'
-        DataType = ftInteger
-      end
-      item
-        Name = 'IIBB'
-        DataType = ftInteger
-      end
-      item
-        Name = 'STOCKMINIMO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'STOCKMAXIMO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'STOCKVENDIDO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'FECHACOMPULT'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'LISTA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PROCEDENCIA'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'CODIGOBARRA'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'RUBRO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PROVEEDOR'
-        DataType = ftInteger
-      end
-      item
-        Name = 'GARANTIA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'FECHA'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'PEDIDO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'STOCK'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'EXISTENTE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ACTUAL'
-        DataType = ftInteger
-      end
-      item
-        Name = 'MARCADOCONTADO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'MARCADOLISTA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'MARCADOFINAL'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PREPARADO'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'CTANOMBRE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTATIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTAANTICIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTAIIBB'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ESTADO'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'VENCE'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'VENCIMIENTO'
-        DataType = ftInteger
-      end>
-    IndexDefs = <
-      item
-        Name = 'PK_Articulo'
-        Fields = 'CODIGO'
-        Options = [ixUnique]
-      end>
-    StoreDefs = True
-    TableName = 'Articulo'
-    UniDirectional = False
-    Left = 27
-    Top = 264
-  end
-  object CategoriaT: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'Categoria'
-    UniDirectional = False
-    Left = 352
-    Top = 425
-  end
-  object SubCategoriaT: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'SubCategoria'
-    UniDirectional = False
-    Left = 512
-    Top = 425
-  end
-  object RubroT: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'Rubro'
-    UniDirectional = False
-    Left = 584
-    Top = 425
-  end
-  object MaterialT: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'Material'
-    UniDirectional = False
-    Left = 11
-    Top = 368
-  end
-  object QTemp: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 240
-    Top = 425
-  end
-  object Usuario: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Usuario"')
-    Left = 8
-    Top = 425
-  end
-  object DSUsuarios: TDataSource
-    DataSet = Usuario
-    Left = 38
-    Top = 425
-  end
-  object CuentaQuery: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Cuenta"'
-      'order by DESCRIPCION')
-    Left = 160
-    Top = 425
-  end
-  object MarcaT: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'Marca'
-    UniDirectional = False
-    Left = 88
-    Top = 368
-  end
-  object ProveedorT: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'Proveedor'
-    UniDirectional = False
-    Left = 200
-    Top = 368
-  end
-  object ConfigQuery: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Config"')
-    Left = 96
-    Top = 425
-  end
-  object IVAT: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'Iva'
-    UniDirectional = False
-    Left = 352
-    Top = 369
-  end
-  object DSTIVA: TDataSource
-    DataSet = IVAT
-    Left = 392
-    Top = 369
   end
 end

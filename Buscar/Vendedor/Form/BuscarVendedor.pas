@@ -9,7 +9,6 @@ uses
 
 type
   TBuscarVendedorForm = class(TForm)
-    DataSource: TDataSource;
     Panel2: TPanel;
     DBText1: TDBText;
     DBText2: TDBText;
@@ -22,7 +21,6 @@ type
     Label3: TLabel;
     BitBtn1: TBitBtn;
     DBGrid1: TDBGrid;
-    Tabla: TIBQuery;
     Panel1: TPanel;
     Label1: TLabel;
     DescripcionEdit: TEdit;
@@ -52,9 +50,9 @@ implementation
 
 procedure TBuscarVendedorForm.Buscar;
 begin
-  Tabla.SQL.Text := ' select * from "Vendedor" where   ("Vendedor".NOMBRE LIKE '
+  dm.qVendedor.SQL.Text := ' select * from "Vendedor" where   ("Vendedor".NOMBRE LIKE '
     + QuotedStr(DescripcionEdit.Text + '%') + ')';
-  Tabla.Open;
+  dm.qVendedor.Open;
 end;
 
 procedure TBuscarVendedorForm.FormKeyDown(Sender: TObject; var Key: Word;
@@ -87,15 +85,15 @@ end;
 
 procedure TBuscarVendedorForm.FormShow(Sender: TObject);
 begin
-  if Tabla.Active = True then
-    Tabla.Close;
-  Tabla.Active := True;
+  if dm.qVendedor.Active = True then
+    dm.qVendedor.Close;
+  dm.qVendedor.Active := True;
 end;
 
 procedure TBuscarVendedorForm.Image1Click(Sender: TObject);
 begin
   ImprimirDataModule := TImprimirDataModule.Create(self);
-  ImprimirDataModule.CSV(Tabla.SQL.Text, 'VENDEDORES');
+  ImprimirDataModule.CSV(dm.qVendedor.SQL.Text, 'VENDEDORES');
   ImprimirDataModule.Free;
 end;
 

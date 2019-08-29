@@ -12,8 +12,6 @@ type
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
-    DataSource: TDataSource;
-    DSUsuarios: TDataSource;
     DBMemo1: TDBMemo;
     Label2: TLabel;
     Label3: TLabel;
@@ -22,7 +20,6 @@ type
     VendedorLabel: TLabel;
     TabSheet3: TTabSheet;
     Label15: TLabel;
-    CuentaDataSource: TDataSource;
     Label24: TLabel;
     DBEdit20: TDBEdit;
     TabSheet4: TTabSheet;
@@ -77,9 +74,6 @@ type
     DBNavigator1: TDBNavigator;
     ImprimirBitBtn: TBitBtn;
     BuscarBitBtn: TBitBtn;
-    Tabla: TIBTable;
-    UsuarioT: TIBTable;
-    CuentaT: TIBTable;
     DBEdit13: TDBEdit;
     Label12: TLabel;
     Label20: TLabel;
@@ -109,7 +103,7 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure TablaAfterInsert(DataSet: TDataSet);
+    procedure tClienteAfterInsert(DataSet: TDataSet);
     procedure VendedorBitBtnClick(Sender: TObject);
     procedure IVADBComboBoxChange(Sender: TObject);
     procedure BuscarGaranteBitBtnClick(Sender: TObject);
@@ -118,9 +112,9 @@ type
     procedure NoBitBtnClick(Sender: TObject);
     procedure ImprimirBitBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure TablaAfterCancel(DataSet: TDataSet);
-    procedure TablaAfterDelete(DataSet: TDataSet);
-    procedure TablaAfterPost(DataSet: TDataSet);
+    procedure tClienteAfterCancel(DataSet: TDataSet);
+    procedure tClienteAfterDelete(DataSet: TDataSet);
+    procedure tClienteAfterPost(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -140,24 +134,24 @@ uses UFBuscaCliente, BuscarVendedor;
 procedure TFClientes.SiBitBtnClick(Sender: TObject);
 begin
   desc := CodigoDBEdit.text;
-  If (Tabla.State = dsEdit) or (Tabla.State = dsInsert) then
-    Tabla.Post;
+  If (dm.tCliente.State = dsEdit) or (dm.tCliente.State = dsInsert) then
+    dm.tCliente.Post;
   Close;
 end;
 
 procedure TFClientes.BuscarBitBtnClick(Sender: TObject);
 begin
   TabSheet1.PageControl.ActivePageIndex := 0;
-  Tabla.Cancel;
+  dm.tCliente.Cancel;
   FBuscaCliente := TFBuscaCliente.Create(self);
   try
     FBuscaCliente.ShowModal;
   finally
-    Tabla.Locate('CODIGO', (FBuscaCliente.Tabla.FieldByName('CODIGO')
+    dm.tCliente.Locate('CODIGO', (dm.qCliente.FieldByName('CODIGO')
       .AsString), []);
     FBuscaCliente.Free;
   end;
-  Tabla.Edit;
+  dm.tCliente.Edit;
   DBEdit2.SetFocus;
 end;
 
@@ -165,11 +159,11 @@ procedure TFClientes.FormCreate(Sender: TObject);
 var i : Integer;
 begin
   // DM := TDM.Create(self);
-  UsuarioT.Open;
-  CuentaT.Open;
-  Tabla.Open;
-  Tabla.Insert;
-  Tabla.FieldByName('CODIGO').AsInteger := dm.UltimoRegistro('Cliente', 'CODIGO');
+  dm.tUsuario.Open;
+  dm.tCuenta.Open;
+  dm.tCliente.Open;
+  dm.tCliente.Insert;
+  dm.tCliente.FieldByName('CODIGO').AsInteger := dm.UltimoRegistro('Cliente', 'CODIGO');
   for i := 1 to 3 do IVADBComboBox.Items.Add(OperacionDM.tipoIVA[i]);
 end;
 
@@ -230,34 +224,34 @@ begin
   try
     FBuscaCliente.ShowModal;
   finally
-    GaranteDBEdit.text := FBuscaCliente.Tabla.FieldByName('CODIGO').AsString;
-    GaranteLabel.Caption := FBuscaCliente.Tabla.FieldByName('NOMBRE').AsString;
+    GaranteDBEdit.text := dm.qCliente.FieldByName('CODIGO').AsString;
+    GaranteLabel.Caption := dm.qCliente.FieldByName('NOMBRE').AsString;
     FBuscaCliente.Free;
   end;
   SiBitBtn.SetFocus;
 end;
 
-procedure TFClientes.TablaAfterCancel(DataSet: TDataSet);
+procedure TFClientes.tClienteAfterCancel(DataSet: TDataSet);
 begin
-  Tabla.Transaction.RollbackRetaining;
+  dm.tCliente.Transaction.RollbackRetaining;
 end;
 
-procedure TFClientes.TablaAfterDelete(DataSet: TDataSet);
+procedure TFClientes.tClienteAfterDelete(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tCliente.Transaction.CommitRetaining;
 end;
 
-procedure TFClientes.TablaAfterInsert(DataSet: TDataSet);
+procedure TFClientes.tClienteAfterInsert(DataSet: TDataSet);
 begin
-  Tabla.FieldByName('CtaNombre').AsString := '9';
-  Tabla.FieldByName('CtaTipo').AsString := '9';
-  Tabla.FieldByName('CtaAnticipo').AsString := '9';
+  dm.tCliente.FieldByName('CtaNombre').AsString := '9';
+  dm.tCliente.FieldByName('CtaTipo').AsString := '9';
+  dm.tCliente.FieldByName('CtaAnticipo').AsString := '9';
   VendedorDBEdit.text := '0';
 end;
 
-procedure TFClientes.TablaAfterPost(DataSet: TDataSet);
+procedure TFClientes.tClienteAfterPost(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tCliente.Transaction.CommitRetaining;
 end;
 
 procedure TFClientes.VendedorBitBtnClick(Sender: TObject);
@@ -266,9 +260,9 @@ begin
   try
     BuscarVendedorForm.ShowModal;
   finally
-    VendedorDBEdit.text := BuscarVendedorForm.Tabla.FieldByName
+    VendedorDBEdit.text := dm.qVendedor.FieldByName
       ('Codigo').AsString;
-    VendedorLabel.Caption := BuscarVendedorForm.Tabla.FieldByName
+    VendedorLabel.Caption := dm.qVendedor.FieldByName
       ('Nombre').AsString;
     BuscarVendedorForm.Free;
   end;

@@ -13,15 +13,6 @@ Coordinates=446,177,221,33
 [FDMemTableCategories]
 Coordinates=196,305,131,51
 
-[D]
-Coordinates=387,305,40,51
-
-[T]
-Coordinates=337,305,40,51
-
-[Q]
-Coordinates=146,305,40,51
-
 [O]
 Coordinates=96,305,40,51
 
@@ -36,4 +27,7 @@ Coordinates=415,10,111,105
 
 [RESTResponse1]
 Coordinates=10,10,96,285
+
+[]
+Coordinates=387,305,40,51
 

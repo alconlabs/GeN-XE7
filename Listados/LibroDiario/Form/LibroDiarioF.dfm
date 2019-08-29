@@ -78,8 +78,8 @@ object LibroDiarioLForm: TLibroDiarioLForm
         Top = 16
         Width = 121
         Height = 21
-        Date = 40179.873243958300000000
-        Time = 40179.873243958300000000
+        Date = 40179.000000000000000000
+        Time = 0.873243958296370700
         TabOrder = 0
         OnCloseUp = DTP1CloseUp
       end
@@ -88,8 +88,8 @@ object LibroDiarioLForm: TLibroDiarioLForm
         Top = 16
         Width = 121
         Height = 21
-        Date = 37668.873295891200000000
-        Time = 37668.873295891200000000
+        Date = 37668.000000000000000000
+        Time = 0.873295891200541500
         TabOrder = 1
         OnCloseUp = DTP2CloseUp
       end
@@ -265,7 +265,7 @@ object LibroDiarioLForm: TLibroDiarioLForm
     Height = 396
     Align = alClient
     Color = clWhite
-    DataSource = DataSource
+    DataSource = DM.dsqLibroDiario
     FixedColor = clWhite
     GradientEndColor = clBlack
     Font.Charset = DEFAULT_CHARSET
@@ -367,6 +367,8 @@ object LibroDiarioLForm: TLibroDiarioLForm
     Top = 30
     Width = 273
     Height = 21
+    DataField = 'CUENTA'
+    DataSource = DM.dsqLibroDiario
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
@@ -374,44 +376,8 @@ object LibroDiarioLForm: TLibroDiarioLForm
     Font.Style = []
     KeyField = 'DESCRIPCION'
     ListField = 'DESCRIPCION'
-    ListSource = CuentaDataSource
+    ListSource = DM.dsqCuenta
     ParentFont = False
     TabOrder = 3
-  end
-  object DataSource: TDataSource
-    DataSet = Tabla
-    Left = 360
-    Top = 320
-  end
-  object CuentaDataSource: TDataSource
-    DataSet = CuentaT
-    Left = 360
-    Top = 376
-  end
-  object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      '')
-    Left = 304
-    Top = 320
-  end
-  object CuentaT: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT *'
-      'FROM'
-      '  "Cuenta"'
-      'ORDER BY'
-      '  "Cuenta".DESCRIPCION')
-    Left = 304
-    Top = 376
   end
 end

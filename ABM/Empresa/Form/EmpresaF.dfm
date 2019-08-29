@@ -440,7 +440,7 @@ object EmpresaForm: TEmpresaForm
         Width = 209
         Height = 21
         DataField = 'Celular'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 10
       end
       object DBEdit10: TDBEdit
@@ -449,7 +449,7 @@ object EmpresaForm: TEmpresaForm
         Width = 209
         Height = 21
         DataField = 'Telefono'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 11
       end
       object DBEdit12: TDBEdit
@@ -458,7 +458,7 @@ object EmpresaForm: TEmpresaForm
         Width = 209
         Height = 21
         DataField = 'Fax'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 12
       end
       object DBEdit13: TDBEdit
@@ -467,7 +467,7 @@ object EmpresaForm: TEmpresaForm
         Width = 201
         Height = 21
         DataField = 'Email'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 13
       end
       object DBEdit18: TDBEdit
@@ -476,7 +476,7 @@ object EmpresaForm: TEmpresaForm
         Width = 82
         Height = 21
         DataField = 'CodigoArea'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 9
       end
       object DBEdit23: TDBEdit
@@ -485,7 +485,7 @@ object EmpresaForm: TEmpresaForm
         Width = 201
         Height = 21
         DataField = 'MSN'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 14
       end
       object DBEdit2: TDBEdit
@@ -494,7 +494,7 @@ object EmpresaForm: TEmpresaForm
         Width = 209
         Height = 21
         DataField = 'Nombre'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 0
       end
       object DBEdit3: TDBEdit
@@ -503,7 +503,7 @@ object EmpresaForm: TEmpresaForm
         Width = 209
         Height = 21
         DataField = 'Direccion'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 3
       end
       object DBEdit4: TDBEdit
@@ -512,7 +512,7 @@ object EmpresaForm: TEmpresaForm
         Width = 209
         Height = 21
         DataField = 'DireccionComercial'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 2
       end
       object DBEdit5: TDBEdit
@@ -521,7 +521,7 @@ object EmpresaForm: TEmpresaForm
         Width = 97
         Height = 21
         DataField = 'Pais'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 4
       end
       object DBEdit6: TDBEdit
@@ -530,7 +530,7 @@ object EmpresaForm: TEmpresaForm
         Width = 97
         Height = 21
         DataField = 'Provincia'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 5
       end
       object DBEdit7: TDBEdit
@@ -539,7 +539,7 @@ object EmpresaForm: TEmpresaForm
         Width = 97
         Height = 21
         DataField = 'Departamento'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 6
       end
       object DBEdit8: TDBEdit
@@ -548,7 +548,7 @@ object EmpresaForm: TEmpresaForm
         Width = 97
         Height = 21
         DataField = 'Ciudad'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 7
       end
       object DBEdit17: TDBEdit
@@ -557,7 +557,7 @@ object EmpresaForm: TEmpresaForm
         Width = 97
         Height = 21
         DataField = 'CP'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 8
       end
       object DBEdit1: TDBEdit
@@ -566,7 +566,7 @@ object EmpresaForm: TEmpresaForm
         Width = 209
         Height = 21
         DataField = 'Titular'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 1
       end
       object DBEdit21: TDBEdit
@@ -575,7 +575,7 @@ object EmpresaForm: TEmpresaForm
         Width = 201
         Height = 21
         DataField = 'Rubro'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 17
       end
       object DBEdit22: TDBEdit
@@ -584,7 +584,7 @@ object EmpresaForm: TEmpresaForm
         Width = 201
         Height = 21
         DataField = 'CUIT'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 16
       end
       object IVADBComboBox: TDBComboBox
@@ -593,7 +593,7 @@ object EmpresaForm: TEmpresaForm
         Width = 201
         Height = 21
         DataField = 'IVA'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 18
         OnChange = IVADBComboBoxChange
       end
@@ -603,7 +603,7 @@ object EmpresaForm: TEmpresaForm
         Width = 202
         Height = 21
         DataField = 'DOCUMENTO'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 15
       end
       object DateTimePicker1: TDateTimePicker
@@ -621,10 +621,10 @@ object EmpresaForm: TEmpresaForm
         Width = 209
         Height = 21
         DataField = 'IIBB'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = IIBBDataSource
+        ListSource = DM.dsqIIBB
         TabOrder = 20
       end
       object DBEdit11: TDBEdit
@@ -633,7 +633,7 @@ object EmpresaForm: TEmpresaForm
         Width = 201
         Height = 21
         DataField = 'WEB'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 21
       end
     end
@@ -647,7 +647,7 @@ object EmpresaForm: TEmpresaForm
         Height = 440
         Align = alClient
         DataField = 'Notas'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         TabOrder = 0
       end
     end
@@ -694,10 +694,10 @@ object EmpresaForm: TEmpresaForm
         Width = 351
         Height = 21
         DataField = 'CtaAnticipo'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 0
       end
       object DBLookupComboBox1: TDBLookupComboBox
@@ -706,10 +706,10 @@ object EmpresaForm: TEmpresaForm
         Width = 351
         Height = 21
         DataField = 'CtaTipo'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 1
       end
       object CuentaDBLookupComboBox: TDBLookupComboBox
@@ -718,10 +718,10 @@ object EmpresaForm: TEmpresaForm
         Width = 351
         Height = 21
         DataField = 'CtaNombre'
-        DataSource = DataSource
+        DataSource = DM.dstEmpresa
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 2
       end
     end
@@ -840,7 +840,7 @@ object EmpresaForm: TEmpresaForm
       Width = 83
       Height = 24
       DataField = 'Codigo'
-      DataSource = DataSource
+      DataSource = DM.dstEmpresa
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -13
@@ -850,237 +850,9 @@ object EmpresaForm: TEmpresaForm
       TabOrder = 3
     end
   end
-  object DataSource: TDataSource
-    DataSet = Tabla
-    Left = 172
-    Top = 396
-  end
-  object CuentaDataSource: TDataSource
-    DataSet = CuentaT
-    Left = 249
-    Top = 396
-  end
-  object Tabla: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    AfterCancel = TablaAfterCancel
-    AfterDelete = TablaAfterDelete
-    AfterPost = TablaAfterPost
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'NOMBRE'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'TITULAR'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCION'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCIONCOMERCIAL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PAIS'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'PROVINCIA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DEPARTAMENTO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CIUDAD'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'CP'
-        DataType = ftWideString
-        Size = 20
-      end
-      item
-        Name = 'CODIGOAREA'
-        DataType = ftWideString
-        Size = 10
-      end
-      item
-        Name = 'CELULAR'
-        DataType = ftWideString
-        Size = 20
-      end
-      item
-        Name = 'TELEFONO'
-        DataType = ftWideString
-        Size = 15
-      end
-      item
-        Name = 'FAX'
-        DataType = ftWideString
-        Size = 15
-      end
-      item
-        Name = 'EMAIL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'SUSPENDIDO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'EXCENTO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'FECHA'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'LIMITECREDITO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'NOTAS'
-        DataType = ftBlob
-        Size = 8
-      end
-      item
-        Name = 'DIASCREDITO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'DOCUMENTO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'RAZONSOCIAL'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'CUIT'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'IIBB'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'RUBRO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'IVA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'MSN'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'WEB'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'ZONA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTANOMBRE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTATIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTAANTICIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PAGARE'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end>
-    IndexDefs = <
-      item
-        Name = 'PK_Empresa'
-        Fields = 'CODIGO'
-        Options = [ixUnique]
-      end>
-    StoreDefs = True
-    TableName = 'Empresa'
-    UniDirectional = False
-    Left = 144
-    Top = 396
-  end
-  object CuentaT: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Cuenta"'
-      'order by DESCRIPCION')
-    Left = 221
-    Top = 396
-  end
   object OpenPictureDialog1: TOpenPictureDialog
     Filter = 'Bitmaps (*.bmp)|*.bmp'
     Left = 400
-    Top = 396
-  end
-  object IIBBQuery: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'Select * from "IIBB"')
-    Left = 325
-    Top = 396
-  end
-  object IIBBDataSource: TDataSource
-    DataSet = IIBBQuery
-    Left = 297
     Top = 396
   end
 end

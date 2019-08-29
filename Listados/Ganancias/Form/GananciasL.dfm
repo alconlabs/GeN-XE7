@@ -23,7 +23,6 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
     Width = 792
     Height = 70
     Align = alTop
-    Color = clBlack
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11
@@ -34,12 +33,12 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
     TabOrder = 0
     object Label5: TLabel
       Left = 402
-      Top = 0
+      Top = 1
       Width = 273
       Height = 29
       Caption = 'GANANCIA$ x VENTAS'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -24
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -54,7 +53,7 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
       AutoSize = False
       Caption = '0'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -24
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -67,7 +66,7 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
       Height = 48
       Caption = ' Fechas '
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -92,8 +91,8 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
         Top = 18
         Width = 121
         Height = 21
-        Date = 42005.873243958300000000
-        Time = 42005.873243958300000000
+        Date = 42005.000000000000000000
+        Time = 0.873243958296370700
         TabOrder = 0
         OnCloseUp = DTP1CloseUp
       end
@@ -102,8 +101,8 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
         Top = 18
         Width = 121
         Height = 21
-        Date = 37668.873295891200000000
-        Time = 37668.873295891200000000
+        Date = 37668.000000000000000000
+        Time = 0.873295891200541500
         TabOrder = 1
         OnCloseUp = DTP2CloseUp
       end
@@ -132,7 +131,6 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
     Width = 105
     Height = 396
     Align = alRight
-    Color = clBlack
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11
@@ -148,7 +146,7 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
       Height = 20
       Caption = 'Debe'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -162,7 +160,7 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
       Height = 20
       Caption = 'Haber'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -175,6 +173,12 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
       Width = 6
       Height = 13
       Caption = '0'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       Visible = False
     end
     object Haber: TLabel
@@ -183,6 +187,12 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
       Width = 6
       Height = 13
       Caption = '0'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       Visible = False
     end
     object SiBitBtn: TBitBtn
@@ -210,7 +220,6 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
     Height = 396
     Align = alClient
     Color = clWhite
-    DataSource = DataSource
     FixedColor = clWhite
     GradientEndColor = clBlack
     Font.Charset = DEFAULT_CHARSET
@@ -306,166 +315,5 @@ object GanaciaxVtaLForm: TGanaciaxVtaLForm
         Width = 65
         Visible = True
       end>
-  end
-  object DBGrid2: TDBGrid
-    Left = 0
-    Top = 70
-    Width = 687
-    Height = 396
-    Align = alClient
-    Color = clWhite
-    DataSource = DataSource
-    FixedColor = clWhite
-    GradientEndColor = clBlack
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
-    ParentFont = False
-    ReadOnly = True
-    TabOrder = 3
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clBlack
-    TitleFont.Height = -11
-    TitleFont.Name = 'MS Sans Serif'
-    TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'Asiento'
-        Title.Caption = 'A'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clBlack
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 30
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'Fecha'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clBlack
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 65
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'Leyenda'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clBlack
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 167
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'DESCRIPCION'
-        Title.Caption = 'Cuenta'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clBlack
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 186
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'Debe'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clBlack
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 68
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'Haber'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clBlack
-        Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
-        Title.Font.Style = [fsBold]
-        Width = 65
-        Visible = True
-      end>
-  end
-  object DataSource: TDataSource
-    DataSet = Tabla
-    Left = 360
-    Top = 256
-  end
-  object CuentaDataSource: TDataSource
-    DataSet = CuentaTabla
-    Left = 360
-    Top = 312
-  end
-  object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT '
-      '  "LibroDiario".CODIGO,'
-      '  "LibroDiario".ASIENTO,'
-      '  "LibroDiario".FECHA,'
-      '  "LibroDiario".LEYENDA,'
-      '  "LibroDiario".JERARQUIA,'
-      '  "LibroDiario".CUENTA,'
-      '  "LibroDiario".DEBE,'
-      '  "LibroDiario".HABER,'
-      '  ("LibroDiario".DEBE - "LibroDiario".HABER) AS "SubTotal,",'
-      '  "LibroDiario".OCULTO,'
-      '  "Cuenta".RUBRO,'
-      '  "Cuenta".CAPITULO,'
-      '  "Cuenta".TIPOGASTO,'
-      '  "Cuenta".DESCRIPCION,'
-      '  "Cuenta".SALDO,'
-      '  "Cuenta".LEYENDADEUDORA,'
-      '  "Cuenta".LEYENDAHACREEDORA'
-      'FROM'
-      '  "LibroDiario"'
-      
-        '  INNER JOIN "Cuenta" ON ("LibroDiario".CUENTA = "Cuenta".DESCRI' +
-        'PCION)')
-    Left = 320
-    Top = 256
-  end
-  object CuentaTabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT '
-      '  "Cuenta".CODIGO,'
-      '  "Cuenta".RUBRO,'
-      '  "Cuenta".CAPITULO,'
-      '  "Cuenta".TIPOGASTO,'
-      '  "Cuenta".JERARQUIA,'
-      '  "Cuenta".DESCRIPCION,'
-      '  "Cuenta".SALDO,'
-      '  "Cuenta".LEYENDADEUDORA,'
-      '  "Cuenta".LEYENDAHACREEDORA'
-      'FROM'
-      '  "Cuenta"'
-      'ORDER BY'
-      '  "Cuenta".DESCRIPCION')
-    Left = 320
-    Top = 312
   end
 end

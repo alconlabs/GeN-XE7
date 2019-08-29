@@ -3,9 +3,9 @@ object ConfiguracionForm: TConfiguracionForm
   Top = 169
   BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
   Caption = 'Configuraci'#243'n del Sistema'
-  ClientHeight = 561
-  ClientWidth = 784
-  Color = clWindow
+  ClientHeight = 572
+  ClientWidth = 792
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -21,18 +21,19 @@ object ConfiguracionForm: TConfiguracionForm
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
-    Left = 720
+    Left = 728
     Top = 0
     Width = 64
-    Height = 561
+    Height = 572
     Align = alRight
     Caption = 'Grabar?'
-    Color = clWindow
     ParentBackground = False
     TabOrder = 0
+    ExplicitLeft = 720
+    ExplicitHeight = 561
     object BitBtn1: TBitBtn
       Left = 1
-      Top = 460
+      Top = 471
       Width = 62
       Height = 50
       Align = alBottom
@@ -64,13 +65,11 @@ object ConfiguracionForm: TConfiguracionForm
       ParentFont = False
       TabOrder = 0
       OnClick = BitBtn1Click
-      ExplicitLeft = 2
-      ExplicitTop = 156
-      ExplicitWidth = 60
+      ExplicitTop = 460
     end
     object BitBtn2: TBitBtn
       Left = 1
-      Top = 510
+      Top = 521
       Width = 62
       Height = 50
       Align = alBottom
@@ -103,35 +102,33 @@ object ConfiguracionForm: TConfiguracionForm
       ParentFont = False
       TabOrder = 1
       OnClick = BitBtn2Click
-      ExplicitLeft = 0
-      ExplicitTop = 294
-      ExplicitWidth = 60
+      ExplicitTop = 510
     end
   end
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 720
-    Height = 561
-    ActivePage = TabSheet1
+    Width = 728
+    Height = 572
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 960
-    ExplicitHeight = 491
+    ExplicitWidth = 720
+    ExplicitHeight = 561
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
-      ExplicitWidth = 952
-      ExplicitHeight = 463
+      ExplicitWidth = 712
+      ExplicitHeight = 533
       object Label43: TLabel
         Left = 3
         Top = 3
         Width = 162
-        Height = 13
+        Height = 17
         Caption = 'Cuenta Contable Asociada a'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
@@ -144,9 +141,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 150
         Height = 13
         Caption = 'Costo de Mercaderias Vendidas'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -159,9 +156,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 21
         Height = 13
         Caption = 'Caja'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -174,9 +171,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 91
         Height = 13
         Caption = 'Comisi'#243'n Vendedor'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -189,9 +186,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 131
         Height = 13
         Caption = 'Comisi'#243'n Vendedor a Pagar'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -204,9 +201,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 130
         Height = 13
         Caption = 'Banco XX Cuenta Corriente'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -219,9 +216,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 110
         Height = 13
         Caption = 'Anticipo a Proveedores'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -234,9 +231,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 138
         Height = 13
         Caption = 'Deudores en Gesti'#243'n Judicial'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -249,9 +246,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 95
         Height = 13
         Caption = 'Deudores por Venta'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -264,9 +261,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 103
         Height = 13
         Caption = 'Documentos a Cobrar'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -279,9 +276,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 91
         Height = 13
         Caption = 'Honorarios Legales'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -294,9 +291,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 131
         Height = 13
         Caption = 'Honorarios Legales a Pagar'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -309,9 +306,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 89
         Height = 13
         Caption = 'Deudores Morosos'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -324,9 +321,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 104
         Height = 13
         Caption = 'Deudores Incobrables'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -339,9 +336,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 57
         Height = 13
         Caption = 'IVA a Pagar'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -354,9 +351,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 184
         Height = 13
         Caption = 'Mercader'#237'a Recuperada Judicialmente'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -369,9 +366,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 119
         Height = 13
         Caption = 'Mercader'#237'as de Reventa'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -384,9 +381,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 101
         Height = 13
         Caption = 'Obligaciones a Pagar'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -399,9 +396,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 94
         Height = 13
         Caption = 'Pago de Honorarios'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -414,9 +411,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 81
         Height = 13
         Caption = 'IVA Debito Fiscal'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -429,9 +426,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 83
         Height = 13
         Caption = 'IVA Credito Fiscal'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -444,9 +441,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 38
         Height = 13
         Caption = 'Servicio'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -459,9 +456,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 78
         Height = 13
         Caption = 'Servicio a Pagar'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -474,9 +471,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 77
         Height = 13
         Caption = 'Valores al Cobro'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -489,9 +486,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 85
         Height = 13
         Caption = 'Recupero Judicial'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -504,9 +501,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 60
         Height = 13
         Caption = 'Proveedores'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -519,9 +516,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 33
         Height = 13
         Caption = 'Ventas'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -534,9 +531,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 92
         Height = 13
         Caption = 'Valores a Depositar'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -549,9 +546,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 84
         Height = 13
         Caption = 'Tarjeta de Credito'
-        Color = clWindowText
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -564,10 +561,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 210
         Height = 21
         DataField = 'CtaBanco'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 0
       end
       object DBLookupComboBox1: TDBLookupComboBox
@@ -576,10 +573,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaCaja'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 1
       end
       object DBLookupComboBox3: TDBLookupComboBox
@@ -588,10 +585,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaComisionVendedor'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 2
       end
       object DBLookupComboBox4: TDBLookupComboBox
@@ -600,10 +597,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaComisionVendedorAPagar'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 3
       end
       object DBLookupComboBox2: TDBLookupComboBox
@@ -612,10 +609,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaCMV'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 4
       end
       object DBLookupComboBox5: TDBLookupComboBox
@@ -624,10 +621,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaAnticipoAProveedor'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 5
       end
       object DBLookupComboBox6: TDBLookupComboBox
@@ -636,10 +633,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaDeudorEnGestionJudicial'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 6
       end
       object DBLookupComboBox7: TDBLookupComboBox
@@ -648,10 +645,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaDeudorMoroso'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 7
       end
       object DBLookupComboBox8: TDBLookupComboBox
@@ -660,10 +657,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaDeudorPorVenta'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 8
       end
       object DBLookupComboBox9: TDBLookupComboBox
@@ -672,10 +669,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaHonorarioLegal'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 9
       end
       object DBLookupComboBox10: TDBLookupComboBox
@@ -684,10 +681,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaHonorarioLegalApagar'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 10
       end
       object DBLookupComboBox11: TDBLookupComboBox
@@ -696,10 +693,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaDocumentoACobrar'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 11
       end
       object DBLookupComboBox12: TDBLookupComboBox
@@ -708,10 +705,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaDeudorIncobrable'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 12
       end
       object DBLookupComboBox13: TDBLookupComboBox
@@ -720,10 +717,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaIVAAPagar'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 13
       end
       object DBLookupComboBox14: TDBLookupComboBox
@@ -732,10 +729,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaIVADebitoFiscal'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 14
       end
       object DBLookupComboBox15: TDBLookupComboBox
@@ -744,10 +741,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaMerRecJudicialmente'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 15
       end
       object DBLookupComboBox16: TDBLookupComboBox
@@ -756,10 +753,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaObligacionAPagar'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 16
       end
       object DBLookupComboBox17: TDBLookupComboBox
@@ -768,10 +765,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaPagoDeHonorario'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 17
       end
       object DBLookupComboBox18: TDBLookupComboBox
@@ -780,10 +777,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaMercaderiaDeReventa'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 18
       end
       object DBLookupComboBox19: TDBLookupComboBox
@@ -792,10 +789,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaIVACreditoFiscal'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 19
       end
       object DBLookupComboBox21: TDBLookupComboBox
@@ -804,10 +801,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaRecuperoJudicial'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 20
       end
       object DBLookupComboBox22: TDBLookupComboBox
@@ -816,10 +813,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaServicio'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 21
       end
       object DBLookupComboBox23: TDBLookupComboBox
@@ -828,10 +825,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaValorAlCobro'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 22
       end
       object DBLookupComboBox25: TDBLookupComboBox
@@ -840,10 +837,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaServicioAPAgar'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 23
       end
       object DBLookupComboBox26: TDBLookupComboBox
@@ -852,10 +849,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaProveedor'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 24
       end
       object DBLookupComboBox27: TDBLookupComboBox
@@ -864,10 +861,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaVenta'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 25
       end
       object DBLookupComboBox24: TDBLookupComboBox
@@ -876,10 +873,10 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaValorADepositar'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 26
       end
       object DBLookupComboBox20: TDBLookupComboBox
@@ -888,26 +885,26 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 209
         Height = 21
         DataField = 'CtaTarjetaDeCredito'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
+        ListSource = DM.dsqCuenta
         TabOrder = 27
       end
     end
     object TabSheet1: TTabSheet
       Caption = 'Parametros'
-      ExplicitLeft = 52
-      ExplicitTop = 64
+      ExplicitLeft = 2
+      ExplicitTop = 27
       object Label1: TLabel
         Left = 16
         Top = 24
         Width = 113
         Height = 13
         Caption = 'N'#250'mero de Factura:'
-        Color = clBlack
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
@@ -920,9 +917,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 102
         Height = 13
         Caption = 'Codigo de Barras:'
-        Color = clBlack
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
@@ -935,9 +932,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 79
         Height = 13
         Caption = 'Comprobante:'
-        Color = clBlack
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
@@ -950,9 +947,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 48
         Height = 13
         Caption = 'Imprimir:'
-        Color = clBlack
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
@@ -965,9 +962,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 73
         Height = 13
         Caption = 'Vista Previa:'
-        Color = clBlack
+        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
@@ -980,19 +977,19 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 193
         Height = 21
         DataField = 'NroFactura'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         TabOrder = 0
       end
       object ReporteDBLookupComboBox: TDBLookupComboBox
         Left = 144
-        Top = 112
+        Top = 111
         Width = 193
         Height = 21
         DataField = 'ImprimirTipo'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         KeyField = 'Codigo'
         ListField = 'Descripcion'
-        ListSource = ImprimirDataSource
+        ListSource = DM.dsqImprimir
         TabOrder = 1
         OnClick = ReporteDBLookupComboBoxClick
       end
@@ -1002,7 +999,7 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 57
         Height = 21
         DataField = 'Imprimir'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         Items.Strings = (
           'SI'
           'NO')
@@ -1014,7 +1011,7 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 57
         Height = 21
         DataField = 'ImprimirMostrar'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         Items.Strings = (
           'SI'
           'NO')
@@ -1026,7 +1023,7 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 57
         Height = 21
         DataField = 'CodigoBarra'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         Items.Strings = (
           'SI'
           'NO')
@@ -1046,10 +1043,8 @@ object ConfiguracionForm: TConfiguracionForm
     object TabSheet2: TTabSheet
       Caption = 'Lista de Precios'
       ImageIndex = 2
-      ExplicitLeft = 2
-      ExplicitTop = 28
-      ExplicitWidth = 952
-      ExplicitHeight = 463
+      ExplicitWidth = 712
+      ExplicitHeight = 533
       object Label2: TLabel
         Left = 47
         Top = 56
@@ -1057,7 +1052,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = 'Precio 1:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1070,7 +1065,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = 'Precio 2:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1083,7 +1078,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = 'Precio 3:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1096,7 +1091,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = 'Precio4:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1109,7 +1104,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = 'Precio 5:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1122,7 +1117,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = 'Precio 6:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1135,7 +1130,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = 'Lista:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1148,7 +1143,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = 'Porcentaje'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
@@ -1161,7 +1156,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = '%'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1174,7 +1169,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = '%'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1187,7 +1182,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = '%'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1200,7 +1195,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = '%'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1213,7 +1208,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = '%'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1226,7 +1221,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = '%'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1239,7 +1234,7 @@ object ConfiguracionForm: TConfiguracionForm
         Height = 13
         Caption = '%'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clCaptionText
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
@@ -1251,7 +1246,7 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 65
         Height = 21
         DataField = 'PP1'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         TabOrder = 0
       end
       object DBEdit3: TDBEdit
@@ -1260,7 +1255,7 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 65
         Height = 21
         DataField = 'PP2'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         TabOrder = 1
       end
       object DBEdit4: TDBEdit
@@ -1269,7 +1264,7 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 65
         Height = 21
         DataField = 'PP3'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         TabOrder = 2
       end
       object DBEdit5: TDBEdit
@@ -1278,7 +1273,7 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 65
         Height = 21
         DataField = 'PP4'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         TabOrder = 3
       end
       object DBEdit6: TDBEdit
@@ -1287,7 +1282,7 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 65
         Height = 21
         DataField = 'PP5'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         TabOrder = 4
       end
       object DBEdit7: TDBEdit
@@ -1296,7 +1291,7 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 65
         Height = 21
         DataField = 'PP6'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         TabOrder = 5
       end
       object DBEdit8: TDBEdit
@@ -1305,316 +1300,9 @@ object ConfiguracionForm: TConfiguracionForm
         Width = 65
         Height = 21
         DataField = 'Precio'
-        DataSource = DataSource
+        DataSource = DM.dstConfiguracion
         TabOrder = 6
       end
     end
-  end
-  object DataSource: TDataSource
-    DataSet = Tabla
-    Left = 120
-    Top = 439
-  end
-  object CuentaDataSource: TDataSource
-    DataSet = CuentaQuery
-    Left = 238
-    Top = 439
-  end
-  object ImprimirDataSource: TDataSource
-    DataSet = ImprimirQuery
-    Left = 374
-    Top = 439
-  end
-  object ImprimirQuery: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Imprimir"')
-    Left = 344
-    Top = 439
-  end
-  object CuentaQuery: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Cuenta"')
-    Left = 208
-    Top = 439
-  end
-  object Tabla: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    AfterCancel = TablaAfterCancel
-    AfterDelete = TablaAfterDelete
-    AfterPost = TablaAfterPost
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'NROFACTURA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'FechaInicio'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PP1'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP2'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP3'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP4'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP5'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP6'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP7'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP8'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP9'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP'
-        DataType = ftFloat
-      end
-      item
-        Name = 'CtaCompra'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaMercaderia'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaIIBB'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaImpuesto'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaDeudor'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaVenta'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaCaja'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaAnticipoAProveedor'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaBanco'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaCMV'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaComisionVendedor'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaComisionVendedorAPagar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaDeudorEnGestionJudicial'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaDeudorIncobrable'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaDeudorMoroso'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaDeudorPorVenta'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaDocumentoACobrar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaHonorarioLegal'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaHonorarioLegalApagar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaIVARemanente'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaIVAAPagar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaIVACreditoFiscal'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaIVADebitoFiscal'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaLiquidacionDeIVA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaMerRecJudicialmente'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaMercaderiaDeReventa'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaObligacionAPagar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaPagoDeHonorario'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaTarjetaDeCredito'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaProveedor'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaRecuperoJudicial'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaServicioAPAgar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaServicio'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaValorAlCobro'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaValorADepositar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'Cuenta'
-        DataType = ftInteger
-      end
-      item
-        Name = 'Precio'
-        DataType = ftInteger
-      end
-      item
-        Name = 'Comprobante'
-        DataType = ftInteger
-      end
-      item
-        Name = 'Empresa'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ImprimirTipo'
-        DataType = ftInteger
-      end
-      item
-        Name = 'Imprimir'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 3
-      end
-      item
-        Name = 'ImprimirFiscal'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 3
-      end
-      item
-        Name = 'ImprimirMostrar'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 3
-      end
-      item
-        Name = 'CodigoBarra'
-        DataType = ftInteger
-      end
-      item
-        Name = 'GesCobTemprana'
-        DataType = ftInteger
-      end
-      item
-        Name = 'GesCobExtraJudicial'
-        DataType = ftInteger
-      end
-      item
-        Name = 'GesCobJudicial'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CMV'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTACAPITALSOC'
-        DataType = ftInteger
-      end>
-    StoreDefs = True
-    TableName = 'Config'
-    UniDirectional = False
-    Left = 88
-    Top = 439
   end
 end

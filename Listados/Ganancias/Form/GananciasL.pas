@@ -21,15 +21,10 @@ type
     Label4: TLabel;
     Debe: TLabel;
     Haber: TLabel;
-    DataSource: TDataSource;
     BitBtn3: TBitBtn;
     DBGrid1: TDBGrid;
-    CuentaDataSource: TDataSource;
-    DBGrid2: TDBGrid;
     Label5: TLabel;
     Saldo: TLabel;
-    Tabla: TIBQuery;
-    CuentaTabla: TIBQuery;
     procedure FormCreate(Sender: TObject);
     procedure DTP1CloseUp(Sender: TObject);
     procedure DTP2CloseUp(Sender: TObject);
@@ -72,7 +67,7 @@ end;
 procedure TGanaciaxVtaLForm.FormCreate(Sender: TObject);
 begin
   // DM := TDM.Create(self);
-  CuentaTabla.Open;
+  dm.qCuenta.Open;
   DTP2.DateTime := Now + 1;
   DM.ConfigQuery.Open;
 end;
@@ -110,7 +105,7 @@ begin
   Debe.Caption := '0';
   Haber.Caption := '0';
   Saldo.Caption := '0';
-  Tabla.SQL.Text := 'SELECT ' + QuotedStr(DM.ConfigQuery.FieldByName('Nombre')
+  dm.qGanancia.SQL.Text := 'SELECT ' + QuotedStr(DM.ConfigQuery.FieldByName('Nombre')
     .AsString) + ' AS Empresa, ' + QuotedStr(DateToStr(DTP1.Date)) +
     ' AS Desde,  ' + QuotedStr(DateToStr(DTP2.Date)) + ' AS Hasta, ' +
     ' "LibroDiario".ASIENTO, ' + ' "LibroDiario".FECHA, ' +
@@ -131,21 +126,21 @@ begin
     ') )' + '';
   {
     // ShortDateFormat := '#yyyy/mm/dd#';
-    Tabla.SQL.Add(' WHERE (FECHA >= '+QuotedStr(DateToStr(DTP1.Date))+') AND (FECHA <= '+QuotedStr(DateToStr(DTP2.Date))+')');
-    Tabla.SQL.Add(' AND (("Cuenta".CODIGO = '+DM.ConfigQuery.FieldByName('CTAVENTA').AsString+') OR ("Cuenta".CODIGO = '+DM.ConfigQuery.FieldByName('CtaCMV').AsString+'))');
+    dm.qGanancia.SQL.Add(' WHERE (FECHA >= '+QuotedStr(DateToStr(DTP1.Date))+') AND (FECHA <= '+QuotedStr(DateToStr(DTP2.Date))+')');
+    dm.qGanancia.SQL.Add(' AND (("Cuenta".CODIGO = '+DM.ConfigQuery.FieldByName('CTAVENTA').AsString+') OR ("Cuenta".CODIGO = '+DM.ConfigQuery.FieldByName('CtaCMV').AsString+'))');
 
     // ShortDateFormat := 'dd/mm/yyyy';
   }
-  Tabla.Open;
-  for i := 1 to Tabla.RecordCount do
+  dm.qGanancia.Open;
+  for i := 1 to dm.qGanancia.RecordCount do
   begin
     Debe.Caption := FloatToStr(StrToFloat(Debe.Caption) +
-      Tabla.FieldByName('Debe').AsFloat);
+      dm.qGanancia.FieldByName('Debe').AsFloat);
     Haber.Caption := FloatToStr(StrToFloat(Haber.Caption) +
-      Tabla.FieldByName('Haber').AsFloat);
+      dm.qGanancia.FieldByName('Haber').AsFloat);
     Saldo.Caption := FloatToStr(StrToFloat(Haber.Caption) -
       StrToFloat(Debe.Caption));
-    Tabla.Next;
+    dm.qGanancia.Next;
   end;
 end;
 
@@ -157,7 +152,7 @@ end;
 procedure TGanaciaxVtaLForm.BitBtn3Click(Sender: TObject);
 begin
   ImprimirDataModule := TImprimirDataModule.Create(self);
-  ImprimirDataModule.SImpr(Tabla.SQL.Text, 'GananciaXvta');
+  ImprimirDataModule.SImpr(dm.qGanancia.SQL.Text, 'GananciaXvta');
   ImprimirDataModule.Free;
 end;
 

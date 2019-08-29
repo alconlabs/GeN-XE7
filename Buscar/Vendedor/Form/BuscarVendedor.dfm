@@ -34,7 +34,7 @@ object BuscarVendedorForm: TBuscarVendedorForm
       Width = 100
       Height = 17
       DataField = 'Direccion'
-      DataSource = DataSource
+      DataSource = DM.dsqVendedor
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -48,7 +48,7 @@ object BuscarVendedorForm: TBuscarVendedorForm
       Width = 100
       Height = 17
       DataField = 'DIRECCIONCOMERCIAL'
-      DataSource = DataSource
+      DataSource = DM.dsqVendedor
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -62,7 +62,7 @@ object BuscarVendedorForm: TBuscarVendedorForm
       Width = 100
       Height = 17
       DataField = 'Provincia'
-      DataSource = DataSource
+      DataSource = DM.dsqVendedor
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -89,7 +89,7 @@ object BuscarVendedorForm: TBuscarVendedorForm
       Width = 100
       Height = 17
       DataField = 'Departamento'
-      DataSource = DataSource
+      DataSource = DM.dsqVendedor
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -103,7 +103,7 @@ object BuscarVendedorForm: TBuscarVendedorForm
       Width = 100
       Height = 17
       DataField = 'Ciudad'
-      DataSource = DataSource
+      DataSource = DM.dsqVendedor
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -253,7 +253,7 @@ object BuscarVendedorForm: TBuscarVendedorForm
     Width = 696
     Height = 407
     Align = alClient
-    DataSource = DataSource
+    DataSource = DM.dsqVendedor
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     ReadOnly = True
     TabOrder = 2
@@ -361,21 +361,5 @@ object BuscarVendedorForm: TBuscarVendedorForm
       TabOrder = 0
       OnKeyUp = DescripcionEditKeyUp
     end
-  end
-  object DataSource: TDataSource
-    DataSet = Tabla
-    Left = 120
-    Top = 376
-  end
-  object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Vendedor"')
-    Left = 72
-    Top = 376
   end
 end

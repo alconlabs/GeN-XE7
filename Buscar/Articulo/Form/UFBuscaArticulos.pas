@@ -31,11 +31,9 @@ type
     DBText1: TDBText;
     DBText3: TDBText;
     BitBtn1: TBitBtn;
-    DataSource: TDataSource;
     VerTodosBitBtn: TBitBtn;
     ivaLabel: TLabel;
     ivaDBText: TDBText;
-    Tabla: TIBQuery;
     imprimir_exportarImage: TImage;
     EnStockCheckBox: TCheckBox;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -109,8 +107,7 @@ begin
 
   imprimir_exportarImage.Picture.LoadFromFile
     (Path + '\img\boton_imprimir_exportar.gif');
-  if Tabla.Active = True then
-    Tabla.Close;
+  if dm.qArticulo.Active then dm.qArticulo.Close;
   if (Proveedor <> '') then
     ProveedorEdit.Text := Proveedor;
   if (Precio <> 'Costo') and (Precio <> 'Precio1') and (Precio <> 'Precio2') and
@@ -124,7 +121,7 @@ begin
     if Precio = 'Costo' then
       Precio := 'Costo';
   end;
-  {Tabla.SQL.Text := 'SELECT' +
+  {dm.qArticulo.SQL.Text := 'SELECT' +
     '    ("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*0.01)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
     + '  "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
     + '  "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'
@@ -170,7 +167,7 @@ begin
     ' INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCategoria".CODIGO)'
     + ' INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
     ' INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)';
-  Tabla.SQL.Text:= articulos
+  dm.qArticulo.SQL.Text:= articulos
     +'  WHERE (PROVEEDOR like ' + QuotedStr(ProveedorEdit.Text + '%') + ')'
     +'  ORDER BY   "Articulo".DESCRIPCION';
   if (DM.ConfigQuery.FieldByName('CodigoBarra').AsString) = 'SI ' then
@@ -182,7 +179,7 @@ end;
 procedure TFBuscaArticulo.imprimir_exportarImageClick(Sender: TObject);
 begin
   ImprimirDataModule := TImprimirDataModule.Create(self);
-  ImprimirDataModule.SImpr(Tabla.SQL.Text, 'Articulos');
+  ImprimirDataModule.SImpr(dm.qArticulo.SQL.Text, 'Articulos');
   ImprimirDataModule.Free;
 end;
 
@@ -195,7 +192,7 @@ end;
 
 procedure TFBuscaArticulo.buscar;
 begin
-  {Tabla.SQL.Text := 'SELECT' +
+  {dm.qArticulo.SQL.Text := 'SELECT' +
     '    ("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*0.01)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
     + '  "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
     + '  "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'
@@ -217,7 +214,7 @@ begin
     '  INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCategoria".CODIGO)'
     + '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
     '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +}
-  Tabla.SQL.Text:= articulos
+  dm.qArticulo.SQL.Text:= articulos
     +' WHERE ' + '(CODIGOBARRA like ' + QuotedStr(CodigoEdit.Text + '%') + ')' +
 //    'AND ("Articulo".DESCRIPCION Containing '+QuotedStr(DescripcionEdit.Text)+')'+
     'AND (upper("Articulo".DESCRIPCION) Containing '+QuotedStr(UpperCase(DescripcionEdit.Text))+')'+
@@ -225,9 +222,9 @@ begin
     'AND ("Rubro".DESCRIPCION like '+QuotedStr(RubroEdit.Text + '%')+')'+
     'AND ("Categoria".DESCRIPCION like '+QuotedStr(CategoriaEdit.Text + '%')+')'+
     'AND ("Proveedor".NOMBRE like '+QuotedStr(ProveedorEdit.Text + '%')+')';
-    if EnStockCheckBox.Checked then Tabla.SQL.Text := Tabla.SQL.Text+'AND ("Articulo".Disponible > 0)';
-    Tabla.SQL.Text := Tabla.SQL.Text+ ' ORDER BY   "Articulo".DESCRIPCION';
-  Tabla.Open;
+    if EnStockCheckBox.Checked then dm.qArticulo.SQL.Text := dm.qArticulo.SQL.Text+'AND ("Articulo".Disponible > 0)';
+    dm.qArticulo.SQL.Text := dm.qArticulo.SQL.Text+ ' ORDER BY   "Articulo".DESCRIPCION';
+  dm.qArticulo.Open;
 end;
 
 procedure TFBuscaArticulo.MarcaEditKeyUp(Sender: TObject; var Key: Word;
@@ -252,7 +249,7 @@ begin
   RubroEdit.Text := '';
   ProveedorEdit.Text := '';
   CodigoEdit.Text := '';
-  {Tabla.SQL.Text := 'SELECT' +
+  {dm.qArticulo.SQL.Text := 'SELECT' +
     '    ("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*0.01)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
     + '  "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
     + '  "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'
@@ -274,9 +271,9 @@ begin
     '  INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCategoria".CODIGO)'
     + '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
     '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' + }
-  Tabla.SQL.Text:= articulos
+  dm.qArticulo.SQL.Text:= articulos
     +'  ORDER BY   "Articulo".DESCRIPCION';
-  Tabla.Open;
+  dm.qArticulo.Open;
 end;
 
 procedure TFBuscaArticulo.CodigoEditKeyUp(Sender: TObject; var Key: Word;

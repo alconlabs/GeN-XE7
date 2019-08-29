@@ -4,7 +4,7 @@ object FSubCategorias: TFSubCategorias
   Caption = 'Sub Categorias'
   ClientHeight = 299
   ClientWidth = 313
-  Color = clBlack
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -25,7 +25,7 @@ object FSubCategorias: TFSubCategorias
     Caption = 'Sub Categoria'
     FocusControl = DBEdit1
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
+    Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]

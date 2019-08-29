@@ -5,7 +5,7 @@ object ListaPreciosForm: TListaPreciosForm
   Caption = 'Lista de Precios'
   ClientHeight = 398
   ClientWidth = 274
-  Color = clBlack
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWhite
   Font.Height = -11
@@ -22,7 +22,7 @@ object ListaPreciosForm: TListaPreciosForm
     Width = 89
     Height = 57
     Caption = ' Destino '
-    Color = clWhite
+    Color = clBtnFace
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -61,7 +61,7 @@ object ListaPreciosForm: TListaPreciosForm
     Width = 185
     Height = 209
     Caption = 'Tipo'
-    Color = clWhite
+    Color = clBtnFace
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11

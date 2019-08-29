@@ -6,7 +6,7 @@ object IncrementoForm: TIncrementoForm
   Caption = 'Incrementar Importe'
   ClientHeight = 221
   ClientWidth = 406
-  Color = clBlack
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clBlack
   Font.Height = -11
@@ -25,7 +25,7 @@ object IncrementoForm: TIncrementoForm
     Height = 29
     Caption = '%'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
+    Font.Color = clWindowText
     Font.Height = -24
     Font.Name = 'MS Sans Serif'
     Font.Style = []
@@ -73,23 +73,5 @@ object IncrementoForm: TIncrementoForm
       TabOrder = 1
       OnClick = NoBitBtnClick
     end
-  end
-  object Q: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 59
-    Top = 118
-  end
-  object T: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 147
-    Top = 118
   end
 end

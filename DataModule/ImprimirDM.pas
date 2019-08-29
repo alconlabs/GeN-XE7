@@ -13,13 +13,13 @@ uses
   frxExportBaseDialog, shellapi, windows;
 type
   TImprimirDataModule = class(TDataModule)
-    Query: TIBQuery;
     frxBarCodeObject1: TfrxBarCodeObject;
     frxPDFExport1: TfrxPDFExport;
     frxDBDataset1: TfrxDBDataset;
     frxCSVExport1: TfrxCSVExport;
     frxReport1: TfrxReport;
     qReporte: TFDQuery;
+    Query: TFDQuery;
     Function VTA(nro, let: string): string;
     Function OPER(nro, tipo, let: string): string;
     Function PRE(nro, let: string): string;

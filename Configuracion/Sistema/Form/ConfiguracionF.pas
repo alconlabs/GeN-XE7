@@ -9,12 +9,6 @@ uses
 
 type
   TConfiguracionForm = class(TForm)
-    DataSource: TDataSource;
-    CuentaDataSource: TDataSource;
-    ImprimirDataSource: TDataSource;
-    ImprimirQuery: TIBQuery;
-    CuentaQuery: TIBQuery;
-    Tabla: TIBTable;
     Panel1: TPanel;
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
@@ -118,9 +112,9 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure CuentasBitBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure TablaAfterCancel(DataSet: TDataSet);
-    procedure TablaAfterDelete(DataSet: TDataSet);
-    procedure TablaAfterPost(DataSet: TDataSet);
+    procedure tConfiguracionAfterCancel(DataSet: TDataSet);
+    procedure tConfiguracionAfterDelete(DataSet: TDataSet);
+    procedure tConfiguracionAfterPost(DataSet: TDataSet);
     procedure ConfigurarFEButtonClick(Sender: TObject);
     procedure ReporteDBLookupComboBoxClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -145,15 +139,15 @@ procedure TConfiguracionForm.BitBtn1Click(Sender: TObject);
 begin
   if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
     if not dm.existeOpenSSL() then
-      tabla.FieldByName('ImprimirTipo').AsInteger:=1;
-  Tabla.Post;
+      dm.tConfiguracion.FieldByName('ImprimirTipo').AsInteger:=1;
+  dm.tConfiguracion.Post;
   DM.TraerConfig;
   Close;
 end;
 
 procedure TConfiguracionForm.BitBtn2Click(Sender: TObject);
 begin
-  Tabla.Cancel;
+  dm.tConfiguracion.Cancel;
   Close;
 end;
 
@@ -174,54 +168,54 @@ end;
 
 procedure TConfiguracionForm.ReporteDBLookupComboBoxClick(Sender: TObject);
 begin
-  reporte := ImprimirQuery.FieldByName('REPORTE').AsString;
+  reporte := dm.qImprimir.FieldByName('REPORTE').AsString;
 //  if (reporte = 'FElectronica') or (reporte = 'TElectronica') then ConfigurarFEButton.Visible := True
 //  else ConfigurarFEButton.Visible := False;
   EsElectronica;
   if ConfigurarFEButton.Visible then ConfigurarFEButton.Click;
 end;
 
-procedure TConfiguracionForm.TablaAfterCancel(DataSet: TDataSet);
+procedure TConfiguracionForm.tConfiguracionAfterCancel(DataSet: TDataSet);
 begin
-  Tabla.Transaction.RollbackRetaining;
+  dm.tConfiguracion.Transaction.RollbackRetaining;
 end;
 
-procedure TConfiguracionForm.TablaAfterDelete(DataSet: TDataSet);
+procedure TConfiguracionForm.tConfiguracionAfterDelete(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tConfiguracion.Transaction.CommitRetaining;
 end;
 
-procedure TConfiguracionForm.TablaAfterPost(DataSet: TDataSet);
+procedure TConfiguracionForm.tConfiguracionAfterPost(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tConfiguracion.Transaction.CommitRetaining;
 end;
 
 procedure TConfiguracionForm.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  Tabla.Close;
+  dm.tConfiguracion.Close;
 end;
 
 procedure TConfiguracionForm.FormCreate(Sender: TObject);
 begin
   // DM := TDM.Create(Self);
-  CuentaQuery.Open;
-  CuentaQuery.Last;
-//  ImprimirQuery.SQL.Text :=
+  dm.qCuenta.Open;
+  dm.qCuenta.Last;
+//  dm.qImprimir.SQL.Text :=
 //    'Select * from "Imprimir" where "Imprimir".REPORTE = ''FElectronica''';
-//  ImprimirQuery.Open;
-//  if ImprimirQuery.RecordCount = 0 then
+//  dm.qImprimir.Open;
+//  if dm.qImprimir.RecordCount = 0 then
 //  begin
-//    ImprimirQuery.SQL.Text :=
+//    dm.qImprimir.SQL.Text :=
 //      'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (11, ''Factura Electronica'', ''FElectronica'')';
-//    ImprimirQuery.ExecSQL;
-//    ImprimirQuery.Transaction.Commit;
+//    dm.qImprimir.ExecSQL;
+//    dm.qImprimir.Transaction.Commit;
 //  end;
-  ImprimirQuery.SQL.Text := 'Select * from "Imprimir"';
-  ImprimirQuery.Open;
-  ImprimirQuery.Last;
-  Tabla.Open;
-  Tabla.Edit;
+  dm.qImprimir.SQL.Text := 'Select * from "Imprimir"';
+  dm.qImprimir.Open;
+  dm.qImprimir.Last;
+  dm.tConfiguracion.Open;
+  dm.tConfiguracion.Edit;
 end;
 
 procedure TConfiguracionForm.FormKeyPress(Sender: TObject; var Key: Char);

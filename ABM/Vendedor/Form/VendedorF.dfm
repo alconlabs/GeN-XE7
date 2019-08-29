@@ -19,14 +19,145 @@ object VendedorForm: TVendedorForm
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object Panel5: TPanel
+    Left = 648
+    Top = 0
+    Width = 144
+    Height = 466
+    Align = alRight
+    Color = clBlack
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 0
+    object Label33: TLabel
+      Left = 48
+      Top = 165
+      Width = 46
+      Height = 13
+      Caption = 'Grabar?'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object AceptarBitBtn: TBitBtn
+      Left = 31
+      Top = 106
+      Width = 80
+      Height = 50
+      Caption = 'Si'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      Glyph.Data = {
+        DE010000424DDE01000000000000760000002800000024000000120000000100
+        0400000000006801000000000000000000001000000000000000000000000000
+        80000080000000808000800000008000800080800000C0C0C000808080000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+        3333333333333333333333330000333333333333333333333333F33333333333
+        00003333344333333333333333388F3333333333000033334224333333333333
+        338338F3333333330000333422224333333333333833338F3333333300003342
+        222224333333333383333338F3333333000034222A22224333333338F338F333
+        8F33333300003222A3A2224333333338F3838F338F33333300003A2A333A2224
+        33333338F83338F338F33333000033A33333A222433333338333338F338F3333
+        0000333333333A222433333333333338F338F33300003333333333A222433333
+        333333338F338F33000033333333333A222433333333333338F338F300003333
+        33333333A222433333333333338F338F00003333333333333A22433333333333
+        3338F38F000033333333333333A223333333333333338F830000333333333333
+        333A333333333333333338330000333333333333333333333333333333333333
+        0000}
+      ModalResult = 6
+      NumGlyphs = 2
+      ParentFont = False
+      TabOrder = 0
+      OnClick = AceptarBitBtnClick
+    end
+    object BitBtn2: TBitBtn
+      Left = 31
+      Top = 185
+      Width = 80
+      Height = 50
+      Caption = 'No'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      Kind = bkNo
+      NumGlyphs = 2
+      ParentFont = False
+      TabOrder = 1
+      OnClick = BitBtn2Click
+    end
+    object BitBtn4: TBitBtn
+      Left = 31
+      Top = 16
+      Width = 80
+      Height = 50
+      Caption = 'Imprimir'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clPurple
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 2
+      OnClick = BitBtn4Click
+    end
+    object DBNavigator1: TDBNavigator
+      Left = 11
+      Top = 357
+      Width = 120
+      Height = 32
+      VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete]
+      Hints.Strings = (
+        'Primer registro'
+        'Registro anterior'
+        'Registro siguiente'
+        #218'ltimo registro'
+        'Insertar registro'
+        'Eliminar registro'
+        'Editar registro'
+        'Guardar cambios'
+        'Cancelar edici'#243'n'
+        'Refrescar datos')
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 3
+    end
+    object BitBtn3: TBitBtn
+      Left = 31
+      Top = 278
+      Width = 80
+      Height = 50
+      Caption = 'Buscar F5'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clNavy
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 4
+      OnClick = BitBtn3Click
+    end
+  end
   object PageControl1: TPageControl
     Left = 0
     Top = 0
     Width = 648
     Height = 466
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     Align = alClient
-    TabOrder = 0
+    TabOrder = 1
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
       ExplicitLeft = 0
@@ -206,7 +337,6 @@ object VendedorForm: TVendedorForm
         Width = 226
         Height = 21
         DataField = 'Nombre'
-        DataSource = DataSource
         TabOrder = 0
       end
       object DBEdit3: TDBEdit
@@ -215,7 +345,6 @@ object VendedorForm: TVendedorForm
         Width = 226
         Height = 21
         DataField = 'Direccion'
-        DataSource = DataSource
         TabOrder = 1
       end
       object CodigoDBEdit: TDBEdit
@@ -224,7 +353,6 @@ object VendedorForm: TVendedorForm
         Width = 76
         Height = 21
         DataField = 'Codigo'
-        DataSource = DataSource
         TabOrder = 10
       end
       object DBEdit9: TDBEdit
@@ -233,7 +361,6 @@ object VendedorForm: TVendedorForm
         Width = 76
         Height = 21
         DataField = 'Celular'
-        DataSource = DataSource
         TabOrder = 5
       end
       object DBEdit4: TDBEdit
@@ -242,7 +369,6 @@ object VendedorForm: TVendedorForm
         Width = 226
         Height = 21
         DataField = 'DIRECCIONCOMERCIAL'
-        DataSource = DataSource
         TabOrder = 2
       end
       object DBEdit10: TDBEdit
@@ -251,7 +377,6 @@ object VendedorForm: TVendedorForm
         Width = 76
         Height = 21
         DataField = 'Telefono'
-        DataSource = DataSource
         TabOrder = 3
       end
       object DBEdit12: TDBEdit
@@ -260,7 +385,6 @@ object VendedorForm: TVendedorForm
         Width = 76
         Height = 21
         DataField = 'Fax'
-        DataSource = DataSource
         TabOrder = 4
       end
       object DBEdit6: TDBEdit
@@ -269,7 +393,6 @@ object VendedorForm: TVendedorForm
         Width = 226
         Height = 21
         DataField = 'Provincia'
-        DataSource = DataSource
         TabOrder = 6
       end
       object DBEdit7: TDBEdit
@@ -278,7 +401,6 @@ object VendedorForm: TVendedorForm
         Width = 226
         Height = 21
         DataField = 'Departamento'
-        DataSource = DataSource
         TabOrder = 7
       end
       object DBEdit24: TDBEdit
@@ -287,7 +409,6 @@ object VendedorForm: TVendedorForm
         Width = 76
         Height = 21
         DataField = 'COMISION'
-        DataSource = DataSource
         TabOrder = 9
         OnExit = DBEdit24Exit
       end
@@ -297,7 +418,6 @@ object VendedorForm: TVendedorForm
         Width = 226
         Height = 21
         DataField = 'CIUDAD'
-        DataSource = DataSource
         TabOrder = 8
       end
     end
@@ -431,7 +551,6 @@ object VendedorForm: TVendedorForm
         Width = 201
         Height = 21
         DataField = 'IIBB'
-        DataSource = DataSource
         TabOrder = 1
       end
       object DBEdit22: TDBEdit
@@ -440,7 +559,6 @@ object VendedorForm: TVendedorForm
         Width = 201
         Height = 21
         DataField = 'CUIT'
-        DataSource = DataSource
         TabOrder = 0
       end
       object IVADBComboBox: TDBComboBox
@@ -449,7 +567,6 @@ object VendedorForm: TVendedorForm
         Width = 67
         Height = 21
         DataField = 'IVA'
-        DataSource = DataSource
         Items.Strings = (
           'CF'
           'MT'
@@ -465,10 +582,8 @@ object VendedorForm: TVendedorForm
         Width = 351
         Height = 21
         DataField = 'CtaNombre'
-        DataSource = DataSource
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 3
       end
       object CtaAnticipoDBLookupComboBox: TDBLookupComboBox
@@ -477,10 +592,8 @@ object VendedorForm: TVendedorForm
         Width = 351
         Height = 21
         DataField = 'CtaAnticipo'
-        DataSource = DataSource
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 4
       end
       object CtaTipoDBLookupComboBox: TDBLookupComboBox
@@ -489,10 +602,8 @@ object VendedorForm: TVendedorForm
         Width = 351
         Height = 21
         DataField = 'CtaTipo'
-        DataSource = DataSource
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 5
       end
     end
@@ -647,7 +758,6 @@ object VendedorForm: TVendedorForm
         Width = 209
         Height = 21
         DataField = 'TITULAR'
-        DataSource = DataSource
         TabOrder = 0
       end
       object DBEdit13: TDBEdit
@@ -656,7 +766,6 @@ object VendedorForm: TVendedorForm
         Width = 209
         Height = 21
         DataField = 'Email'
-        DataSource = DataSource
         TabOrder = 6
       end
       object DBEdit23: TDBEdit
@@ -665,7 +774,6 @@ object VendedorForm: TVendedorForm
         Width = 209
         Height = 21
         DataField = 'MSN'
-        DataSource = DataSource
         TabOrder = 7
       end
       object DBEdit19: TDBEdit
@@ -674,7 +782,6 @@ object VendedorForm: TVendedorForm
         Width = 209
         Height = 21
         DataField = 'Documento'
-        DataSource = DataSource
         TabOrder = 1
       end
       object DBEdit21: TDBEdit
@@ -683,7 +790,6 @@ object VendedorForm: TVendedorForm
         Width = 209
         Height = 21
         DataField = 'Rubro'
-        DataSource = DataSource
         TabOrder = 2
       end
       object DBEdit5: TDBEdit
@@ -692,7 +798,6 @@ object VendedorForm: TVendedorForm
         Width = 97
         Height = 21
         DataField = 'Pais'
-        DataSource = DataSource
         TabOrder = 8
       end
       object DBEdit17: TDBEdit
@@ -701,7 +806,6 @@ object VendedorForm: TVendedorForm
         Width = 82
         Height = 21
         DataField = 'CP'
-        DataSource = DataSource
         TabOrder = 3
       end
       object DBEdit11: TDBEdit
@@ -710,7 +814,6 @@ object VendedorForm: TVendedorForm
         Width = 82
         Height = 21
         DataField = 'Extencion'
-        DataSource = DataSource
         TabOrder = 5
       end
       object DBEdit18: TDBEdit
@@ -719,7 +822,6 @@ object VendedorForm: TVendedorForm
         Width = 82
         Height = 21
         DataField = 'CodigoArea'
-        DataSource = DataSource
         TabOrder = 4
       end
       object DBEdit8: TDBEdit
@@ -728,17 +830,12 @@ object VendedorForm: TVendedorForm
         Width = 97
         Height = 21
         DataField = 'Ciudad'
-        DataSource = DataSource
         TabOrder = 9
       end
     end
     object TabSheet5: TTabSheet
       Caption = 'Parametros'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label13: TLabel
         Left = 150
         Top = 61
@@ -836,7 +933,6 @@ object VendedorForm: TVendedorForm
         Width = 145
         Height = 21
         DataField = 'TERMINOS'
-        DataSource = DataSource
         TabOrder = 0
       end
       object DBEdit15: TDBEdit
@@ -845,7 +941,6 @@ object VendedorForm: TVendedorForm
         Width = 145
         Height = 21
         DataField = 'LIMITECREDITO'
-        DataSource = DataSource
         TabOrder = 1
       end
       object DBComboBox1: TDBComboBox
@@ -854,7 +949,6 @@ object VendedorForm: TVendedorForm
         Width = 49
         Height = 21
         DataField = 'PRECIO'
-        DataSource = DataSource
         Items.Strings = (
           '1'
           '2'
@@ -871,7 +965,6 @@ object VendedorForm: TVendedorForm
         Width = 145
         Height = 21
         DataField = 'DiasCredito'
-        DataSource = DataSource
         TabOrder = 2
       end
       object DBCheckBox1: TDBCheckBox
@@ -881,7 +974,6 @@ object VendedorForm: TVendedorForm
         Height = 17
         Caption = 'Suspendido'
         DataField = 'Suspendido'
-        DataSource = DataSource
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -896,7 +988,6 @@ object VendedorForm: TVendedorForm
         Width = 121
         Height = 21
         DataField = 'Promociones'
-        DataSource = DataSource
         TabOrder = 5
       end
       object DBEdit26: TDBEdit
@@ -905,421 +996,8 @@ object VendedorForm: TVendedorForm
         Width = 121
         Height = 21
         DataField = 'Almanaques'
-        DataSource = DataSource
         TabOrder = 6
       end
     end
-  end
-  object Panel5: TPanel
-    Left = 648
-    Top = 0
-    Width = 144
-    Height = 466
-    Align = alRight
-    Color = clBlack
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    ParentBackground = False
-    ParentFont = False
-    TabOrder = 1
-    object Label33: TLabel
-      Left = 48
-      Top = 165
-      Width = 46
-      Height = 13
-      Caption = 'Grabar?'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object AceptarBitBtn: TBitBtn
-      Left = 31
-      Top = 106
-      Width = 80
-      Height = 50
-      Caption = 'Si'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      Glyph.Data = {
-        DE010000424DDE01000000000000760000002800000024000000120000000100
-        0400000000006801000000000000000000001000000000000000000000000000
-        80000080000000808000800000008000800080800000C0C0C000808080000000
-        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
-        3333333333333333333333330000333333333333333333333333F33333333333
-        00003333344333333333333333388F3333333333000033334224333333333333
-        338338F3333333330000333422224333333333333833338F3333333300003342
-        222224333333333383333338F3333333000034222A22224333333338F338F333
-        8F33333300003222A3A2224333333338F3838F338F33333300003A2A333A2224
-        33333338F83338F338F33333000033A33333A222433333338333338F338F3333
-        0000333333333A222433333333333338F338F33300003333333333A222433333
-        333333338F338F33000033333333333A222433333333333338F338F300003333
-        33333333A222433333333333338F338F00003333333333333A22433333333333
-        3338F38F000033333333333333A223333333333333338F830000333333333333
-        333A333333333333333338330000333333333333333333333333333333333333
-        0000}
-      ModalResult = 6
-      NumGlyphs = 2
-      ParentFont = False
-      TabOrder = 0
-      OnClick = AceptarBitBtnClick
-    end
-    object BitBtn2: TBitBtn
-      Left = 31
-      Top = 185
-      Width = 80
-      Height = 50
-      Caption = 'No'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      Kind = bkNo
-      NumGlyphs = 2
-      ParentFont = False
-      TabOrder = 1
-      OnClick = BitBtn2Click
-    end
-    object BitBtn4: TBitBtn
-      Left = 31
-      Top = 16
-      Width = 80
-      Height = 50
-      Caption = 'Imprimir'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clPurple
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 2
-      OnClick = BitBtn4Click
-    end
-    object DBNavigator1: TDBNavigator
-      Left = 11
-      Top = 357
-      Width = 120
-      Height = 32
-      DataSource = DataSource
-      VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete]
-      Hints.Strings = (
-        'Primer registro'
-        'Registro anterior'
-        'Registro siguiente'
-        #218'ltimo registro'
-        'Insertar registro'
-        'Eliminar registro'
-        'Editar registro'
-        'Guardar cambios'
-        'Cancelar edici'#243'n'
-        'Refrescar datos')
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 3
-    end
-    object BitBtn3: TBitBtn
-      Left = 31
-      Top = 278
-      Width = 80
-      Height = 50
-      Caption = 'Buscar F5'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNavy
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 4
-      OnClick = BitBtn3Click
-    end
-  end
-  object DataSource: TDataSource
-    DataSet = Tabla
-    Left = 262
-    Top = 358
-  end
-  object DSUsuarios: TDataSource
-    DataSet = UsuarioT
-    Left = 326
-    Top = 358
-  end
-  object CuentaDataSource: TDataSource
-    DataSet = CuentaT
-    Left = 398
-    Top = 358
-  end
-  object Tabla: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    AfterCancel = TablaAfterCancel
-    AfterDelete = TablaAfterDelete
-    AfterInsert = TablaAfterInsert
-    AfterPost = TablaAfterPost
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        Attributes = [faRequired]
-        DataType = ftInteger
-      end
-      item
-        Name = 'NOMBRE'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'TITULAR'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCION'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCIONCOMERCIAL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PAIS'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'PROVINCIA'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'DEPARTAMENTO'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'CIUDAD'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'CP'
-        DataType = ftWideString
-        Size = 20
-      end
-      item
-        Name = 'CODIGOAREA'
-        DataType = ftWideString
-        Size = 10
-      end
-      item
-        Name = 'CELULAR'
-        DataType = ftWideString
-        Size = 20
-      end
-      item
-        Name = 'TELEFONO'
-        DataType = ftWideString
-        Size = 15
-      end
-      item
-        Name = 'EXTENCION'
-        DataType = ftWideString
-        Size = 6
-      end
-      item
-        Name = 'FAX'
-        DataType = ftWideString
-        Size = 15
-      end
-      item
-        Name = 'EMAIL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'TERMINOS'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'VENDEDOR'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PRECIO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'SUSPENDIDO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'EXCENTO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'FECHAINGRESO'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'LIMITECREDITO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'NOTAS'
-        DataType = ftBlob
-        Size = 8
-      end
-      item
-        Name = 'DIASCREDITO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'DOCUMENTO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CUIT'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'IIBB'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'RUBRO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'IVA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'MSN'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'ALMANAQUES'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PROMOCIONES'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'GARANTE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ZONA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTANOMBRE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTATIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTAANTICIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PAGARE'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'COMISION'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PUNTOS'
-        DataType = ftFloat
-      end>
-    IndexDefs = <
-      item
-        Name = 'PK_Vendedor'
-        Fields = 'CODIGO'
-        Options = [ixUnique]
-      end>
-    StoreDefs = True
-    TableName = 'Vendedor'
-    UniDirectional = False
-    Left = 232
-    Top = 358
-  end
-  object CuentaT: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Cuenta"'
-      'order by DESCRIPCION')
-    Left = 368
-    Top = 358
-  end
-  object UsuarioT: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Usuario"')
-    Left = 296
-    Top = 358
-  end
-  object EmpresaQuery: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Empresa"')
-    Left = 440
-    Top = 358
-  end
-  object Query: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 480
-    Top = 358
   end
 end

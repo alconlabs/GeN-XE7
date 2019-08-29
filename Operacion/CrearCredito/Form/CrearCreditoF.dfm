@@ -590,8 +590,8 @@ object CrearCreditoForm: TCrearCreditoForm
       Top = 2
       Width = 85
       Height = 21
-      Date = 42005.475039594910000000
-      Time = 42005.475039594910000000
+      Date = 42005.000000000000000000
+      Time = 0.475039594908594200
       TabOrder = 4
     end
   end
@@ -793,8 +793,6 @@ object CrearCreditoForm: TCrearCreditoForm
     end
   end
   object QTemp: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
@@ -802,8 +800,6 @@ object CrearCreditoForm: TCrearCreditoForm
     Top = 232
   end
   object Q: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True

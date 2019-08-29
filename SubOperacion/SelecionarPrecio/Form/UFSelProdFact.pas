@@ -68,25 +68,25 @@ begin
   try
     FBuscaArticulo.ShowModal;
   finally
-    If FBuscaArticulo.Tabla.Active = True then
+    If dm.qArticulo.Active = True then
     begin
-      with FBuscaArticulo do
+      with dm.qArticulo do
       begin
-        Edit1.Text := Tabla.FieldByName('CODIGO').AsString;
+        Edit1.Text := FieldByName('CODIGO').AsString;
         if Precio = 'Costo' then
           Edit9.Text := Format('%8.2f',
-            [((Tabla.FieldByName('Costo').AsFloat) {+
+            [((FieldByName('Costo').AsFloat) {+
             (Tabla.FieldByName('ImpOtros').AsFloat)) *
             ((Tabla.FieldByName('Tasa').AsFloat) / 100 + 1})])
         else
         begin
-          Edit6.Text := Tabla.FieldByName('Precio1').AsString;
-          Edit2.Text := Tabla.FieldByName('Precio2').AsString;
-          Edit4.Text := Tabla.FieldByName('Precio3').AsString;
-          Edit5.Text := Tabla.FieldByName('Precio4').AsString;
-          Edit7.Text := Tabla.FieldByName('Precio5').AsString;
-          Edit8.Text := Tabla.FieldByName('Precio6').AsString;
-          Edit9.Text := Tabla.FieldByName('Costo').AsString;
+          Edit6.Text := FieldByName('Precio1').AsString;
+          Edit2.Text := FieldByName('Precio2').AsString;
+          Edit4.Text := FieldByName('Precio3').AsString;
+          Edit5.Text := FieldByName('Precio4').AsString;
+          Edit7.Text := FieldByName('Precio5').AsString;
+          Edit8.Text := FieldByName('Precio6').AsString;
+          Edit9.Text := FieldByName('Costo').AsString;
         end;
         If Precio = '2' then
         begin

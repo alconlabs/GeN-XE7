@@ -23,13 +23,6 @@ const
 
 type
   TFProductos = class(TForm)
-    DataSource: TDataSource;
-    DSTCat: TDataSource;
-    DSTSubCat: TDataSource;
-    DSMateriales: TDataSource;
-    DSRubro: TDataSource;
-    DSQProve: TDataSource;
-    MarcaDataSource: TDataSource;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet3: TTabSheet;
@@ -90,7 +83,6 @@ type
     Precio5DBEdit: TDBEdit;
     IVADBText: TDBText;
     TabSheet5: TTabSheet;
-    CuentaDataSource: TDataSource;
     Label50: TLabel;
     CuentaDBLookupComboBox: TDBLookupComboBox;
     DBLookupComboBox1: TDBLookupComboBox;
@@ -110,18 +102,6 @@ type
     CategoriaDBLookupComboBox: TDBLookupComboBox;
     CategoriaBitBtn: TBitBtn;
     Label29: TLabel;
-    Tabla: TIBTable;
-    CategoriaT: TIBTable;
-    SubCategoriaT: TIBTable;
-    RubroT: TIBTable;
-    MaterialT: TIBTable;
-    QTemp: TIBQuery;
-    Usuario: TIBQuery;
-    DSUsuarios: TDataSource;
-    CuentaQuery: TIBQuery;
-    MarcaT: TIBTable;
-    ProveedorT: TIBTable;
-    ConfigQuery: TIBQuery;
     Label1: TLabel;
     CodigoDBEdit: TDBEdit;
     BitBtn4: TBitBtn;
@@ -132,8 +112,6 @@ type
     PaintBox1: TImage;
     DBEdit2: TDBEdit;
     Label35: TLabel;
-    IVAT: TIBTable;
-    DSTIVA: TDataSource;
     IVADBComboBox: TDBLookupComboBox;
     Label8: TLabel;
     procedure BitBtn1Click(Sender: TObject);
@@ -186,7 +164,7 @@ var
 
 implementation
 
-uses UFBuscaArticulos, Color;
+uses UFBuscaArticulos;
 
 {$R *.dfm}
 
@@ -309,31 +287,34 @@ end;
 
 procedure TFProductos.BitBtn1Click(Sender: TObject);
 begin
+with dm do begin
   desc := CodigoDBEdit.Text;
-  If (Tabla.State = dsEdit) or (Tabla.State = dsInsert) And
+  If (dm.tArticulo.State = dsEdit) or (dm.tArticulo.State = dsInsert) And
     (DescripcionDBEdit.Text <> '') then
-    Tabla.Post
+    dm.tArticulo.Post
   else if (DescripcionDBEdit.Text <> '') then
     ShowMessage('COMPLETE TODOS LOS CAMPOS');
+end;
   Close;
 end;
 
 procedure TFProductos.BitBtn2Click(Sender: TObject);
 begin
-  Tabla.Cancel;
+  dm.tArticulo.Cancel;
   Close;
 end;
 
 procedure TFProductos.FormCreate(Sender: TObject);
 begin
+with dm do begin
   // DM := TDM.Create(Self);
-  Tabla.Active := True;
-  SubCategoriaT.Active := True;
-  ProveedorT.Active := True;
-  RubroT.Active := True;
-  MarcaT.Active := True;
-  CategoriaT.Active := True;
-  IVAT.Active := True;
+  dm.tArticulo.Active := True;
+  dm.tSubCategoria.Active := True;
+  dm.tProveedor.Active := True;
+  dm.tRubro.Active := True;
+  dm.tMarca.Active := True;
+  tCategoria.Active := True;
+  tIVA.Active := True;
 //  with DM do
 //  begin
     //ConfigQuery.Open;
@@ -354,25 +335,27 @@ begin
     IVADBText.Visible:=True;
     IVADBTLabel.Visible:=True;
   end;
-  CuentaQuery.Open;
-  Tabla.Insert;
+  dm.qCuenta.Open;
+  dm.tArticulo.Insert;
+end;
 end;
 
 procedure TFProductos.BitBtn4Click(Sender: TObject);
 begin
+with dm do begin
   TabSheet1.PageControl.ActivePageIndex := 0;
-  Tabla.Cancel;
+  dm.tArticulo.Cancel;
   FBuscaArticulo := TFBuscaArticulo.Create(Self);
   try
     FBuscaArticulo.ShowModal;
   finally
-    If FBuscaArticulo.Tabla.Active = True then
-      Tabla.Locate('CODIGO', FBuscaArticulo.Tabla.FieldByName('CODIGO')
-        .AsInteger, []);
+    If dm.qArticulo.Active = True then
+      dm.tArticulo.Locate('CODIGO', dm.qArticulo.FieldByName('CODIGO').AsInteger, []);
     FBuscaArticulo.Free;
   end;
-  Tabla.Edit;
+  dm.tArticulo.Edit;
   Codifica(CodigoBarraEdit.Text);
+end;
 end;
 
 procedure TFProductos.FormKeyPress(Sender: TObject; var Key: Char);
@@ -386,53 +369,59 @@ end;
 
 procedure TFProductos.IVADBComboBoxEnter(Sender: TObject);
 begin
-  with IVAT do
+with dm do begin
+  with tIVA do
   begin
     Close;
     Open;
     Last;
   end;
 end;
+end;
 
 procedure TFProductos.IVADBComboBoxExit(Sender: TObject);
 var
   t:string;
 begin
+with dm do begin
 //if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
 //  else
   tasa:=StrToFloat(IVADBComboBox.Text);
   if tasa=10.5 then t:='105' else t:=FloatToStr(tasa);
-  Tabla.FieldByName('Tasa').AsInteger := StrToInt(t);
+  dm.tArticulo.FieldByName('Tasa').AsInteger := StrToInt(t);
   Calcular;
   BitBtn1.SetFocus;
+end;
 end;
 
 Procedure TFProductos.nuevo;
 begin
-  Tabla.FieldByName('CtaNombre').AsString := '13';
-  Tabla.FieldByName('CtaTipo').AsString := '13';
-  Tabla.FieldByName('CtaAnticipo').AsString := '13';
-  Tabla.FieldByName('CtaIIBB').AsString := '66';
-  Tabla.FieldByName('CODIGOBARRA').AsString := '0';
-  Tabla.FieldByName('Color').AsString := '0';
-  Tabla.FieldByName('Categoria').AsString := '0';
-  Tabla.FieldByName('SubCategoria').AsString := '0';
-  Tabla.FieldByName('Rubro').AsString := '0';
-  Tabla.FieldByName('Marca').AsString := '0';
-  Tabla.FieldByName('Proveedor').Value := 1;
+with dm do begin
+  dm.tArticulo.FieldByName('CtaNombre').AsString := '13';
+  dm.tArticulo.FieldByName('CtaTipo').AsString := '13';
+  dm.tArticulo.FieldByName('CtaAnticipo').AsString := '13';
+  dm.tArticulo.FieldByName('CtaIIBB').AsString := '66';
+  dm.tArticulo.FieldByName('CODIGOBARRA').AsString := '0';
+  dm.tArticulo.FieldByName('Color').AsString := '0';
+  dm.tArticulo.FieldByName('Categoria').AsString := '0';
+  dm.tArticulo.FieldByName('SubCategoria').AsString := '0';
+  dm.tArticulo.FieldByName('Rubro').AsString := '0';
+  dm.tArticulo.FieldByName('Marca').AsString := '0';
+  dm.tArticulo.FieldByName('Proveedor').Value := 1;
   DBLookupComboBox4.KeyValue := 0;
   DBEdit9.Field.AsString := 'c/u';
   DBEdit17.Field.AsDateTime := Date;
-  Tabla.FieldByName('Costo').AsInteger := 0;
+  dm.tArticulo.FieldByName('Costo').AsInteger := 0;
   CostoDBEdit.Field.AsFloat := 0;
-  Tabla.FieldByName('ImpOtros').AsInteger := 0;
+  dm.tArticulo.FieldByName('ImpOtros').AsInteger := 0;
   FleteDBEdit.Field.AsFloat := 0;
-  Tabla.FieldByName('Tasa').AsInteger := 0;
+  dm.tArticulo.FieldByName('Tasa').AsInteger := 0;
 //  IVADBEdit.Field.AsFloat := 0;
-  Tabla.FieldByName('Precio').AsInteger := 0;
+  dm.tArticulo.FieldByName('Precio').AsInteger := 0;
   PrecioCtaCteDBEdit.Field.AsFloat := 0;
-  Tabla.FieldByName('IIBB').AsInteger := 0;
+  dm.tArticulo.FieldByName('IIBB').AsInteger := 0;
   CodigoDBEdit.Text:=IntToStr(DM.UltimoRegistro('Articulo', 'CODIGO'));
+end;
 end;
 
 procedure TFProductos.RubroBitBtnClick(Sender: TObject);
@@ -444,27 +433,28 @@ begin
     finally
     If RubroForm.desc <> '' then
     RubroDBLookupComboBox.KeyValue:= RubroForm.desc;
-    Tabla.FieldByName('Rubro').AsString:=RubroForm.desc;
+    dm.tArticulo.FieldByName('Rubro').AsString:=RubroForm.desc;
     RubroForm.Free;
     end;
-    RubroT.Close;
-    RubroT.Open;
+    dm.tRubro.Close;
+    dm.tRubro.Open;
     MarcaDBLookupComboBox.SetFocus;
   }
 end;
 
 procedure TFProductos.RubroDBLookupComboBoxEnter(Sender: TObject);
 begin
-  RubroT.Close;
-  RubroT.Open;
-  RubroT.Last;
+  dm.tRubro.Close;
+  dm.tRubro.Open;
+  dm.tRubro.Last;
 end;
 
 procedure TFProductos.CodigoBarraBitBtnClick(Sender: TObject);
 var
   i: integer;
 begin
-  if Tabla.State = dsInsert then
+with dm do begin
+  if dm.tArticulo.State = dsInsert then
   begin
     QTemp.Close;
     QTemp.SQL.Text := 'SELECT max(CODIGO) FROM "Articulo"';
@@ -475,8 +465,8 @@ begin
   else
   begin
     i := 1000000000 + StrToInt(CodigoDBEdit.Text);
-    IF (Tabla.State <> dsEdit) then
-      Tabla.Edit;
+    IF (dm.tArticulo.State <> dsEdit) then
+      dm.tArticulo.Edit;
   end;
   // codigo de barras
   CodigoBarraEdit.Text := '10' + IntToStr(i) + '2';
@@ -484,7 +474,8 @@ begin
   Codifica(CodigoBarraEdit.Text);
   CodigoBarraEdit.SelStart := 0;
   CodigoBarraEdit.SelLength := Length(CodigoBarraEdit.Text);
-  Tabla.FieldByName('CodigoBarra').AsString := CodigoBarraEdit.Text;
+  dm.tArticulo.FieldByName('CodigoBarra').AsString := CodigoBarraEdit.Text;
+end;
 end;
 
 procedure TFProductos.FormKeyUp(Sender: TObject; var Key: Word;
@@ -539,13 +530,13 @@ begin
     If FCategorias.desc <> '' then
     begin
     CategoriaDBLookupComboBox.KeyValue:= FCategorias.desc;
-    Tabla.FieldByName('Categoria').AsString:=FCategorias.desc;
+    dm.tArticulo.FieldByName('Categoria').AsString:=FCategorias.desc;
     end;
     FCategorias.Free;
     end;
 
-    CategoriaT.Close;
-    CategoriaT.Open;
+    tCategoria.Close;
+    tCategoria.Open;
     RubroDBLookupComboBox.SetFocus;
   }
 
@@ -553,9 +544,11 @@ end;
 
 procedure TFProductos.CategoriaDBLookupComboBoxEnter(Sender: TObject);
 begin
-  CategoriaT.Close;
-  CategoriaT.Open;
-  CategoriaT.Last;
+with dm do begin
+  tCategoria.Close;
+  tCategoria.Open;
+  tCategoria.Last;
+end;
 end;
 
 procedure TFProductos.MarcaBitBtnClick(Sender: TObject);
@@ -568,13 +561,13 @@ begin
     If MarcaForm.desc <> '' then
     begin
     MarcaDBLookupComboBox.KeyValue:= MarcaForm.desc;
-    If (Tabla.State <> dsEdit) and (Tabla.State <> dsInsert) then Tabla.Edit;
-    Tabla.FieldByName('Marca').AsString:=MarcaForm.desc;
+    If (dm.tArticulo.State <> dsEdit) and (dm.tArticulo.State <> dsInsert) then dm.tArticulo.Edit;
+    dm.tArticulo.FieldByName('Marca').AsString:=MarcaForm.desc;
     end;
     MarcaForm.Free;
     end;
-    MarcaT.Close;
-    MarcaT.Open;
+    dm.tMarca.Close;
+    dm.tMarca.Open;
     DBEdit9.SetFocus;
   }
 
@@ -582,17 +575,17 @@ end;
 
 procedure TFProductos.MarcaDBLookupComboBoxEnter(Sender: TObject);
 begin
-  MarcaT.Close;
-  MarcaT.Open;
-  MarcaT.Last;
+  dm.tMarca.Close;
+  dm.tMarca.Open;
+  dm.tMarca.Last;
 end;
 
 procedure TFProductos.MarcaDBLookupComboBoxKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  MarcaT.Close;
-  MarcaT.Open;
-  MarcaT.Last;
+  dm.tMarca.Close;
+  dm.tMarca.Open;
+  dm.tMarca.Last;
 end;
 
 procedure TFProductos.DBEdit14Exit(Sender: TObject);
@@ -602,9 +595,9 @@ end;
 
 procedure TFProductos.DBLookupComboBox4Enter(Sender: TObject);
 begin
-  ProveedorT.Close;
-  ProveedorT.Open;
-  ProveedorT.Last;
+  dm.tProveedor.Close;
+  dm.tProveedor.Open;
+  dm.tProveedor.Last;
 end;
 
 procedure TFProductos.BitBtn13Click(Sender: TObject);
@@ -614,25 +607,25 @@ end;
 
 procedure TFProductos.TablaAfterCancel(DataSet: TDataSet);
 begin
-  Tabla.Transaction.RollbackRetaining;
+  dm.tArticulo.Transaction.RollbackRetaining;
 end;
 
 procedure TFProductos.TablaAfterDelete(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tArticulo.Transaction.CommitRetaining;
 end;
 
 procedure TFProductos.TablaAfterInsert(DataSet: TDataSet);
 begin
   If Cancelar then
-    Tabla.Cancel
+    dm.tArticulo.Cancel
   else
     nuevo;
 end;
 
 procedure TFProductos.TablaAfterPost(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tArticulo.Transaction.CommitRetaining;
 end;
 
 procedure TFProductos.Calcular;

@@ -26,11 +26,13 @@ object FClientes: TFClientes
     Top = 0
     Width = 488
     Height = 454
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
+      ExplicitLeft = 3
+      ExplicitTop = 27
       object Label2: TLabel
         Left = 50
         Top = 39
@@ -156,7 +158,7 @@ object FClientes: TFClientes
         Width = 226
         Height = 21
         DataField = 'NOMBRE'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 0
       end
       object DBEdit3: TDBEdit
@@ -165,7 +167,7 @@ object FClientes: TFClientes
         Width = 226
         Height = 21
         DataField = 'Direccion'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 4
       end
       object DBEdit10: TDBEdit
@@ -174,7 +176,7 @@ object FClientes: TFClientes
         Width = 122
         Height = 21
         DataField = 'Telefono'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 3
       end
       object DBEdit6: TDBEdit
@@ -183,7 +185,7 @@ object FClientes: TFClientes
         Width = 226
         Height = 21
         DataField = 'Provincia'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 7
       end
       object DBEdit13: TDBEdit
@@ -192,7 +194,7 @@ object FClientes: TFClientes
         Width = 226
         Height = 21
         DataField = 'Email'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 2
       end
       object DBEdit8: TDBEdit
@@ -201,7 +203,7 @@ object FClientes: TFClientes
         Width = 122
         Height = 21
         DataField = 'Ciudad'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 6
       end
       object DBEdit19: TDBEdit
@@ -210,7 +212,7 @@ object FClientes: TFClientes
         Width = 122
         Height = 21
         DataField = 'Documento'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 1
       end
       object DBEdit17: TDBEdit
@@ -219,7 +221,7 @@ object FClientes: TFClientes
         Width = 122
         Height = 21
         DataField = 'CP'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 5
       end
     end
@@ -233,7 +235,7 @@ object FClientes: TFClientes
         Height = 426
         Align = alClient
         DataField = 'Notas'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 0
       end
     end
@@ -309,7 +311,7 @@ object FClientes: TFClientes
         Width = 201
         Height = 21
         DataField = 'IIBB'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 1
       end
       object DBEdit22: TDBEdit
@@ -318,7 +320,7 @@ object FClientes: TFClientes
         Width = 201
         Height = 21
         DataField = 'CUIT'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 0
       end
       object IVADBComboBox: TDBComboBox
@@ -327,7 +329,7 @@ object FClientes: TFClientes
         Width = 201
         Height = 21
         DataField = 'IVA'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 2
         OnChange = IVADBComboBoxChange
       end
@@ -337,10 +339,9 @@ object FClientes: TFClientes
         Width = 351
         Height = 21
         DataField = 'CTANOMBRE'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 3
       end
       object DBLookupComboBox3: TDBLookupComboBox
@@ -349,10 +350,9 @@ object FClientes: TFClientes
         Width = 351
         Height = 21
         DataField = 'CTAANTICIPO'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 4
       end
       object DBLookupComboBox1: TDBLookupComboBox
@@ -361,10 +361,9 @@ object FClientes: TFClientes
         Width = 351
         Height = 21
         DataField = 'CTATIPO'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = CuentaDataSource
         TabOrder = 5
       end
     end
@@ -527,7 +526,7 @@ object FClientes: TFClientes
         Width = 209
         Height = 21
         DataField = 'TITULAR'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 0
       end
       object DBEdit23: TDBEdit
@@ -536,7 +535,7 @@ object FClientes: TFClientes
         Width = 209
         Height = 21
         DataField = 'MSN'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 5
       end
       object DBEdit21: TDBEdit
@@ -545,7 +544,7 @@ object FClientes: TFClientes
         Width = 209
         Height = 21
         DataField = 'Rubro'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 1
       end
       object DBEdit5: TDBEdit
@@ -554,7 +553,7 @@ object FClientes: TFClientes
         Width = 97
         Height = 21
         DataField = 'Pais'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 8
       end
       object DBEdit11: TDBEdit
@@ -563,7 +562,7 @@ object FClientes: TFClientes
         Width = 82
         Height = 21
         DataField = 'Extencion'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 3
       end
       object DBEdit18: TDBEdit
@@ -572,7 +571,7 @@ object FClientes: TFClientes
         Width = 82
         Height = 21
         DataField = 'CodigoArea'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 2
       end
       object DBEdit4: TDBEdit
@@ -581,7 +580,7 @@ object FClientes: TFClientes
         Width = 226
         Height = 21
         DataField = 'DIRECCIONCOMERCIAL'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 4
       end
       object DBEdit12: TDBEdit
@@ -590,7 +589,7 @@ object FClientes: TFClientes
         Width = 76
         Height = 21
         DataField = 'Fax'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 6
       end
       object DBEdit9: TDBEdit
@@ -599,7 +598,7 @@ object FClientes: TFClientes
         Width = 76
         Height = 21
         DataField = 'Celular'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 7
       end
       object DBEdit7: TDBEdit
@@ -608,7 +607,7 @@ object FClientes: TFClientes
         Width = 226
         Height = 21
         DataField = 'Departamento'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 9
       end
       object DBEdit24: TDBEdit
@@ -617,7 +616,7 @@ object FClientes: TFClientes
         Width = 226
         Height = 21
         DataField = 'Barrio'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 10
       end
       object DBEdit27: TDBEdit
@@ -626,7 +625,7 @@ object FClientes: TFClientes
         Width = 76
         Height = 21
         DataField = 'Zona'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 11
       end
       object GaranteDBEdit: TDBEdit
@@ -635,15 +634,15 @@ object FClientes: TFClientes
         Width = 76
         Height = 21
         DataField = 'Garante'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 12
       end
       object BuscarGaranteBitBtn: TBitBtn
-        Left = 211
-        Top = 374
-        Width = 65
+        Left = 182
+        Top = 362
+        Width = 17
         Height = 22
-        Caption = 'Buscar'
+        Caption = '...'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -11
@@ -726,7 +725,7 @@ object FClientes: TFClientes
         Width = 145
         Height = 21
         DataField = 'Terminos'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 0
       end
       object DBEdit15: TDBEdit
@@ -735,7 +734,7 @@ object FClientes: TFClientes
         Width = 145
         Height = 21
         DataField = 'LimiteCredito'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 2
       end
       object DBComboBox1: TDBComboBox
@@ -744,7 +743,7 @@ object FClientes: TFClientes
         Width = 49
         Height = 21
         DataField = 'PRECIO'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         Items.Strings = (
           '1'
           '2'
@@ -761,7 +760,7 @@ object FClientes: TFClientes
         Width = 145
         Height = 21
         DataField = 'DiasCredito'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 3
       end
       object DBCheckBox1: TDBCheckBox
@@ -771,7 +770,7 @@ object FClientes: TFClientes
         Height = 17
         Caption = 'Cr'#233'dito Suspendido'
         DataField = 'Suspendido'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 5
       end
       object DBEdit25: TDBEdit
@@ -780,7 +779,7 @@ object FClientes: TFClientes
         Width = 121
         Height = 21
         DataField = 'Promociones'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 6
       end
       object DBEdit26: TDBEdit
@@ -789,7 +788,7 @@ object FClientes: TFClientes
         Width = 121
         Height = 21
         DataField = 'Almanaques'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 7
       end
       object VendedorDBEdit: TDBEdit
@@ -798,7 +797,7 @@ object FClientes: TFClientes
         Width = 41
         Height = 21
         DataField = 'Vendedor'
-        DataSource = DataSource
+        DataSource = DM.dstCliente
         TabOrder = 1
       end
       object VendedorBitBtn: TBitBtn
@@ -915,7 +914,7 @@ object FClientes: TFClientes
       Top = 421
       Width = 144
       Height = 32
-      DataSource = DataSource
+      DataSource = DM.dstCliente
       VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete]
       Align = alBottom
       Hints.Strings = (
@@ -970,7 +969,7 @@ object FClientes: TFClientes
       Width = 76
       Height = 21
       DataField = 'CODIGO'
-      DataSource = DataSource
+      DataSource = DM.dstCliente
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -979,334 +978,5 @@ object FClientes: TFClientes
       ParentFont = False
       TabOrder = 5
     end
-  end
-  object DataSource: TDataSource
-    DataSet = Tabla
-    Left = 54
-    Top = 394
-  end
-  object DSUsuarios: TDataSource
-    DataSet = UsuarioT
-    Left = 126
-    Top = 394
-  end
-  object CuentaDataSource: TDataSource
-    DataSet = CuentaT
-    Left = 310
-    Top = 394
-  end
-  object Tabla: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    AfterCancel = TablaAfterCancel
-    AfterDelete = TablaAfterDelete
-    AfterInsert = TablaAfterInsert
-    AfterPost = TablaAfterPost
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'NOMBRE'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'TITULAR'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCION'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCIONCOMERCIAL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PAIS'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PROVINCIA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DEPARTAMENTO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CIUDAD'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'BARRIO'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'CP'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CODIGOAREA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CELULAR'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'TELEFONO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'EXTENCION'
-        DataType = ftWideString
-        Size = 6
-      end
-      item
-        Name = 'FAX'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'EMAIL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'TERMINOS'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'VENDEDOR'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PRECIO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'SUSPENDIDO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'EXCENTO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'FECHA'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'LIMITECREDITO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'NOTAS'
-        DataType = ftBlob
-        Size = 8
-      end
-      item
-        Name = 'DIASCREDITO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'DOCUMENTO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CUIT'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'IIBB'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'RUBRO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'IVA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'MSN'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'ALMANAQUES'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PROMOCIONES'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'GARANTE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ZONA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTANOMBRE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTATIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTAANTICIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PAGARE'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end>
-    IndexDefs = <
-      item
-        Name = 'PK_Cliente'
-        Fields = 'CODIGO'
-        Options = [ixUnique]
-      end>
-    StoreDefs = True
-    TableName = 'Cliente'
-    UniDirectional = False
-    Left = 176
-    Top = 400
-  end
-  object UsuarioT: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'NOMBRE'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'password'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DESCRIPCION'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'PERMISO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'EMPRESA'
-        DataType = ftInteger
-      end>
-    StoreDefs = True
-    TableName = 'Usuario'
-    UniDirectional = False
-    Left = 216
-    Top = 408
-  end
-  object CuentaT: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'RUBRO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CAPITULO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'TIPOGASTO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'JERARQUIA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DESCRIPCION'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'SALDO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'LEYENDADEUDORA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'LEYENDAHACREEDORA'
-        DataType = ftWideString
-        Size = 50
-      end>
-    IndexDefs = <
-      item
-        Name = 'IDX_Cuenta'
-        Fields = 'CODIGO'
-      end>
-    StoreDefs = True
-    TableName = 'Cuenta'
-    UniDirectional = False
-    Left = 264
-    Top = 400
   end
 end

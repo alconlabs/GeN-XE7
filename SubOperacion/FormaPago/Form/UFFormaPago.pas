@@ -44,10 +44,7 @@ type
     Label13: TLabel;
     Label14: TLabel;
     Label16: TLabel;
-    Query: TIBQuery;
     tarjetaDBLookupComboBox: TDBLookupComboBox;
-    DS: TDataSource;
-    tarjetaIBQuery: TIBQuery;
     procedure AceptarClick(Sender: TObject);
     procedure CancelaClick(Sender: TObject);
     procedure CalculaSaldo;
@@ -78,8 +75,6 @@ var
   Cuenta: Integer;
 
 implementation
-
-uses BuscarCheques;
 
 {$R *.dfm}
 
@@ -153,24 +148,24 @@ begin
       // PASAR LOS DATOS A CHEQUES ENTREGADOS
       For i := 1 to PagoStringGrid.RowCount - 1 do
       begin
-        Query.SQL.Text :=
+        dm.qQ.SQL.Text :=
           'INSERT INTO "ChequeEntregado" (NUMERO, CHEQUE, DESCRIPCION, FACTURA, IMPORTE, FECHA, DIAS) VALUES '
           + '(' + PagoStringGrid.Cells[6, i] + ',' + PagoStringGrid.Cells[0, i]
           + ',' + QuotedStr(PagoStringGrid.Cells[1, i]) + ',' +
           PagoStringGrid.Cells[4, i] + ',' + PagoStringGrid.Cells[2, i] + ',' +
           QuotedStr(PagoStringGrid.Cells[5, i]) + ',' + PagoStringGrid.Cells
           [3, i] + ')';
-        Query.ExecSQL;
+        dm.qQ.ExecSQL;
       end;
       // ELIMINAR CHEQUE DE CARTERA
       For i := 1 to PagoStringGrid.RowCount - 1 do
       begin
-        Query.SQL.Text := 'DELETE * FROM "Cheque" WHERE "Cheque".CODIGO=' +
+        dm.qQ.SQL.Text := 'DELETE * FROM "Cheque" WHERE "Cheque".CODIGO=' +
           PagoStringGrid.Cells[6, i];
-        Query.ExecSQL;
+        dm.qQ.ExecSQL;
       end;
       // Completa la Transaccion
-      Query.Transaction.CommitRetaining;
+      dm.qQ.Transaction.CommitRetaining;
     end;
   Close;
 end;
@@ -208,7 +203,7 @@ end;
 procedure TFFormaPago.FormShow(Sender: TObject);
 begin
   TDM.Create(self);
-  tarjetaIBQuery.Open;
+  dm.qTarjeta.Open;
   FEContado.Text := '0.00';
   FECheque.Text := '0.00';
   FETarjeta.Text := '0.00';
@@ -240,41 +235,41 @@ end;
 
 procedure TFFormaPago.BuscarCheques;
 begin
-  BuscarChequesForm := TBuscarChequesForm.Create(self);
-  try
-    BuscarChequesForm.ShowModal;
-  finally
-    ChequeCodCheque := BuscarChequesForm.Codigo;
-    BuscarChequesForm.Free;
-  end;
-  TraerCheque;
+//  BuscarChequesForm := TBuscarChequesForm.Create(self);
+//  try
+//    BuscarChequesForm.ShowModal;
+//  finally
+//    ChequeCodCheque := BuscarChequesForm.Codigo;
+//    BuscarChequesForm.Free;
+//  end;
+//  TraerCheque;
 end;
 
 procedure TFFormaPago.TraerCheque;
 begin
   If Cuenta > 1 then
     PagoStringGrid.RowCount := PagoStringGrid.RowCount + 1;
-  Query.SQL.Text := 'SELECT * FROM "Cheque" WHERE "Cheque".CODIGO=' +
+  dm.qQ.SQL.Text := 'SELECT * FROM "Cheque" WHERE "Cheque".CODIGO=' +
     ChequeCodCheque;
-  Query.Open;
-  PagoStringGrid.Cells[0, Cuenta] := Query.FieldByName('NUMERO').AsString;
+  dm.qQ.Open;
+  PagoStringGrid.Cells[0, Cuenta] := dm.qQ.FieldByName('NUMERO').AsString;
   // NUMERO DEL CHEQUE;
-  PagoStringGrid.Cells[1, Cuenta] := Query.FieldByName('DESCRIPCION').AsString;
+  PagoStringGrid.Cells[1, Cuenta] := dm.qQ.FieldByName('DESCRIPCION').AsString;
   // DETALLE DEL CHEQUE;
-  PagoStringGrid.Cells[2, Cuenta] := Query.FieldByName('IMPORTE').AsString;
+  PagoStringGrid.Cells[2, Cuenta] := dm.qQ.FieldByName('IMPORTE').AsString;
   // IMPORTE DEL CHEQUE
-  PagoStringGrid.Cells[3, Cuenta] := Query.FieldByName('DIAS').AsString;
+  PagoStringGrid.Cells[3, Cuenta] := dm.qQ.FieldByName('DIAS').AsString;
   // A CUANTOS DIAS ESTA EL CHEQUE
 
-  PagoStringGrid.Cells[4, Cuenta] := Query.FieldByName('FACTURA').AsString;
+  PagoStringGrid.Cells[4, Cuenta] := dm.qQ.FieldByName('FACTURA').AsString;
   // CODIGO DE FACTURA DEL CHEQUE;
-  PagoStringGrid.Cells[5, Cuenta] := Query.FieldByName('FECHA').AsString;
+  PagoStringGrid.Cells[5, Cuenta] := dm.qQ.FieldByName('FECHA').AsString;
   // FECHA DE EMISION DEL CHEQUE
-  PagoStringGrid.Cells[6, Cuenta] := Query.FieldByName('CODIGO').AsString;
+  PagoStringGrid.Cells[6, Cuenta] := dm.qQ.FieldByName('CODIGO').AsString;
   // FECHA DE EMISION DEL CHEQUE
 
   Cuenta := Cuenta + 1;
-  Query.Close;
+  dm.qQ.Close;
 
   CalculaCheque;
 end;

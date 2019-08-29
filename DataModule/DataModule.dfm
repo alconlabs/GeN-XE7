@@ -1,86 +1,8 @@
 object DM: TDM
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 249
-  Width = 404
-  object BaseDatos: TIBDatabase
-    DatabaseName = 'C:\Users\DeGsoft\Documents\Civeloo\GeN\db\GeN.FDB'
-    Params.Strings = (
-      'user_name=SYSDBA'
-      'password=masterkey'
-      'lc_ctype=WIN1252'
-      'sql_role_name=3')
-    LoginPrompt = False
-    DefaultTransaction = Transaccion
-    ServerType = 'IBServer'
-    AllowStreamedConnected = False
-    Left = 24
-  end
-  object Transaccion: TIBTransaction
-    DefaultDatabase = BaseDatos
-    DefaultAction = TARollback
-    Params.Strings = (
-      'read_committed'
-      'rec_version'
-      'nowait')
-    Left = 24
-    Top = 48
-  end
-  object ConfigQuery: TIBQuery
-    Database = BaseDatos
-    Transaction = Transaccion
-    ForcedRefresh = True
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT'
-      
-        #9'"Config".CODIGO, "Config".NROFACTURA, "Config"."FechaInicio", "' +
-        'Config".PP1, "Config".PP2, "Config".PP3, "Config".PP4, "Config".' +
-        'PP5, "Config".PP6, "Config".PP7, "Config".PP8, "Config".PP9, "Co' +
-        'nfig".PP, "Config"."CtaCompra", "Config"."CtaMercaderia", "Confi' +
-        'g"."CtaIIBB", "Config"."CtaImpuesto", "Config"."CtaDeudor", "Con' +
-        'fig"."CtaVenta", "Config"."CtaCaja", "Config"."CtaAnticipoAProve' +
-        'edor", "Config"."CtaBanco", "Config"."CtaCMV", "Config"."CtaComi' +
-        'sionVendedor", "Config"."CtaComisionVendedorAPagar", "Config"."C' +
-        'taDeudorEnGestionJudicial", "Config"."CtaDeudorIncobrable", "Con' +
-        'fig"."CtaDeudorMoroso", "Config"."CtaDeudorPorVenta", "Config"."' +
-        'CtaDocumentoACobrar", "Config"."CtaHonorarioLegal", "Config"."Ct' +
-        'aHonorarioLegalApagar", "Config"."CtaIVARemanente", "Config"."Ct' +
-        'aIVAAPagar", "Config"."CtaIVACreditoFiscal", "Config"."CtaIVADeb' +
-        'itoFiscal", "Config"."CtaLiquidacionDeIVA", "Config"."CtaMerRecJ' +
-        'udicialmente", "Config"."CtaMercaderiaDeReventa", "Config"."CtaO' +
-        'bligacionAPagar", "Config"."CtaPagoDeHonorario", "Config"."CtaTa' +
-        'rjetaDeCredito", "Config"."CtaProveedor", "Config"."CtaRecuperoJ' +
-        'udicial", "Config"."CtaServicioAPAgar", "Config"."CtaServicio", ' +
-        '"Config"."CtaValorAlCobro", "Config"."CtaValorADepositar", "Conf' +
-        'ig"."Cuenta", "Config"."Precio", "Config"."Comprobante", "Config' +
-        '"."Empresa", "Config"."ImprimirTipo", "Config"."Imprimir", "Conf' +
-        'ig"."ImprimirFiscal", "Config"."ImprimirMostrar", "Config"."Codi' +
-        'goBarra", "Config"."GesCobTemprana", "Config"."GesCobExtraJudici' +
-        'al", "Config"."GesCobJudicial", "Config".CMV, "Config".CTACAPITA' +
-        'LSOC,'
-      
-        '  '#9'"Empresa".CODIGO AS PtoVta, "Empresa".NOMBRE, "Empresa".TITUL' +
-        'AR, "Empresa".DIRECCION, "Empresa".DIRECCIONCOMERCIAL, "Empresa"' +
-        '.PAIS, "Empresa".PROVINCIA, "Empresa".DEPARTAMENTO, "Empresa".CI' +
-        'UDAD, "Empresa".CP, "Empresa".CODIGOAREA, "Empresa".CELULAR, "Em' +
-        'presa".TELEFONO, "Empresa".FAX, "Empresa".EMAIL, "Empresa".SUSPE' +
-        'NDIDO, "Empresa".EXCENTO, "Empresa".FECHA, "Empresa".LIMITECREDI' +
-        'TO, "Empresa".DIASCREDITO, "Empresa".DOCUMENTO, "Empresa".RAZONS' +
-        'OCIAL, "Empresa".CUIT, "Empresa".IIBB, "Empresa".RUBRO, "Empresa' +
-        '".IVA, "Empresa".MSN, "Empresa".WEB, "Empresa".ZONA, "Empresa".C' +
-        'TA, "Empresa".CTANOMBRE, "Empresa".CTATIPO, "Empresa".CTAANTICIP' +
-        'O, "Empresa".PAGARE,'
-      '  '#9'"Imprimir".DESCRIPCION, "Imprimir".REPORTE'
-      'FROM "Config"'
-      
-        ' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".' +
-        'CODIGO)'
-      ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)')
-    Left = 96
-  end
+  Height = 817
+  Width = 1074
   object Consulta: TIBScript
     AutoDDL = False
     Terminator = ';'
@@ -993,22 +915,522 @@ object DM: TDM
       ''
       'COMMIT;')
     Statistics = False
-    Left = 24
+    Left = 32
     Top = 96
   end
-  object FDConnection1: TFDConnection
-    Params.Strings = (
-      'ConnectionDef=GeN')
-    LoginPrompt = False
-    Left = 184
-  end
   object OpenDialog1: TOpenDialog
-    DefaultExt = '.exe'
-    FileName = 'openssl'
-    Filter = 'EXE|*.exe'
-    InitialDir = 'C:'
-    Left = 184
-    Top = 56
+    Left = 176
+    Top = 48
+  end
+  object FDTable1: TFDTable
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 192
+    Top = 144
+  end
+  object FDQuery1: TFDQuery
+    Connection = BaseDatosFB
+    Left = 192
+    Top = 96
+  end
+  object tLibroIVAventa: TIBTable
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'CODIGO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'FECHA'
+        DataType = ftDateTime
+      end
+      item
+        Name = 'FACTURA'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'CLIENTE'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'CUIT'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'CONDICION'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'NG1'
+        DataType = ftFloat
+      end
+      item
+        Name = 'NG2'
+        DataType = ftFloat
+      end
+      item
+        Name = 'NG3'
+        DataType = ftFloat
+      end
+      item
+        Name = 'IVA1'
+        DataType = ftFloat
+      end
+      item
+        Name = 'IVA2'
+        DataType = ftFloat
+      end
+      item
+        Name = 'IVA3'
+        DataType = ftFloat
+      end
+      item
+        Name = 'OEIIBB'
+        DataType = ftFloat
+      end
+      item
+        Name = 'IDERPYPAC'
+        DataType = ftFloat
+      end
+      item
+        Name = 'ITF'
+        DataType = ftFloat
+      end
+      item
+        Name = 'CBTETIPO'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'PTOVTA'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'CBTEDESDE'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'CBTEHASTA'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'DOCTIPO'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'NOMCLI'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'MONID'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'MONCOTIZ'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'CANTIVA'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'OPCION'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'FCHVTOPAGO'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'ALICIVA'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'IMPNETO'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'NOGRABADO'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'IMPOPEX'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'IMPIVA'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'GENERALES'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'NOCAT'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'IMPTRIB'
+        DataType = ftWideString
+        Size = 255
+      end>
+    StoreDefs = True
+    TableName = 'LibroIVAventa'
+    UniDirectional = False
+    Left = 504
+    Top = 232
+    object tLibroIVAventaCODIGO: TIntegerField
+      FieldName = 'CODIGO'
+    end
+    object tLibroIVAventaFECHA: TDateTimeField
+      FieldName = 'FECHA'
+    end
+    object tLibroIVAventaFACTURA: TIBStringField
+      FieldName = 'FACTURA'
+      Size = 50
+    end
+    object tLibroIVAventaCLIENTE: TIBStringField
+      FieldName = 'CLIENTE'
+      Size = 50
+    end
+    object tLibroIVAventaCUIT: TIBStringField
+      FieldName = 'CUIT'
+      Size = 50
+    end
+    object tLibroIVAventaCONDICION: TIBStringField
+      FieldName = 'CONDICION'
+      Size = 50
+    end
+    object tLibroIVAventaNG1: TFloatField
+      FieldName = 'NG1'
+    end
+    object tLibroIVAventaNG2: TFloatField
+      FieldName = 'NG2'
+    end
+    object tLibroIVAventaNG3: TFloatField
+      FieldName = 'NG3'
+    end
+    object tLibroIVAventaIVA1: TFloatField
+      FieldName = 'IVA1'
+    end
+    object tLibroIVAventaIVA2: TFloatField
+      FieldName = 'IVA2'
+    end
+    object tLibroIVAventaIVA3: TFloatField
+      FieldName = 'IVA3'
+    end
+    object tLibroIVAventaOEIIBB: TFloatField
+      FieldName = 'OEIIBB'
+    end
+    object tLibroIVAventaIDERPYPAC: TFloatField
+      FieldName = 'IDERPYPAC'
+    end
+    object tLibroIVAventaITF: TFloatField
+      FieldName = 'ITF'
+    end
+    object tLibroIVAventaCBTETIPO: TIBStringField
+      FieldName = 'CBTETIPO'
+      Size = 255
+    end
+    object tLibroIVAventaPTOVTA: TIBStringField
+      FieldName = 'PTOVTA'
+      Size = 255
+    end
+    object tLibroIVAventaCBTEDESDE: TIBStringField
+      FieldName = 'CBTEDESDE'
+      Size = 255
+    end
+    object tLibroIVAventaCBTEHASTA: TIBStringField
+      FieldName = 'CBTEHASTA'
+      Size = 255
+    end
+    object tLibroIVAventaDOCTIPO: TIBStringField
+      FieldName = 'DOCTIPO'
+      Size = 255
+    end
+    object tLibroIVAventaNOMCLI: TIBStringField
+      FieldName = 'NOMCLI'
+      Size = 255
+    end
+    object tLibroIVAventaMONID: TIBStringField
+      FieldName = 'MONID'
+      Size = 255
+    end
+    object tLibroIVAventaMONCOTIZ: TIBStringField
+      FieldName = 'MONCOTIZ'
+      Size = 255
+    end
+    object tLibroIVAventaCANTIVA: TIBStringField
+      FieldName = 'CANTIVA'
+      Size = 255
+    end
+    object tLibroIVAventaOPCION: TIBStringField
+      FieldName = 'OPCION'
+      Size = 255
+    end
+    object tLibroIVAventaFCHVTOPAGO: TIBStringField
+      FieldName = 'FCHVTOPAGO'
+      Size = 255
+    end
+    object tLibroIVAventaALICIVA: TIBStringField
+      FieldName = 'ALICIVA'
+      Size = 255
+    end
+    object tLibroIVAventaIMPNETO: TIBStringField
+      FieldName = 'IMPNETO'
+      Size = 255
+    end
+    object tLibroIVAventaNOGRABADO: TIBStringField
+      FieldName = 'NOGRABADO'
+      Size = 255
+    end
+    object tLibroIVAventaIMPOPEX: TIBStringField
+      FieldName = 'IMPOPEX'
+      Size = 255
+    end
+    object tLibroIVAventaIMPIVA: TIBStringField
+      FieldName = 'IMPIVA'
+      Size = 255
+    end
+    object tLibroIVAventaGENERALES: TIBStringField
+      FieldName = 'GENERALES'
+      Size = 255
+    end
+    object tLibroIVAventaNOCAT: TIBStringField
+      FieldName = 'NOCAT'
+      Size = 255
+    end
+    object tLibroIVAventaIMPTRIB: TIBStringField
+      FieldName = 'IMPTRIB'
+      Size = 255
+    end
+  end
+  object sdb: TFDConnection
+    Params.Strings = (
+      'Database=C:\Users\DeGsoft\Documents\Civeloo\GeN\db\db.sdb'
+      'DriverID=SQLite')
+    LoginPrompt = False
+    Left = 104
+  end
+  object tCbteTipo: TFDQuery
+    Connection = sdb
+    Left = 104
+    Top = 48
+  end
+  object tSiapVtaComp: TFDQuery
+    Connection = sdb
+    SQL.Strings = (
+      'SELECT * FROM SiapVtaComp')
+    Left = 104
+    Top = 96
+    object tSiapVtaCompCodigo: TIntegerField
+      FieldName = 'Codigo'
+      Origin = 'Codigo'
+    end
+    object tSiapVtaCompCbteFch: TWideMemoField
+      FieldName = 'CbteFch'
+      Origin = 'CbteFch'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompCbteTipo: TWideMemoField
+      FieldName = 'CbteTipo'
+      Origin = 'CbteTipo'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompPtoVta: TWideMemoField
+      FieldName = 'PtoVta'
+      Origin = 'PtoVta'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompCbteDesde: TWideMemoField
+      FieldName = 'CbteDesde'
+      Origin = 'CbteDesde'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompCbteHasta: TWideMemoField
+      FieldName = 'CbteHasta'
+      Origin = 'CbteHasta'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompDocTipo: TWideMemoField
+      FieldName = 'DocTipo'
+      Origin = 'DocTipo'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompDocNro: TWideMemoField
+      FieldName = 'DocNro'
+      Origin = 'DocNro'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompDocNomb: TWideMemoField
+      FieldName = 'DocNomb'
+      Origin = 'DocNomb'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompMonId: TWideMemoField
+      FieldName = 'MonId'
+      Origin = 'MonId'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompMonCotiz: TWideMemoField
+      FieldName = 'MonCotiz'
+      Origin = 'MonCotiz'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompIvaCant: TWideMemoField
+      FieldName = 'IvaCant'
+      Origin = 'IvaCant'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompCodOper: TWideMemoField
+      FieldName = 'CodOper'
+      Origin = 'CodOper'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompFchVtoPago: TWideMemoField
+      FieldName = 'FchVtoPago'
+      Origin = 'FchVtoPago'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompIvaId: TWideMemoField
+      FieldName = 'IvaId'
+      Origin = 'IvaId'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompImpNeto: TWideMemoField
+      FieldName = 'ImpNeto'
+      Origin = 'ImpNeto'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompImpNoGra: TWideMemoField
+      FieldName = 'ImpNoGra'
+      Origin = 'ImpNoGra'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompImpOpEx: TWideMemoField
+      FieldName = 'ImpOpEx'
+      Origin = 'ImpOpEx'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompImpIva: TWideMemoField
+      FieldName = 'ImpIva'
+      Origin = 'ImpIva'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompImpPercGral: TWideMemoField
+      FieldName = 'ImpPercGral'
+      Origin = 'ImpPercGral'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompImpPercNoCat: TWideMemoField
+      FieldName = 'ImpPercNoCat'
+      Origin = 'ImpPercNoCat'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompImpPercIIBB: TWideMemoField
+      FieldName = 'ImpPercIIBB'
+      Origin = 'ImpPercIIBB'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompImpPercMuni: TWideMemoField
+      FieldName = 'ImpPercMuni'
+      Origin = 'ImpPercMuni'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompImpImpInt: TWideMemoField
+      FieldName = 'ImpImpInt'
+      Origin = 'ImpImpInt'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompImpOtrTrib: TWideMemoField
+      FieldName = 'ImpOtrTrib'
+      Origin = 'ImpOtrTrib'
+      BlobType = ftWideMemo
+    end
+    object tSiapVtaCompImpTotal: TWideMemoField
+      FieldName = 'ImpTotal'
+      Origin = 'ImpTotal'
+      BlobType = ftWideMemo
+    end
+  end
+  object mtIVA: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 104
+    Top = 144
+  end
+  object qSdb: TFDQuery
+    Connection = sdb
+    Left = 104
+    Top = 192
+  end
+  object SaveDialog1: TSaveDialog
+    Left = 208
+    Top = 48
+  end
+  object FDBatchMoveSQLWriter1: TFDBatchMoveSQLWriter
+    Connection = BaseDatosFB
+    TableName = '"Proveedor"'
+    Left = 192
+    Top = 288
+  end
+  object FDBatchMoveTextReader1: TFDBatchMoveTextReader
+    DataDef.Fields = <>
+    Left = 192
+    Top = 240
+  end
+  object FDBatchMove1: TFDBatchMove
+    Reader = FDBatchMoveTextReader1
+    Writer = FDBatchMoveSQLWriter1
+    Mappings = <>
+    LogFileName = 'Data.log'
+    Left = 192
+    Top = 192
+  end
+  object BaseDatosFB: TFDConnection
+    Params.Strings = (
+      'DriverID=FB'
+      'User_Name=sysdba'
+      'Password=masterkey')
+    LoginPrompt = False
+    Left = 192
+  end
+  object FDScript1: TFDScript
+    SQLScripts = <>
+    Connection = sdb
+    Params = <>
+    Macros = <>
+    Left = 192
+    Top = 448
   end
   object IBScript1: TIBScript
     AutoDDL = False
@@ -1979,21 +2401,753 @@ object DM: TDM
       ''
       'COMMIT;')
     Statistics = False
-    Left = 24
+    Left = 32
     Top = 144
   end
-  object FDTable1: TFDTable
-    Connection = FDConnection1
-    Left = 184
-    Top = 112
+  object ConfigQuery: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'SELECT'
+      
+        #9'"Config".CODIGO, "Config".NROFACTURA, "Config"."FechaInicio", "' +
+        'Config".PP1, "Config".PP2, "Config".PP3, "Config".PP4, "Config".' +
+        'PP5, "Config".PP6, "Config".PP7, "Config".PP8, "Config".PP9, "Co' +
+        'nfig".PP, "Config"."CtaCompra", "Config"."CtaMercaderia", "Confi' +
+        'g"."CtaIIBB", "Config"."CtaImpuesto", "Config"."CtaDeudor", "Con' +
+        'fig"."CtaVenta", "Config"."CtaCaja", "Config"."CtaAnticipoAProve' +
+        'edor", "Config"."CtaBanco", "Config"."CtaCMV", "Config"."CtaComi' +
+        'sionVendedor", "Config"."CtaComisionVendedorAPagar", "Config"."C' +
+        'taDeudorEnGestionJudicial", "Config"."CtaDeudorIncobrable", "Con' +
+        'fig"."CtaDeudorMoroso", "Config"."CtaDeudorPorVenta", "Config"."' +
+        'CtaDocumentoACobrar", "Config"."CtaHonorarioLegal", "Config"."Ct' +
+        'aHonorarioLegalApagar", "Config"."CtaIVARemanente", "Config"."Ct' +
+        'aIVAAPagar", "Config"."CtaIVACreditoFiscal", "Config"."CtaIVADeb' +
+        'itoFiscal", "Config"."CtaLiquidacionDeIVA", "Config"."CtaMerRecJ' +
+        'udicialmente", "Config"."CtaMercaderiaDeReventa", "Config"."CtaO' +
+        'bligacionAPagar", "Config"."CtaPagoDeHonorario", "Config"."CtaTa' +
+        'rjetaDeCredito", "Config"."CtaProveedor", "Config"."CtaRecuperoJ' +
+        'udicial", "Config"."CtaServicioAPAgar", "Config"."CtaServicio", ' +
+        '"Config"."CtaValorAlCobro", "Config"."CtaValorADepositar", "Conf' +
+        'ig"."Cuenta", "Config"."Precio", "Config"."Comprobante", "Config' +
+        '"."Empresa", "Config"."ImprimirTipo", "Config"."Imprimir", "Conf' +
+        'ig"."ImprimirFiscal", "Config"."ImprimirMostrar", "Config"."Codi' +
+        'goBarra", "Config"."GesCobTemprana", "Config"."GesCobExtraJudici' +
+        'al", "Config"."GesCobJudicial", "Config".CMV, "Config".CTACAPITA' +
+        'LSOC,'
+      
+        '  '#9'"Empresa".CODIGO AS PtoVta, "Empresa".NOMBRE, "Empresa".TITUL' +
+        'AR, "Empresa".DIRECCION, "Empresa".DIRECCIONCOMERCIAL, "Empresa"' +
+        '.PAIS, "Empresa".PROVINCIA, "Empresa".DEPARTAMENTO, "Empresa".CI' +
+        'UDAD, "Empresa".CP, "Empresa".CODIGOAREA, "Empresa".CELULAR, "Em' +
+        'presa".TELEFONO, "Empresa".FAX, "Empresa".EMAIL, "Empresa".SUSPE' +
+        'NDIDO, "Empresa".EXCENTO, "Empresa".FECHA, "Empresa".LIMITECREDI' +
+        'TO, "Empresa".DIASCREDITO, "Empresa".DOCUMENTO, "Empresa".RAZONS' +
+        'OCIAL, "Empresa".CUIT, "Empresa".IIBB, "Empresa".RUBRO, "Empresa' +
+        '".IVA, "Empresa".MSN, "Empresa".WEB, "Empresa".ZONA, "Empresa".C' +
+        'TA, "Empresa".CTANOMBRE, "Empresa".CTATIPO, "Empresa".CTAANTICIP' +
+        'O, "Empresa".PAGARE,'
+      '  '#9'"Imprimir".DESCRIPCION, "Imprimir".REPORTE'
+      'FROM "Config"'
+      
+        ' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".' +
+        'CODIGO)'
+      ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)')
+    Left = 192
+    Top = 336
   end
-  object FDQuery1: TFDQuery
-    Connection = FDConnection1
-    Left = 184
-    Top = 168
+  object BaseDatosIB: TIBDatabase
+    Connected = True
+    DatabaseName = 'C:\Users\DeGsoft\Documents\Civeloo\GeN\db\GeN.FDB'
+    Params.Strings = (
+      'user_name=SYSDBA'
+      'password=masterkey'
+      'sql_role_name=3'
+      'lc_ctype=WIN1252')
+    LoginPrompt = False
+    DefaultTransaction = Transaccion
+    ServerType = 'IBServer'
+    Left = 32
   end
-  object tLibroIVAventa: TIBTable
-    Database = BaseDatos
+  object tArticulo: TIBTable
+    Database = BaseDatosIB
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'CODIGO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'DESCRIPCION'
+        DataType = ftString
+        Size = 255
+      end
+      item
+        Name = 'COSTO'
+        DataType = ftFloat
+      end
+      item
+        Name = 'ULTCOSTO'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PRECIO1'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PRECIO2'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PRECIO3'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PRECIO4'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PRECIO5'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PRECIO6'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PRECIO'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PORCENTAJE'
+        DataType = ftFloat
+      end
+      item
+        Name = 'ULTPRECIO'
+        DataType = ftFloat
+      end
+      item
+        Name = 'MARCA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'COLOR'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CATEGORIA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'SUBCATEGORIA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'UBICACION'
+        DataType = ftString
+        Size = 255
+      end
+      item
+        Name = 'UNIDAD'
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'DISPONIBLE'
+        DataType = ftInteger
+      end
+      item
+        Name = 'ENPRODUCCION'
+        DataType = ftInteger
+      end
+      item
+        Name = 'NOTAS'
+        DataType = ftString
+        Size = 255
+      end
+      item
+        Name = 'IVA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'TASA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'IMPOTROS'
+        DataType = ftInteger
+      end
+      item
+        Name = 'IIBB'
+        DataType = ftInteger
+      end
+      item
+        Name = 'STOCKMINIMO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'STOCKMAXIMO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'STOCKVENDIDO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'FECHACOMPULT'
+        DataType = ftDateTime
+      end
+      item
+        Name = 'LISTA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'PROCEDENCIA'
+        DataType = ftString
+        Size = 255
+      end
+      item
+        Name = 'CODIGOBARRA'
+        DataType = ftString
+        Size = 255
+      end
+      item
+        Name = 'RUBRO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'PROVEEDOR'
+        DataType = ftInteger
+      end
+      item
+        Name = 'GARANTIA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'FECHA'
+        DataType = ftDateTime
+      end
+      item
+        Name = 'PEDIDO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'STOCK'
+        DataType = ftString
+        Size = 255
+      end
+      item
+        Name = 'EXISTENTE'
+        DataType = ftInteger
+      end
+      item
+        Name = 'ACTUAL'
+        DataType = ftInteger
+      end
+      item
+        Name = 'MARCADOCONTADO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'MARCADOLISTA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'MARCADOFINAL'
+        DataType = ftInteger
+      end
+      item
+        Name = 'PREPARADO'
+        DataType = ftString
+        Size = 255
+      end
+      item
+        Name = 'CTANOMBRE'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CTATIPO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CTAANTICIPO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CTAIIBB'
+        DataType = ftInteger
+      end
+      item
+        Name = 'ESTADO'
+        DataType = ftString
+        Size = 255
+      end
+      item
+        Name = 'VENCE'
+        DataType = ftDateTime
+      end
+      item
+        Name = 'VENCIMIENTO'
+        DataType = ftInteger
+      end>
+    IndexDefs = <
+      item
+        Name = 'PK_Articulo'
+        Fields = 'CODIGO'
+        Options = [ixUnique]
+      end>
+    StoreDefs = True
+    TableName = 'Articulo'
+    UniDirectional = False
+    Left = 504
+    Top = 8
+  end
+  object dstArticulo: TDataSource
+    AutoEdit = False
+    DataSet = tArticulo
+    Left = 552
+    Top = 8
+  end
+  object tMaterial: TIBTable
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    TableName = 'Material'
+    UniDirectional = False
+    Left = 504
+    Top = 280
+  end
+  object dsqMaterial: TDataSource
+    DataSet = tMaterial
+    Left = 552
+    Top = 280
+  end
+  object qUsuario: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from "Usuario"')
+    Left = 632
+    Top = 688
+  end
+  object dsqUsuario: TDataSource
+    DataSet = qUsuario
+    Left = 664
+    Top = 688
+  end
+  object tMarca: TIBTable
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    TableName = 'Marca'
+    UniDirectional = False
+    Left = 504
+    Top = 328
+  end
+  object dstMarca: TDataSource
+    DataSet = tMarca
+    Left = 552
+    Top = 328
+  end
+  object qQ: TIBQuery
+    Database = BaseDatosIB
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from "Config"')
+    Left = 792
+    Top = 56
+  end
+  object qCuenta: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from "Cuenta"'
+      'order by DESCRIPCION')
+    Left = 632
+    Top = 240
+  end
+  object dsqCuenta: TDataSource
+    DataSet = qCuenta
+    Left = 664
+    Top = 240
+  end
+  object tProveedor: TIBTable
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    TableName = 'Proveedor'
+    UniDirectional = False
+    Left = 504
+    Top = 376
+  end
+  object dstProveedor: TDataSource
+    DataSet = tProveedor
+    Left = 552
+    Top = 376
+  end
+  object qTemp: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    Left = 792
+    Top = 8
+  end
+  object tCategoria: TIBTable
+    Database = BaseDatosIB
+    BufferChunks = 1000
+    CachedUpdates = False
+    TableName = 'Categoria'
+    UniDirectional = False
+    Left = 504
+    Top = 56
+  end
+  object tIVA: TIBTable
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    TableName = 'Iva'
+    UniDirectional = False
+    Left = 504
+    Top = 184
+  end
+  object dstIVA: TDataSource
+    DataSet = tIVA
+    Left = 552
+    Top = 184
+  end
+  object dstCategoria: TDataSource
+    DataSet = tCategoria
+    Left = 552
+    Top = 56
+  end
+  object tSubCategoria: TIBTable
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    TableName = 'SubCategoria'
+    UniDirectional = False
+    Left = 504
+    Top = 512
+  end
+  object dstSubCategoria: TDataSource
+    DataSet = tSubCategoria
+    Left = 552
+    Top = 512
+  end
+  object tRubro: TIBTable
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    TableName = 'Rubro'
+    UniDirectional = False
+    Left = 504
+    Top = 472
+  end
+  object dstRubro: TDataSource
+    DataSet = tRubro
+    Left = 552
+    Top = 472
+  end
+  object qODM: TFDQuery
+    Connection = BaseDatosFB
+    Left = 880
+    Top = 8
+  end
+  object dsqArticulo: TDataSource
+    DataSet = qArticulo
+    Left = 664
+    Top = 8
+  end
+  object qCliente: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'Select * from "Cliente"'
+      'order by CODIGO asc')
+    Left = 632
+    Top = 192
+  end
+  object dsqCliente: TDataSource
+    DataSet = qCliente
+    Left = 664
+    Top = 192
+  end
+  object dsqVendedor: TDataSource
+    DataSet = qVendedor
+    Left = 664
+    Top = 640
+  end
+  object qVendedor: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from "Vendedor"')
+    Left = 632
+    Top = 640
+  end
+  object tVendedor: TIBTable
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'CODIGO'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'NOMBRE'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'TITULAR'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'DIRECCION'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'DIRECCIONCOMERCIAL'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'PAIS'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'PROVINCIA'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'DEPARTAMENTO'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'CIUDAD'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'CP'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'CODIGOAREA'
+        DataType = ftWideString
+        Size = 10
+      end
+      item
+        Name = 'CELULAR'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'TELEFONO'
+        DataType = ftWideString
+        Size = 15
+      end
+      item
+        Name = 'EXTENCION'
+        DataType = ftWideString
+        Size = 6
+      end
+      item
+        Name = 'FAX'
+        DataType = ftWideString
+        Size = 15
+      end
+      item
+        Name = 'EMAIL'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'TERMINOS'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'VENDEDOR'
+        DataType = ftInteger
+      end
+      item
+        Name = 'PRECIO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'SUSPENDIDO'
+        Attributes = [faFixed]
+        DataType = ftWideString
+        Size = 2
+      end
+      item
+        Name = 'EXCENTO'
+        Attributes = [faFixed]
+        DataType = ftWideString
+        Size = 2
+      end
+      item
+        Name = 'FECHAINGRESO'
+        DataType = ftDateTime
+      end
+      item
+        Name = 'LIMITECREDITO'
+        DataType = ftFloat
+      end
+      item
+        Name = 'NOTAS'
+        DataType = ftBlob
+        Size = 8
+      end
+      item
+        Name = 'DIASCREDITO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'DOCUMENTO'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'CUIT'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'IIBB'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'RUBRO'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'IVA'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'MSN'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'ALMANAQUES'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'PROMOCIONES'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'GARANTE'
+        DataType = ftInteger
+      end
+      item
+        Name = 'ZONA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CTA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CTANOMBRE'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CTATIPO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CTAANTICIPO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'PAGARE'
+        Attributes = [faFixed]
+        DataType = ftWideString
+        Size = 2
+      end
+      item
+        Name = 'COMISION'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PUNTOS'
+        DataType = ftFloat
+      end>
+    IndexDefs = <
+      item
+        Name = 'PK_Vendedor'
+        Fields = 'CODIGO'
+        Options = [ixUnique]
+      end>
+    StoreDefs = True
+    TableName = 'Vendedor'
+    UniDirectional = False
+    Left = 504
+    Top = 678
+  end
+  object dstVendedor: TDataSource
+    DataSet = tVendedor
+    Left = 550
+    Top = 678
+  end
+  object qEmpresa: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from "Empresa"')
+    Left = 632
+    Top = 288
+  end
+  object dstCuenta: TDataSource
+    DataSet = tCuenta
+    Left = 550
+    Top = 144
+  end
+  object tCuenta: TIBTable
+    Database = BaseDatosIB
     Transaction = Transaccion
     BufferChunks = 1000
     CachedUpdates = False
@@ -2003,16 +3157,235 @@ object DM: TDM
         DataType = ftInteger
       end
       item
-        Name = 'FECHA'
-        DataType = ftDateTime
+        Name = 'RUBRO'
+        DataType = ftInteger
       end
       item
-        Name = 'FACTURA'
+        Name = 'CAPITULO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'TIPOGASTO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'JERARQUIA'
         DataType = ftWideString
         Size = 50
       end
       item
-        Name = 'CLIENTE'
+        Name = 'DESCRIPCION'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'SALDO'
+        DataType = ftFloat
+      end
+      item
+        Name = 'LEYENDADEUDORA'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'LEYENDAHACREEDORA'
+        DataType = ftWideString
+        Size = 50
+      end>
+    IndexDefs = <
+      item
+        Name = 'IDX_Cuenta'
+        Fields = 'CODIGO'
+      end>
+    StoreDefs = True
+    TableName = 'Cuenta'
+    UniDirectional = False
+    Left = 504
+    Top = 144
+  end
+  object tUsuario: TIBTable
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'CODIGO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'NOMBRE'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'password'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'DESCRIPCION'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'PERMISO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'EMPRESA'
+        DataType = ftInteger
+      end>
+    StoreDefs = True
+    TableName = 'Usuario'
+    UniDirectional = False
+    Left = 504
+    Top = 632
+  end
+  object dstUsuario: TDataSource
+    DataSet = tUsuario
+    Left = 550
+    Top = 631
+  end
+  object dstCliente: TDataSource
+    DataSet = tCliente
+    Left = 550
+    Top = 106
+  end
+  object tCliente: TIBTable
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'CODIGO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'NOMBRE'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'TITULAR'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'DIRECCION'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'DIRECCIONCOMERCIAL'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'PAIS'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'PROVINCIA'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'DEPARTAMENTO'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'CIUDAD'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'BARRIO'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'CP'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'CODIGOAREA'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'CELULAR'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'TELEFONO'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'EXTENCION'
+        DataType = ftWideString
+        Size = 6
+      end
+      item
+        Name = 'FAX'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'EMAIL'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'TERMINOS'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'VENDEDOR'
+        DataType = ftInteger
+      end
+      item
+        Name = 'PRECIO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'SUSPENDIDO'
+        Attributes = [faFixed]
+        DataType = ftWideString
+        Size = 2
+      end
+      item
+        Name = 'EXCENTO'
+        Attributes = [faFixed]
+        DataType = ftWideString
+        Size = 2
+      end
+      item
+        Name = 'FECHA'
+        DataType = ftDateTime
+      end
+      item
+        Name = 'LIMITECREDITO'
+        DataType = ftFloat
+      end
+      item
+        Name = 'NOTAS'
+        DataType = ftBlob
+        Size = 8
+      end
+      item
+        Name = 'DIASCREDITO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'DOCUMENTO'
         DataType = ftWideString
         Size = 50
       end
@@ -2022,443 +3395,974 @@ object DM: TDM
         Size = 50
       end
       item
-        Name = 'CONDICION'
+        Name = 'IIBB'
         DataType = ftWideString
         Size = 50
       end
       item
-        Name = 'NG1'
-        DataType = ftFloat
-      end
-      item
-        Name = 'NG2'
-        DataType = ftFloat
-      end
-      item
-        Name = 'NG3'
-        DataType = ftFloat
-      end
-      item
-        Name = 'IVA1'
-        DataType = ftFloat
-      end
-      item
-        Name = 'IVA2'
-        DataType = ftFloat
-      end
-      item
-        Name = 'IVA3'
-        DataType = ftFloat
-      end
-      item
-        Name = 'OEIIBB'
-        DataType = ftFloat
-      end
-      item
-        Name = 'IDERPYPAC'
-        DataType = ftFloat
-      end
-      item
-        Name = 'ITF'
-        DataType = ftFloat
-      end
-      item
-        Name = 'CBTETIPO'
+        Name = 'RUBRO'
         DataType = ftWideString
-        Size = 255
+        Size = 50
       end
       item
-        Name = 'PTOVTA'
+        Name = 'IVA'
         DataType = ftWideString
-        Size = 255
+        Size = 50
       end
       item
-        Name = 'CBTEDESDE'
+        Name = 'MSN'
         DataType = ftWideString
-        Size = 255
+        Size = 50
       end
       item
-        Name = 'CBTEHASTA'
+        Name = 'ALMANAQUES'
         DataType = ftWideString
-        Size = 255
+        Size = 50
       end
       item
-        Name = 'DOCTIPO'
+        Name = 'PROMOCIONES'
         DataType = ftWideString
-        Size = 255
+        Size = 50
       end
       item
-        Name = 'NOMCLI'
-        DataType = ftWideString
-        Size = 255
+        Name = 'GARANTE'
+        DataType = ftInteger
       end
       item
-        Name = 'MONID'
-        DataType = ftWideString
-        Size = 255
+        Name = 'ZONA'
+        DataType = ftInteger
       end
       item
-        Name = 'MONCOTIZ'
-        DataType = ftWideString
-        Size = 255
+        Name = 'CTA'
+        DataType = ftInteger
       end
       item
-        Name = 'CANTIVA'
-        DataType = ftWideString
-        Size = 255
+        Name = 'CTANOMBRE'
+        DataType = ftInteger
       end
       item
-        Name = 'OPCION'
-        DataType = ftWideString
-        Size = 255
+        Name = 'CTATIPO'
+        DataType = ftInteger
       end
       item
-        Name = 'FCHVTOPAGO'
-        DataType = ftWideString
-        Size = 255
+        Name = 'CTAANTICIPO'
+        DataType = ftInteger
       end
       item
-        Name = 'ALICIVA'
+        Name = 'PAGARE'
+        Attributes = [faFixed]
         DataType = ftWideString
-        Size = 255
-      end
+        Size = 2
+      end>
+    IndexDefs = <
       item
-        Name = 'IMPNETO'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'NOGRABADO'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'IMPOPEX'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'IMPIVA'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'GENERALES'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'NOCAT'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'IMPTRIB'
-        DataType = ftWideString
-        Size = 255
+        Name = 'PK_Cliente'
+        Fields = 'CODIGO'
+        Options = [ixUnique]
       end>
     StoreDefs = True
-    TableName = 'LibroIVAventa'
+    TableName = 'Cliente'
     UniDirectional = False
-    Left = 248
-    object tLibroIVAventaCODIGO: TIntegerField
-      FieldName = 'CODIGO'
-    end
-    object tLibroIVAventaFECHA: TDateTimeField
-      FieldName = 'FECHA'
-    end
-    object tLibroIVAventaFACTURA: TIBStringField
-      FieldName = 'FACTURA'
-      Size = 50
-    end
-    object tLibroIVAventaCLIENTE: TIBStringField
-      FieldName = 'CLIENTE'
-      Size = 50
-    end
-    object tLibroIVAventaCUIT: TIBStringField
-      FieldName = 'CUIT'
-      Size = 50
-    end
-    object tLibroIVAventaCONDICION: TIBStringField
-      FieldName = 'CONDICION'
-      Size = 50
-    end
-    object tLibroIVAventaNG1: TFloatField
-      FieldName = 'NG1'
-    end
-    object tLibroIVAventaNG2: TFloatField
-      FieldName = 'NG2'
-    end
-    object tLibroIVAventaNG3: TFloatField
-      FieldName = 'NG3'
-    end
-    object tLibroIVAventaIVA1: TFloatField
-      FieldName = 'IVA1'
-    end
-    object tLibroIVAventaIVA2: TFloatField
-      FieldName = 'IVA2'
-    end
-    object tLibroIVAventaIVA3: TFloatField
-      FieldName = 'IVA3'
-    end
-    object tLibroIVAventaOEIIBB: TFloatField
-      FieldName = 'OEIIBB'
-    end
-    object tLibroIVAventaIDERPYPAC: TFloatField
-      FieldName = 'IDERPYPAC'
-    end
-    object tLibroIVAventaITF: TFloatField
-      FieldName = 'ITF'
-    end
-    object tLibroIVAventaCBTETIPO: TIBStringField
-      FieldName = 'CBTETIPO'
-      Size = 255
-    end
-    object tLibroIVAventaPTOVTA: TIBStringField
-      FieldName = 'PTOVTA'
-      Size = 255
-    end
-    object tLibroIVAventaCBTEDESDE: TIBStringField
-      FieldName = 'CBTEDESDE'
-      Size = 255
-    end
-    object tLibroIVAventaCBTEHASTA: TIBStringField
-      FieldName = 'CBTEHASTA'
-      Size = 255
-    end
-    object tLibroIVAventaDOCTIPO: TIBStringField
-      FieldName = 'DOCTIPO'
-      Size = 255
-    end
-    object tLibroIVAventaNOMCLI: TIBStringField
-      FieldName = 'NOMCLI'
-      Size = 255
-    end
-    object tLibroIVAventaMONID: TIBStringField
-      FieldName = 'MONID'
-      Size = 255
-    end
-    object tLibroIVAventaMONCOTIZ: TIBStringField
-      FieldName = 'MONCOTIZ'
-      Size = 255
-    end
-    object tLibroIVAventaCANTIVA: TIBStringField
-      FieldName = 'CANTIVA'
-      Size = 255
-    end
-    object tLibroIVAventaOPCION: TIBStringField
-      FieldName = 'OPCION'
-      Size = 255
-    end
-    object tLibroIVAventaFCHVTOPAGO: TIBStringField
-      FieldName = 'FCHVTOPAGO'
-      Size = 255
-    end
-    object tLibroIVAventaALICIVA: TIBStringField
-      FieldName = 'ALICIVA'
-      Size = 255
-    end
-    object tLibroIVAventaIMPNETO: TIBStringField
-      FieldName = 'IMPNETO'
-      Size = 255
-    end
-    object tLibroIVAventaNOGRABADO: TIBStringField
-      FieldName = 'NOGRABADO'
-      Size = 255
-    end
-    object tLibroIVAventaIMPOPEX: TIBStringField
-      FieldName = 'IMPOPEX'
-      Size = 255
-    end
-    object tLibroIVAventaIMPIVA: TIBStringField
-      FieldName = 'IMPIVA'
-      Size = 255
-    end
-    object tLibroIVAventaGENERALES: TIBStringField
-      FieldName = 'GENERALES'
-      Size = 255
-    end
-    object tLibroIVAventaNOCAT: TIBStringField
-      FieldName = 'NOCAT'
-      Size = 255
-    end
-    object tLibroIVAventaIMPTRIB: TIBStringField
-      FieldName = 'IMPTRIB'
-      Size = 255
-    end
+    Left = 504
+    Top = 104
   end
-  object Query: TIBQuery
-    Database = BaseDatos
+  object tEmpresa: TIBTable
+    Database = BaseDatosIB
     Transaction = Transaccion
-    ForcedRefresh = True
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'CODIGO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'NOMBRE'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'TITULAR'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'DIRECCION'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'DIRECCIONCOMERCIAL'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'PAIS'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'PROVINCIA'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'DEPARTAMENTO'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'CIUDAD'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'CP'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'CODIGOAREA'
+        DataType = ftWideString
+        Size = 10
+      end
+      item
+        Name = 'CELULAR'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'TELEFONO'
+        DataType = ftWideString
+        Size = 15
+      end
+      item
+        Name = 'FAX'
+        DataType = ftWideString
+        Size = 15
+      end
+      item
+        Name = 'EMAIL'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'SUSPENDIDO'
+        Attributes = [faFixed]
+        DataType = ftWideString
+        Size = 2
+      end
+      item
+        Name = 'EXCENTO'
+        Attributes = [faFixed]
+        DataType = ftWideString
+        Size = 2
+      end
+      item
+        Name = 'FECHA'
+        DataType = ftDateTime
+      end
+      item
+        Name = 'LIMITECREDITO'
+        DataType = ftFloat
+      end
+      item
+        Name = 'NOTAS'
+        DataType = ftBlob
+        Size = 8
+      end
+      item
+        Name = 'DIASCREDITO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'DOCUMENTO'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'RAZONSOCIAL'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'CUIT'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'IIBB'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'RUBRO'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'IVA'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'MSN'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'WEB'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'ZONA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CTA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CTANOMBRE'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CTATIPO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CTAANTICIPO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'PAGARE'
+        Attributes = [faFixed]
+        DataType = ftWideString
+        Size = 2
+      end>
+    IndexDefs = <
+      item
+        Name = 'PK_Empresa'
+        Fields = 'CODIGO'
+        Options = [ixUnique]
+      end>
+    StoreDefs = True
+    TableName = 'Empresa'
+    UniDirectional = False
+    Left = 504
+    Top = 420
+  end
+  object dstEmpresa: TDataSource
+    DataSet = tEmpresa
+    Left = 548
+    Top = 420
+  end
+  object qIIBB: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
-    Left = 96
-    Top = 48
-  end
-  object sdb: TFDConnection
-    Params.Strings = (
-      'Database=C:\Users\DeGsoft\Documents\Civeloo\GeN\db\db.sdb'
-      'DriverID=SQLite')
-    LoginPrompt = False
-    Left = 348
-  end
-  object tCbteTipo: TFDQuery
-    Connection = sdb
-    Left = 348
-    Top = 48
-  end
-  object tSiapVtaComp: TFDQuery
-    Connection = sdb
     SQL.Strings = (
-      'SELECT * FROM SiapVtaComp')
-    Left = 348
-    Top = 96
-    object tSiapVtaCompCodigo: TIntegerField
-      FieldName = 'Codigo'
-      Origin = 'Codigo'
-    end
-    object tSiapVtaCompCbteFch: TWideMemoField
-      FieldName = 'CbteFch'
-      Origin = 'CbteFch'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompCbteTipo: TWideMemoField
-      FieldName = 'CbteTipo'
-      Origin = 'CbteTipo'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompPtoVta: TWideMemoField
-      FieldName = 'PtoVta'
-      Origin = 'PtoVta'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompCbteDesde: TWideMemoField
-      FieldName = 'CbteDesde'
-      Origin = 'CbteDesde'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompCbteHasta: TWideMemoField
-      FieldName = 'CbteHasta'
-      Origin = 'CbteHasta'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompDocTipo: TWideMemoField
-      FieldName = 'DocTipo'
-      Origin = 'DocTipo'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompDocNro: TWideMemoField
-      FieldName = 'DocNro'
-      Origin = 'DocNro'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompDocNomb: TWideMemoField
-      FieldName = 'DocNomb'
-      Origin = 'DocNomb'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompMonId: TWideMemoField
-      FieldName = 'MonId'
-      Origin = 'MonId'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompMonCotiz: TWideMemoField
-      FieldName = 'MonCotiz'
-      Origin = 'MonCotiz'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompIvaCant: TWideMemoField
-      FieldName = 'IvaCant'
-      Origin = 'IvaCant'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompCodOper: TWideMemoField
-      FieldName = 'CodOper'
-      Origin = 'CodOper'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompFchVtoPago: TWideMemoField
-      FieldName = 'FchVtoPago'
-      Origin = 'FchVtoPago'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompIvaId: TWideMemoField
-      FieldName = 'IvaId'
-      Origin = 'IvaId'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpNeto: TWideMemoField
-      FieldName = 'ImpNeto'
-      Origin = 'ImpNeto'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpNoGra: TWideMemoField
-      FieldName = 'ImpNoGra'
-      Origin = 'ImpNoGra'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpOpEx: TWideMemoField
-      FieldName = 'ImpOpEx'
-      Origin = 'ImpOpEx'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpIva: TWideMemoField
-      FieldName = 'ImpIva'
-      Origin = 'ImpIva'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpPercGral: TWideMemoField
-      FieldName = 'ImpPercGral'
-      Origin = 'ImpPercGral'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpPercNoCat: TWideMemoField
-      FieldName = 'ImpPercNoCat'
-      Origin = 'ImpPercNoCat'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpPercIIBB: TWideMemoField
-      FieldName = 'ImpPercIIBB'
-      Origin = 'ImpPercIIBB'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpPercMuni: TWideMemoField
-      FieldName = 'ImpPercMuni'
-      Origin = 'ImpPercMuni'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpImpInt: TWideMemoField
-      FieldName = 'ImpImpInt'
-      Origin = 'ImpImpInt'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpOtrTrib: TWideMemoField
-      FieldName = 'ImpOtrTrib'
-      Origin = 'ImpOtrTrib'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpTotal: TWideMemoField
-      FieldName = 'ImpTotal'
-      Origin = 'ImpTotal'
-      BlobType = ftWideMemo
-    end
+      'Select * from "IIBB"')
+    Left = 632
+    Top = 376
   end
-  object mtIVA: TFDMemTable
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 344
-    Top = 144
+  object dsqIIBB: TDataSource
+    DataSet = qIIBB
+    Left = 664
+    Top = 376
   end
-  object qSdb: TFDQuery
-    Connection = sdb
-    Left = 344
-    Top = 192
+  object dsqProveedor: TDataSource
+    DataSet = qProveedor
+    Left = 664
+    Top = 552
+  end
+  object qProveedor: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'Select * from "Proveedor"')
+    Left = 632
+    Top = 552
+  end
+  object dsqCompra: TDataSource
+    DataSet = qCompra
+    Left = 664
+    Top = 104
+  end
+  object qCompra: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT    '#39'proveedor'#39'  As Empresa,'
+      '          "Proveedor".NOMBRE,   "Proveedor".TITULAR,'
+      
+        '          "Proveedor".DIRECCION,   "Proveedor".DIRECCIONCOMERCIA' +
+        'L,'
+      '          "Articulo".DESCRIPCION,   "CompraItem".OPERACION,'
+      '          "CompraItem".ARTICULO,   "CompraItem".CANTIDAD,'
+      '          "CompraItem".PRECIO,'
+      
+        '          ("CompraItem".PRECIO * "CompraItem".CANTIDAD ) as PREX' +
+        'CANT,'
+      
+        '          "CompraItem".SERVICIO,   "CompraItem".DESCRIPCION AS D' +
+        'ESCR,'
+      '          "Compra".CODIGO,   "Compra".LETRA,   "Compra".FECHA,'
+      
+        '          "Compra".COMPROBANTE,   "Compra".IVA3,   "Compra".TOTA' +
+        'L,'
+      
+        '          "Compra".CONTADO,   "Compra".Proveedor,   "Compra".SUB' +
+        'TOTAL,'
+      
+        '          "Compra".DESCUENTO,   "Compra".IMPUESTO,   "Compra".IV' +
+        'A2,'
+      '          "Compra".IVA1,   "Compra".EXCENTO,   "Compra".SALDO,'
+      '          "Compra".PAGADO  FROM   "Compra"'
+      
+        '          INNER JOIN "CompraItem" ON ("Compra".CODIGO = "CompraI' +
+        'tem".OPERACION)'
+      
+        '          INNER JOIN "Articulo" ON ("CompraItem".ARTICULO = "Art' +
+        'iculo".CODIGO)'
+      
+        '          INNER JOIN "Proveedor" ON ("Compra".Proveedor = "Prove' +
+        'edor".CODIGO)'
+      '')
+    Left = 632
+    Top = 104
+  end
+  object qOperacion: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT'
+      '  '#39'Mi Empresa'#39' As Empresa,'
+      '  "Cliente".NOMBRE,'
+      '  "Cliente".TITULAR,'
+      '  "Cliente".DIRECCION,'
+      '  "Cliente".DIRECCIONCOMERCIAL,'
+      '  "Articulo".DESCRIPCION,'
+      '  "VentaItem".OPERACION,'
+      '  "VentaItem".ARTICULO,'
+      '  "VentaItem".CANTIDAD,'
+      '  "VentaItem".PRECIO,'
+      '  ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT,'
+      '  "VentaItem".SERVICIO,'
+      '  "VentaItem".DESCRIPCION AS DESCR,'
+      '  "Venta".CODIGO,'
+      '  "Venta".LETRA,'
+      '  "Venta".FECHA,'
+      '  "Venta".COMPROBANTE,'
+      '  "Venta".IVA3,'
+      '  "Venta".TOTAL,'
+      '  "Venta".CONTADO,'
+      '  "Venta".CLIENTE,'
+      '  "Venta".SUBTOTAL,'
+      '  "Venta".DESCUENTO,'
+      '  "Venta".IMPUESTO,'
+      '  "Venta".IVA2,'
+      '  "Venta".IVA1,'
+      '  "Venta".EXCENTO,'
+      '  "Venta".SALDO,'
+      '  "Venta".PAGADO'
+      ' FROM'
+      '  "Venta"'
+      
+        '  INNER JOIN "VentaItem" ON ("Venta".CODIGO = "VentaItem".OPERAC' +
+        'ION)'
+      
+        '  INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CO' +
+        'DIGO)'
+      '  INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)'
+      '')
+    Left = 632
+    Top = 600
+  end
+  object dsqOperacion: TDataSource
+    AutoEdit = False
+    DataSet = qOperacion
+    Left = 664
+    Top = 600
+  end
+  object tConfiguracion: TIBTable
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'CODIGO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'NROFACTURA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'FechaInicio'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'PP1'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PP2'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PP3'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PP4'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PP5'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PP6'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PP7'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PP8'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PP9'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PP'
+        DataType = ftFloat
+      end
+      item
+        Name = 'CtaCompra'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaMercaderia'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaIIBB'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaImpuesto'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaDeudor'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaVenta'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaCaja'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaAnticipoAProveedor'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaBanco'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaCMV'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaComisionVendedor'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaComisionVendedorAPagar'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaDeudorEnGestionJudicial'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaDeudorIncobrable'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaDeudorMoroso'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaDeudorPorVenta'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaDocumentoACobrar'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaHonorarioLegal'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaHonorarioLegalApagar'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaIVARemanente'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaIVAAPagar'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaIVACreditoFiscal'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaIVADebitoFiscal'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaLiquidacionDeIVA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaMerRecJudicialmente'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaMercaderiaDeReventa'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaObligacionAPagar'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaPagoDeHonorario'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaTarjetaDeCredito'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaProveedor'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaRecuperoJudicial'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaServicioAPAgar'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaServicio'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaValorAlCobro'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CtaValorADepositar'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Cuenta'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Precio'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Comprobante'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Empresa'
+        DataType = ftInteger
+      end
+      item
+        Name = 'ImprimirTipo'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Imprimir'
+        Attributes = [faFixed]
+        DataType = ftWideString
+        Size = 3
+      end
+      item
+        Name = 'ImprimirFiscal'
+        Attributes = [faFixed]
+        DataType = ftWideString
+        Size = 3
+      end
+      item
+        Name = 'ImprimirMostrar'
+        Attributes = [faFixed]
+        DataType = ftWideString
+        Size = 3
+      end
+      item
+        Name = 'CodigoBarra'
+        DataType = ftInteger
+      end
+      item
+        Name = 'GesCobTemprana'
+        DataType = ftInteger
+      end
+      item
+        Name = 'GesCobExtraJudicial'
+        DataType = ftInteger
+      end
+      item
+        Name = 'GesCobJudicial'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CMV'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CTACAPITALSOC'
+        DataType = ftInteger
+      end>
+    StoreDefs = True
+    TableName = 'Config'
+    UniDirectional = False
+    Left = 632
+    Top = 152
+  end
+  object dstConfiguracion: TDataSource
+    DataSet = tConfiguracion
+    Left = 664
+    Top = 152
+  end
+  object qImprimir: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from "Imprimir"')
+    Left = 632
+    Top = 416
+  end
+  object dsqImprimir: TDataSource
+    DataSet = qImprimir
+    Left = 664
+    Top = 416
+  end
+  object dsqCaja: TDataSource
+    DataSet = qCaja
+    Left = 664
+    Top = 56
+  end
+  object qGanancia: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT '
+      '  "LibroDiario".CODIGO,'
+      '  "LibroDiario".ASIENTO,'
+      '  "LibroDiario".FECHA,'
+      '  "LibroDiario".LEYENDA,'
+      '  "LibroDiario".JERARQUIA,'
+      '  "LibroDiario".CUENTA,'
+      '  "LibroDiario".DEBE,'
+      '  "LibroDiario".HABER,'
+      '  ("LibroDiario".DEBE - "LibroDiario".HABER) AS "SubTotal,",'
+      '  "LibroDiario".OCULTO,'
+      '  "Cuenta".RUBRO,'
+      '  "Cuenta".CAPITULO,'
+      '  "Cuenta".TIPOGASTO,'
+      '  "Cuenta".DESCRIPCION,'
+      '  "Cuenta".SALDO,'
+      '  "Cuenta".LEYENDADEUDORA,'
+      '  "Cuenta".LEYENDAHACREEDORA'
+      'FROM'
+      '  "LibroDiario"'
+      
+        '  INNER JOIN "Cuenta" ON ("LibroDiario".CUENTA = "Cuenta".DESCRI' +
+        'PCION)')
+    Left = 632
+    Top = 336
+  end
+  object dsqGanancia: TDataSource
+    DataSet = qGanancia
+    Left = 664
+    Top = 336
+  end
+  object qLibroDiario: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT'
+      ' '#39'YYYMMDD'#39' AS SubTotal,'
+      ' '#39'YYYMMDD'#39' AS Empresa,'
+      ' '#39'YYYMMDD'#39' AS Desde, '
+      ' '#39'YYYMMDD'#39' AS Hasta,'
+      ' "LibroDiario".CODIGO,'
+      ' "LibroDiario".ASIENTO,'
+      ' "LibroDiario".FECHA,'
+      ' "LibroDiario".LEYENDA,'
+      ' "LibroDiario".JERARQUIA, '
+      ' "LibroDiario".CUENTA,'
+      ' "LibroDiario".DEBE, '
+      ' "LibroDiario".HABER,  '
+      ' "LibroDiario".OCULTO '
+      ' FROM'
+      ' "LibroDiario"')
+    Left = 632
+    Top = 464
+  end
+  object dsqLibroDiario: TDataSource
+    DataSet = qLibroDiario
+    Left = 664
+    Top = 464
+  end
+  object Transaccion: TIBTransaction
+    DefaultDatabase = BaseDatosIB
+    Left = 32
+    Top = 48
+  end
+  object dsqLibro: TDataSource
+    DataSet = qLibro
+    Left = 664
+    Top = 512
+  end
+  object qLibro: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    Left = 632
+    Top = 512
+  end
+  object dsqTarjeta: TDataSource
+    DataSet = qTarjeta
+    Left = 664
+    Top = 736
+  end
+  object qTarjeta: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from "Tarjeta"')
+    Left = 632
+    Top = 736
+  end
+  object qT: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from "Config"')
+    Left = 792
+    Top = 104
+  end
+  object qD: TIBQuery
+    Database = BaseDatosIB
+    Transaction = Transaccion
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from "Config"')
+    Left = 792
+    Top = 152
+  end
+  object Query: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'SELECT'
+      
+        #9'"Config".CODIGO, "Config".NROFACTURA, "Config"."FechaInicio", "' +
+        'Config".PP1, "Config".PP2, "Config".PP3, "Config".PP4, "Config".' +
+        'PP5, "Config".PP6, "Config".PP7, "Config".PP8, "Config".PP9, "Co' +
+        'nfig".PP, "Config"."CtaCompra", "Config"."CtaMercaderia", "Confi' +
+        'g"."CtaIIBB", "Config"."CtaImpuesto", "Config"."CtaDeudor", "Con' +
+        'fig"."CtaVenta", "Config"."CtaCaja", "Config"."CtaAnticipoAProve' +
+        'edor", "Config"."CtaBanco", "Config"."CtaCMV", "Config"."CtaComi' +
+        'sionVendedor", "Config"."CtaComisionVendedorAPagar", "Config"."C' +
+        'taDeudorEnGestionJudicial", "Config"."CtaDeudorIncobrable", "Con' +
+        'fig"."CtaDeudorMoroso", "Config"."CtaDeudorPorVenta", "Config"."' +
+        'CtaDocumentoACobrar", "Config"."CtaHonorarioLegal", "Config"."Ct' +
+        'aHonorarioLegalApagar", "Config"."CtaIVARemanente", "Config"."Ct' +
+        'aIVAAPagar", "Config"."CtaIVACreditoFiscal", "Config"."CtaIVADeb' +
+        'itoFiscal", "Config"."CtaLiquidacionDeIVA", "Config"."CtaMerRecJ' +
+        'udicialmente", "Config"."CtaMercaderiaDeReventa", "Config"."CtaO' +
+        'bligacionAPagar", "Config"."CtaPagoDeHonorario", "Config"."CtaTa' +
+        'rjetaDeCredito", "Config"."CtaProveedor", "Config"."CtaRecuperoJ' +
+        'udicial", "Config"."CtaServicioAPAgar", "Config"."CtaServicio", ' +
+        '"Config"."CtaValorAlCobro", "Config"."CtaValorADepositar", "Conf' +
+        'ig"."Cuenta", "Config"."Precio", "Config"."Comprobante", "Config' +
+        '"."Empresa", "Config"."ImprimirTipo", "Config"."Imprimir", "Conf' +
+        'ig"."ImprimirFiscal", "Config"."ImprimirMostrar", "Config"."Codi' +
+        'goBarra", "Config"."GesCobTemprana", "Config"."GesCobExtraJudici' +
+        'al", "Config"."GesCobJudicial", "Config".CMV, "Config".CTACAPITA' +
+        'LSOC,'
+      
+        '  '#9'"Empresa".CODIGO AS PtoVta, "Empresa".NOMBRE, "Empresa".TITUL' +
+        'AR, "Empresa".DIRECCION, "Empresa".DIRECCIONCOMERCIAL, "Empresa"' +
+        '.PAIS, "Empresa".PROVINCIA, "Empresa".DEPARTAMENTO, "Empresa".CI' +
+        'UDAD, "Empresa".CP, "Empresa".CODIGOAREA, "Empresa".CELULAR, "Em' +
+        'presa".TELEFONO, "Empresa".FAX, "Empresa".EMAIL, "Empresa".SUSPE' +
+        'NDIDO, "Empresa".EXCENTO, "Empresa".FECHA, "Empresa".LIMITECREDI' +
+        'TO, "Empresa".DIASCREDITO, "Empresa".DOCUMENTO, "Empresa".RAZONS' +
+        'OCIAL, "Empresa".CUIT, "Empresa".IIBB, "Empresa".RUBRO, "Empresa' +
+        '".IVA, "Empresa".MSN, "Empresa".WEB, "Empresa".ZONA, "Empresa".C' +
+        'TA, "Empresa".CTANOMBRE, "Empresa".CTATIPO, "Empresa".CTAANTICIP' +
+        'O, "Empresa".PAGARE,'
+      '  '#9'"Imprimir".DESCRIPCION, "Imprimir".REPORTE'
+      'FROM "Config"'
+      
+        ' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".' +
+        'CODIGO)'
+      ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)')
+    Left = 192
+    Top = 384
+  end
+  object qArticulo: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'SELECT'
+      
+        '  ROUND(("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*' +
+        '0.01)),2) as precioIVA, '
+      '  "Articulo".DESCRIPCION,'
+      '  "Articulo".CODIGO,'
+      '  "Articulo".COSTO,'
+      '  "Articulo".ULTCOSTO,'
+      '  "Articulo".PRECIO1,'
+      '  "Articulo".PRECIO2,'
+      '  "Articulo".PRECIO3,'
+      '  "Articulo".PRECIO4,'
+      '  "Articulo".PRECIO5,'
+      '  "Articulo".PRECIO6,'
+      '  "Articulo".PRECIO,'
+      '  "Articulo".PORCENTAJE,'
+      '  "Articulo".ULTPRECIO,'
+      '  "Articulo".UBICACION,'
+      '  "Articulo".UNIDAD,'
+      '  "Articulo".DISPONIBLE,'
+      '  "Articulo".ENPRODUCCION,'
+      '  "Articulo".NOTAS,'
+      '  "Articulo".IVA,'
+      '  "Articulo".TASA,'
+      '  "Articulo".IMPOTROS,'
+      '  "Articulo".IIBB,'
+      '  "Articulo".STOCKMINIMO,'
+      '  "Articulo".STOCKMAXIMO,'
+      '  "Articulo".STOCKVENDIDO,'
+      '  "Articulo".FECHACOMPULT,'
+      '  "Articulo".LISTA,'
+      '  "Articulo".PROCEDENCIA,'
+      '  "Articulo".CODIGOBARRA,'
+      '  "Articulo".GARANTIA,'
+      '  "Articulo".FECHA,'
+      '  "Articulo".PEDIDO,'
+      '  "Articulo".STOCK,'
+      '  "Articulo".EXISTENTE,'
+      '  "Articulo".ACTUAL,'
+      '  "Articulo".MARCADOCONTADO,'
+      '  "Articulo".MARCADOLISTA,'
+      '  "Articulo".MARCADOFINAL,'
+      '  "Articulo".PREPARADO,'
+      '  "Articulo".CTANOMBRE,'
+      '  "Articulo".CTATIPO,'
+      '  "Articulo".CTAANTICIPO,'
+      '  "Articulo".CTAIIBB,'
+      '  "Articulo".ESTADO,'
+      '  "Articulo".VENCE,'
+      '  "Articulo".VENCIMIENTO,'
+      '  "Marca".DESCRIPCION AS MARCA,'
+      '  "Color".DESCRIPCION AS COLOR,'
+      '  "Categoria".DESCRIPCION AS CATEGORIA,'
+      '  "SubCategoria".DESCRIPCION AS SUBCATEGORIA,'
+      '  "Rubro".DESCRIPCION AS RUBRO,'
+      '  "Proveedor".NOMBRE AS PROVEEDOR'
+      'FROM'
+      '  "Articulo"'
+      '  INNER JOIN "Marca" ON ("Articulo".MARCA = "Marca".CODIGO)'
+      '  INNER JOIN "Color" ON ("Articulo".COLOR = "Color".CODIGO)'
+      
+        '  INNER JOIN "Categoria" ON ("Articulo".CATEGORIA = "Categoria".' +
+        'CODIGO)'
+      
+        '  INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCa' +
+        'tegoria".CODIGO)'
+      '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)'
+      
+        '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".' +
+        'CODIGO)')
+    Left = 632
+    Top = 8
+  end
+  object qCaja: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'SELECT '
+      '  ("LibroDiario".DEBE - "LibroDiario".HABER) AS "SubTotal",'
+      '  '#39'+dm.ConfigQuery.FieldByName(Nombre).AsString+'#39' AS "Empresa",'
+      '  '#39'+DateToStr(DTP1.Date)+'#39' AS "Desde",'
+      '  '#39'+DateToStr(DTP2.Date)+'#39' AS "Hasta",'
+      '  "LibroDiario".CODIGO,'
+      '  "LibroDiario".ASIENTO,'
+      '  "LibroDiario".FECHA,'
+      '  "LibroDiario".LEYENDA,'
+      '  "LibroDiario".JERARQUIA,'
+      '  "LibroDiario".CUENTA,'
+      '  "LibroDiario".DEBE,'
+      '  "LibroDiario".HABER,'
+      '  "LibroDiario".OCULTO'
+      'FROM'
+      '  "LibroDiario"')
+    Left = 632
+    Top = 56
   end
 end

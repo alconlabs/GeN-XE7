@@ -9,7 +9,6 @@ uses
 
 type
   TFBuscaCliente = class(TForm)
-    DataSource: TDataSource;
     DBGrid1: TDBGrid;
     Panel1: TPanel;
     Label1: TLabel;
@@ -25,7 +24,6 @@ type
     Label6: TLabel;
     Label3: TLabel;
     SiBitBtn: TBitBtn;
-    Tabla: TIBQuery;
     Image1: TImage;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure DBGrid1DblClick(Sender: TObject);
@@ -53,9 +51,9 @@ implementation
 
 Procedure TFBuscaCliente.Buscar;
 begin
-  Tabla.SQL.Text := ' select * from "Cliente" where '+
+  dm.qCliente.SQL.Text := ' select * from "Cliente" where '+
   ' upper("Cliente".NOMBRE) LIKE '+QuotedStr(UpperCase(DescripcionEdit.Text)+'%');
-  Tabla.Open;
+  dm.qCliente.Open;
 end;
 
 procedure TFBuscaCliente.DescripcionEditKeyUp(Sender: TObject; var Key: Word;
@@ -94,15 +92,15 @@ end;
 
 procedure TFBuscaCliente.FormShow(Sender: TObject);
 begin
-  if Tabla.Active = True then
-    Tabla.Close;
-  Tabla.Active := True;
+  if dm.qCliente.Active = True then
+    dm.qCliente.Close;
+  dm.qCliente.Active := True;
 end;
 
 procedure TFBuscaCliente.Image1Click(Sender: TObject);
 begin
   ImprimirDataModule := TImprimirDataModule.Create(self);
-  ImprimirDataModule.CSV(Tabla.SQL.Text, 'CLIENTES');
+  ImprimirDataModule.CSV(dm.qCliente.SQL.Text, 'CLIENTES');
   ImprimirDataModule.Free;
 end;
 

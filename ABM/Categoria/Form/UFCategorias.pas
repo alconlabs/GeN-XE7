@@ -15,15 +15,13 @@ type
     DBGrid1: TDBGrid;
     DBNavigator1: TDBNavigator;
     BitBtn1: TBitBtn;
-    DS: TDataSource;
-    Tabla: TIBTable;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BitBtn1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure TablaAfterCancel(DataSet: TDataSet);
-    procedure TablaAfterDelete(DataSet: TDataSet);
-    procedure TablaAfterPost(DataSet: TDataSet);
+    procedure tCategoriaAfterCancel(DataSet: TDataSet);
+    procedure tCategoriaAfterDelete(DataSet: TDataSet);
+    procedure tCategoriaAfterPost(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -41,43 +39,43 @@ implementation
 procedure TFCategorias.FormCreate(Sender: TObject);
 begin
   // DM := TDM.Create(Self);
-  Tabla.Active := true;
+  dm.tCategoria.Active := true;
 end;
 
 procedure TFCategorias.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Tabla.Active := false;
+  dm.tCategoria.Active := false;
 end;
 
 procedure TFCategorias.BitBtn1Click(Sender: TObject);
 begin
   desc := DBEdit1.Text;
-  If (Tabla.State = dsEdit) or (Tabla.State = dsInsert) then
+  If (dm.tCategoria.State = dsEdit) or (dm.tCategoria.State = dsInsert) then
     If DBEdit1.Text <> '' then
     begin
-      Tabla.Post;
+      dm.tCategoria.Post;
     end;
   Close;
 end;
 
 procedure TFCategorias.FormShow(Sender: TObject);
 begin
-  Tabla.Insert;
+  dm.tCategoria.Insert;
 end;
 
-procedure TFCategorias.TablaAfterCancel(DataSet: TDataSet);
+procedure TFCategorias.tCategoriaAfterCancel(DataSet: TDataSet);
 begin
-  Tabla.Transaction.RollbackRetaining;
+  dm.tCategoria.Transaction.RollbackRetaining;
 end;
 
-procedure TFCategorias.TablaAfterDelete(DataSet: TDataSet);
+procedure TFCategorias.tCategoriaAfterDelete(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tCategoria.Transaction.CommitRetaining;
 end;
 
-procedure TFCategorias.TablaAfterPost(DataSet: TDataSet);
+procedure TFCategorias.tCategoriaAfterPost(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tCategoria.Transaction.CommitRetaining;
 end;
 
 end.

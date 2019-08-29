@@ -24,13 +24,9 @@ type
     Label5: TLabel;
     Debe: TLabel;
     Haber: TLabel;
-    DataSource: TDataSource;
     BitBtn3: TBitBtn;
-    CuentaDataSource: TDataSource;
     DBGrid2: TDBGrid;
     Label7: TLabel;
-    Tabla: TIBQuery;
-    CuentaT: TIBQuery;
     CuentaDBLookupComboBox: TDBLookupComboBox;
     OcultoCheckBox: TCheckBox;
     Label6: TLabel;
@@ -77,8 +73,8 @@ procedure TLibroDiarioLForm.FormCreate(Sender: TObject);
 begin
   // DM := TDM.Create(self);
   DM.ConfigQuery.Open;
-  CuentaT.Open;
-  CuentaT.Last;
+  dm.qCuenta.Open;
+  dm.qCuenta.Last;
   DTP2.Date := Now + 1;
 end;
 
@@ -109,7 +105,7 @@ begin
   Debe.Caption := '0';
   Haber.Caption := '0';
   Saldo.Caption := '0';
-  Tabla.SQL.Text := 'SELECT ' +
+  dm.qLibroDiario.SQL.Text := 'SELECT ' +
     '  ("LibroDiario".DEBE - "LibroDiario".HABER) AS SubTotal,' + '  ' +
     QuotedStr(DM.ConfigQuery.FieldByName('Nombre').AsString) + ' AS Empresa, ' +
     '  ' + QuotedStr(DateToStr(DTP1.Date)) + ' AS Desde,  ' + '  ' +
@@ -125,23 +121,25 @@ begin
     '  ("LibroDiario".FECHA <= ' + QuotedStr(DateToStr(DTP2.Date)) + ' ) AND  '
     + '  ("LibroDiario".CUENTA like ' + QuotedStr(CuentaDBLookupComboBox.Text +
     '%') + ' )  ' + ' ORDER BY     ' + '  "LibroDiario".CODIGO  ' + '';
-  Tabla.Open;
+  dm.qLibroDiario.Open;
 
-  for i := 1 to Tabla.RecordCount do
+  for i := 1 to dm.qLibroDiario.RecordCount do
   begin
     Debe.Caption := FloatToStr(StrToFloat(Debe.Caption) +
-      Tabla.FieldByName('DEBE').AsFloat);
+      dm.qLibroDiario.FieldByName('DEBE').AsFloat);
     Haber.Caption := FloatToStr(StrToFloat(Haber.Caption) +
-      Tabla.FieldByName('HABER').AsFloat);
+      dm.qLibroDiario.FieldByName('HABER').AsFloat);
     Saldo.Caption := FloatToStr(StrToFloat(Debe.Caption) -
       StrToFloat(Haber.Caption));
-    Tabla.Next;
+    dm.qLibroDiario.Next;
   end;
 end;
 
 procedure TLibroDiarioLForm.FormDestroy(Sender: TObject);
 begin
-  EnvioRamTerminado;
+//  EnvioRamTerminado;
+  DM.ConfigQuery.Close;
+  dm.qCuenta.Close;
 end;
 
 procedure TLibroDiarioLForm.FormKeyUp(Sender: TObject; var Key: Word;
@@ -153,10 +151,10 @@ end;
 
 procedure TLibroDiarioLForm.BitBtn3Click(Sender: TObject);
 begin
-  if Tabla.Active = True then
+  if dm.qLibroDiario.Active = True then
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
-    ImprimirDataModule.SImpr(Tabla.SQL.Text, 'LibroDiario');
+    ImprimirDataModule.SImpr(dm.qLibroDiario.SQL.Text, 'LibroDiario');
     ImprimirDataModule.Free;
   end;
 end;

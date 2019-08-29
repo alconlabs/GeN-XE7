@@ -24,8 +24,6 @@ type
     Panel1: TPanel;
     Label1: TLabel;
     DescripcionEdit: TEdit;
-    Tabla: TIBQuery;
-    DataSource: TDataSource;
     Image1: TImage;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure SiBitBtnClick(Sender: TObject);
@@ -54,9 +52,9 @@ implementation
 
 Procedure TFBuscaProve.Buscar;
 begin
-  Tabla.SQL.Text := ' select * from "Proveedor" where ("Proveedor".NOMBRE LIKE '
+  dm.qProveedor.SQL.Text := ' select * from "Proveedor" where ("Proveedor".NOMBRE LIKE '
     + QuotedStr(DescripcionEdit.Text + '%') + ')';
-  Tabla.Open;
+  dm.qProveedor.Open;
 end;
 
 procedure TFBuscaProve.FormKeyDown(Sender: TObject; var Key: Word;
@@ -79,7 +77,7 @@ begin
 procedure TFBuscaProve.Image1Click(Sender: TObject);
 begin
   ImprimirDataModule := TImprimirDataModule.Create(self);
-  ImprimirDataModule.CSV(Tabla.SQL.Text, 'ARTICULOS');
+  ImprimirDataModule.CSV(dm.qProveedor.SQL.Text, 'ARTICULOS');
   ImprimirDataModule.Free;
 end;
 
@@ -106,7 +104,7 @@ end;
 
 procedure TFBuscaProve.FormCreate(Sender: TObject);
 begin
-  Tabla.Open;
+  dm.qProveedor.Open;
 end;
 
 end.

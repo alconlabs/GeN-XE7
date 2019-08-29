@@ -84,7 +84,7 @@ var
 
 implementation
 
-uses ImprimirDM, UFBuscaCliente, BuscarPlanFacturado;
+uses ImprimirDM, UFBuscaCliente;
 
 {$R *.dfm}
 

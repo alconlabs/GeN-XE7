@@ -66,12 +66,12 @@ begin
   try
     FBuscaArticulo.ShowModal;
   finally
-    ArticuloEdit.Text := FBuscaArticulo.Tabla.FieldByName('CODIGO').AsString;
-    ArticuloLabel.Caption := FBuscaArticulo.Tabla.FieldByName
+    ArticuloEdit.Text := dm.qArticulo.FieldByName('CODIGO').AsString;
+    ArticuloLabel.Caption := dm.qArticulo.FieldByName
       ('DESCRIPCION').AsString;
-    ArticuloCtaTipo := FBuscaArticulo.Tabla.FieldByName('CTATIPO').AsString;
-    ArticuloCtaNombre := FBuscaArticulo.Tabla.FieldByName('CTANOMBRE').AsString;
-    ArticuloCosto := FBuscaArticulo.Tabla.FieldByName('COSTO').AsFloat;
+    ArticuloCtaTipo := dm.qArticulo.FieldByName('CTATIPO').AsString;
+    ArticuloCtaNombre := dm.qArticulo.FieldByName('CTANOMBRE').AsString;
+    ArticuloCosto := dm.qArticulo.FieldByName('COSTO').AsFloat;
     FBuscaArticulo.Free;
   end;
 end;

@@ -15,8 +15,6 @@ type
     buscarBitBtn: TBitBtn;
     BitBtn2: TBitBtn;
     nroEdit: TEdit;
-    Tabla: TIBQuery;
-    Q: TIBQuery;
     LetraLabel: TLabel;
     Label2: TLabel;
     procedure BitBtn1Click(Sender: TObject);

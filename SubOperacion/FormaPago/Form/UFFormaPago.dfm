@@ -24,8 +24,13 @@ object FFormaPago: TFFormaPago
     Height = 204
     Align = alTop
     BevelOuter = bvLowered
-    Color = clBlack
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
     ParentBackground = False
+    ParentFont = False
     TabOrder = 0
     object Label1: TLabel
       Left = 108
@@ -57,7 +62,7 @@ object FFormaPago: TFFormaPago
       AutoSize = False
       Caption = 'LbSubTotal'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -72,7 +77,7 @@ object FFormaPago: TFFormaPago
       AutoSize = False
       Caption = 'LbImpuesto'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -87,7 +92,7 @@ object FFormaPago: TFFormaPago
       AutoSize = False
       Caption = 'LbTotal'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -318,6 +323,8 @@ object FFormaPago: TFFormaPago
       Width = 120
       Height = 24
       Color = clOlive
+      DataField = 'DESCRIPCION'
+      DataSource = DM.dsqTarjeta
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -13
@@ -325,7 +332,6 @@ object FFormaPago: TFFormaPago
       Font.Style = [fsBold]
       KeyField = 'CODIGO'
       ListField = 'DESCRIPCION'
-      ListSource = DS
       ParentFont = False
       TabOrder = 9
     end
@@ -337,8 +343,13 @@ object FFormaPago: TFFormaPago
     Height = 87
     Align = alBottom
     BevelOuter = bvLowered
-    Color = clBlack
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
     ParentBackground = False
+    ParentFont = False
     TabOrder = 1
     object Label8: TLabel
       Left = 24
@@ -363,7 +374,7 @@ object FFormaPago: TFFormaPago
       AutoSize = False
       Caption = '0.0'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -378,7 +389,7 @@ object FFormaPago: TFFormaPago
       AutoSize = False
       Caption = '0.0'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -393,7 +404,7 @@ object FFormaPago: TFFormaPago
       AutoSize = False
       Caption = 'Grabar?'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -462,30 +473,5 @@ object FFormaPago: TFFormaPago
     RowHeights = (
       24
       24)
-  end
-  object Query: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 312
-    Top = 296
-  end
-  object DS: TDataSource
-    DataSet = tarjetaIBQuery
-    Left = 288
-    Top = 8
-  end
-  object tarjetaIBQuery: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Tarjeta"')
-    Left = 360
-    Top = 8
   end
 end

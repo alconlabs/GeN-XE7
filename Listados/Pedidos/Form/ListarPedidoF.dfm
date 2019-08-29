@@ -70,8 +70,8 @@ object ListarPedidoForm: TListarPedidoForm
       Top = 18
       Width = 98
       Height = 21
-      Date = 40179.806226666670000000
-      Time = 40179.806226666670000000
+      Date = 40179.000000000000000000
+      Time = 0.806226666667498600
       TabOrder = 0
     end
     object DateTimePicker2: TDateTimePicker
@@ -79,8 +79,8 @@ object ListarPedidoForm: TListarPedidoForm
       Top = 18
       Width = 98
       Height = 21
-      Date = 40220.806226666670000000
-      Time = 40220.806226666670000000
+      Date = 40220.000000000000000000
+      Time = 0.806226666667498600
       TabOrder = 1
     end
     object BitBtn8: TBitBtn
@@ -186,8 +186,6 @@ object ListarPedidoForm: TListarPedidoForm
       24)
   end
   object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
@@ -212,8 +210,6 @@ object ListarPedidoForm: TListarPedidoForm
     Top = 320
   end
   object Q: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True

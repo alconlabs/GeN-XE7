@@ -123,7 +123,7 @@ begin
   try
     BuscarVendedorForm.ShowModal;
   finally
-    Edit3.Text := BuscarVendedorForm.Tabla.FieldByName('CODIGO').AsString;
+    Edit3.Text := dm.qVendedor.FieldByName('CODIGO').AsString;
     BuscarVendedorForm.Free;
   end;
 end;

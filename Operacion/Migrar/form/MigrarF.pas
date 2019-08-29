@@ -72,14 +72,16 @@ var
   OutLine: string;
   sTemp: string;
 begin
+with dm do begin
   SaveTextFileDialog1.FileName := tabla;
   with OperacionDataModule do begin
-    Q.SQL.Text:='Select * from "'+tabla+'"';
-    Q.Open;
+    qQ.SQL.Text:='Select * from "'+tabla+'"';
+    qQ.Open;
     SaveTextFileDialog1.Execute();
     DataSetToCsv( SaveTextFileDialog1.FileName );
   end;
   ShowMessage('Exportación finalizada con éxito!!!');
+end;
   close;
 end;
 
@@ -206,7 +208,7 @@ with DMR do
             if disponible='' then disponible:='0';
             if not (OperacionDataModule.existeEnTabla('Articulo','CODIGO='+O.FieldByName('id').AsString)) then
             begin
-              D.SQL.Text := 'INSERT INTO "Articulo" ( CODIGO, DESCRIPCION '
+              dm.qD.SQL.Text := 'INSERT INTO "Articulo" ( CODIGO, DESCRIPCION '
               + ', ULTCOSTO, COSTO, PRECIO, PRECIO1, PRECIO2, DISPONIBLE'
               + ', PORCENTAJE, IMPOTROS, UNIDAD, TASA, IIBB, CTANOMBRE, CTATIPO, CTAANTICIPO, CTAIIBB '
               + ', FECHA, FECHACOMPULT, CODIGOBARRA'
@@ -217,10 +219,10 @@ with DMR do
               + ', 30, 5, ''c/u'', '+FloatToStr(iva)+', 1, 13, 13, 13, 66'
               + ', ' + QuotedStr(fecha) + ', ' + QuotedStr(fecha) + ', ' + QuotedStr(O.FieldByName('sku').AsString)
               + ', '+cat+', 0, 0, 1, '+rub+', '+subcat+' )';
-  //            D.ExecSQL;
+  //            dm.qD.ExecSQL;
             end
               else
-                D.SQL.Text := 'UPDATE "Articulo" SET'
+                dm.qD.SQL.Text := 'UPDATE "Articulo" SET'
                 +' DESCRIPCION = ' + QuotedStr(O.FieldByName('name').AsString)
     //            +', ULTCOSTO = ' + costo
   //              +', COSTO = ' + costo
@@ -247,12 +249,12 @@ with DMR do
                 +', RUBRO = ' + rub
                 +', SUBCATEGORIA = ' + subcat
                 +' WHERE CODIGO ='+ IntToStr(O.FieldByName('id').AsInteger);
-            D.ExecSQL;
+            dm.qD.ExecSQL;
             ProgressBar1.Position := i;
             O.Next;
           end;
     until (O.RecordCount<2); //  until ((O.RecordCount=0) or (O.RecordCount=1));
-    D.Transaction.CommitRetaining;
+    dm.qD.Transaction.CommitRetaining;
     ShowMessage('IMPORTACION DE PRODUCTOS FINALIZADA');
     Close;
     end;
@@ -405,7 +407,7 @@ begin
 			end;
 		end;
 		MessageDlg('Lectura Exitosa..', mtInformation, [mbOK], 0);
-  OperacionDataModule.Q.Transaction.CommitRetaining;
+  dm.qQ.Transaction.CommitRetaining;
 	Except
 	    on E : Exception do
 	    begin
@@ -613,7 +615,7 @@ begin
 			end;
 		end;
 		MessageDlg('Lectura Exitosa..', mtInformation, [mbOK], 0);
-  OperacionDataModule.Q.Transaction.CommitRetaining;
+  dm.qQ.Transaction.CommitRetaining;
 	Except
 	    on E : Exception do
 	    begin

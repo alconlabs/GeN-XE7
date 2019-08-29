@@ -23,7 +23,6 @@ object FCategorias: TFCategorias
     Width = 359
     Height = 415
     Align = alClient
-    Caption = 'Panel1'
     TabOrder = 0
     object Label1: TLabel
       Left = 36
@@ -33,7 +32,7 @@ object FCategorias: TFCategorias
       Caption = 'Categor'#237'a'
       FocusControl = DBEdit1
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -41,11 +40,11 @@ object FCategorias: TFCategorias
     end
     object DBEdit1: TDBEdit
       Left = 99
-      Top = 208
+      Top = 215
       Width = 227
       Height = 21
       DataField = 'DESCRIPCION'
-      DataSource = DS
+      DataSource = DM.dstCategoria
       TabOrder = 0
     end
     object DBGrid1: TDBGrid
@@ -53,7 +52,7 @@ object FCategorias: TFCategorias
       Top = 66
       Width = 290
       Height = 124
-      DataSource = DS
+      DataSource = DM.dstCategoria
       ReadOnly = True
       TabOrder = 1
       TitleFont.Charset = DEFAULT_CHARSET
@@ -78,7 +77,7 @@ object FCategorias: TFCategorias
       Top = 242
       Width = 290
       Height = 50
-      DataSource = DS
+      DataSource = DM.dstCategoria
       Hints.Strings = (
         'Primer registro'
         'Registro anterior'
@@ -105,40 +104,5 @@ object FCategorias: TFCategorias
       TabOrder = 3
       OnClick = BitBtn1Click
     end
-  end
-  object DS: TDataSource
-    DataSet = Tabla
-    Left = 67
-    Top = 350
-  end
-  object Tabla: TIBTable
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    AfterCancel = TablaAfterCancel
-    AfterDelete = TablaAfterDelete
-    AfterPost = TablaAfterPost
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'DESCRIPCION'
-        DataType = ftWideString
-        Size = 255
-      end>
-    IndexDefs = <
-      item
-        Name = 'PK_Categoria'
-        Fields = 'CODIGO'
-        Options = [ixUnique]
-      end>
-    StoreDefs = True
-    TableName = 'Categoria'
-    UniDirectional = False
-    Left = 35
-    Top = 350
   end
 end

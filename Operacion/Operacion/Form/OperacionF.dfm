@@ -855,22 +855,4 @@ object OperacionForm: TOperacionForm
       end
     end
   end
-  object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 200
-    Top = 168
-  end
-  object Q: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 288
-    Top = 168
-  end
 end

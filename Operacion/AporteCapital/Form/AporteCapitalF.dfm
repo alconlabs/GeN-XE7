@@ -147,8 +147,8 @@ object AporteCapitalForm: TAporteCapitalForm
       Top = 13
       Width = 79
       Height = 21
-      Date = 40110.475039594910000000
-      Time = 40110.475039594910000000
+      Date = 40110.000000000000000000
+      Time = 0.475039594908594200
       TabOrder = 6
     end
     object BienDBCheckBox: TCheckBox
@@ -284,8 +284,6 @@ object AporteCapitalForm: TAporteCapitalForm
     end
   end
   object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
@@ -293,8 +291,6 @@ object AporteCapitalForm: TAporteCapitalForm
     Top = 200
   end
   object Q: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True

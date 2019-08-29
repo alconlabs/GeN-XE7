@@ -35,8 +35,6 @@ type
     FETarjeta: TEdit;
     DiaChequeDateTimePicker: TDateTimePicker;
     FEContado: TEdit;
-    Tabla: TIBQuery;
-    Q: TIBQuery;
     Panel3: TPanel;
     ProcesarBitBtn: TBitBtn;
     ClienteBitBtn: TBitBtn;
@@ -136,8 +134,8 @@ var
 
 implementation
 
-uses UFBuscaCliente, BuscarCheques, UFBuscaArticulos,
-  AgregarCantidad, BuscarVendedor, servicio, UFBuscaProve, UFSelProdFact, DescuentoF,
+uses UFBuscaCliente, UFBuscaArticulos,
+  AgregarCantidad, BuscarVendedor, UFBuscaProve, UFSelProdFact, DescuentoF,
   ufRetPerc;
 {$R *.dfm}
 
@@ -154,10 +152,10 @@ var
   p,c :Double;
 begin
   if Cuenta > 1 then SGFact.RowCount := SGFact.RowCount + 1;
-  Tabla.Close;
-  Tabla.SQL.Text := 'SELECT * FROM "Articulo" ' + 'WHERE CODIGO = ' + codigoArticulo;
-  if codigoArticulo <> '' then Tabla.Open;
-  if Tabla.RecordCount < 1 then
+  dm.qOperacion.Close;
+  dm.qOperacion.SQL.Text := 'SELECT * FROM "Articulo" ' + 'WHERE CODIGO = ' + codigoArticulo;
+  if codigoArticulo <> '' then dm.qOperacion.Open;
+  if dm.qOperacion.RecordCount < 1 then
     begin
 //      MessageDlg('¡El código no existe!', mtError, [mbOK], 0);
       ShowMessage('¡El código no existe!');
@@ -165,12 +163,12 @@ begin
     end
   else
     begin
-      {codigo}SGFact.Cells[0, Cuenta] := Tabla.FieldByName('CODIGO').AsString;
-      {nombre}SGFact.Cells[1, Cuenta] := Tabla.FieldByName('DESCRIPCION').AsString;
+      {codigo}SGFact.Cells[0, Cuenta] := dm.qOperacion.FieldByName('CODIGO').AsString;
+      {nombre}SGFact.Cells[1, Cuenta] := dm.qOperacion.FieldByName('DESCRIPCION').AsString;
       {cantidad}SGFact.Cells[3, Cuenta] := FloatToStr(CAN);
-      if PR=0 then PR := Tabla.FieldByName('PRECIO' + PrecioLabel.Caption).AsFloat;
+      if PR=0 then PR := dm.qOperacion.FieldByName('PRECIO' + PrecioLabel.Caption).AsFloat;
       {precio}SGFact.Cells[4, Cuenta] := FloatToStr(PR);
-      TASA := Tabla.FieldByName('TASA').AsString;
+      TASA := dm.qOperacion.FieldByName('TASA').AsString;
       if TASA='105' then TASA := '10.5';
       {iva}SGFact.Cells[6, Cuenta] := TASA;
       {tot}SGFact.Cells[5, Cuenta] :=
@@ -240,34 +238,34 @@ end;
 
 procedure TOperacionForm.NuevoBitBtnClick(Sender: TObject);
 begin
-  ServForm := TServForm.Create(self);
-  try
-    ServForm.ShowModal;
-  finally
-    If ServForm.DescripcionEdit.Text <> '' then
-    begin
-      if Cuenta > 1 then
-        SGFact.RowCount := SGFact.RowCount + 1;
-      SGFact.Cells[0, Cuenta] := ServForm.cod;
-      SGFact.Cells[1, Cuenta] := ServForm.DescripcionEdit.Text;
-      SGFact.Cells[2, Cuenta] := '0';
-      SGFact.Cells[3, Cuenta] := '1'; // cantidad
-      SGFact.Cells[4, Cuenta] := ServForm.PrecioEdit.Text;
-      SGFact.Cells[5, Cuenta] := FloatToStr(StrToFloat(SGFact.Cells[4, Cuenta])
-        * StrToFloat(SGFact.Cells[3, Cuenta])); // total
-      SGFact.Cells[6, Cuenta] := '0';
-      SGFact.Cells[7, Cuenta] := '0';
-      SGFact.Cells[8, Cuenta] := '0'; // PRECIO DE COSTO
-      SGFact.Cells[9, Cuenta] := '0';
-      SGFact.Cells[10, Cuenta] := '0';
-      SGFact.Cells[11, Cuenta] := '0'; // PRECIO DE COSTO
-      Cuenta := Cuenta + 1;
-    end;
-    ServForm.Free;
-  end;
-  FEContado.Text:='0';
-  CalculaTotales;
-  FEContado.SetFocus;
+//  ServForm := TServForm.Create(self);
+//  try
+//    ServForm.ShowModal;
+//  finally
+//    If ServForm.DescripcionEdit.Text <> '' then
+//    begin
+//      if Cuenta > 1 then
+//        SGFact.RowCount := SGFact.RowCount + 1;
+//      SGFact.Cells[0, Cuenta] := ServForm.cod;
+//      SGFact.Cells[1, Cuenta] := ServForm.DescripcionEdit.Text;
+//      SGFact.Cells[2, Cuenta] := '0';
+//      SGFact.Cells[3, Cuenta] := '1'; // cantidad
+//      SGFact.Cells[4, Cuenta] := ServForm.PrecioEdit.Text;
+//      SGFact.Cells[5, Cuenta] := FloatToStr(StrToFloat(SGFact.Cells[4, Cuenta])
+//        * StrToFloat(SGFact.Cells[3, Cuenta])); // total
+//      SGFact.Cells[6, Cuenta] := '0';
+//      SGFact.Cells[7, Cuenta] := '0';
+//      SGFact.Cells[8, Cuenta] := '0'; // PRECIO DE COSTO
+//      SGFact.Cells[9, Cuenta] := '0';
+//      SGFact.Cells[10, Cuenta] := '0';
+//      SGFact.Cells[11, Cuenta] := '0'; // PRECIO DE COSTO
+//      Cuenta := Cuenta + 1;
+//    end;
+//    ServForm.Free;
+//  end;
+//  FEContado.Text:='0';
+//  CalculaTotales;
+//  FEContado.SetFocus;
 end;
 
 procedure TOperacionForm.bRetPerClick(Sender: TObject);
@@ -299,7 +297,6 @@ var
   esA, esB, esC : Boolean;
 begin
   // Calcula los totales de la factura
-  with dm do begin
   //  subtotal := 0;
   //  Impuesto := 0;
   desc := 0;
@@ -322,7 +319,7 @@ begin
   if (cbTipo.ItemIndex<6) then esA:=true;
   if (cbTipo.ItemIndex>5) and (cbTipo.ItemIndex<11) then esB:=true;
   if (cbTipo.ItemIndex>10) and (cbTipo.ItemIndex<15) then esC:=true;
-  VaciarMtIVA;
+  dm.VaciarMtIVA;
   For i := 1 to SGFact.RowCount - 1 do
   begin
     //CANTIDAD
@@ -338,7 +335,7 @@ begin
     if (SGFact.Cells[5, i] = '') then SGFact.Cells[5, i] := '0';
     TOT := StrToFloat(SGFact.Cells[5, i]);
 //    if not((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then PR := OperacionDataModule.CalcularIVA((PR),TIVA);
-    if esB then PR := CalcularIVA((PR),TIVA);//es B
+    if esB then PR := dm.CalcularIVA((PR),TIVA);//es B
     //DESCUENTO
     if (SGFact.Cells[7, i] = '') then SGFact.Cells[7, i] := '0';
     des := (SGFact.Cells[7, i]);
@@ -355,8 +352,8 @@ begin
     NG := (PR*CAN)-DSC;
 //    SGFact.Cells[5, i] := FloatToStr(TOT);
     //IVA
-    if esA then IVA := CalcularIVA((NG),TIVA)-NG
-    else if esB then IVA := SacarIVA((NG),TIVA);
+    if esA then IVA := dm.CalcularIVA((NG),TIVA)-NG
+    else if esB then IVA := dm.SacarIVA((NG),TIVA);
     SGFact.Cells[10, i] := FloatToStr(IVA);
     // NG
     if esB then NG := NG - IVA;
@@ -371,7 +368,7 @@ begin
     if SGFact.Cells[9, i] <> '0' then reparaciones := reparaciones + StrToFloat(SGFact.Cells[9, i]);
 
   // Calcula el monto para cobrar el impuesto de ventas
-    if not esC then AgregarMtIva(TIVA,NG,IVA);
+    if not esC then dm.AgregarMtIva(TIVA,NG,IVA);
     if ((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then
     begin
       NGO:= NGO + NG;
@@ -440,7 +437,6 @@ begin
   Saldo := Total - Pagado;
   TotalLabel.Caption := FloatToStr(Total);
   LbSaldo.Caption := FloatToStr(Saldo);
-  end;
 end;
 
 procedure TOperacionForm.cbTipoChange(Sender: TObject);
@@ -498,42 +494,42 @@ var cliIVA : string;
 begin
 If ClienteEdit.Text <> '' then
   begin
-    Tabla.SQL.Text := 'Select * from "Cliente" where CODIGO = ' +
+    dm.qOperacion.SQL.Text := 'Select * from "Cliente" where CODIGO = ' +
       ClienteEdit.Text;
-    Tabla.Active := True;
-    If Tabla.RecordCount < 1 then
+    dm.qOperacion.Active := True;
+    If dm.qOperacion.RecordCount < 1 then
     begin
       MessageDlg('¡Código de cliente no existe!', mtError, [mbOK], 0);
       ClienteEdit.SetFocus;
     end
     else
       begin
-        ClienteLabel.Caption := Tabla.FieldByName('NOMBRE').AsString;
-        lPrecio.Caption := Tabla.FieldByName('DIRECCION').AsString;
-        // DireccionLabel.Caption := Tabla.FieldByName('DIRECCIONCOMERCIAL').AsString;
-        // Label13.Caption := Tabla.FieldByName('TELEFONO').AsString;
-        // Label14.Caption := Tabla.FieldByName('CELULAR').AsString;
-        PrecioLabel.Caption := Tabla.FieldByName('PRECIO').AsString;
+        ClienteLabel.Caption := dm.qOperacion.FieldByName('NOMBRE').AsString;
+        lPrecio.Caption := dm.qOperacion.FieldByName('DIRECCION').AsString;
+        // DireccionLabel.Caption := dm.qOperacion.FieldByName('DIRECCIONCOMERCIAL').AsString;
+        // Label13.Caption := dm.qOperacion.FieldByName('TELEFONO').AsString;
+        // Label14.Caption := dm.qOperacion.FieldByName('CELULAR').AsString;
+        PrecioLabel.Caption := dm.qOperacion.FieldByName('PRECIO').AsString;
 //        if PrecioLabel.Caption = '' then PrecioLabel.Caption := '0';
-        // Label19.Caption := Tabla.FieldByName('TERMINOS').AsString;
-        // Label23.Caption := DateToStr(IncDay(now,Tabla.FieldByName('DIASCREDITO').AsInteger));
-        VendedorEdit.Text := Tabla.FieldByName('VENDEDOR').AsString;
-        CuitEdit.Text := Tabla.FieldByName('CUIT').AsString;
+        // Label19.Caption := dm.qOperacion.FieldByName('TERMINOS').AsString;
+        // Label23.Caption := DateToStr(IncDay(now,dm.qOperacion.FieldByName('DIASCREDITO').AsInteger));
+        VendedorEdit.Text := dm.qOperacion.FieldByName('VENDEDOR').AsString;
+        CuitEdit.Text := dm.qOperacion.FieldByName('CUIT').AsString;
         if CuitEdit.Text =''  then
-          CuitEdit.Text := Tabla.FieldByName('DOCUMENTO').AsString;
+          CuitEdit.Text := dm.qOperacion.FieldByName('DOCUMENTO').AsString;
           if CuitEdit.Text =''  then
             CuitEdit.Text := '20222222223';
-        // DocumentoLabel.Caption := Tabla.FieldByName('DOCUMENTO').AsString;
+        // DocumentoLabel.Caption := dm.qOperacion.FieldByName('DOCUMENTO').AsString;
         // CUENTA CLIENTE
         if ClienteEdit.Text<>'0' then
-          EmailEdit.Text := Tabla.FieldByName('EMAIL').AsString;
-        CtaNombre := Tabla.FieldByName('CTANOMBRE').AsString;
-        CtaTipo := Tabla.FieldByName('CTATIPO').AsString;
-        CtaAnticipo := Tabla.FieldByName('CTAANTICIPO').AsString;
-        IF Tabla.FieldByName('PAGARE').AsString = 'SI' THEN
+          EmailEdit.Text := dm.qOperacion.FieldByName('EMAIL').AsString;
+        CtaNombre := dm.qOperacion.FieldByName('CTANOMBRE').AsString;
+        CtaTipo := dm.qOperacion.FieldByName('CTATIPO').AsString;
+        CtaAnticipo := dm.qOperacion.FieldByName('CTAANTICIPO').AsString;
+        IF dm.qOperacion.FieldByName('PAGARE').AsString = 'SI' THEN
           PagareCheckBox.Checked := True;
         // IVA
-        cliIVA := Tabla.FieldByName('IVA').AsString;
+        cliIVA := dm.qOperacion.FieldByName('IVA').AsString;
         if catIVA='Responsable Monotributo' then cbTipo.ItemIndex := 11
         else
           if catIVA='Responsable Inscripto' then
@@ -568,7 +564,7 @@ If ClienteEdit.Text <> '' then
             DM.Query.Close;
             FEContado.Text := FloatToStr(Total);
           end;
-          Tabla.Active := False;
+          dm.qOperacion.Active := False;
         end;
       end;
   end;
@@ -587,20 +583,20 @@ begin
       if salir then Exit;
       with FBuscaProve do
       begin
-        ClienteEdit.Text := Tabla.FieldByName('CODIGO').AsString;
-        ClienteLabel.Caption := Tabla.FieldByName('Nombre').AsString;
-        Label3.Caption := Tabla.FieldByName('Direccion').AsString;
-        CUITEdit.Text := Tabla.FieldByName('CUIT').AsString;
-        if CUITEdit.Text='' then CUITEdit.Text := Tabla.FieldByName('DOCUMENTO').AsString;
-        EmailEdit.Text := Tabla.FieldByName('EMAIL').AsString;
-        CtaNombre := Tabla.FieldByName('CtaNombre').AsString;
-        CtaTipo := Tabla.FieldByName('CtaTipo').AsString;
-        CtaAnticipo := Tabla.FieldByName('CtaAnticipo').AsString;
-        PagareCheckBox.Checked := Tabla.FieldByName('PAGARE').AsBoolean;
+        ClienteEdit.Text := dm.qOperacion.FieldByName('CODIGO').AsString;
+        ClienteLabel.Caption := dm.qOperacion.FieldByName('Nombre').AsString;
+        Label3.Caption := dm.qOperacion.FieldByName('Direccion').AsString;
+        CUITEdit.Text := dm.qOperacion.FieldByName('CUIT').AsString;
+        if CUITEdit.Text='' then CUITEdit.Text := dm.qOperacion.FieldByName('DOCUMENTO').AsString;
+        EmailEdit.Text := dm.qOperacion.FieldByName('EMAIL').AsString;
+        CtaNombre := dm.qOperacion.FieldByName('CtaNombre').AsString;
+        CtaTipo := dm.qOperacion.FieldByName('CtaTipo').AsString;
+        CtaAnticipo := dm.qOperacion.FieldByName('CtaAnticipo').AsString;
+        PagareCheckBox.Checked := dm.qOperacion.FieldByName('PAGARE').AsBoolean;
         if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Inscripto') and
-          (Tabla.FieldByName('IVA').AsString = 'RI') then cbTipo.ItemIndex := 0
+          (dm.qOperacion.FieldByName('IVA').AsString = 'RI') then cbTipo.ItemIndex := 0
         else
-        if (Tabla.FieldByName('IVA').AsString = 'RI') then
+        if (dm.qOperacion.FieldByName('IVA').AsString = 'RI') then
           cbTipo.ItemIndex := 6
         else
           cbTipo.ItemIndex := 11;
@@ -616,7 +612,7 @@ begin
       FBuscaCliente.ShowModal;
         salir := FBuscaCliente.salir;
         if salir then Exit;
-        ClienteEdit.Text := FBuscaCliente.Tabla.FieldByName('CODIGO').AsString;
+        ClienteEdit.Text := dm.qCliente.FieldByName('CODIGO').AsString;
 //      with FBuscaCliente do
         TraeNombreCliente;
     finally
@@ -724,12 +720,12 @@ begin
     try
       FBuscaArticulo.ShowModal;
     finally
-      If FBuscaArticulo.Tabla.Active = True then
+      If dm.qArticulo.Active = True then
       begin
-        TraerArticulo(FBuscaArticulo.Tabla.FieldByName('CODIGO').AsString,0,1);
+        TraerArticulo(dm.qArticulo.FieldByName('CODIGO').AsString,0,1);
       end;
       FBuscaArticulo.Free;
-      Tabla.Close;
+      dm.qOperacion.Close;
       FEContado.SetFocus;
     end;
   end;
@@ -903,7 +899,7 @@ begin
     begin
       OperacionForm.Caption := 'COMPRA';
       ClienteBitBtn.Caption := 'Proveedor';
-      Label1.Caption := ClienteBitBtn.Caption+':';
+//      Label1.Caption := ClienteBitBtn.Caption+':';
       TipoRadioGroup.ItemIndex:=0;
       pPago.Visible:=False;
       lPrecio.Visible:=False;
@@ -1066,11 +1062,11 @@ begin
   try
     BuscarVendedorForm.ShowModal;
   finally
-    VendedorEdit.Text := BuscarVendedorForm.Tabla.FieldByName('CODIGO')
+    VendedorEdit.Text := dm.qVendedor.FieldByName('CODIGO')
       .AsString;
-    VendedorLabel.Caption := BuscarVendedorForm.Tabla.FieldByName
+    VendedorLabel.Caption := dm.qVendedor.FieldByName
       ('NOMBRE').AsString;
-    Comision := BuscarVendedorForm.Tabla.FieldByName('COMISION').AsFloat;
+    Comision := dm.qVendedor.FieldByName('COMISION').AsFloat;
     BuscarVendedorForm.Free;
   end;
 end;
@@ -1085,21 +1081,21 @@ end;
 
 procedure TOperacionForm.TraerRemito;
 begin
-  Tabla.SQL.Text := 'SELECT CLIENTE FROM  "Operacion" WHERE CODIGO='+codigo;
-  Tabla.Open;
-  ClienteEdit.Text := Tabla.FieldByName('CLIENTE').AsString;
+  dm.qOperacion.SQL.Text := 'SELECT CLIENTE FROM  "Operacion" WHERE CODIGO='+codigo;
+  dm.qOperacion.Open;
+  ClienteEdit.Text := dm.qOperacion.FieldByName('CLIENTE').AsString;
   TraeNombreCliente;
-  Tabla.SQL.Text := 'SELECT ARTICULO, PRECIO, CANTIDAD FROM "OperacionItem"'+
+  dm.qOperacion.SQL.Text := 'SELECT ARTICULO, PRECIO, CANTIDAD FROM "OperacionItem"'+
   ' WHERE OPERACION = '+codigo;
-  Tabla.Open;
-  while not Tabla.eof do
+  dm.qOperacion.Open;
+  while not dm.qOperacion.eof do
   begin
     TraerArticulo(
-      Tabla.FieldByName('ARTICULO').AsString,
-      Tabla.FieldByName('PRECIO').AsFloat,
-      Tabla.FieldByName('CANTIDAD').AsFloat
+      dm.qOperacion.FieldByName('ARTICULO').AsString,
+      dm.qOperacion.FieldByName('PRECIO').AsFloat,
+      dm.qOperacion.FieldByName('CANTIDAD').AsFloat
     );
-    Tabla.Next;
+    dm.qOperacion.Next;
   end;
 end;
 

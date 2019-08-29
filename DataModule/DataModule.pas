@@ -11,17 +11,15 @@ uses
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, IBX.IBScript, System.Net.HTTPClient, System.StrUtils,
   ShellApi, System.Variants, ShlObj, System.IOUtils, IBX.IBTable,
-  FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs;
+  FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
+  FireDAC.FMXUI.Wait, FireDAC.Comp.UI, FireDAC.Comp.BatchMove.DataSet,
+  FireDAC.Comp.BatchMove, FireDAC.Comp.BatchMove.Text, FireDAC.Comp.BatchMove.SQL,
+  FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, FireDAC.Comp.Script;
 
 type
   TDM = class(TDataModule)
-    BaseDatos: TIBDatabase;
-    Transaccion: TIBTransaction;
-    ConfigQuery: TIBQuery;
     Consulta: TIBScript;
-    FDConnection1: TFDConnection;
     OpenDialog1: TOpenDialog;
-    IBScript1: TIBScript;
     FDTable1: TFDTable;
     FDQuery1: TFDQuery;
     tLibroIVAventa: TIBTable;
@@ -59,7 +57,6 @@ type
     tLibroIVAventaGENERALES: TIBStringField;
     tLibroIVAventaNOCAT: TIBStringField;
     tLibroIVAventaIMPTRIB: TIBStringField;
-    Query: TIBQuery;
     sdb: TFDConnection;
     tCbteTipo: TFDQuery;
     tSiapVtaComp: TFDQuery;
@@ -91,6 +88,82 @@ type
     tSiapVtaCompImpTotal: TWideMemoField;
     mtIVA: TFDMemTable;
     qSdb: TFDQuery;
+    SaveDialog1: TSaveDialog;
+    FDBatchMoveSQLWriter1: TFDBatchMoveSQLWriter;
+    FDBatchMoveTextReader1: TFDBatchMoveTextReader;
+    FDBatchMove1: TFDBatchMove;
+    BaseDatosFB: TFDConnection;
+    FDScript1: TFDScript;
+    IBScript1: TIBScript;
+    ConfigQuery: TFDQuery;
+    BaseDatosIB: TIBDatabase;
+    dstArticulo: TDataSource;
+    tMarca: TIBTable;
+    tArticulo: TIBTable;
+    tMaterial: TIBTable;
+    dsqMaterial: TDataSource;
+    qUsuario: TIBQuery;
+    dsqUsuario: TDataSource;
+    dstMarca: TDataSource;
+    qQ: TIBQuery;
+    qCuenta: TIBQuery;
+    dsqCuenta: TDataSource;
+    tProveedor: TIBTable;
+    dstProveedor: TDataSource;
+    qTemp: TIBQuery;
+    tCategoria: TIBTable;
+    tIVA: TIBTable;
+    dstIVA: TDataSource;
+    dstCategoria: TDataSource;
+    tSubCategoria: TIBTable;
+    dstSubCategoria: TDataSource;
+    tRubro: TIBTable;
+    dstRubro: TDataSource;
+    qODM: TFDQuery;
+    dsqArticulo: TDataSource;
+    qCliente: TIBQuery;
+    dsqCliente: TDataSource;
+    dsqVendedor: TDataSource;
+    qVendedor: TIBQuery;
+    tVendedor: TIBTable;
+    dstVendedor: TDataSource;
+    qEmpresa: TIBQuery;
+    dstCuenta: TDataSource;
+    tCuenta: TIBTable;
+    tUsuario: TIBTable;
+    dstUsuario: TDataSource;
+    dstCliente: TDataSource;
+    tCliente: TIBTable;
+    tEmpresa: TIBTable;
+    dstEmpresa: TDataSource;
+    qIIBB: TIBQuery;
+    dsqIIBB: TDataSource;
+    dsqProveedor: TDataSource;
+    qProveedor: TIBQuery;
+    dsqCompra: TDataSource;
+    qCompra: TIBQuery;
+    qOperacion: TIBQuery;
+    dsqOperacion: TDataSource;
+    tConfiguracion: TIBTable;
+    dstConfiguracion: TDataSource;
+    qImprimir: TIBQuery;
+    dsqImprimir: TDataSource;
+    dsqCaja: TDataSource;
+    qGanancia: TIBQuery;
+    dsqGanancia: TDataSource;
+    qLibroDiario: TIBQuery;
+    dsqLibroDiario: TDataSource;
+    Transaccion: TIBTransaction;
+    dsqLibro: TDataSource;
+    qLibro: TIBQuery;
+    dsqTarjeta: TDataSource;
+    qTarjeta: TIBQuery;
+    qT: TIBQuery;
+    qD: TIBQuery;
+    Query: TFDQuery;
+    qArticulo: TFDQuery;
+    qCaja: TFDQuery;
+
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
     procedure LeerINI;
@@ -168,6 +241,8 @@ type
     procedure ActualizarNroComp(tipo,comp: string);
     procedure AgregarRetPer(tipo:string;codigo:Integer;noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib:double);
     procedure AgregarSiapCmpCompAlicuota(codigo:Integer;ivaId,ivaBaseImp,ivaAlic:String);
+    procedure ExportarTabla(tabla:string);
+    procedure ImportarTabla(tabla:string);
   end;
 
 const
@@ -254,8 +329,7 @@ end;
 
 procedure TDM.DejarUsuario;
 begin
-  if (Transaccion.Params.Text <> 'read') and (Transaccion.Params.Text <> '')
-  then
+//  if (Transaccion.Params.Text <> 'read') and (Transaccion.Params.Text <> '') then
   begin
     TraerUsuario;
     if Control <> '' then
@@ -263,7 +337,7 @@ begin
       Query.SQL.Text := 'update "Control" set MAQUINA=' + QuotedStr(Maquina) +
         ' where CODIGO=' + Control;
       Query.ExecSQL;
-      Query.Transaction.Commit;
+//      Query.Transaction.Commit;
     end;
   end;
 end;
@@ -336,7 +410,7 @@ ConfigQuery.SQL.Text := 'SELECT '
   reporte := ConfigQuery.FieldByName('Reporte').AsString;
   IngresosBrutos := ConfigQuery.FieldByName('IIBB').AsString;
   if IngresosBrutos='' then IngresosBrutos:='0';
-  catIVA := dm.ConfigQuery.FieldByName('IVA').AsString;
+  catIVA := ConfigQuery.FieldByName('IVA').AsString;
   Precio1 := ConfigQuery.FieldByName('PP1').AsFloat / 100 + 1;
   Precio2 := ConfigQuery.FieldByName('PP2').AsFloat / 100 + 1;
   Precio3 := ConfigQuery.FieldByName('PP3').AsFloat / 100 + 1;
@@ -412,7 +486,8 @@ procedure TDM.connection;
 //  origen, destino: string;
 begin
   FormatearFecha;
-  if BaseDatos.Connected = True then BaseDatos.Close;
+  if BaseDatosFB.Connected = True then BaseDatosFB.Close;
+  if BaseDatosIB.Connected = True then BaseDatosIB.Close;
   // Obtiene la ruta y el nombre de la base de datos
   Path := TPath.GetDocumentsPath()+'\Civeloo\GeN\';
   ejecutable := ExtractFilePath(Application.ExeName);
@@ -424,8 +499,10 @@ begin
   if bd <> '' then Path := bd;
   if BasedeDatos = '' then BasedeDatos := Path + 'db\GeN.FDB';
   If BasedeDatos = '' then ShowMessage('Error al cargar Base de Datos');
-  BaseDatos.DatabaseName := BasedeDatos;
-  BaseDatos.Open;
+  BaseDatosFB.Params.Database:=BasedeDatos;
+  BaseDatosFB.Connected:=True;
+  BaseDatosIB.DatabaseName:=BasedeDatos;
+  BaseDatosIB.Open;
   ConectarSDB;
 end;
 
@@ -493,7 +570,8 @@ end;
 
 procedure TDM.VaciarBase;
 begin
-  BaseDatos.Close;
+  BaseDatosIB.Close;
+  BaseDatosFB.Close;
   TDirectory.Delete(Path, True);
 //  Consulta.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
 //    + ' USER ''SYSDBA'' PASSWORD ''masterkey''; ' + Consulta.Script.Text;
@@ -598,7 +676,7 @@ begin
   if Query.RecordCount = 0 then
   begin
     Query.Close;
-    c:=IntToStr(DM.UltimoRegistro('Imprimir', 'CODIGO'));
+    c:=IntToStr(UltimoRegistro('Imprimir', 'CODIGO'));
     Query.SQL.Text :=
       'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES ('+c+', '+QuotedStr(reporte)+', '+QuotedStr(reporte)+')';
     Query.ExecSQL;
@@ -898,7 +976,7 @@ procedure TDM.CrearTable;
        { set properties of the temporary TTable component }
        Active := False;
 //       DatabaseName := ;
-       Connection := FDConnection1;
+       Connection := BaseDatosFB;
        TableName := nombre;
 //       TableType := ttDefault;
        { define fields for the new table }
@@ -1592,6 +1670,81 @@ begin
   ActualizarTrigger('PresupuestoFecha_BI',a,b);
   ActualizarTrigger('RendidoVendedorFecha_BI',a,b);
   ActualizarTrigger('VentaFecha_BI',a,b);
+end;
+
+procedure TDM.ExportarTabla;
+begin
+    SaveDialog1.FileName := tabla+'.csv';
+    SaveDialog1.Execute;
+//    if SaveDialog1.FileName<>'' then
+//    begin
+      try
+        with FDTable1 do begin
+          if Active then Active := False;
+          TableName := '"'+tabla+'"';
+          Active := True;
+          DisableControls;
+        end;
+        with TFDBatchMoveDataSetReader.Create(FDBatchMove1) do begin
+          DataSet := FDTable1;
+          Optimise := False;
+        end;
+        with TFDBatchMoveTextWriter.Create(FDBatchMove1) do begin
+          // Set text data file name
+          FileName := SaveDialog1.FileName;
+          // Setup file format
+          DataDef.Separator := ';';
+          DataDef.WithFieldNames := True;
+        end;
+        with FDBatchMove1 do begin
+          // Use "always insert record" mode
+          Mode := dmAlwaysInsert;
+          // Erase destination dataset before moving data
+          Options := [poClearDest];
+          Execute;
+        end;
+      finally
+        FDTable1.EnableControls;
+      end;
+//    end;
+end;
+
+procedure TDM.ImportarTabla;
+begin
+  OpenDialog1.Execute();
+  try
+//    // Create text reader and set FDBatchMode as owner. Then
+//    // FDBatchMove will automatically manage the reader instance.
+//    with TFDBatchMoveTextReader.Create(FDBatchMove) do begin
+//      // Set text data file name
+//      FileName := OpenDialog1.FileName;
+//      // Setup file format
+//      DataDef.Separator := ';';
+//      DataDef.WithFieldNames := True;
+//    end;
+//    // Create dataset writer and set FDBatchMode as owner. Then
+//    // FDBatchMove will automatically manage the writer instance.
+//    with TFDBatchMoveSQLWriter.Create(FDBatchMove) do begin
+//    // Set destination dataset
+//      Connection := FDConnection1;
+//      TableName := '"'+tabla+'"';
+//    end;
+//    // Analyze source text file structure
+//    with FDBatchMove do begin
+//      Options := [poIdentityInsert,poCreateDest,poSkipUnmatchedDestFields,poUseTransactions];
+//      Mode := dmAppendUpdate;
+//      GuessFormat;
+//      Execute;
+//    end;
+FDBatchMoveTextReader1.FileName := OpenDialog1.FileName;
+FDBatchMoveTextReader1.DataDef.Separator := ';';
+FDBatchMoveTextReader1.DataDef.WithFieldNames := True;
+FDBatchMove1.Mode := dmAppendUpdate;
+FDBatchMove1.GuessFormat;
+FDBatchMove1.Execute;
+  finally
+  //
+  end;
 end;
 
 end.

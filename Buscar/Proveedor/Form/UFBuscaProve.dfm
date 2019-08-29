@@ -37,7 +37,7 @@ object FBuscaProve: TFBuscaProve
       Height = 17
       Alignment = taRightJustify
       DataField = 'DIRECCION'
-      DataSource = DataSource
+      DataSource = DM.dsqProveedor
     end
     object DBText2: TDBText
       Left = 12
@@ -46,7 +46,7 @@ object FBuscaProve: TFBuscaProve
       Height = 17
       Alignment = taRightJustify
       DataField = 'DIRECCIONCOMERCIAL'
-      DataSource = DataSource
+      DataSource = DM.dsqProveedor
     end
     object DBText3: TDBText
       Left = 15
@@ -55,7 +55,7 @@ object FBuscaProve: TFBuscaProve
       Height = 17
       Alignment = taRightJustify
       DataField = 'Provincia'
-      DataSource = DataSource
+      DataSource = DM.dsqProveedor
     end
     object DBText4: TDBText
       Left = 15
@@ -64,7 +64,7 @@ object FBuscaProve: TFBuscaProve
       Height = 17
       Alignment = taRightJustify
       DataField = 'Departamento'
-      DataSource = DataSource
+      DataSource = DM.dsqProveedor
     end
     object DBText5: TDBText
       Left = 15
@@ -73,7 +73,7 @@ object FBuscaProve: TFBuscaProve
       Height = 17
       Alignment = taRightJustify
       DataField = 'CIUDAD'
-      DataSource = DataSource
+      DataSource = DM.dsqProveedor
     end
     object Label4: TLabel
       Left = 12
@@ -230,7 +230,7 @@ object FBuscaProve: TFBuscaProve
     Width = 673
     Height = 459
     Align = alClient
-    DataSource = DataSource
+    DataSource = DM.dsqProveedor
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
@@ -320,21 +320,5 @@ object FBuscaProve: TFBuscaProve
       TabOrder = 0
       OnKeyUp = DescripcionEditKeyUp
     end
-  end
-  object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'Select * from "Proveedor"')
-    Left = 285
-    Top = 278
-  end
-  object DataSource: TDataSource
-    DataSet = Tabla
-    Left = 341
-    Top = 278
   end
 end

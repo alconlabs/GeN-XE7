@@ -26,8 +26,6 @@ type
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
-    QTemp: TIBQuery;
-    Q: TIBQuery;
     procedure AceptarBitBtnClick(Sender: TObject);
     procedure CalcularBitBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -57,134 +55,134 @@ begin
 
   // Insertar en la tabla LibroDiario
   // obtener el numero de asiento
-  Q.SQL.Text := 'Select Max(ASIENTO) From "LibroDiario"';
-  Q.Open;
-  i := Q.Fields[0].AsInteger + 1;
-  Q.Close;
+  dm.qQ.SQL.Text := 'Select Max(ASIENTO) From "LibroDiario"';
+  dm.qQ.Open;
+  i := dm.qQ.Fields[0].AsInteger + 1;
+  dm.qQ.Close;
 
   // LIQUIDACION DE IVA
 
   // renglon  - IVA DEBITO FISCAL
-  Q.SQL.Text := 'select * from "Cuenta" where CODIGO=' +
+  dm.qQ.SQL.Text := 'select * from "Cuenta" where CODIGO=' +
     dm.ConfigQuery.FieldByName('CtaIVADebitoFiscal').AsString;
-  Q.Open;
+  dm.qQ.Open;
   c := c + 1;
-  QTemp.SQL.Text :=
+  dm.qTemp.SQL.Text :=
     'Insert Into "LibroDiario" (ASIENTO, FECHA, LEYENDA, JERARQUIA, CUENTA, DEBE, HABER, OCULTO)'
     + ' Values ' + '( ' + IntToStr(i) + ', ' + QuotedStr(fecha) +
-    ', ''LIQUIDACION DE IVA'', ' + QuotedStr(Q.FieldByName('Jerarquia')
-    .AsString) + ', ' + QuotedStr(Q.FieldByName('DESCRIPCION').AsString) + ', '
+    ', ''LIQUIDACION DE IVA'', ' + QuotedStr(dm.qQ.FieldByName('Jerarquia')
+    .AsString) + ', ' + QuotedStr(dm.qQ.FieldByName('DESCRIPCION').AsString) + ', '
     + DebitoEdit.Text + ', 0, ' + QuotedStr(Oculto) + ' )';
-  QTemp.ExecSQL;
+  dm.qTemp.ExecSQL;
 
   if StrToFloat(SaldoEdit.Text) < 0 then
   begin // renglon  - IVA REMANENTE
-    Q.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
+    dm.qQ.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
       dm.ConfigQuery.FieldByName('CtaIVARemanente').AsString;
-    Q.Open;
+    dm.qQ.Open;
     c := c + 1;
-    QTemp.SQL.Text :=
+    dm.qTemp.SQL.Text :=
       'Insert Into "LibroDiario" (ASIENTO, FECHA, LEYENDA, JERARQUIA, CUENTA, DEBE, HABER, OCULTO)'
       + ' Values ' + '( ' + IntToStr(i) + ', ' + QuotedStr(fecha) +
-      ', ''LIQUIDACION DE IVA'', ' + QuotedStr(Q.FieldByName('Jerarquia')
-      .AsString) + ', ' + QuotedStr(Q.FieldByName('DESCRIPCION').AsString) +
+      ', ''LIQUIDACION DE IVA'', ' + QuotedStr(dm.qQ.FieldByName('Jerarquia')
+      .AsString) + ', ' + QuotedStr(dm.qQ.FieldByName('DESCRIPCION').AsString) +
       ', ' + FloatToStr(abs(StrToFloat(SaldoEdit.Text))) + ', 0, ' +
       QuotedStr(Oculto) + ' )';
-    QTemp.ExecSQL;
+    dm.qTemp.ExecSQL;
   end;
 
   // renglon  - IVA CREDITO FISCAL
-  Q.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
+  dm.qQ.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
     dm.ConfigQuery.FieldByName('CtaIVACreditoFiscal').AsString;
-  Q.Open;
+  dm.qQ.Open;
   c := c + 1;
-  QTemp.SQL.Text :=
+  dm.qTemp.SQL.Text :=
     'Insert Into "LibroDiario" (ASIENTO, FECHA, LEYENDA, JERARQUIA, CUENTA, DEBE, HABER, OCULTO)'
     + ' Values ' + '( ' + IntToStr(i) + ', ' + QuotedStr(fecha) +
-    ', ''LIQUIDACION DE IVA'', ' + QuotedStr(Q.FieldByName('Jerarquia')
-    .AsString) + ', ' + QuotedStr(Q.FieldByName('DESCRIPCION').AsString) +
+    ', ''LIQUIDACION DE IVA'', ' + QuotedStr(dm.qQ.FieldByName('Jerarquia')
+    .AsString) + ', ' + QuotedStr(dm.qQ.FieldByName('DESCRIPCION').AsString) +
     ', 0, ' + CreditoEdit.Text + ', ' + QuotedStr(Oculto) + ' )';
-  QTemp.ExecSQL;
+  dm.qTemp.ExecSQL;
 
   if StrToFloat(SaldoEdit.Text) > 0 then
   begin // renglon  - IVA A PAGAR
-    Q.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
+    dm.qQ.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
       dm.ConfigQuery.FieldByName('CtaIVAAPagar').AsString;
-    Q.Open;
+    dm.qQ.Open;
     c := c + 1;
-    QTemp.SQL.Text :=
+    dm.qTemp.SQL.Text :=
       'Insert Into "LibroDiario" (ASIENTO, FECHA, LEYENDA, JERARQUIA, CUENTA, DEBE, HABER, OCULTO)'
       + ' Values ' + '( ' + IntToStr(i) + ', ' + QuotedStr(fecha) +
-      ', ''LIQUIDACION DE IVA'', ' + QuotedStr(Q.FieldByName('Jerarquia')
-      .AsString) + ', ' + QuotedStr(Q.FieldByName('DESCRIPCION').AsString) +
+      ', ''LIQUIDACION DE IVA'', ' + QuotedStr(dm.qQ.FieldByName('Jerarquia')
+      .AsString) + ', ' + QuotedStr(dm.qQ.FieldByName('DESCRIPCION').AsString) +
       ', 0, ' + SaldoEdit.Text + ', ' + QuotedStr(Oculto) + ' )';
-    QTemp.ExecSQL;
+    dm.qTemp.ExecSQL;
 
     // PAGO DE IVA
     // renglon  - IVA A PAGAR
-    Q.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
+    dm.qQ.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
       dm.ConfigQuery.FieldByName('CtaIVAAPagar').AsString;
-    Q.Open;
+    dm.qQ.Open;
     c := c + 1;
-    QTemp.SQL.Text :=
+    dm.qTemp.SQL.Text :=
       'Insert Into "LibroDiario" (ASIENTO, FECHA, LEYENDA, JERARQUIA, CUENTA, DEBE, HABER, OCULTO)'
       + ' Values ' + '( ' + IntToStr(i) + ', ' + QuotedStr(fecha) +
-      ', ''PAGO DE IVA'', ' + QuotedStr(Q.FieldByName('Jerarquia').AsString) +
-      ', ' + QuotedStr(Q.FieldByName('DESCRIPCION').AsString) + ', ' +
+      ', ''PAGO DE IVA'', ' + QuotedStr(dm.qQ.FieldByName('Jerarquia').AsString) +
+      ', ' + QuotedStr(dm.qQ.FieldByName('DESCRIPCION').AsString) + ', ' +
       SaldoEdit.Text + ', 0, ' + QuotedStr(Oculto) + ' )';
-    QTemp.ExecSQL;
+    dm.qTemp.ExecSQL;
 
     // renglon  - CAJA
-    Q.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
+    dm.qQ.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
       dm.ConfigQuery.FieldByName('CtaCaja').AsString;
-    Q.Open;
+    dm.qQ.Open;
     c := c + 1;
-    QTemp.SQL.Text :=
+    dm.qTemp.SQL.Text :=
       'Insert Into "LibroDiario" (ASIENTO, FECHA, LEYENDA, JERARQUIA, CUENTA, DEBE, HABER, OCULTO)'
       + ' Values ' + '( ' + IntToStr(i) + ', ' + QuotedStr(fecha) +
-      ', ''PAGO DE IVA'', ' + QuotedStr(Q.FieldByName('Jerarquia').AsString) +
-      ', ' + QuotedStr(Q.FieldByName('DESCRIPCION').AsString) + ', 0, ' +
+      ', ''PAGO DE IVA'', ' + QuotedStr(dm.qQ.FieldByName('Jerarquia').AsString) +
+      ', ' + QuotedStr(dm.qQ.FieldByName('DESCRIPCION').AsString) + ', 0, ' +
       SaldoEdit.Text + ', ' + QuotedStr(Oculto) + ' )';
-    QTemp.ExecSQL;
+    dm.qTemp.ExecSQL;
   end;
 
   // CONTABILIDAD------------------------------------------------------------------------------
 
   // Completa la Transaccion
-  QTemp.Transaction.CommitRetaining;
+  dm.qTemp.Transaction.CommitRetaining;
   Close;
 end;
 
 procedure TPagoIVAForm.CalcularBitBtnClick(Sender: TObject);
 begin
   // DEBITO
-  QTemp.SQL.Text := 'SELECT ' + '  "LibroIVAventa".IVA1,' +
+  dm.qTemp.SQL.Text := 'SELECT ' + '  "LibroIVAventa".IVA1,' +
     '  "LibroIVAventa".IVA2, IDERPYPAC, ' + '  "LibroIVAventa".FECHA ' + ' FROM ' +
     '  "LibroIVAventa"  ' + ' WHERE ' + '  ("LibroIVAventa".FECHA >= ' +
     QuotedStr(DateToStr(DesdeDateTimePicker.Date)) + ' ) AND' +
     '  ("LibroIVAventa".FECHA <= ' +
     QuotedStr(DateToStr(HastaDateTimePicker.Date)) + ' )' + '';
-  QTemp.Open;
-  while QTemp.Eof = False do
+  dm.qTemp.Open;
+  while dm.qTemp.Eof = False do
   begin
     CreditoEdit.Text := FloatToStr(StrToFloat(CreditoEdit.Text) +
-      QTemp.FieldByName('IVA1').AsFloat + QTemp.FieldByName('IVA2').AsFloat + QTemp.FieldByName('IDERPYPAC').AsFloat);
-    QTemp.Next;
+      dm.qTemp.FieldByName('IVA1').AsFloat + dm.qTemp.FieldByName('IVA2').AsFloat + dm.qTemp.FieldByName('IDERPYPAC').AsFloat);
+    dm.qTemp.Next;
   end;
 
   // CREDITO
-  QTemp.SQL.Text := 'SELECT ' + '  "LibroIVAcompra".IVA1,' +
+  dm.qTemp.SQL.Text := 'SELECT ' + '  "LibroIVAcompra".IVA1,' +
     '  "LibroIVAcompra".IVA2, IDERPYPAC, ' + '  "LibroIVAcompra".FECHA ' + ' FROM ' +
     '  "LibroIVAcompra"  ' + ' WHERE ' + '  ("LibroIVAcompra".FECHA >= ' +
     QuotedStr(DateToStr(DesdeDateTimePicker.Date)) + ' ) AND' +
     '  ("LibroIVAcompra".FECHA <= ' +
     QuotedStr(DateToStr(HastaDateTimePicker.Date)) + ' )' + '';
-  QTemp.Open;
-  while QTemp.Eof = False do
+  dm.qTemp.Open;
+  while dm.qTemp.Eof = False do
   begin
     DebitoEdit.Text := FloatToStr(StrToFloat(DebitoEdit.Text) +
-      QTemp.FieldByName('IVA1').AsFloat + QTemp.FieldByName('IVA2').AsFloat - QTemp.FieldByName('IDERPYPAC').AsFloat);
-    QTemp.Next;
+      dm.qTemp.FieldByName('IVA1').AsFloat + dm.qTemp.FieldByName('IVA2').AsFloat - dm.qTemp.FieldByName('IDERPYPAC').AsFloat);
+    dm.qTemp.Next;
   end;
 
 

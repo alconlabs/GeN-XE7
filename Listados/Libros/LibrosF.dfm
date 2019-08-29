@@ -25,7 +25,7 @@ object LibrosForm: TLibrosForm
     Width = 640
     Height = 468
     Align = alClient
-    DataSource = DS
+    DataSource = DM.dsqLibro
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -245,19 +245,5 @@ object LibrosForm: TLibrosForm
       TabOrder = 3
       OnClick = bSiapClick
     end
-  end
-  object DS: TDataSource
-    DataSet = qLibros
-    Left = 320
-    Top = 360
-  end
-  object qLibros: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 288
-    Top = 360
   end
 end

@@ -10,11 +10,9 @@ uses
 type
   TLibrosForm = class(TForm)
     DBGrid1: TDBGrid;
-    DS: TDataSource;
     Panel2: TPanel;
     bProcesar: TBitBtn;
     bImprimir: TBitBtn;
-    qLibros: TIBQuery;
     GroupBox1: TGroupBox;
     Label2: TLabel;
     Label1: TLabel;
@@ -115,7 +113,7 @@ begin
       Free;
     end;
   end;
-  qLibros.SQL.Text := 'SELECT ' +
+  dm.qLibro.SQL.Text := 'SELECT ' +
 //    QuotedStr(DM.ConfigQuery.FieldByName('Nombre').AsString) + ' AS Empresa, ' +
 //    '  ' + QuotedStr(DateToStr(DTP1.Date)) + ' AS Desde,  ' + '  ' +
 //    QuotedStr(DateToStr(DTP2.Date)) + ' AS Hasta, ' +
@@ -123,7 +121,7 @@ begin
   +' (FECHA > ' + QuotedStr(DateToStr(DTP1.Date-1)) + ' ) AND '
   +' (FECHA < ' + QuotedStr(DateToStr(DTP2.Date+1)) + ' )   '
   + 'ORDER BY CODIGO';
-  qLibros.Open;
+  dm.qLibro.Open;
 end;
 
 procedure TLibrosForm.FormDestroy(Sender: TObject);
@@ -171,18 +169,18 @@ procedure TLibrosForm.iExpClick(Sender: TObject);
 begin
   ImprimirDataModule := TImprimirDataModule.Create(Self);
   with ImprimirDataModule do begin
-    CSV(qLibros.SQL.Text, 'LIBRO IVA VENTAS');
+    CSV(dm.qLibro.SQL.Text, 'LIBRO IVA VENTAS');
     Free;
   end;
 end;
 
 procedure TLibrosForm.bImprimirClick(Sender: TObject);
 begin
-  if qLibros.Active = true then
+  if dm.qLibro.Active = true then
   begin
     ImprimirDataModule := TImprimirDataModule.Create(Self);
     with ImprimirDataModule do begin
-      SImpr(qLibros.SQL.Text, rpt);
+      SImpr(dm.qLibro.SQL.Text, rpt);
       Free;
     end;
   end;

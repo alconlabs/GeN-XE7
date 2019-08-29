@@ -5,7 +5,7 @@ object ListadoClientesForm: TListadoClientesForm
   Caption = 'Listado de Clientes'
   ClientHeight = 423
   ClientWidth = 299
-  Color = clBlack
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWhite
   Font.Height = -11
@@ -39,7 +39,7 @@ object ListadoClientesForm: TListadoClientesForm
     Width = 185
     Height = 105
     Caption = 'Mostrar'
-    Color = clWhite
+    Color = clBtnFace
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
@@ -60,7 +60,7 @@ object ListadoClientesForm: TListadoClientesForm
     Width = 185
     Height = 161
     Caption = 'Ordenar por'
-    Color = clWhite
+    Color = clBtnFace
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11

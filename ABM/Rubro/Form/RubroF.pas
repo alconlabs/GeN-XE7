@@ -15,15 +15,13 @@ type
     DBGrid1: TDBGrid;
     DBNavigator1: TDBNavigator;
     BitBtn1: TBitBtn;
-    DS: TDataSource;
-    Tabla: TIBTable;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BitBtn1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure TablaAfterCancel(DataSet: TDataSet);
-    procedure TablaAfterDelete(DataSet: TDataSet);
-    procedure TablaAfterPost(DataSet: TDataSet);
+    procedure tRubroAfterCancel(DataSet: TDataSet);
+    procedure tRubroAfterDelete(DataSet: TDataSet);
+    procedure tRubroAfterPost(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -41,43 +39,43 @@ implementation
 procedure TRubroForm.FormCreate(Sender: TObject);
 begin
   // DM := TDM.Create(Self);
-  Tabla.Active := true;
+  dm.tRubro.Active := true;
 end;
 
 procedure TRubroForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Tabla.Active := false;
+  dm.tRubro.Active := false;
 end;
 
 procedure TRubroForm.BitBtn1Click(Sender: TObject);
 begin
   desc := DBEdit1.Text;
-  If (Tabla.State = dsEdit) or (Tabla.State = dsInsert) then
+  If (dm.tRubro.State = dsEdit) or (dm.tRubro.State = dsInsert) then
     If DBEdit1.Text <> '' then
     begin
-      Tabla.Post;
+      dm.tRubro.Post;
     end;
   Close;
 end;
 
 procedure TRubroForm.FormShow(Sender: TObject);
 begin
-  Tabla.Insert;
+  dm.tRubro.Insert;
 end;
 
-procedure TRubroForm.TablaAfterCancel(DataSet: TDataSet);
+procedure TRubroForm.tRubroAfterCancel(DataSet: TDataSet);
 begin
-  Tabla.Transaction.RollbackRetaining;
+  dm.tRubro.Transaction.RollbackRetaining;
 end;
 
-procedure TRubroForm.TablaAfterDelete(DataSet: TDataSet);
+procedure TRubroForm.tRubroAfterDelete(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tRubro.Transaction.CommitRetaining;
 end;
 
-procedure TRubroForm.TablaAfterPost(DataSet: TDataSet);
+procedure TRubroForm.tRubroAfterPost(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tRubro.Transaction.CommitRetaining;
 end;
 
 end.

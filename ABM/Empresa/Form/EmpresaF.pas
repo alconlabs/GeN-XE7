@@ -14,7 +14,6 @@ type
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     DBMemo1: TDBMemo;
-    DataSource: TDataSource;
     Label4: TLabel;
     Label9: TLabel;
     Label11: TLabel;
@@ -56,7 +55,6 @@ type
     DBEdit19: TDBEdit;
     Label23: TLabel;
     TabSheet3: TTabSheet;
-    CuentaDataSource: TDataSource;
     Label52: TLabel;
     Label51: TLabel;
     Label54: TLabel;
@@ -69,8 +67,6 @@ type
     SiBitBtn: TBitBtn;
     NoBitBtn: TBitBtn;
     ImprimirBitBtn: TBitBtn;
-    Tabla: TIBTable;
-    CuentaT: TIBQuery;
     Image1: TImage;
     Label1: TLabel;
     OpenPictureDialog1: TOpenPictureDialog;
@@ -78,8 +74,6 @@ type
     DateTimePicker1: TDateTimePicker;
     CodigoDBEdit: TDBEdit;
     Label14: TLabel;
-    IIBBQuery: TIBQuery;
-    IIBBDataSource: TDataSource;
     DBLookupComboBox2: TDBLookupComboBox;
     Label15: TLabel;
     DBEdit11: TDBEdit;
@@ -90,9 +84,9 @@ type
     procedure IVADBComboBoxChange(Sender: TObject);
     procedure SiBitBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure TablaAfterCancel(DataSet: TDataSet);
-    procedure TablaAfterDelete(DataSet: TDataSet);
-    procedure TablaAfterPost(DataSet: TDataSet);
+    procedure tEmpresaAfterCancel(DataSet: TDataSet);
+    procedure tEmpresaAfterDelete(DataSet: TDataSet);
+    procedure tEmpresaAfterPost(DataSet: TDataSet);
     procedure Image1Click(Sender: TObject);
   private
     { Private declarations }
@@ -113,15 +107,15 @@ begin
   // guardar imagen
   Image1.Picture.SaveToFile(path + 'img\empresa.bmp');
   //
-  If (Tabla.State = dsEdit) or (Tabla.State = dsInsert) then
+  If (dm.tEmpresa.State = dsEdit) or (dm.tEmpresa.State = dsInsert) then
   begin
-    Tabla.FieldByName('Fecha').AsDateTime := DateTimePicker1.Date;
-    Tabla.Post;
+    dm.tEmpresa.FieldByName('Fecha').AsDateTime := DateTimePicker1.Date;
+    dm.tEmpresa.Post;
     // e:=CodigoDBEdit.Text;
     dm.Query.SQL.Text := 'Update "Config" Set "Empresa" = (' +
       QuotedStr(CodigoDBEdit.Text) + ')';
     dm.Query.ExecSQL;
-    dm.Transaccion.CommitRetaining;
+    dm.BaseDatosFB.CommitRetaining;
   end;
 //  dm.ConfigQuery.Close;
 //  dm.ConfigQuery.Open;
@@ -129,19 +123,19 @@ begin
   Close;
 end;
 
-procedure TEmpresaForm.TablaAfterCancel(DataSet: TDataSet);
+procedure TEmpresaForm.tEmpresaAfterCancel(DataSet: TDataSet);
 begin
-  Tabla.Transaction.RollbackRetaining;
+  dm.tEmpresa.Transaction.RollbackRetaining;
 end;
 
-procedure TEmpresaForm.TablaAfterDelete(DataSet: TDataSet);
+procedure TEmpresaForm.tEmpresaAfterDelete(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tEmpresa.Transaction.CommitRetaining;
 end;
 
-procedure TEmpresaForm.TablaAfterPost(DataSet: TDataSet);
+procedure TEmpresaForm.tEmpresaAfterPost(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tEmpresa.Transaction.CommitRetaining;
 end;
 
 procedure TEmpresaForm.NoBitBtnClick(Sender: TObject);
@@ -153,11 +147,11 @@ procedure TEmpresaForm.FormCreate(Sender: TObject);
 var i:integer;
 begin
   // DM := TDM.Create(Self);
-  CuentaT.Open;
-  Tabla.Open;
-  IIBBQuery.Open;
+  dm.qCuenta.Open;
+  dm.tEmpresa.Open;
+  dm.qIIBB.Open;
   Image1.Picture.LoadFromFile(path + 'img\empresa.bmp');
-  DateTimePicker1.Date := Tabla.FieldByName('Fecha').AsDateTime;
+  DateTimePicker1.Date := dm.tEmpresa.FieldByName('Fecha').AsDateTime;
   for i := 1 to 3 do IVADBComboBox.Items.Add(OperacionDM.tipoIVA[i]);
 end;
 
@@ -174,7 +168,7 @@ procedure TEmpresaForm.FormShow(Sender: TObject);
 begin
   IVADBComboBoxChange(Sender);
   TabSheet1.PageControl.ActivePageIndex := 0;
-  Tabla.Edit;
+  dm.tEmpresa.Edit;
   DBEdit2.SetFocus;
 end;
 

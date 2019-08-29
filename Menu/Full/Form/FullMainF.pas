@@ -193,18 +193,12 @@ var
 
 implementation
 
-uses LoginF, CrearCreditoF, CtaCteF, BuscaFactura,
-  AnularVtaF, incremento, CrearPedidoF, RendicionCartonF, PagoComisionCobrador,
-  RendicionClienteLF, RendicionClienteF, NotaCreditoPlanF, CartonCobranzaF,
-  PagoIVAF, AporteCapitalF, CuentaContableF, CapituloF, RubroContableFormF,
-  TipoGastoF, SocioF, LibroDiarioF,
-  GestionCobranzaF, CobranzaExtraJudicialF, CobranzaJudicialF,
-  CobranzaIncobrableF, CtaCteProveedores, PagoVendedorF,
-  UFProductos, ProveedorF, UFClientes, PlanF, VendedorF, CobradorF, RubroF,
-  UFCategorias, UFSubCategorias, IngresosBrutosF, UFBuscaArticulos, CajaLF,
-  GananciasL, PedidoLF, Precios, ListadoClientes, EstadoCuentaLF, BuscaCompra,
-  EmpresaF, UsuariosF, ConfiguracionF, VaciarBaseF, BackUpF, MigrarF, main, OperacionF,
-  PagoF, LibrosF;
+uses LoginF, BuscaFactura, AnularVtaF, incremento, PagoIVAF, LibroDiarioF,
+  UFProductos, ProveedorF, UFClientes, VendedorF, RubroF,
+  UFCategorias, UFBuscaArticulos, CajaLF,
+  GananciasL, Precios, ListadoClientes, BuscaCompra, EmpresaF, ConfiguracionF,
+  VaciarBaseF, MigrarF, main, OperacionF,
+  LibrosF;
 
 {$R *.dfm}
 
@@ -215,84 +209,87 @@ begin
 end;
 
 procedure TFullMainForm.FormShow(Sender: TObject);
+var i:Integer;
 begin
-  // CONECTAR BASE DE DATOS
-  // CONTROL DE USUARIOS
-  with DM do
-  begin
-    TraerConfig;
-    Query.SQL.Text :=
-      'Select * From "Usuario" Where (NOMBRE=''admin'' and "password"=''admin'')';
-    Query.Open;
-    If Query.RecordCount = 0 then
-    begin
-      FLogin := TFLogin.Create(self);
-      try
-        FLogin.ShowModal;
-      finally
-        FLogin.Free;
+  with DM do begin
+    try
+      // CONECTAR BASE DE DATOS
+      // CONTROL DE USUARIOS
+
+        TraerConfig;
+        Query.SQL.Text :=
+          'Select * From "Usuario" Where (NOMBRE=''admin'' and "password"=''admin'')';
+        Query.Open;
+        If Query.RecordCount = 0 then
+        begin
+          FLogin := TFLogin.Create(self);
+          try
+            FLogin.ShowModal;
+          finally
+            Query.Close;
+            Query.Free;
+            FLogin.Free;
+          end;
+        end
+        else
+        begin
+          Usuario := Query.FieldByName('CODIGO').AsString;
+          Permiso := Query.FieldByName('PERMISO').AsInteger;
+          Query.SQL.Text := 'insert into "Control" (USUARIO, MAQUINA) values (' +
+            Usuario + ', ' + QuotedStr(Maquina) + ')';
+          Query.ExecSQL;
+//          Query.Transaction.Commit;
+          LoginOk := True;
+        end;
+      WebBrowser1.Navigate(path + 'hlp\index.htm');
+    //  ShellExecute(0,'open','https://www.gamerzone.com.ar/',nil,nil,SW_SHOWMINIMIZED);
+      if LoginOk <> True then
+      begin
+        ShowMessage('el usuario no coincide con la clave...');
+        close;
+      end
+      else
+      begin
+        if Permiso < 3 then
+          Configuracion1.Visible := False;
+        if Permiso < 2 then
+          CONTABILIDAD1.Visible := False;
+        if Permiso < 1 then
+        begin
+          Listados1.Visible := False;
+          ABM1.Visible := False;
+          Pagos1.Visible := False;
+          Comprar1.Visible := False;
+          CuentaCorriente1.Visible := False;
+          Aumentarporporcentaje1.Visible := False;
+          // AnularVenta1.Visible := False;
+          AnularVenta1.Visible := False;
+          // DevolverMercadera1.Visible := False;
+          // Retenciones1.Visible := False;
+    //      ReImprimir.Visible := False;
+          // AsignarCobrador1.Visible := False;
+          CrearPedido1.Visible := False;
+        end;
       end;
-    end
-    else
-    begin
-      Usuario := Query.FieldByName('CODIGO').AsString;
-      Permiso := Query.FieldByName('PERMISO').AsInteger;
-      Query.SQL.Text := 'insert into "Control" (USUARIO, MAQUINA) values (' +
-        Usuario + ', ' + QuotedStr(Maquina) + ')';
-      Query.ExecSQL;
-      Query.Transaction.Commit;
-      LoginOk := True;
+    finally
+//      Query.Close;
+      FullMainForm.caption := 'Civeloo GeN v'+version+' - [' + Empresa + '] - ' + Licencia +
+        ' - [USUARIO: ' + Usuario + '] MODULO COMPLETO ';
+      if Actualizar then Close;
+      FormatearFecha;
     end;
-  end;
-  WebBrowser1.Navigate(path + 'hlp\index.htm');
-//  ShellExecute(0,'open','https://www.gamerzone.com.ar/',nil,nil,SW_SHOWMINIMIZED);
-  if LoginOk <> True then
-  begin
-    ShowMessage('el usuario no coincide con la clave...');
-    close;
-  end
-  else
-  begin
-    if Permiso < 3 then
-      Configuracion1.Visible := False;
-    if Permiso < 2 then
-      CONTABILIDAD1.Visible := False;
-    if Permiso < 1 then
-    begin
-      Listados1.Visible := False;
-      ABM1.Visible := False;
-      Pagos1.Visible := False;
-      Comprar1.Visible := False;
-      CuentaCorriente1.Visible := False;
-      Aumentarporporcentaje1.Visible := False;
-      // AnularVenta1.Visible := False;
-      AnularVenta1.Visible := False;
-      // DevolverMercadera1.Visible := False;
-      // Retenciones1.Visible := False;
-//      ReImprimir.Visible := False;
-      // AsignarCobrador1.Visible := False;
-      CrearPedido1.Visible := False;
-    end;
-  end;
-  FullMainForm.caption := 'Civeloo GeN v'+version+' - [' + Empresa + '] - ' + Licencia +
-    ' - [USUARIO: ' + Usuario + '] MODULO COMPLETO ';
-  with DM do
-  begin
-    if Actualizar then
-      Close;
-    FormatearFecha;
   end;
 end;
 
 procedure TFullMainForm.Cuentas1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'CuentaContable.exe')), SW_SHOWNORMAL);
-  CuentasContablesForm := TCuentasContablesForm.Create(self);
-  try
-    CuentasContablesForm.ShowModal;
-  finally
-    CuentasContablesForm.Free;
-  end;
+//  CuentasContablesForm := TCuentasContablesForm.Create(self);
+//  try
+//    CuentasContablesForm.ShowModal;
+//  finally
+//    CuentasContablesForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.DIARIO1Click(Sender: TObject);
@@ -332,23 +329,23 @@ end;
 procedure TFullMainForm.NOTADECREDITO1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'NotaCreditoPlan.exe')), SW_SHOWNORMAL);
-  NotaCreditoPlanForm := TNotaCreditoPlanForm.Create(self);
-  try
-    NotaCreditoPlanForm.ShowModal;
-  finally
-    NotaCreditoPlanForm.Free;
-  end;
+//  NotaCreditoPlanForm := TNotaCreditoPlanForm.Create(self);
+//  try
+//    NotaCreditoPlanForm.ShowModal;
+//  finally
+//    NotaCreditoPlanForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.BACKUPCopiadeSeguridad1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'Backup.exe')), SW_SHOWNORMAL);
-  BackUpForm := TBackUpForm.Create(self);
-  try
-    BackUpForm.ShowModal;
-  finally
-    BackUpForm.Free;
-  end;
+//  BackUpForm := TBackUpForm.Create(self);
+//  try
+//    BackUpForm.ShowModal;
+//  finally
+//    BackUpForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.Productos1Click(Sender: TObject);
@@ -399,12 +396,12 @@ end;
 procedure TFullMainForm.RUBROS1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'RubroContable.exe')), SW_SHOWNORMAL);
-  RubroContableForm := TRubroContableForm.Create(self);
-  try
-    RubroContableForm.ShowModal;
-  finally
-    RubroContableForm.Free;
-  end;
+//  RubroContableForm := TRubroContableForm.Create(self);
+//  try
+//    RubroContableForm.ShowModal;
+//  finally
+//    RubroContableForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.REMITOClick(Sender: TObject);
@@ -437,12 +434,12 @@ end;
 procedure TFullMainForm.APORTEDECAPITAL1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'AporteCapital.exe')), SW_SHOWNORMAL);
-  AporteCapitalForm := TAporteCapitalForm.Create(self);
-  try
-    AporteCapitalForm.ShowModal;
-  finally
-    AporteCapitalForm.Free;
-  end;
+//  AporteCapitalForm := TAporteCapitalForm.Create(self);
+//  try
+//    AporteCapitalForm.ShowModal;
+//  finally
+//    AporteCapitalForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.MigrarArticulosClick(Sender: TObject);
@@ -564,12 +561,12 @@ end;
 procedure TFullMainForm.Login1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'Usuarios.exe')), SW_SHOWNORMAL);
-  UsuariosForm := TUsuariosForm.Create(self);
-  try
-    UsuariosForm.ShowModal;
-  finally
-    UsuariosForm.Free;
-  end;
+//  UsuariosForm := TUsuariosForm.Create(self);
+//  try
+//    UsuariosForm.ShowModal;
+//  finally
+//    UsuariosForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.Contable1Click(Sender: TObject);
@@ -580,12 +577,12 @@ end;
 procedure TFullMainForm.IMPRIMIRCARTON1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'CartonCobranza.exe')), SW_SHOWNORMAL);
-  CartonCobranzaForm := TCartonCobranzaForm.Create(self);
-  try
-    CartonCobranzaForm.ShowModal;
-  finally
-    CartonCobranzaForm.Free;
-  end;
+//  CartonCobranzaForm := TCartonCobranzaForm.Create(self);
+//  try
+//    CartonCobranzaForm.ShowModal;
+//  finally
+//    CartonCobranzaForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.ImpuestosyServicios1Click(Sender: TObject);
@@ -596,34 +593,34 @@ end;
 procedure TFullMainForm.INCOBRABLE1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'CobranzaIncobrable.exe')),SW_SHOWNORMAL);
-  CobranzaIncobrableForm := TCobranzaIncobrableForm.Create(self);
-  try
-    CobranzaIncobrableForm.ShowModal;
-  finally
-    CobranzaIncobrableForm.Free;
-  end;
+//  CobranzaIncobrableForm := TCobranzaIncobrableForm.Create(self);
+//  try
+//    CobranzaIncobrableForm.ShowModal;
+//  finally
+//    CobranzaIncobrableForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.IngresosBrutosClick(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'IngresosBrutos.exe')), SW_SHOWNORMAL);
-  IngresosBrutosForm := TIngresosBrutosForm.Create(self);
-  try
-    IngresosBrutosForm.ShowModal;
-  finally
-    IngresosBrutosForm.Free;
-  end;
+//  IngresosBrutosForm := TIngresosBrutosForm.Create(self);
+//  try
+//    IngresosBrutosForm.ShowModal;
+//  finally
+//    IngresosBrutosForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.IPODEGASTO1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'TipoGasto.exe')), SW_SHOWNORMAL);
-  TipoGastoForm := TTipoGastoForm.Create(self);
-  try
-    TipoGastoForm.ShowModal;
-  finally
-    TipoGastoForm.Free;
-  end;
+//  TipoGastoForm := TTipoGastoForm.Create(self);
+//  try
+//    TipoGastoForm.ShowModal;
+//  finally
+//    TipoGastoForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.IVACOMPRAS1Click(Sender: TObject);
@@ -655,12 +652,12 @@ end;
 procedure TFullMainForm.JUDICIAL1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'CobranzaJudicial.exe')), SW_SHOWNORMAL);
-  CobranzaJudicialForm := TCobranzaJudicialForm.Create(self);
-  try
-    CobranzaJudicialForm.ShowModal;
-  finally
-    CobranzaJudicialForm.Free;
-  end;
+//  CobranzaJudicialForm := TCobranzaJudicialForm.Create(self);
+//  try
+//    CobranzaJudicialForm.ShowModal;
+//  finally
+//    CobranzaJudicialForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.Clientes1Click(Sender: TObject);
@@ -693,12 +690,12 @@ end;
 procedure TFullMainForm.CAPITULOS1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'Capitulo.exe')), SW_SHOWNORMAL);
-  CapituloForm := TCapituloForm.Create(self);
-  try
-    CapituloForm.ShowModal;
-  finally
-    CapituloForm.Free;
-  end;
+//  CapituloForm := TCapituloForm.Create(self);
+//  try
+//    CapituloForm.ShowModal;
+//  finally
+//    CapituloForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.Entregados1Click(Sender: TObject);
@@ -709,23 +706,23 @@ end;
 procedure TFullMainForm.ESTADODECUENTA1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'EstadoCuentaL.exe')), SW_SHOWNORMAL);
-  EstadoCuentaLForm := TEstadoCuentaLForm.Create(self);
-  try
-    EstadoCuentaLForm.ShowModal;
-  finally
-    EstadoCuentaLForm.Free;
-  end;
+//  EstadoCuentaLForm := TEstadoCuentaLForm.Create(self);
+//  try
+//    EstadoCuentaLForm.ShowModal;
+//  finally
+//    EstadoCuentaLForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.EXTRAJUDICIAL1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'CobranzaExtrajudicial.exe')),SW_SHOWNORMAL);
-  CobranzaExtraJudicialForm := TCobranzaExtraJudicialForm.Create(self);
-  try
-    CobranzaExtraJudicialForm.ShowModal;
-  finally
-    CobranzaExtraJudicialForm.Free;
-  end;
+//  CobranzaExtraJudicialForm := TCobranzaExtraJudicialForm.Create(self);
+//  try
+//    CobranzaExtraJudicialForm.ShowModal;
+//  finally
+//    CobranzaExtraJudicialForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.PlanesClick(Sender: TObject);
@@ -736,12 +733,12 @@ end;
 procedure TFullMainForm.PagoaCobradores1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'PagoCobrador.exe')), SW_SHOWNORMAL);
-  PagoComisionCobradorForm := TPagoComisionCobradorForm.Create(self);
-  try
-    PagoComisionCobradorForm.ShowModal;
-  finally
-    PagoComisionCobradorForm.Free;
-  end;
+//  PagoComisionCobradorForm := TPagoComisionCobradorForm.Create(self);
+//  try
+//    PagoComisionCobradorForm.ShowModal;
+//  finally
+//    PagoComisionCobradorForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.RendiciondeCobrador1Click(Sender: TObject);
@@ -752,44 +749,44 @@ end;
 procedure TFullMainForm.RENDICIONDECOBRADORES1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'PagoCobrador.exe')), SW_SHOWNORMAL);
-  PagoComisionCobradorForm := TPagoComisionCobradorForm.Create(self);
-  try
-    PagoComisionCobradorForm.ShowModal;
-  finally
-    PagoComisionCobradorForm.Free;
-  end;
+//  PagoComisionCobradorForm := TPagoComisionCobradorForm.Create(self);
+//  try
+//    PagoComisionCobradorForm.ShowModal;
+//  finally
+//    PagoComisionCobradorForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.RENDICIONDECUOTAS1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'RendicionCliente.exe')), SW_SHOWNORMAL);
-  RendicionClienteForm := TRendicionClienteForm.Create(self);
-  try
-    RendicionClienteForm.ShowModal;
-  finally
-    RendicionClienteForm.Free;
-  end;
+//  RendicionClienteForm := TRendicionClienteForm.Create(self);
+//  try
+//    RendicionClienteForm.ShowModal;
+//  finally
+//    RendicionClienteForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.PagoaVendedores1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'PagoVendedor.exe')), SW_SHOWNORMAL);
-  PagoVendedorForm := TPagoVendedorForm.Create(self);
-  try
-    PagoVendedorForm.ShowModal;
-  finally
-    PagoVendedorForm.Free;
-  end;
+//  PagoVendedorForm := TPagoVendedorForm.Create(self);
+//  try
+//    PagoVendedorForm.ShowModal;
+//  finally
+//    PagoVendedorForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.PAGODEIIBB1Click(Sender: TObject);
 begin
-  PagoForm := TPagoForm.Create(self);
-  try
-    PagoForm.ShowModal;
-  finally
-    PagoForm.Free;
-  end;
+//  PagoForm := TPagoForm.Create(self);
+//  try
+//    PagoForm.ShowModal;
+//  finally
+//    PagoForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.PAGODEIVA1Click(Sender: TObject);
@@ -811,12 +808,12 @@ end;
 procedure TFullMainForm.RENDICIONDECLIENTES1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'RendicionClienteL.exe')), SW_SHOWNORMAL);
-  RendicionClienteLForm := TRendicionClienteLForm.Create(self);
-  try
-    RendicionClienteLForm.ShowModal;
-  finally
-    RendicionClienteLForm.Free;
-  end;
+//  RendicionClienteLForm := TRendicionClienteLForm.Create(self);
+//  try
+//    RendicionClienteLForm.ShowModal;
+//  finally
+//    RendicionClienteLForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.LibroDiario1Click(Sender: TObject);
@@ -832,12 +829,12 @@ end;
 procedure TFullMainForm.EMPRANOS1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'GestionCobranza.exe')), SW_SHOWNORMAL);
-  GestionCobranzaForm := TGestionCobranzaForm.Create(self);
-  try
-    GestionCobranzaForm.ShowModal;
-  finally
-    GestionCobranzaForm.Free;
-  end;
+//  GestionCobranzaForm := TGestionCobranzaForm.Create(self);
+//  try
+//    GestionCobranzaForm.ShowModal;
+//  finally
+//    GestionCobranzaForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.Empresa1Click(Sender: TObject);
@@ -854,23 +851,23 @@ end;
 procedure TFullMainForm.Pedido1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'PedidoL.exe')), SW_SHOWNORMAL);
-  PedidoLForm := TPedidoLForm.Create(self);
-  try
-    PedidoLForm.ShowModal;
-  finally
-    PedidoLForm.Free;
-  end;
+//  PedidoLForm := TPedidoLForm.Create(self);
+//  try
+//    PedidoLForm.ShowModal;
+//  finally
+//    PedidoLForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.PLANES1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'Plan.exe')), SW_SHOWNORMAL);
-  PlanForm := TPlanForm.Create(self);
-  try
-    PlanForm.ShowModal;
-  finally
-    PlanForm.Free;
-  end;
+//  PlanForm := TPlanForm.Create(self);
+//  try
+//    PlanForm.ShowModal;
+//  finally
+//    PlanForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.Ganancias1Click(Sender: TObject);
@@ -898,12 +895,12 @@ end;
 procedure TFullMainForm.SOCIOS1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'Socio.exe')), SW_SHOWNORMAL);
-  SocioForm := TSocioForm.Create(self);
-  try
-    SocioForm.ShowModal;
-  finally
-    SocioForm.Free;
-  end;
+//  SocioForm := TSocioForm.Create(self);
+//  try
+//    SocioForm.ShowModal;
+//  finally
+//    SocioForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.Stock1Click(Sender: TObject);
@@ -914,12 +911,12 @@ end;
 procedure TFullMainForm.SubCategoriasClick(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'SubCategoria.exe')), SW_SHOWNORMAL);
-  FSubCategorias := TFSubCategorias.Create(self);
-  try
-    FSubCategorias.ShowModal;
-  finally
-    FSubCategorias.Free;
-  end;
+//  FSubCategorias := TFSubCategorias.Create(self);
+//  try
+//    FSubCategorias.ShowModal;
+//  finally
+//    FSubCategorias.Free;
+//  end;
 end;
 
 procedure TFullMainForm.VaciarBasedeDatos1Click(Sender: TObject);
@@ -961,23 +958,23 @@ end;
 procedure TFullMainForm.COBRADOR2Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'RendicionCarton.exe')), SW_SHOWNORMAL);
-  RendicionCartonForm := TRendicionCartonForm.Create(self);
-  try
-    RendicionCartonForm.ShowModal;
-  finally
-    RendicionCartonForm.Free;
-  end;
+//  RendicionCartonForm := TRendicionCartonForm.Create(self);
+//  try
+//    RendicionCartonForm.ShowModal;
+//  finally
+//    RendicionCartonForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.CobradoresClick(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'Cobrador.exe')), SW_SHOWNORMAL);
-  CobradorForm := TCobradorForm.Create(self);
-  try
-    CobradorForm.ShowModal;
-  finally
-    CobradorForm.Free;
-  end;
+//  CobradorForm := TCobradorForm.Create(self);
+//  try
+//    CobradorForm.ShowModal;
+//  finally
+//    CobradorForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.VerStock1Click(Sender: TObject);
@@ -988,12 +985,12 @@ end;
 procedure TFullMainForm.CrearCredito1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'CrearCredito.exe')), SW_SHOWNORMAL);
-  CrearCreditoForm := TCrearCreditoForm.Create(self);
-  try
-    CrearCreditoForm.ShowModal;
-  finally
-    CrearCreditoForm.Free;
-  end;
+//  CrearCreditoForm := TCrearCreditoForm.Create(self);
+//  try
+//    CrearCreditoForm.ShowModal;
+//  finally
+//    CrearCreditoForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.CrearPedido1Click(Sender: TObject);
@@ -1015,34 +1012,34 @@ end;
 procedure TFullMainForm.PagosaProveedores1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'PagoProveedor.exe')), SW_SHOWNORMAL);
-  CtaCteProveedoresForm := TCtaCteProveedoresForm.Create(self);
-  try
-    CtaCteProveedoresForm.ShowModal;
-  finally
-    CtaCteProveedoresForm.Free;
-  end;
+//  CtaCteProveedoresForm := TCtaCteProveedoresForm.Create(self);
+//  try
+//    CtaCteProveedoresForm.ShowModal;
+//  finally
+//    CtaCteProveedoresForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.CuentaCorriente1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'CtaCte.exe')), SW_SHOWNORMAL);
-  CtaCteForm := TCtaCteForm.Create(self);
-  try
-    CtaCteForm.ShowModal;
-  finally
-    CtaCteForm.Free;
-  end;
+//  CtaCteForm := TCtaCteForm.Create(self);
+//  try
+//    CtaCteForm.ShowModal;
+//  finally
+//    CtaCteForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.REGISTRO1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'GestionCobranza.exe')), SW_SHOWNORMAL);
-  GestionCobranzaForm := TGestionCobranzaForm.Create(self);
-  try
-    GestionCobranzaForm.ShowModal;
-  finally
-    GestionCobranzaForm.Free;
-  end;
+//  GestionCobranzaForm := TGestionCobranzaForm.Create(self);
+//  try
+//    GestionCobranzaForm.ShowModal;
+//  finally
+//    GestionCobranzaForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.AnularVenta1Click(Sender: TObject);

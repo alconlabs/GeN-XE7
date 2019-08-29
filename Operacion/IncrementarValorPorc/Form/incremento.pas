@@ -11,8 +11,6 @@ type
   TIncrementoForm = class(TForm)
     Edit1: TEdit;
     Label1: TLabel;
-    Q: TIBQuery;
-    T: TIBQuery;
     Panel1: TPanel;
     SiBitBtn: TBitBtn;
     NoBitBtn: TBitBtn;
@@ -61,11 +59,11 @@ begin
     (FBuscaArticulo.ProveedorEdit.Text = FBuscaArticulo.CodigoEdit.Text)
     then
     begin
-      SetLength(art, FBuscaArticulo.Tabla.RecordCount + 1);
-      For i := 1 to FBuscaArticulo.Tabla.RecordCount do
+      SetLength(art, dm.qArticulo.RecordCount + 1);
+      For i := 1 to dm.qArticulo.RecordCount do
       begin
-        art[i] := (FBuscaArticulo.Tabla.FieldByName('CODIGO').AsInteger);
-        FBuscaArticulo.Tabla.Next;
+        art[i] := (dm.qArticulo.FieldByName('CODIGO').AsInteger);
+        dm.qArticulo.Next;
       end;
     end;
     FBuscaArticulo.Free;
@@ -89,30 +87,30 @@ begin
     for i := 1 to High(art) + 1 do
     begin
       where:= '+1) , 2) WHERE CODIGO =' + IntToStr(art[i])+ ' AND TASA';
-      Q.SQL.Text := sql
+      dm.qQ.SQL.Text := sql
         + '0.01'
         + where + ' <> 105';
-      Q.ExecSQL;
-      Q.SQL.Text := sql
+      dm.qQ.ExecSQL;
+      dm.qQ.SQL.Text := sql
         +'0.001'
         + where +' = 105 ';
-      Q.ExecSQL;
+      dm.qQ.ExecSQL;
     end;
   end
     else
       begin
         where:= '+1) , 2) WHERE TASA';
-        Q.SQL.Text := sql
+        dm.qQ.SQL.Text := sql
           + '0.01'
           + where + ' <> 105';
-        Q.ExecSQL;
-        Q.SQL.Text := sql
+        dm.qQ.ExecSQL;
+        dm.qQ.SQL.Text := sql
           +'0.001'
           + where +' = 105 ';
-        Q.ExecSQL;
+        dm.qQ.ExecSQL;
       end;
 
-  Q.Transaction.CommitRetaining;
+  dm.qQ.Transaction.CommitRetaining;
   Close;
 end;
 

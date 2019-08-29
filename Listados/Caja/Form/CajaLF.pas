@@ -24,12 +24,8 @@ type
     Label5: TLabel;
     Debe: TLabel;
     Haber: TLabel;
-    DataSource: TDataSource;
     BitBtn3: TBitBtn;
-    CuentaDataSource: TDataSource;
     DBGrid2: TDBGrid;
-    Tabla: TIBQuery;
-    CuentaT: TIBQuery;
     procedure FormCreate(Sender: TObject);
     procedure DTP1CloseUp(Sender: TObject);
     procedure DTP2CloseUp(Sender: TObject);
@@ -73,8 +69,8 @@ procedure TCajaLForm.FormCreate(Sender: TObject);
 begin
   // DM := TDM.Create(self);
   DM.ConfigQuery.Open;
-  CuentaT.Open;
-  CuentaT.Last;
+  dm.qCuenta.Open;
+  dm.qCuenta.Last;
   DTP2.Date := Now + 1;
 end;
 
@@ -103,14 +99,14 @@ var
   i: Integer;
   caja: string;
 begin
-  Tabla.SQL.Text := 'SELECT DESCRIPCION FROM "Cuenta" WHERE CODIGO=' +
+  dm.qCaja.SQL.Text := 'SELECT DESCRIPCION FROM "Cuenta" WHERE CODIGO=' +
     DM.ConfigQuery.FieldByName('CTACAJA').AsString;
-  Tabla.Open;
-  caja := Tabla.FieldByName('DESCRIPCION').AsString;
+  dm.qCaja.Open;
+  caja := dm.qCaja.FieldByName('DESCRIPCION').AsString;
   Debe.Caption := '0';
   Haber.Caption := '0';
   Saldo.Caption := '0';
-  Tabla.SQL.Text := 'SELECT ' +
+  dm.qCaja.SQL.Text := 'SELECT ' +
     '  ("LibroDiario".DEBE - "LibroDiario".HABER) AS SubTotal,' + '  ' +
     QuotedStr(DM.ConfigQuery.FieldByName('Nombre').AsString) + ' AS Empresa, ' +
     '  ' + QuotedStr(DateToStr(DTP1.Date)) + ' AS Desde,  ' + '  ' +
@@ -125,16 +121,16 @@ begin
     QuotedStr(DateToStr(DTP2.Date)) + ' ) AND  ' + '  ("LibroDiario".CUENTA = '
     + QuotedStr(caja) + ')  ' + ' ORDER BY     ' +
     '  "LibroDiario".CODIGO  ' + '';
-  Tabla.Open;
-  for i := 1 to Tabla.RecordCount do
+  dm.qCaja.Open;
+  for i := 1 to dm.qCaja.RecordCount do
   begin
     Debe.Caption := FloatToStr(StrToFloat(Debe.Caption) +
-      Tabla.FieldByName('DEBE').AsFloat);
+      dm.qCaja.FieldByName('DEBE').AsFloat);
     Haber.Caption := FloatToStr(StrToFloat(Haber.Caption) +
-      Tabla.FieldByName('HABER').AsFloat);
+      dm.qCaja.FieldByName('HABER').AsFloat);
     Saldo.Caption := FloatToStr(StrToFloat(Debe.Caption) -
       StrToFloat(Haber.Caption));
-    Tabla.Next;
+    dm.qCaja.Next;
   end;
 end;
 
@@ -146,7 +142,7 @@ end;
 procedure TCajaLForm.BitBtn3Click(Sender: TObject);
 begin
   ImprimirDataModule := TImprimirDataModule.Create(self);
-  ImprimirDataModule.SImpr(Tabla.SQL.Text, 'LibroDiario');
+  ImprimirDataModule.SImpr(dm.qCaja.SQL.Text, 'LibroDiario');
   ImprimirDataModule.Free;
 end;
 

@@ -468,8 +468,8 @@ object CrearPedidoForm: TCrearPedidoForm
       Top = 2
       Width = 103
       Height = 21
-      Date = 40179.475039594910000000
-      Time = 40179.475039594910000000
+      Date = 40179.000000000000000000
+      Time = 0.475039594908594200
       TabOrder = 2
     end
     object FLEPorcDesc: TEdit
@@ -727,8 +727,8 @@ object CrearPedidoForm: TCrearPedidoForm
       Top = 18
       Width = 82
       Height = 21
-      Date = 40148.506836111110000000
-      Time = 40148.506836111110000000
+      Date = 40148.000000000000000000
+      Time = 0.506836111111624600
       TabOrder = 8
     end
     object FEContado: TEdit
@@ -774,8 +774,6 @@ object CrearPedidoForm: TCrearPedidoForm
     end
   end
   object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
@@ -783,8 +781,6 @@ object CrearPedidoForm: TCrearPedidoForm
     Top = 208
   end
   object Q: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True

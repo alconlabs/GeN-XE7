@@ -34,7 +34,7 @@ object FLogin: TFLogin
       Alignment = taCenter
       Caption = 'Usuario:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -48,7 +48,7 @@ object FLogin: TFLogin
       Alignment = taCenter
       Caption = 'Clave:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -61,7 +61,7 @@ object FLogin: TFLogin
       Height = 13
       Caption = 'Confirmar?'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -148,14 +148,5 @@ object FLogin: TFLogin
       TabOrder = 3
       OnClick = CancelarBitBtnClick
     end
-  end
-  object Query: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 112
-    Top = 152
   end
 end

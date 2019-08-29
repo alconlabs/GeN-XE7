@@ -25,7 +25,7 @@ object FBuscaCliente: TFBuscaCliente
     Width = 690
     Height = 407
     Align = alClient
-    DataSource = DataSource
+    DataSource = DM.dsqCliente
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     ReadOnly = True
     TabOrder = 1
@@ -124,7 +124,7 @@ object FBuscaCliente: TFBuscaCliente
       Height = 17
       Alignment = taRightJustify
       DataField = 'Direccion'
-      DataSource = DataSource
+      DataSource = DM.dsqCliente
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -139,7 +139,7 @@ object FBuscaCliente: TFBuscaCliente
       Height = 17
       Alignment = taRightJustify
       DataField = 'DIRECCIONCOMERCIAL'
-      DataSource = DataSource
+      DataSource = DM.dsqCliente
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -154,7 +154,7 @@ object FBuscaCliente: TFBuscaCliente
       Height = 17
       Alignment = taRightJustify
       DataField = 'Provincia'
-      DataSource = DataSource
+      DataSource = DM.dsqCliente
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -169,7 +169,7 @@ object FBuscaCliente: TFBuscaCliente
       Height = 17
       Alignment = taRightJustify
       DataField = 'Departamento'
-      DataSource = DataSource
+      DataSource = DM.dsqCliente
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -184,7 +184,7 @@ object FBuscaCliente: TFBuscaCliente
       Height = 17
       Alignment = taRightJustify
       DataField = 'Ciudad'
-      DataSource = DataSource
+      DataSource = DM.dsqCliente
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -340,22 +340,5 @@ object FBuscaCliente: TFBuscaCliente
       TabOrder = 0
       OnClick = SiBitBtnClick
     end
-  end
-  object DataSource: TDataSource
-    DataSet = Tabla
-    Left = 341
-    Top = 278
-  end
-  object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'Select * from "Cliente"'
-      'order by CODIGO asc')
-    Left = 285
-    Top = 278
   end
 end

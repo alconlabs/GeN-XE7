@@ -28,20 +28,6 @@ object DMR: TDMR
     RaiseExceptionOn500 = False
     Left = 328
   end
-  object Q: TIBQuery
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 224
-    Top = 48
-  end
-  object T: TIBQuery
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 224
-    Top = 96
-  end
   object RESTRequest1: TRESTRequest
     Client = RESTClient1
     Params = <
@@ -108,10 +94,19 @@ object DMR: TDMR
     Left = 328
     Top = 192
   end
-  object D: TIBQuery
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 224
+  object FDQuery1: TFDQuery
+    Connection = DM.BaseDatos
+    Left = 232
+    Top = 16
+  end
+  object FDQuery2: TFDQuery
+    Connection = DM.BaseDatos
+    Left = 232
+    Top = 80
+  end
+  object T: TFDQuery
+    Connection = DM.BaseDatos
+    Left = 232
+    Top = 128
   end
 end

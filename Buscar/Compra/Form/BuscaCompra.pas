@@ -9,13 +9,11 @@ uses
 
 type
   TBuscaCompraForm = class(TForm)
-    DS: TDataSource;
     Panel1: TPanel;
     Label2: TLabel;
     codigoEdit: TEdit;
     Panel2: TPanel;
     SiBitBtn: TBitBtn;
-    Tabla: TIBQuery;
     LetraEdit: TEdit;
     Label1: TLabel;
     DBGrid1: TDBGrid;
@@ -54,7 +52,7 @@ procedure TBuscaCompraForm.FormKeyUp(Sender: TObject; var Key: Word;
 begin
   if not DBGrid1.Focused = True then
   begin
-    Tabla.SqL.Text := 'SELECT ' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE')
+    dm.qCompra.SqL.Text := 'SELECT ' + QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE')
       .AsString) + ' As Empresa,' + '  "Proveedor".NOMBRE,' +
       '  "Proveedor".TITULAR,' + '  "Proveedor".DIRECCION,' +
       '  "Proveedor".DIRECCIONCOMERCIAL,' + '  "Articulo".DESCRIPCION,' +
@@ -75,7 +73,7 @@ begin
       QuotedStr(ComprobanteEdit.Text + '%') + '  ) AND ("Compra".CODIGO like ' +
       QuotedStr(codigoEdit.Text + '%') + '  ) AND ("Compra".LETRA like ' +
       QuotedStr(LetraEdit.Text + '%') + '  )';
-    Tabla.Open;
+    dm.qCompra.Open;
   end;
   if Key = VK_Escape then
     Close;
@@ -110,7 +108,7 @@ procedure TBuscaCompraForm.imprimir_exportarImageClick(Sender: TObject);
 begin
   ImprimirDataModule := TImprimirDataModule.Create(self);
   ImprimirDataModule.SImpr(BuscaCompraForm.SqL + ' WHERE OPERACION=' +
-    Tabla.FieldByName('OPERACION').AsString, 'Compra');
+    dm.qCompra.FieldByName('OPERACION').AsString, 'Compra');
   ImprimirDataModule.Free;
 end;
 
@@ -128,8 +126,8 @@ end;
 
 procedure TBuscaCompraForm.todoBitBtnClick(Sender: TObject);
 begin
-  Tabla.SqL.Text := SqL;
-  Tabla.Open;
+  dm.qCompra.SqL.Text := SqL;
+  dm.qCompra.Open;
 end;
 
 procedure TBuscaCompraForm.DBGrid1DblClick(Sender: TObject);
@@ -151,7 +149,7 @@ end;
 
 procedure TBuscaCompraForm.FormDestroy(Sender: TObject);
 begin
-  Tabla.Close;
+  dm.qCompra.Close;
 end;
 
 end.

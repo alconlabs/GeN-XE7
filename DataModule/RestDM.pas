@@ -9,7 +9,7 @@ uses
   FireDAC.Comp.Client, REST.Response.Adapter, REST.Client, Data.DB,
   IBX.IBCustomDataSet, IBX.IBQuery, Data.Bind.Components, Data.Bind.ObjectScope,
   System.JSON, REST.Types, Winapi.ShellAPI, REST.Utils, Winapi.Windows,
-  Vcl.DdeMan, Dialogs, DataModule, Vcl.Forms;
+  Vcl.DdeMan, Dialogs, DataModule, Vcl.Forms, FireDAC.Stan.Async, FireDAC.DApt;
 
 type
   TTRest = class(TThread)
@@ -42,15 +42,15 @@ type
     RESTResponse1: TRESTResponse;
     RESTClientCategories: TRESTClient;
     RESTClient1: TRESTClient;
-    Q: TIBQuery;
-    T: TIBQuery;
     RESTRequest1: TRESTRequest;
     RESTRequestCategories: TRESTRequest;
     RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter;
     RESTResponseDataSetAdapterCategories: TRESTResponseDataSetAdapter;
     FDMemTableCategories: TFDMemTable;
     O: TFDMemTable;
-    D: TIBQuery;
+    FDQuery1: TFDQuery;
+    FDQuery2: TFDQuery;
+    T: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

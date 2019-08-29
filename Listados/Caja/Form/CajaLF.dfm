@@ -64,8 +64,8 @@ object CajaLForm: TCajaLForm
         Top = 16
         Width = 121
         Height = 21
-        Date = 42005.873243958300000000
-        Time = 42005.873243958300000000
+        Date = 42005.000000000000000000
+        Time = 0.873243958296370700
         TabOrder = 0
         OnCloseUp = DTP1CloseUp
       end
@@ -74,8 +74,8 @@ object CajaLForm: TCajaLForm
         Top = 16
         Width = 121
         Height = 21
-        Date = 42051.873295891200000000
-        Time = 42051.873295891200000000
+        Date = 42051.000000000000000000
+        Time = 0.873295891200541500
         TabOrder = 1
         OnCloseUp = DTP2CloseUp
       end
@@ -215,7 +215,6 @@ object CajaLForm: TCajaLForm
     Height = 396
     Align = alClient
     Color = clWhite
-    DataSource = DataSource
     FixedColor = clWhite
     GradientEndColor = clBlack
     Font.Charset = DEFAULT_CHARSET
@@ -311,56 +310,5 @@ object CajaLForm: TCajaLForm
         Width = 65
         Visible = True
       end>
-  end
-  object DataSource: TDataSource
-    DataSet = Tabla
-    Left = 360
-    Top = 320
-  end
-  object CuentaDataSource: TDataSource
-    DataSet = CuentaT
-    Left = 360
-    Top = 376
-  end
-  object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT '
-      '  ("LibroDiario".DEBE - "LibroDiario".HABER) AS "SubTotal",'
-      '  '#39'+dm.ConfigQuery.FieldByName(Nombre).AsString+'#39' AS "Empresa",'
-      '  '#39'+DateToStr(DTP1.Date)+'#39' AS "Desde",'
-      '  '#39'+DateToStr(DTP2.Date)+'#39' AS "Hasta",'
-      '  "LibroDiario".CODIGO,'
-      '  "LibroDiario".ASIENTO,'
-      '  "LibroDiario".FECHA,'
-      '  "LibroDiario".LEYENDA,'
-      '  "LibroDiario".JERARQUIA,'
-      '  "LibroDiario".CUENTA,'
-      '  "LibroDiario".DEBE,'
-      '  "LibroDiario".HABER,'
-      '  "LibroDiario".OCULTO'
-      'FROM'
-      '  "LibroDiario"')
-    Left = 304
-    Top = 320
-  end
-  object CuentaT: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT *'
-      'FROM'
-      '  "Cuenta"'
-      'ORDER BY'
-      '  "Cuenta".DESCRIPCION')
-    Left = 304
-    Top = 376
   end
 end

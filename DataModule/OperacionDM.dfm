@@ -3,27 +3,4 @@ object OperacionDataModule: TOperacionDataModule
   OnCreate = fd
   Height = 285
   Width = 295
-  object Q: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 120
-    Top = 96
-  end
-  object T: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 120
-    Top = 176
-  end
-  object qODM: TFDQuery
-    Connection = DM.sdb
-    Left = 120
-    Top = 16
-  end
 end

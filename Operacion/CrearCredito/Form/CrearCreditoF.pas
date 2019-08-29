@@ -397,15 +397,15 @@ begin
   try
     FBuscaArticulo.ShowModal;
   finally
-    If FBuscaArticulo.Tabla.Active = True then
+    If dm.qArticulo.Active = True then
     begin
       If Cuenta > 1 then
         SGFact.RowCount := SGFact.RowCount + 1;
       QTemp.Close;
       QTemp.SQL.Text := 'SELECT * FROM "Articulo" WHERE "Articulo".CODIGO = ' +
-        QuotedStr(FBuscaArticulo.Tabla.FieldByName('CODIGO').AsString);
+        QuotedStr(dm.qArticulo.FieldByName('CODIGO').AsString);
       QTemp.Open;
-      SGFact.Cells[0, Cuenta] := FBuscaArticulo.Tabla.FieldByName
+      SGFact.Cells[0, Cuenta] := dm.qArticulo.FieldByName
         ('CODIGO').AsString;
       SGFact.Cells[1, Cuenta] := QTemp.FieldByName('DESCRIPCION').AsString;
       // nombre

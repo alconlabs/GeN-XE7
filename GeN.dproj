@@ -100,10 +100,10 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.28;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.31;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <UWP_DelphiLogo44>GeN-Logo-44x44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>GeN-Logo-150x150.png</UWP_DelphiLogo150>
-        <VerInfo_Build>28</VerInfo_Build>
+        <VerInfo_Build>31</VerInfo_Build>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
         <VerInfo_Release>0</VerInfo_Release>
         <PF_KeyStorePass>85190DA36405559EA3757169D17BE32C819C055DA057979397B50FF08E723CD8DB05A38FE3431C4DC1CC572EFA9CC37ABAF83612047422E0166545C2E5F1228CC90AB967EE98A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
@@ -150,20 +150,8 @@
             <Form>FBuscaCliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Operacion\AporteCapital\Form\AporteCapitalF.pas">
-            <Form>AporteCapitalForm</Form>
-        </DCCReference>
         <DCCReference Include="SubOperacion\AgregarCantidad\Form\AgregarCantidad.pas">
             <Form>AgregarCantidadForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\ActivarCelular\Form\ActivarCelularF.pas">
-            <Form>VendedorActivaForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\Activaciones\Form\ActivacionesLF.pas">
-            <Form>ActivacionesLForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\Pedidos\Form\ListarPedidoF.pas">
-            <Form>ListarPedidoForm</Form>
         </DCCReference>
         <DCCReference Include="Listados\Clientes\Form\ListadoClientes.pas">
             <Form>ListadoClientesForm</Form>
@@ -171,21 +159,11 @@
         <DCCReference Include="Listados\Libros\LibrosF.pas">
             <Form>LibrosForm</Form>
         </DCCReference>
-        <DCCReference Include="Listados\LibroIVACompras\Form\LibroIVAComprasF.pas">
-            <Form>LibroIVAComprasForm</Form>
-        </DCCReference>
         <DCCReference Include="Listados\LibroDiario\Form\LibroDiarioF.pas">
             <Form>LibroDiarioLForm</Form>
         </DCCReference>
-        <DCCReference Include="SubOperacion\IngresoDinero\Form\IngresoDineroF.pas">
-            <Form>IngresoDineroForm</Form>
-        </DCCReference>
         <DCCReference Include="Operacion\IncrementarValorPorc\Form\incremento.pas">
             <Form>IncrementoForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\ImpuestoServicio\Form\ImpuestosServicios.pas">
-            <Form>ImpuestosServiciosFrom</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="DataModule\ImprimirDM.pas">
             <Form>ImprimirDataModule</Form>
@@ -193,264 +171,65 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Exportar\Excel\Hoja_Calculo.pas"/>
-        <DCCReference Include="Operacion\GestionCobranza\From\GestionCobranzaF.pas">
-            <Form>GestionCobranzaForm</Form>
-        </DCCReference>
         <DCCReference Include="Listados\Ganancias\Form\GananciasL.pas">
             <Form>GanaciaxVtaLForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\EstadoCuenta\Form\EstadoCuentaLF.pas">
-            <Form>EstadoCuentaLForm</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\EntregaDinero\Form\Entrega.pas">
-            <Form>EntregaForm</Form>
         </DCCReference>
         <DCCReference Include="ABM\Empresa\Form\EmpresaF.pas">
             <Form>EmpresaForm</Form>
             <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Operacion\DevolucionProveedorCelular\Form\DevolucionProveedorCelularF.pas">
-            <Form>DevolucionesForm</Form>
         </DCCReference>
         <DCCReference Include="DataModule\DataModule.pas">
             <Form>DM</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="SubOperacion\CalculoCuotas\Form\CalculoCuotas.pas">
-            <Form>CalculoCuotasForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\Cuentas\Form\ListadoCuentasF.pas">
-            <Form>ListadoCuentasForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\CuentaContable\Form\CuentaContableF.pas">
-            <Form>CuentasContablesForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Operacion\PagoProveedor\Form\CtaCteProveedores.pas">
-            <Form>CtaCteProveedoresForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\CtaCte\Form\CtaCteF.pas">
-            <Form>CtaCteForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\CrearPedido\Form\CrearPedidoF.pas">
-            <Form>CrearPedidoForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\CrearCredito\Form\CrearCreditoF.pas">
-            <Form>CrearCreditoForm</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\BackUp\Form\ConfigurarF.pas">
-            <Form>ConfigurarForm</Form>
-        </DCCReference>
         <DCCReference Include="Configuracion\Sistema\Form\ConfiguracionF.pas">
             <Form>ConfiguracionForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\ComprarCelular\Form\ComprarCelularF.pas">
-            <Form>ComprarCelularForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Color\Form\Color.pas">
-            <Form>ColorForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Operacion\GestionCobranzaJudicial\Form\CobranzaJudicialF.pas">
-            <Form>CobranzaJudicialForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\GestionCobranzaIncobrable\Form\CobranzaIncobrableF.pas">
-            <Form>CobranzaIncobrableForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\GestionCobranzaExtraJudicial\Form\CobranzaExtraJudicialF.pas">
-            <Form>CobranzaExtraJudicialForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Cobrador\Form\CobradorF.pas">
-            <Form>CobradorForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Listados\CartonCobranza\Form\CartonCobranzaF.pas">
-            <Form>CartonCobranzaForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Capitulo\Form\CapituloF.pas">
-            <Form>CapituloForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Listados\Caja\Form\CajaLF.pas">
             <Form>CajaLForm</Form>
         </DCCReference>
-        <DCCReference Include="ABM\Caja\Form\CajaF.pas">
-            <Form>ABMCajaForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Buscar\Socio\Form\BuscaSocioF.pas">
-            <Form>BuscaSocioForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Buscar\Vendedor\Form\BuscarVendedor.pas">
             <Form>BuscarVendedorForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Buscar\TipoGasto\Form\BuscarTipoGastoF.pas">
-            <Form>BuscarTipoGastoForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Buscar\RubroContable\Form\BuscarRubroContableF.pas">
-            <Form>BuscarRubroContableForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Buscar\PlanProcesado\Form\BuscarPlanFacturado.pas">
-            <Form>BuscarPlanFacturadoForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Buscar\Plan\Form\BuscarPlan.pas">
-            <Form>BuscarPlanForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Buscar\ImpuestoServicio\Form\BuscarImpuestosServicios.pas">
-            <Form>BuscarImpuestosServiciosForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Buscar\CuentaContable\Form\BuscarCuentaF.pas">
-            <Form>BuscarCuentaForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Buscar\Cobrador\Form\BuscarCobrador.pas">
-            <Form>BuscarCobradorForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Buscar\Cheque\Form\BuscarCheques.pas">
-            <Form>BuscarChequesForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Buscar\Capitulo\Form\BuscarCapituloF.pas">
-            <Form>BuscarCapituloForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Buscar\Articulo\Form\UFBuscaArticulos.pas">
             <Form>FBuscaArticulo</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="ABM\Cuota\Form\Cuotas.pas">
-            <Form>CuotaForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Operacion\AnularVenta\Form\AnularVtaF.pas">
             <Form>FAnulaReimp</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\TipoGasto\Form\TipoGastoF.pas">
-            <Form>TipoGastoForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Menu\Stock\Form\StockF.pas">
-            <Form>StockForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Socio\Form\SocioF.pas">
-            <Form>SocioForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\ManoObra\Form\servicio.pas">
-            <Form>ServForm</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\SeleccionarCelular\Form\SeleccionarCelularF.pas">
-            <Form>SeleccionarCelularForm</Form>
-        </DCCReference>
-        <DCCReference Include="SubOperacion\SeleccionarCarton\Form\SeleccionarCartonF.pas">
-            <Form>SeleccionarCartonForm</Form>
         </DCCReference>
         <DCCReference Include="ABM\Rubro\Form\RubroF.pas">
             <Form>RubroForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="ABM\RubroContable\Form\RubroContableFormF.pas">
-            <Form>RubroContableForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Operacion\RetiroCaja\Form\RetiroCajaF.pas">
-            <Form>RetiroCajaForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\RendicionCobrador\Form\RendicionCobradorLF.pas">
-            <Form>RendicionCobradorLForm</Form>
-        </DCCReference>
-        <DCCReference Include="Listados\RendicionCliente\Form\RendicionClienteLF.pas">
-            <Form>RendicionClienteLForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\RendicionCliente\Form\RendicionClienteF.pas">
-            <Form>RendicionClienteForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\RendicionCarton\Form\RendicionCartonF.pas">
-            <Form>RendicionCartonForm</Form>
-        </DCCReference>
         <DCCReference Include="ABM\Proveedor\Form\ProveedorF.pas">
             <Form>ProveedorForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Operacion\Presupuesto\Form\PresupuestoF.pas">
-            <Form>PresupuestoForm</Form>
-        </DCCReference>
         <DCCReference Include="Listados\Precios\Form\Precios.pas">
             <Form>ListaPreciosForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\Plan\Form\PlanF.pas">
-            <Form>PlanForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Listados\Pedidos\Form\PedidoLF.pas">
-            <Form>PedidoLForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\PagoVendedor\Form\PagoVendedorF.pas">
-            <Form>PagoVendedorForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\PagoServicio\Form\Pagos.pas">
-            <Form>PagosForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\Pago\Form\PagoF.pas">
-            <Form>PagoForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\PagoCobrador\Form\PagoComisionCobrador.pas">
-            <Form>PagoComisionCobradorForm</Form>
         </DCCReference>
         <DCCReference Include="DataModule\OperacionDM.pas">
             <Form>OperacionDataModule</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Operacion\NotaCreditoPlan\Form\NotaCreditoPlanF.pas">
-            <Form>NotaCreditoPlanForm</Form>
-        </DCCReference>
         <DCCReference Include="Operacion\Migrar\form\MigrarF.pas">
             <Form>MigrarForm</Form>
-        </DCCReference>
-        <DCCReference Include="Operacion\BackUp\Form\BackUpF.pas">
-            <Form>BackUpForm</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\ArticuloCelular\Form\ArticuloCelularF.pas">
-            <Form>ArticuloCelularForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Operacion\VaciarBase\Form\VaciarBaseF.pas">
             <Form>VaciarBaseForm</Form>
         </DCCReference>
-        <DCCReference Include="ABM\Usuarios\Form\UsuariosF.pas">
-            <Form>UsuariosForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Exportar\Excel\Unit1.pas">
             <Form>Form1</Form>
-        </DCCReference>
-        <DCCReference Include="ABM\SubCategoria\Form\UFSubCategorias.pas">
-            <Form>FSubCategorias</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="SubOperacion\SelecionarPrecio\Form\UFSelProdFact.pas">
             <Form>FSelProdFact</Form>
         </DCCReference>
-        <DCCReference Include="Buscar\Orden\Form\UFSelOrden.pas">
-            <Form>FSelOrden</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="ABM\Articulo\Form\UFProductos.pas">
             <Form>FProductos</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Buscar\Cobranza\Form\VerCobranza.pas">
-            <Form>VerCobranzaForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Operacion\Operacion\Form\OperacionF.pas">
@@ -478,19 +257,8 @@
             <Form>BuscaFacturaForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="operacion\devolucion\form\UFDevoluciones.pas">
-            <Form>FDevoluciones</Form>
-        </DCCReference>
-        <DCCReference Include="buscar\articulocelular\form\BuscarArticulosCelularF.pas">
-            <Form>BuscaArticuloCelularForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="ABM\Marca\Form\MarcaF.pas">
             <Form>MarcaForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="abm\ingresosbrutos\form\IngresosBrutosF.pas">
-            <Form>IngresosBrutosForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="DataModule\AfipDM.pas">

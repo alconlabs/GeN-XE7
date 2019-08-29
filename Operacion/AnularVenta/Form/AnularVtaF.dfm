@@ -4,7 +4,7 @@ object FAnulaReimp: TFAnulaReimp
   Caption = 'Anular Venta'
   ClientHeight = 184
   ClientWidth = 318
-  Color = clBlack
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -23,7 +23,7 @@ object FAnulaReimp: TFAnulaReimp
     Height = 20
     Caption = 'Comprobante:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
+    Font.Color = clWindowText
     Font.Height = -16
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
@@ -35,9 +35,9 @@ object FAnulaReimp: TFAnulaReimp
     Width = 16
     Height = 20
     Caption = '...'
-    Color = clBlack
+    Color = clBtnFace
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
+    Font.Color = clWindowText
     Font.Height = -16
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
@@ -51,7 +51,7 @@ object FAnulaReimp: TFAnulaReimp
     Height = 13
     Caption = 'Anular?'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
+    Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
@@ -186,23 +186,5 @@ object FAnulaReimp: TFAnulaReimp
     Font.Style = []
     ParentFont = False
     TabOrder = 4
-  end
-  object Tabla: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 8
-    Top = 8
-  end
-  object Q: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 8
-    Top = 64
   end
 end

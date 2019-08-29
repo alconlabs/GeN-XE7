@@ -15,15 +15,13 @@ type
     DBGrid1: TDBGrid;
     DBNavigator1: TDBNavigator;
     BitBtn1: TBitBtn;
-    DS: TDataSource;
-    Tabla: TIBTable;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BitBtn1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure TablaAfterCancel(DataSet: TDataSet);
-    procedure TablaAfterDelete(DataSet: TDataSet);
-    procedure TablaAfterPost(DataSet: TDataSet);
+    procedure tMarcaAfterCancel(DataSet: TDataSet);
+    procedure tMarcaAfterDelete(DataSet: TDataSet);
+    procedure tMarcaAfterPost(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -41,43 +39,43 @@ implementation
 procedure TMarcaForm.FormCreate(Sender: TObject);
 begin
   // DM := TDM.Create(Self);
-  Tabla.Active := true;
+  dm.tEmpresa.Active := true;
 end;
 
 procedure TMarcaForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Tabla.Active := false;
+  dm.tEmpresa.Active := false;
 end;
 
 procedure TMarcaForm.BitBtn1Click(Sender: TObject);
 begin
   desc := DBEdit1.Text;
-  If (Tabla.State = dsEdit) or (Tabla.State = dsInsert) then
+  If (dm.tMarca.State = dsEdit) or (dm.tEmpresa.State = dsInsert) then
     If DBEdit1.Text <> '' then
     begin
-      Tabla.Post;
+      dm.tEmpresa.Post;
     end;
   Close;
 end;
 
 procedure TMarcaForm.FormShow(Sender: TObject);
 begin
-  Tabla.Insert;
+  dm.tEmpresa.Insert;
 end;
 
-procedure TMarcaForm.TablaAfterCancel(DataSet: TDataSet);
+procedure TMarcaForm.tMarcaAfterCancel(DataSet: TDataSet);
 begin
-  Tabla.Transaction.RollbackRetaining;
+  dm.tEmpresa.Transaction.RollbackRetaining;
 end;
 
-procedure TMarcaForm.TablaAfterDelete(DataSet: TDataSet);
+procedure TMarcaForm.tMarcaAfterDelete(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tEmpresa.Transaction.CommitRetaining;
 end;
 
-procedure TMarcaForm.TablaAfterPost(DataSet: TDataSet);
+procedure TMarcaForm.tMarcaAfterPost(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tEmpresa.Transaction.CommitRetaining;
 end;
 
 end.

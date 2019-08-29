@@ -4,7 +4,7 @@ object AgregarCantidadForm: TAgregarCantidadForm
   Caption = 'Cantidad'
   ClientHeight = 166
   ClientWidth = 273
-  Color = clBlack
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -21,7 +21,7 @@ object AgregarCantidadForm: TAgregarCantidadForm
     Height = 13
     Caption = 'Grabar?'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
+    Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]

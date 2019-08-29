@@ -9,13 +9,11 @@ uses
 
 type
   TBuscaFacturaForm = class(TForm)
-    DS: TDataSource;
     Panel1: TPanel;
     Label2: TLabel;
     ventaEdit: TEdit;
     Panel2: TPanel;
     SiBitBtn: TBitBtn;
-    Tabla: TIBQuery;
     LetraEdit: TEdit;
     Label1: TLabel;
     DBGrid1: TDBGrid;
@@ -85,9 +83,9 @@ begin
   end;
 
   ImprimirDataModule.Free;
-  Tabla.SQL.Text := sql + where;
-  Tabla.Open;
-  Tabla.Last;
+  dm.qOperacion.SQL.Text := sql + where;
+  dm.qOperacion.Open;
+  dm.qOperacion.Last;
 end;
 
 procedure TBuscaFacturaForm.FormKeyUp(Sender: TObject; var Key: Word;
@@ -117,7 +115,7 @@ end;
 procedure TBuscaFacturaForm.Image1Click(Sender: TObject);
 begin
   ImprimirDataModule := TImprimirDataModule.Create(self);
-  ImprimirDataModule.CSV(Tabla.SQL.Text, 'VENTAS');
+  ImprimirDataModule.CSV(dm.qOperacion.SQL.Text, 'VENTAS');
   ImprimirDataModule.Free;
 end;
 
@@ -132,12 +130,12 @@ procedure TBuscaFacturaForm.SiBitBtnClick(Sender: TObject);
 var
   nro, letra: string;
 begin
-  Codigo := Tabla.FieldByName('CODIGO').AsString;
+  Codigo := dm.qOperacion.FieldByName('CODIGO').AsString;
   // IMPRIMIR
   if not ( anular and ((dm.ConfigQuery.FieldByName('Imprimir').AsString ) <> 'SI')) then
   begin
-    nro := Tabla.FieldByName('CODIGO').AsString;
-    letra := Tabla.FieldByName('LETRA').AsString;
+    nro := dm.qOperacion.FieldByName('CODIGO').AsString;
+    letra := dm.qOperacion.FieldByName('LETRA').AsString;
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
       case TipoRadioGroup.ItemIndex of
@@ -184,12 +182,12 @@ end;
 procedure TBuscaFacturaForm.FacturarBitBtnClick(Sender: TObject);
 var codRem : string;
 begin
-  if (TipoRadioGroup.ItemIndex=1) and (Tabla.RecordCount>0) then
+  if (TipoRadioGroup.ItemIndex=1) and (dm.qOperacion.RecordCount>0) then
   begin
-    codRem := Tabla.FieldByName('CODIGO').AsString;
-    Tabla.SQL.Text:='SELECT "Venta".REMITO FROM "Venta" WHERE "Venta".REMITO='+QuotedStr(codRem);
-    Tabla.Open;
-    If Tabla.RecordCount > 0 then
+    codRem := dm.qOperacion.FieldByName('CODIGO').AsString;
+    dm.qOperacion.SQL.Text:='SELECT "Venta".REMITO FROM "Venta" WHERE "Venta".REMITO='+QuotedStr(codRem);
+    dm.qOperacion.Open;
+    If dm.qOperacion.RecordCount > 0 then
     begin
       ShowMessage('¡Remito ya facturado!');
       todoBitBtn.Click;
@@ -214,7 +212,7 @@ end;
 
 procedure TBuscaFacturaForm.FormDestroy(Sender: TObject);
 begin
-  Tabla.Close;
+  dm.qOperacion.Close;
 end;
 
 end.

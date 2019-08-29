@@ -22,7 +22,6 @@ object ABMCajaForm: TABMCajaForm
     Width = 698
     Height = 384
     Align = alClient
-    DataSource = DataSource
     ReadOnly = True
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -275,47 +274,40 @@ object ABMCajaForm: TABMCajaForm
     Top = 0
     Width = 792
     Height = 50
-    DataSource = DataSource
     Align = alTop
     TabOrder = 3
     Visible = False
   end
-  object DataSource: TDataSource
-    DataSet = Query
-    Left = 432
-    Top = 200
-  end
   object EmpresaQuery: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
       'select * from "Empresa"')
+    Left = 112
+    Top = 302
+  end
+  object IBQuery2: TIBQuery
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT * FROM "Caja" Order by Fecha DESC')
     Left = 248
-    Top = 200
+    Top = 302
   end
-  object Query: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
+  object DataSource1: TDataSource
+    DataSet = IBQuery2
+    Left = 296
+    Top = 302
+  end
+  object IBQuery3: TIBQuery
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
       'SELECT * FROM "Caja" Order by Fecha DESC')
-    Left = 384
-    Top = 200
-  end
-  object QTemp: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT * FROM "Caja" Order by Fecha DESC')
-    Left = 504
-    Top = 200
+    Left = 368
+    Top = 302
   end
 end

@@ -3,17 +3,6 @@ object ImprimirDataModule: TImprimirDataModule
   OnCreate = DataModuleCreate
   Height = 473
   Width = 806
-  object Query: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      '')
-    Left = 40
-    Top = 8
-  end
   object frxBarCodeObject1: TfrxBarCodeObject
     Left = 40
     Top = 152
@@ -91,5 +80,9 @@ object ImprimirDataModule: TImprimirDataModule
       'SELECT * FROM SiapVtaComp')
     Left = 112
     Top = 8
+  end
+  object Query: TFDQuery
+    Connection = DM.BaseDatos
+    Left = 40
   end
 end

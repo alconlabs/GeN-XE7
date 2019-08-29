@@ -71,20 +71,13 @@ type
     Label18: TLabel;
     DBEdit1: TDBEdit;
     Panel1: TPanel;
-    Label33: TLabel;
     SiBitBtn: TBitBtn;
     NoBitBtn: TBitBtn;
     ImprimirBitBtn: TBitBtn;
-    Tabla: TIBTable;
-    DataSource: TDataSource;
-    UsuarioT: TIBQuery;
-    DSUsuarios: TDataSource;
-    CuentaT: TIBQuery;
-    CuentaDataSource: TDataSource;
-    EmpresaQuery: TIBQuery;
-    Query: TIBQuery;
     DBNavigator1: TDBNavigator;
     BuscarBitBtn: TBitBtn;
+    bExportar: TButton;
+    bImportar: TButton;
     procedure SiBitBtnClick(Sender: TObject);
     procedure NoBitBtnClick(Sender: TObject);
     procedure BuscarBitBtnClick(Sender: TObject);
@@ -92,13 +85,15 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ImprimirBitBtnClick(Sender: TObject);
-    procedure TablaAfterInsert(DataSet: TDataSet);
+    procedure tProveedorAfterInsert(DataSet: TDataSet);
     procedure IVADBComboBoxChange(Sender: TObject);
     procedure DBEdit24Exit(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure TablaAfterPost(DataSet: TDataSet);
-    procedure TablaAfterDelete(DataSet: TDataSet);
-    procedure TablaAfterCancel(DataSet: TDataSet);
+    procedure tProveedorAfterPost(DataSet: TDataSet);
+    procedure tProveedorAfterDelete(DataSet: TDataSet);
+    procedure tProveedorAfterCancel(DataSet: TDataSet);
+    procedure bExportarClick(Sender: TObject);
+    procedure bImportarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -119,8 +114,8 @@ procedure TProveedorForm.SiBitBtnClick(Sender: TObject);
 begin
   desc := CodigoDBEdit.text;
 
-  If (Tabla.State = dsEdit) or (Tabla.State = dsInsert) then
-    Tabla.Post;
+  If (dm.tProveedor.State = dsEdit) or (dm.tProveedor.State = dsInsert) then
+    dm.tProveedor.Post;
   Close;
 end;
 
@@ -129,16 +124,33 @@ begin
   Close;
 end;
 
+procedure TProveedorForm.bExportarClick(Sender: TObject);
+begin
+dm.tProveedor.Cancel;
+  dm.ExportarTabla('Proveedor');
+end;
+
+procedure TProveedorForm.bImportarClick(Sender: TObject);
+begin
+  dm.tProveedor.Cancel;
+  dm.tProveedor.Close;
+  dm.tUsuario.Close;
+  dm.tCuenta.Close;
+  dm.ImportarTabla('Proveedor');
+//  dm.tProveedor.Edit;
+//  dm.tProveedor.Post;
+  Close;
+end;
+
 procedure TProveedorForm.BuscarBitBtnClick(Sender: TObject);
 begin
   TabSheet1.PageControl.ActivePageIndex := 0;
-  Tabla.Cancel;
+  dm.tProveedor.Cancel;
   FBuscaProve := TFBuscaProve.Create(self);
   try
     FBuscaProve.ShowModal;
   finally
-    Tabla.Locate('CODIGO', (FBuscaProve.Tabla.FieldByName('CODIGO')
-      .AsString), []);
+    dm.tProveedor.Locate('CODIGO', (dm.qProveedor.FieldByName('CODIGO').AsString), []);
     FBuscaProve.Free;
   end;
   DBEdit2.SetFocus;
@@ -147,12 +159,11 @@ end;
 procedure TProveedorForm.FormCreate(Sender: TObject);
 begin
   // DM := TDM.Create(self);
-  If (Tabla.Active = True) then
-    Tabla.Close;
-  UsuarioT.Open;
-  CuentaT.Open;
-  Tabla.Open;
-  Tabla.Insert;
+  If (dm.tProveedor.Active = True) then dm.tProveedor.Close;
+  dm.tUsuario.Open;
+  dm.tCuenta.Open;
+  dm.tProveedor.Open;
+  dm.tProveedor.Insert;
 end;
 
 procedure TProveedorForm.FormKeyPress(Sender: TObject; var Key: Char);
@@ -221,26 +232,26 @@ begin
   SiBitBtn.SetFocus;
 end;
 
-procedure TProveedorForm.TablaAfterCancel(DataSet: TDataSet);
+procedure TProveedorForm.tProveedorAfterCancel(DataSet: TDataSet);
 begin
-  Tabla.Transaction.RollbackRetaining;
+  dm.tProveedor.Transaction.RollbackRetaining;
 end;
 
-procedure TProveedorForm.TablaAfterDelete(DataSet: TDataSet);
+procedure TProveedorForm.tProveedorAfterDelete(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tProveedor.Transaction.CommitRetaining;
 end;
 
-procedure TProveedorForm.TablaAfterInsert(DataSet: TDataSet);
+procedure TProveedorForm.tProveedorAfterInsert(DataSet: TDataSet);
 begin
-  Tabla.FieldByName('CtaNombre').AsString := '76';
-  Tabla.FieldByName('CtaTipo').AsString := '13';
-  Tabla.FieldByName('CtaAnticipo').AsString := '36';
+  dm.tProveedor.FieldByName('CtaNombre').AsString := '76';
+  dm.tProveedor.FieldByName('CtaTipo').AsString := '13';
+  dm.tProveedor.FieldByName('CtaAnticipo').AsString := '36';
 end;
 
-procedure TProveedorForm.TablaAfterPost(DataSet: TDataSet);
+procedure TProveedorForm.tProveedorAfterPost(DataSet: TDataSet);
 begin
-  Tabla.Transaction.CommitRetaining;
+  dm.tProveedor.Transaction.CommitRetaining;
 end;
 
 end.

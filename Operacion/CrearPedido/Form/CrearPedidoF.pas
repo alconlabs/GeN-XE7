@@ -480,17 +480,17 @@ begin
   try
     FBuscaArticulo.ShowModal;
   finally
-    If FBuscaArticulo.Tabla.Active = True then
+    If dm.qArticulo.Active = True then
     begin
       If Cuenta > 1 then
         SGFact.RowCount := SGFact.RowCount + 1;
       Tabla.Close;
       Tabla.SQL.Text := 'SELECT * FROM "Articulo" ' + 'WHERE CODIGO = ' +
-        (FBuscaArticulo.Tabla.FieldByName('CODIGO').AsString);
+        (dm.qArticulo.FieldByName('CODIGO').AsString);
       Tabla.Open;
       if PrecioLabel.Caption = '0' then
         PrecioLabel.Caption := '';
-      SGFact.Cells[0, Cuenta] := FBuscaArticulo.Tabla.FieldByName
+      SGFact.Cells[0, Cuenta] := dm.qArticulo.FieldByName
         ('CODIGO').AsString;
       SGFact.Cells[1, Cuenta] := Tabla.FieldByName('DESCRIPCION').AsString;
       // nombre
