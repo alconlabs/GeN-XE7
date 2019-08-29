@@ -923,15 +923,16 @@ object DM: TDM
     Top = 48
   end
   object FDTable1: TFDTable
+    Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     Left = 192
-    Top = 144
+    Top = 192
   end
   object FDQuery1: TFDQuery
     Connection = BaseDatosFB
     Left = 192
-    Top = 96
+    Top = 144
   end
   object tLibroIVAventa: TIBTable
     Database = BaseDatosIB
@@ -1102,7 +1103,7 @@ object DM: TDM
     TableName = 'LibroIVAventa'
     UniDirectional = False
     Left = 504
-    Top = 232
+    Top = 280
     object tLibroIVAventaCODIGO: TIntegerField
       FieldName = 'CODIGO'
     end
@@ -1233,6 +1234,7 @@ object DM: TDM
     Params.Strings = (
       'Database=C:\Users\DeGsoft\Documents\Civeloo\GeN\db\db.sdb'
       'DriverID=SQLite')
+    Connected = True
     LoginPrompt = False
     Left = 104
   end
@@ -1401,12 +1403,12 @@ object DM: TDM
     Connection = BaseDatosFB
     TableName = '"Proveedor"'
     Left = 192
-    Top = 288
+    Top = 336
   end
   object FDBatchMoveTextReader1: TFDBatchMoveTextReader
     DataDef.Fields = <>
     Left = 192
-    Top = 240
+    Top = 288
   end
   object FDBatchMove1: TFDBatchMove
     Reader = FDBatchMoveTextReader1
@@ -1414,13 +1416,16 @@ object DM: TDM
     Mappings = <>
     LogFileName = 'Data.log'
     Left = 192
-    Top = 192
+    Top = 240
   end
   object BaseDatosFB: TFDConnection
     Params.Strings = (
-      'DriverID=FB'
       'User_Name=sysdba'
-      'Password=masterkey')
+      'Password=masterkey'
+      'Database=C:\Users\DeGsoft\Documents\Civeloo\GeN\db\GeN.FDB'
+      'CharacterSet=WIN1252'
+      'DriverID=FB')
+    Connected = True
     LoginPrompt = False
     Left = 192
   end
@@ -1430,7 +1435,7 @@ object DM: TDM
     Params = <>
     Macros = <>
     Left = 192
-    Top = 448
+    Top = 96
   end
   object IBScript1: TIBScript
     AutoDDL = False
@@ -2453,7 +2458,7 @@ object DM: TDM
         'CODIGO)'
       ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)')
     Left = 192
-    Top = 336
+    Top = 384
   end
   object BaseDatosIB: TIBDatabase
     Connected = True
@@ -2468,245 +2473,10 @@ object DM: TDM
     ServerType = 'IBServer'
     Left = 32
   end
-  object tArticulo: TIBTable
-    Database = BaseDatosIB
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'DESCRIPCION'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'COSTO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'ULTCOSTO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO1'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO2'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO3'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO4'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO5'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO6'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PRECIO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PORCENTAJE'
-        DataType = ftFloat
-      end
-      item
-        Name = 'ULTPRECIO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'MARCA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'COLOR'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CATEGORIA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'SUBCATEGORIA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'UBICACION'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'UNIDAD'
-        DataType = ftString
-        Size = 50
-      end
-      item
-        Name = 'DISPONIBLE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ENPRODUCCION'
-        DataType = ftInteger
-      end
-      item
-        Name = 'NOTAS'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'IVA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'TASA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'IMPOTROS'
-        DataType = ftInteger
-      end
-      item
-        Name = 'IIBB'
-        DataType = ftInteger
-      end
-      item
-        Name = 'STOCKMINIMO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'STOCKMAXIMO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'STOCKVENDIDO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'FECHACOMPULT'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'LISTA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PROCEDENCIA'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'CODIGOBARRA'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'RUBRO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PROVEEDOR'
-        DataType = ftInteger
-      end
-      item
-        Name = 'GARANTIA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'FECHA'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'PEDIDO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'STOCK'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'EXISTENTE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ACTUAL'
-        DataType = ftInteger
-      end
-      item
-        Name = 'MARCADOCONTADO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'MARCADOLISTA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'MARCADOFINAL'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PREPARADO'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'CTANOMBRE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTATIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTAANTICIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTAIIBB'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ESTADO'
-        DataType = ftString
-        Size = 255
-      end
-      item
-        Name = 'VENCE'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'VENCIMIENTO'
-        DataType = ftInteger
-      end>
-    IndexDefs = <
-      item
-        Name = 'PK_Articulo'
-        Fields = 'CODIGO'
-        Options = [ixUnique]
-      end>
-    StoreDefs = True
-    TableName = 'Articulo'
-    UniDirectional = False
-    Left = 504
-    Top = 8
-  end
   object dstArticulo: TDataSource
     AutoEdit = False
     DataSet = tArticulo
-    Left = 552
-    Top = 8
+    Left = 536
   end
   object tMaterial: TIBTable
     Database = BaseDatosIB
@@ -2716,28 +2486,17 @@ object DM: TDM
     TableName = 'Material'
     UniDirectional = False
     Left = 504
-    Top = 280
+    Top = 328
   end
   object dsqMaterial: TDataSource
     DataSet = tMaterial
-    Left = 552
-    Top = 280
-  end
-  object qUsuario: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Usuario"')
-    Left = 632
-    Top = 688
+    Left = 536
+    Top = 328
   end
   object dsqUsuario: TDataSource
     DataSet = qUsuario
     Left = 664
-    Top = 688
+    Top = 672
   end
   object tMarca: TIBTable
     Database = BaseDatosIB
@@ -2747,15 +2506,16 @@ object DM: TDM
     TableName = 'Marca'
     UniDirectional = False
     Left = 504
-    Top = 328
+    Top = 376
   end
   object dstMarca: TDataSource
     DataSet = tMarca
-    Left = 552
-    Top = 328
+    Left = 536
+    Top = 376
   end
   object qQ: TIBQuery
     Database = BaseDatosIB
+    Transaction = Transaccion
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
@@ -2764,22 +2524,10 @@ object DM: TDM
     Left = 792
     Top = 56
   end
-  object qCuenta: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Cuenta"'
-      'order by DESCRIPCION')
-    Left = 632
-    Top = 240
-  end
   object dsqCuenta: TDataSource
     DataSet = qCuenta
     Left = 664
-    Top = 240
+    Top = 192
   end
   object tProveedor: TIBTable
     Database = BaseDatosIB
@@ -2789,12 +2537,12 @@ object DM: TDM
     TableName = 'Proveedor'
     UniDirectional = False
     Left = 504
-    Top = 376
+    Top = 424
   end
   object dstProveedor: TDataSource
     DataSet = tProveedor
-    Left = 552
-    Top = 376
+    Left = 536
+    Top = 424
   end
   object qTemp: TIBQuery
     Database = BaseDatosIB
@@ -2805,15 +2553,6 @@ object DM: TDM
     Left = 792
     Top = 8
   end
-  object tCategoria: TIBTable
-    Database = BaseDatosIB
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'Categoria'
-    UniDirectional = False
-    Left = 504
-    Top = 56
-  end
   object tIVA: TIBTable
     Database = BaseDatosIB
     Transaction = Transaccion
@@ -2822,17 +2561,17 @@ object DM: TDM
     TableName = 'Iva'
     UniDirectional = False
     Left = 504
-    Top = 184
+    Top = 232
   end
   object dstIVA: TDataSource
     DataSet = tIVA
-    Left = 552
-    Top = 184
+    Left = 536
+    Top = 232
   end
   object dstCategoria: TDataSource
     DataSet = tCategoria
-    Left = 552
-    Top = 56
+    Left = 536
+    Top = 48
   end
   object tSubCategoria: TIBTable
     Database = BaseDatosIB
@@ -2842,12 +2581,12 @@ object DM: TDM
     TableName = 'SubCategoria'
     UniDirectional = False
     Left = 504
-    Top = 512
+    Top = 560
   end
   object dstSubCategoria: TDataSource
     DataSet = tSubCategoria
-    Left = 552
-    Top = 512
+    Left = 536
+    Top = 560
   end
   object tRubro: TIBTable
     Database = BaseDatosIB
@@ -2857,12 +2596,12 @@ object DM: TDM
     TableName = 'Rubro'
     UniDirectional = False
     Left = 504
-    Top = 472
+    Top = 520
   end
   object dstRubro: TDataSource
     DataSet = tRubro
-    Left = 552
-    Top = 472
+    Left = 536
+    Top = 520
   end
   object qODM: TFDQuery
     Connection = BaseDatosFB
@@ -2872,40 +2611,16 @@ object DM: TDM
   object dsqArticulo: TDataSource
     DataSet = qArticulo
     Left = 664
-    Top = 8
-  end
-  object qCliente: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'Select * from "Cliente"'
-      'order by CODIGO asc')
-    Left = 632
-    Top = 192
   end
   object dsqCliente: TDataSource
     DataSet = qCliente
     Left = 664
-    Top = 192
+    Top = 144
   end
   object dsqVendedor: TDataSource
     DataSet = qVendedor
     Left = 664
-    Top = 640
-  end
-  object qVendedor: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Vendedor"')
-    Left = 632
-    Top = 640
+    Top = 624
   end
   object tVendedor: TIBTable
     Database = BaseDatosIB
@@ -3123,85 +2838,17 @@ object DM: TDM
     TableName = 'Vendedor'
     UniDirectional = False
     Left = 504
-    Top = 678
+    Top = 654
   end
   object dstVendedor: TDataSource
     DataSet = tVendedor
-    Left = 550
-    Top = 678
-  end
-  object qEmpresa: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Empresa"')
-    Left = 632
-    Top = 288
+    Left = 536
+    Top = 654
   end
   object dstCuenta: TDataSource
     DataSet = tCuenta
-    Left = 550
-    Top = 144
-  end
-  object tCuenta: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'RUBRO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CAPITULO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'TIPOGASTO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'JERARQUIA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DESCRIPCION'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'SALDO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'LEYENDADEUDORA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'LEYENDAHACREEDORA'
-        DataType = ftWideString
-        Size = 50
-      end>
-    IndexDefs = <
-      item
-        Name = 'IDX_Cuenta'
-        Fields = 'CODIGO'
-      end>
-    StoreDefs = True
-    TableName = 'Cuenta'
-    UniDirectional = False
-    Left = 504
-    Top = 144
+    Left = 536
+    Top = 192
   end
   object tUsuario: TIBTable
     Database = BaseDatosIB
@@ -3240,231 +2887,17 @@ object DM: TDM
     TableName = 'Usuario'
     UniDirectional = False
     Left = 504
-    Top = 632
+    Top = 608
   end
   object dstUsuario: TDataSource
     DataSet = tUsuario
-    Left = 550
-    Top = 631
+    Left = 536
+    Top = 607
   end
   object dstCliente: TDataSource
     DataSet = tCliente
-    Left = 550
-    Top = 106
-  end
-  object tCliente: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'NOMBRE'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'TITULAR'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCION'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCIONCOMERCIAL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PAIS'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PROVINCIA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DEPARTAMENTO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CIUDAD'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'BARRIO'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'CP'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CODIGOAREA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CELULAR'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'TELEFONO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'EXTENCION'
-        DataType = ftWideString
-        Size = 6
-      end
-      item
-        Name = 'FAX'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'EMAIL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'TERMINOS'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'VENDEDOR'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PRECIO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'SUSPENDIDO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'EXCENTO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'FECHA'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'LIMITECREDITO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'NOTAS'
-        DataType = ftBlob
-        Size = 8
-      end
-      item
-        Name = 'DIASCREDITO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'DOCUMENTO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CUIT'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'IIBB'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'RUBRO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'IVA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'MSN'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'ALMANAQUES'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PROMOCIONES'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'GARANTE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ZONA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTANOMBRE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTATIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTAANTICIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PAGARE'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end>
-    IndexDefs = <
-      item
-        Name = 'PK_Cliente'
-        Fields = 'CODIGO'
-        Options = [ixUnique]
-      end>
-    StoreDefs = True
-    TableName = 'Cliente'
-    UniDirectional = False
-    Left = 504
-    Top = 104
+    Left = 536
+    Top = 98
   end
   object tEmpresa: TIBTable
     Database = BaseDatosIB
@@ -3651,513 +3084,58 @@ object DM: TDM
     TableName = 'Empresa'
     UniDirectional = False
     Left = 504
-    Top = 420
+    Top = 468
   end
   object dstEmpresa: TDataSource
     DataSet = tEmpresa
-    Left = 548
-    Top = 420
-  end
-  object qIIBB: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'Select * from "IIBB"')
-    Left = 632
-    Top = 376
+    Left = 536
+    Top = 468
   end
   object dsqIIBB: TDataSource
     DataSet = qIIBB
     Left = 664
-    Top = 376
+    Top = 336
   end
   object dsqProveedor: TDataSource
     DataSet = qProveedor
     Left = 664
-    Top = 552
-  end
-  object qProveedor: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'Select * from "Proveedor"')
-    Left = 632
-    Top = 552
+    Top = 528
   end
   object dsqCompra: TDataSource
     DataSet = qCompra
     Left = 664
-    Top = 104
-  end
-  object qCompra: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT    '#39'proveedor'#39'  As Empresa,'
-      '          "Proveedor".NOMBRE,   "Proveedor".TITULAR,'
-      
-        '          "Proveedor".DIRECCION,   "Proveedor".DIRECCIONCOMERCIA' +
-        'L,'
-      '          "Articulo".DESCRIPCION,   "CompraItem".OPERACION,'
-      '          "CompraItem".ARTICULO,   "CompraItem".CANTIDAD,'
-      '          "CompraItem".PRECIO,'
-      
-        '          ("CompraItem".PRECIO * "CompraItem".CANTIDAD ) as PREX' +
-        'CANT,'
-      
-        '          "CompraItem".SERVICIO,   "CompraItem".DESCRIPCION AS D' +
-        'ESCR,'
-      '          "Compra".CODIGO,   "Compra".LETRA,   "Compra".FECHA,'
-      
-        '          "Compra".COMPROBANTE,   "Compra".IVA3,   "Compra".TOTA' +
-        'L,'
-      
-        '          "Compra".CONTADO,   "Compra".Proveedor,   "Compra".SUB' +
-        'TOTAL,'
-      
-        '          "Compra".DESCUENTO,   "Compra".IMPUESTO,   "Compra".IV' +
-        'A2,'
-      '          "Compra".IVA1,   "Compra".EXCENTO,   "Compra".SALDO,'
-      '          "Compra".PAGADO  FROM   "Compra"'
-      
-        '          INNER JOIN "CompraItem" ON ("Compra".CODIGO = "CompraI' +
-        'tem".OPERACION)'
-      
-        '          INNER JOIN "Articulo" ON ("CompraItem".ARTICULO = "Art' +
-        'iculo".CODIGO)'
-      
-        '          INNER JOIN "Proveedor" ON ("Compra".Proveedor = "Prove' +
-        'edor".CODIGO)'
-      '')
-    Left = 632
-    Top = 104
-  end
-  object qOperacion: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT'
-      '  '#39'Mi Empresa'#39' As Empresa,'
-      '  "Cliente".NOMBRE,'
-      '  "Cliente".TITULAR,'
-      '  "Cliente".DIRECCION,'
-      '  "Cliente".DIRECCIONCOMERCIAL,'
-      '  "Articulo".DESCRIPCION,'
-      '  "VentaItem".OPERACION,'
-      '  "VentaItem".ARTICULO,'
-      '  "VentaItem".CANTIDAD,'
-      '  "VentaItem".PRECIO,'
-      '  ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT,'
-      '  "VentaItem".SERVICIO,'
-      '  "VentaItem".DESCRIPCION AS DESCR,'
-      '  "Venta".CODIGO,'
-      '  "Venta".LETRA,'
-      '  "Venta".FECHA,'
-      '  "Venta".COMPROBANTE,'
-      '  "Venta".IVA3,'
-      '  "Venta".TOTAL,'
-      '  "Venta".CONTADO,'
-      '  "Venta".CLIENTE,'
-      '  "Venta".SUBTOTAL,'
-      '  "Venta".DESCUENTO,'
-      '  "Venta".IMPUESTO,'
-      '  "Venta".IVA2,'
-      '  "Venta".IVA1,'
-      '  "Venta".EXCENTO,'
-      '  "Venta".SALDO,'
-      '  "Venta".PAGADO'
-      ' FROM'
-      '  "Venta"'
-      
-        '  INNER JOIN "VentaItem" ON ("Venta".CODIGO = "VentaItem".OPERAC' +
-        'ION)'
-      
-        '  INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CO' +
-        'DIGO)'
-      '  INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)'
-      '')
-    Left = 632
-    Top = 600
+    Top = 96
   end
   object dsqOperacion: TDataSource
     AutoEdit = False
     DataSet = qOperacion
     Left = 664
-    Top = 600
-  end
-  object tConfiguracion: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'NROFACTURA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'FechaInicio'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PP1'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP2'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP3'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP4'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP5'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP6'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP7'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP8'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP9'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PP'
-        DataType = ftFloat
-      end
-      item
-        Name = 'CtaCompra'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaMercaderia'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaIIBB'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaImpuesto'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaDeudor'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaVenta'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaCaja'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaAnticipoAProveedor'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaBanco'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaCMV'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaComisionVendedor'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaComisionVendedorAPagar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaDeudorEnGestionJudicial'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaDeudorIncobrable'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaDeudorMoroso'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaDeudorPorVenta'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaDocumentoACobrar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaHonorarioLegal'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaHonorarioLegalApagar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaIVARemanente'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaIVAAPagar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaIVACreditoFiscal'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaIVADebitoFiscal'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaLiquidacionDeIVA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaMerRecJudicialmente'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaMercaderiaDeReventa'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaObligacionAPagar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaPagoDeHonorario'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaTarjetaDeCredito'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaProveedor'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaRecuperoJudicial'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaServicioAPAgar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaServicio'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaValorAlCobro'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CtaValorADepositar'
-        DataType = ftInteger
-      end
-      item
-        Name = 'Cuenta'
-        DataType = ftInteger
-      end
-      item
-        Name = 'Precio'
-        DataType = ftInteger
-      end
-      item
-        Name = 'Comprobante'
-        DataType = ftInteger
-      end
-      item
-        Name = 'Empresa'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ImprimirTipo'
-        DataType = ftInteger
-      end
-      item
-        Name = 'Imprimir'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 3
-      end
-      item
-        Name = 'ImprimirFiscal'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 3
-      end
-      item
-        Name = 'ImprimirMostrar'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 3
-      end
-      item
-        Name = 'CodigoBarra'
-        DataType = ftInteger
-      end
-      item
-        Name = 'GesCobTemprana'
-        DataType = ftInteger
-      end
-      item
-        Name = 'GesCobExtraJudicial'
-        DataType = ftInteger
-      end
-      item
-        Name = 'GesCobJudicial'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CMV'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTACAPITALSOC'
-        DataType = ftInteger
-      end>
-    StoreDefs = True
-    TableName = 'Config'
-    UniDirectional = False
-    Left = 632
-    Top = 152
+    Top = 576
   end
   object dstConfiguracion: TDataSource
     DataSet = tConfiguracion
-    Left = 664
-    Top = 152
-  end
-  object qImprimir: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Imprimir"')
-    Left = 632
-    Top = 416
+    Left = 536
+    Top = 144
   end
   object dsqImprimir: TDataSource
-    DataSet = qImprimir
+    DataSet = qIIBB
     Left = 664
-    Top = 416
+    Top = 384
   end
   object dsqCaja: TDataSource
     DataSet = qCaja
     Left = 664
-    Top = 56
-  end
-  object qGanancia: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT '
-      '  "LibroDiario".CODIGO,'
-      '  "LibroDiario".ASIENTO,'
-      '  "LibroDiario".FECHA,'
-      '  "LibroDiario".LEYENDA,'
-      '  "LibroDiario".JERARQUIA,'
-      '  "LibroDiario".CUENTA,'
-      '  "LibroDiario".DEBE,'
-      '  "LibroDiario".HABER,'
-      '  ("LibroDiario".DEBE - "LibroDiario".HABER) AS "SubTotal,",'
-      '  "LibroDiario".OCULTO,'
-      '  "Cuenta".RUBRO,'
-      '  "Cuenta".CAPITULO,'
-      '  "Cuenta".TIPOGASTO,'
-      '  "Cuenta".DESCRIPCION,'
-      '  "Cuenta".SALDO,'
-      '  "Cuenta".LEYENDADEUDORA,'
-      '  "Cuenta".LEYENDAHACREEDORA'
-      'FROM'
-      '  "LibroDiario"'
-      
-        '  INNER JOIN "Cuenta" ON ("LibroDiario".CUENTA = "Cuenta".DESCRI' +
-        'PCION)')
-    Left = 632
-    Top = 336
+    Top = 48
   end
   object dsqGanancia: TDataSource
     DataSet = qGanancia
     Left = 664
-    Top = 336
-  end
-  object qLibroDiario: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'SELECT'
-      ' '#39'YYYMMDD'#39' AS SubTotal,'
-      ' '#39'YYYMMDD'#39' AS Empresa,'
-      ' '#39'YYYMMDD'#39' AS Desde, '
-      ' '#39'YYYMMDD'#39' AS Hasta,'
-      ' "LibroDiario".CODIGO,'
-      ' "LibroDiario".ASIENTO,'
-      ' "LibroDiario".FECHA,'
-      ' "LibroDiario".LEYENDA,'
-      ' "LibroDiario".JERARQUIA, '
-      ' "LibroDiario".CUENTA,'
-      ' "LibroDiario".DEBE, '
-      ' "LibroDiario".HABER,  '
-      ' "LibroDiario".OCULTO '
-      ' FROM'
-      ' "LibroDiario"')
-    Left = 632
-    Top = 464
+    Top = 288
   end
   object dsqLibroDiario: TDataSource
     DataSet = qLibroDiario
     Left = 664
-    Top = 464
+    Top = 432
   end
   object Transaccion: TIBTransaction
     DefaultDatabase = BaseDatosIB
@@ -4167,32 +3145,12 @@ object DM: TDM
   object dsqLibro: TDataSource
     DataSet = qLibro
     Left = 664
-    Top = 512
-  end
-  object qLibro: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 632
-    Top = 512
+    Top = 480
   end
   object dsqTarjeta: TDataSource
     DataSet = qTarjeta
     Left = 664
-    Top = 736
-  end
-  object qTarjeta: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Tarjeta"')
-    Left = 632
-    Top = 736
+    Top = 720
   end
   object qT: TIBQuery
     Database = BaseDatosIB
@@ -4265,7 +3223,7 @@ object DM: TDM
         'CODIGO)'
       ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)')
     Left = 192
-    Top = 384
+    Top = 432
   end
   object qArticulo: TFDQuery
     Connection = BaseDatosFB
@@ -4341,7 +3299,6 @@ object DM: TDM
         '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".' +
         'CODIGO)')
     Left = 632
-    Top = 8
   end
   object qCaja: TFDQuery
     Connection = BaseDatosFB
@@ -4363,6 +3320,279 @@ object DM: TDM
       'FROM'
       '  "LibroDiario"')
     Left = 632
-    Top = 56
+    Top = 48
+  end
+  object qCompra: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'SELECT    '#39'proveedor'#39'  As Empresa,'
+      '          "Proveedor".NOMBRE,   "Proveedor".TITULAR,'
+      
+        '          "Proveedor".DIRECCION,   "Proveedor".DIRECCIONCOMERCIA' +
+        'L,'
+      '          "Articulo".DESCRIPCION,   "CompraItem".OPERACION,'
+      '          "CompraItem".ARTICULO,   "CompraItem".CANTIDAD,'
+      '          "CompraItem".PRECIO,'
+      
+        '          ("CompraItem".PRECIO * "CompraItem".CANTIDAD ) as PREX' +
+        'CANT,'
+      
+        '          "CompraItem".SERVICIO,   "CompraItem".DESCRIPCION AS D' +
+        'ESCR,'
+      '          "Compra".CODIGO,   "Compra".LETRA,   "Compra".FECHA,'
+      
+        '          "Compra".COMPROBANTE,   "Compra".IVA3,   "Compra".TOTA' +
+        'L,'
+      
+        '          "Compra".CONTADO,   "Compra".Proveedor,   "Compra".SUB' +
+        'TOTAL,'
+      
+        '          "Compra".DESCUENTO,   "Compra".IMPUESTO,   "Compra".IV' +
+        'A2,'
+      '          "Compra".IVA1,   "Compra".EXCENTO,   "Compra".SALDO,'
+      '          "Compra".PAGADO  FROM   "Compra"'
+      
+        '          INNER JOIN "CompraItem" ON ("Compra".CODIGO = "CompraI' +
+        'tem".OPERACION)'
+      
+        '          INNER JOIN "Articulo" ON ("CompraItem".ARTICULO = "Art' +
+        'iculo".CODIGO)'
+      
+        '          INNER JOIN "Proveedor" ON ("Compra".Proveedor = "Prove' +
+        'edor".CODIGO)')
+    Left = 632
+    Top = 96
+  end
+  object qCliente: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'Select * from "Cliente"'
+      'order by CODIGO asc')
+    Left = 632
+    Top = 144
+  end
+  object qCuenta: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'select * from "Cuenta"'
+      'order by DESCRIPCION')
+    Left = 632
+    Top = 192
+  end
+  object qEmpresa: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'SELECT '
+      '  "LibroDiario".CODIGO,'
+      '  "LibroDiario".ASIENTO,'
+      '  "LibroDiario".FECHA,'
+      '  "LibroDiario".LEYENDA,'
+      '  "LibroDiario".JERARQUIA,'
+      '  "LibroDiario".CUENTA,'
+      '  "LibroDiario".DEBE,'
+      '  "LibroDiario".HABER,'
+      '  ("LibroDiario".DEBE - "LibroDiario".HABER) AS "SubTotal,",'
+      '  "LibroDiario".OCULTO,'
+      '  "Cuenta".RUBRO,'
+      '  "Cuenta".CAPITULO,'
+      '  "Cuenta".TIPOGASTO,'
+      '  "Cuenta".DESCRIPCION,'
+      '  "Cuenta".SALDO,'
+      '  "Cuenta".LEYENDADEUDORA,'
+      '  "Cuenta".LEYENDAHACREEDORA'
+      'FROM'
+      '  "LibroDiario"'
+      
+        '  INNER JOIN "Cuenta" ON ("LibroDiario".CUENTA = "Cuenta".DESCRI' +
+        'PCION)')
+    Left = 632
+    Top = 240
+  end
+  object qGanancia: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'SELECT '
+      '  "LibroDiario".CODIGO,'
+      '  "LibroDiario".ASIENTO,'
+      '  "LibroDiario".FECHA,'
+      '  "LibroDiario".LEYENDA,'
+      '  "LibroDiario".JERARQUIA,'
+      '  "LibroDiario".CUENTA,'
+      '  "LibroDiario".DEBE,'
+      '  "LibroDiario".HABER,'
+      '  ("LibroDiario".DEBE - "LibroDiario".HABER) AS "SubTotal,",'
+      '  "LibroDiario".OCULTO,'
+      '  "Cuenta".RUBRO,'
+      '  "Cuenta".CAPITULO,'
+      '  "Cuenta".TIPOGASTO,'
+      '  "Cuenta".DESCRIPCION,'
+      '  "Cuenta".SALDO,'
+      '  "Cuenta".LEYENDADEUDORA,'
+      '  "Cuenta".LEYENDAHACREEDORA'
+      'FROM'
+      '  "LibroDiario"'
+      
+        '  INNER JOIN "Cuenta" ON ("LibroDiario".CUENTA = "Cuenta".DESCRI' +
+        'PCION)')
+    Left = 632
+    Top = 288
+  end
+  object qIIBB: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'Select * from "IIBB"')
+    Left = 632
+    Top = 336
+  end
+  object qImprimir: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'select * from "Imprimir"')
+    Left = 632
+    Top = 384
+  end
+  object qLibroDiario: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'SELECT'
+      ' '#39'YYYMMDD'#39' AS SubTotal,'
+      ' '#39'YYYMMDD'#39' AS Empresa,'
+      ' '#39'YYYMMDD'#39' AS Desde, '
+      ' '#39'YYYMMDD'#39' AS Hasta,'
+      ' "LibroDiario".CODIGO,'
+      ' "LibroDiario".ASIENTO,'
+      ' "LibroDiario".FECHA,'
+      ' "LibroDiario".LEYENDA,'
+      ' "LibroDiario".JERARQUIA, '
+      ' "LibroDiario".CUENTA,'
+      ' "LibroDiario".DEBE, '
+      ' "LibroDiario".HABER,  '
+      ' "LibroDiario".OCULTO '
+      ' FROM'
+      ' "LibroDiario"')
+    Left = 632
+    Top = 432
+  end
+  object qLibro: TFDQuery
+    Connection = BaseDatosFB
+    Left = 632
+    Top = 480
+  end
+  object qProveedor: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'Select * from "Proveedor"')
+    Left = 632
+    Top = 528
+  end
+  object qOperacion: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'SELECT'
+      '  '#39'Mi Empresa'#39' As Empresa,'
+      '  "Cliente".NOMBRE,'
+      '  "Cliente".TITULAR,'
+      '  "Cliente".DIRECCION,'
+      '  "Cliente".DIRECCIONCOMERCIAL,'
+      '  "Articulo".DESCRIPCION,'
+      '  "VentaItem".OPERACION,'
+      '  "VentaItem".ARTICULO,'
+      '  "VentaItem".CANTIDAD,'
+      '  "VentaItem".PRECIO,'
+      '  ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT,'
+      '  "VentaItem".SERVICIO,'
+      '  "VentaItem".DESCRIPCION AS DESCR,'
+      '  "Venta".CODIGO,'
+      '  "Venta".LETRA,'
+      '  "Venta".FECHA,'
+      '  "Venta".COMPROBANTE,'
+      '  "Venta".IVA3,'
+      '  "Venta".TOTAL,'
+      '  "Venta".CONTADO,'
+      '  "Venta".CLIENTE,'
+      '  "Venta".SUBTOTAL,'
+      '  "Venta".DESCUENTO,'
+      '  "Venta".IMPUESTO,'
+      '  "Venta".IVA2,'
+      '  "Venta".IVA1,'
+      '  "Venta".EXCENTO,'
+      '  "Venta".SALDO,'
+      '  "Venta".PAGADO'
+      ' FROM'
+      '  "Venta"'
+      
+        '  INNER JOIN "VentaItem" ON ("Venta".CODIGO = "VentaItem".OPERAC' +
+        'ION)'
+      
+        '  INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CO' +
+        'DIGO)'
+      '  INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)')
+    Left = 632
+    Top = 576
+  end
+  object qVendedor: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'select * from "Vendedor"')
+    Left = 632
+    Top = 624
+  end
+  object qUsuario: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'select * from "Usuario"')
+    Left = 632
+    Top = 672
+  end
+  object qTarjeta: TFDQuery
+    Connection = BaseDatosFB
+    SQL.Strings = (
+      'select * from "Tarjeta"')
+    Left = 632
+    Top = 720
+  end
+  object tArticulo: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Articulo"'
+    TableName = '"Articulo"'
+    Left = 504
+  end
+  object tCategoria: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Categoria"'
+    TableName = '"Categoria"'
+    Left = 504
+    Top = 48
+  end
+  object tCliente: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Cliente"'
+    TableName = '"Cliente"'
+    Left = 504
+    Top = 97
+  end
+  object tConfiguracion: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Config"'
+    TableName = '"Config"'
+    Left = 504
+    Top = 144
+  end
+  object tCuenta: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Cuenta"'
+    TableName = '"Cuenta"'
+    Left = 504
+    Top = 192
   end
 end
