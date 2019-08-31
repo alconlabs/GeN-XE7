@@ -5,11 +5,11 @@ object ProveedorForm: TProveedorForm
   BorderStyle = bsSingle
   Caption = 'Altas, Bajas y Modificaciones de Proveedores'
   ClientHeight = 475
-  ClientWidth = 427
+  ClientWidth = 510
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -13
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   KeyPreview = True
@@ -20,25 +20,25 @@ object ProveedorForm: TProveedorForm
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 352
+    Width = 435
     Height = 475
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 327
-    ExplicitHeight = 468
+    ExplicitWidth = 352
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
+      ExplicitTop = 24
       ExplicitWidth = 319
       ExplicitHeight = 440
       object Label2: TLabel
         Left = 0
         Top = 40
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Nombre'
@@ -54,7 +54,7 @@ object ProveedorForm: TProveedorForm
       object Label3: TLabel
         Left = 0
         Top = 120
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Direcci'#243'n Comercial'
@@ -70,7 +70,7 @@ object ProveedorForm: TProveedorForm
       object Label1: TLabel
         Left = 0
         Top = 0
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Nro. Cta'
@@ -86,13 +86,13 @@ object ProveedorForm: TProveedorForm
         Left = 632
         Top = 64
         Width = 9
-        Height = 13
+        Height = 16
         Caption = '...'
       end
       object Label4: TLabel
         Left = 0
         Top = 360
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Celular'
@@ -108,7 +108,7 @@ object ProveedorForm: TProveedorForm
       object Label9: TLabel
         Left = 0
         Top = 160
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Tel'#233'fono'
@@ -124,7 +124,7 @@ object ProveedorForm: TProveedorForm
       object Label11: TLabel
         Left = 0
         Top = 200
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Fax'
@@ -140,7 +140,7 @@ object ProveedorForm: TProveedorForm
       object Label6: TLabel
         Left = 0
         Top = 240
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Provincia'
@@ -156,7 +156,7 @@ object ProveedorForm: TProveedorForm
       object Label7: TLabel
         Left = 0
         Top = 280
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Departamento'
@@ -172,7 +172,7 @@ object ProveedorForm: TProveedorForm
       object Label27: TLabel
         Left = 0
         Top = 320
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Localidad'
@@ -188,7 +188,7 @@ object ProveedorForm: TProveedorForm
       object Label13: TLabel
         Left = 0
         Top = 80
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Direcci'#243'n'
@@ -204,7 +204,7 @@ object ProveedorForm: TProveedorForm
       object DBEdit2: TDBEdit
         Left = 0
         Top = 56
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Nombre'
@@ -221,7 +221,7 @@ object ProveedorForm: TProveedorForm
       object DBEdit3: TDBEdit
         Left = 0
         Top = 96
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'DIRECCION'
@@ -238,7 +238,7 @@ object ProveedorForm: TProveedorForm
       object CodigoDBEdit: TDBEdit
         Left = 0
         Top = 16
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'CODIGO'
@@ -255,7 +255,7 @@ object ProveedorForm: TProveedorForm
       object DBEdit9: TDBEdit
         Left = 0
         Top = 376
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Celular'
@@ -272,7 +272,7 @@ object ProveedorForm: TProveedorForm
       object DBEdit4: TDBEdit
         Left = 0
         Top = 136
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'DIRECCIONCOMERCIAL'
@@ -289,7 +289,7 @@ object ProveedorForm: TProveedorForm
       object DBEdit10: TDBEdit
         Left = 0
         Top = 176
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Telefono'
@@ -306,7 +306,7 @@ object ProveedorForm: TProveedorForm
       object DBEdit12: TDBEdit
         Left = 0
         Top = 216
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Fax'
@@ -323,7 +323,7 @@ object ProveedorForm: TProveedorForm
       object DBEdit6: TDBEdit
         Left = 0
         Top = 256
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Provincia'
@@ -340,7 +340,7 @@ object ProveedorForm: TProveedorForm
       object DBEdit7: TDBEdit
         Left = 0
         Top = 296
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Departamento'
@@ -357,7 +357,7 @@ object ProveedorForm: TProveedorForm
       object DBEdit24: TDBEdit
         Left = 0
         Top = 336
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Ciudad'
@@ -376,26 +376,31 @@ object ProveedorForm: TProveedorForm
     object TabSheet2: TTabSheet
       Caption = 'Notas'
       ImageIndex = 1
+      ExplicitTop = 24
+      ExplicitWidth = 344
       ExplicitHeight = 440
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
-        Width = 344
-        Height = 447
+        Width = 427
+        Height = 444
         Align = alClient
         DataField = 'Notas'
         TabOrder = 0
+        ExplicitWidth = 344
         ExplicitHeight = 440
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
+      ExplicitTop = 24
+      ExplicitWidth = 344
       ExplicitHeight = 440
       object Label15: TLabel
         Left = 0
         Top = 136
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Alignment = taRightJustify
@@ -411,7 +416,7 @@ object ProveedorForm: TProveedorForm
       object Label24: TLabel
         Left = 0
         Top = 40
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Ingresos Brutos'
@@ -427,7 +432,7 @@ object ProveedorForm: TProveedorForm
       object Label25: TLabel
         Left = 0
         Top = 0
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'CUIT'
@@ -443,7 +448,7 @@ object ProveedorForm: TProveedorForm
       object Label38: TLabel
         Left = 0
         Top = 80
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Categor'#237'a de IVA'
@@ -458,7 +463,7 @@ object ProveedorForm: TProveedorForm
       object IVALabel: TLabel
         Left = 0
         Top = 120
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = '...'
@@ -473,7 +478,7 @@ object ProveedorForm: TProveedorForm
       object Label54: TLabel
         Left = 0
         Top = 192
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Anticipo'
@@ -488,7 +493,7 @@ object ProveedorForm: TProveedorForm
       object Label52: TLabel
         Left = 0
         Top = 152
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Nombre'
@@ -503,7 +508,7 @@ object ProveedorForm: TProveedorForm
       object Label51: TLabel
         Left = 0
         Top = 232
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Tipo'
@@ -518,7 +523,7 @@ object ProveedorForm: TProveedorForm
       object DBEdit20: TDBEdit
         Left = 0
         Top = 56
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'IIBB'
@@ -530,11 +535,12 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        ExplicitWidth = 344
       end
       object DBEdit22: TDBEdit
         Left = 0
         Top = 16
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'CUIT'
@@ -546,11 +552,12 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        ExplicitWidth = 344
       end
       object IVADBComboBox: TDBComboBox
         Left = 0
         Top = 96
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'IVA'
@@ -569,11 +576,12 @@ object ProveedorForm: TProveedorForm
         ParentFont = False
         TabOrder = 2
         OnChange = IVADBComboBoxChange
+        ExplicitWidth = 344
       end
       object CtaNombreDBLookupComboBox: TDBLookupComboBox
         Left = 0
         Top = 168
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'CtaNombre'
@@ -588,11 +596,12 @@ object ProveedorForm: TProveedorForm
         ListSource = DM.dstCuenta
         ParentFont = False
         TabOrder = 3
+        ExplicitWidth = 344
       end
       object CtaAnticipoDBLookupComboBox: TDBLookupComboBox
         Left = 0
         Top = 208
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'CtaAnticipo'
@@ -607,11 +616,12 @@ object ProveedorForm: TProveedorForm
         ListSource = DM.dstCuenta
         ParentFont = False
         TabOrder = 5
+        ExplicitWidth = 344
       end
       object CtaTipoDBLookupComboBox: TDBLookupComboBox
         Left = 0
         Top = 248
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'CtaTipo'
@@ -626,16 +636,19 @@ object ProveedorForm: TProveedorForm
         ListSource = DM.dstCuenta
         ParentFont = False
         TabOrder = 4
+        ExplicitWidth = 344
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'Datos Secundarios'
       ImageIndex = 3
+      ExplicitTop = 24
+      ExplicitWidth = 344
       ExplicitHeight = 440
       object Label19: TLabel
         Left = 0
         Top = 0
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Nombre del Titular'
@@ -651,7 +664,7 @@ object ProveedorForm: TProveedorForm
       object Label12: TLabel
         Left = 0
         Top = 240
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Email'
@@ -667,7 +680,7 @@ object ProveedorForm: TProveedorForm
       object Label28: TLabel
         Left = 0
         Top = 280
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Messenger'
@@ -683,7 +696,7 @@ object ProveedorForm: TProveedorForm
       object Label23: TLabel
         Left = 0
         Top = 40
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'DNI'
@@ -699,7 +712,7 @@ object ProveedorForm: TProveedorForm
       object Label26: TLabel
         Left = 0
         Top = 80
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Rubro'
@@ -714,7 +727,7 @@ object ProveedorForm: TProveedorForm
       object Label5: TLabel
         Left = 0
         Top = 360
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Pais'
@@ -730,7 +743,7 @@ object ProveedorForm: TProveedorForm
       object Label21: TLabel
         Left = 0
         Top = 120
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Codigo Postal'
@@ -746,7 +759,7 @@ object ProveedorForm: TProveedorForm
       object Label22: TLabel
         Left = 0
         Top = 160
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Codigo de Area'
@@ -761,7 +774,7 @@ object ProveedorForm: TProveedorForm
       object Label10: TLabel
         Left = 0
         Top = 200
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Extenci'#243'n'
@@ -789,7 +802,7 @@ object ProveedorForm: TProveedorForm
       object Label18: TLabel
         Left = 0
         Top = 320
-        Width = 344
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Dias Cr'#233'dito'
@@ -805,7 +818,7 @@ object ProveedorForm: TProveedorForm
       object DBEdit16: TDBEdit
         Left = 0
         Top = 16
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Gerente'
@@ -817,11 +830,12 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        ExplicitWidth = 344
       end
       object DBEdit13: TDBEdit
         Left = 0
         Top = 256
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Email'
@@ -833,11 +847,12 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 6
+        ExplicitWidth = 344
       end
       object DBEdit23: TDBEdit
         Left = 0
         Top = 296
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'MSN'
@@ -849,11 +864,12 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 7
+        ExplicitWidth = 344
       end
       object DBEdit19: TDBEdit
         Left = 0
         Top = 56
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Documento'
@@ -865,11 +881,12 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        ExplicitWidth = 344
       end
       object DBEdit21: TDBEdit
         Left = 0
         Top = 96
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Rubro'
@@ -881,11 +898,12 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 2
+        ExplicitWidth = 344
       end
       object DBEdit5: TDBEdit
         Left = 0
         Top = 376
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Pais'
@@ -897,11 +915,12 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 8
+        ExplicitWidth = 344
       end
       object DBEdit17: TDBEdit
         Left = 0
         Top = 136
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'CP'
@@ -913,11 +932,12 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 3
+        ExplicitWidth = 344
       end
       object DBEdit11: TDBEdit
         Left = 0
         Top = 216
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'Extencion'
@@ -929,11 +949,12 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 5
+        ExplicitWidth = 344
       end
       object DBEdit18: TDBEdit
         Left = 0
         Top = 176
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'CodigoArea'
@@ -945,11 +966,12 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 4
+        ExplicitWidth = 344
       end
       object DBEdit1: TDBEdit
         Left = 0
         Top = 336
-        Width = 344
+        Width = 427
         Height = 24
         Align = alTop
         DataField = 'DiasCredito'
@@ -961,11 +983,12 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 9
+        ExplicitWidth = 344
       end
     end
   end
   object Panel1: TPanel
-    Left = 352
+    Left = 435
     Top = 0
     Width = 75
     Height = 475

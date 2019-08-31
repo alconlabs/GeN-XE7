@@ -8,7 +8,7 @@ object FBuscaArticulo: TFBuscaArticulo
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -13
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   KeyPreview = True
@@ -19,11 +19,11 @@ object FBuscaArticulo: TFBuscaArticulo
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object DBGrid1: TDBGrid
     Left = 0
     Top = 73
-    Width = 692
+    Width = 717
     Height = 393
     Align = alClient
     DataSource = DM.dsqArticulo
@@ -32,7 +32,7 @@ object FBuscaArticulo: TFBuscaArticulo
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
-    TitleFont.Height = -11
+    TitleFont.Height = -13
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
     OnDblClick = DBGrid1DblClick
@@ -40,7 +40,7 @@ object FBuscaArticulo: TFBuscaArticulo
       item
         Expanded = False
         FieldName = 'CODIGO'
-        Width = 49
+        Width = 63
         Visible = True
       end
       item
@@ -56,7 +56,7 @@ object FBuscaArticulo: TFBuscaArticulo
         Title.Font.Height = -11
         Title.Font.Name = 'MS Sans Serif'
         Title.Font.Style = [fsBold]
-        Width = 204
+        Width = 315
         Visible = True
       end
       item
@@ -102,7 +102,6 @@ object FBuscaArticulo: TFBuscaArticulo
     Width = 792
     Height = 73
     Align = alTop
-    Color = clBlack
     ParentBackground = False
     TabOrder = 1
     object Label1: TLabel
@@ -112,7 +111,7 @@ object FBuscaArticulo: TFBuscaArticulo
       Height = 24
       Caption = 'Codigo Barras:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -125,7 +124,7 @@ object FBuscaArticulo: TFBuscaArticulo
       Height = 24
       Caption = 'Descripci'#243'n:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -138,7 +137,7 @@ object FBuscaArticulo: TFBuscaArticulo
       Height = 24
       Caption = 'Rubro:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -151,7 +150,7 @@ object FBuscaArticulo: TFBuscaArticulo
       Height = 24
       Caption = 'Categor'#237'a:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -164,7 +163,7 @@ object FBuscaArticulo: TFBuscaArticulo
       Height = 24
       Caption = 'Proveedor:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -177,7 +176,7 @@ object FBuscaArticulo: TFBuscaArticulo
       Height = 24
       Caption = 'Marca:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -270,102 +269,120 @@ object FBuscaArticulo: TFBuscaArticulo
     end
   end
   object Panel3: TPanel
-    Left = 692
+    Left = 717
     Top = 73
-    Width = 100
+    Width = 75
     Height = 393
     Align = alRight
-    Color = clBlack
     ParentBackground = False
     TabOrder = 2
     object Label6: TLabel
-      Left = 10
-      Top = 150
-      Width = 67
+      Left = 1
+      Top = 125
+      Width = 73
       Height = 24
+      Align = alTop
       Caption = 'Precio:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 67
     end
     object Label3: TLabel
-      Left = 10
-      Top = 96
-      Width = 58
+      Left = 1
+      Top = 68
+      Width = 73
       Height = 24
+      Align = alTop
       Caption = 'Stock:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 58
     end
     object DBText1: TDBText
-      Left = 10
-      Top = 116
-      Width = 80
+      Left = 1
+      Top = 92
+      Width = 73
       Height = 33
+      Align = alTop
       DataField = 'Disponible'
       DataSource = DM.dsqArticulo
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -19
+      Font.Color = clWindowText
+      Font.Height = -13
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 10
+      ExplicitTop = 116
+      ExplicitWidth = 80
     end
     object DBText3: TDBText
-      Left = 10
-      Top = 170
-      Width = 80
+      Left = 1
+      Top = 149
+      Width = 73
       Height = 33
+      Align = alTop
       DataField = 'PRECIO'
       DataSource = DM.dsqArticulo
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -19
+      Font.Color = clWindowText
+      Font.Height = -13
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 10
+      ExplicitTop = 170
+      ExplicitWidth = 80
     end
     object ivaLabel: TLabel
-      Left = 10
-      Top = 203
-      Width = 50
+      Left = 1
+      Top = 182
+      Width = 73
       Height = 24
+      Align = alTop
       Caption = 'c/iva:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 50
     end
     object ivaDBText: TDBText
-      Left = 10
-      Top = 225
-      Width = 80
+      Left = 1
+      Top = 206
+      Width = 73
       Height = 20
+      Align = alTop
       DataField = 'precioIVA'
       DataSource = DM.dsqArticulo
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -19
+      Font.Color = clWindowText
+      Font.Height = -13
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 10
+      ExplicitTop = 225
+      ExplicitWidth = 80
     end
     object imprimir_exportarImage: TImage
-      Left = 10
-      Top = 267
-      Width = 80
-      Height = 50
+      Left = 1
+      Top = 26
+      Width = 73
+      Height = 25
       Cursor = crHandPoint
       Hint = 'IMPRIMIR O EXPORTAR'
+      Align = alTop
       Center = True
       DragCursor = crDefault
       ParentShowHint = False
@@ -443,13 +460,14 @@ object FBuscaArticulo: TFBuscaArticulo
         FCF6EBEFBF3B8400003B}
       ShowHint = True
       OnClick = imprimir_exportarImageClick
+      ExplicitTop = 51
     end
     object BitBtn1: TBitBtn
-      Left = 10
-      Top = 331
-      Width = 80
+      Left = 1
+      Top = 342
+      Width = 73
       Height = 50
-      Caption = 'mostrar'
+      Align = alBottom
       Default = True
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -480,10 +498,11 @@ object FBuscaArticulo: TFBuscaArticulo
       OnClick = BitBtn1Click
     end
     object VerTodosBitBtn: TBitBtn
-      Left = 10
-      Top = 15
-      Width = 80
-      Height = 50
+      Left = 1
+      Top = 1
+      Width = 73
+      Height = 25
+      Align = alTop
       Caption = 'Todos'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -513,15 +532,16 @@ object FBuscaArticulo: TFBuscaArticulo
       OnClick = VerTodosBitBtnClick
     end
     object EnStockCheckBox: TCheckBox
-      Left = 10
-      Top = 71
-      Width = 69
+      Left = 1
+      Top = 51
+      Width = 73
       Height = 17
+      Align = alTop
       Alignment = taLeftJustify
       Caption = 'Disponible'
-      Color = clBlack
+      Color = clBtnFace
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []

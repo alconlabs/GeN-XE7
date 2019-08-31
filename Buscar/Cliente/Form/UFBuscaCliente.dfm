@@ -8,7 +8,7 @@ object FBuscaCliente: TFBuscaCliente
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -13
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   KeyPreview = True
@@ -18,12 +18,12 @@ object FBuscaCliente: TFBuscaCliente
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object DBGrid1: TDBGrid
     Left = 0
-    Top = 59
-    Width = 690
-    Height = 407
+    Top = 50
+    Width = 715
+    Height = 416
     Align = alClient
     DataSource = DM.dsqCliente
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
@@ -31,7 +31,7 @@ object FBuscaCliente: TFBuscaCliente
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
-    TitleFont.Height = -11
+    TitleFont.Height = -13
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
     OnDblClick = DBGrid1DblClick
@@ -73,30 +73,32 @@ object FBuscaCliente: TFBuscaCliente
     Left = 0
     Top = 0
     Width = 790
-    Height = 59
+    Height = 50
     Align = alTop
     BevelOuter = bvLowered
-    Color = clBlack
     ParentBackground = False
     TabOrder = 0
     object Label1: TLabel
-      Left = 8
-      Top = 4
-      Width = 44
+      Left = 1
+      Top = 1
+      Width = 788
       Height = 13
+      Align = alTop
       Caption = 'Nombre'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 44
     end
     object DescripcionEdit: TEdit
-      Left = 8
-      Top = 20
-      Width = 337
+      Left = 1
+      Top = 14
+      Width = 788
       Height = 32
+      Align = alTop
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -19
@@ -108,149 +110,176 @@ object FBuscaCliente: TFBuscaCliente
     end
   end
   object Panel2: TPanel
-    Left = 690
-    Top = 59
-    Width = 100
-    Height = 407
+    Left = 715
+    Top = 50
+    Width = 75
+    Height = 416
     Align = alRight
     BevelOuter = bvLowered
-    Color = clBlack
     ParentBackground = False
     TabOrder = 2
     object DBText1: TDBText
-      Left = 11
-      Top = 29
-      Width = 80
+      Left = 1
+      Top = 64
+      Width = 73
       Height = 17
+      Align = alTop
       Alignment = taRightJustify
       DataField = 'Direccion'
       DataSource = DM.dsqCliente
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 11
+      ExplicitTop = 29
+      ExplicitWidth = 80
     end
     object DBText2: TDBText
-      Left = 11
-      Top = 52
-      Width = 80
+      Left = 1
+      Top = 81
+      Width = 73
       Height = 17
+      Align = alTop
       Alignment = taRightJustify
       DataField = 'DIRECCIONCOMERCIAL'
       DataSource = DM.dsqCliente
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 6
+      ExplicitTop = 75
+      ExplicitWidth = 98
     end
     object DBText3: TDBText
-      Left = 11
-      Top = 92
-      Width = 80
+      Left = 1
+      Top = 111
+      Width = 73
       Height = 17
+      Align = alTop
       Alignment = taRightJustify
       DataField = 'Provincia'
       DataSource = DM.dsqCliente
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 11
+      ExplicitTop = 92
+      ExplicitWidth = 80
     end
     object DBText4: TDBText
-      Left = 11
-      Top = 134
-      Width = 80
+      Left = 1
+      Top = 141
+      Width = 73
       Height = 17
+      Align = alTop
       Alignment = taRightJustify
       DataField = 'Departamento'
       DataSource = DM.dsqCliente
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 11
+      ExplicitTop = 134
+      ExplicitWidth = 80
     end
     object DBText5: TDBText
-      Left = 11
-      Top = 179
-      Width = 80
+      Left = 1
+      Top = 171
+      Width = 73
       Height = 17
+      Align = alTop
       Alignment = taRightJustify
       DataField = 'Ciudad'
       DataSource = DM.dsqCliente
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 11
+      ExplicitTop = 179
+      ExplicitWidth = 80
     end
     object Label4: TLabel
-      Left = 11
-      Top = 72
-      Width = 58
+      Left = 1
+      Top = 98
+      Width = 73
       Height = 13
+      Align = alTop
       Caption = 'Provincia:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 58
     end
     object Label5: TLabel
-      Left = 11
-      Top = 115
-      Width = 43
+      Left = 1
+      Top = 128
+      Width = 73
       Height = 13
+      Align = alTop
       Caption = 'Depart:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 43
     end
     object Label6: TLabel
-      Left = 11
-      Top = 160
-      Width = 44
+      Left = 1
+      Top = 158
+      Width = 73
       Height = 13
+      Align = alTop
       Caption = 'Ciudad:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 44
     end
     object Label3: TLabel
-      Left = 11
-      Top = 18
-      Width = 59
+      Left = 1
+      Top = 51
+      Width = 73
       Height = 13
+      Align = alTop
       Caption = 'Direcci'#243'n:'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 59
     end
     object Image1: TImage
-      Left = 11
-      Top = 261
-      Width = 80
+      Left = 1
+      Top = 1
+      Width = 73
       Height = 50
       Hint = 'EXPORTAR A EXCEL EN FORMATO CSV'
-      Align = alCustom
+      Align = alTop
       ParentShowHint = False
       Picture.Data = {
         0A544A504547496D61676537080000FFD8FFE000104A46494600010200006400
@@ -322,13 +351,16 @@ object FBuscaCliente: TFBuscaCliente
         6805A03FFFD9}
       ShowHint = True
       OnClick = Image1Click
+      ExplicitLeft = 6
+      ExplicitTop = -25
+      ExplicitWidth = 98
     end
     object SiBitBtn: TBitBtn
-      Left = 11
-      Top = 336
-      Width = 80
+      Left = 1
+      Top = 365
+      Width = 73
       Height = 50
-      Caption = 'mostrar'
+      Align = alBottom
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11

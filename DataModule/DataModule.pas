@@ -918,15 +918,17 @@ begin
   with IBScript1 do
   begin
       if codigo<>'' then codigo := ' where CODIGO='+codigo;
-      Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
-        +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
-        +' update "'+(tabla)+'" set '+(campo)+'='+(valor)+codigo+';';
-      ExecuteScript;
-      with Transaction do
-      begin
-        if not Active then StartTransaction;
-        CommitRetaining;
-      end;
+//      Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
+//        +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
+        BaseDatosFB.ExecSQL(
+          ' update "'+(tabla)+'" set '+(campo)+'='+(valor)+codigo+';'
+        );
+//      ExecuteScript;
+//      with Transaction do
+//      begin
+//        if not Active then StartTransaction;
+//        CommitRetaining;
+//      end;
   end;
 end;
 
@@ -1601,18 +1603,20 @@ end;
 
 procedure TDM.ActualizarTrigger;
 begin
-    IBScript1.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
-      +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
-      +' ALTER TRIGGER "'+name+'"'
-      +active
-      +' POSITION 0'
-      +' AS'
-      +' BEGIN'
-      +'   /* Trigger body */'
-      +body
-      +' END;';
-    IBScript1.ExecuteScript;
-    IBScript1.Transaction.CommitRetaining;
+//    IBScript1.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
+//      +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
+      BaseDatosFB.ExecSQL(
+        ' ALTER TRIGGER "'+name+'"'
+        +active
+        +' POSITION 0'
+        +' AS'
+        +' BEGIN'
+        +'   /* Trigger body */'
+        +body
+        +' END;'
+      );
+//    IBScript1.ExecuteScript;
+//    IBScript1.Transaction.CommitRetaining;
 end;
 
 procedure TDM.ActualizarTriggerFecha;
@@ -1700,12 +1704,12 @@ begin
 //      GuessFormat;
 //      Execute;
 //    end;
-FDBatchMoveTextReader1.FileName := OpenDialog1.FileName;
-FDBatchMoveTextReader1.DataDef.Separator := ';';
-FDBatchMoveTextReader1.DataDef.WithFieldNames := True;
-FDBatchMove1.Mode := dmAppendUpdate;
-FDBatchMove1.GuessFormat;
-FDBatchMove1.Execute;
+    FDBatchMoveTextReader1.FileName := OpenDialog1.FileName;
+    FDBatchMoveTextReader1.DataDef.Separator := ';';
+    FDBatchMoveTextReader1.DataDef.WithFieldNames := True;
+    FDBatchMove1.Mode := dmAppendUpdate;
+    FDBatchMove1.GuessFormat;
+    FDBatchMove1.Execute;
   finally
   //
   end;

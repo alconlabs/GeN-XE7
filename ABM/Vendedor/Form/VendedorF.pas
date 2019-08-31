@@ -14,7 +14,6 @@ type
     AceptarBitBtn: TBitBtn;
     BitBtn2: TBitBtn;
     BitBtn4: TBitBtn;
-    DBNavigator1: TDBNavigator;
     BitBtn3: TBitBtn;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
@@ -84,7 +83,7 @@ type
     Label18: TLabel;
     Label29: TLabel;
     Label30: TLabel;
-    Label31: TLabel;
+    lPrecioTipo: TLabel;
     DBEdit14: TDBEdit;
     DBEdit15: TDBEdit;
     DBComboBox1: TDBComboBox;
@@ -94,6 +93,8 @@ type
     DBEdit26: TDBEdit;
     CodigoDBEdit: TDBEdit;
     Label1: TLabel;
+    pButton: TPanel;
+    DBNavigator1: TDBNavigator;
     procedure AceptarBitBtnClick(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);

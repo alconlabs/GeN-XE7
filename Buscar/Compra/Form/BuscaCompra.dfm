@@ -7,7 +7,7 @@ object BuscaCompraForm: TBuscaCompraForm
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -13
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   KeyPreview = True
@@ -18,16 +18,16 @@ object BuscaCompraForm: TBuscaCompraForm
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object Panel1: TPanel
     Left = 0
     Top = 0
     Width = 792
     Height = 67
     Align = alTop
-    Color = clBlack
     ParentBackground = False
     TabOrder = 0
+    ExplicitTop = -6
     object Label2: TLabel
       Left = 199
       Top = 5
@@ -35,7 +35,7 @@ object BuscaCompraForm: TBuscaCompraForm
       Height = 24
       Caption = 'CODIGO'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -48,7 +48,7 @@ object BuscaCompraForm: TBuscaCompraForm
       Height = 24
       Caption = 'LETRA'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -61,7 +61,7 @@ object BuscaCompraForm: TBuscaCompraForm
       Height = 24
       Caption = 'COMPROBANTE'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -108,22 +108,22 @@ object BuscaCompraForm: TBuscaCompraForm
     end
   end
   object Panel2: TPanel
-    Left = 692
+    Left = 717
     Top = 67
-    Width = 100
+    Width = 75
     Height = 399
     Align = alRight
     BevelOuter = bvLowered
-    Color = clBlack
     ParentBackground = False
     TabOrder = 1
     object imprimir_exportarImage: TImage
-      Left = 11
-      Top = 173
-      Width = 80
+      Left = 1
+      Top = 51
+      Width = 73
       Height = 50
       Cursor = crHandPoint
       Hint = 'IMPRIMIR O EXPORTAR'
+      Align = alTop
       Center = True
       DragCursor = crDefault
       ParentShowHint = False
@@ -201,13 +201,16 @@ object BuscaCompraForm: TBuscaCompraForm
         FCF6EBEFBF3B8400003B}
       ShowHint = True
       OnClick = imprimir_exportarImageClick
+      ExplicitLeft = 11
+      ExplicitTop = 173
+      ExplicitWidth = 80
     end
     object SiBitBtn: TBitBtn
-      Left = 11
-      Top = 321
-      Width = 80
+      Left = 1
+      Top = 348
+      Width = 73
       Height = 50
-      Caption = 'procesar'
+      Align = alBottom
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -218,12 +221,16 @@ object BuscaCompraForm: TBuscaCompraForm
       ParentFont = False
       TabOrder = 0
       OnClick = SiBitBtnClick
+      ExplicitLeft = 11
+      ExplicitTop = 321
+      ExplicitWidth = 80
     end
     object todoBitBtn: TBitBtn
-      Left = 11
-      Top = 20
-      Width = 80
+      Left = 1
+      Top = 1
+      Width = 73
       Height = 50
+      Align = alTop
       Caption = 'TODO'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -251,12 +258,14 @@ object BuscaCompraForm: TBuscaCompraForm
       ParentFont = False
       TabOrder = 1
       OnClick = todoBitBtnClick
+      ExplicitTop = -13
+      ExplicitWidth = 98
     end
   end
   object DBGrid1: TDBGrid
     Left = 0
     Top = 67
-    Width = 692
+    Width = 717
     Height = 399
     Align = alClient
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
@@ -264,7 +273,7 @@ object BuscaCompraForm: TBuscaCompraForm
     TabOrder = 2
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
-    TitleFont.Height = -11
+    TitleFont.Height = -13
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
     OnDblClick = DBGrid1DblClick

@@ -1127,7 +1127,6 @@ object DM: TDM
       'Database=C:\Users\DeGsoft\Documents\Civeloo\GeN\db\GeN.FDB'
       'CharacterSet=WIN1252'
       'DriverID=FB')
-    Connected = True
     LoginPrompt = False
     Left = 192
   end

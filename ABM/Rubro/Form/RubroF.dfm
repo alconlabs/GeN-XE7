@@ -7,7 +7,7 @@ object RubroForm: TRubroForm
   Color = clBlack
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -13
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -16,7 +16,7 @@ object RubroForm: TRubroForm
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object Panel1: TPanel
     Left = 0
     Top = 0
@@ -24,7 +24,6 @@ object RubroForm: TRubroForm
     Height = 389
     Align = alClient
     TabOrder = 0
-    ExplicitHeight = 415
     object Label1: TLabel
       Left = 1
       Top = 177
@@ -39,22 +38,17 @@ object RubroForm: TRubroForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitLeft = 36
-      ExplicitTop = 208
       ExplicitWidth = 54
     end
     object DBEdit1: TDBEdit
       Left = 1
       Top = 190
       Width = 357
-      Height = 21
+      Height = 24
       Align = alTop
       DataField = 'DESCRIPCION'
       DataSource = DM.dstRubro
       TabOrder = 0
-      ExplicitLeft = 99
-      ExplicitTop = 208
-      ExplicitWidth = 227
     end
     object DBGrid1: TDBGrid
       Left = 1
@@ -67,7 +61,7 @@ object RubroForm: TRubroForm
       TabOrder = 1
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
-      TitleFont.Height = -11
+      TitleFont.Height = -13
       TitleFont.Name = 'MS Sans Serif'
       TitleFont.Style = []
       Columns = <
@@ -104,9 +98,6 @@ object RubroForm: TRubroForm
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
-      ExplicitLeft = 36
-      ExplicitTop = 242
-      ExplicitWidth = 290
     end
     object BitBtn1: TBitBtn
       Left = 139
