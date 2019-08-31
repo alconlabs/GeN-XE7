@@ -361,6 +361,7 @@ object FBuscaCliente: TFBuscaCliente
       Width = 73
       Height = 50
       Align = alBottom
+      Caption = ' '
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11

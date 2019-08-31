@@ -27,7 +27,6 @@ object BuscaCompraForm: TBuscaCompraForm
     Align = alTop
     ParentBackground = False
     TabOrder = 0
-    ExplicitTop = -6
     object Label2: TLabel
       Left = 199
       Top = 5
@@ -211,6 +210,7 @@ object BuscaCompraForm: TBuscaCompraForm
       Width = 73
       Height = 50
       Align = alBottom
+      Caption = ' '
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -221,9 +221,7 @@ object BuscaCompraForm: TBuscaCompraForm
       ParentFont = False
       TabOrder = 0
       OnClick = SiBitBtnClick
-      ExplicitLeft = 11
-      ExplicitTop = 321
-      ExplicitWidth = 80
+      ExplicitLeft = 6
     end
     object todoBitBtn: TBitBtn
       Left = 1
@@ -258,8 +256,6 @@ object BuscaCompraForm: TBuscaCompraForm
       ParentFont = False
       TabOrder = 1
       OnClick = todoBitBtnClick
-      ExplicitTop = -13
-      ExplicitWidth = 98
     end
   end
   object DBGrid1: TDBGrid

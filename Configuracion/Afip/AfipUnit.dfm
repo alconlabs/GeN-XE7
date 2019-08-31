@@ -15,16 +15,16 @@ object AfipForm: TAfipForm
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
-    Left = 520
+    Left = 543
     Top = 0
-    Width = 123
+    Width = 100
     Height = 281
     Align = alRight
     TabOrder = 0
     object Label38: TLabel
       Left = 1
       Top = 117
-      Width = 121
+      Width = 98
       Height = 13
       Align = alBottom
       ExplicitWidth = 3
@@ -32,79 +32,84 @@ object AfipForm: TAfipForm
     object CRTButton: TButton
       Left = 1
       Top = 205
-      Width = 121
+      Width = 98
       Height = 25
       Align = alBottom
       Caption = '3 - CRT'
       TabOrder = 0
       OnClick = CRTButtonClick
+      ExplicitWidth = 121
     end
     object CSRButton: TButton
       Left = 1
       Top = 180
-      Width = 121
+      Width = 98
       Height = 25
       Align = alBottom
       Caption = '2 - CSR'
       TabOrder = 1
       OnClick = CSRButtonClick
+      ExplicitWidth = 121
     end
     object AyudaButton: TButton
       Left = 1
       Top = 1
-      Width = 121
+      Width = 98
       Height = 25
       Align = alTop
       Caption = '?'
       TabOrder = 2
       OnClick = AyudaButtonClick
+      ExplicitWidth = 121
     end
     object Button1: TButton
       Left = 1
       Top = 230
-      Width = 121
+      Width = 98
       Height = 25
       Align = alBottom
       Caption = '4 - Autorizar'
       TabOrder = 3
       OnClick = Button1Click
+      ExplicitWidth = 121
     end
     object PuntoVentaButton: TButton
       Left = 1
       Top = 155
-      Width = 121
+      Width = 98
       Height = 25
       Align = alBottom
       Caption = '1 - Punto Venta'
       TabOrder = 4
       OnClick = PuntoVentaButtonClick
+      ExplicitWidth = 121
     end
     object OpensslButton: TButton
       Left = 1
       Top = 130
-      Width = 121
+      Width = 98
       Height = 25
       Align = alBottom
       Caption = '0 - OpenSSL'
       TabOrder = 5
       OnClick = OpensslButtonClick
-      ExplicitLeft = 6
-      ExplicitTop = 124
+      ExplicitWidth = 121
     end
     object ProbarButton: TButton
       Left = 1
       Top = 255
-      Width = 121
+      Width = 98
       Height = 25
       Align = alBottom
       Caption = '5 - Probar'
       TabOrder = 6
       OnClick = ProbarButtonClick
+      ExplicitWidth = 121
     end
     object SubscripcionButton: TButton
       Left = 1
       Top = 26
-      Width = 121
+      Width = 98
       Height = 25
       Align = alTop
       Caption = 'SOPORTE'
@@ -116,15 +121,17 @@ object AfipForm: TAfipForm
       ParentFont = False
       TabOrder = 7
       OnClick = SubscripcionButtonClick
+      ExplicitWidth = 121
     end
   end
   object Memo1: TMemo
     Left = 0
     Top = 0
-    Width = 520
+    Width = 543
     Height = 281
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 520
   end
   object SaveTextFileDialog1: TSaveTextFileDialog
     Left = 312

@@ -583,20 +583,20 @@ begin
       if salir then Exit;
       with FBuscaProve do
       begin
-        ClienteEdit.Text := dm.qOperacion.FieldByName('CODIGO').AsString;
-        ClienteLabel.Caption := dm.qOperacion.FieldByName('Nombre').AsString;
-        Label3.Caption := dm.qOperacion.FieldByName('Direccion').AsString;
-        CUITEdit.Text := dm.qOperacion.FieldByName('CUIT').AsString;
-        if CUITEdit.Text='' then CUITEdit.Text := dm.qOperacion.FieldByName('DOCUMENTO').AsString;
-        EmailEdit.Text := dm.qOperacion.FieldByName('EMAIL').AsString;
-        CtaNombre := dm.qOperacion.FieldByName('CtaNombre').AsString;
-        CtaTipo := dm.qOperacion.FieldByName('CtaTipo').AsString;
-        CtaAnticipo := dm.qOperacion.FieldByName('CtaAnticipo').AsString;
-        PagareCheckBox.Checked := dm.qOperacion.FieldByName('PAGARE').AsBoolean;
+        ClienteEdit.Text := dm.qProveedor.FieldByName('CODIGO').AsString;
+        ClienteLabel.Caption := dm.qProveedor.FieldByName('Nombre').AsString;
+        Label3.Caption := dm.qProveedor.FieldByName('Direccion').AsString;
+        CUITEdit.Text := dm.qProveedor.FieldByName('CUIT').AsString;
+        if CUITEdit.Text='' then CUITEdit.Text := dm.qProveedor.FieldByName('DOCUMENTO').AsString;
+        EmailEdit.Text := dm.qProveedor.FieldByName('EMAIL').AsString;
+        CtaNombre := dm.qProveedor.FieldByName('CtaNombre').AsString;
+        CtaTipo := dm.qProveedor.FieldByName('CtaTipo').AsString;
+        CtaAnticipo := dm.qProveedor.FieldByName('CtaAnticipo').AsString;
+        PagareCheckBox.Checked := dm.qProveedor.FieldByName('PAGARE').AsBoolean;
         if (dm.ConfigQuery.FieldByName('IVA').AsString = 'Responsable Inscripto') and
-          (dm.qOperacion.FieldByName('IVA').AsString = 'RI') then cbTipo.ItemIndex := 0
+          (dm.qProveedor.FieldByName('IVA').AsString = 'RI') then cbTipo.ItemIndex := 0
         else
-        if (dm.qOperacion.FieldByName('IVA').AsString = 'RI') then
+        if (dm.qProveedor.FieldByName('IVA').AsString = 'RI') then
           cbTipo.ItemIndex := 6
         else
           cbTipo.ItemIndex := 11;
@@ -792,8 +792,8 @@ begin
         end else
         ProcCompra(PuntoVentaEdit.Text, cbTipo.Text, ClienteEdit.Text,
           FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-          VendedorEdit.Text, ComprobanteEdit.Text, CtaNombre, CuitEdit.Text, PagareCheckBox.Checked,
-          costo, Impuesto, StrToFloat(FECheque.Text),
+          VendedorEdit.Text, CuitEdit.Text, ComprobanteEdit.Text, CtaNombre,
+          PagareCheckBox.Checked, costo, Impuesto, StrToFloat(FECheque.Text),
           StrToFloat(FECheque.Text), StrToFloat(FEContado.Text), Total,
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
           Saldo, Pagado, NG105, NG21, NGO, IVA105, IVA21, IVAO, Exento, Total - Saldo
@@ -903,7 +903,7 @@ begin
       TipoRadioGroup.ItemIndex:=0;
       pPago.Visible:=False;
       lPrecio.Visible:=False;
-//      ClienteBitBtn.Click;
+      ClienteBitBtn.Click;
     end  else
     if TipoRadioGroup.ItemIndex=2 then
       begin

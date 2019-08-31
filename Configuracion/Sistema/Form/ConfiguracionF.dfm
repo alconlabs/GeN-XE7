@@ -21,23 +21,20 @@ object ConfiguracionForm: TConfiguracionForm
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
-    Left = 728
+    Left = 717
     Top = 0
-    Width = 64
+    Width = 75
     Height = 572
     Align = alRight
-    Caption = 'Grabar?'
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 720
-    ExplicitHeight = 561
     object BitBtn1: TBitBtn
       Left = 1
       Top = 471
-      Width = 62
+      Width = 73
       Height = 50
       Align = alBottom
-      Caption = 'Si'
+      Caption = 'Grabar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -65,12 +62,12 @@ object ConfiguracionForm: TConfiguracionForm
       ParentFont = False
       TabOrder = 0
       OnClick = BitBtn1Click
-      ExplicitTop = 460
+      ExplicitWidth = 62
     end
     object BitBtn2: TBitBtn
       Left = 1
       Top = 521
-      Width = 62
+      Width = 73
       Height = 50
       Align = alBottom
       Cancel = True
@@ -102,29 +99,27 @@ object ConfiguracionForm: TConfiguracionForm
       ParentFont = False
       TabOrder = 1
       OnClick = BitBtn2Click
-      ExplicitTop = 510
+      ExplicitWidth = 62
     end
   end
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 728
+    Width = 717
     Height = 572
     ActivePage = TabSheet3
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 720
-    ExplicitHeight = 561
+    ExplicitWidth = 728
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
-      ExplicitWidth = 712
-      ExplicitHeight = 533
+      ExplicitWidth = 720
       object Label43: TLabel
         Left = 3
         Top = 3
         Width = 162
-        Height = 17
+        Height = 13
         Caption = 'Cuenta Contable Asociada a'
         Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
@@ -894,8 +889,7 @@ object ConfiguracionForm: TConfiguracionForm
     end
     object TabSheet1: TTabSheet
       Caption = 'Parametros'
-      ExplicitLeft = 2
-      ExplicitTop = 27
+      ExplicitWidth = 720
       object Label1: TLabel
         Left = 16
         Top = 24
@@ -1043,8 +1037,7 @@ object ConfiguracionForm: TConfiguracionForm
     object TabSheet2: TTabSheet
       Caption = 'Lista de Precios'
       ImageIndex = 2
-      ExplicitWidth = 712
-      ExplicitHeight = 533
+      ExplicitWidth = 720
       object Label2: TLabel
         Left = 47
         Top = 56

@@ -7,7 +7,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -13
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   KeyPreview = True
@@ -18,14 +18,13 @@ object BuscaFacturaForm: TBuscaFacturaForm
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object Panel1: TPanel
     Left = 0
     Top = 0
     Width = 792
     Height = 67
     Align = alTop
-    Color = clBlack
     ParentBackground = False
     TabOrder = 0
     object Label2: TLabel
@@ -35,7 +34,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
       Height = 24
       Caption = 'OPERACION'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -48,7 +47,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
       Height = 24
       Caption = 'LETRA'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -19
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -87,7 +86,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
       Height = 57
       Caption = 'Tipo'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -102,19 +101,18 @@ object BuscaFacturaForm: TBuscaFacturaForm
     end
   end
   object Panel2: TPanel
-    Left = 692
+    Left = 717
     Top = 67
-    Width = 100
+    Width = 75
     Height = 399
     Align = alRight
     BevelOuter = bvLowered
-    Color = clBlack
     ParentBackground = False
     TabOrder = 1
     object Image1: TImage
       Left = 1
       Top = 298
-      Width = 98
+      Width = 73
       Height = 50
       Hint = 'EXPORTAR A EXCEL EN FORMATO CSV'
       Align = alBottom
@@ -201,7 +199,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
       Height = 13
       Caption = 'Enviar email?'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -210,10 +208,10 @@ object BuscaFacturaForm: TBuscaFacturaForm
     object SiBitBtn: TBitBtn
       Left = 1
       Top = 348
-      Width = 98
+      Width = 73
       Height = 50
       Align = alBottom
-      Caption = 'Imprimir'
+      Caption = ' '
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -228,7 +226,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
     object FacturarBitBtn: TBitBtn
       Left = 1
       Top = 51
-      Width = 98
+      Width = 73
       Height = 50
       Align = alTop
       Caption = '&Facturar'
@@ -247,7 +245,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
     object todoBitBtn: TBitBtn
       Left = 1
       Top = 1
-      Width = 98
+      Width = 73
       Height = 50
       Align = alTop
       Caption = 'TODO'
@@ -283,9 +281,9 @@ object BuscaFacturaForm: TBuscaFacturaForm
       Top = 106
       Width = 14
       Height = 17
-      Color = clBlack
+      Color = clBtnFace
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -298,7 +296,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
   object DBGrid1: TDBGrid
     Left = 0
     Top = 67
-    Width = 692
+    Width = 717
     Height = 399
     Align = alClient
     DataSource = DM.dsqOperacion
@@ -307,7 +305,7 @@ object BuscaFacturaForm: TBuscaFacturaForm
     TabOrder = 2
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
-    TitleFont.Height = -11
+    TitleFont.Height = -13
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
     OnDblClick = DBGrid1DblClick

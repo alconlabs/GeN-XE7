@@ -58,7 +58,6 @@ type
     FDBatchMoveTextReader1: TFDBatchMoveTextReader;
     FDBatchMove1: TFDBatchMove;
     BaseDatosFB: TFDConnection;
-    IBScript1: TIBScript;
     ConfigQuery: TFDQuery;
     dstArticulo: TDataSource;
     dsqMaterial: TDataSource;
@@ -153,9 +152,10 @@ type
     procedure CrearTablasSiap;
     procedure ConectarSDB;
     procedure CrearMtIva;
-    procedure CrearTabalaRetPer;
+    procedure CrearTablaRetPer;
     procedure ActualizarTrigger(name,active,body:string);
     procedure ActualizarTriggerFecha;
+    procedure CrearTablasIva;
   public
   const
     NumThreads: Integer = 4;
@@ -298,9 +298,12 @@ begin
     TraerUsuario;
     if Control <> '' then
     begin
-      Query.SQL.Text := 'update "Control" set MAQUINA=' + QuotedStr(Maquina) +
-        ' where CODIGO=' + Control;
-      Query.ExecSQL;
+//      Query.SQL.Text :=
+      BaseDatosFB.ExecSQL(
+        'update "Control" set MAQUINA=' + QuotedStr(Maquina) +
+        ' where CODIGO=' + Control
+      );
+//      Query.ExecSQL;
 //      Query.Transaction.Commit;
     end;
   end;
@@ -641,10 +644,12 @@ begin
   begin
     Query.Close;
     c:=IntToStr(UltimoRegistro('Imprimir', 'CODIGO'));
-    Query.SQL.Text :=
-      'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES ('+c+', '+QuotedStr(reporte)+', '+QuotedStr(reporte)+')';
-    Query.ExecSQL;
-    Query.Transaction.Commit;
+//    Query.SQL.Text :=
+    BaseDatosFB.ExecSQL(
+      'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES ('+c+', '+QuotedStr(reporte)+', '+QuotedStr(reporte)+')'
+    );
+//    Query.ExecSQL;
+//    Query.Transaction.Commit;
   end;
 end;
 
@@ -723,7 +728,8 @@ begin
       CopyDir(ejecutable+'rpt', Path);
       CrearCbtetipo;
       CrearTablasSiap;
-      CrearTabalaRetPer;
+      CrearTablaRetPer;
+      CrearTablasIva;
       ActualizarTriggerFecha;
       ActualizarVersion;
     end;
@@ -762,41 +768,8 @@ begin
       ActualizarTabla('Presupuesto', 'CBTESASOC', 'INTEGER');
       ActualizarTabla('Compra', 'CBTESASOC', 'INTEGER');
     end;
-  {
-  <ar:Iva>
-    <ar:AlicIva>
-      <ar:Id>5</ar:Id>  21%
-      <ar:BaseImp>100</ar:BaseImp>
-      <ar:Importe>21</ar:Importe>
-    </ar:AlicIva>
-    <ar:AlicIva>
-      <ar:Id>4</ar:Id>  10.5%
-      <ar:BaseImp>50</ar:BaseImp>
-      <ar:Importe>5.25</ar:Importe>
-    </ar:AlicIva>
-  </ar:Iva>
-  }
-    if not ExisteEnTabla('Iva', '') then
-    begin
-      CrearTabla('Iva', 'CODIGO', 'INTEGER');
-       ActualizarTabla('Iva', 'TASA', 'DOUBLE PRECISION');
-       ActualizarTabla('Iva', 'DESCRIPCION', 'VARCHAR(255)');
-       ActualizarIVA('3', '0');
-       ActualizarIVA('4', '10.5');
-       ActualizarIVA('5', '21');
-       ActualizarIVA('6', '27');
-       ActualizarIVA('8', '5');
-       ActualizarIVA('9', '2.5');
-      CrearTabla('AlicIva', 'CODIGO', 'INTEGER');
-       ActualizarTabla('AlicIva', 'ID', 'INTEGER');
-       ActualizarTabla('AlicIva', 'BASEIMP', 'DOUBLE PRECISION');
-       ActualizarTabla('AlicIva', 'IMPORTE', 'DOUBLE PRECISION');
-      ActualizarTabla('Operacion', 'ALICIVA', 'INTEGER');
-      ActualizarTabla('Venta', 'ALICIVA', 'INTEGER');
-      ActualizarTabla('CtaCte', 'ALICIVA', 'INTEGER');
-      ActualizarTabla('Presupuesto', 'ALICIVA', 'INTEGER');
-    end;
-    ActualizarTabla('Compra', 'ALICIVA', 'INTEGER');
+
+
     ActualizarImprimir('FElectronica');
     ActualizarImprimir('TElectronica');
   end;
@@ -819,11 +792,13 @@ procedure TDM.ActualizarTabla;
 begin
   if not ExisteEnTabla(TB_NAME, FLD_NAME) then
   begin
-    IBScript1.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
-      +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
-      +' ALTER TABLE "'+(TB_NAME)+'" ADD '+(FLD_NAME)+' '+(TYP_NAME)+';';
-    IBScript1.ExecuteScript;
-    IBScript1.Transaction.CommitRetaining;
+    BaseDatosFB.ExecSQL(
+//    IBScript1.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
+//        +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
+        ' ALTER TABLE "'+(TB_NAME)+'" ADD '+(FLD_NAME)+' '+(TYP_NAME)+';'
+      );
+//    IBScript1.ExecuteScript;
+//    IBScript1.Transaction.CommitRetaining;
   end;
 end;
 
@@ -831,19 +806,23 @@ procedure TDM.CrearTabla;
 begin
   if not ExisteEnTabla(TB_NAME, '') then
   begin
-    IBScript1.Script.Text := 'SET NAMES WIN1252; CONNECT '+QuotedStr(BaseDeDatos)
-      +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
-      +' CREATE TABLE "'+(TB_NAME)+'" ( '+(FLD_NAME)+' '+TYP_NAME+' )';
-    IBScript1.ExecuteScript;
+    BaseDatosFB.ExecSQL(
+//    IBScript1.Script.Text := 'SET NAMES WIN1252; CONNECT '+QuotedStr(BaseDeDatos)
+//      +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
+      ' CREATE TABLE "'+(TB_NAME)+'" ( '+(FLD_NAME)+' '+TYP_NAME+' )'
+      );
+//    IBScript1.ExecuteScript;
   end;
 end;
 
 procedure TDM.ActualizarIVA;
 begin
-  Query.SQL.Text :=
-    'INSERT INTO "Iva" (CODIGO, TASA) VALUES ('+CODIGO+', '+TASA+')';
-  Query.ExecSQL;
-  Query.Transaction.Commit;
+//  Query.SQL.Text :=
+    BaseDatosFB.ExecSQL(
+     'INSERT INTO "Iva" (CODIGO, TASA) VALUES ('+CODIGO+', '+TASA+')'
+    );
+//  Query.ExecSQL;
+//  Query.Transaction.Commit;
 end;
 
 function TDM.TraerValor;
@@ -854,6 +833,7 @@ begin
       Query.SQL.Text := Query.SQL.Text + ' WHERE CODIGO='+codigo;
   Query.Open;
   result := Query.Fields.Fields[0].AsString;
+  if result='' then result:='0';
 end;
 
 function TDM.TraerValor2;
@@ -882,10 +862,12 @@ end;
 
 procedure TDM.AgregarValor;
 begin
-  Query.SQL.Text :=
-    'INSERT INTO "'+tabla+'" ('+campo+') VALUES ('+valor+')';
-  Query.ExecSQL;
-  Query.Transaction.Commit;
+//  Query.SQL.Text :=
+    BaseDatosFB.ExecSQL(
+      'INSERT INTO "'+tabla+'" ('+campo+') VALUES ('+valor+')'
+    );
+//  Query.ExecSQL;
+//  Query.Transaction.Commit;
 end;
 
 procedure TDM.GetBuildInfo;
@@ -915,8 +897,8 @@ begin
 //  if codigo<>'' then Query.SQL.Text := Query.SQL.Text+' where CODIGO='+codigo;
 //  Query.ExecSQL;
 //  Query.Transaction.Commit;
-  with IBScript1 do
-  begin
+//  with IBScript1 do
+//  begin
       if codigo<>'' then codigo := ' where CODIGO='+codigo;
 //      Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
 //        +' USER ''SYSDBA'' PASSWORD ''masterkey''; '
@@ -929,7 +911,7 @@ begin
 //        if not Active then StartTransaction;
 //        CommitRetaining;
 //      end;
-  end;
+//  end;
 end;
 
 procedure TDM.CrearTable;
@@ -1543,7 +1525,7 @@ begin
   EscribirINI;
 end;
 
-procedure TDM.CrearTabalaRetPer;
+procedure TDM.CrearTablaRetPer;
 begin
   sdb.ExecSQL('CREATE TABLE IF NOT EXISTS RetPer ('
     +' Codigo INTEGER'
@@ -1712,6 +1694,47 @@ begin
     FDBatchMove1.Execute;
   finally
   //
+  end;
+end;
+
+procedure TDM.CrearTablasIva;
+begin
+    {
+  <ar:Iva>
+    <ar:AlicIva>
+      <ar:Id>5</ar:Id>  21%
+      <ar:BaseImp>100</ar:BaseImp>
+      <ar:Importe>21</ar:Importe>
+    </ar:AlicIva>
+    <ar:AlicIva>
+      <ar:Id>4</ar:Id>  10.5%
+      <ar:BaseImp>50</ar:BaseImp>
+      <ar:Importe>5.25</ar:Importe>
+    </ar:AlicIva>
+  </ar:Iva>
+  }
+  if not ExisteEnTabla('Iva', '') then
+  begin
+    CrearTabla('Iva', 'CODIGO', 'INTEGER');
+     ActualizarTabla('Iva', 'TASA', 'DOUBLE PRECISION');
+     ActualizarTabla('Iva', 'DESCRIPCION', 'VARCHAR(255)');
+     ActualizarIVA('3', '0');
+     ActualizarIVA('4', '10.5');
+     ActualizarIVA('5', '21');
+     ActualizarIVA('6', '27');
+     ActualizarIVA('8', '5');
+     ActualizarIVA('9', '2.5');
+  end;
+  if not ExisteEnTabla('AlicIva', '') then begin
+    CrearTabla('AlicIva', 'CODIGO', 'INTEGER');
+    ActualizarTabla('AlicIva', 'ID', 'INTEGER');
+    ActualizarTabla('AlicIva', 'BASEIMP', 'DOUBLE PRECISION');
+    ActualizarTabla('AlicIva', 'IMPORTE', 'DOUBLE PRECISION');
+    ActualizarTabla('Operacion', 'ALICIVA', 'INTEGER');
+    ActualizarTabla('Venta', 'ALICIVA', 'INTEGER');
+    ActualizarTabla('CtaCte', 'ALICIVA', 'INTEGER');
+    ActualizarTabla('Presupuesto', 'ALICIVA', 'INTEGER');
+    ActualizarTabla('Compra', 'ALICIVA', 'INTEGER');
   end;
 end;
 

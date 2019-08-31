@@ -830,7 +830,7 @@ object OperacionForm: TOperacionForm
         NumbersOnly = True
         ParentFont = False
         TabOrder = 2
-        Text = 'Nro. Comprobante'
+        Text = 'Nro.Comprobante'
         TextHint = 'Nro. Comprobante'
       end
       object PuntoVentaEdit: TEdit
@@ -850,7 +850,7 @@ object OperacionForm: TOperacionForm
         NumbersOnly = True
         ParentFont = False
         TabOrder = 1
-        Text = 'Nro. Punto de Venta'
+        Text = 'Pto.Vta.'
         TextHint = 'Nro. Comprobante'
       end
     end

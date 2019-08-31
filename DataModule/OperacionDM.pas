@@ -43,7 +43,7 @@ type
 //      cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
 //      int, n10, n21, i10, i21, deud, ulc: Double):Boolean;
      (pvta, com,
-      let, cod, fech, cui, ven, ctan: string; pre, pgr, impr: Boolean;
+      let, cod, fech, ven, cui, ctan: string; pre, pgr, impr: Boolean;
       cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
       int, n10, n21, i10, i21, deud, ulc,
       n3, i3, exc, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib
@@ -51,7 +51,7 @@ type
     Procedure ProcOPER(tipo, let, cod, fech, ven, cui, ctan: string;
       pre, pgr, impr: Boolean; cost, comv, impu, cheq, ch3q, cont, tot, sbt, des,
       tarj, otr, sal, pag, int, n10, n21, i10, i21, deud, ulc: Double);
-    Procedure ProcCompra(pvta, let, cod, fech, ven, com, ctan,cui: string; pgr: Boolean;
+    Procedure ProcCompra(pvta, let, cod, fech, ven, cui, com, ctan: string; pgr: Boolean;
       cost, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag, n10,
       n21, n3, i10, i21, i3, exc, deud , noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib
       : Double);
@@ -118,7 +118,7 @@ with dm do begin
   // Insertar en la tabla LibroDiario
   LibroDiario(tipo + ' CAJA', '', '', soc, '', false, strtofloat(imp), 0, 0, 0,
     0, 0, 0, 0, 0, 0);
-  qQ.Transaction.CommitRetaining;
+  BaseDatosFB.CommitRetaining;
 end;
 end;
 
@@ -441,7 +441,7 @@ with dm do begin
   LibroDiario('VENTA', nro, let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, comv);
   // Completa la Transaccion
-  qQ.Transaction.CommitRetaining;
+  BaseDatosFB.CommitRetaining;
   // IMPRIMIR
   if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
   begin
@@ -495,7 +495,7 @@ with dm do begin
   LibroDiario(tipo, '0', '', cod, fecha, false, 0, pag, cheq, ch3q, cont,
     tarj, 0, 0, 0, 0);
   // --CONTABILIDAD **************************************************************
-  qQ.Transaction.CommitRetaining;
+  BaseDatosFB.CommitRetaining;
 end;
 end;
 
@@ -763,7 +763,7 @@ with dm do begin
     end;
     // -----------------------------------3------------------------------------------
     // CONTABILIDAD---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    qQ.Transaction.CommitRetaining;
+    BaseDatosFB.CommitRetaining;
     // IMPRIMIR
     if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
     begin
@@ -790,6 +790,7 @@ var
   IIBB, cmv: Double;
 begin
 with dm do begin
+  BaseDatosFB.StartTransaction;
   nro := inttostr(DM.UltimoRegistro('Presupuesto', 'CODIGO'));
   //AlicuotaIVA
   aIva := InsertarAlicIva;
@@ -820,7 +821,7 @@ with dm do begin
     qQ.ExecSQL;
   end;
   // Completa la Transaccion
-  qQ.Transaction.CommitRetaining;
+  BaseDatosFB.CommitRetaining;
   // IMPRIMIR
   if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
   begin
@@ -841,6 +842,7 @@ var
   ctaCte : boolean;
 begin
 with dm do begin
+  BaseDatosFB.StartTransaction;
   //  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
   DM.FormatearFecha;
   pagare := '0';
@@ -981,7 +983,7 @@ with dm do begin
   //Retenciones y Percepciones
   dm.AgregarRetPer('VENTA',StrToInt(nro),noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib);
   // Completa la Transaccion
-  qQ.Transaction.CommitRetaining;
+  BaseDatosFB.CommitRetaining;
 //  if webUpd='True' then RestDataModule.CrearOrden;
   // IMPRIMIR
   if impr then
@@ -1002,6 +1004,7 @@ var
   IIBB, cmv: Double;
 begin
 with dm do begin
+  BaseDatosFB.StartTransaction;
   pagare := '0';
   nro := (DM.UltimoRegistro('Operacion', 'CODIGO'));
 //  if nro = '1' then nro := inttostr(dm.ConfigQuery.FieldByName('NroFactura').AsInteger + 1);
@@ -1092,7 +1095,7 @@ with dm do begin
   LibroDiario(tipo, IntToStr(nro), let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, comv);
   // Completa la Transaccion
-  qQ.Transaction.CommitRetaining;
+  BaseDatosFB.CommitRetaining;
   // IMPRIMIR
   if impr then
   begin
@@ -1111,6 +1114,7 @@ var
   IIBB, cmv, ret, per: Double;
 begin
 with dm do begin
+  BaseDatosFB.StartTransaction;
   cmv := 0;
   nro := IntToStr(DM.UltimoRegistro('Compra', 'CODIGO'));
   per := noGra+perIIBB+perImpMun+impInt+otrTrib;
@@ -1193,7 +1197,8 @@ with dm do begin
   //Retenciones y Percepciones
   dm.AgregarRetPer('COMPRA',StrToInt(nro),noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib);
   // Completa la Transaccion
-  qQ.Transaction.CommitRetaining;
+//  BaseDatosFB.CommitRetaining;
+BaseDatosFB.CommitRetaining;
 end;
 end;
 
@@ -1564,7 +1569,7 @@ with dm do begin
   qQ.SQL.Text := 'INSERT INTO "'+tabla+'" (CODIGO,DESCRIPCION) VALUES ('
   + codigo + ',' + QuotedStr(desc) + ')';
   qQ.ExecSQL;
-  qQ.Transaction.CommitRetaining;
+  BaseDatosFB.CommitRetaining;
 end;
 end;
 
@@ -1715,7 +1720,7 @@ with dm do begin
 //      +' CODIGOBARRA = ' + QuotedStr(codigobarra);
 //        +' DESCRIPCION = ' + QuotedStr(descripcion);
     qQ.ExecSQL;
-//    qQ.Transaction.CommitRetaining;
+//    BaseDatosFB.CommitRetaining;
 end;
 end;
 
@@ -1809,6 +1814,7 @@ var
   ctaCte: boolean;
 begin
 with dm do begin
+  BaseDatosFB.StartTransaction;
   FormatearFecha;
   pagare := '0';
   nro := (DM.UltimoRegistro('Venta', 'CODIGO'));
@@ -1949,7 +1955,7 @@ with dm do begin
   LibroDiario('VENTA', IntToStr(nro), let, cod, fech, pgr, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0);
   // Completa la Transaccion
-  qQ.Transaction.CommitRetaining;
+  BaseDatosFB.CommitRetaining;
 //  if webUpd='True' then RestDataModule.CrearOrden;
   // IMPRIMIR
   if impr then

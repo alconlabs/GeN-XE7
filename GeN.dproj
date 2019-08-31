@@ -100,10 +100,10 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.36;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.39;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <UWP_DelphiLogo44>GeN-Logo-44x44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>GeN-Logo-150x150.png</UWP_DelphiLogo150>
-        <VerInfo_Build>36</VerInfo_Build>
+        <VerInfo_Build>39</VerInfo_Build>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
         <VerInfo_Release>0</VerInfo_Release>
         <PF_KeyStorePass>85190DA36405559EA3757169D17BE32C819C055DA057979397B50FF08E723CD8DB05A38FE3431C4DC1CC572EFA9CC37ABAF83612047422E0166545C2E5F1228CC90AB967EE98A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
