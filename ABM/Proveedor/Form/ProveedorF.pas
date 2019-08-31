@@ -78,6 +78,7 @@ type
     BuscarBitBtn: TBitBtn;
     bExportar: TButton;
     bImportar: TButton;
+    Label13: TLabel;
     procedure SiBitBtnClick(Sender: TObject);
     procedure NoBitBtnClick(Sender: TObject);
     procedure BuscarBitBtnClick(Sender: TObject);

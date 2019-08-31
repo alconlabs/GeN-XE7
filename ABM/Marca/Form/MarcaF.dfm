@@ -48,10 +48,11 @@ object MarcaForm: TMarcaForm
       TabOrder = 0
     end
     object DBGrid1: TDBGrid
-      Left = 36
-      Top = 32
-      Width = 290
-      Height = 158
+      Left = 1
+      Top = 1
+      Width = 357
+      Height = 200
+      Align = alTop
       DataSource = DM.dstMarca
       ReadOnly = True
       TabOrder = 1
@@ -69,16 +70,17 @@ object MarcaForm: TMarcaForm
         item
           Expanded = False
           FieldName = 'DESCRIPCION'
-          Width = 184
+          Width = 268
           Visible = True
         end>
     end
     object DBNavigator1: TDBNavigator
-      Left = 36
-      Top = 266
-      Width = 290
+      Left = 1
+      Top = 364
+      Width = 357
       Height = 50
       DataSource = DM.dstMarca
+      Align = alBottom
       Hints.Strings = (
         'Primer registro'
         'Registro anterior'
@@ -93,10 +95,13 @@ object MarcaForm: TMarcaForm
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
+      ExplicitLeft = 36
+      ExplicitTop = 266
+      ExplicitWidth = 290
     end
     object BitBtn1: TBitBtn
       Left = 139
-      Top = 337
+      Top = 281
       Width = 80
       Height = 50
       Caption = 'Cerrar'

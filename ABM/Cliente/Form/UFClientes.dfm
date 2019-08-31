@@ -24,15 +24,17 @@ object FClientes: TFClientes
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 488
-    Height = 454
-    ActivePage = TabSheet5
+    Width = 559
+    Height = 429
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 488
+    ExplicitHeight = 454
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
-      ExplicitLeft = 3
-      ExplicitTop = 27
+      ExplicitWidth = 480
+      ExplicitHeight = 426
       object Label2: TLabel
         Left = 50
         Top = 39
@@ -228,20 +230,26 @@ object FClientes: TFClientes
     object TabSheet2: TTabSheet
       Caption = 'Notas'
       ImageIndex = 1
+      ExplicitWidth = 480
+      ExplicitHeight = 426
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
-        Width = 480
-        Height = 426
+        Width = 551
+        Height = 401
         Align = alClient
         DataField = 'Notas'
         DataSource = DM.dstCliente
         TabOrder = 0
+        ExplicitWidth = 480
+        ExplicitHeight = 426
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
+      ExplicitWidth = 480
+      ExplicitHeight = 426
       object Label15: TLabel
         Left = 105
         Top = 158
@@ -342,6 +350,7 @@ object FClientes: TFClientes
         DataSource = DM.dstCliente
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstCuenta
         TabOrder = 3
       end
       object DBLookupComboBox3: TDBLookupComboBox
@@ -353,6 +362,7 @@ object FClientes: TFClientes
         DataSource = DM.dstCliente
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstCuenta
         TabOrder = 4
       end
       object DBLookupComboBox1: TDBLookupComboBox
@@ -364,12 +374,15 @@ object FClientes: TFClientes
         DataSource = DM.dstCliente
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstCuenta
         TabOrder = 5
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'Datos Secundarios'
       ImageIndex = 3
+      ExplicitWidth = 480
+      ExplicitHeight = 426
       object Label19: TLabel
         Left = 16
         Top = 39
@@ -656,6 +669,10 @@ object FClientes: TFClientes
     object TabSheet5: TTabSheet
       Caption = 'Parametros'
       ImageIndex = 4
+      ExplicitLeft = 3
+      ExplicitTop = 27
+      ExplicitWidth = 512
+      ExplicitHeight = 426
       object Label13: TLabel
         Left = 2
         Top = 34
@@ -818,12 +835,11 @@ object FClientes: TFClientes
     end
   end
   object Panel1: TPanel
-    Left = 488
+    Left = 559
     Top = 0
-    Width = 146
-    Height = 454
+    Width = 75
+    Height = 429
     Align = alRight
-    Color = clBlack
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11
@@ -832,38 +848,30 @@ object FClientes: TFClientes
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
-    object Label34: TLabel
-      Left = 50
-      Top = 328
-      Width = 46
-      Height = 13
-      Caption = 'Grabar?'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
+    ExplicitHeight = 454
     object Label1: TLabel
-      Left = 41
-      Top = 66
-      Width = 48
-      Height = 13
+      Left = 1
+      Top = 51
+      Width = 73
+      Height = 14
+      Align = alTop
+      Alignment = taCenter
       Caption = 'Nro. Cta'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 144
     end
     object SiBitBtn: TBitBtn
-      Left = 33
-      Top = 272
-      Width = 80
+      Left = 1
+      Top = 328
+      Width = 73
       Height = 50
-      Caption = 'Si'
+      Align = alBottom
+      Caption = 'Grabar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -891,12 +899,16 @@ object FClientes: TFClientes
       ParentFont = False
       TabOrder = 0
       OnClick = SiBitBtnClick
+      ExplicitLeft = 33
+      ExplicitTop = 272
+      ExplicitWidth = 80
     end
     object NoBitBtn: TBitBtn
-      Left = 33
-      Top = 348
-      Width = 80
+      Left = 1
+      Top = 378
+      Width = 73
       Height = 50
+      Align = alBottom
       Caption = 'No'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -908,15 +920,78 @@ object FClientes: TFClientes
       ParentFont = False
       TabOrder = 1
       OnClick = NoBitBtnClick
+      ExplicitLeft = 33
+      ExplicitTop = 348
+      ExplicitWidth = 80
     end
+    object ImprimirBitBtn: TBitBtn
+      Left = 1
+      Top = 89
+      Width = 73
+      Height = 50
+      Align = alTop
+      Caption = 'Imprimir'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clPurple
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 2
+      OnClick = ImprimirBitBtnClick
+      ExplicitLeft = 33
+      ExplicitTop = 154
+      ExplicitWidth = 80
+    end
+    object BuscarBitBtn: TBitBtn
+      Left = 1
+      Top = 1
+      Width = 73
+      Height = 50
+      Align = alTop
+      Caption = 'Buscar F5'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clNavy
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 3
+      OnClick = BuscarBitBtnClick
+      ExplicitWidth = 144
+    end
+    object CodigoDBEdit: TDBEdit
+      Left = 1
+      Top = 65
+      Width = 73
+      Height = 24
+      Align = alTop
+      DataField = 'CODIGO'
+      DataSource = DM.dstCliente
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 4
+    end
+  end
+  object pButton: TPanel
+    Left = 0
+    Top = 429
+    Width = 634
+    Height = 25
+    Align = alBottom
+    TabOrder = 2
     object DBNavigator1: TDBNavigator
       Left = 1
-      Top = 421
-      Width = 144
-      Height = 32
+      Top = 1
+      Width = 632
+      Height = 23
       DataSource = DM.dstCliente
       VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete]
-      Align = alBottom
+      Align = alClient
       Hints.Strings = (
         'Primer registro'
         'Registro anterior'
@@ -930,53 +1005,11 @@ object FClientes: TFClientes
         'Refrescar datos')
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 2
-    end
-    object ImprimirBitBtn: TBitBtn
-      Left = 33
-      Top = 154
-      Width = 80
-      Height = 50
-      Caption = 'Imprimir'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clPurple
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 3
-      OnClick = ImprimirBitBtnClick
-    end
-    object BuscarBitBtn: TBitBtn
-      Left = 1
-      Top = 1
-      Width = 144
-      Height = 50
-      Align = alTop
-      Caption = 'Buscar F5'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNavy
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 4
-      OnClick = BuscarBitBtnClick
-    end
-    object CodigoDBEdit: TDBEdit
-      Left = 32
-      Top = 85
-      Width = 76
-      Height = 21
-      DataField = 'CODIGO'
-      DataSource = DM.dstCliente
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 5
+      TabOrder = 0
+      ExplicitLeft = 2
+      ExplicitTop = 422
+      ExplicitWidth = 120
+      ExplicitHeight = 32
     end
   end
 end

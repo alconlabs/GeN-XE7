@@ -215,7 +215,6 @@ begin
     try
       // CONECTAR BASE DE DATOS
       // CONTROL DE USUARIOS
-
         TraerConfig;
         Query.SQL.Text :=
           'Select * From "Usuario" Where (NOMBRE=''admin'' and "password"=''admin'')';

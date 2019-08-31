@@ -18,45 +18,10 @@ uses
 
 type
   TDM = class(TDataModule)
-    Consulta: TIBScript;
+    Consulta1: TIBScript;
     OpenDialog1: TOpenDialog;
     FDTable1: TFDTable;
     FDQuery1: TFDQuery;
-    tLibroIVAventa: TIBTable;
-    tLibroIVAventaCODIGO: TIntegerField;
-    tLibroIVAventaFECHA: TDateTimeField;
-    tLibroIVAventaFACTURA: TIBStringField;
-    tLibroIVAventaCLIENTE: TIBStringField;
-    tLibroIVAventaCUIT: TIBStringField;
-    tLibroIVAventaCONDICION: TIBStringField;
-    tLibroIVAventaNG1: TFloatField;
-    tLibroIVAventaNG2: TFloatField;
-    tLibroIVAventaNG3: TFloatField;
-    tLibroIVAventaIVA1: TFloatField;
-    tLibroIVAventaIVA2: TFloatField;
-    tLibroIVAventaIVA3: TFloatField;
-    tLibroIVAventaOEIIBB: TFloatField;
-    tLibroIVAventaIDERPYPAC: TFloatField;
-    tLibroIVAventaITF: TFloatField;
-    tLibroIVAventaCBTETIPO: TIBStringField;
-    tLibroIVAventaPTOVTA: TIBStringField;
-    tLibroIVAventaCBTEDESDE: TIBStringField;
-    tLibroIVAventaCBTEHASTA: TIBStringField;
-    tLibroIVAventaDOCTIPO: TIBStringField;
-    tLibroIVAventaNOMCLI: TIBStringField;
-    tLibroIVAventaMONID: TIBStringField;
-    tLibroIVAventaMONCOTIZ: TIBStringField;
-    tLibroIVAventaCANTIVA: TIBStringField;
-    tLibroIVAventaOPCION: TIBStringField;
-    tLibroIVAventaFCHVTOPAGO: TIBStringField;
-    tLibroIVAventaALICIVA: TIBStringField;
-    tLibroIVAventaIMPNETO: TIBStringField;
-    tLibroIVAventaNOGRABADO: TIBStringField;
-    tLibroIVAventaIMPOPEX: TIBStringField;
-    tLibroIVAventaIMPIVA: TIBStringField;
-    tLibroIVAventaGENERALES: TIBStringField;
-    tLibroIVAventaNOCAT: TIBStringField;
-    tLibroIVAventaIMPTRIB: TIBStringField;
     sdb: TFDConnection;
     tCbteTipo: TFDQuery;
     tSiapVtaComp: TFDQuery;
@@ -93,39 +58,26 @@ type
     FDBatchMoveTextReader1: TFDBatchMoveTextReader;
     FDBatchMove1: TFDBatchMove;
     BaseDatosFB: TFDConnection;
-    FDScript1: TFDScript;
     IBScript1: TIBScript;
     ConfigQuery: TFDQuery;
-    BaseDatosIB: TIBDatabase;
     dstArticulo: TDataSource;
-    tMarca: TIBTable;
-    tMaterial: TIBTable;
     dsqMaterial: TDataSource;
     dsqUsuario: TDataSource;
     dstMarca: TDataSource;
-    qQ: TIBQuery;
     dsqCuenta: TDataSource;
-    tProveedor: TIBTable;
     dstProveedor: TDataSource;
-    qTemp: TIBQuery;
-    tIVA: TIBTable;
     dstIVA: TDataSource;
     dstCategoria: TDataSource;
-    tSubCategoria: TIBTable;
     dstSubCategoria: TDataSource;
-    tRubro: TIBTable;
     dstRubro: TDataSource;
     qODM: TFDQuery;
     dsqArticulo: TDataSource;
     dsqCliente: TDataSource;
     dsqVendedor: TDataSource;
-    tVendedor: TIBTable;
     dstVendedor: TDataSource;
     dstCuenta: TDataSource;
-    tUsuario: TIBTable;
     dstUsuario: TDataSource;
     dstCliente: TDataSource;
-    tEmpresa: TIBTable;
     dstEmpresa: TDataSource;
     dsqIIBB: TDataSource;
     dsqProveedor: TDataSource;
@@ -136,11 +88,8 @@ type
     dsqCaja: TDataSource;
     dsqGanancia: TDataSource;
     dsqLibroDiario: TDataSource;
-    Transaccion: TIBTransaction;
     dsqLibro: TDataSource;
     dsqTarjeta: TDataSource;
-    qT: TIBQuery;
-    qD: TIBQuery;
     Query: TFDQuery;
     qArticulo: TFDQuery;
     qCaja: TFDQuery;
@@ -163,6 +112,21 @@ type
     tCliente: TFDTable;
     tConfiguracion: TFDTable;
     tCuenta: TFDTable;
+    tIVA: TFDTable;
+    tLibroIVAventa: TFDTable;
+    tMaterial: TFDTable;
+    tMarca: TFDTable;
+    tProveedor: TFDTable;
+    tEmpresa: TFDTable;
+    tRubro: TFDTable;
+    tSubCategoria: TFDTable;
+    tUsuario: TFDTable;
+    tVendedor: TFDTable;
+    qQ: TFDQuery;
+    qTemp: TFDQuery;
+    qT: TFDQuery;
+    qD: TFDQuery;
+    Consulta: TFDScript;
 
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
@@ -487,7 +451,7 @@ procedure TDM.connection;
 begin
   FormatearFecha;
   if BaseDatosFB.Connected = True then BaseDatosFB.Close;
-  if BaseDatosIB.Connected = True then BaseDatosIB.Close;
+//  if BaseDatosIB.Connected = True then BaseDatosIB.Close;
   // Obtiene la ruta y el nombre de la base de datos
   Path := TPath.GetDocumentsPath()+'\Civeloo\GeN\';
   ejecutable := ExtractFilePath(Application.ExeName);
@@ -501,8 +465,8 @@ begin
   If BasedeDatos = '' then ShowMessage('Error al cargar Base de Datos');
   BaseDatosFB.Params.Database:=BasedeDatos;
   BaseDatosFB.Connected:=True;
-  BaseDatosIB.DatabaseName:=BasedeDatos;
-  BaseDatosIB.Open;
+//  BaseDatosIB.DatabaseName:=BasedeDatos;
+//  BaseDatosIB.Open;
   ConectarSDB;
 end;
 
@@ -570,7 +534,7 @@ end;
 
 procedure TDM.VaciarBase;
 begin
-  BaseDatosIB.Close;
+//  BaseDatosIB.Close;
   BaseDatosFB.Close;
   TDirectory.Delete(Path, True);
 //  Consulta.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)

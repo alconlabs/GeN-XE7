@@ -2,7 +2,7 @@ object RubroForm: TRubroForm
   Left = 450
   Top = 246
   Caption = 'Rubro'
-  ClientHeight = 415
+  ClientHeight = 389
   ClientWidth = 359
   Color = clBlack
   Font.Charset = DEFAULT_CHARSET
@@ -21,14 +21,16 @@ object RubroForm: TRubroForm
     Left = 0
     Top = 0
     Width = 359
-    Height = 415
+    Height = 389
     Align = alClient
     TabOrder = 0
+    ExplicitHeight = 415
     object Label1: TLabel
-      Left = 36
-      Top = 208
-      Width = 54
+      Left = 1
+      Top = 177
+      Width = 357
       Height = 13
+      Align = alTop
       Caption = 'NOMBRE'
       FocusControl = DBEdit1
       Font.Charset = DEFAULT_CHARSET
@@ -37,21 +39,29 @@ object RubroForm: TRubroForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitLeft = 36
+      ExplicitTop = 208
+      ExplicitWidth = 54
     end
     object DBEdit1: TDBEdit
-      Left = 99
-      Top = 208
-      Width = 227
+      Left = 1
+      Top = 190
+      Width = 357
       Height = 21
+      Align = alTop
       DataField = 'DESCRIPCION'
       DataSource = DM.dstRubro
       TabOrder = 0
+      ExplicitLeft = 99
+      ExplicitTop = 208
+      ExplicitWidth = 227
     end
     object DBGrid1: TDBGrid
-      Left = 36
-      Top = 66
-      Width = 290
-      Height = 124
+      Left = 1
+      Top = 1
+      Width = 357
+      Height = 176
+      Align = alTop
       DataSource = DM.dstRubro
       ReadOnly = True
       TabOrder = 1
@@ -74,11 +84,12 @@ object RubroForm: TRubroForm
         end>
     end
     object DBNavigator1: TDBNavigator
-      Left = 36
-      Top = 242
-      Width = 290
+      Left = 1
+      Top = 338
+      Width = 357
       Height = 50
       DataSource = DM.dstRubro
+      Align = alBottom
       Hints.Strings = (
         'Primer registro'
         'Registro anterior'
@@ -93,10 +104,13 @@ object RubroForm: TRubroForm
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
+      ExplicitLeft = 36
+      ExplicitTop = 242
+      ExplicitWidth = 290
     end
     object BitBtn1: TBitBtn
       Left = 139
-      Top = 305
+      Top = 249
       Width = 80
       Height = 50
       Caption = 'Cerrar'

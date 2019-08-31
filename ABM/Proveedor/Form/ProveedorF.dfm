@@ -1,11 +1,11 @@
 object ProveedorForm: TProveedorForm
   Left = 182
   Top = 90
-  BorderIcons = []
+  BorderIcons = [biMaximize]
   BorderStyle = bsSingle
   Caption = 'Altas, Bajas y Modificaciones de Proveedores'
-  ClientHeight = 468
-  ClientWidth = 794
+  ClientHeight = 475
+  ClientWidth = 427
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,53 +24,63 @@ object ProveedorForm: TProveedorForm
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 719
-    Height = 468
-    ActivePage = TabSheet1
+    Width = 352
+    Height = 475
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 327
+    ExplicitHeight = 468
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
+      ExplicitWidth = 319
+      ExplicitHeight = 440
       object Label2: TLabel
-        Left = 181
-        Top = 64
-        Width = 44
-        Height = 13
+        Left = 0
+        Top = 40
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Nombre'
         FocusControl = DBEdit2
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 56
       end
       object Label3: TLabel
-        Left = 170
-        Top = 91
-        Width = 55
-        Height = 13
-        Caption = 'Direcci'#243'n'
+        Left = 0
+        Top = 120
+        Width = 344
+        Height = 16
+        Align = alTop
+        Caption = 'Direcci'#243'n Comercial'
         FocusControl = DBEdit3
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 141
       end
       object Label1: TLabel
-        Left = 177
-        Top = 37
-        Width = 48
-        Height = 13
+        Left = 0
+        Top = 0
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Nro. Cta'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 57
       end
       object VendedorLabel: TLabel
         Left = 632
@@ -80,542 +90,885 @@ object ProveedorForm: TProveedorForm
         Caption = '...'
       end
       object Label4: TLabel
-        Left = 185
-        Top = 199
-        Width = 40
-        Height = 13
+        Left = 0
+        Top = 360
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Celular'
         FocusControl = DBEdit9
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 50
       end
       object Label9: TLabel
-        Left = 174
-        Top = 145
-        Width = 51
-        Height = 13
+        Left = 0
+        Top = 160
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Tel'#233'fono'
         FocusControl = DBEdit10
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 63
       end
       object Label11: TLabel
-        Left = 204
-        Top = 172
-        Width = 21
-        Height = 13
+        Left = 0
+        Top = 200
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Fax'
         FocusControl = DBEdit12
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 26
       end
       object Label6: TLabel
-        Left = 171
-        Top = 226
-        Width = 54
-        Height = 13
+        Left = 0
+        Top = 240
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Provincia'
         FocusControl = DBEdit6
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 66
       end
       object Label7: TLabel
-        Left = 145
-        Top = 253
-        Width = 80
-        Height = 13
+        Left = 0
+        Top = 280
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Departamento'
         FocusControl = DBEdit7
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 99
       end
       object Label27: TLabel
-        Left = 169
-        Top = 280
-        Width = 56
-        Height = 13
+        Left = 0
+        Top = 320
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Localidad'
         FocusControl = DBEdit24
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 70
+      end
+      object Label13: TLabel
+        Left = 0
+        Top = 80
+        Width = 344
+        Height = 16
+        Align = alTop
+        Caption = 'Direcci'#243'n'
+        FocusControl = DBEdit3
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 67
       end
       object DBEdit2: TDBEdit
-        Left = 231
-        Top = 64
-        Width = 226
-        Height = 21
+        Left = 0
+        Top = 56
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Nombre'
         DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 0
+        ExplicitWidth = 319
       end
       object DBEdit3: TDBEdit
-        Left = 231
-        Top = 91
-        Width = 226
-        Height = 21
+        Left = 0
+        Top = 96
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'DIRECCION'
         DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 1
+        ExplicitWidth = 319
       end
       object CodigoDBEdit: TDBEdit
-        Left = 231
-        Top = 37
-        Width = 76
-        Height = 21
+        Left = 0
+        Top = 16
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'CODIGO'
         DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 9
+        ExplicitWidth = 319
       end
       object DBEdit9: TDBEdit
-        Left = 231
-        Top = 199
-        Width = 76
-        Height = 21
+        Left = 0
+        Top = 376
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Celular'
         DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 5
+        ExplicitWidth = 319
       end
       object DBEdit4: TDBEdit
-        Left = 231
-        Top = 118
-        Width = 226
-        Height = 21
+        Left = 0
+        Top = 136
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'DIRECCIONCOMERCIAL'
         DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 2
+        ExplicitWidth = 319
       end
       object DBEdit10: TDBEdit
-        Left = 231
-        Top = 145
-        Width = 76
-        Height = 21
+        Left = 0
+        Top = 176
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Telefono'
         DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 3
+        ExplicitWidth = 319
       end
       object DBEdit12: TDBEdit
-        Left = 231
-        Top = 172
-        Width = 76
-        Height = 21
+        Left = 0
+        Top = 216
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Fax'
         DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 4
+        ExplicitWidth = 319
       end
       object DBEdit6: TDBEdit
-        Left = 231
-        Top = 226
-        Width = 226
-        Height = 21
+        Left = 0
+        Top = 256
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Provincia'
         DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 6
+        ExplicitWidth = 319
       end
       object DBEdit7: TDBEdit
-        Left = 231
-        Top = 253
-        Width = 226
-        Height = 21
+        Left = 0
+        Top = 296
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Departamento'
         DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 7
+        ExplicitWidth = 319
       end
       object DBEdit24: TDBEdit
-        Left = 231
-        Top = 280
-        Width = 226
-        Height = 21
+        Left = 0
+        Top = 336
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Ciudad'
         DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 8
         OnExit = DBEdit24Exit
+        ExplicitWidth = 319
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'Notas'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitHeight = 440
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
-        Width = 711
-        Height = 440
+        Width = 344
+        Height = 447
         Align = alClient
         DataField = 'Notas'
         TabOrder = 0
+        ExplicitHeight = 440
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
+      ExplicitHeight = 440
       object Label15: TLabel
-        Left = 209
-        Top = 155
-        Width = 162
-        Height = 13
+        Left = 0
+        Top = 136
+        Width = 344
+        Height = 16
+        Align = alTop
+        Alignment = taRightJustify
         Caption = 'Cuenta Contable Asociada a'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 198
       end
       object Label24: TLabel
-        Left = 116
-        Top = 77
-        Width = 89
-        Height = 13
+        Left = 0
+        Top = 40
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Ingresos Brutos'
         FocusControl = DBEdit20
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 109
       end
       object Label25: TLabel
-        Left = 175
-        Top = 39
-        Width = 30
-        Height = 13
+        Left = 0
+        Top = 0
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'CUIT'
         FocusControl = DBEdit22
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 36
       end
       object Label38: TLabel
-        Left = 106
-        Top = 116
-        Width = 99
-        Height = 13
+        Left = 0
+        Top = 80
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Categor'#237'a de IVA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 119
       end
       object IVALabel: TLabel
-        Left = 282
-        Top = 116
-        Width = 9
-        Height = 13
+        Left = 0
+        Top = 120
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = '...'
-      end
-      object Label54: TLabel
-        Left = 170
-        Top = 259
-        Width = 35
-        Height = 13
-        Caption = 'Orden'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        ExplicitWidth = 9
+      end
+      object Label54: TLabel
+        Left = 0
+        Top = 192
+        Width = 344
+        Height = 16
+        Align = alTop
+        Caption = 'Anticipo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 57
       end
       object Label52: TLabel
-        Left = 161
-        Top = 182
-        Width = 44
-        Height = 13
+        Left = 0
+        Top = 152
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Nombre'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 56
       end
       object Label51: TLabel
-        Left = 179
-        Top = 219
-        Width = 26
-        Height = 13
+        Left = 0
+        Top = 232
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Tipo'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 33
       end
       object DBEdit20: TDBEdit
-        Left = 209
-        Top = 77
-        Width = 201
-        Height = 21
+        Left = 0
+        Top = 56
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'IIBB'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 1
       end
       object DBEdit22: TDBEdit
-        Left = 209
-        Top = 39
-        Width = 201
-        Height = 21
+        Left = 0
+        Top = 16
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'CUIT'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 0
       end
       object IVADBComboBox: TDBComboBox
-        Left = 209
-        Top = 113
-        Width = 67
-        Height = 21
+        Left = 0
+        Top = 96
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'IVA'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
         Items.Strings = (
           'CF'
           'MT'
           'RI'
           'EX'
           'NR')
+        ParentFont = False
         TabOrder = 2
         OnChange = IVADBComboBoxChange
       end
       object CtaNombreDBLookupComboBox: TDBLookupComboBox
-        Left = 209
-        Top = 178
-        Width = 351
-        Height = 21
+        Left = 0
+        Top = 168
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'CtaNombre'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstCuenta
+        ParentFont = False
         TabOrder = 3
       end
       object CtaAnticipoDBLookupComboBox: TDBLookupComboBox
-        Left = 209
-        Top = 255
-        Width = 351
-        Height = 21
+        Left = 0
+        Top = 208
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'CtaAnticipo'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstCuenta
+        ParentFont = False
         TabOrder = 5
       end
       object CtaTipoDBLookupComboBox: TDBLookupComboBox
-        Left = 209
-        Top = 215
-        Width = 351
-        Height = 21
+        Left = 0
+        Top = 248
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'CtaTipo'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstCuenta
+        ParentFont = False
         TabOrder = 4
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'Datos Secundarios'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitHeight = 440
       object Label19: TLabel
-        Left = 208
-        Top = 42
-        Width = 86
-        Height = 13
+        Left = 0
+        Top = 0
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Nombre del Titular'
         FocusControl = DBEdit16
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 130
       end
       object Label12: TLabel
-        Left = 269
-        Top = 204
-        Width = 25
-        Height = 13
+        Left = 0
+        Top = 240
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Email'
         FocusControl = DBEdit13
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 40
       end
       object Label28: TLabel
-        Left = 242
-        Top = 231
-        Width = 52
-        Height = 13
+        Left = 0
+        Top = 280
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Messenger'
         FocusControl = DBEdit23
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 78
       end
       object Label23: TLabel
-        Left = 275
-        Top = 69
-        Width = 19
-        Height = 13
+        Left = 0
+        Top = 40
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'DNI'
         FocusControl = DBEdit19
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 27
       end
       object Label26: TLabel
-        Left = 265
-        Top = 96
-        Width = 29
-        Height = 13
+        Left = 0
+        Top = 80
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Rubro'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 43
       end
       object Label5: TLabel
-        Left = 274
-        Top = 258
-        Width = 20
-        Height = 13
+        Left = 0
+        Top = 360
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Pais'
         FocusControl = DBEdit5
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 32
       end
       object Label21: TLabel
-        Left = 229
-        Top = 123
-        Width = 65
-        Height = 13
+        Left = 0
+        Top = 120
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Codigo Postal'
         FocusControl = DBEdit17
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 99
       end
       object Label22: TLabel
-        Left = 221
-        Top = 152
-        Width = 73
-        Height = 13
+        Left = 0
+        Top = 160
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Codigo de Area'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 110
       end
       object Label10: TLabel
-        Left = 247
-        Top = 177
-        Width = 47
-        Height = 13
+        Left = 0
+        Top = 200
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Extenci'#243'n'
         FocusControl = DBEdit11
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 68
       end
       object Label8: TLabel
         Left = 261
         Top = 288
-        Width = 3
+        Width = 5
         Height = 13
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
       object Label18: TLabel
-        Left = 237
-        Top = 285
-        Width = 57
-        Height = 13
-        Alignment = taRightJustify
+        Left = 0
+        Top = 320
+        Width = 344
+        Height = 16
+        Align = alTop
         Caption = 'Dias Cr'#233'dito'
         FocusControl = DBEdit1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 87
       end
       object DBEdit16: TDBEdit
-        Left = 300
-        Top = 42
-        Width = 209
-        Height = 21
+        Left = 0
+        Top = 16
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Gerente'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 0
       end
       object DBEdit13: TDBEdit
-        Left = 298
-        Top = 204
-        Width = 209
-        Height = 21
+        Left = 0
+        Top = 256
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Email'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 6
       end
       object DBEdit23: TDBEdit
-        Left = 298
-        Top = 231
-        Width = 209
-        Height = 21
+        Left = 0
+        Top = 296
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'MSN'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 7
       end
       object DBEdit19: TDBEdit
-        Left = 298
-        Top = 69
-        Width = 209
-        Height = 21
+        Left = 0
+        Top = 56
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Documento'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 1
       end
       object DBEdit21: TDBEdit
-        Left = 298
+        Left = 0
         Top = 96
-        Width = 209
-        Height = 21
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Rubro'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 2
       end
       object DBEdit5: TDBEdit
-        Left = 298
-        Top = 258
-        Width = 97
-        Height = 21
+        Left = 0
+        Top = 376
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Pais'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 8
       end
       object DBEdit17: TDBEdit
-        Left = 298
-        Top = 123
-        Width = 82
-        Height = 21
+        Left = 0
+        Top = 136
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'CP'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 3
       end
       object DBEdit11: TDBEdit
-        Left = 298
-        Top = 177
-        Width = 82
-        Height = 21
+        Left = 0
+        Top = 216
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'Extencion'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 5
       end
       object DBEdit18: TDBEdit
-        Left = 298
-        Top = 150
-        Width = 82
-        Height = 21
+        Left = 0
+        Top = 176
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'CodigoArea'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 4
       end
       object DBEdit1: TDBEdit
-        Left = 298
-        Top = 285
-        Width = 145
-        Height = 21
+        Left = 0
+        Top = 336
+        Width = 344
+        Height = 24
+        Align = alTop
         DataField = 'DiasCredito'
+        DataSource = DM.dstProveedor
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 9
       end
     end
   end
   object Panel1: TPanel
-    Left = 719
+    Left = 352
     Top = 0
     Width = 75
-    Height = 468
+    Height = 475
     Align = alRight
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
@@ -625,9 +978,11 @@ object ProveedorForm: TProveedorForm
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
+    ExplicitLeft = 327
+    ExplicitHeight = 468
     object SiBitBtn: TBitBtn
       Left = 1
-      Top = 367
+      Top = 374
       Width = 73
       Height = 50
       Align = alBottom
@@ -659,10 +1014,11 @@ object ProveedorForm: TProveedorForm
       ParentFont = False
       TabOrder = 0
       OnClick = SiBitBtnClick
+      ExplicitTop = 367
     end
     object NoBitBtn: TBitBtn
       Left = 1
-      Top = 417
+      Top = 424
       Width = 73
       Height = 50
       Align = alBottom
@@ -677,13 +1033,14 @@ object ProveedorForm: TProveedorForm
       ParentFont = False
       TabOrder = 1
       OnClick = NoBitBtnClick
+      ExplicitTop = 417
     end
     object ImprimirBitBtn: TBitBtn
       Left = 1
-      Top = 292
+      Top = 26
       Width = 73
       Height = 25
-      Align = alBottom
+      Align = alTop
       Caption = 'Imprimir'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clPurple
@@ -717,10 +1074,10 @@ object ProveedorForm: TProveedorForm
     end
     object BuscarBitBtn: TBitBtn
       Left = 1
-      Top = 267
+      Top = 1
       Width = 73
       Height = 25
-      Align = alBottom
+      Align = alTop
       Caption = 'Buscar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
@@ -733,20 +1090,20 @@ object ProveedorForm: TProveedorForm
     end
     object bExportar: TButton
       Left = 1
-      Top = 317
+      Top = 51
       Width = 73
       Height = 25
-      Align = alBottom
+      Align = alTop
       Caption = 'Exportar'
       TabOrder = 5
       OnClick = bExportarClick
     end
     object bImportar: TButton
       Left = 1
-      Top = 342
+      Top = 76
       Width = 73
       Height = 25
-      Align = alBottom
+      Align = alTop
       Caption = 'Importar'
       TabOrder = 6
       OnClick = bImportarClick

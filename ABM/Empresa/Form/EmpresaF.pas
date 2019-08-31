@@ -63,7 +63,6 @@ type
     CuentaDBLookupComboBox: TDBLookupComboBox;
     Label50: TLabel;
     Panel1: TPanel;
-    Label33: TLabel;
     SiBitBtn: TBitBtn;
     NoBitBtn: TBitBtn;
     ImprimirBitBtn: TBitBtn;

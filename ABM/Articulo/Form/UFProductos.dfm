@@ -362,6 +362,7 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'NOMBRE'
+        ListSource = DM.dstProveedor
         TabOrder = 1
         OnEnter = DBLookupComboBox4Enter
       end
@@ -455,6 +456,7 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'TASA'
+        ListSource = DM.dstIVA
         TabOrder = 6
         OnEnter = IVADBComboBoxEnter
         OnExit = IVADBComboBoxExit
@@ -643,6 +645,7 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstRubro
         TabOrder = 1
         OnEnter = RubroDBLookupComboBoxEnter
       end
@@ -671,6 +674,7 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstMarca
         TabOrder = 2
         OnEnter = MarcaDBLookupComboBoxEnter
         OnKeyUp = MarcaDBLookupComboBoxKeyUp
@@ -700,6 +704,7 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstCategoria
         TabOrder = 0
         OnEnter = CategoriaDBLookupComboBoxEnter
       end
@@ -926,6 +931,7 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstCuenta
         TabOrder = 0
       end
       object DBLookupComboBox1: TDBLookupComboBox
@@ -937,10 +943,11 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstCuenta
         TabOrder = 1
       end
       object DBLookupComboBox2: TDBLookupComboBox
-        Left = 185
+        Left = 186
         Top = 163
         Width = 351
         Height = 21
@@ -948,6 +955,7 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstCuenta
         TabOrder = 2
       end
       object DBLookupComboBox7: TDBLookupComboBox
@@ -959,6 +967,7 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
+        ListSource = DM.dstCuenta
         TabOrder = 3
       end
     end

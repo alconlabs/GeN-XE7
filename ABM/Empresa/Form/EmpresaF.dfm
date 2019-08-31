@@ -649,6 +649,8 @@ object EmpresaForm: TEmpresaForm
         DataField = 'Notas'
         DataSource = DM.dstEmpresa
         TabOrder = 0
+        ExplicitLeft = -1
+        ExplicitTop = -3
       end
     end
     object TabSheet3: TTabSheet
@@ -697,7 +699,7 @@ object EmpresaForm: TEmpresaForm
         DataSource = DM.dstEmpresa
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = DM.dsqCuenta
+        ListSource = DM.dstCuenta
         TabOrder = 0
       end
       object DBLookupComboBox1: TDBLookupComboBox
@@ -709,7 +711,7 @@ object EmpresaForm: TEmpresaForm
         DataSource = DM.dstEmpresa
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = DM.dsqCuenta
+        ListSource = DM.dstCuenta
         TabOrder = 1
       end
       object CuentaDBLookupComboBox: TDBLookupComboBox
@@ -721,7 +723,7 @@ object EmpresaForm: TEmpresaForm
         DataSource = DM.dstEmpresa
         KeyField = 'CODIGO'
         ListField = 'DESCRIPCION'
-        ListSource = DM.dsqCuenta
+        ListSource = DM.dstCuenta
         TabOrder = 2
       end
     end
@@ -732,47 +734,36 @@ object EmpresaForm: TEmpresaForm
     Width = 93
     Height = 468
     Align = alRight
-    Color = clBlack
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
+    Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
-    object Label33: TLabel
-      Left = 23
-      Top = 339
-      Width = 46
-      Height = 13
-      Caption = 'Grabar?'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
     object Label14: TLabel
-      Left = 7
-      Top = 4
-      Width = 71
+      Left = 1
+      Top = 1
+      Width = 91
       Height = 13
+      Align = alTop
       Caption = 'Pto.Vta. Nro'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 71
     end
     object SiBitBtn: TBitBtn
-      Left = 6
-      Top = 283
-      Width = 80
+      Left = 1
+      Top = 367
+      Width = 91
       Height = 50
-      Caption = 'Si'
+      Align = alBottom
+      Caption = 'Grabar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -800,12 +791,15 @@ object EmpresaForm: TEmpresaForm
       ParentFont = False
       TabOrder = 0
       OnClick = SiBitBtnClick
+      ExplicitLeft = 6
+      ExplicitTop = 348
     end
     object NoBitBtn: TBitBtn
-      Left = 6
-      Top = 359
-      Width = 80
+      Left = 1
+      Top = 417
+      Width = 91
       Height = 50
+      Align = alBottom
       Caption = 'No'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -817,12 +811,16 @@ object EmpresaForm: TEmpresaForm
       ParentFont = False
       TabOrder = 1
       OnClick = NoBitBtnClick
+      ExplicitLeft = 6
+      ExplicitTop = 359
+      ExplicitWidth = 80
     end
     object ImprimirBitBtn: TBitBtn
-      Left = 6
-      Top = 95
-      Width = 80
+      Left = 1
+      Top = 38
+      Width = 91
       Height = 50
+      Align = alTop
       Caption = 'Imprimir'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clPurple
@@ -833,12 +831,16 @@ object EmpresaForm: TEmpresaForm
       TabOrder = 2
       Visible = False
       OnClick = ImprimirBitBtnClick
+      ExplicitLeft = 6
+      ExplicitTop = 95
+      ExplicitWidth = 80
     end
     object CodigoDBEdit: TDBEdit
-      Left = 6
-      Top = 24
-      Width = 83
+      Left = 1
+      Top = 14
+      Width = 91
       Height = 24
+      Align = alTop
       DataField = 'Codigo'
       DataSource = DM.dstEmpresa
       Font.Charset = DEFAULT_CHARSET
@@ -848,6 +850,9 @@ object EmpresaForm: TEmpresaForm
       Font.Style = []
       ParentFont = False
       TabOrder = 3
+      ExplicitLeft = 6
+      ExplicitTop = 24
+      ExplicitWidth = 83
     end
   end
   object OpenPictureDialog1: TOpenPictureDialog

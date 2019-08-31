@@ -95,17 +95,14 @@ object DMR: TDMR
     Top = 192
   end
   object FDQuery1: TFDQuery
-    Connection = DM.BaseDatos
     Left = 232
     Top = 16
   end
   object FDQuery2: TFDQuery
-    Connection = DM.BaseDatos
     Left = 232
     Top = 80
   end
   object T: TFDQuery
-    Connection = DM.BaseDatos
     Left = 232
     Top = 128
   end

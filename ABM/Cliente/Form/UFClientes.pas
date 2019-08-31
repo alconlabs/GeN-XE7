@@ -68,10 +68,8 @@ type
     Label6: TLabel;
     DBEdit6: TDBEdit;
     Panel1: TPanel;
-    Label34: TLabel;
     SiBitBtn: TBitBtn;
     NoBitBtn: TBitBtn;
-    DBNavigator1: TDBNavigator;
     ImprimirBitBtn: TBitBtn;
     BuscarBitBtn: TBitBtn;
     DBEdit13: TDBEdit;
@@ -98,8 +96,10 @@ type
     DBEdit19: TDBEdit;
     Label21: TLabel;
     DBEdit17: TDBEdit;
-    Label1: TLabel;
     CodigoDBEdit: TDBEdit;
+    Label1: TLabel;
+    pButton: TPanel;
+    DBNavigator1: TDBNavigator;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);

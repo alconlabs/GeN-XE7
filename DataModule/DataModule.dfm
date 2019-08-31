@@ -3,7 +3,7 @@ object DM: TDM
   OnCreate = DataModuleCreate
   Height = 817
   Width = 1074
-  object Consulta: TIBScript
+  object Consulta1: TIBScript
     AutoDDL = False
     Terminator = ';'
     Script.Strings = (
@@ -915,8 +915,7 @@ object DM: TDM
       ''
       'COMMIT;')
     Statistics = False
-    Left = 32
-    Top = 96
+    Left = 16
   end
   object OpenDialog1: TOpenDialog
     Left = 176
@@ -927,314 +926,17 @@ object DM: TDM
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     Left = 192
-    Top = 192
+    Top = 144
   end
   object FDQuery1: TFDQuery
     Connection = BaseDatosFB
     Left = 192
-    Top = 144
-  end
-  object tLibroIVAventa: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'FECHA'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'FACTURA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CLIENTE'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CUIT'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CONDICION'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'NG1'
-        DataType = ftFloat
-      end
-      item
-        Name = 'NG2'
-        DataType = ftFloat
-      end
-      item
-        Name = 'NG3'
-        DataType = ftFloat
-      end
-      item
-        Name = 'IVA1'
-        DataType = ftFloat
-      end
-      item
-        Name = 'IVA2'
-        DataType = ftFloat
-      end
-      item
-        Name = 'IVA3'
-        DataType = ftFloat
-      end
-      item
-        Name = 'OEIIBB'
-        DataType = ftFloat
-      end
-      item
-        Name = 'IDERPYPAC'
-        DataType = ftFloat
-      end
-      item
-        Name = 'ITF'
-        DataType = ftFloat
-      end
-      item
-        Name = 'CBTETIPO'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'PTOVTA'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'CBTEDESDE'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'CBTEHASTA'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'DOCTIPO'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'NOMCLI'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'MONID'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'MONCOTIZ'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'CANTIVA'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'OPCION'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'FCHVTOPAGO'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'ALICIVA'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'IMPNETO'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'NOGRABADO'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'IMPOPEX'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'IMPIVA'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'GENERALES'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'NOCAT'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'IMPTRIB'
-        DataType = ftWideString
-        Size = 255
-      end>
-    StoreDefs = True
-    TableName = 'LibroIVAventa'
-    UniDirectional = False
-    Left = 504
-    Top = 280
-    object tLibroIVAventaCODIGO: TIntegerField
-      FieldName = 'CODIGO'
-    end
-    object tLibroIVAventaFECHA: TDateTimeField
-      FieldName = 'FECHA'
-    end
-    object tLibroIVAventaFACTURA: TIBStringField
-      FieldName = 'FACTURA'
-      Size = 50
-    end
-    object tLibroIVAventaCLIENTE: TIBStringField
-      FieldName = 'CLIENTE'
-      Size = 50
-    end
-    object tLibroIVAventaCUIT: TIBStringField
-      FieldName = 'CUIT'
-      Size = 50
-    end
-    object tLibroIVAventaCONDICION: TIBStringField
-      FieldName = 'CONDICION'
-      Size = 50
-    end
-    object tLibroIVAventaNG1: TFloatField
-      FieldName = 'NG1'
-    end
-    object tLibroIVAventaNG2: TFloatField
-      FieldName = 'NG2'
-    end
-    object tLibroIVAventaNG3: TFloatField
-      FieldName = 'NG3'
-    end
-    object tLibroIVAventaIVA1: TFloatField
-      FieldName = 'IVA1'
-    end
-    object tLibroIVAventaIVA2: TFloatField
-      FieldName = 'IVA2'
-    end
-    object tLibroIVAventaIVA3: TFloatField
-      FieldName = 'IVA3'
-    end
-    object tLibroIVAventaOEIIBB: TFloatField
-      FieldName = 'OEIIBB'
-    end
-    object tLibroIVAventaIDERPYPAC: TFloatField
-      FieldName = 'IDERPYPAC'
-    end
-    object tLibroIVAventaITF: TFloatField
-      FieldName = 'ITF'
-    end
-    object tLibroIVAventaCBTETIPO: TIBStringField
-      FieldName = 'CBTETIPO'
-      Size = 255
-    end
-    object tLibroIVAventaPTOVTA: TIBStringField
-      FieldName = 'PTOVTA'
-      Size = 255
-    end
-    object tLibroIVAventaCBTEDESDE: TIBStringField
-      FieldName = 'CBTEDESDE'
-      Size = 255
-    end
-    object tLibroIVAventaCBTEHASTA: TIBStringField
-      FieldName = 'CBTEHASTA'
-      Size = 255
-    end
-    object tLibroIVAventaDOCTIPO: TIBStringField
-      FieldName = 'DOCTIPO'
-      Size = 255
-    end
-    object tLibroIVAventaNOMCLI: TIBStringField
-      FieldName = 'NOMCLI'
-      Size = 255
-    end
-    object tLibroIVAventaMONID: TIBStringField
-      FieldName = 'MONID'
-      Size = 255
-    end
-    object tLibroIVAventaMONCOTIZ: TIBStringField
-      FieldName = 'MONCOTIZ'
-      Size = 255
-    end
-    object tLibroIVAventaCANTIVA: TIBStringField
-      FieldName = 'CANTIVA'
-      Size = 255
-    end
-    object tLibroIVAventaOPCION: TIBStringField
-      FieldName = 'OPCION'
-      Size = 255
-    end
-    object tLibroIVAventaFCHVTOPAGO: TIBStringField
-      FieldName = 'FCHVTOPAGO'
-      Size = 255
-    end
-    object tLibroIVAventaALICIVA: TIBStringField
-      FieldName = 'ALICIVA'
-      Size = 255
-    end
-    object tLibroIVAventaIMPNETO: TIBStringField
-      FieldName = 'IMPNETO'
-      Size = 255
-    end
-    object tLibroIVAventaNOGRABADO: TIBStringField
-      FieldName = 'NOGRABADO'
-      Size = 255
-    end
-    object tLibroIVAventaIMPOPEX: TIBStringField
-      FieldName = 'IMPOPEX'
-      Size = 255
-    end
-    object tLibroIVAventaIMPIVA: TIBStringField
-      FieldName = 'IMPIVA'
-      Size = 255
-    end
-    object tLibroIVAventaGENERALES: TIBStringField
-      FieldName = 'GENERALES'
-      Size = 255
-    end
-    object tLibroIVAventaNOCAT: TIBStringField
-      FieldName = 'NOCAT'
-      Size = 255
-    end
-    object tLibroIVAventaIMPTRIB: TIBStringField
-      FieldName = 'IMPTRIB'
-      Size = 255
-    end
+    Top = 96
   end
   object sdb: TFDConnection
     Params.Strings = (
       'Database=C:\Users\DeGsoft\Documents\Civeloo\GeN\db\db.sdb'
       'DriverID=SQLite')
-    Connected = True
     LoginPrompt = False
     Left = 104
   end
@@ -1403,12 +1105,12 @@ object DM: TDM
     Connection = BaseDatosFB
     TableName = '"Proveedor"'
     Left = 192
-    Top = 336
+    Top = 288
   end
   object FDBatchMoveTextReader1: TFDBatchMoveTextReader
     DataDef.Fields = <>
     Left = 192
-    Top = 288
+    Top = 240
   end
   object FDBatchMove1: TFDBatchMove
     Reader = FDBatchMoveTextReader1
@@ -1416,7 +1118,7 @@ object DM: TDM
     Mappings = <>
     LogFileName = 'Data.log'
     Left = 192
-    Top = 240
+    Top = 192
   end
   object BaseDatosFB: TFDConnection
     Params.Strings = (
@@ -1428,14 +1130,6 @@ object DM: TDM
     Connected = True
     LoginPrompt = False
     Left = 192
-  end
-  object FDScript1: TFDScript
-    SQLScripts = <>
-    Connection = sdb
-    Params = <>
-    Macros = <>
-    Left = 192
-    Top = 96
   end
   object IBScript1: TIBScript
     AutoDDL = False
@@ -2406,8 +2100,8 @@ object DM: TDM
       ''
       'COMMIT;')
     Statistics = False
-    Left = 32
-    Top = 144
+    Left = 16
+    Top = 48
   end
   object ConfigQuery: TFDQuery
     Connection = BaseDatosFB
@@ -2458,721 +2152,156 @@ object DM: TDM
         'CODIGO)'
       ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)')
     Left = 192
-    Top = 384
-  end
-  object BaseDatosIB: TIBDatabase
-    Connected = True
-    DatabaseName = 'C:\Users\DeGsoft\Documents\Civeloo\GeN\db\GeN.FDB'
-    Params.Strings = (
-      'user_name=SYSDBA'
-      'password=masterkey'
-      'sql_role_name=3'
-      'lc_ctype=WIN1252')
-    LoginPrompt = False
-    DefaultTransaction = Transaccion
-    ServerType = 'IBServer'
-    Left = 32
+    Top = 336
   end
   object dstArticulo: TDataSource
     AutoEdit = False
     DataSet = tArticulo
-    Left = 536
-  end
-  object tMaterial: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'Material'
-    UniDirectional = False
-    Left = 504
-    Top = 328
+    Left = 312
   end
   object dsqMaterial: TDataSource
     DataSet = tMaterial
-    Left = 536
+    Left = 312
     Top = 328
   end
   object dsqUsuario: TDataSource
     DataSet = qUsuario
-    Left = 664
+    Left = 440
     Top = 672
-  end
-  object tMarca: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'Marca'
-    UniDirectional = False
-    Left = 504
-    Top = 376
   end
   object dstMarca: TDataSource
     DataSet = tMarca
-    Left = 536
+    Left = 312
     Top = 376
-  end
-  object qQ: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Config"')
-    Left = 792
-    Top = 56
   end
   object dsqCuenta: TDataSource
     DataSet = qCuenta
-    Left = 664
+    Left = 440
     Top = 192
-  end
-  object tProveedor: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'Proveedor'
-    UniDirectional = False
-    Left = 504
-    Top = 424
   end
   object dstProveedor: TDataSource
     DataSet = tProveedor
-    Left = 536
+    Left = 312
     Top = 424
-  end
-  object qTemp: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 792
-    Top = 8
-  end
-  object tIVA: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'Iva'
-    UniDirectional = False
-    Left = 504
-    Top = 232
   end
   object dstIVA: TDataSource
     DataSet = tIVA
-    Left = 536
+    Left = 312
     Top = 232
   end
   object dstCategoria: TDataSource
     DataSet = tCategoria
-    Left = 536
+    Left = 312
     Top = 48
-  end
-  object tSubCategoria: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'SubCategoria'
-    UniDirectional = False
-    Left = 504
-    Top = 560
   end
   object dstSubCategoria: TDataSource
     DataSet = tSubCategoria
-    Left = 536
+    Left = 312
     Top = 560
-  end
-  object tRubro: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    TableName = 'Rubro'
-    UniDirectional = False
-    Left = 504
-    Top = 520
   end
   object dstRubro: TDataSource
     DataSet = tRubro
-    Left = 536
+    Left = 312
     Top = 520
   end
   object qODM: TFDQuery
     Connection = BaseDatosFB
-    Left = 880
-    Top = 8
+    Left = 488
+    Top = 184
   end
   object dsqArticulo: TDataSource
     DataSet = qArticulo
-    Left = 664
+    Left = 440
   end
   object dsqCliente: TDataSource
     DataSet = qCliente
-    Left = 664
+    Left = 440
     Top = 144
   end
   object dsqVendedor: TDataSource
     DataSet = qVendedor
-    Left = 664
+    Left = 440
     Top = 624
-  end
-  object tVendedor: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        Attributes = [faRequired]
-        DataType = ftInteger
-      end
-      item
-        Name = 'NOMBRE'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'TITULAR'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCION'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCIONCOMERCIAL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PAIS'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'PROVINCIA'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'DEPARTAMENTO'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'CIUDAD'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'CP'
-        DataType = ftWideString
-        Size = 20
-      end
-      item
-        Name = 'CODIGOAREA'
-        DataType = ftWideString
-        Size = 10
-      end
-      item
-        Name = 'CELULAR'
-        DataType = ftWideString
-        Size = 20
-      end
-      item
-        Name = 'TELEFONO'
-        DataType = ftWideString
-        Size = 15
-      end
-      item
-        Name = 'EXTENCION'
-        DataType = ftWideString
-        Size = 6
-      end
-      item
-        Name = 'FAX'
-        DataType = ftWideString
-        Size = 15
-      end
-      item
-        Name = 'EMAIL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'TERMINOS'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'VENDEDOR'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PRECIO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'SUSPENDIDO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'EXCENTO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'FECHAINGRESO'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'LIMITECREDITO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'NOTAS'
-        DataType = ftBlob
-        Size = 8
-      end
-      item
-        Name = 'DIASCREDITO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'DOCUMENTO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CUIT'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'IIBB'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'RUBRO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'IVA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'MSN'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'ALMANAQUES'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PROMOCIONES'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'GARANTE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'ZONA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTANOMBRE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTATIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTAANTICIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PAGARE'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'COMISION'
-        DataType = ftFloat
-      end
-      item
-        Name = 'PUNTOS'
-        DataType = ftFloat
-      end>
-    IndexDefs = <
-      item
-        Name = 'PK_Vendedor'
-        Fields = 'CODIGO'
-        Options = [ixUnique]
-      end>
-    StoreDefs = True
-    TableName = 'Vendedor'
-    UniDirectional = False
-    Left = 504
-    Top = 654
   end
   object dstVendedor: TDataSource
     DataSet = tVendedor
-    Left = 536
+    Left = 312
     Top = 654
   end
   object dstCuenta: TDataSource
     DataSet = tCuenta
-    Left = 536
+    Left = 312
     Top = 192
-  end
-  object tUsuario: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'NOMBRE'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'password'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DESCRIPCION'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'PERMISO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'EMPRESA'
-        DataType = ftInteger
-      end>
-    StoreDefs = True
-    TableName = 'Usuario'
-    UniDirectional = False
-    Left = 504
-    Top = 608
   end
   object dstUsuario: TDataSource
     DataSet = tUsuario
-    Left = 536
+    Left = 312
     Top = 607
   end
   object dstCliente: TDataSource
     DataSet = tCliente
-    Left = 536
+    Left = 312
     Top = 98
-  end
-  object tEmpresa: TIBTable
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'CODIGO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'NOMBRE'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'TITULAR'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCION'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DIRECCIONCOMERCIAL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'PAIS'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'PROVINCIA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'DEPARTAMENTO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'CIUDAD'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'CP'
-        DataType = ftWideString
-        Size = 20
-      end
-      item
-        Name = 'CODIGOAREA'
-        DataType = ftWideString
-        Size = 10
-      end
-      item
-        Name = 'CELULAR'
-        DataType = ftWideString
-        Size = 20
-      end
-      item
-        Name = 'TELEFONO'
-        DataType = ftWideString
-        Size = 15
-      end
-      item
-        Name = 'FAX'
-        DataType = ftWideString
-        Size = 15
-      end
-      item
-        Name = 'EMAIL'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'SUSPENDIDO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'EXCENTO'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end
-      item
-        Name = 'FECHA'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'LIMITECREDITO'
-        DataType = ftFloat
-      end
-      item
-        Name = 'NOTAS'
-        DataType = ftBlob
-        Size = 8
-      end
-      item
-        Name = 'DIASCREDITO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'DOCUMENTO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'RAZONSOCIAL'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'CUIT'
-        DataType = ftWideString
-        Size = 30
-      end
-      item
-        Name = 'IIBB'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'RUBRO'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'IVA'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'MSN'
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = 'WEB'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'ZONA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTA'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTANOMBRE'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTATIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'CTAANTICIPO'
-        DataType = ftInteger
-      end
-      item
-        Name = 'PAGARE'
-        Attributes = [faFixed]
-        DataType = ftWideString
-        Size = 2
-      end>
-    IndexDefs = <
-      item
-        Name = 'PK_Empresa'
-        Fields = 'CODIGO'
-        Options = [ixUnique]
-      end>
-    StoreDefs = True
-    TableName = 'Empresa'
-    UniDirectional = False
-    Left = 504
-    Top = 468
   end
   object dstEmpresa: TDataSource
     DataSet = tEmpresa
-    Left = 536
-    Top = 468
+    Left = 312
+    Top = 472
   end
   object dsqIIBB: TDataSource
     DataSet = qIIBB
-    Left = 664
+    Left = 440
     Top = 336
   end
   object dsqProveedor: TDataSource
     DataSet = qProveedor
-    Left = 664
+    Left = 440
     Top = 528
   end
   object dsqCompra: TDataSource
     DataSet = qCompra
-    Left = 664
+    Left = 440
     Top = 96
   end
   object dsqOperacion: TDataSource
-    AutoEdit = False
     DataSet = qOperacion
-    Left = 664
+    Left = 440
     Top = 576
   end
   object dstConfiguracion: TDataSource
     DataSet = tConfiguracion
-    Left = 536
+    Left = 312
     Top = 144
   end
   object dsqImprimir: TDataSource
     DataSet = qIIBB
-    Left = 664
+    Left = 440
     Top = 384
   end
   object dsqCaja: TDataSource
     DataSet = qCaja
-    Left = 664
+    Left = 440
     Top = 48
   end
   object dsqGanancia: TDataSource
     DataSet = qGanancia
-    Left = 664
+    Left = 440
     Top = 288
   end
   object dsqLibroDiario: TDataSource
     DataSet = qLibroDiario
-    Left = 664
+    Left = 440
     Top = 432
-  end
-  object Transaccion: TIBTransaction
-    DefaultDatabase = BaseDatosIB
-    Left = 32
-    Top = 48
   end
   object dsqLibro: TDataSource
     DataSet = qLibro
-    Left = 664
+    Left = 440
     Top = 480
   end
   object dsqTarjeta: TDataSource
     DataSet = qTarjeta
-    Left = 664
+    Left = 440
     Top = 720
-  end
-  object qT: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Config"')
-    Left = 792
-    Top = 104
-  end
-  object qD: TIBQuery
-    Database = BaseDatosIB
-    Transaction = Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from "Config"')
-    Left = 792
-    Top = 152
   end
   object Query: TFDQuery
     Connection = BaseDatosFB
@@ -3223,7 +2352,7 @@ object DM: TDM
         'CODIGO)'
       ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)')
     Left = 192
-    Top = 432
+    Top = 392
   end
   object qArticulo: TFDQuery
     Connection = BaseDatosFB
@@ -3298,7 +2427,7 @@ object DM: TDM
       
         '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".' +
         'CODIGO)')
-    Left = 632
+    Left = 408
   end
   object qCaja: TFDQuery
     Connection = BaseDatosFB
@@ -3319,7 +2448,7 @@ object DM: TDM
       '  "LibroDiario".OCULTO'
       'FROM'
       '  "LibroDiario"')
-    Left = 632
+    Left = 408
     Top = 48
   end
   object qCompra: TFDQuery
@@ -3360,7 +2489,7 @@ object DM: TDM
       
         '          INNER JOIN "Proveedor" ON ("Compra".Proveedor = "Prove' +
         'edor".CODIGO)')
-    Left = 632
+    Left = 408
     Top = 96
   end
   object qCliente: TFDQuery
@@ -3368,7 +2497,7 @@ object DM: TDM
     SQL.Strings = (
       'Select * from "Cliente"'
       'order by CODIGO asc')
-    Left = 632
+    Left = 408
     Top = 144
   end
   object qCuenta: TFDQuery
@@ -3376,7 +2505,7 @@ object DM: TDM
     SQL.Strings = (
       'select * from "Cuenta"'
       'order by DESCRIPCION')
-    Left = 632
+    Left = 408
     Top = 192
   end
   object qEmpresa: TFDQuery
@@ -3405,7 +2534,7 @@ object DM: TDM
       
         '  INNER JOIN "Cuenta" ON ("LibroDiario".CUENTA = "Cuenta".DESCRI' +
         'PCION)')
-    Left = 632
+    Left = 408
     Top = 240
   end
   object qGanancia: TFDQuery
@@ -3434,21 +2563,21 @@ object DM: TDM
       
         '  INNER JOIN "Cuenta" ON ("LibroDiario".CUENTA = "Cuenta".DESCRI' +
         'PCION)')
-    Left = 632
+    Left = 408
     Top = 288
   end
   object qIIBB: TFDQuery
     Connection = BaseDatosFB
     SQL.Strings = (
       'Select * from "IIBB"')
-    Left = 632
+    Left = 408
     Top = 336
   end
   object qImprimir: TFDQuery
     Connection = BaseDatosFB
     SQL.Strings = (
       'select * from "Imprimir"')
-    Left = 632
+    Left = 408
     Top = 384
   end
   object qLibroDiario: TFDQuery
@@ -3470,19 +2599,19 @@ object DM: TDM
       ' "LibroDiario".OCULTO '
       ' FROM'
       ' "LibroDiario"')
-    Left = 632
+    Left = 408
     Top = 432
   end
   object qLibro: TFDQuery
     Connection = BaseDatosFB
-    Left = 632
+    Left = 408
     Top = 480
   end
   object qProveedor: TFDQuery
     Connection = BaseDatosFB
     SQL.Strings = (
       'Select * from "Proveedor"')
-    Left = 632
+    Left = 408
     Top = 528
   end
   object qOperacion: TFDQuery
@@ -3527,28 +2656,28 @@ object DM: TDM
         '  INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CO' +
         'DIGO)'
       '  INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)')
-    Left = 632
+    Left = 408
     Top = 576
   end
   object qVendedor: TFDQuery
     Connection = BaseDatosFB
     SQL.Strings = (
       'select * from "Vendedor"')
-    Left = 632
+    Left = 408
     Top = 624
   end
   object qUsuario: TFDQuery
     Connection = BaseDatosFB
     SQL.Strings = (
       'select * from "Usuario"')
-    Left = 632
+    Left = 408
     Top = 672
   end
   object qTarjeta: TFDQuery
     Connection = BaseDatosFB
     SQL.Strings = (
       'select * from "Tarjeta"')
-    Left = 632
+    Left = 408
     Top = 720
   end
   object tArticulo: TFDTable
@@ -3557,7 +2686,7 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Articulo"'
     TableName = '"Articulo"'
-    Left = 504
+    Left = 280
   end
   object tCategoria: TFDTable
     Connection = BaseDatosFB
@@ -3565,7 +2694,7 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Categoria"'
     TableName = '"Categoria"'
-    Left = 504
+    Left = 280
     Top = 48
   end
   object tCliente: TFDTable
@@ -3574,7 +2703,7 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Cliente"'
     TableName = '"Cliente"'
-    Left = 504
+    Left = 280
     Top = 97
   end
   object tConfiguracion: TFDTable
@@ -3583,7 +2712,7 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Config"'
     TableName = '"Config"'
-    Left = 504
+    Left = 280
     Top = 144
   end
   object tCuenta: TFDTable
@@ -3592,7 +2721,1033 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Cuenta"'
     TableName = '"Cuenta"'
-    Left = 504
+    Left = 280
     Top = 192
+  end
+  object tIVA: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Iva"'
+    TableName = '"Iva"'
+    Left = 280
+    Top = 232
+  end
+  object tLibroIVAventa: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"LibroIVAventa"'
+    TableName = '"LibroIVAventa"'
+    Left = 280
+    Top = 280
+  end
+  object tMaterial: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Material"'
+    TableName = '"Material"'
+    Left = 280
+    Top = 328
+  end
+  object tMarca: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Marca"'
+    TableName = '"Marca"'
+    Left = 280
+    Top = 376
+  end
+  object tProveedor: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Proveedor"'
+    TableName = '"Proveedor"'
+    Left = 280
+    Top = 424
+  end
+  object tEmpresa: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Empresa"'
+    TableName = '"Empresa"'
+    Left = 280
+    Top = 472
+  end
+  object tRubro: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Rubro"'
+    TableName = '"Rubro"'
+    Left = 280
+    Top = 520
+  end
+  object tSubCategoria: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 280
+    Top = 560
+  end
+  object tUsuario: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Usuario"'
+    TableName = '"Usuario"'
+    Left = 280
+    Top = 608
+  end
+  object tVendedor: TFDTable
+    Connection = BaseDatosFB
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.UpdateTableName = '"Venta"'
+    TableName = '"Venta"'
+    Left = 280
+    Top = 656
+  end
+  object qQ: TFDQuery
+    Connection = BaseDatosFB
+    Left = 488
+    Top = 40
+  end
+  object qTemp: TFDQuery
+    Connection = BaseDatosFB
+    Left = 488
+  end
+  object qT: TFDQuery
+    Connection = BaseDatosFB
+    Left = 488
+    Top = 88
+  end
+  object qD: TFDQuery
+    Connection = BaseDatosFB
+    Left = 488
+    Top = 136
+  end
+  object Consulta: TFDScript
+    SQLScripts = <
+      item
+        SQL.Strings = (
+          '/* delete Tables */'
+          ''
+          'DELETE FROM "ActivarCelular";'
+          'DELETE FROM "Area";'
+          'DELETE FROM "Articulo";'
+          'DELETE FROM "Banco";'
+          'DELETE FROM "Capitulo";'
+          'DELETE FROM "CartonCobranza";'
+          'DELETE FROM "Categoria";'
+          'DELETE FROM "Cheque";'
+          'DELETE FROM "ChequeEntegado";'
+          'DELETE FROM "Cliente";'
+          'DELETE FROM "Cobrador";'
+          'DELETE FROM "Cobranza";'
+          'DELETE FROM "Color";'
+          'DELETE FROM "Compra";'
+          'DELETE FROM "CompraItem";'
+          'DELETE FROM "Concepto";'
+          'DELETE FROM "Config";'
+          'DELETE FROM "Contrato";'
+          'DELETE FROM "Control";'
+          'DELETE FROM "CtaCte";'
+          'DELETE FROM "CtaCteItem";'
+          'DELETE FROM "Cuenta";'
+          'DELETE FROM "Devolucion";'
+          'DELETE FROM "Empresa";'
+          'DELETE FROM "FormaPago";'
+          'DELETE FROM "GestionCobranza";'
+          'DELETE FROM IG;'
+          'DELETE FROM IIBB;'
+          'DELETE FROM "Imprimir";'
+          'DELETE FROM "LibroBanco";'
+          'DELETE FROM "LibroDiario";'
+          'DELETE FROM "LibroIVAcompra";'
+          'DELETE FROM "LibroIVAventa";'
+          'DELETE FROM "Marca";'
+          'DELETE FROM "Material";'
+          'DELETE FROM "NotaCredito";'
+          'DELETE FROM "Operacion";'
+          'DELETE FROM "OperacionItem";'
+          'DELETE FROM "Permiso";'
+          'DELETE FROM "Plan";'
+          'DELETE FROM "Presupuesto";'
+          'DELETE FROM "PresupuestoItem";'
+          'DELETE FROM "Proveedor";'
+          'DELETE FROM "RendidoCobrador";'
+          'DELETE FROM "RendidoVendedor";'
+          'DELETE FROM "Rubro";'
+          'DELETE FROM "RubroContable";'
+          'DELETE FROM "Socio";'
+          'DELETE FROM "StillActivacion";'
+          'DELETE FROM "SubCategoria";'
+          'DELETE FROM "Tarjeta";'
+          'DELETE FROM "TipoCambio";'
+          'DELETE FROM "TipoGasto";'
+          'DELETE FROM "Tratado";'
+          'DELETE FROM "Usuario";'
+          'DELETE FROM "Vendedor";'
+          'DELETE FROM "Venta";'
+          'DELETE FROM "VentaItem";'
+          'DELETE FROM "AlicIva";'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Capitulo" (CODIGO, DESCRIPCION, TIPOGASTO) VALUES (' +
+            '1, '#39'ACTIVO'#39', 0);'
+          
+            'INSERT INTO "Capitulo" (CODIGO, DESCRIPCION, TIPOGASTO) VALUES (' +
+            '2, '#39'PASIVO'#39', 0);'
+          
+            'INSERT INTO "Capitulo" (CODIGO, DESCRIPCION, TIPOGASTO) VALUES (' +
+            '3, '#39'PATRIMONIO NETO'#39', 0);'
+          
+            'INSERT INTO "Capitulo" (CODIGO, DESCRIPCION, TIPOGASTO) VALUES (' +
+            '4, '#39'RESULTADO NEGATIVO'#39', 1);'
+          
+            'INSERT INTO "Capitulo" (CODIGO, DESCRIPCION, TIPOGASTO) VALUES (' +
+            '5, '#39'RESULTADO POSITIVO'#39', 0);'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Categoria" (CODIGO, DESCRIPCION) VALUES (0, '#39'VARIOS' +
+            #39');'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Cliente" (CODIGO, NOMBRE, TITULAR, DIRECCION, DIREC' +
+            'CIONCOMERCIAL, PAIS, PROVINCIA, DEPARTAMENTO, CIUDAD, BARRIO, CP' +
+            ', CODIGOAREA, CELULAR, TELEFONO, EXTENCION, FAX, EMAIL, TERMINOS' +
+            ', VENDEDOR, PRECIO, SUSPENDIDO, EXCENTO, FECHA, LIMITECREDITO, D' +
+            'IASCREDITO, DOCUMENTO, CUIT, IIBB, RUBRO, IVA, MSN, ALMANAQUES, ' +
+            'PROMOCIONES, GARANTE, ZONA, CTA, CTANOMBRE, CTATIPO, CTAANTICIPO' +
+            ', PAGARE) VALUES (0, '#39'CONSUMIDOR FINAL'#39', NULL, '#39'Calle s/n'#39', '#39'Rut' +
+            'a s/n'#39', NULL, '#39'Mendoza'#39', '#39'San Rafael'#39', NULL, '#39'Ciudad'#39', NULL, NUL' +
+            'L, '#39'15'#39', '#39'4'#39', NULL, '#39'2627'#39', NULL, NULL, 0, NULL, NULL, NULL, '#39'07' +
+            '/22/2010 11:46:07'#39', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NU' +
+            'LL, NULL, NULL, NULL, 3, NULL, 9, 9, 9, NULL);'
+          
+            'INSERT INTO "Cliente" (CODIGO, NOMBRE, TITULAR, DIRECCION, DIREC' +
+            'CIONCOMERCIAL, PAIS, PROVINCIA, DEPARTAMENTO, CIUDAD, BARRIO, CP' +
+            ', CODIGOAREA, CELULAR, TELEFONO, EXTENCION, FAX, EMAIL, TERMINOS' +
+            ', VENDEDOR, PRECIO, SUSPENDIDO, EXCENTO, FECHA, LIMITECREDITO, D' +
+            'IASCREDITO, DOCUMENTO, CUIT, IIBB, RUBRO, IVA, MSN, ALMANAQUES, ' +
+            'PROMOCIONES, GARANTE, ZONA, CTA, CTANOMBRE, CTATIPO, CTAANTICIPO' +
+            ', PAGARE) VALUES (1, '#39'cliente'#39', NULL, '#39'Calle s/n'#39', '#39'Ruta s/n'#39', N' +
+            'ULL, '#39'Mendoza'#39', '#39'San Rafael'#39', NULL, '#39'Ciudad'#39', NULL, NULL, '#39'15'#39', ' +
+            #39'4'#39', NULL, '#39'2627'#39', NULL, NULL, 0, NULL, NULL, NULL, '#39'07/22/2010 ' +
+            '11:46:07'#39', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,' +
+            ' NULL, 0, 3, NULL, 9, 9, 9, NULL);'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Cobrador" (CODIGO, NOMBRE, TITULAR, DIRECCION, DIRE' +
+            'CCIONCOMERCIAL, PAIS, PROVINCIA, DEPARTAMENTO, CIUDAD, CP, CODIG' +
+            'OAREA, CELULAR, TELEFONO, EXTENCION, FAX, EMAIL, TERMINOS, VENDE' +
+            'DOR, PRECIO, SUSPENDIDO, EXCENTO, FECHAINGRESO, LIMITECREDITO, D' +
+            'IASCREDITO, DOCUMENTO, CUIT, IIBB, RUBRO, IVA, MSN, ALMANAQUES, ' +
+            'PROMOCIONES, GARANTE, ZONA, CTA, CTANOMBRE, CTATIPO, CTAANTICIPO' +
+            ', PAGARE, COMISION, PUNTOS) VALUES (1, '#39'cobrador'#39', NULL, '#39'Calle ' +
+            's/n'#39', '#39'Ruta s/n'#39', NULL, '#39'Mendoza'#39', '#39'San Rafael'#39', '#39'Ciudad'#39', NULL,' +
+            ' NULL, '#39'15'#39', '#39'4'#39', NULL, '#39'2627'#39', NULL, NULL, NULL, NULL, NULL, NU' +
+            'LL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ' +
+            'NULL, NULL, 3, NULL, 51, 51, 26, NULL, 5, NULL);'
+          ''
+          ''
+          ''
+          'INSERT INTO "Color" (CODIGO, DESCRIPCION) VALUES (0, '#39'VARIOS'#39');'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Config" (CODIGO, NROFACTURA, "FechaInicio", PP1, PP' +
+            '2, PP3, PP4, PP5, PP6, PP7, PP8, PP9, PP, "CtaCompra", "CtaMerca' +
+            'deria", "CtaIIBB", "CtaImpuesto", "CtaDeudor", "CtaVenta", "CtaC' +
+            'aja", "CtaAnticipoAProveedor", "CtaBanco", "CtaCMV", "CtaComisio' +
+            'nVendedor", "CtaComisionVendedorAPagar", "CtaDeudorEnGestionJudi' +
+            'cial", "CtaDeudorIncobrable", "CtaDeudorMoroso", "CtaDeudorPorVe' +
+            'nta", "CtaDocumentoACobrar", "CtaHonorarioLegal", "CtaHonorarioL' +
+            'egalApagar", "CtaIVARemanente", "CtaIVAAPagar", "CtaIVACreditoFi' +
+            'scal", "CtaIVADebitoFiscal", "CtaLiquidacionDeIVA", "CtaMerRecJu' +
+            'dicialmente", "CtaMercaderiaDeReventa", "CtaObligacionAPagar", "' +
+            'CtaPagoDeHonorario", "CtaTarjetaDeCredito", "CtaProveedor", "Cta' +
+            'RecuperoJudicial", "CtaServicioAPAgar", "CtaServicio", "CtaValor' +
+            'AlCobro", "CtaValorADepositar", "Cuenta", "Precio", "Comprobante' +
+            '", "Empresa", "ImprimirTipo", "Imprimir", "ImprimirFiscal", "Imp' +
+            'rimirMostrar", "CodigoBarra", "GesCobTemprana", "GesCobExtraJudi' +
+            'cial", "GesCobJudicial", CMV, CTACAPITALSOC) VALUES (1, 0, '#39'01/0' +
+            '1/2010'#39', 5, 10, 15, 20, 25, 30, 0, 0, 0, 0, 8, 13, 8, 5, 16, 46,' +
+            ' 77, 36, 4, 45, 50, 25, 12, 58, 11, 9, 10, 79, 79, 86, 31, 14, 3' +
+            '0, 0, 15, 13, 38, 0, 0, 76, 3, 28, 81, 3, 85, 0, 0, 1, 1, 1, '#39'SI' +
+            #39', NULL, '#39'SI'#39', '#39'NO'#39', 0, 0, 0, NULL, 87);'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (90, 2, 1, NULL, '#39'100290'#39', '#39'SOCIO XX CTA PARTICULAR'#39', NULL, N' +
+            'ULL, NULL);'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (91, 2, 1, NULL, '#39'100291'#39', '#39'SOCIO YY CTA ARTICULAR'#39', NULL, NU' +
+            'LL, NULL);'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (88, 13, 4, 1, '#39'401388'#39', '#39'IMPUESTOS Y SERVICIOS'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (89, 6, 2, 1, '#39'200689'#39', '#39'IMPUESTOS Y SERVICIOS A PAGAR'#39', 0, '#39 +
+            #39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (10, 2, 1, 0, '#39'100210'#39', '#39'DOCUMENTOS COMERCIALES A COBRAR'#39', 0,' +
+            ' '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (1, 1, 1, 0, '#39'100101'#39', '#39'CAJA EN MONEDA NACIONAL'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (2, 1, 1, 0, '#39'100102'#39', '#39'CAJA EN MONEDA EXTRANJERA'#39', 0, '#39#39', '#39#39 +
+            ');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (3, 1, 1, 0, '#39'100103'#39', '#39'VALORES AL COBRO'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (4, 1, 1, 0, '#39'100104'#39', '#39'BANCO XX CUENTA CORRIENTE'#39', 0, '#39#39', '#39#39 +
+            ');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (5, 1, 1, 0, '#39'100105'#39', '#39'BANCO YY CUENTA CORRIENTE'#39', 0, '#39#39', '#39#39 +
+            ');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (6, 1, 1, 0, '#39'100106'#39', '#39'BANCO ZZ CAJA DE AHORRO'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (7, 1, 1, 0, '#39'100107'#39', '#39'CAJA CHICA EN MONEDA NACIONAL'#39', 0, '#39#39 +
+            ', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (8, 1, 1, 0, '#39'100108'#39', '#39'CAJA CHICA EN MONEDA EXTRANJERA'#39', 0, ' +
+            #39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (9, 2, 1, 0, '#39'100209'#39', '#39'DEUDORES POR VENTAS'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (11, 2, 1, 0, '#39'100211'#39', '#39'DEUDORES MOROSOS'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (12, 2, 1, 0, '#39'100212'#39', '#39'DEUDORES EN GESTION JUDICIAL'#39', 0, '#39#39 +
+            ', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (13, 3, 1, 0, '#39'100313'#39', '#39'MERCADERIAS DE REVENTA'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (14, 4, 1, 0, '#39'100414'#39', '#39'IVA CREDITO FISCAL'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (15, 3, 1, 0, '#39'100315'#39', '#39'MERCADERIA RECUPERADA JUDICIALMENTE'#39 +
+            ', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (16, 4, 1, 0, '#39'100416'#39', '#39'OTROS CREDITOS VARIOS'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (17, 5, 2, 0, '#39'200517'#39', '#39'SUELDOS Y JORNALES A PAGAR'#39', 0, '#39#39', ' +
+            #39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (18, 5, 2, 0, '#39'200518'#39', '#39'SAC A PAGAR'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (19, 5, 2, 0, '#39'200519'#39', '#39'CARGAS SOCIALES A PAGAR'#39', 0, '#39#39', '#39#39')' +
+            ';'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (20, 5, 2, 0, '#39'200520'#39', '#39'SEGUROS A PAGAR'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (21, 5, 2, 0, '#39'200521'#39', '#39'HONORARIOS CONTABLES A PAGAR'#39', 0, '#39#39 +
+            ', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (22, 5, 2, 0, '#39'200522'#39', '#39'HONORARIOS LEGALES A PAGAR'#39', 0, '#39#39', ' +
+            #39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (23, 5, 2, 0, '#39'200523'#39', '#39'HONORARIOS DIRECTORES A PAGAR'#39', 0, '#39 +
+            #39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (24, 5, 2, 0, '#39'200524'#39', '#39'OTROS GASTOS ADMINISTRATIVOS A PAGAR' +
+            #39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (25, 6, 2, 0, '#39'200625'#39', '#39'COMISION VENDEDORES A PAGAR'#39', 0, '#39#39',' +
+            ' '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (26, 6, 2, 0, '#39'200626'#39', '#39'COMISION COBRADORES A PAGAR'#39', 0, '#39#39',' +
+            ' '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (27, 6, 2, 0, '#39'200627'#39', '#39'FLETES Y ACARREOS A PAGAR'#39', 0, '#39#39', '#39 +
+            #39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (28, 6, 2, 0, '#39'200628'#39', '#39'TELEFONIA INTERNET A PAGAR'#39', 0, '#39#39', ' +
+            #39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (29, 6, 2, 0, '#39'200629'#39', '#39'TELEFONIA MOVIL A PAGAR'#39', 0, '#39#39', '#39#39')' +
+            ';'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (30, 7, 2, 0, '#39'200730'#39', '#39'IVA DEBITO FISCAL'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (31, 7, 2, 0, '#39'200731'#39', '#39'IVA A PAGAR'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (32, 7, 2, 0, '#39'200732'#39', '#39'INGRESOS BRUTOS A PAGAR'#39', 0, '#39#39', '#39#39')' +
+            ';'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (33, 7, 2, 0, '#39'200733'#39', '#39'IMPUESTO A LAS GANANCIAS A PAGAR'#39', 0' +
+            ', '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (34, 7, 2, 0, '#39'200734'#39', '#39'OTROS IMPUESTOS A PAGAR'#39', 0, '#39#39', '#39#39')' +
+            ';'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (35, 5, 2, 0, '#39'200535'#39', '#39'ALQUILERES A PAGAR'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (36, 2, 1, 0, '#39'100236'#39', '#39'ANTICIPO A PROVEEDORES'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (37, 8, 2, 0, '#39'200837'#39', '#39'INTERESES BANCARIOS A PAGAR'#39', 0, '#39#39',' +
+            ' '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (38, 5, 2, 0, '#39'200538'#39', '#39'OBLIGACIONES A PAGAR'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (39, 6, 2, 0, '#39'200639'#39', '#39'VIATICOS A PAGAR'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (40, 8, 2, 0, '#39'200840'#39', '#39'OTROS GASTOS FINANCIEROS A PAGAR'#39', 0' +
+            ', '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (41, 9, 3, 0, '#39'300941'#39', '#39'ACCIONISTA SOCIO XX'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (42, 9, 3, 0, '#39'300942'#39', '#39'ACCIONISTA SOCIO YY'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (43, 9, 3, 0, '#39'300943'#39', '#39'ACCIONISTA SOCIO 3'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (44, 9, 3, 0, '#39'300944'#39', '#39'ACCIONISTA SOCIO 4'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (45, 11, 4, 1, '#39'401145'#39', '#39'COSTO DE MERCADERIA VENDIDA'#39', 0, '#39#39 +
+            ', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (46, 10, 5, 0, '#39'501046'#39', '#39'VENTAS'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (47, 12, 4, 2, '#39'401247'#39', '#39'SUELDOS Y JORNALES'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (48, 12, 4, 2, '#39'401248'#39', '#39'CARGAS SOCIALES'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (49, 12, 4, 2, '#39'401249'#39', '#39'SAC'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (50, 13, 4, 2, '#39'401350'#39', '#39'COMISION VENDEDOR'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (51, 13, 4, 2, '#39'401351'#39', '#39'COMISION COBRADOR'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (52, 13, 4, 2, '#39'401352'#39', '#39'MOVILIDAD Y VIATICOS'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (53, 13, 4, 1, '#39'401353'#39', '#39'FLETES Y ACARREOS'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (54, 13, 4, 1, '#39'401354'#39', '#39'GASTOS DE LIMPIEZA'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (55, 4, 1, 0, '#39'100455'#39', '#39'MUEBLES Y UTILES DE OFICINA'#39', 0, '#39#39',' +
+            ' '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (56, 13, 4, 1, '#39'401356'#39', '#39'PROPAGANDA Y PUBLICIDAD'#39', 0, '#39#39', '#39#39 +
+            ');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (57, 12, 4, 1, '#39'401257'#39', '#39'ALQUILERES'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (58, 13, 4, 3, '#39'401358'#39', '#39'DEUDORES INCOBRABLES'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (59, 12, 4, 1, '#39'401259'#39', '#39'GASTOS DE LIBRERIA'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (60, 13, 4, 1, '#39'401360'#39', '#39'DIFERENCIA DE INVENTARIO'#39', 0, '#39#39', '#39 +
+            #39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (61, 9, 3, 0, '#39'300961'#39', '#39'APORTE CAPITAL SOCIO XX'#39', 0, '#39#39', '#39#39')' +
+            ';'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (62, 9, 3, 0, '#39'300962'#39', '#39'APORTE CAPITAL SOCIO YY'#39', 0, '#39#39', '#39#39')' +
+            ';'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (66, 15, 4, 4, '#39'400158'#39', '#39'INGRESOS BRUTOS'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (70, 12, 4, 1, '#39'401212'#39', '#39'PAPELERIA Y UTILES'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (75, 2, 1, 0, '#39'100217'#39', '#39'PLANES VIGENTES A COBRAR'#39', 0, '#39#39', '#39#39 +
+            ');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (76, 6, 2, 0, '#39'200618'#39', '#39'PROVEEDORES'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (77, 1, 1, 0, '#39'100119'#39', '#39'CAJA'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (78, 12, 4, 1, '#39'401220'#39', '#39'HONORARIOS CONTABLE'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (79, 12, 4, 1, '#39'401221'#39', '#39'HONORARIOS LEGALES'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (80, 13, 4, 1, '#39'401322'#39', '#39'VIATICOS'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (81, 13, 4, 1, '#39'401381'#39', '#39'TELEFONO E INTERNET'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (82, 12, 4, 2, '#39'401224'#39', '#39'CARGAS SOCIALES'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (83, 11, 1, 1, '#39'101125'#39', '#39'ACREEDORES VARIOS'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (85, 1, 1, 1, '#39'100185'#39', '#39'VALORES A DEPOSITAR'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (86, 7, 2, 0, '#39'200785'#39', '#39'IVA REMANENTE'#39', 0, '#39#39', '#39#39');'
+          
+            'INSERT INTO "Cuenta" (CODIGO, RUBRO, CAPITULO, TIPOGASTO, JERARQ' +
+            'UIA, DESCRIPCION, SALDO, LEYENDADEUDORA, LEYENDAHACREEDORA) VALU' +
+            'ES (87, 9, 3, 0, '#39'300987'#39', '#39'CAPITAL SOCIAL'#39', 0, '#39#39', '#39#39');'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Empresa" (CODIGO, NOMBRE, TITULAR, DIRECCION, DIREC' +
+            'CIONCOMERCIAL, PAIS, PROVINCIA, DEPARTAMENTO, CIUDAD, CP, CODIGO' +
+            'AREA, CELULAR, TELEFONO, FAX, EMAIL, SUSPENDIDO, EXCENTO, FECHA,' +
+            ' LIMITECREDITO, DIASCREDITO, DOCUMENTO, RAZONSOCIAL, CUIT, IIBB,' +
+            ' RUBRO, IVA, MSN, WEB, ZONA, CTA, CTANOMBRE, CTATIPO, CTAANTICIP' +
+            'O, PAGARE) VALUES (1, '#39'Mi Empresa'#39', '#39'Yo'#39', NULL, '#39'Lejos'#39', NULL, N' +
+            'ULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,' +
+            ' NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '#39'Responsable Monot' +
+            'ributo'#39', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO IG (CODIGO, DESCRIPCION, NORETENIDO, PORCENTAJE, MON' +
+            'TO) VALUES (0, '#39'VARIOS'#39', 1800, 0.005, 20);'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO IIBB (CODIGO, DESCRIPCION, PORCENTAJE, COEF1, COEF2,' +
+            ' COEF3, MONTO) VALUES (0, '#39'VARIOS'#39', 2.5, NULL, NULL, NULL, 2000)' +
+            ';'
+          
+            'INSERT INTO IIBB (CODIGO, DESCRIPCION, PORCENTAJE, COEF1, COEF2,' +
+            ' COEF3, MONTO) VALUES (1, '#39'REGIMEN LABORAL PARA COMPRA Y VENTA D' +
+            'E BIENES'#39', 3, 0.8, NULL, NULL, 2000);'
+          
+            'INSERT INTO IIBB (CODIGO, DESCRIPCION, PORCENTAJE, COEF1, COEF2,' +
+            ' COEF3, MONTO) VALUES (3, '#39'REGIMEN DE CONVENIO MULTILATERAL PARA' +
+            ' COMPRA Y VENTA DE BIENES'#39', 3, 0.8, 0.7768, NULL, 2000);'
+          
+            'INSERT INTO IIBB (CODIGO, DESCRIPCION, PORCENTAJE, COEF1, COEF2,' +
+            ' COEF3, MONTO) VALUES (2, '#39'REGIMEN LABORAL PARA LOCACION DE OBRA' +
+            'S Y SERVICIOS'#39', 3.5, 0.8, NULL, NULL, 2000);'
+          
+            'INSERT INTO IIBB (CODIGO, DESCRIPCION, PORCENTAJE, COEF1, COEF2,' +
+            ' COEF3, MONTO) VALUES (4, '#39'REGIMEN DE CONVENIO MULTILATERAL PARA' +
+            ' LOCACION DE OBRAS Y SERVICIOS'#39', 3.5, 0.8, 0.7768, NULL, 2000);'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (1,' +
+            ' '#39'Ticket'#39', '#39'CTicket'#39');'
+          
+            'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (2,' +
+            ' '#39'Original'#39', '#39'COriginal'#39');'
+          
+            'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (3,' +
+            ' '#39'Preimpresa Original'#39', '#39'CPOriginal'#39');'
+          
+            'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (4,' +
+            ' '#39'Factura Electronica'#39', '#39'FElectronica'#39');'
+          
+            'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES (5,' +
+            ' '#39'Ticket Electronico'#39', '#39'TElectronica'#39');'
+          ''
+          ''
+          ''
+          'INSERT INTO "Marca" (CODIGO, DESCRIPCION) VALUES (0, '#39'VARIOS'#39');'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Permiso" (CODIGO, DESCRIPCION, SECTOR) VALUES (0, '#39 +
+            'MINIMO'#39', '#39'0'#39');'
+          
+            'INSERT INTO "Permiso" (CODIGO, DESCRIPCION, SECTOR) VALUES (1, '#39 +
+            'BASICO'#39', '#39'0'#39');'
+          
+            'INSERT INTO "Permiso" (CODIGO, DESCRIPCION, SECTOR) VALUES (2, '#39 +
+            'AVANZADO'#39', '#39'0'#39');'
+          
+            'INSERT INTO "Permiso" (CODIGO, DESCRIPCION, SECTOR) VALUES (3, '#39 +
+            'ADMINISTRADOR'#39', '#39'0'#39');'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Plan" (CODIGO, NOMBRE, DESCRIPCION, INTERES, NUMERO' +
+            'HABIL, NUMERONOHABIL, DIASCALCULO, TOTAL) VALUES (1, '#39'288 cuotas' +
+            #39', '#39'plan diario'#39', 150, 6, 1, 1, 288);'
+          
+            'INSERT INTO "Plan" (CODIGO, NOMBRE, DESCRIPCION, INTERES, NUMERO' +
+            'HABIL, NUMERONOHABIL, DIASCALCULO, TOTAL) VALUES (2, '#39'180 cuotas' +
+            #39', '#39'plan semanal de 180 cuotas.'#39', 100, 7, 0, 7, 180);'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Proveedor" (CODIGO, NOMBRE, TITULAR, DIRECCION, DIR' +
+            'ECCIONCOMERCIAL, PAIS, PROVINCIA, DEPARTAMENTO, CIUDAD, CP, CODI' +
+            'GOAREA, CELULAR, TELEFONO, EXTENCION, FAX, EMAIL, TERMINOS, VEND' +
+            'EDOR, PRECIO, SUSPENDIDO, EXCENTO, FECHAINGRESO, LIMITECREDITO, ' +
+            'DIASCREDITO, DOCUMENTO, CUIT, IIBB, RUBRO, IVA, MSN, CONTACTO, G' +
+            'ERENTE, BANCO, CTACTE, FORMADEPAGO, VENCIMIENTO, ZONA, CTA, CTAN' +
+            'OMBRE, CTATIPO, CTAANTICIPO, PAGARE) VALUES (1, '#39'proveedor'#39', NUL' +
+            'L, '#39'Calle s/n'#39', NULL, NULL, '#39'Mendoza'#39', '#39'San Rafael'#39', '#39'Ciudad'#39', N' +
+            'ULL, NULL, '#39'15'#39', '#39'4'#39', NULL, '#39'2627'#39', NULL, NULL, NULL, NULL, NULL' +
+            ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '#39'RI'#39', NULL, NU' +
+            'LL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 76, 13, 36, NULL);'
+          
+            'INSERT INTO "Proveedor" (CODIGO, NOMBRE, TITULAR, DIRECCION, DIR' +
+            'ECCIONCOMERCIAL, PAIS, PROVINCIA, DEPARTAMENTO, CIUDAD, CP, CODI' +
+            'GOAREA, CELULAR, TELEFONO, EXTENCION, FAX, EMAIL, TERMINOS, VEND' +
+            'EDOR, PRECIO, SUSPENDIDO, EXCENTO, FECHAINGRESO, LIMITECREDITO, ' +
+            'DIASCREDITO, DOCUMENTO, CUIT, IIBB, RUBRO, IVA, MSN, CONTACTO, G' +
+            'ERENTE, BANCO, CTACTE, FORMADEPAGO, VENCIMIENTO, ZONA, CTA, CTAN' +
+            'OMBRE, CTATIPO, CTAANTICIPO, PAGARE) VALUES (2, '#39'impuestos y ser' +
+            'vicios'#39', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N' +
+            'ULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,' +
+            ' NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NUL' +
+            'L, NULL, NULL, NULL, NULL, NULL, 88, 88, 89, NULL);'
+          ''
+          ''
+          ''
+          'INSERT INTO "Rubro" (CODIGO, DESCRIPCION) VALUES (0, '#39'VARIOS'#39');'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "RubroContable" (CODIGO, DESCRIPCION) VALUES (1, '#39'CA' +
+            'JA Y BANCOS'#39');'
+          
+            'INSERT INTO "RubroContable" (CODIGO, DESCRIPCION) VALUES (2, '#39'CU' +
+            'ENTAS POR COBRAR'#39');'
+          
+            'INSERT INTO "RubroContable" (CODIGO, DESCRIPCION) VALUES (3, '#39'BI' +
+            'ENES DE CAMBIO'#39');'
+          
+            'INSERT INTO "RubroContable" (CODIGO, DESCRIPCION) VALUES (4, '#39'OT' +
+            'ROS CREDITOS'#39');'
+          
+            'INSERT INTO "RubroContable" (CODIGO, DESCRIPCION) VALUES (6, '#39'DE' +
+            'UDAS COMERCIALES'#39');'
+          
+            'INSERT INTO "RubroContable" (CODIGO, DESCRIPCION) VALUES (7, '#39'DE' +
+            'UDAS IMPOSITIVAS'#39');'
+          
+            'INSERT INTO "RubroContable" (CODIGO, DESCRIPCION) VALUES (9, '#39'CA' +
+            'PITAL SOCIAL'#39');'
+          
+            'INSERT INTO "RubroContable" (CODIGO, DESCRIPCION) VALUES (10, '#39'I' +
+            'NGRESOS POR VENTAS'#39');'
+          
+            'INSERT INTO "RubroContable" (CODIGO, DESCRIPCION) VALUES (11, '#39'C' +
+            'OSTO DE MERCADERIA VENDIDA'#39');'
+          
+            'INSERT INTO "RubroContable" (CODIGO, DESCRIPCION) VALUES (12, '#39'G' +
+            'ASTOS ADMINISTRATIVOS'#39');'
+          
+            'INSERT INTO "RubroContable" (CODIGO, DESCRIPCION) VALUES (13, '#39'G' +
+            'ASTOS COMERCIALES'#39');'
+          
+            'INSERT INTO "RubroContable" (CODIGO, DESCRIPCION) VALUES (15, '#39'G' +
+            'ASTOS IMPOSITIVOS'#39');'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Socio" (CODIGO, NOMBRE, TITULAR, DIRECCION, DIRECCI' +
+            'ONCOMERCIAL, PAIS, PROVINCIA, DEPARTAMENTO, CIUDAD, CP, CODIGOAR' +
+            'EA, CELULAR, TELEFONO, EXTENCION, FAX, EMAIL, TERMINOS, VENDEDOR' +
+            ', PRECIO, SUSPENDIDO, EXCENTO, FECHAINGRESO, LIMITECREDITO, DIAS' +
+            'CREDITO, DOCUMENTO, CUIT, IIBB, RUBRO, IVA, MSN, CONTACTO, GEREN' +
+            'TE, BANCO, CTACTE, FORMADEPAGO, VENCIMIENTO, ZONA, CTA, CTANOMBR' +
+            'E, CTATIPO, CTAANTICIPO, PAGARE) VALUES (1, '#39'socio xx'#39', NULL, '#39'C' +
+            'alle s/n'#39', '#39'Ruta s/n'#39', NULL, '#39'Mendoza'#39', '#39'San Rafael'#39', '#39'Ciudad'#39', ' +
+            'NULL, NULL, '#39'15'#39', '#39'4'#39', NULL, '#39'2627'#39', NULL, NULL, NULL, NULL, NUL' +
+            'L, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N' +
+            'ULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 61, 41, 90, NULL)' +
+            ';'
+          
+            'INSERT INTO "Socio" (CODIGO, NOMBRE, TITULAR, DIRECCION, DIRECCI' +
+            'ONCOMERCIAL, PAIS, PROVINCIA, DEPARTAMENTO, CIUDAD, CP, CODIGOAR' +
+            'EA, CELULAR, TELEFONO, EXTENCION, FAX, EMAIL, TERMINOS, VENDEDOR' +
+            ', PRECIO, SUSPENDIDO, EXCENTO, FECHAINGRESO, LIMITECREDITO, DIAS' +
+            'CREDITO, DOCUMENTO, CUIT, IIBB, RUBRO, IVA, MSN, CONTACTO, GEREN' +
+            'TE, BANCO, CTACTE, FORMADEPAGO, VENCIMIENTO, ZONA, CTA, CTANOMBR' +
+            'E, CTATIPO, CTAANTICIPO, PAGARE) VALUES (2, '#39'socio yy'#39', NULL, '#39'C' +
+            'alle s/n'#39', '#39'Ruta s/n'#39', NULL, '#39'Mendoza'#39', '#39'San Rafael'#39', '#39'Ciudad'#39', ' +
+            'NULL, NULL, '#39'15'#39', '#39'4'#39', NULL, '#39'2627'#39', NULL, NULL, NULL, NULL, NUL' +
+            'L, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N' +
+            'ULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 62, 42, 91, NULL)' +
+            ';'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "SubCategoria" (CODIGO, DESCRIPCION) VALUES (0, '#39'VAR' +
+            'IOS'#39');'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "TipoGasto" (CODIGO, DESCRIPCION) VALUES (1, '#39'GASTOS' +
+            ' GENERALES'#39');'
+          
+            'INSERT INTO "TipoGasto" (CODIGO, DESCRIPCION) VALUES (2, '#39'GASTOS' +
+            ' EN PERSONAL'#39');'
+          
+            'INSERT INTO "TipoGasto" (CODIGO, DESCRIPCION) VALUES (3, '#39'INCOBR' +
+            'ABLES'#39');'
+          
+            'INSERT INTO "TipoGasto" (CODIGO, DESCRIPCION) VALUES (4, '#39'IMPUES' +
+            'TOS'#39');'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Usuario" (CODIGO, NOMBRE, "password", DESCRIPCION, ' +
+            'PERMISO, EMPRESA) VALUES (0, '#39'minimo'#39', '#39'minimo'#39', '#39'minimo'#39', 0, 0)' +
+            ';'
+          
+            'INSERT INTO "Usuario" (CODIGO, NOMBRE, "password", DESCRIPCION, ' +
+            'PERMISO, EMPRESA) VALUES (1, '#39'basico'#39', '#39'basico'#39', '#39'basico'#39', 1, 0)' +
+            ';'
+          
+            'INSERT INTO "Usuario" (CODIGO, NOMBRE, "password", DESCRIPCION, ' +
+            'PERMISO, EMPRESA) VALUES (2, '#39'avanzado'#39', '#39'avanzado'#39', '#39'avanzado'#39',' +
+            ' 2, 0);'
+          
+            'INSERT INTO "Usuario" (CODIGO, NOMBRE, "password", DESCRIPCION, ' +
+            'PERMISO, EMPRESA) VALUES (3, '#39'admin'#39', '#39'admin'#39', '#39'admin'#39', 3, 0);'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Vendedor" (CODIGO, NOMBRE, TITULAR, DIRECCION, DIRE' +
+            'CCIONCOMERCIAL, PAIS, PROVINCIA, DEPARTAMENTO, CIUDAD, CP, CODIG' +
+            'OAREA, CELULAR, TELEFONO, EXTENCION, FAX, EMAIL, TERMINOS, VENDE' +
+            'DOR, PRECIO, SUSPENDIDO, EXCENTO, FECHAINGRESO, LIMITECREDITO, D' +
+            'IASCREDITO, DOCUMENTO, CUIT, IIBB, RUBRO, IVA, MSN, ALMANAQUES, ' +
+            'PROMOCIONES, GARANTE, ZONA, CTA, CTANOMBRE, CTATIPO, CTAANTICIPO' +
+            ', PAGARE, COMISION, PUNTOS) VALUES (1, '#39'vendedor'#39', NULL, '#39'Calle ' +
+            's/n'#39', '#39'Ruta s/n'#39', NULL, '#39'Mendoza'#39', '#39'San Rafael'#39', '#39'San Rafael'#39', N' +
+            'ULL, NULL, '#39'15'#39', '#39'4'#39', NULL, '#39'2627'#39', NULL, NULL, NULL, NULL, NULL' +
+            ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NU' +
+            'LL, NULL, NULL, NULL, NULL, 50, 50, 25, NULL, 5, NULL);'
+          ''
+          ''
+          ''
+          
+            'INSERT INTO "Articulo" (CODIGO, DESCRIPCION, COSTO, ULTCOSTO, PR' +
+            'ECIO1, PRECIO2, PRECIO3, PRECIO4, PRECIO5, PRECIO6, PRECIO, PORC' +
+            'ENTAJE, ULTPRECIO, MARCA, COLOR, CATEGORIA, SUBCATEGORIA, UBICAC' +
+            'ION, UNIDAD, DISPONIBLE, ENPRODUCCION, NOTAS, IVA, TASA, IMPOTRO' +
+            'S, IIBB, STOCKMINIMO, STOCKMAXIMO, STOCKVENDIDO, FECHACOMPULT, L' +
+            'ISTA, PROCEDENCIA, CODIGOBARRA, RUBRO, PROVEEDOR, GARANTIA, FECH' +
+            'A, PEDIDO, STOCK, EXISTENTE, ACTUAL, MARCADOCONTADO, MARCADOLIST' +
+            'A, MARCADOFINAL, PREPARADO, CTANOMBRE, CTATIPO, CTAANTICIPO, CTA' +
+            'IIBB, ESTADO, VENCE, VENCIMIENTO) VALUES'
+          
+            '(0, '#39'prueba'#39', 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.' +
+            '01, 0, NULL, 0, 0, 0, 0, NULL, '#39'c/u'#39', 0, NULL, NULL, NULL, 0, 0,' +
+            ' 1, NULL, NULL, NULL, '#39'07/07/2010'#39', NULL, NULL, '#39'11000280'#39', 0, 1' +
+            ', NULL, '#39'07/22/2010 11:46:07'#39', NULL, NULL, NULL, NULL, NULL, NUL' +
+            'L, NULL, NULL, 13, 13, 13, 66, NULL, NULL, NULL);'
+          
+            'INSERT INTO "Articulo" (CODIGO, DESCRIPCION, COSTO, ULTCOSTO, PR' +
+            'ECIO1, PRECIO2, PRECIO3, PRECIO4, PRECIO5, PRECIO6, PRECIO, PORC' +
+            'ENTAJE, ULTPRECIO, MARCA, COLOR, CATEGORIA, SUBCATEGORIA, UBICAC' +
+            'ION, UNIDAD, DISPONIBLE, ENPRODUCCION, NOTAS, IVA, TASA, IMPOTRO' +
+            'S, IIBB, STOCKMINIMO, STOCKMAXIMO, STOCKVENDIDO, FECHACOMPULT, L' +
+            'ISTA, PROCEDENCIA, CODIGOBARRA, RUBRO, PROVEEDOR, GARANTIA, FECH' +
+            'A, PEDIDO, STOCK, EXISTENTE, ACTUAL, MARCADOCONTADO, MARCADOLIST' +
+            'A, MARCADOFINAL, PREPARADO, CTANOMBRE, CTATIPO, CTAANTICIPO, CTA' +
+            'IIBB, ESTADO, VENCE, VENCIMIENTO) VALUES'
+          
+            '(1, '#39'articulo'#39', 100, 100, 105, 110, 115, 120, 125, 130, 135, 35,' +
+            ' NULL, 0, 0, 0, 0, NULL, '#39'c/u'#39', 0, NULL, NULL, NULL, 21, 0, 1, N' +
+            'ULL, NULL, NULL, '#39'07/07/2010'#39', NULL, NULL, '#39'11000013'#39', 0, 1, NUL' +
+            'L, '#39'07/22/2010 11:46:07'#39', NULL, NULL, NULL, NULL, NULL, NULL, NU' +
+            'LL, NULL, 13, 13, 13, 66, NULL, NULL, NULL);'
+          ''
+          ''
+          ''
+          'SET GENERATOR "ActivarCelular_generator" TO 0;'
+          ''
+          'SET GENERATOR "Area_generator" TO 0;'
+          ''
+          'SET GENERATOR "Articulo_CODIGO_GEN" TO 2;'
+          ''
+          'SET GENERATOR "Banco_generator" TO 0;'
+          ''
+          'SET GENERATOR "Capitulo_generator" TO 5;'
+          ''
+          'SET GENERATOR "CartonCobranza_generator" TO 0;'
+          ''
+          'SET GENERATOR "Categoria_CODIGO_GEN" TO 1;'
+          ''
+          'SET GENERATOR "Cheque_generator" TO 0;'
+          ''
+          'SET GENERATOR "ChequeEntregado_generator" TO 0;'
+          ''
+          'SET GENERATOR "Cliente_CODIGO_GEN" TO 1;'
+          ''
+          'SET GENERATOR "Cobrador_generator" TO 1;'
+          ''
+          'SET GENERATOR "Cobranza_generator" TO 0;'
+          ''
+          'SET GENERATOR "Color_CODIGO_GEN" TO 1;'
+          ''
+          'SET GENERATOR "Compra_generator" TO 0;'
+          ''
+          'SET GENERATOR "CompraItem_generator" TO 0;'
+          ''
+          'SET GENERATOR "Concepto_generator" TO 0;'
+          ''
+          'SET GENERATOR "Config_generator" TO 1;'
+          ''
+          'SET GENERATOR "Contrato_generator" TO 0;'
+          ''
+          'SET GENERATOR "Control_generator" TO 0;'
+          ''
+          'SET GENERATOR "CtaCte_generator" TO 0;'
+          ''
+          'SET GENERATOR "CtaCteItem_generator" TO 0;'
+          ''
+          'SET GENERATOR "Devolucion_generator" TO 0;'
+          ''
+          'SET GENERATOR "Empresa_generator" TO 1;'
+          ''
+          'SET GENERATOR "FormaPago_generator" TO 0;'
+          ''
+          'SET GENERATOR "GestionCobranza_generator" TO 0;'
+          ''
+          'SET GENERATOR IG_CODIGO_GEN TO 0;'
+          ''
+          'SET GENERATOR IIBB_CODIGO_GEN TO 1;'
+          ''
+          'SET GENERATOR "Imprimir_generator" TO 10;'
+          ''
+          'SET GENERATOR "LibroBanco_generator" TO 0;'
+          ''
+          'SET GENERATOR "LibroDiario_generator" TO 0;'
+          ''
+          'SET GENERATOR "LibroIVAcompra_generator" TO 0;'
+          ''
+          'SET GENERATOR "LibroIVAventa_generator" TO 0;'
+          ''
+          'SET GENERATOR "Marca_CODIGO_GEN" TO 1;'
+          ''
+          'SET GENERATOR "Material_generator" TO 0;'
+          ''
+          'SET GENERATOR "NotaCredito_generator" TO 0;'
+          ''
+          'SET GENERATOR "OPERACION_GENERATOR" TO 0;'
+          ''
+          'SET GENERATOR "OPERACIONITEM_GENERATOR" TO 0;'
+          ''
+          'SET GENERATOR "Permiso_generator" TO 0;'
+          ''
+          'SET GENERATOR "Plan_generator" TO 2;'
+          ''
+          'SET GENERATOR "Proveedor_CODIGO_GEN" TO 2;'
+          ''
+          'SET GENERATOR "RendidoCobrador_generator" TO 0;'
+          ''
+          'SET GENERATOR "RendidoVendedor_generator" TO 0;'
+          ''
+          'SET GENERATOR "Rubro_CODIGO_GEN" TO 1;'
+          ''
+          'SET GENERATOR "RubroContable_generator" TO 15;'
+          ''
+          'SET GENERATOR "Socio_generator" TO 2;'
+          ''
+          'SET GENERATOR "StillActivacion_generator" TO 0;'
+          ''
+          'SET GENERATOR "SubCategoria_CODIGO_GEN" TO 0;'
+          ''
+          'SET GENERATOR "SubCategoria_generator" TO 1;'
+          ''
+          'SET GENERATOR "Tarjeta_generator" TO 0;'
+          ''
+          'SET GENERATOR "TipoCambio_generator" TO 0;'
+          ''
+          'SET GENERATOR "TipoGasto_generator" TO 4;'
+          ''
+          'SET GENERATOR "Tratado_generator" TO 0;'
+          ''
+          'SET GENERATOR "Usuario_generator" TO 3;'
+          ''
+          'SET GENERATOR "Vendedor_generator" TO 1;'
+          ''
+          'SET GENERATOR "Venta_generator" TO 0;'
+          ''
+          'SET GENERATOR "VentaItem_generator" TO 0;'
+          ''
+          ''
+          'COMMIT;'
+          '')
+      end>
+    Connection = sdb
+    Params = <>
+    Macros = <>
+    Left = 192
+    Top = 448
   end
 end

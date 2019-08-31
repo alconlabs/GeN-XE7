@@ -772,7 +772,7 @@ var
   order_items_quantity, last_updated,sj, hoy : string;
   n, r, l, ro, no, p, t, paging_total: Integer;
 begin
-  hoy := formatdatetime('yyyy-mm-dd', now);
+  hoy := formatdatetime('yyyy-mm-dd', now-1);
   with dmML do
     with tOrders do
     begin
@@ -810,7 +810,6 @@ begin
                   tOrdersid.AsString := order_id;
                   //                tOrdersid.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].id').ToString;//2054151756,
                   tOrderscomments.AsString := jOrderRecent.GetValue<string>('results['+i+'].comments');//null,
-                  tOrdersstatus.AsString := jOrderRecent.GetValue<string>('results['+i+'].status');//"paid",
                   tOrdersstatus_detail.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].status_detail').ToString;//{},
                   tOrdersdate_created.AsString := jOrderRecent.GetValue<string>('results['+i+'].date_created');//"2019-06-13T18:12:24.000-04:00",
                   tOrdersdate_closed.AsString := jOrderRecent.GetValue<string>('results['+i+'].date_closed');//"2019-06-13T18:12:27.000-04:00",
@@ -838,10 +837,12 @@ begin
                   tOrdersfeedback.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].feedback').ToString;//{},
                   tOrderstags.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
 //                  ObtenerMessages(order_id,seller_id);
-                  tOrdersshipping.AsString:=(jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
-                  if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
                   ObtenerDespachados(order_id);
                 end;
+                tOrdersstatus.AsString := jOrderRecent.GetValue<string>('results['+i+'].status');//"paid",
+                tOrderstags.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
+                tOrdersshipping.AsString:=(jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
+                if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
 //              ObtenerShipping(tOrdersshipping.AsString);
 //              ObtenerMessages(order_id,seller_id);
                 last_updated:=jOrderRecent.GetValue<string>('results['+i+'].date_last_updated');

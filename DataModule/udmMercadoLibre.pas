@@ -220,10 +220,13 @@ var
   dmML: TdmML;
 
 const
+  whereNot_delivered=' (orders.tags LIKE ''%not_delivered%'')';
+  whereDelivered=' (orders.tags LIKE ''%delivered%'')';
+  wherePaid=' (orders.status=''paid'')';
+//  whereDelivered='(shipments.status=''delivered'')';
   whereReady_to_ship=' (shipments.status=''ready_to_ship'')';
-  whereShipped='(shipments.status=''shipped'')';
-  whereDelivered='(shipments.status=''delivered'')';
-  whereNoStatus='(shipments.status='''')';
+  whereShipped=' (shipments.status=''shipped'')';
+  whereNoStatus=' (shipments.status='''')';
   whereCancelled=' (shipments.status=''cancelled'')';
   whereSMMe1=' (shipments.mode=''me1'')';
   whereSMMe2=' (shipments.mode=''me2'')';
@@ -259,9 +262,9 @@ const
   sqlDespachados='SELECT * FROM despachados';
   sqlOrderFrom=' FROM orders'
     +' INNER JOIN order_items ON orders.id = order_items.order_id'
-    +' INNER JOIN shipments ON orders.shipping = shipments.id'
+    +' LEFT JOIN shipments ON orders.shipping = shipments.id'
     +' LEFT JOIN shipping_option ON shipments.shipping_option = shipping_option.id'
-    +' INNER JOIN buyer ON orders.buyer = buyer.id'
+    +' LEFT JOIN buyer ON orders.buyer = buyer.id'
     +' LEFT JOIN despachados ON orders.id = despachados.order_id';
 //    +' LEFT JOIN messages ON orders.id = messages.order_id';
   sqlOrderWhere=' WHERE'
@@ -270,8 +273,7 @@ const
 //    +' (NOT(shipments.status=''shipped''))'
 //    +' AND (NOT(shipments.status=''delivered''))'
 //    +' AND (NOT(shipments.status=''not_delivered''))'
-  +' AND '+whereNoEmbalado+''
-    ;
+  +' AND '+whereNoEmbalado+'';
   sqlSelectOrderItems='SELECT '
 //    +'order_items.title AS TITULO'
 //    +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
@@ -286,7 +288,8 @@ const
   sqlMensajes=sqlSelectOrderItems+', messages.*'+sqlOrderFrom+' INNER JOIN messages ON orders.id = messages.order_id'+' WHERE (NOT'+whereNoSubject+')';
   sqlMensajesNoLeido=sqlMensajes+' AND '+whereNoLeido;
   sqlItems=sqlSelectOrderItems+sqlOrderFrom;
-  sqlPreparar=sqlItems+sqlOrderWhere;
+//  sqlPreparar=sqlItems+sqlOrderWhere;
+  sqlPreparar=sqlItems+' WHERE '+wherePaid+' AND '+whereNot_delivered;
   sqlPrepararEnvios=sqlPreparar+' AND '+whereEnvio+' AND (NOT'+whereFlex+')';
   sqlPrepararEnviosItems=sqlPreparar;
   sqlPrepararFlex=sqlPreparar+' AND '+whereFlex;
@@ -1423,6 +1426,10 @@ e:=jEnvio.ToString;
             FieldByName('market_place').AsString := jEnvio.GetValue<string>('market_place');
             FieldByName('return_details').AsString := jEnvio.GetValue<string>('return_details');
             FieldByName('tags').AsString := jEnvio.GetValue<TJSONValue>('tags').ToString;
+            FieldByName('return_tracking_number').AsString := jEnvio.GetValue<string>('return_tracking_number');
+            FieldByName('cost_components').AsString := jEnvio.GetValue<TJSONValue>('cost_components').ToString;
+          end;
+
             if FieldByName('tags').AsString<>'[]' then
             begin
               FieldByName('delay').AsString := jEnvio.GetValue<TJSONValue>('delay').ToString;
@@ -1430,9 +1437,6 @@ e:=jEnvio.ToString;
               FieldByName('logistic_type').AsString := jEnvio.GetValue<string>('logistic_type');
               FieldByName('application_id').AsString := jEnvio.GetValue<string>('application_id');
             end;
-            FieldByName('return_tracking_number').AsString := jEnvio.GetValue<string>('return_tracking_number');
-            FieldByName('cost_components').AsString := jEnvio.GetValue<TJSONValue>('cost_components').ToString;
-          end;
 
           FieldByName('status').AsString := jEnvio.GetValue<string>('status');
           if FieldByName('substatus').AsString<>'' then
