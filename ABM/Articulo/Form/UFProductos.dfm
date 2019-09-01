@@ -16,6 +16,7 @@ object FProductos: TFProductos
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnKeyUp = FormKeyUp
   PixelsPerInch = 96
@@ -465,6 +466,10 @@ object FProductos: TFProductos
     object TabSheet3: TTabSheet
       Caption = 'Notas'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -479,6 +484,10 @@ object FProductos: TFProductos
     object TabSheet2: TTabSheet
       Caption = 'Informaci'#243'n Adicional'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label6: TLabel
         Left = 351
         Top = 116
@@ -737,6 +746,10 @@ object FProductos: TFProductos
     object TabSheet4: TTabSheet
       Caption = 'Precios'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label11: TLabel
         Left = 185
         Top = 221
@@ -857,6 +870,10 @@ object FProductos: TFProductos
     object TabSheet5: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label50: TLabel
         Left = 185
         Top = 51

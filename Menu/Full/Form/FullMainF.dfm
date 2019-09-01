@@ -225,14 +225,17 @@ object FullMainForm: TFullMainForm
       end
       object PLANES1: TMenuItem
         Caption = 'PLANES'
+        Visible = False
         OnClick = PLANES1Click
       end
       object Vendedores: TMenuItem
         Caption = 'VENDEDOR'
+        Visible = False
         OnClick = VendedoresClick
       end
       object Cobradores: TMenuItem
         Caption = 'COBRADOR'
+        Visible = False
         OnClick = CobradoresClick
       end
       object Rubro: TMenuItem
@@ -254,6 +257,7 @@ object FullMainForm: TFullMainForm
       end
       object IngresosBrutos: TMenuItem
         Caption = 'IIBB'
+        Visible = False
         OnClick = IngresosBrutosClick
       end
     end

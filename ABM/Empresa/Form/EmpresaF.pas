@@ -87,6 +87,7 @@ type
     procedure tEmpresaAfterDelete(DataSet: TDataSet);
     procedure tEmpresaAfterPost(DataSet: TDataSet);
     procedure Image1Click(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -124,17 +125,17 @@ end;
 
 procedure TEmpresaForm.tEmpresaAfterCancel(DataSet: TDataSet);
 begin
-  dm.tEmpresa.Transaction.RollbackRetaining;
+//  dm.tEmpresa.Transaction.RollbackRetaining;
 end;
 
 procedure TEmpresaForm.tEmpresaAfterDelete(DataSet: TDataSet);
 begin
-  dm.tEmpresa.Transaction.CommitRetaining;
+//  dm.tEmpresa.Transaction.CommitRetaining;
 end;
 
 procedure TEmpresaForm.tEmpresaAfterPost(DataSet: TDataSet);
 begin
-  dm.tEmpresa.Transaction.CommitRetaining;
+//  dm.tEmpresa.Transaction.CommitRetaining;
 end;
 
 procedure TEmpresaForm.NoBitBtnClick(Sender: TObject);
@@ -146,12 +147,21 @@ procedure TEmpresaForm.FormCreate(Sender: TObject);
 var i:integer;
 begin
   // DM := TDM.Create(Self);
-  dm.qCuenta.Open;
+  dm.tCuenta.Open;
   dm.tEmpresa.Open;
   dm.qIIBB.Open;
   Image1.Picture.LoadFromFile(path + 'img\empresa.bmp');
   DateTimePicker1.Date := dm.tEmpresa.FieldByName('Fecha').AsDateTime;
   for i := 1 to 3 do IVADBComboBox.Items.Add(OperacionDM.tipoIVA[i]);
+end;
+
+procedure TEmpresaForm.FormDestroy(Sender: TObject);
+begin
+  with dm do begin
+    tCuenta.Close;
+    tEmpresa.Close;
+    qIIBB.Close;
+  end;
 end;
 
 procedure TEmpresaForm.FormKeyPress(Sender: TObject; var Key: Char);
@@ -190,7 +200,7 @@ end;
 procedure TEmpresaForm.Image1Click(Sender: TObject);
 begin
   OpenPictureDialog1.Execute();
-  Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+  if OpenPictureDialog1.FileName<>'' then Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
 end;
 
 procedure TEmpresaForm.ImprimirBitBtnClick(Sender: TObject);

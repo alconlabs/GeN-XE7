@@ -142,6 +142,7 @@ type
     procedure IVADBComboBoxExit(Sender: TObject);
     procedure GanaciaDBEditExit(Sender: TObject);
     procedure IVADBComboBoxEnter(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
     tasa: Double;
@@ -338,6 +339,21 @@ with dm do begin
   dm.qCuenta.Open;
   dm.tArticulo.Insert;
 end;
+end;
+
+procedure TFProductos.FormDestroy(Sender: TObject);
+begin
+  with dm do begin
+    tArticulo.Active := False;
+    tSubCategoria.Active := False;
+    tProveedor.Active := False;
+    tRubro.Active := False;
+    tMarca.Active := False;
+    tCategoria.Active := False;
+    tIVA.Active := False;
+    QTemp.Active := False;
+    qCuenta.Active := False;
+  end;
 end;
 
 procedure TFProductos.BitBtn4Click(Sender: TObject);

@@ -915,22 +915,22 @@ object DM: TDM
       ''
       'COMMIT;')
     Statistics = False
-    Left = 16
+    Left = 24
   end
   object OpenDialog1: TOpenDialog
-    Left = 176
+    Left = 160
     Top = 48
   end
   object FDTable1: TFDTable
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
-    Left = 192
+    Left = 176
     Top = 144
   end
   object FDQuery1: TFDQuery
     Connection = BaseDatosFB
-    Left = 192
+    Left = 176
     Top = 96
   end
   object sdb: TFDConnection
@@ -938,18 +938,18 @@ object DM: TDM
       'Database=C:\Users\DeGsoft\Documents\Civeloo\GeN\db\db.sdb'
       'DriverID=SQLite')
     LoginPrompt = False
-    Left = 104
+    Left = 88
   end
   object tCbteTipo: TFDQuery
     Connection = sdb
-    Left = 104
+    Left = 88
     Top = 48
   end
   object tSiapVtaComp: TFDQuery
     Connection = sdb
     SQL.Strings = (
       'SELECT * FROM SiapVtaComp')
-    Left = 104
+    Left = 88
     Top = 96
     object tSiapVtaCompCodigo: TIntegerField
       FieldName = 'Codigo'
@@ -1089,27 +1089,27 @@ object DM: TDM
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 104
-    Top = 144
+    Left = 24
+    Top = 48
   end
   object qSdb: TFDQuery
     Connection = sdb
-    Left = 104
-    Top = 192
+    Left = 88
+    Top = 144
   end
   object SaveDialog1: TSaveDialog
-    Left = 208
+    Left = 192
     Top = 48
   end
   object FDBatchMoveSQLWriter1: TFDBatchMoveSQLWriter
     Connection = BaseDatosFB
     TableName = '"Proveedor"'
-    Left = 192
+    Left = 176
     Top = 288
   end
   object FDBatchMoveTextReader1: TFDBatchMoveTextReader
     DataDef.Fields = <>
-    Left = 192
+    Left = 176
     Top = 240
   end
   object FDBatchMove1: TFDBatchMove
@@ -1117,7 +1117,7 @@ object DM: TDM
     Writer = FDBatchMoveSQLWriter1
     Mappings = <>
     LogFileName = 'Data.log'
-    Left = 192
+    Left = 176
     Top = 192
   end
   object BaseDatosFB: TFDConnection
@@ -1127,8 +1127,9 @@ object DM: TDM
       'Database=C:\Users\DeGsoft\Documents\Civeloo\GeN\db\GeN.FDB'
       'CharacterSet=WIN1252'
       'DriverID=FB')
+    Connected = True
     LoginPrompt = False
-    Left = 192
+    Left = 176
   end
   object ConfigQuery: TFDQuery
     Connection = BaseDatosFB
@@ -1178,156 +1179,156 @@ object DM: TDM
         ' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".' +
         'CODIGO)'
       ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)')
-    Left = 192
+    Left = 176
     Top = 336
   end
   object dstArticulo: TDataSource
     AutoEdit = False
     DataSet = tArticulo
-    Left = 312
+    Left = 296
   end
   object dsqMaterial: TDataSource
     DataSet = tMaterial
-    Left = 312
+    Left = 296
     Top = 328
   end
   object dsqUsuario: TDataSource
     DataSet = qUsuario
-    Left = 440
+    Left = 376
     Top = 672
   end
   object dstMarca: TDataSource
     DataSet = tMarca
-    Left = 312
+    Left = 296
     Top = 376
   end
   object dsqCuenta: TDataSource
     DataSet = qCuenta
-    Left = 440
+    Left = 376
     Top = 192
   end
   object dstProveedor: TDataSource
     DataSet = tProveedor
-    Left = 312
+    Left = 296
     Top = 424
   end
   object dstIVA: TDataSource
     DataSet = tIVA
-    Left = 312
+    Left = 296
     Top = 232
   end
   object dstCategoria: TDataSource
     DataSet = tCategoria
-    Left = 312
+    Left = 296
     Top = 48
   end
   object dstSubCategoria: TDataSource
     DataSet = tSubCategoria
-    Left = 312
-    Top = 560
+    Left = 296
+    Top = 568
   end
   object dstRubro: TDataSource
     DataSet = tRubro
-    Left = 312
+    Left = 296
     Top = 520
   end
   object qODM: TFDQuery
     Connection = BaseDatosFB
-    Left = 488
+    Left = 424
     Top = 184
   end
   object dsqArticulo: TDataSource
     DataSet = qArticulo
-    Left = 440
+    Left = 376
   end
   object dsqCliente: TDataSource
     DataSet = qCliente
-    Left = 440
+    Left = 376
     Top = 144
   end
   object dsqVendedor: TDataSource
     DataSet = qVendedor
-    Left = 440
+    Left = 376
     Top = 624
   end
   object dstVendedor: TDataSource
     DataSet = tVendedor
-    Left = 312
-    Top = 654
+    Left = 296
+    Top = 662
   end
   object dstCuenta: TDataSource
     DataSet = tCuenta
-    Left = 312
+    Left = 296
     Top = 192
   end
   object dstUsuario: TDataSource
     DataSet = tUsuario
-    Left = 312
-    Top = 607
+    Left = 296
+    Top = 615
   end
   object dstCliente: TDataSource
     DataSet = tCliente
-    Left = 312
+    Left = 296
     Top = 98
   end
   object dstEmpresa: TDataSource
     DataSet = tEmpresa
-    Left = 312
+    Left = 296
     Top = 472
   end
   object dsqIIBB: TDataSource
     DataSet = qIIBB
-    Left = 440
+    Left = 376
     Top = 336
   end
   object dsqProveedor: TDataSource
     DataSet = qProveedor
-    Left = 440
+    Left = 376
     Top = 528
   end
   object dsqCompra: TDataSource
     DataSet = qCompra
-    Left = 440
+    Left = 376
     Top = 96
   end
   object dsqOperacion: TDataSource
     DataSet = qOperacion
-    Left = 440
+    Left = 376
     Top = 576
   end
   object dstConfiguracion: TDataSource
     DataSet = tConfiguracion
-    Left = 312
+    Left = 296
     Top = 144
   end
   object dsqImprimir: TDataSource
     DataSet = qIIBB
-    Left = 440
+    Left = 376
     Top = 384
   end
   object dsqCaja: TDataSource
     DataSet = qCaja
-    Left = 440
+    Left = 376
     Top = 48
   end
   object dsqGanancia: TDataSource
     DataSet = qGanancia
-    Left = 440
+    Left = 376
     Top = 288
   end
   object dsqLibroDiario: TDataSource
     DataSet = qLibroDiario
-    Left = 440
+    Left = 376
     Top = 432
   end
   object dsqLibro: TDataSource
     DataSet = qLibro
-    Left = 440
+    Left = 376
     Top = 480
   end
   object dsqTarjeta: TDataSource
     DataSet = qTarjeta
-    Left = 440
+    Left = 376
     Top = 720
   end
   object Query: TFDQuery
@@ -1378,8 +1379,8 @@ object DM: TDM
         ' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".' +
         'CODIGO)'
       ' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO)')
-    Left = 192
-    Top = 392
+    Left = 160
+    Top = 384
   end
   object qArticulo: TFDQuery
     Connection = BaseDatosFB
@@ -1454,7 +1455,7 @@ object DM: TDM
       
         '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".' +
         'CODIGO)')
-    Left = 408
+    Left = 344
   end
   object qCaja: TFDQuery
     Connection = BaseDatosFB
@@ -1475,7 +1476,7 @@ object DM: TDM
       '  "LibroDiario".OCULTO'
       'FROM'
       '  "LibroDiario"')
-    Left = 408
+    Left = 344
     Top = 48
   end
   object qCompra: TFDQuery
@@ -1516,7 +1517,7 @@ object DM: TDM
       
         '          INNER JOIN "Proveedor" ON ("Compra".Proveedor = "Prove' +
         'edor".CODIGO)')
-    Left = 408
+    Left = 344
     Top = 96
   end
   object qCliente: TFDQuery
@@ -1524,7 +1525,7 @@ object DM: TDM
     SQL.Strings = (
       'Select * from "Cliente"'
       'order by CODIGO asc')
-    Left = 408
+    Left = 344
     Top = 144
   end
   object qCuenta: TFDQuery
@@ -1532,7 +1533,7 @@ object DM: TDM
     SQL.Strings = (
       'select * from "Cuenta"'
       'order by DESCRIPCION')
-    Left = 408
+    Left = 344
     Top = 192
   end
   object qEmpresa: TFDQuery
@@ -1561,7 +1562,7 @@ object DM: TDM
       
         '  INNER JOIN "Cuenta" ON ("LibroDiario".CUENTA = "Cuenta".DESCRI' +
         'PCION)')
-    Left = 408
+    Left = 344
     Top = 240
   end
   object qGanancia: TFDQuery
@@ -1590,21 +1591,21 @@ object DM: TDM
       
         '  INNER JOIN "Cuenta" ON ("LibroDiario".CUENTA = "Cuenta".DESCRI' +
         'PCION)')
-    Left = 408
+    Left = 344
     Top = 288
   end
   object qIIBB: TFDQuery
     Connection = BaseDatosFB
     SQL.Strings = (
       'Select * from "IIBB"')
-    Left = 408
+    Left = 344
     Top = 336
   end
   object qImprimir: TFDQuery
     Connection = BaseDatosFB
     SQL.Strings = (
       'select * from "Imprimir"')
-    Left = 408
+    Left = 344
     Top = 384
   end
   object qLibroDiario: TFDQuery
@@ -1626,19 +1627,19 @@ object DM: TDM
       ' "LibroDiario".OCULTO '
       ' FROM'
       ' "LibroDiario"')
-    Left = 408
+    Left = 344
     Top = 432
   end
   object qLibro: TFDQuery
     Connection = BaseDatosFB
-    Left = 408
+    Left = 344
     Top = 480
   end
   object qProveedor: TFDQuery
     Connection = BaseDatosFB
     SQL.Strings = (
       'Select * from "Proveedor"')
-    Left = 408
+    Left = 344
     Top = 528
   end
   object qOperacion: TFDQuery
@@ -1683,28 +1684,28 @@ object DM: TDM
         '  INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CO' +
         'DIGO)'
       '  INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)')
-    Left = 408
+    Left = 344
     Top = 576
   end
   object qVendedor: TFDQuery
     Connection = BaseDatosFB
     SQL.Strings = (
       'select * from "Vendedor"')
-    Left = 408
+    Left = 344
     Top = 624
   end
   object qUsuario: TFDQuery
     Connection = BaseDatosFB
     SQL.Strings = (
       'select * from "Usuario"')
-    Left = 408
+    Left = 344
     Top = 672
   end
   object qTarjeta: TFDQuery
     Connection = BaseDatosFB
     SQL.Strings = (
       'select * from "Tarjeta"')
-    Left = 408
+    Left = 344
     Top = 720
   end
   object tArticulo: TFDTable
@@ -1713,7 +1714,7 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Articulo"'
     TableName = '"Articulo"'
-    Left = 280
+    Left = 264
   end
   object tCategoria: TFDTable
     Connection = BaseDatosFB
@@ -1721,7 +1722,7 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Categoria"'
     TableName = '"Categoria"'
-    Left = 280
+    Left = 264
     Top = 48
   end
   object tCliente: TFDTable
@@ -1730,7 +1731,7 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Cliente"'
     TableName = '"Cliente"'
-    Left = 280
+    Left = 264
     Top = 97
   end
   object tConfiguracion: TFDTable
@@ -1739,7 +1740,7 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Config"'
     TableName = '"Config"'
-    Left = 280
+    Left = 264
     Top = 144
   end
   object tCuenta: TFDTable
@@ -1748,7 +1749,7 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Cuenta"'
     TableName = '"Cuenta"'
-    Left = 280
+    Left = 264
     Top = 192
   end
   object tIVA: TFDTable
@@ -1757,7 +1758,7 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Iva"'
     TableName = '"Iva"'
-    Left = 280
+    Left = 264
     Top = 232
   end
   object tLibroIVAventa: TFDTable
@@ -1766,7 +1767,7 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"LibroIVAventa"'
     TableName = '"LibroIVAventa"'
-    Left = 280
+    Left = 264
     Top = 280
   end
   object tMaterial: TFDTable
@@ -1775,7 +1776,7 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Material"'
     TableName = '"Material"'
-    Left = 280
+    Left = 264
     Top = 328
   end
   object tMarca: TFDTable
@@ -1784,16 +1785,17 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Marca"'
     TableName = '"Marca"'
-    Left = 280
+    Left = 264
     Top = 376
   end
   object tProveedor: TFDTable
+    IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Proveedor"'
     TableName = '"Proveedor"'
-    Left = 280
+    Left = 264
     Top = 424
   end
   object tEmpresa: TFDTable
@@ -1801,8 +1803,9 @@ object DM: TDM
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Empresa"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Empresa"'
-    Left = 280
+    Left = 264
     Top = 472
   end
   object tRubro: TFDTable
@@ -1811,15 +1814,17 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Rubro"'
     TableName = '"Rubro"'
-    Left = 280
+    Left = 264
     Top = 520
   end
   object tSubCategoria: TFDTable
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
-    Left = 280
-    Top = 560
+    UpdateOptions.UpdateTableName = '"SubCategoria"'
+    TableName = '"SubCategoria"'
+    Left = 264
+    Top = 568
   end
   object tUsuario: TFDTable
     Connection = BaseDatosFB
@@ -1827,8 +1832,8 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Usuario"'
     TableName = '"Usuario"'
-    Left = 280
-    Top = 608
+    Left = 264
+    Top = 616
   end
   object tVendedor: TFDTable
     Connection = BaseDatosFB
@@ -1836,26 +1841,26 @@ object DM: TDM
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Venta"'
     TableName = '"Venta"'
-    Left = 280
-    Top = 656
+    Left = 264
+    Top = 662
   end
   object qQ: TFDQuery
     Connection = BaseDatosFB
-    Left = 488
+    Left = 424
     Top = 40
   end
   object qTemp: TFDQuery
     Connection = BaseDatosFB
-    Left = 488
+    Left = 424
   end
   object qT: TFDQuery
     Connection = BaseDatosFB
-    Left = 488
+    Left = 424
     Top = 88
   end
   object qD: TFDQuery
     Connection = BaseDatosFB
-    Left = 488
+    Left = 424
     Top = 136
   end
   object Consulta: TFDScript
@@ -2774,7 +2779,19 @@ object DM: TDM
     Connection = sdb
     Params = <>
     Macros = <>
-    Left = 192
+    Left = 176
     Top = 448
+  end
+  object qSdbReporte: TFDQuery
+    Connection = sdb
+    SQL.Strings = (
+      'SELECT * FROM SiapVtaComp')
+    Left = 88
+    Top = 192
+  end
+  object dsQuery: TDataSource
+    DataSet = Query
+    Left = 192
+    Top = 384
   end
 end

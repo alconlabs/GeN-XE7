@@ -16,6 +16,7 @@ object ProveedorForm: TProveedorForm
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnKeyUp = FormKeyUp
   OnShow = FormShow
@@ -29,31 +30,28 @@ object ProveedorForm: TProveedorForm
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 352
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
-      ExplicitTop = 24
-      ExplicitWidth = 319
-      ExplicitHeight = 440
       object Label2: TLabel
         Left = 0
-        Top = 40
+        Top = 0
         Width = 427
         Height = 16
         Align = alTop
         Caption = 'Nombre'
-        FocusControl = DBEdit2
+        FocusControl = dbeNombre
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitTop = 40
         ExplicitWidth = 56
       end
       object Label3: TLabel
         Left = 0
-        Top = 120
+        Top = 80
         Width = 427
         Height = 16
         Align = alTop
@@ -65,22 +63,8 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitTop = 120
         ExplicitWidth = 141
-      end
-      object Label1: TLabel
-        Left = 0
-        Top = 0
-        Width = 427
-        Height = 16
-        Align = alTop
-        Caption = 'Nro. Cta'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
-        ExplicitWidth = 57
       end
       object VendedorLabel: TLabel
         Left = 632
@@ -91,7 +75,7 @@ object ProveedorForm: TProveedorForm
       end
       object Label4: TLabel
         Left = 0
-        Top = 360
+        Top = 320
         Width = 427
         Height = 16
         Align = alTop
@@ -103,11 +87,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitTop = 360
         ExplicitWidth = 50
       end
       object Label9: TLabel
         Left = 0
-        Top = 160
+        Top = 120
         Width = 427
         Height = 16
         Align = alTop
@@ -119,11 +104,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitTop = 160
         ExplicitWidth = 63
       end
       object Label11: TLabel
         Left = 0
-        Top = 200
+        Top = 160
         Width = 427
         Height = 16
         Align = alTop
@@ -135,11 +121,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitTop = 200
         ExplicitWidth = 26
       end
       object Label6: TLabel
         Left = 0
-        Top = 240
+        Top = 200
         Width = 427
         Height = 16
         Align = alTop
@@ -151,11 +138,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitTop = 240
         ExplicitWidth = 66
       end
       object Label7: TLabel
         Left = 0
-        Top = 280
+        Top = 240
         Width = 427
         Height = 16
         Align = alTop
@@ -167,11 +155,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitTop = 280
         ExplicitWidth = 99
       end
       object Label27: TLabel
         Left = 0
-        Top = 320
+        Top = 280
         Width = 427
         Height = 16
         Align = alTop
@@ -183,11 +172,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitTop = 320
         ExplicitWidth = 70
       end
       object Label13: TLabel
         Left = 0
-        Top = 80
+        Top = 40
         Width = 427
         Height = 16
         Align = alTop
@@ -199,11 +189,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitTop = 80
         ExplicitWidth = 67
       end
-      object DBEdit2: TDBEdit
+      object dbeNombre: TDBEdit
         Left = 0
-        Top = 56
+        Top = 16
         Width = 427
         Height = 24
         Align = alTop
@@ -216,11 +207,11 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        ExplicitWidth = 319
+        ExplicitTop = 56
       end
       object DBEdit3: TDBEdit
         Left = 0
-        Top = 96
+        Top = 56
         Width = 427
         Height = 24
         Align = alTop
@@ -233,28 +224,11 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 1
-        ExplicitWidth = 319
-      end
-      object CodigoDBEdit: TDBEdit
-        Left = 0
-        Top = 16
-        Width = 427
-        Height = 24
-        Align = alTop
-        DataField = 'CODIGO'
-        DataSource = DM.dstProveedor
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 9
-        ExplicitWidth = 319
+        ExplicitTop = 96
       end
       object DBEdit9: TDBEdit
         Left = 0
-        Top = 376
+        Top = 336
         Width = 427
         Height = 24
         Align = alTop
@@ -267,11 +241,11 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 5
-        ExplicitWidth = 319
+        ExplicitTop = 376
       end
       object DBEdit4: TDBEdit
         Left = 0
-        Top = 136
+        Top = 96
         Width = 427
         Height = 24
         Align = alTop
@@ -284,11 +258,11 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 2
-        ExplicitWidth = 319
+        ExplicitTop = 136
       end
       object DBEdit10: TDBEdit
         Left = 0
-        Top = 176
+        Top = 136
         Width = 427
         Height = 24
         Align = alTop
@@ -301,11 +275,11 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 3
-        ExplicitWidth = 319
+        ExplicitTop = 176
       end
       object DBEdit12: TDBEdit
         Left = 0
-        Top = 216
+        Top = 176
         Width = 427
         Height = 24
         Align = alTop
@@ -318,11 +292,11 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 4
-        ExplicitWidth = 319
+        ExplicitTop = 216
       end
       object DBEdit6: TDBEdit
         Left = 0
-        Top = 256
+        Top = 216
         Width = 427
         Height = 24
         Align = alTop
@@ -335,11 +309,11 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 6
-        ExplicitWidth = 319
+        ExplicitTop = 256
       end
       object DBEdit7: TDBEdit
         Left = 0
-        Top = 296
+        Top = 256
         Width = 427
         Height = 24
         Align = alTop
@@ -352,11 +326,11 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 7
-        ExplicitWidth = 319
+        ExplicitTop = 296
       end
       object DBEdit24: TDBEdit
         Left = 0
-        Top = 336
+        Top = 296
         Width = 427
         Height = 24
         Align = alTop
@@ -370,15 +344,12 @@ object ProveedorForm: TProveedorForm
         ParentFont = False
         TabOrder = 8
         OnExit = DBEdit24Exit
-        ExplicitWidth = 319
+        ExplicitTop = 336
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'Notas'
       ImageIndex = 1
-      ExplicitTop = 24
-      ExplicitWidth = 344
-      ExplicitHeight = 440
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -387,16 +358,11 @@ object ProveedorForm: TProveedorForm
         Align = alClient
         DataField = 'Notas'
         TabOrder = 0
-        ExplicitWidth = 344
-        ExplicitHeight = 440
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
-      ExplicitTop = 24
-      ExplicitWidth = 344
-      ExplicitHeight = 440
       object Label15: TLabel
         Left = 0
         Top = 136
@@ -411,6 +377,7 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitLeft = 229
         ExplicitWidth = 198
       end
       object Label24: TLabel
@@ -535,7 +502,6 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 1
-        ExplicitWidth = 344
       end
       object DBEdit22: TDBEdit
         Left = 0
@@ -552,7 +518,6 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        ExplicitWidth = 344
       end
       object IVADBComboBox: TDBComboBox
         Left = 0
@@ -576,7 +541,6 @@ object ProveedorForm: TProveedorForm
         ParentFont = False
         TabOrder = 2
         OnChange = IVADBComboBoxChange
-        ExplicitWidth = 344
       end
       object CtaNombreDBLookupComboBox: TDBLookupComboBox
         Left = 0
@@ -596,7 +560,6 @@ object ProveedorForm: TProveedorForm
         ListSource = DM.dstCuenta
         ParentFont = False
         TabOrder = 3
-        ExplicitWidth = 344
       end
       object CtaAnticipoDBLookupComboBox: TDBLookupComboBox
         Left = 0
@@ -616,7 +579,6 @@ object ProveedorForm: TProveedorForm
         ListSource = DM.dstCuenta
         ParentFont = False
         TabOrder = 5
-        ExplicitWidth = 344
       end
       object CtaTipoDBLookupComboBox: TDBLookupComboBox
         Left = 0
@@ -636,15 +598,11 @@ object ProveedorForm: TProveedorForm
         ListSource = DM.dstCuenta
         ParentFont = False
         TabOrder = 4
-        ExplicitWidth = 344
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'Datos Secundarios'
       ImageIndex = 3
-      ExplicitTop = 24
-      ExplicitWidth = 344
-      ExplicitHeight = 440
       object Label19: TLabel
         Left = 0
         Top = 0
@@ -830,7 +788,6 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        ExplicitWidth = 344
       end
       object DBEdit13: TDBEdit
         Left = 0
@@ -847,7 +804,6 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 6
-        ExplicitWidth = 344
       end
       object DBEdit23: TDBEdit
         Left = 0
@@ -864,7 +820,6 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 7
-        ExplicitWidth = 344
       end
       object DBEdit19: TDBEdit
         Left = 0
@@ -881,7 +836,6 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 1
-        ExplicitWidth = 344
       end
       object DBEdit21: TDBEdit
         Left = 0
@@ -898,7 +852,6 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 2
-        ExplicitWidth = 344
       end
       object DBEdit5: TDBEdit
         Left = 0
@@ -915,7 +868,6 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 8
-        ExplicitWidth = 344
       end
       object DBEdit17: TDBEdit
         Left = 0
@@ -932,7 +884,6 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 3
-        ExplicitWidth = 344
       end
       object DBEdit11: TDBEdit
         Left = 0
@@ -949,7 +900,6 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 5
-        ExplicitWidth = 344
       end
       object DBEdit18: TDBEdit
         Left = 0
@@ -966,7 +916,6 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 4
-        ExplicitWidth = 344
       end
       object DBEdit1: TDBEdit
         Left = 0
@@ -983,7 +932,6 @@ object ProveedorForm: TProveedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 9
-        ExplicitWidth = 344
       end
     end
   end
@@ -1001,8 +949,22 @@ object ProveedorForm: TProveedorForm
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
-    ExplicitLeft = 327
-    ExplicitHeight = 468
+    object Label1: TLabel
+      Left = 1
+      Top = 101
+      Width = 73
+      Height = 16
+      Align = alTop
+      Caption = 'Nro. Cta'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ExplicitLeft = 2
+      ExplicitTop = 89
+    end
     object SiBitBtn: TBitBtn
       Left = 1
       Top = 374
@@ -1037,7 +999,6 @@ object ProveedorForm: TProveedorForm
       ParentFont = False
       TabOrder = 0
       OnClick = SiBitBtnClick
-      ExplicitTop = 367
     end
     object NoBitBtn: TBitBtn
       Left = 1
@@ -1056,7 +1017,6 @@ object ProveedorForm: TProveedorForm
       ParentFont = False
       TabOrder = 1
       OnClick = NoBitBtnClick
-      ExplicitTop = 417
     end
     object ImprimirBitBtn: TBitBtn
       Left = 1
@@ -1130,6 +1090,24 @@ object ProveedorForm: TProveedorForm
       Caption = 'Importar'
       TabOrder = 6
       OnClick = bImportarClick
+    end
+    object CodigoDBEdit: TDBEdit
+      Left = 1
+      Top = 117
+      Width = 73
+      Height = 24
+      Align = alTop
+      DataField = 'CODIGO'
+      DataSource = DM.dstProveedor
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 7
+      ExplicitLeft = 2
+      ExplicitTop = 173
     end
   end
 end

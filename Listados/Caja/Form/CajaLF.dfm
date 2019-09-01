@@ -75,7 +75,7 @@ object CajaLForm: TCajaLForm
         Width = 121
         Height = 21
         Date = 42051.000000000000000000
-        Time = 0.873295891200541500
+        Time = 0.873295891200541600
         TabOrder = 1
         OnCloseUp = DTP2CloseUp
       end
@@ -215,6 +215,7 @@ object CajaLForm: TCajaLForm
     Height = 396
     Align = alClient
     Color = clWhite
+    DataSource = DM.dsqCaja
     FixedColor = clWhite
     GradientEndColor = clBlack
     Font.Charset = DEFAULT_CHARSET

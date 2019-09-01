@@ -214,17 +214,19 @@ begin
     '  INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCategoria".CODIGO)'
     + '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
     '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +}
-  dm.qArticulo.SQL.Text:= articulos
-    +' WHERE ' + '(CODIGOBARRA like ' + QuotedStr(CodigoEdit.Text + '%') + ')' +
+  with dm do begin
+    qArticulo.SQL.Text:= articulos+' WHERE '+
 //    'AND ("Articulo".DESCRIPCION Containing '+QuotedStr(DescripcionEdit.Text)+')'+
-    'AND (upper("Articulo".DESCRIPCION) Containing '+QuotedStr(UpperCase(DescripcionEdit.Text))+')'+
+    ' (upper("Articulo".DESCRIPCION) Containing '+QuotedStr(UpperCase(DescripcionEdit.Text))+')'+
     'AND ("Marca".DESCRIPCION like '+QuotedStr(MarcaEdit.Text + '%')+')'+
     'AND ("Rubro".DESCRIPCION like '+QuotedStr(RubroEdit.Text + '%')+')'+
     'AND ("Categoria".DESCRIPCION like '+QuotedStr(CategoriaEdit.Text + '%')+')'+
-    'AND ("Proveedor".NOMBRE like '+QuotedStr(ProveedorEdit.Text + '%')+')';
-    if EnStockCheckBox.Checked then dm.qArticulo.SQL.Text := dm.qArticulo.SQL.Text+'AND ("Articulo".Disponible > 0)';
-    dm.qArticulo.SQL.Text := dm.qArticulo.SQL.Text+ ' ORDER BY   "Articulo".DESCRIPCION';
-  dm.qArticulo.Open;
+    'AND (upper("Proveedor".NOMBRE) Containing '+QuotedStr(UpperCase(ProveedorEdit.Text))+')';
+    if CodigoEdit.Text<>'' then qArticulo.SQL.Text := qArticulo.SQL.Text + 'AND (CODIGOBARRA like ' + QuotedStr(CodigoEdit.Text + '%') + ')';
+    if EnStockCheckBox.Checked then qArticulo.SQL.Text := qArticulo.SQL.Text+'AND ("Articulo".Disponible > 0)';
+    qArticulo.SQL.Text := qArticulo.SQL.Text+ ' ORDER BY   "Articulo".DESCRIPCION';
+    qArticulo.Open;
+  end;
 end;
 
 procedure TFBuscaArticulo.MarcaEditKeyUp(Sender: TObject; var Key: Word;

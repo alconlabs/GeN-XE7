@@ -18,8 +18,6 @@ type
     frxDBDataset1: TfrxDBDataset;
     frxCSVExport1: TfrxCSVExport;
     frxReport1: TfrxReport;
-    qReporte: TFDQuery;
-    Query: TFDQuery;
     Function VTA(nro, let: string): string;
     Function OPER(nro, tipo, let: string): string;
     Function PRE(nro, let: string): string;
@@ -51,8 +49,8 @@ uses OperacionDM;
 
 Procedure TImprimirDataModule.SImpr;
 begin
-  Query.sql.Text := vsql;
-  Query.Open;
+  dm.Query.sql.Text := vsql;
+  dm.Query.Open;
   with frxReport1 do
   begin
     LoadFromFile(path + 'rpt\' + reporte + '.fr3');
@@ -73,8 +71,8 @@ var
   // ? f,c :integer;
   c: Integer;
 begin
-  Query.sql.Text := sql;
-  Query.Open;
+  dm.Query.sql.Text := sql;
+  dm.Query.Open;
   try
     m := TStringList.Create;
     g := TSaveDialog.Create(Self);
@@ -84,21 +82,21 @@ begin
     g.DefaultExt := 'csv';
     g.FileName := n;
     // ingresa los campos
-    for c := 0 to Query.FieldCount - 1 do // columnas
+    for c := 0 to dm.Query.FieldCount - 1 do // columnas
     begin
-      col := col + '"' + Query.Fields.Fields[c].DisplayName + '",';
+      col := col + '"' + dm.Query.Fields.Fields[c].DisplayName + '",';
     end;
     m.Append(col);
     // ingresa el contenido
-    while not Query.Eof do // filas
+    while not dm.Query.Eof do // filas
     begin
       col := '';
-      for c := 0 to Query.FieldCount - 1 do // columnas
+      for c := 0 to dm.Query.FieldCount - 1 do // columnas
       begin
-        col := col + '"' + Query.Fields.Fields[c].AsString + '",';
+        col := col + '"' + dm.Query.Fields.Fields[c].AsString + '",';
       end;
       m.Append(col);
-      Query.Next;
+      dm.Query.Next;
     end;
     if g.Execute then
     begin
@@ -212,7 +210,7 @@ begin
     rpt := StringReplace(rpt, 'P', '', [rfReplaceAll]);
   end;
   if not(rpt='CTicket') and ((reporte='TElectronica') or (reporte='CTicket')) then rpt := reporte;
-  Query.sql.Text := 'SELECT '+
+  dm.Query.sql.Text := 'SELECT '+
     QuotedStr(PuntoVenta) + ' As PtoVta,' +
     QuotedStr(dm.ConfigQuery.FieldByName('NOMBRE').AsString) + ' As Empresa,' +
     QuotedStr(dm.ConfigQuery.FieldByName('TITULAR').AsString) + ' As ETITULAR,'
@@ -234,7 +232,7 @@ begin
     .AsString) + ' As EIIBB, '
     +QuotedStr(ctipo)+' as CTIPO, '+QuotedStr(nctipo)+' as NCTIPO,'
     + vsql;
-  Query.Open;
+  dm.Query.Open;
   with frxReport1 do
   begin
     LoadFromFile(path + 'rpt\' + rpt + '.fr3');
@@ -256,7 +254,7 @@ begin
 //          - 49 para los Bienes Usados
 //          Consultar método FEParamGetTiposCbte.
 //         }
-//         Case IndexStr(Query.FieldByName('LETRA').AsString, ['A', 'B', 'C']) of
+//         Case IndexStr(dm.Query.FieldByName('LETRA').AsString, ['A', 'B', 'C']) of
 //          0: tipo_cbte := 1;//A
 //          1: tipo_cbte := 6;//B
 //          2: tipo_cbte := 11;//C
@@ -264,18 +262,18 @@ begin
 //
 //          AfipWsfev1(
 //          tipo_cbte// tipo_cbte
-//          ,Query.FieldByName('PtoVta').AsInteger// punto_vta
+//          ,dm.Query.FieldByName('PtoVta').AsInteger// punto_vta
 //          ,80// tipo_doc
 //          ,0// presta_serv
 //          ,0// id
 //          ,0// cbt_desde
 //          ,0// cbt_hasta : Integer;
-//          ,Query.FieldByName('FECHA').AsString// fecha
-//          ,Query.FieldByName('CCUIT').AsString// nro_doc
-//          ,Query.FieldByName('TOTAL').AsString// imp_total
+//          ,dm.Query.FieldByName('FECHA').AsString// fecha
+//          ,dm.Query.FieldByName('CCUIT').AsString// nro_doc
+//          ,dm.Query.FieldByName('TOTAL').AsString// imp_total
 //          ,'0.00'// imp_tot_conc
-//          ,Query.FieldByName('SUBTOTAL').AsString// imp_neto
-//          ,Query.FieldByName('IMPUESTO').AsString// impto_liq
+//          ,dm.Query.FieldByName('SUBTOTAL').AsString// imp_neto
+//          ,dm.Query.FieldByName('IMPUESTO').AsString// impto_liq
 //          ,'0.00'// impto_liq_rni
 //          ,'0.00'// imp_op_ex
 //          ,'20170425'// fecha_cbte
@@ -285,10 +283,10 @@ begin
 //          ,'20170425'// venc : String;
 //          ,'PES'// moneda_id
 //          ,'1.000'// moneda_ctz : String ;
-//          ,Query.FieldByName('NG2').AsString// bi21
-//          ,Query.FieldByName('IVA2').AsString// i21
-//          ,Query.FieldByName('NG1').AsString// bi105
-//          ,Query.FieldByName('IVA1').AsString// i105: String;
+//          ,dm.Query.FieldByName('NG2').AsString// bi21
+//          ,dm.Query.FieldByName('IVA2').AsString// i21
+//          ,dm.Query.FieldByName('NG1').AsString// bi105
+//          ,dm.Query.FieldByName('IVA1').AsString// i105: String;
 //          );
 //      end
     end
@@ -333,9 +331,9 @@ begin
     if envEmail then
     begin
       archivoPDF := Path + 'db\'
-        +Query.FieldByName('PtoVta').AsString
-        +Query.FieldByName('LETRA').AsString
-        +Query.FieldByName('COMPROBANTE').AsString
+        +dm.Query.FieldByName('PtoVta').AsString
+        +dm.Query.FieldByName('LETRA').AsString
+        +dm.Query.FieldByName('COMPROBANTE').AsString
         +'.pdf';
       if not FileExists(archivoPDF) then
       begin
@@ -346,9 +344,9 @@ begin
         Export(oExportFilter);
       end;
       dm.EnviarEmail(
-        Query.FieldByName('EMAIL').AsString,
-        'FACTURA '+Query.FieldByName('Empresa').AsString,
-        'Adjunto factura&#44 que disfrutes tu compra.<br>'+Query.FieldByName('EWEB').AsString,
+        dm.Query.FieldByName('EMAIL').AsString,
+        'FACTURA '+dm.Query.FieldByName('Empresa').AsString,
+        'Adjunto factura&#44 que disfrutes tu compra.<br>'+dm.Query.FieldByName('EWEB').AsString,
         archivoPDF
       );
     end;
@@ -378,12 +376,12 @@ var
   w,cb,tipo,cae,vto : string;
 begin
   w := ' WHERE ("Venta".CODIGO = '+nro+') AND ("Venta".LETRA = '+QuotedStr(let)+')';
-  Query.sql.Text:='Select "Venta".DESCRIPCION, "Venta".TERMINOS  From "Venta" '+w;
-  Query.Open;
+  dm.Query.sql.Text:='Select "Venta".DESCRIPCION, "Venta".TERMINOS  From "Venta" '+w;
+  dm.Query.Open;
   tipo := DM.TraerTipoCbte(let);
-  cae := Query.FieldByName('DESCRIPCION').AsString;
-  vto := Query.FieldByName('TERMINOS').AsString;
-  Query.Close;
+  cae := dm.Query.FieldByName('DESCRIPCION').AsString;
+  vto := dm.Query.FieldByName('TERMINOS').AsString;
+  dm.Query.Close;
   cb := CodigoBarraElectronico(CUIT,tipo,PuntoVenta,cae,vto);
   Result := QuotedStr(cb)+' as CB, '+vtaSql+w;
 end;

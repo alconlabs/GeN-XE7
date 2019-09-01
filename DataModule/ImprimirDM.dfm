@@ -35,6 +35,7 @@ object ImprimirDataModule: TImprimirDataModule
   object frxDBDataset1: TfrxDBDataset
     UserName = 'frxDBDataset1'
     CloseDataSource = False
+    DataSource = DM.dsQuery
     BCDToCurrency = False
     Left = 40
     Top = 56
@@ -73,16 +74,5 @@ object ImprimirDataModule: TImprimirDataModule
     Datasets = <>
     Variables = <>
     Style = <>
-  end
-  object qReporte: TFDQuery
-    Connection = DM.sdb
-    SQL.Strings = (
-      'SELECT * FROM SiapVtaComp')
-    Left = 112
-    Top = 8
-  end
-  object Query: TFDQuery
-    Connection = DM.BaseDatos
-    Left = 40
   end
 end

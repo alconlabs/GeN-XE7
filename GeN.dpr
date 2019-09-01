@@ -51,7 +51,8 @@ uses
   Vcl.Styles,
   udmMercadoLibre in 'DataModule\udmMercadoLibre.pas' {dmML: TDataModule},
   EditorReporteUnit in 'Report\EditorReporteUnit.pas' {fEditorReporte},
-  ufRetPerc in 'SubOperacion\RetencionesPercepciones\ufRetPerc.pas' {fRetPerc};
+  ufRetPerc in 'SubOperacion\RetencionesPercepciones\ufRetPerc.pas' {fRetPerc},
+  PagoF in 'Operacion\Pago\Form\PagoF.pas' {PagoForm};
 
 {$R *.res}
 
@@ -62,5 +63,6 @@ begin
   Application.Title := 'Civeloo GeN';
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFullMainForm, FullMainForm);
+  Application.CreateForm(TPagoForm, PagoForm);
   Application.Run;
 end.

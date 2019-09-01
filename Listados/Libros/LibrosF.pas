@@ -117,7 +117,7 @@ begin
 //    QuotedStr(DM.ConfigQuery.FieldByName('Nombre').AsString) + ' AS Empresa, ' +
 //    '  ' + QuotedStr(DateToStr(DTP1.Date)) + ' AS Desde,  ' + '  ' +
 //    QuotedStr(DateToStr(DTP2.Date)) + ' AS Hasta, ' +
-    sql + ' WHERE'
+  sql + ' WHERE'
   +' (FECHA > ' + QuotedStr(DateToStr(DTP1.Date-1)) + ' ) AND '
   +' (FECHA < ' + QuotedStr(DateToStr(DTP2.Date+1)) + ' )   '
   + 'ORDER BY CODIGO';
@@ -197,10 +197,10 @@ begin
   try
     with ImprimirDataModule do
     begin
-      frxDBDataset1.DataSet:=qReporte;
-      qReporte.Open(s + siap + w );
+      frxDBDataset1.DataSet:=dm.qSdbReporte;
+      dm.qSdbReporte.Open(s + siap + w );
       ExportarReporteTXT(siap);
-      qReporte.Open(s + siap+'Alicuota'
+      dm.qSdbReporte.Open(s + siap+'Alicuota'
        +' inner join '+ siap +' on '+ siap +'.Codigo='+ siap +'Alicuota.Codigo'
        + w
        +' Order By '+ siap +'Alicuota.Codigo'

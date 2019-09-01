@@ -126,6 +126,8 @@ type
     qT: TFDQuery;
     qD: TFDQuery;
     Consulta: TFDScript;
+    qSdbReporte: TFDQuery;
+    dsQuery: TDataSource;
 
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
@@ -156,6 +158,7 @@ type
     procedure ActualizarTrigger(name,active,body:string);
     procedure ActualizarTriggerFecha;
     procedure CrearTablasIva;
+    procedure CrearTablaCbteAsoc;
   public
   const
     NumThreads: Integer = 4;
@@ -730,6 +733,7 @@ begin
       CrearTablasSiap;
       CrearTablaRetPer;
       CrearTablasIva;
+      CrearTablaCbteAsoc;
       ActualizarTriggerFecha;
       ActualizarVersion;
     end;
@@ -744,32 +748,6 @@ begin
     ActualizarValor('Version', 'V2', '', FloatToStr(v2));
     ActualizarValor('Version', 'V3', '', FloatToStr(v3));
     ActualizarValor('Version', 'V4', '', FloatToStr(v4));
-    if not ExisteEnTabla('CbtesAsoc', '') then
-    begin
-  {
-  <ar:CbtesAsoc>
-    <ar:CbteAsoc>
-    <ar:Tipo>short</ar:Tipo>
-    <ar:PtoVta>int</ar:PtoVta>
-    <ar:Nro>long</ar:Nro>
-    <ar:Cuit>String</ar:Cuit>
-    <ar:CbteFch>String</ar:CbteFch>
-  </ar:CbteAsoc>
-  }
-      CrearTabla('CbtesAsoc', 'CODIGO', 'INTEGER');
-      ActualizarTabla('CbtesAsoc', 'TIPO', 'INTEGER');
-      ActualizarTabla('CbtesAsoc', 'PTOVTA', 'INTEGER');
-      ActualizarTabla('CbtesAsoc', 'NRO', 'VARCHAR(255)');
-      ActualizarTabla('CbtesAsoc', 'CUIT', 'VARCHAR(255)');
-      ActualizarTabla('CbtesAsoc', 'CBTEFCH', 'VARCHAR(255)');
-      ActualizarTabla('Operacion', 'CBTESASOC', 'INTEGER');
-      ActualizarTabla('Venta', 'CBTESASOC', 'INTEGER');
-      ActualizarTabla('CtaCte', 'CBTESASOC', 'INTEGER');
-      ActualizarTabla('Presupuesto', 'CBTESASOC', 'INTEGER');
-      ActualizarTabla('Compra', 'CBTESASOC', 'INTEGER');
-    end;
-
-
     ActualizarImprimir('FElectronica');
     ActualizarImprimir('TElectronica');
   end;
@@ -1736,6 +1714,34 @@ begin
     ActualizarTabla('Presupuesto', 'ALICIVA', 'INTEGER');
     ActualizarTabla('Compra', 'ALICIVA', 'INTEGER');
   end;
+end;
+
+procedure TDM.CrearTablaCbteAsoc;
+begin
+  if not ExisteEnTabla('CbtesAsoc', '') then
+    begin
+      {
+      <ar:CbtesAsoc>
+        <ar:CbteAsoc>
+        <ar:Tipo>short</ar:Tipo>
+        <ar:PtoVta>int</ar:PtoVta>
+        <ar:Nro>long</ar:Nro>
+        <ar:Cuit>String</ar:Cuit>
+        <ar:CbteFch>String</ar:CbteFch>
+      </ar:CbteAsoc>
+      }
+      CrearTabla('CbtesAsoc', 'CODIGO', 'INTEGER');
+      ActualizarTabla('CbtesAsoc', 'TIPO', 'INTEGER');
+      ActualizarTabla('CbtesAsoc', 'PTOVTA', 'INTEGER');
+      ActualizarTabla('CbtesAsoc', 'NRO', 'VARCHAR(255)');
+      ActualizarTabla('CbtesAsoc', 'CUIT', 'VARCHAR(255)');
+      ActualizarTabla('CbtesAsoc', 'CBTEFCH', 'VARCHAR(255)');
+      ActualizarTabla('Operacion', 'CBTESASOC', 'INTEGER');
+      ActualizarTabla('Venta', 'CBTESASOC', 'INTEGER');
+      ActualizarTabla('CtaCte', 'CBTESASOC', 'INTEGER');
+      ActualizarTabla('Presupuesto', 'CBTESASOC', 'INTEGER');
+      ActualizarTabla('Compra', 'CBTESASOC', 'INTEGER');
+    end;
 end;
 
 end.

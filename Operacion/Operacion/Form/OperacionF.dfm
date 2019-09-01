@@ -832,6 +832,7 @@ object OperacionForm: TOperacionForm
         TabOrder = 2
         Text = 'Nro.Comprobante'
         TextHint = 'Nro. Comprobante'
+        OnExit = ComprobanteEditExit
       end
       object PuntoVentaEdit: TEdit
         Left = 67

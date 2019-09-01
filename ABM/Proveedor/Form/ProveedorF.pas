@@ -15,10 +15,8 @@ type
     DBMemo1: TDBMemo;
     Label2: TLabel;
     Label3: TLabel;
-    DBEdit2: TDBEdit;
+    dbeNombre: TDBEdit;
     DBEdit3: TDBEdit;
-    CodigoDBEdit: TDBEdit;
-    Label1: TLabel;
     VendedorLabel: TLabel;
     TabSheet3: TTabSheet;
     Label15: TLabel;
@@ -79,11 +77,12 @@ type
     bExportar: TButton;
     bImportar: TButton;
     Label13: TLabel;
+    Label1: TLabel;
+    CodigoDBEdit: TDBEdit;
     procedure SiBitBtnClick(Sender: TObject);
     procedure NoBitBtnClick(Sender: TObject);
     procedure BuscarBitBtnClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
-    procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ImprimirBitBtnClick(Sender: TObject);
     procedure tProveedorAfterInsert(DataSet: TDataSet);
@@ -95,6 +94,8 @@ type
     procedure tProveedorAfterCancel(DataSet: TDataSet);
     procedure bExportarClick(Sender: TObject);
     procedure bImportarClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -154,17 +155,28 @@ begin
     dm.tProveedor.Locate('CODIGO', (dm.qProveedor.FieldByName('CODIGO').AsString), []);
     FBuscaProve.Free;
   end;
-  DBEdit2.SetFocus;
+  dbeNombre.SetFocus;
 end;
 
 procedure TProveedorForm.FormCreate(Sender: TObject);
 begin
-  // DM := TDM.Create(self);
-  If (dm.tProveedor.Active = True) then dm.tProveedor.Close;
-  dm.tUsuario.Open;
-  dm.tCuenta.Open;
-  dm.tProveedor.Open;
-  dm.tProveedor.Insert;
+ // DM := TDM.Create(self);
+ //  If (dm.tProveedor.Active = True) then dm.tProveedor.Close;
+  with dm do begin
+    tUsuario.Active := True;
+    tCuenta.Active := True;
+    tProveedor.Active := True;
+    tProveedor.Insert;
+  end;
+end;
+
+procedure TProveedorForm.FormDestroy(Sender: TObject);
+begin
+  with dm do begin
+    tUsuario.Active := False;
+    tCuenta.Active := False;
+    tProveedor.Active := False;
+  end;
 end;
 
 procedure TProveedorForm.FormKeyPress(Sender: TObject; var Key: Char);
@@ -174,11 +186,6 @@ begin
     Key := #0; { eat enter key }
     Perform(WM_NEXTDLGCTL, 0, 0); { move to next control }
   end;
-end;
-
-procedure TProveedorForm.FormShow(Sender: TObject);
-begin
-  DBEdit2.SetFocus;
 end;
 
 procedure TProveedorForm.IVADBComboBoxChange(Sender: TObject);
@@ -200,6 +207,11 @@ procedure TProveedorForm.FormKeyUp(Sender: TObject; var Key: Word;
 begin
   IF Key = VK_F5 then
     BuscarBitBtn.Click;
+end;
+
+procedure TProveedorForm.FormShow(Sender: TObject);
+begin
+  dbeNombre.SetFocus;
 end;
 
 procedure TProveedorForm.ImprimirBitBtnClick(Sender: TObject);

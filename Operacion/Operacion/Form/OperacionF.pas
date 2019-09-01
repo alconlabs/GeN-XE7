@@ -96,6 +96,7 @@ type
     procedure TraerRemito(codigo: string);
     procedure EnviarEmailCheckBoxClick(Sender: TObject);
     procedure bRetPerClick(Sender: TObject);
+    procedure ComprobanteEditExit(Sender: TObject);
   private
     { Private declarations }
     salir : Boolean;
@@ -314,7 +315,8 @@ begin
 //  DSC := 0;
   NGD :=0;
   IVA :=0;
-  CONT:=StrToFloat( FEContado.Text );
+  if FEContado.Text='' then FEContado.Text:='0';
+  CONT := StrToFloat( FEContado.Text );
   PR:=0;
   if (cbTipo.ItemIndex<6) then esA:=true;
   if (cbTipo.ItemIndex>5) and (cbTipo.ItemIndex<11) then esB:=true;
@@ -622,6 +624,11 @@ begin
   FEContado.Text:='0';
   CalculaTotales;
   AgregarBitBtn.Click;
+end;
+
+procedure TOperacionForm.ComprobanteEditExit(Sender: TObject);
+begin
+  ProcesarBitBtn.SetFocus;
 end;
 
 procedure TOperacionForm.DescuentoBitBtnClick(Sender: TObject);

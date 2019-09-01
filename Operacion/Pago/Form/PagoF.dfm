@@ -102,8 +102,8 @@ object PagoForm: TPagoForm
       Top = 24
       Width = 81
       Height = 21
-      Date = 43101.914764351850000000
-      Time = 43101.914764351850000000
+      Date = 43101.000000000000000000
+      Time = 0.914764351851772500
       TabOrder = 1
     end
     object HastaDateTimePicker: TDateTimePicker
@@ -111,8 +111,8 @@ object PagoForm: TPagoForm
       Top = 24
       Width = 82
       Height = 21
-      Date = 43252.914837233790000000
-      Time = 43252.914837233790000000
+      Date = 43252.000000000000000000
+      Time = 0.914837233787693600
       TabOrder = 2
     end
   end
@@ -212,23 +212,5 @@ object PagoForm: TPagoForm
       TabOrder = 1
       Text = '0'
     end
-  end
-  object QTemp: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 472
-    Top = 88
-  end
-  object Q: TIBQuery
-    Database = DM.BaseDatos
-    Transaction = DM.Transaccion
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    Left = 472
-    Top = 176
   end
 end

@@ -16,6 +16,7 @@ object EmpresaForm: TEmpresaForm
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PixelsPerInch = 96
@@ -649,8 +650,6 @@ object EmpresaForm: TEmpresaForm
         DataField = 'Notas'
         DataSource = DM.dstEmpresa
         TabOrder = 0
-        ExplicitLeft = -1
-        ExplicitTop = -3
       end
     end
     object TabSheet3: TTabSheet
@@ -791,8 +790,6 @@ object EmpresaForm: TEmpresaForm
       ParentFont = False
       TabOrder = 0
       OnClick = SiBitBtnClick
-      ExplicitLeft = 6
-      ExplicitTop = 348
     end
     object NoBitBtn: TBitBtn
       Left = 1
@@ -811,9 +808,6 @@ object EmpresaForm: TEmpresaForm
       ParentFont = False
       TabOrder = 1
       OnClick = NoBitBtnClick
-      ExplicitLeft = 6
-      ExplicitTop = 359
-      ExplicitWidth = 80
     end
     object ImprimirBitBtn: TBitBtn
       Left = 1
@@ -831,9 +825,6 @@ object EmpresaForm: TEmpresaForm
       TabOrder = 2
       Visible = False
       OnClick = ImprimirBitBtnClick
-      ExplicitLeft = 6
-      ExplicitTop = 95
-      ExplicitWidth = 80
     end
     object CodigoDBEdit: TDBEdit
       Left = 1
@@ -850,9 +841,6 @@ object EmpresaForm: TEmpresaForm
       Font.Style = []
       ParentFont = False
       TabOrder = 3
-      ExplicitLeft = 6
-      ExplicitTop = 24
-      ExplicitWidth = 83
     end
   end
   object OpenPictureDialog1: TOpenPictureDialog

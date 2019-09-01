@@ -198,7 +198,7 @@ uses LoginF, BuscaFactura, AnularVtaF, incremento, PagoIVAF, LibroDiarioF,
   UFCategorias, UFBuscaArticulos, CajaLF,
   GananciasL, Precios, ListadoClientes, BuscaCompra, EmpresaF, ConfiguracionF,
   VaciarBaseF, MigrarF, main, OperacionF,
-  LibrosF;
+  LibrosF, PagoF;
 
 {$R *.dfm}
 
@@ -780,12 +780,12 @@ end;
 
 procedure TFullMainForm.PAGODEIIBB1Click(Sender: TObject);
 begin
-//  PagoForm := TPagoForm.Create(self);
-//  try
-//    PagoForm.ShowModal;
-//  finally
-//    PagoForm.Free;
-//  end;
+  PagoForm := TPagoForm.Create(self);
+  try
+    PagoForm.ShowModal;
+  finally
+    PagoForm.Free;
+  end;
 end;
 
 procedure TFullMainForm.PAGODEIVA1Click(Sender: TObject);

@@ -22,8 +22,6 @@ type
     Label3: TLabel;
     SaldoEdit: TEdit;
     Label6: TLabel;
-    QTemp: TIBQuery;
-    Q: TIBQuery;
     TotalEdit: TEdit;
     Label4: TLabel;
     procedure AceptarBitBtnClick(Sender: TObject);
@@ -51,15 +49,15 @@ begin
   fecha := (FormatDateTime('mm/dd/yyyy hh:mm:ss', now));
 
   // Iniciar la Transaccion
-
+  dm.BaseDatosFB.StartTransaction;
   // CONTABILIDAD++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
   // Insertar en la tabla LibroDiario
   // obtener el numero de asiento
-  Q.SQL.Text := 'Select Max(ASIENTO) From "LibroDiario"';
-  Q.Open;
-  i := Q.Fields[0].AsInteger + 1;
-  Q.Close;
+  dm.Query.SQL.Text := 'Select Max(ASIENTO) From "LibroDiario"';
+  dm.Query.Open;
+  i := dm.Query.Fields[0].AsInteger + 1;
+  dm.Query.Close;
 
   // LIQUIDACION DE
 
@@ -67,36 +65,36 @@ begin
   begin
     // PAGO DE IIBB
     // renglon  -  A PAGAR
-    Q.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
+    dm.Query.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
       dm.ConfigQuery.FieldByName('CtaIIBB').AsString;
-    Q.Open;
+    dm.Query.Open;
     c := c + 1;
-    QTemp.SQL.Text :=
+    dm.QTemp.SQL.Text :=
       'Insert Into "LibroDiario" (ASIENTO, FECHA, LEYENDA, JERARQUIA, CUENTA, DEBE, HABER, OCULTO)'
       + ' Values ' + '( ' + IntToStr(i) + ', ' + QuotedStr(fecha) +
-      ', ''PAGO DE IIBB'', ' + QuotedStr(Q.FieldByName('Jerarquia').AsString) +
-      ', ' + QuotedStr(Q.FieldByName('DESCRIPCION').AsString) + ', ' +
+      ', ''PAGO DE IIBB'', ' + QuotedStr(dm.Query.FieldByName('Jerarquia').AsString) +
+      ', ' + QuotedStr(dm.Query.FieldByName('DESCRIPCION').AsString) + ', ' +
       SaldoEdit.Text + ', 0, ' + QuotedStr(Oculto) + ' )';
-    QTemp.ExecSQL;
+    dm.QTemp.ExecSQL;
 
     // renglon  - CAJA
-    Q.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
+    dm.Query.SQL.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' +
       dm.ConfigQuery.FieldByName('CtaCaja').AsString;
-    Q.Open;
+    dm.Query.Open;
     c := c + 1;
-    QTemp.SQL.Text :=
+    dm.QTemp.SQL.Text :=
       'Insert Into "LibroDiario" (ASIENTO, FECHA, LEYENDA, JERARQUIA, CUENTA, DEBE, HABER, OCULTO)'
       + ' Values ' + '( ' + IntToStr(i) + ', ' + QuotedStr(fecha) +
-      ', ''PAGO DE IIBB'', ' + QuotedStr(Q.FieldByName('Jerarquia').AsString) +
-      ', ' + QuotedStr(Q.FieldByName('DESCRIPCION').AsString) + ', 0, ' +
+      ', ''PAGO DE IIBB'', ' + QuotedStr(dm.Query.FieldByName('Jerarquia').AsString) +
+      ', ' + QuotedStr(dm.Query.FieldByName('DESCRIPCION').AsString) + ', 0, ' +
       SaldoEdit.Text + ', ' + QuotedStr(Oculto) + ' )';
-    QTemp.ExecSQL;
+    dm.QTemp.ExecSQL;
   end;
 
   // CONTABILIDAD------------------------------------------------------------------------------
 
   // Completa la Transaccion
-  QTemp.Transaction.CommitRetaining;
+  dm.BaseDatosFB.CommitRetaining;
   Close;
 end;
 
@@ -105,16 +103,16 @@ var iibb, tot : Double;
 begin
   iibb:=0;
   tot:=0;
-  QTemp.SQL.Text := 'SELECT IIBB, TOTAL FROM "Venta" WHERE ("Venta".FECHA >= ' +
+  dm.QTemp.SQL.Text := 'SELECT IIBB, TOTAL FROM "Venta" WHERE ("Venta".FECHA >= ' +
     QuotedStr(DateToStr(DesdeDateTimePicker.Date)) + ' ) AND' +
     '  ("Venta".FECHA <= ' +
     QuotedStr(DateToStr(HastaDateTimePicker.Date)) + ' )' + '';
-  QTemp.Open;
-  while QTemp.Eof = False do
+  dm.QTemp.Open;
+  while dm.QTemp.Eof = False do
   begin
-    iibb := iibb + QTemp.FieldByName('IIBB').AsFloat;
-    tot := tot + QTemp.FieldByName('TOTAL').AsFloat;
-    QTemp.Next;
+    iibb := iibb + dm.QTemp.FieldByName('IIBB').AsFloat;
+    tot := tot + dm.QTemp.FieldByName('TOTAL').AsFloat;
+    dm.QTemp.Next;
   end;
   SaldoEdit.Text := FloatToStr(iibb);
   TotalEdit.Text := FloatToStr(tot);
