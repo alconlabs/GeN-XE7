@@ -12,6 +12,7 @@ object dmML: TdmML
   end
   object tOrders: TFDQuery
     Connection = dbMain
+    FetchOptions.AssignedValues = [evRowsetSize]
     SQL.Strings = (
       'SELECT * FROM orders')
     Left = 72
@@ -164,6 +165,7 @@ object dmML: TdmML
   end
   object tOrder_items: TFDQuery
     Connection = dbMain
+    FetchOptions.AssignedValues = [evRowsetSize]
     SQL.Strings = (
       'SELECT * FROM order_items')
     Left = 72
@@ -266,6 +268,7 @@ object dmML: TdmML
   end
   object tMessages: TFDQuery
     Connection = dbMain
+    FetchOptions.AssignedValues = [evRowsetSize]
     SQL.Strings = (
       'SELECT * FROM messages')
     Left = 72
@@ -439,11 +442,13 @@ object dmML: TdmML
   end
   object FDQuery1: TFDQuery
     Connection = dbMain
+    FetchOptions.AssignedValues = [evRowsetSize]
     Left = 8
     Top = 48
   end
   object tShipments: TFDQuery
     Connection = dbMain
+    FetchOptions.AssignedValues = [evRowsetSize]
     SQL.Strings = (
       'SELECT * FROM shipments')
     Left = 72
@@ -622,6 +627,7 @@ object dmML: TdmML
   end
   object tBuyer: TFDQuery
     Connection = dbMain
+    FetchOptions.AssignedValues = [evRowsetSize]
     SQL.Strings = (
       'SELECT * FROM buyer')
     Left = 72
@@ -670,6 +676,7 @@ object dmML: TdmML
   end
   object tDespachados: TFDQuery
     Connection = dbMain
+    FetchOptions.AssignedValues = [evRowsetSize]
     SQL.Strings = (
       'SELECT * FROM despachados')
     Left = 72
@@ -720,6 +727,7 @@ object dmML: TdmML
   end
   object tShipping_option: TFDQuery
     Connection = dbMain
+    FetchOptions.AssignedValues = [evRowsetSize]
     SQL.Strings = (
       'select * from shipping_option')
     Left = 112

@@ -3,8 +3,8 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   Left = 0
   Top = 0
   Caption = 'Mercado Libre Envios'
-  ClientHeight = 572
-  ClientWidth = 779
+  ClientHeight = 527
+  ClientWidth = 501
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,20 +20,19 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
   object ProgressBar1: TProgressBar
     Left = 0
     Top = 0
-    Width = 779
+    Width = 501
     Height = 5
     Align = alTop
     Min = 1
     Position = 1
     TabOrder = 0
     Visible = False
-    ExplicitWidth = 843
   end
   object pPreparar: TPanel
     Left = 0
     Top = 5
-    Width = 263
-    Height = 567
+    Width = 250
+    Height = 522
     Align = alLeft
     BevelOuter = bvSpace
     TabOrder = 1
@@ -41,7 +40,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       AlignWithMargins = True
       Left = 6
       Top = 86
-      Width = 251
+      Width = 238
       Height = 70
       Margins.Left = 5
       Margins.Top = 5
@@ -84,7 +83,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       AlignWithMargins = True
       Left = 6
       Top = 166
-      Width = 251
+      Width = 238
       Height = 70
       Margins.Left = 5
       Margins.Top = 5
@@ -99,9 +98,9 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       object lTituloPrepararEnvios: TLabel
         Left = 17
         Top = 17
-        Width = 141
+        Width = 83
         Height = 13
-        Caption = 'Para la colecta | Ma'#241'ana'
+        Caption = 'Para la colecta'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -131,7 +130,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       AlignWithMargins = True
       Left = 6
       Top = 246
-      Width = 251
+      Width = 238
       Height = 70
       Margins.Left = 5
       Margins.Top = 5
@@ -144,9 +143,9 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       object lTituloPrepararFlex: TLabel
         Left = 17
         Top = 18
-        Width = 175
+        Width = 117
         Height = 13
-        Caption = 'Mercado Env'#237'os Flex  | Ma'#241'ana'
+        Caption = 'Mercado Env'#237'os Flex '
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -176,7 +175,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       AlignWithMargins = True
       Left = 6
       Top = 326
-      Width = 251
+      Width = 238
       Height = 70
       Margins.Left = 5
       Margins.Top = 5
@@ -189,9 +188,9 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       object lTituloPrepararAcordar: TLabel
         Left = 17
         Top = 17
-        Width = 207
+        Width = 146
         Height = 13
-        Caption = 'Acordar con el comprador | Ma'#241'ana '
+        Caption = 'Acordar con el comprador'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -221,7 +220,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       AlignWithMargins = True
       Left = 6
       Top = 6
-      Width = 251
+      Width = 238
       Height = 70
       Margins.Left = 5
       Margins.Top = 5
@@ -233,9 +232,9 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       object lPreparar: TLabel
         Left = 17
         Top = 16
-        Width = 92
+        Width = 182
         Height = 16
-        Caption = 'Para preparar'
+        Caption = 'Para preparar (Sin Embalar)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -257,20 +256,11 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         ParentFont = False
       end
     end
-  end
-  object pDespachar: TPanel
-    Left = 263
-    Top = 5
-    Width = 253
-    Height = 567
-    Align = alClient
-    TabOrder = 2
-    ExplicitWidth = 317
-    object pDespacharDemoradas: TPanel
+    object Panel3: TPanel
       AlignWithMargins = True
       Left = 6
-      Top = 86
-      Width = 241
+      Top = 406
+      Width = 238
       Height = 70
       Margins.Left = 5
       Margins.Top = 5
@@ -278,10 +268,9 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Margins.Bottom = 5
       Align = alTop
       ParentBackground = False
-      TabOrder = 0
+      TabOrder = 5
       OnClick = pDespacharDemoradasClick
-      ExplicitWidth = 305
-      object lTituloDespacharDemoradas: TLabel
+      object Label3: TLabel
         Left = 17
         Top = 17
         Width = 65
@@ -294,7 +283,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object lVentasDespacharDemoradas: TLabel
+      object Label4: TLabel
         Left = 17
         Top = 33
         Width = 42
@@ -307,195 +296,17 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentColor = False
-        ParentFont = False
-      end
-    end
-    object pDespacharMensajes: TPanel
-      AlignWithMargins = True
-      Left = 6
-      Top = 166
-      Width = 241
-      Height = 70
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Align = alTop
-      ParentBackground = False
-      TabOrder = 1
-      OnClick = pDespacharMensajesClick
-      ExplicitWidth = 305
-      object lTituloDespacharMensajes: TLabel
-        Left = 17
-        Top = 17
-        Width = 98
-        Height = 13
-        Caption = 'Mensajes nuevos'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object lVentasDespacharMensajes: TLabel
-        Left = 17
-        Top = 33
-        Width = 42
-        Height = 13
-        Caption = '0 ventas'
-        Color = clBtnFace
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-      end
-    end
-    object pDespacharFlex: TPanel
-      AlignWithMargins = True
-      Left = 6
-      Top = 246
-      Width = 241
-      Height = 70
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Align = alTop
-      ParentBackground = False
-      TabOrder = 2
-      OnClick = pDespacharFlexClick
-      ExplicitWidth = 305
-      object lTituloDespacharFlex: TLabel
-        Left = 17
-        Top = 18
-        Width = 152
-        Height = 13
-        Caption = 'Mercado Env'#237'os FLex | Hoy'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        OnClick = pDespacharFlexClick
-      end
-      object lVentasDespacharFlex: TLabel
-        Left = 17
-        Top = 36
-        Width = 42
-        Height = 13
-        Caption = '0 ventas'
-        Color = clBtnFace
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-        OnClick = pDespacharFlexClick
-      end
-    end
-    object pDespacharColecta: TPanel
-      AlignWithMargins = True
-      Left = 6
-      Top = 326
-      Width = 241
-      Height = 70
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Align = alTop
-      ParentBackground = False
-      TabOrder = 3
-      OnClick = pDespacharColectaClick
-      ExplicitWidth = 305
-      object lTituloDespacharColecta: TLabel
-        Left = 17
-        Top = 14
-        Width = 118
-        Height = 13
-        Caption = 'Para la colecta | Hoy'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        OnClick = pDespacharColectaClick
-      end
-      object lVentasDespacharColecta: TLabel
-        Left = 17
-        Top = 33
-        Width = 42
-        Height = 13
-        Caption = '0 ventas'
-        Color = clBtnFace
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-        OnClick = pDespacharColectaClick
-      end
-    end
-    object pTituloDespachar: TPanel
-      AlignWithMargins = True
-      Left = 6
-      Top = 6
-      Width = 241
-      Height = 70
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Align = alTop
-      BevelOuter = bvNone
-      TabOrder = 4
-      ExplicitWidth = 305
-      object lDespachar: TLabel
-        Left = 17
-        Top = 16
-        Width = 144
-        Height = 16
-        Caption = 'Listas para despachar'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object lVentasDespachar: TLabel
-        Left = 17
-        Top = 35
-        Width = 42
-        Height = 13
-        Caption = '0 ventas'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
         ParentFont = False
       end
     end
   end
   object Panel1: TPanel
-    Left = 516
-    Top = 5
+    Left = 265
+    Top = 8
     Width = 263
     Height = 567
-    Align = alRight
     TabOrder = 3
-    ExplicitLeft = 580
+    Visible = False
     object pTransitoCamino: TPanel
       AlignWithMargins = True
       Left = 6
@@ -667,16 +478,283 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       end
     end
   end
+  object pDespachar: TPanel
+    Left = 251
+    Top = 5
+    Width = 250
+    Height = 522
+    Align = alRight
+    TabOrder = 2
+    object pDespacharDemoradas: TPanel
+      AlignWithMargins = True
+      Left = 6
+      Top = 406
+      Width = 238
+      Height = 70
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alTop
+      ParentBackground = False
+      TabOrder = 0
+      OnClick = pDespacharDemoradasClick
+      object lTituloDespacharDemoradas: TLabel
+        Left = 17
+        Top = 17
+        Width = 65
+        Height = 13
+        Caption = 'Demoradas'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lVentasDespacharDemoradas: TLabel
+        Left = 17
+        Top = 33
+        Width = 42
+        Height = 13
+        Caption = '0 ventas'
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object pDespacharMensajes: TPanel
+      AlignWithMargins = True
+      Left = 6
+      Top = 86
+      Width = 238
+      Height = 70
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alTop
+      ParentBackground = False
+      TabOrder = 1
+      OnClick = pDespacharMensajesClick
+      object lTituloDespacharMensajes: TLabel
+        Left = 17
+        Top = 17
+        Width = 98
+        Height = 13
+        Caption = 'Mensajes nuevos'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lVentasDespacharMensajes: TLabel
+        Left = 17
+        Top = 33
+        Width = 42
+        Height = 13
+        Caption = '0 ventas'
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object pDespacharFlex: TPanel
+      AlignWithMargins = True
+      Left = 6
+      Top = 246
+      Width = 238
+      Height = 70
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alTop
+      ParentBackground = False
+      TabOrder = 2
+      OnClick = pDespacharFlexClick
+      object lTituloDespacharFlex: TLabel
+        Left = 17
+        Top = 18
+        Width = 117
+        Height = 13
+        Caption = 'Mercado Env'#237'os FLex'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = pDespacharFlexClick
+      end
+      object lVentasDespacharFlex: TLabel
+        Left = 17
+        Top = 36
+        Width = 42
+        Height = 13
+        Caption = '0 ventas'
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        OnClick = pDespacharFlexClick
+      end
+    end
+    object pDespacharColecta: TPanel
+      AlignWithMargins = True
+      Left = 6
+      Top = 166
+      Width = 238
+      Height = 70
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alTop
+      ParentBackground = False
+      TabOrder = 3
+      OnClick = pDespacharColectaClick
+      object lTituloDespacharColecta: TLabel
+        Left = 17
+        Top = 14
+        Width = 83
+        Height = 13
+        Caption = 'Para la colecta'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = pDespacharColectaClick
+      end
+      object lVentasDespacharColecta: TLabel
+        Left = 17
+        Top = 33
+        Width = 42
+        Height = 13
+        Caption = '0 ventas'
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        OnClick = pDespacharColectaClick
+      end
+    end
+    object pTituloDespachar: TPanel
+      AlignWithMargins = True
+      Left = 6
+      Top = 6
+      Width = 238
+      Height = 70
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alTop
+      BevelOuter = bvNone
+      TabOrder = 4
+      object lDespachar: TLabel
+        Left = 17
+        Top = 16
+        Width = 179
+        Height = 16
+        Caption = 'Para despachar (Embalado)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lVentasDespachar: TLabel
+        Left = 17
+        Top = 35
+        Width = 42
+        Height = 13
+        Caption = '0 ventas'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+    end
+    object Panel2: TPanel
+      AlignWithMargins = True
+      Left = 6
+      Top = 326
+      Width = 238
+      Height = 70
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alTop
+      ParentBackground = False
+      TabOrder = 5
+      OnClick = pPrepararAcordarClick
+      object Label1: TLabel
+        Left = 17
+        Top = 17
+        Width = 146
+        Height = 13
+        Caption = 'Acordar con el comprador'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = pPrepararAcordarClick
+      end
+      object Label2: TLabel
+        Left = 17
+        Top = 33
+        Width = 42
+        Height = 13
+        Caption = '0 ventas'
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        OnClick = pPrepararAcordarClick
+      end
+    end
+  end
   object tProgressBar: TTimer
     Enabled = False
     OnTimer = tProgressBarTimer
-    Left = 336
-    Top = 416
+    Left = 224
   end
   object Timer1: TTimer
     Enabled = False
     OnTimer = Timer1Timer
-    Left = 368
-    Top = 416
+    Left = 248
   end
 end

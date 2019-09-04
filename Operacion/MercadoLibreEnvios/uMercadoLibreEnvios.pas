@@ -59,6 +59,12 @@ type
     Panel6: TPanel;
     lTransito: TLabel;
     lVentasTransito: TLabel;
+    Panel2: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Panel3: TPanel;
+    Label3: TLabel;
+    Label4: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure tProgressBarTimer(Sender: TObject);
     procedure FormShow(Sender: TObject);

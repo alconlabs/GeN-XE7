@@ -103,6 +103,7 @@ var
 
   tI: Integer;
   DMR: TDMR;
+  tRest: array [0 .. 9999 - 1] of TTRest;
 
 implementation
 
@@ -116,7 +117,8 @@ uses udmMercadoLibre, OperacionDM;
 constructor TTRest.Create;//(//CreateSuspended : boolean;
 // vUrl, vClientId, vClientSecret, vResource, vAccessToken, vAccept, vSeller_id, vQ, vLimit : string);
 begin
-  inherited Create(True); // llamamos al constructor del padre (TThread)
+//  FreeOnTerminate := True;
+  inherited Create(False); // llamamos al constructor del padre (TThread)
   vClient := TRESTClient.Create(nil);
   vRequest := TRESTRequest.Create(nil);
 //  vResponse := TRESTResponse.Create(nil);
@@ -148,7 +150,7 @@ end;
 procedure TTRest.Execute;
 begin
   inherited;
-  FreeOnTerminate := True;
+//  FreeOnTerminate := True;
   while not Terminated do
     Synchronize(GetResponse);
 //  Synchronize(ObtenerConsultaRest);
@@ -157,6 +159,7 @@ end;
 procedure TTRest.GetResponse;
 begin
   try
+  vJSONValue:=nil;
     with vRequest do
     begin
       Execute;
@@ -167,7 +170,7 @@ begin
           begin
             try
 //              vMemo1.Text := vResponse.Content;
-e:=vRequest.Response.Content;
+//e:=vRequest.Response.Content;
               vJSONValue := TJSONObject.ParseJSONValue(vRequest.Response.Content);
             except
               on E:Exception do begin
@@ -181,9 +184,9 @@ e:=vRequest.Response.Content;
      vClient.Free;
 //     vResponse.Free;
      vRequest.Free;
-     termino:=true;
+     termino:=True;
      Terminate;
-     Application.ProcessMessages;
+//     Application.ProcessMessages;
    end;
 end;
 
@@ -705,7 +708,7 @@ begin
                 i:=IntToStr(n);
                 order_id := jOrderRecent.GetValue<string>('results['+i+'].id');
                 Open(sqlOrders+' WHERE id=:I',[order_id]);
-                if RowsAffected>0 then
+                if RecordCount>0 then
                   Edit
                 else
                 begin
@@ -769,10 +772,11 @@ procedure TDMR.ObtenerOrder;
 var
   jOrderRecent, order_items, buyer, item, shipping : TJSONValue;
   i, io, order_id,order_status,buyer_id,item_id,item_title,seller_sku,
-  order_items_quantity, last_updated,sj, hoy : string;
+  order_items_quantity, last_updated,sj, hoy, ayer : string;
   n, r, l, ro, no, p, t, paging_total: Integer;
 begin
-  hoy := formatdatetime('yyyy-mm-dd', now-1);
+  hoy := formatdatetime('yyyy-mm-dd', now);
+  ayer := formatdatetime('yyyy-mm-dd', now-4);
   with dmML do
     with tOrders do
     begin
@@ -782,7 +786,9 @@ begin
         repeat
           Inc(p);
           ObtenerConsultaRest('orders/search?seller='+seller_id
-//          +'&order.date_created.from=2019-08-13T00:00:00.000-00:00'
+          +'&order.status=paid'
+          +'&tags=not_delivered'//+'&shipping.status=not_delivered'//&shipping.status=to_be_agreed
+          +'&order.date_created.from='+ayer+'T00:00:00.000-00:00'
           +'&order.date_last_updated.from='+hoy+'T00:00:00.000-00:00'
           +'&offset='+IntToStr(p)
 //          +'&'
@@ -802,7 +808,8 @@ begin
                 i:=IntToStr(n);
                 order_id := jOrderRecent.GetValue<string>('results['+i+'].id');
                 Open(sqlOrders+' WHERE id=:I',[order_id]);
-                if RowsAffected>0 then
+                dmML.dbMain.StartTransaction;
+                if RecordCount>0 then
                   Edit
                 else
                 begin
@@ -839,23 +846,28 @@ begin
 //                  ObtenerMessages(order_id,seller_id);
                   ObtenerDespachados(order_id);
                 end;
-                tOrdersstatus.AsString := jOrderRecent.GetValue<string>('results['+i+'].status');//"paid",
-                tOrderstags.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
-                tOrdersshipping.AsString:=(jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
-                if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
+//                tOrdersstatus.AsString := jOrderRecent.GetValue<string>('results['+i+'].status');//"paid",
+//                tOrderstags.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
+//                tOrdersshipping.AsString:=(jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
+//                if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
 //              ObtenerShipping(tOrdersshipping.AsString);
 //              ObtenerMessages(order_id,seller_id);
                 last_updated:=jOrderRecent.GetValue<string>('results['+i+'].date_last_updated');
-                if tOrdersdate_last_updated.AsString <> last_updated then
+                if not (tOrdersdate_last_updated.AsString = last_updated) then
                   begin
                     tOrdersdate_last_updated.AsString := last_updated;
+                    tOrdersstatus.AsString := jOrderRecent.GetValue<string>('results['+i+'].status');//"paid",
+                    tOrderstags.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
+                    tOrdersshipping.AsString:=(jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
+                    if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
                     ObtenerShipping(tOrdersshipping.AsString);
                     ObtenerMessages(order_id,seller_id);
                   end;
                 tOrders.Post;
+                dmML.dbMain.CommitRetaining;
+                Application.ProcessMessages;
               end;
           end;
-          Application.ProcessMessages;
         until ((p=t) or (p>t));
       finally
       //
@@ -895,13 +907,14 @@ begin
 end;
 
 function TDMR.Obtener;//(resource:string):TJSONValue;
-var
-  tRest: array [0 .. 9999 - 1] of TTRest;
+//var
+//  tRest: array [0 .. 9999 - 1] of TTRest;
 begin
 //Para conocer el pack_id, deberás obtener el campo “pack_id” en la respuesta de /orders/<order_id>
 //  with dmML do
 //  begin
     try
+      result:=nil;
       if  accessToken='' then ObtenerRefreshToken;
   //curl -X GET “https://api.mercadolibre.com/messages/packs/$pack_id/sellers/$user_id?access_token=$ACCESS_TOKEN”
   //      tRest := TTRest.Create(
@@ -916,18 +929,30 @@ begin
       with tRest[tI] do
       begin
         tRest[tI].vJSONValue := result;
-        tRest[tI].FreeOnTerminate := True;
-        tRest[tI].Start;
+//        tRest[tI].FreeOnTerminate := True;
+//        tRest[tI].Start;
       end;
+////      result := tRest[tI].vJSONValue;
+////      if Assigned(tRest[tI]) then
+//      while (Assigned(tRest[tI]) and (not tRest[tI].termino) and (not tRest[tI].Terminated)) do
+////        while (not tRest[tI].Terminated) do
+//        begin
+//          Application.ProcessMessages;
+////          result := tRest[tI].vJSONValue;
+//        end;
 
-      while not tRest[tI].Terminated do
-      begin
-        Application.ProcessMessages;
-      end;
+//      tRest[tI].WaitFor;
+//      while not tRest[tI].termino do
+//        Application.ProcessMessages;
+    if not tRest[tI].Terminated then
+      tRest[tI].WaitFor;
 
     finally
       result := tRest[tI].vJSONValue;
-      tRest[tI].Terminate;
+//      tRest[tI].vRequest.Free;
+//      tRest[tI].vClient.Free;
+//     vResponse.Free;
+//      tRest[tI].Terminate;
     end;
 //  end;
 end;
@@ -994,7 +1019,7 @@ begin
       Start;
     end;
   finally
-    tObtenerMensajes.Terminate;
+//    tObtenerMensajes.Terminate;
   end;
 end;
 //  if j is TJSONObject then
@@ -1012,7 +1037,7 @@ end;
 //            id := order_id+'_'+message_id;
 ////            if CantidadRegistros('messages','id='+QuotedStr(id))>0 then
 //            Open(sqlMessages+' WHERE id=:I',[id]);
-//            if RowsAffected>0 then
+//            if RecordCount>0 then
 ////              Edit
 //            else
 //            begin
@@ -1079,7 +1104,7 @@ begin
           item_id := item.GetValue<string>('id');
           id := order_id+'_'+item_id;
           Open(sqlOrder_items+' WHERE id=:I',[id]);
-          if RowsAffected>0 then
+          if RecordCount>0 then
             Edit
           else
           begin
@@ -1113,7 +1138,7 @@ end;
 
 procedure TDMR.ObtenerShipping;
 var
-  tObtenerEnvio: TTObtenerEnvio;
+//  tObtenerEnvio: TTObtenerEnvio;
   j, shipping : TJSONValue;
   r : Integer;
   s:string;
@@ -1125,7 +1150,7 @@ begin
       with tShipments do
       begin
         Open('SELECT * FROM shipments WHERE id=:I',['0']);
-        if RowsAffected>0 then
+        if RecordCount>0 then
 //          Edit
         else
         begin
@@ -1141,7 +1166,7 @@ begin
       with tShipping_option do
       begin
         Open(sqlShipping_option+' WHERE id=:I',['0']);
-        if RowsAffected>0 then
+        if RecordCount>0 then
 //          Edit
         else
         begin
@@ -1156,14 +1181,16 @@ begin
     begin
 //      j := Obtener('/shipments/'+id);
         try
-          tObtenerEnvio := TTObtenerEnvio.Create(id);
-          with tObtenerEnvio do
-          begin
-            FreeOnTerminate := True;
-            Start;
-          end;
+//          tObtenerEnvio := TTObtenerEnvio.Create(id);
+          Inc(teI);
+          tObtenerEnvio[teI] := TTObtenerEnvio.Create(id);
+//          with tObtenerEnvio do
+//          begin
+//            FreeOnTerminate := True;
+//            Start;
+//          end;
         finally
-          tObtenerEnvio.Terminate;
+//          tObtenerEnvio.Terminate;
         end;
 //      if j is TJSONObject then
 //      begin
@@ -1172,7 +1199,7 @@ begin
 //        begin
 //          id := shipping.GetValue<string>('id');
 //          Open(sqlShipments+' WHERE id=:I',[id]);
-//          if RowsAffected>0 then
+//          if RecordCount>0 then
 //            Edit
 //          else
 //          begin
@@ -1225,6 +1252,7 @@ begin
 //      end;
     end;
   end;
+//      Application.ProcessMessages;
 end;
 
 function TDMR.ObtenerBuyer;
@@ -1238,7 +1266,7 @@ begin
       buyer := j.GetValue<TJSONValue>();//('['+io+']');
       id := buyer.GetValue<string>('id');
       Open(sqlBuyer+' WHERE id=:I',[id]);
-      if RowsAffected>0 then
+      if RecordCount>0 then
 //        Edit
       else
       begin
@@ -1256,6 +1284,7 @@ begin
       end;
       result := id;
     end;
+//    Application.ProcessMessages;
 end;
 
 end.

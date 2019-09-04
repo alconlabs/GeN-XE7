@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>MercadoLibreEnvios.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -89,8 +89,8 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Build>4</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=Civeloo ;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.4;InternalName=Mercado Libre Envios;LegalCopyright=Civeloo ;LegalTrademarks=Civeloo ;OriginalFilename=MercadoLibreEnvios.exe;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=www.civeloo.com</VerInfo_Keys>
+        <VerInfo_Build>5</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=Civeloo ;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.5;InternalName=Mercado Libre Envios;LegalCopyright=Civeloo ;LegalTrademarks=Civeloo ;OriginalFilename=MercadoLibreEnvios.exe;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=www.civeloo.com</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -103,8 +103,8 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Build>16</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=Civeloo ;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.16;InternalName=Mercado Libre Envios;LegalCopyright=Civeloo ;LegalTrademarks=Civeloo ;OriginalFilename=MercadoLibreEnvios.exe;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=www.civeloo.com</VerInfo_Keys>
+        <VerInfo_Build>17</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=Civeloo ;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.17;InternalName=Mercado Libre Envios;LegalCopyright=Civeloo ;LegalTrademarks=Civeloo ;OriginalFilename=MercadoLibreEnvios.exe;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=www.civeloo.com</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">

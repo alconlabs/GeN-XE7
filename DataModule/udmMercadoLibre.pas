@@ -218,6 +218,8 @@ type
 
 var
   dmML: TdmML;
+  teI: Integer;
+  tObtenerEnvio: array [0 .. 9999 - 1] of TTObtenerEnvio;
 
 const
   whereNot_delivered=' (orders.tags LIKE ''%not_delivered%'')';
@@ -232,10 +234,11 @@ const
   whereSMMe2=' (shipments.mode=''me2'')';
   whereSMCustom=' (shipments.mode=''custom'')';
   whereFlex=' ('//' shipments.tracking_number=shipments.id';
-  +'(shipping_option.shipping_method_id=''506245'')'
-  +' OR (shipping_option.shipping_method_id=''506345'')'
-  +' OR (shipping_option.shipping_method_id=''506445'')'
-  +' OR (shipping_option.shipping_method_id=''507045'')'
+//  +'(shipping_option.shipping_method_id=''506245'')'
+//  +' OR (shipping_option.shipping_method_id=''506345'')'
+//  +' OR (shipping_option.shipping_method_id=''506445'')'
+//  +' OR (shipping_option.shipping_method_id=''507045'')'
+    +' shipments.tracking_method LIKE ''%Express'' '
   +')';
   whereNoMode=' (shipments.mode='''')';
   whereEmbalado=' (despachados.embalado=''S'')';
@@ -247,7 +250,7 @@ const
   whereEsperandoRetiro=' (shipments.substatus=''waiting_for_withdrawal'')';
   whereEnCamino=' (shipments.substatus='''')';
   whereEnvio=' ('+whereSMMe1+' OR '+whereSMMe2+')';
-  whereSinEnviar=' ('+whereReady_to_ship+' OR '+whereNoStatus+')';
+  whereSinEnviar=whereNot_delivered;//+whereReady_to_ship+' OR '+whereNoStatus+')';
   whereNoSubject=' (messages.subject='''')';
   orderMessages=' ORDER BY messages.id DESC';
   groupOrder=' GROUP BY orders.id';
@@ -275,29 +278,24 @@ const
 //    +' AND (NOT(shipments.status=''not_delivered''))'
   +' AND '+whereNoEmbalado+'';
   sqlSelectOrderItems='SELECT '
-//    +'order_items.title AS TITULO'
-//    +', order_items.full_unit_price AS PRECIO, order_items.quantity AS CANTIDAD'
-//    +', order_items.seller_sku AS SKU, buyer.first_name AS NOMBRE'
-//    +', buyer.last_name AS APELLIDO, buyer.nickname AS NIK, "imprimir" AS ETIQUETA'
-//    +', shipping, buyer, order_items.order_id';
     +'order_items.title'
     +', order_items.full_unit_price, order_items.quantity'
     +', order_items.seller_sku, buyer.first_name'
     +', buyer.last_name, buyer.nickname, "Ver" AS ITEMS'
-    +', orders.shipping, orders.buyer, order_items.order_id';
-  sqlMensajes=sqlSelectOrderItems+', messages.*'+sqlOrderFrom+' INNER JOIN messages ON orders.id = messages.order_id'+' WHERE (NOT'+whereNoSubject+')';
+    +', orders.shipping, orders.buyer, order_items.order_id ';
+  sqlMensajes=sqlSelectOrderItems+', messages.*'+sqlOrderFrom+' INNER JOIN messages ON orders.id = messages.order_id'+' WHERE '+wherePaid+' AND (NOT'+whereNoSubject+')';
   sqlMensajesNoLeido=sqlMensajes+' AND '+whereNoLeido;
   sqlItems=sqlSelectOrderItems+sqlOrderFrom;
 //  sqlPreparar=sqlItems+sqlOrderWhere;
-  sqlPreparar=sqlItems+' WHERE '+wherePaid+' AND '+whereNot_delivered;
-  sqlPrepararEnvios=sqlPreparar+' AND '+whereEnvio+' AND (NOT'+whereFlex+')';
+  sqlPreparar=sqlItems+' WHERE '+wherePaid+' AND '+whereNot_delivered+' AND (NOT '+whereShipped+') AND '+whereNoEmbalado;
+  sqlPrepararEnvios=sqlPreparar+' AND '+whereReady_to_ship+' AND (NOT'+whereFlex+')';
   sqlPrepararEnviosItems=sqlPreparar;
   sqlPrepararFlex=sqlPreparar+' AND '+whereFlex;
   sqlPrepararAcordar=sqlPreparar+' AND '+whereNoMode;
   sqlPrepararMensajes=sqlMensajesNoLeido+' AND '+whereSinEnviar+' AND '+whereNoEmbalado;//+groupOrder;
   sqlDespachar=sqlItems+' WHERE '+whereSinEnviar+' AND '+whereEmbalado;
   sqlDespacharDemoradas=sqlDespachar+' AND '+whereDelayed;
-  sqlDespacharEnvios=sqlDespachar+' AND (NOT'+whereFlex+')';
+  sqlDespacharEnvios=sqlPrepararEnvios+' AND '+whereEmbalado+'';
   sqlDespacharFlex=sqlDespachar+' AND '+whereFlex;
   sqlDespacharMensajes=sqlMensajesNoLeido+' AND '+whereSinEnviar+' AND '+whereEmbalado;//+''+groupOrder;
   sqlTransito=sqlItems+' WHERE '+whereShipped;
@@ -888,7 +886,7 @@ begin
   with tOrders do
   begin
     Open('SELECT * FROM orders WHERE id=:I',['1']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -903,7 +901,7 @@ begin
   with tOrder_items do
   begin
     Open('SELECT * FROM order_items WHERE id=:I',['1']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -920,7 +918,7 @@ begin
   with tShipments do
   begin
     Open('SELECT * FROM shipments WHERE id=:I',['1']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -936,7 +934,7 @@ begin
   with tShipping_option do
   begin
     Open(sqlShipping_option+' WHERE id=:I',['0']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -949,7 +947,7 @@ begin
   with tMessages do
   begin
     Open('SELECT * FROM messages WHERE id=:I',['1']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -965,7 +963,7 @@ begin
   with tBuyer do
   begin
     Open('SELECT * FROM buyer WHERE id=:I',['1']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -980,7 +978,7 @@ begin
   with tDespachados do
   begin
     Open('SELECT * FROM despachados WHERE order_id=:I',['1']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -997,7 +995,7 @@ begin
   with tOrders do
   begin
     Open('SELECT * FROM orders WHERE id=:I',['2']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1012,7 +1010,7 @@ begin
   with tOrder_items do
   begin
     Open('SELECT * FROM order_items WHERE id=:I',['2']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1029,7 +1027,7 @@ begin
   with tShipments do
   begin
     Open('SELECT * FROM shipments WHERE id=:I',['0']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1045,7 +1043,7 @@ begin
   with tShipping_option do
   begin
     Open(sqlShipping_option+' WHERE id=:I',['0']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1058,7 +1056,7 @@ begin
   with tMessages do
   begin
     Open('SELECT * FROM messages WHERE id=:I',['2']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1074,7 +1072,7 @@ begin
   with tMessages do
   begin
     Open('SELECT * FROM messages WHERE id=:I',['3']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1090,7 +1088,7 @@ begin
   with tDespachados do
   begin
     Open('SELECT * FROM despachados WHERE order_id=:I',['2']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1107,7 +1105,7 @@ begin
   with tOrders do
   begin
     Open('SELECT * FROM orders WHERE id=:I',['3']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1122,7 +1120,7 @@ begin
   with tOrder_items do
   begin
     Open('SELECT * FROM order_items WHERE id=:I',['3']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1139,7 +1137,7 @@ begin
   with tShipments do
   begin
     Open('SELECT * FROM shipments WHERE id=:I',['3']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1155,7 +1153,7 @@ begin
   with tShipping_option do
   begin
     Open(sqlShipping_option+' WHERE id=:I',['507045']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1168,7 +1166,7 @@ begin
   with tMessages do
   begin
     Open('SELECT * FROM messages WHERE id=:I',['3']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1184,7 +1182,7 @@ begin
   with tBuyer do
   begin
     Open('SELECT * FROM buyer WHERE id=:I',['3']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1199,7 +1197,7 @@ begin
   with tDespachados do
   begin
     Open('SELECT * FROM despachados WHERE order_id=:I',['3']);
-    if RowsAffected>0 then
+    if RecordCount>0 then
       Edit
     else
     begin
@@ -1231,7 +1229,8 @@ end;
 function TdmML.CantidadVentas;
 begin
   FDQuery1.Open(sql);
-  result := IntToStr(FDQuery1.RowsAffected)+' ventas';
+  FDQuery1.FetchAll;
+  result := IntToStr(FDQuery1.RecordCount)+' ventas';
 end;
 
 procedure TTObtenerMensajes.AgregarMensajes;
@@ -1241,13 +1240,21 @@ var
   id, message_id, message_text, i, e:string;
   r,n :Integer;
 begin
-jMensajes := TJSONValue.Create;
-jMensajes:=nil;
-  jMensajes:=DMR.Obtener('/messages/orders/'+vOrder_id+'?');
+  jMensajes := TJSONValue.Create;
+  jMensajes:=nil;
+//  jMensajes:=DMR.Obtener('/messages/orders/'+vOrder_id+'?');
+  with DMR do begin
+    try
+      ObtenerConsultaRest('/messages/orders/'+vOrder_id+'?'+''+'client_id='+clientId
+          ,'');
+    finally
+      jMensajes := TJSONObject.ParseJSONValue(RESTRequest1.Response.Content);
+    end;
+  end;
   if jMensajes<>nil then
   if jMensajes is TJSONObject then
   begin
-e:=jMensajes.ToString;
+//  e:=jMensajes.ToString;
     r:=TJSONArray(jMensajes.GetValue<TJSONValue>('results')).Size;
     if r>0 then
       with vQuery do
@@ -1259,8 +1266,8 @@ e:=jMensajes.ToString;
 //            id := order_id+'_'+message_id;
 //            if CantidadRegistros('messages','id='+QuotedStr(id))>0 then
             Open(sqlMessages+' WHERE id=:I',[id]);
-//            vQuery.Transaction.StartTransaction;
-            if RowsAffected>0 then
+            dmML.dbMain.StartTransaction;
+            if RecordCount>0 then
 //              Edit
             else
             begin
@@ -1305,7 +1312,7 @@ e:=jMensajes.ToString;
   //            FieldByName('conversation_substatus').AsString := jMensajes.GetValue<string>('results['+i+'].conversation_substatus');
   //            FieldByName('conversation_is_blocking_allowed').AsString := jMensajes.GetValue<string>('results['+i+'].conversation_is_blocking_allowed');
               Post;
-//              vQuery.Transaction.CommitRetaining;
+              dmML.dbMain.CommitRetaining;
               Application.ProcessMessages;
             end;
           end;
@@ -1315,6 +1322,7 @@ end;
 
 constructor TTObtenerMensajes.Create;
 begin
+  FreeOnTerminate := True;
   inherited Create(True); // llamamos al constructor del padre (TThread)
   vQuery := TFDQuery.Create(nil);
   vQuery.Connection:=dmML.dbMain;
@@ -1332,66 +1340,71 @@ end;
 
 constructor TTObtenerEnvio.Create;
 begin
+  FreeOnTerminate := True;
   vQuery := TFDQuery.Create(nil);
   vQuery.Connection:=dmML.dbMain;
   vId := id;
   jEnvio := TJSONValue.Create;
   jEnvio:=nil;
-  inherited Create(True); // llamamos al constructor del padre (TThread)
+  inherited Create(False); // llamamos al constructor del padre (TThread)
 end;
 
 procedure TTObtenerEnvio.Execute;
 begin
   inherited;
-  FreeOnTerminate := True;
+//  FreeOnTerminate := True;
   while not Terminated do
     Synchronize(ObtenerEnvio);
 end;
 
 procedure TTObtenerEnvio.ObtenerEnvio;
 //var
+//  tags : string;
 //  tRestEnvio:TTRest;
 begin
-      jEnvio:=DMR.Obtener('/shipments/'+vId+'?');
-//      with dmr do
-//      begin
-//        try
-//          if  accessToken='' then ObtenerRefreshToken;
-//  //            Inc(tI);
-//          tRestEnvio := TTRest.Create(
-//            url,
-//            '/shipments/'+vId+'?'+''+'client_id='+clientId+
-//            '&client_secret='+clientSecret+'&access_token='+accessToken,
-//            'application/json',
-//            rmGET
-//          );
-//    //      with tRest do
-//    //      begin
-//    //        tRest[tI].vJSONValue := result;
-////            tRestEnvio.FreeOnTerminate := True;
-////            tRestEnvio.Start;
-//    //      end;
-//
-//          while not tRestEnvio.termino do
-//          begin
-//            Application.ProcessMessages;
-//          end;
-//
-//          finally
-//            jEnvio := tRestEnvio.vJSONValue;
-//          end;
-//      end;
+
+//      jEnvio:=DMR.Obtener('/shipments/'+vId+'?');
+with DMR do begin
+    try
+      ObtenerConsultaRest('/shipments/'+vId+'?'
+          ,'');
+    finally
+      jEnvio := TJSONObject.ParseJSONValue(RESTRequest1.Response.Content);
+    end;
+  end;
+//  with DMR do begin
+//    try
+//      if  accessToken='' then ObtenerRefreshToken;
+//  //curl -X GET “https://api.mercadolibre.com/messages/packs/$pack_id/sellers/$user_id?access_token=$ACCESS_TOKEN”
+//  //      tRest := TTRest.Create(
+//      Inc(tI);
+//      tRest[tI] := TTRest.Create(
+//        url,
+//        '/shipments/'+vId+'?'+''+'client_id='+clientId+
+//        '&client_secret='+clientSecret+'&access_token='+accessToken,
+//        'application/json',
+//        rmGET
+//      );
+////      tRest[tI].vJSONValue := jEnvio;
+////      if not tRest[tI].Terminated then
+//        tRest[tI].WaitFor;
+//    finally
+//      jEnvio:=tRest[tI].vJSONValue;
+//    end;
+//  end;
+      if Assigned(jEnvio) then
       if (jEnvio<>nil) then
       if jEnvio.Owned then
       if jEnvio is TJSONObject then
       begin
-e:=jEnvio.ToString;
+//e:=jEnvio.ToString;
 //        shipping := j.GetValue<TJSONValue>();//('Results');
         with vQuery do
         begin
 //          vId := jEnvio.GetValue<string>('id');
           Open(sqlShipments+' WHERE id=:I',[vId]);
-          if RowsAffected>0 then
+          dmML.dbMain.StartTransaction;
+          if vQuery.RecordCount>0 then
             Edit
           else
           begin
@@ -1405,9 +1418,9 @@ e:=jEnvio.ToString;
             FieldByName('site_id').AsString := jEnvio.GetValue<string>('site_id');
             FieldByName('status').AsString := jEnvio.GetValue<string>('status');
             FieldByName('substatus').AsString := jEnvio.GetValue<string>('substatus');
-            FieldByName('status_history').AsString := jEnvio.GetValue<TJSONValue>('status_history').ToString;
-            if FieldByName('substatus').AsString<>'' then
-              FieldByName('substatus_history').AsString := jEnvio.GetValue<TJSONValue>('substatus_history').ToString;
+//            FieldByName('status_history').AsString := jEnvio.GetValue<TJSONValue>('status_history').ToString;
+//            if FieldByName('substatus').AsString<>'' then
+//              FieldByName('substatus_history').AsString := jEnvio.GetValue<TJSONValue>('substatus_history').ToString;
             FieldByName('date_created').AsString := jEnvio.GetValue<string>('date_created');
             FieldByName('last_updated').AsString := jEnvio.GetValue<string>('last_updated');
             FieldByName('tracking_number').AsString := jEnvio.GetValue<string>('tracking_number');
@@ -1425,28 +1438,29 @@ e:=jEnvio.ToString;
             FieldByName('date_first_printed').AsString := jEnvio.GetValue<string>('date_first_printed');
             FieldByName('market_place').AsString := jEnvio.GetValue<string>('market_place');
             FieldByName('return_details').AsString := jEnvio.GetValue<string>('return_details');
-            FieldByName('tags').AsString := jEnvio.GetValue<TJSONValue>('tags').ToString;
+//            FieldByName('tags').AsString := jEnvio.GetValue<TJSONValue>('tags').ToString;
             FieldByName('return_tracking_number').AsString := jEnvio.GetValue<string>('return_tracking_number');
             FieldByName('cost_components').AsString := jEnvio.GetValue<TJSONValue>('cost_components').ToString;
           end;
-
-            if FieldByName('tags').AsString<>'[]' then
-            begin
-              FieldByName('delay').AsString := jEnvio.GetValue<TJSONValue>('delay').ToString;
-              FieldByName('type').AsString := jEnvio.GetValue<TJSONValue>('type').ToString;
-              FieldByName('logistic_type').AsString := jEnvio.GetValue<string>('logistic_type');
-              FieldByName('application_id').AsString := jEnvio.GetValue<string>('application_id');
-            end;
-
+//            FieldByName('tags').AsString := jEnvio.GetValue<TJSONValue>('tags').ToString;
+//            if FieldByName('tags').AsString<>'[]' then
+//            begin
+//              FieldByName('delay').AsString := jEnvio.GetValue<TJSONValue>('delay').ToString;
+//              FieldByName('type').AsString := jEnvio.GetValue<TJSONValue>('type').ToString;
+//              FieldByName('logistic_type').AsString := jEnvio.GetValue<string>('logistic_type');
+//              FieldByName('application_id').AsString := jEnvio.GetValue<string>('application_id');
+//            end;
           FieldByName('status').AsString := jEnvio.GetValue<string>('status');
+          FieldByName('substatus').AsString := jEnvio.GetValue<string>('substatus');
           if FieldByName('substatus').AsString<>'' then
             FieldByName('substatus_history').AsString := jEnvio.GetValue<TJSONValue>('substatus_history').ToString;
           Post;
+          dmML.dbMain.CommitRetaining;
           Application.ProcessMessages;
         end;
       end;
       jEnvio.Free;
-//      TTObtenerEnvio.Terminate;
+Terminate;
 end;
 
 procedure TdmML.ObtenerDespachados;
@@ -1455,7 +1469,7 @@ begin
     with tDespachados do
     begin
       Open(sqlDespachados+' WHERE order_id=:I',[order_id]);
-      if RowsAffected>0 then
+      if RecordCount>0 then
 //        Edit
       else
       begin
@@ -1466,6 +1480,7 @@ begin
         Post;
       end;
     end;
+ Application.ProcessMessages;
 end;
 
 function TdmML.ObtenerShipping_option;
@@ -1477,7 +1492,7 @@ begin
       id := j.GetValue<string>('id');
       if id='' then id:='0';
       Open(sqlShipping_option+' WHERE id=:I',[id]);
-      if RowsAffected>0 then
+      if RecordCount>0 then
         Edit
       else
       begin
