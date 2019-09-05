@@ -789,7 +789,7 @@ begin
           +'&order.status=paid'
           +'&tags=not_delivered'//+'&shipping.status=not_delivered'//&shipping.status=to_be_agreed
           +'&order.date_created.from='+ayer+'T00:00:00.000-00:00'
-          +'&order.date_last_updated.from='+hoy+'T00:00:00.000-00:00'
+//          +'&order.date_last_updated.from='+hoy+'T00:00:00.000-00:00'
           +'&offset='+IntToStr(p)
 //          +'&'
           ,'');
