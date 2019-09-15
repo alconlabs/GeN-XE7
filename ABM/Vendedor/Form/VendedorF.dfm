@@ -33,8 +33,6 @@ object VendedorForm: TVendedorForm
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    ExplicitLeft = 717
-    ExplicitHeight = 488
     object Label1: TLabel
       Left = 1
       Top = 51
@@ -48,7 +46,6 @@ object VendedorForm: TVendedorForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitTop = 25
       ExplicitWidth = 57
     end
     object AceptarBitBtn: TBitBtn
@@ -85,9 +82,6 @@ object VendedorForm: TVendedorForm
       ParentFont = False
       TabOrder = 0
       OnClick = AceptarBitBtnClick
-      ExplicitLeft = 31
-      ExplicitTop = 106
-      ExplicitWidth = 80
     end
     object BitBtn2: TBitBtn
       Left = 1
@@ -106,9 +100,6 @@ object VendedorForm: TVendedorForm
       ParentFont = False
       TabOrder = 1
       OnClick = BitBtn2Click
-      ExplicitLeft = 31
-      ExplicitTop = 185
-      ExplicitWidth = 80
     end
     object BitBtn4: TBitBtn
       Left = 1
@@ -125,7 +116,6 @@ object VendedorForm: TVendedorForm
       ParentFont = False
       TabOrder = 2
       OnClick = BitBtn4Click
-      ExplicitTop = 51
     end
     object BitBtn3: TBitBtn
       Left = 1
@@ -158,8 +148,6 @@ object VendedorForm: TVendedorForm
       Font.Style = []
       ParentFont = False
       TabOrder = 4
-      ExplicitLeft = 2
-      ExplicitTop = 86
     end
   end
   object PageControl1: TPageControl
@@ -170,13 +158,8 @@ object VendedorForm: TVendedorForm
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 717
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
-      ExplicitLeft = 76
-      ExplicitTop = -49
-      ExplicitWidth = 640
-      ExplicitHeight = 438
       object Label2: TLabel
         Left = 0
         Top = 0
@@ -191,9 +174,7 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitLeft = -2
-        ExplicitTop = -8
-        ExplicitWidth = 640
+        ExplicitWidth = 56
       end
       object Label3: TLabel
         Left = 0
@@ -209,9 +190,7 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitLeft = -2
-        ExplicitTop = 34
-        ExplicitWidth = 640
+        ExplicitWidth = 67
       end
       object Label4: TLabel
         Left = 0
@@ -227,7 +206,6 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 71
         ExplicitWidth = 50
       end
       object Label20: TLabel
@@ -245,7 +223,7 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 37
+        ExplicitLeft = 438
         ExplicitWidth = 56
       end
       object Label9: TLabel
@@ -262,9 +240,7 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitLeft = -2
-        ExplicitTop = 114
-        ExplicitWidth = 640
+        ExplicitWidth = 63
       end
       object Label11: TLabel
         Left = 0
@@ -280,9 +256,7 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitLeft = -2
-        ExplicitTop = 154
-        ExplicitWidth = 709
+        ExplicitWidth = 26
       end
       object Label6: TLabel
         Left = 0
@@ -298,7 +272,6 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 374
         ExplicitWidth = 66
       end
       object Label7: TLabel
@@ -315,9 +288,7 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitLeft = -2
-        ExplicitTop = 422
-        ExplicitWidth = 640
+        ExplicitWidth = 99
       end
       object Label27: TLabel
         Left = 0
@@ -333,9 +304,7 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitLeft = -1
-        ExplicitTop = 344
-        ExplicitWidth = 709
+        ExplicitWidth = 65
       end
       object Label14: TLabel
         Left = 0
@@ -351,9 +320,7 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitLeft = -1
-        ExplicitTop = 330
-        ExplicitWidth = 709
+        ExplicitWidth = 50
       end
       object Label32: TLabel
         Left = 0
@@ -370,9 +337,8 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitLeft = -1
-        ExplicitTop = 403
-        ExplicitWidth = 709
+        ExplicitLeft = 480
+        ExplicitWidth = 14
       end
       object DBEdit2: TDBEdit
         Left = 0
@@ -389,9 +355,6 @@ object VendedorForm: TVendedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        ExplicitLeft = -2
-        ExplicitTop = 10
-        ExplicitWidth = 640
       end
       object DBEdit3: TDBEdit
         Left = 0
@@ -408,9 +371,6 @@ object VendedorForm: TVendedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 1
-        ExplicitLeft = -3
-        ExplicitTop = 66
-        ExplicitWidth = 640
       end
       object DBEdit9: TDBEdit
         Left = 0
@@ -427,8 +387,6 @@ object VendedorForm: TVendedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 5
-        ExplicitTop = 93
-        ExplicitWidth = 640
       end
       object DBEdit4: TDBEdit
         Left = 0
@@ -445,8 +403,6 @@ object VendedorForm: TVendedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 2
-        ExplicitTop = 56
-        ExplicitWidth = 640
       end
       object DBEdit10: TDBEdit
         Left = 0
@@ -463,9 +419,6 @@ object VendedorForm: TVendedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 3
-        ExplicitLeft = -2
-        ExplicitTop = 106
-        ExplicitWidth = 640
       end
       object DBEdit12: TDBEdit
         Left = 0
@@ -482,9 +435,6 @@ object VendedorForm: TVendedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 4
-        ExplicitLeft = -2
-        ExplicitTop = 146
-        ExplicitWidth = 709
       end
       object DBEdit6: TDBEdit
         Left = 0
@@ -501,8 +451,6 @@ object VendedorForm: TVendedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 6
-        ExplicitTop = 423
-        ExplicitWidth = 640
       end
       object DBEdit7: TDBEdit
         Left = 0
@@ -519,9 +467,6 @@ object VendedorForm: TVendedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 7
-        ExplicitLeft = -2
-        ExplicitTop = 438
-        ExplicitWidth = 640
       end
       object DBEdit24: TDBEdit
         Left = 0
@@ -539,9 +484,6 @@ object VendedorForm: TVendedorForm
         ParentFont = False
         TabOrder = 9
         OnExit = DBEdit24Exit
-        ExplicitLeft = -1
-        ExplicitTop = 419
-        ExplicitWidth = 709
       end
       object DBEdit27: TDBEdit
         Left = 0
@@ -558,14 +500,12 @@ object VendedorForm: TVendedorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 8
-        ExplicitLeft = -1
-        ExplicitTop = 346
-        ExplicitWidth = 709
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'Notas'
       ImageIndex = 1
+      ExplicitLeft = 0
       ExplicitTop = 24
       ExplicitWidth = 640
       ExplicitHeight = 438
@@ -590,6 +530,7 @@ object VendedorForm: TVendedorForm
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
+      ExplicitLeft = 0
       ExplicitTop = 24
       ExplicitWidth = 640
       ExplicitHeight = 438
@@ -607,8 +548,7 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitLeft = 511
-        ExplicitTop = 115
+        ExplicitLeft = 296
         ExplicitWidth = 198
       end
       object Label24: TLabel
@@ -625,7 +565,6 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 34
         ExplicitWidth = 109
       end
       object Label25: TLabel
@@ -657,7 +596,6 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 74
         ExplicitWidth = 119
       end
       object IVALabel: TLabel
@@ -673,7 +611,6 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
-        ExplicitTop = 111
         ExplicitWidth = 9
       end
       object Label54: TLabel
@@ -689,7 +626,6 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 177
         ExplicitWidth = 57
       end
       object Label52: TLabel
@@ -705,7 +641,6 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 143
         ExplicitWidth = 56
       end
       object Label51: TLabel
@@ -721,7 +656,6 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 217
         ExplicitWidth = 33
       end
       object DBEdit20: TDBEdit
@@ -781,7 +715,6 @@ object VendedorForm: TVendedorForm
         ParentFont = False
         TabOrder = 2
         OnChange = IVADBComboBoxChange
-        ExplicitWidth = 709
       end
       object CtaNombreDBLookupComboBox: TDBLookupComboBox
         Left = 0
@@ -848,13 +781,14 @@ object VendedorForm: TVendedorForm
     object TabSheet4: TTabSheet
       Caption = 'Datos Secundarios'
       ImageIndex = 3
+      ExplicitLeft = 0
       ExplicitTop = 24
       ExplicitWidth = 640
       ExplicitHeight = 438
       object Label19: TLabel
         Left = 0
         Top = 0
-        Width = 494
+        Width = 126
         Height = 16
         Align = alTop
         Caption = 'Nombre de Titular'
@@ -865,12 +799,11 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 126
       end
       object Label12: TLabel
         Left = 0
         Top = 240
-        Width = 494
+        Width = 40
         Height = 16
         Align = alTop
         Caption = 'Email'
@@ -881,13 +814,11 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 207
-        ExplicitWidth = 40
       end
       object Label28: TLabel
         Left = 0
         Top = 280
-        Width = 494
+        Width = 78
         Height = 16
         Align = alTop
         Caption = 'Messenger'
@@ -898,13 +829,11 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 244
-        ExplicitWidth = 78
       end
       object Label23: TLabel
         Left = 0
         Top = 40
-        Width = 494
+        Width = 27
         Height = 16
         Align = alTop
         Caption = 'DNI'
@@ -915,13 +844,11 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 37
-        ExplicitWidth = 27
       end
       object Label26: TLabel
         Left = 0
         Top = 80
-        Width = 494
+        Width = 43
         Height = 16
         Align = alTop
         Caption = 'Rubro'
@@ -931,13 +858,11 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 74
-        ExplicitWidth = 43
       end
       object Label5: TLabel
         Left = 0
         Top = 320
-        Width = 494
+        Width = 32
         Height = 16
         Align = alTop
         Caption = 'Pais'
@@ -948,13 +873,11 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 287
-        ExplicitWidth = 32
       end
       object Label21: TLabel
         Left = 0
         Top = 120
-        Width = 494
+        Width = 99
         Height = 16
         Align = alTop
         Caption = 'Codigo Postal'
@@ -965,13 +888,11 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 111
-        ExplicitWidth = 99
       end
       object Label22: TLabel
         Left = 0
         Top = 160
-        Width = 494
+        Width = 110
         Height = 16
         Align = alTop
         Caption = 'Codigo de Area'
@@ -981,13 +902,11 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 148
-        ExplicitWidth = 110
       end
       object Label10: TLabel
         Left = 0
         Top = 200
-        Width = 494
+        Width = 68
         Height = 16
         Align = alTop
         Caption = 'Extenci'#243'n'
@@ -998,13 +917,11 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 185
-        ExplicitWidth = 68
       end
       object Label8: TLabel
         Left = 0
         Top = 360
-        Width = 494
+        Width = 50
         Height = 16
         Align = alTop
         Caption = 'Ciudad'
@@ -1015,8 +932,6 @@ object VendedorForm: TVendedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 333
-        ExplicitWidth = 50
       end
       object DBEdit16: TDBEdit
         Left = 0
@@ -1233,7 +1148,6 @@ object VendedorForm: TVendedorForm
         Font.Style = [fsBold]
         ParentBiDiMode = False
         ParentFont = False
-        ExplicitTop = 37
         ExplicitWidth = 96
       end
       object Label17: TLabel
@@ -1251,7 +1165,6 @@ object VendedorForm: TVendedorForm
         Font.Style = [fsBold]
         ParentBiDiMode = False
         ParentFont = False
-        ExplicitTop = 111
         ExplicitWidth = 46
       end
       object Label18: TLabel
@@ -1304,7 +1217,6 @@ object VendedorForm: TVendedorForm
         Font.Style = [fsBold]
         ParentBiDiMode = False
         ParentFont = False
-        ExplicitTop = 213
         ExplicitWidth = 87
       end
       object lPrecioTipo: TLabel
@@ -1322,7 +1234,7 @@ object VendedorForm: TVendedorForm
         Font.Style = []
         ParentBiDiMode = False
         ParentFont = False
-        ExplicitLeft = 667
+        ExplicitLeft = 452
         ExplicitWidth = 42
       end
       object DBEdit14: TDBEdit
@@ -1390,8 +1302,6 @@ object VendedorForm: TVendedorForm
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 3
-        ExplicitTop = 115
-        ExplicitWidth = 709
       end
       object DBEdit1: TDBEdit
         Left = 0
@@ -1484,7 +1394,6 @@ object VendedorForm: TVendedorForm
     Height = 25
     Align = alBottom
     TabOrder = 2
-    ExplicitWidth = 792
     object DBNavigator1: TDBNavigator
       Left = 1
       Top = 1
@@ -1506,10 +1415,6 @@ object VendedorForm: TVendedorForm
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
-      ExplicitLeft = 2
-      ExplicitTop = 9
-      ExplicitWidth = 790
-      ExplicitHeight = 32
     end
   end
 end

@@ -133,6 +133,10 @@ type
     function ObtenerConfig(campo:string):Variant;
     procedure LeerINI;
     procedure EscribirINI;
+    procedure tClienteAfterInsert(DataSet: TDataSet);
+    procedure tArticuloAfterInsert(DataSet: TDataSet);
+    procedure tProveedorAfterInsert(DataSet: TDataSet);
+    procedure tVendedorAfterInsert(DataSet: TDataSet);
   private
     { Private declarations }
     bd, ejecutable : string;
@@ -210,6 +214,7 @@ type
     procedure AgregarSiapCmpCompAlicuota(codigo:Integer;ivaId,ivaBaseImp,ivaAlic:String);
     procedure ExportarTabla(tabla:string);
     procedure ImportarTabla(tabla:string);
+    function HayBase:Boolean;
   end;
 
 const
@@ -446,6 +451,7 @@ begin
 //  if not microsoftStore then
 //  Descargar('https://raw.githubusercontent.com/DeGsoft/GeN-XE7/master/Instalador/Update.iss'
 //  , Path+'Update.iss');
+  if not HayBase then Exit;
   ActualizarBase;
   TraerConfig;
   CrearMtIva;
@@ -461,9 +467,11 @@ begin
   // Obtiene la ruta y el nombre de la base de datos
   Path := TPath.GetDocumentsPath()+'\Civeloo\GeN\';
   ejecutable := ExtractFilePath(Application.ExeName);
-  ejecutable := StringReplace(ejecutable, 'bin\', '', [rfReplaceAll]);
-  if  not FileExists(Path+'db\GeN.FDB') then
-    CopyDir(ejecutable, Path);
+  ejecutable := StringReplace(ejecutable, 'bin', '', [rfReplaceAll]);
+//  ejecutable := StringReplace(ejecutable, 'GeN', '', [rfReplaceAll]);
+  if  not HayBase then
+    CopyDir(ejecutable+'', Path+'');
+  if  not HayBase then Exit;
   LeerINI;
   U := ExtractFileDrive(Application.ExeName);
   if bd <> '' then Path := bd;
@@ -583,6 +591,15 @@ begin
     (Copy(StrDate, 9, 2))+':'+
     (Copy(StrDate, 11, 2))
   ),Fmt);
+end;
+
+procedure TDM.tProveedorAfterInsert(DataSet: TDataSet);
+begin
+  with tProveedor do begin
+    FieldByName('CtaNombre').AsString := '76';
+    FieldByName('CtaTipo').AsString := '13';
+    FieldByName('CtaAnticipo').AsString := '36';
+  end;
 end;
 
 function TDM.Descargar;
@@ -836,6 +853,15 @@ begin
       Query.SQL.Text := Query.SQL.Text + ' WHERE '+codigo+'='+valor;
   Query.Open;
   result := Query.Fields.Fields[0].AsString;
+end;
+
+procedure TDM.tVendedorAfterInsert(DataSet: TDataSet);
+begin
+  with tVendedor do begin
+    FieldByName('CtaTipo').AsString := '50';
+    FieldByName('CtaNombre').AsString := '50';
+    FieldByName('CtaAnticipo').AsString := '25';
+  end;
 end;
 
 procedure TDM.AgregarValor;
@@ -1454,6 +1480,41 @@ begin
   Result := monto-monto/(porcentaje/100+1);
 end;
 
+procedure TDM.tArticuloAfterInsert(DataSet: TDataSet);
+begin
+  with tArticulo do begin
+    FieldByName('CtaNombre').AsString := '13';
+    FieldByName('CtaTipo').AsString := '13';
+    FieldByName('CtaAnticipo').AsString := '13';
+    FieldByName('CtaIIBB').AsString := '66';
+    FieldByName('CODIGOBARRA').AsString := '0';
+    FieldByName('Color').AsString := '0';
+    FieldByName('Categoria').AsString := '0';
+    FieldByName('SubCategoria').AsString := '0';
+    FieldByName('Rubro').AsString := '0';
+    FieldByName('Marca').AsString := '0';
+    FieldByName('Proveedor').Value := 1;
+    FieldByName('Unidad').AsString := 'c/u';
+    FieldByName('FechaCompUlt').AsDateTime := Date;
+    FieldByName('Costo').AsFloat := 0;
+    FieldByName('ImpOtros').AsInteger := 0;
+    FieldByName('Tasa').AsInteger := 21;
+    FieldByName('PRECIO').AsInteger := 0;
+    FieldByName('IIBB').AsInteger := 0;
+    FieldByName('CODIGO').AsInteger:=UltimoRegistro('Articulo', 'CODIGO');
+  end;
+end;
+
+procedure TDM.tClienteAfterInsert(DataSet: TDataSet);
+begin
+  with tCliente do begin
+    FieldByName('CtaNombre').AsString := '9';
+    FieldByName('CtaTipo').AsString := '9';
+    FieldByName('CtaAnticipo').AsString := '9';
+    FieldByName('Vendedor').AsString := '0';
+  end;
+end;
+
 function TDM.TraerAlicuota;
 begin
   result := TraerValorX('Iva','CODIGO','Tasa',tasa);
@@ -1742,6 +1803,11 @@ begin
       ActualizarTabla('Presupuesto', 'CBTESASOC', 'INTEGER');
       ActualizarTabla('Compra', 'CBTESASOC', 'INTEGER');
     end;
+end;
+
+function TDM.HayBase;
+begin
+  result := FileExists(Path+'db\GeN.FDB');
 end;
 
 end.

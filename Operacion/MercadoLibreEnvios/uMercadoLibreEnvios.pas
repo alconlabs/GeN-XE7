@@ -63,8 +63,8 @@ type
     Label1: TLabel;
     Label2: TLabel;
     Panel3: TPanel;
-    Label3: TLabel;
-    Label4: TLabel;
+    lTituloPrepararDemoradas: TLabel;
+    lVentasPrepararDemoradas: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure tProgressBarTimer(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -174,6 +174,7 @@ end;
 procedure TfMercadoLibreEnvios.tProgressBarTimer(Sender: TObject);
 begin
   ProgressBar1.StepIt;
+  lVentasPreparar.Caption:='procesando '+IntToStr(dmr.pag)+' de '+IntToStr(dmr.tpag)+'...';
 end;
 
 procedure TfMercadoLibreEnvios.actualizarEtiquetas;
@@ -185,6 +186,7 @@ begin
     lVentasPrepararFlex.Caption := CantidadVentas(sqlPrepararFlex);
     lVentasPrepararAcordar.Caption := CantidadVentas(sqlPrepararAcordar);
     lVentasPrepararMensajes.Caption := CantidadVentas(sqlPrepararMensajes);
+    lVentasPrepararDemoradas.Caption := CantidadVentas(sqlPrepararDemoradas);
     lVentasDespachar.Caption := CantidadVentas(sqlDespachar);
     lVentasDespacharDemoradas.Caption := CantidadVentas(sqlDespacharDemoradas);
     lVentasDespacharColecta.Caption := CantidadVentas(sqlDespacharEnvios);
@@ -243,8 +245,13 @@ begin
         tProgressBar.Enabled:=True;
         FDQuery1.Close;
         Application.ProcessMessages;
+//dmml.dbmain.ExecSQL('DELETE FROM orders');
+//dmml.dbmain.ExecSQL('DELETE FROM shipments');
 //        ObtenerOrderRecent;
         ObtenerOrder;
+        while (teI<tfeI)and(tmI<tfmI) do begin
+          Application.ProcessMessages;
+        end;
         tProgressBar.Enabled:=False;
         ProgressBar1.StepBy(100);
         sleep(100);

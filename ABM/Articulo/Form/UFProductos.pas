@@ -33,7 +33,7 @@ type
     Label14: TLabel;
     Label23: TLabel;
     DescripcionDBEdit: TDBEdit;
-    DBEdit1: TDBEdit;
+    CantidadDBEdit: TDBEdit;
     DBLookupComboBox4: TDBLookupComboBox;
     BitBtn13: TBitBtn;
     IVADBCBLabel: TLabel;
@@ -113,7 +113,7 @@ type
     DBEdit2: TDBEdit;
     Label35: TLabel;
     IVADBComboBox: TDBLookupComboBox;
-    Label8: TLabel;
+    IVADBCBPorcLabel: TLabel;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -127,10 +127,6 @@ type
     procedure MarcaBitBtnClick(Sender: TObject);
     procedure DBEdit14Exit(Sender: TObject);
     procedure BitBtn13Click(Sender: TObject);
-    procedure TablaAfterInsert(DataSet: TDataSet);
-    procedure TablaAfterPost(DataSet: TDataSet);
-    procedure TablaAfterCancel(DataSet: TDataSet);
-    procedure TablaAfterDelete(DataSet: TDataSet);
     procedure MarcaDBLookupComboBoxKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure DBLookupComboBox4Enter(Sender: TObject);
@@ -291,10 +287,15 @@ begin
 with dm do begin
   desc := CodigoDBEdit.Text;
   If (dm.tArticulo.State = dsEdit) or (dm.tArticulo.State = dsInsert) And
-    (DescripcionDBEdit.Text <> '') then
+    (
+      (DescripcionDBEdit.Text<>'') and
+      (CantidadDBEdit.Text<>'') and
+      (CostoDBEdit.Text<>'') and
+      (PrecioCtaCteDBEdit.Text<>'')
+    ) then
     dm.tArticulo.Post
-  else if (DescripcionDBEdit.Text <> '') then
-    ShowMessage('COMPLETE TODOS LOS CAMPOS');
+  else
+      ShowMessage('COMPLETE TODOS LOS CAMPOS');
 end;
   Close;
 end;
@@ -335,9 +336,11 @@ with dm do begin
     IVADBComboBox.Visible:=True;
     IVADBText.Visible:=True;
     IVADBTLabel.Visible:=True;
+    IVADBCBPorcLabel.Visible:=True;
   end;
-  dm.qCuenta.Open;
+  dm.tCuenta.Active:=True;
   dm.tArticulo.Insert;
+  nuevo;
 end;
 end;
 
@@ -352,7 +355,7 @@ begin
     tCategoria.Active := False;
     tIVA.Active := False;
     QTemp.Active := False;
-    qCuenta.Active := False;
+    tCuenta.Active := False;
   end;
 end;
 
@@ -399,45 +402,24 @@ procedure TFProductos.IVADBComboBoxExit(Sender: TObject);
 var
   t:string;
 begin
-with dm do begin
-//if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
-//  else
-  tasa:=StrToFloat(IVADBComboBox.Text);
-  if tasa=10.5 then t:='105' else t:=FloatToStr(tasa);
-  dm.tArticulo.FieldByName('Tasa').AsInteger := StrToInt(t);
-  Calcular;
-  BitBtn1.SetFocus;
-end;
+  with dm do begin
+  //if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
+  //  else
+    if IVADBComboBox.Text='' then tasa:=21
+    else
+      tasa:=StrToFloat(IVADBComboBox.Text);
+    if tasa=10.5 then t:='105' else t:=FloatToStr(tasa);
+    tArticulo.FieldByName('Tasa').AsInteger := StrToInt(t);
+  end;
 end;
 
 Procedure TFProductos.nuevo;
 begin
-with dm do begin
-  dm.tArticulo.FieldByName('CtaNombre').AsString := '13';
-  dm.tArticulo.FieldByName('CtaTipo').AsString := '13';
-  dm.tArticulo.FieldByName('CtaAnticipo').AsString := '13';
-  dm.tArticulo.FieldByName('CtaIIBB').AsString := '66';
-  dm.tArticulo.FieldByName('CODIGOBARRA').AsString := '0';
-  dm.tArticulo.FieldByName('Color').AsString := '0';
-  dm.tArticulo.FieldByName('Categoria').AsString := '0';
-  dm.tArticulo.FieldByName('SubCategoria').AsString := '0';
-  dm.tArticulo.FieldByName('Rubro').AsString := '0';
-  dm.tArticulo.FieldByName('Marca').AsString := '0';
-  dm.tArticulo.FieldByName('Proveedor').Value := 1;
-  DBLookupComboBox4.KeyValue := 0;
-  DBEdit9.Field.AsString := 'c/u';
-  DBEdit17.Field.AsDateTime := Date;
-  dm.tArticulo.FieldByName('Costo').AsInteger := 0;
-  CostoDBEdit.Field.AsFloat := 0;
-  dm.tArticulo.FieldByName('ImpOtros').AsInteger := 0;
-  FleteDBEdit.Field.AsFloat := 0;
-  dm.tArticulo.FieldByName('Tasa').AsInteger := 0;
 //  IVADBEdit.Field.AsFloat := 0;
-  dm.tArticulo.FieldByName('Precio').AsInteger := 0;
-  PrecioCtaCteDBEdit.Field.AsFloat := 0;
-  dm.tArticulo.FieldByName('IIBB').AsInteger := 0;
-  CodigoDBEdit.Text:=IntToStr(DM.UltimoRegistro('Articulo', 'CODIGO'));
-end;
+//  CodigoDBEdit.Text:=IntToStr(DM.UltimoRegistro('Articulo', 'CODIGO'));
+//  CostoDBEdit.Field.AsFloat := 0;
+//  FleteDBEdit.Field.AsFloat := 0;
+//  PrecioCtaCteDBEdit.Field.AsFloat := 0;
 end;
 
 procedure TFProductos.RubroBitBtnClick(Sender: TObject);
@@ -512,6 +494,7 @@ end;
 procedure TFProductos.GanaciaDBEditExit(Sender: TObject);
 begin
   Calcular;
+  BitBtn1.SetFocus;
 end;
 
 procedure TFProductos.PaintBox1Click(Sender: TObject);
@@ -537,7 +520,7 @@ end;
 
 procedure TFProductos.CategoriaBitBtnClick(Sender: TObject);
 begin
-  WinExec(PAnsiChar(AnsiString(Path + 'Categoria.exe')), SW_SHOWNORMAL);
+//  WinExec(PAnsiChar(AnsiString(Path + 'Categoria.exe')), SW_SHOWNORMAL);
   {
     FCategorias:=TFCategorias.Create(self);
     try
@@ -618,30 +601,7 @@ end;
 
 procedure TFProductos.BitBtn13Click(Sender: TObject);
 begin
-  WinExec(PAnsiChar(AnsiString(Path + 'Proveedor.exe')), SW_SHOWNORMAL);
-end;
-
-procedure TFProductos.TablaAfterCancel(DataSet: TDataSet);
-begin
-  dm.tArticulo.Transaction.RollbackRetaining;
-end;
-
-procedure TFProductos.TablaAfterDelete(DataSet: TDataSet);
-begin
-  dm.tArticulo.Transaction.CommitRetaining;
-end;
-
-procedure TFProductos.TablaAfterInsert(DataSet: TDataSet);
-begin
-  If Cancelar then
-    dm.tArticulo.Cancel
-  else
-    nuevo;
-end;
-
-procedure TFProductos.TablaAfterPost(DataSet: TDataSet);
-begin
-  dm.tArticulo.Transaction.CommitRetaining;
+//  WinExec(PAnsiChar(AnsiString(Path + 'Proveedor.exe')), SW_SHOWNORMAL);
 end;
 
 procedure TFProductos.Calcular;

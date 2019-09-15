@@ -85,13 +85,9 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ImprimirBitBtnClick(Sender: TObject);
-    procedure tProveedorAfterInsert(DataSet: TDataSet);
     procedure IVADBComboBoxChange(Sender: TObject);
     procedure DBEdit24Exit(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure tProveedorAfterPost(DataSet: TDataSet);
-    procedure tProveedorAfterDelete(DataSet: TDataSet);
-    procedure tProveedorAfterCancel(DataSet: TDataSet);
     procedure bExportarClick(Sender: TObject);
     procedure bImportarClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -243,28 +239,6 @@ end;
 procedure TProveedorForm.DBEdit24Exit(Sender: TObject);
 begin
   SiBitBtn.SetFocus;
-end;
-
-procedure TProveedorForm.tProveedorAfterCancel(DataSet: TDataSet);
-begin
-  dm.tProveedor.Transaction.RollbackRetaining;
-end;
-
-procedure TProveedorForm.tProveedorAfterDelete(DataSet: TDataSet);
-begin
-  dm.tProveedor.Transaction.CommitRetaining;
-end;
-
-procedure TProveedorForm.tProveedorAfterInsert(DataSet: TDataSet);
-begin
-  dm.tProveedor.FieldByName('CtaNombre').AsString := '76';
-  dm.tProveedor.FieldByName('CtaTipo').AsString := '13';
-  dm.tProveedor.FieldByName('CtaAnticipo').AsString := '36';
-end;
-
-procedure TProveedorForm.tProveedorAfterPost(DataSet: TDataSet);
-begin
-  dm.tProveedor.Transaction.CommitRetaining;
 end;
 
 end.

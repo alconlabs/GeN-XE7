@@ -85,7 +85,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure tEmpresaAfterCancel(DataSet: TDataSet);
     procedure tEmpresaAfterDelete(DataSet: TDataSet);
-    procedure tEmpresaAfterPost(DataSet: TDataSet);
     procedure Image1Click(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
@@ -124,18 +123,11 @@ begin
 end;
 
 procedure TEmpresaForm.tEmpresaAfterCancel(DataSet: TDataSet);
-begin
-//  dm.tEmpresa.Transaction.RollbackRetaining;
+begin//  dm.tEmpresa.Transaction.RollbackRetaining;
 end;
 
 procedure TEmpresaForm.tEmpresaAfterDelete(DataSet: TDataSet);
-begin
-//  dm.tEmpresa.Transaction.CommitRetaining;
-end;
-
-procedure TEmpresaForm.tEmpresaAfterPost(DataSet: TDataSet);
-begin
-//  dm.tEmpresa.Transaction.CommitRetaining;
+begin//  dm.tEmpresa.Transaction.CommitRetaining;
 end;
 
 procedure TEmpresaForm.NoBitBtnClick(Sender: TObject);

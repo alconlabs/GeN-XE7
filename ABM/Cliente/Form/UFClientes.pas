@@ -103,7 +103,6 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure tClienteAfterInsert(DataSet: TDataSet);
     procedure VendedorBitBtnClick(Sender: TObject);
     procedure IVADBComboBoxChange(Sender: TObject);
     procedure BuscarGaranteBitBtnClick(Sender: TObject);
@@ -112,9 +111,6 @@ type
     procedure NoBitBtnClick(Sender: TObject);
     procedure ImprimirBitBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure tClienteAfterCancel(DataSet: TDataSet);
-    procedure tClienteAfterDelete(DataSet: TDataSet);
-    procedure tClienteAfterPost(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -229,29 +225,6 @@ begin
     FBuscaCliente.Free;
   end;
   SiBitBtn.SetFocus;
-end;
-
-procedure TFClientes.tClienteAfterCancel(DataSet: TDataSet);
-begin
-  dm.tCliente.Transaction.RollbackRetaining;
-end;
-
-procedure TFClientes.tClienteAfterDelete(DataSet: TDataSet);
-begin
-  dm.tCliente.Transaction.CommitRetaining;
-end;
-
-procedure TFClientes.tClienteAfterInsert(DataSet: TDataSet);
-begin
-  dm.tCliente.FieldByName('CtaNombre').AsString := '9';
-  dm.tCliente.FieldByName('CtaTipo').AsString := '9';
-  dm.tCliente.FieldByName('CtaAnticipo').AsString := '9';
-  VendedorDBEdit.text := '0';
-end;
-
-procedure TFClientes.tClienteAfterPost(DataSet: TDataSet);
-begin
-  dm.tCliente.Transaction.CommitRetaining;
 end;
 
 procedure TFClientes.VendedorBitBtnClick(Sender: TObject);

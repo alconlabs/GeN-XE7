@@ -174,8 +174,9 @@ procedure TOperacionDataModule.VarCos;
   end;
 
 var
-  porc: Double;
-  p1, p2, p3, p4, p5, p6, p: Double;
+  porc,
+  fle,
+  p1, p2, p3, p4, p5, p6, p, pp: Double;
 begin
   with dm do
   begin
@@ -185,11 +186,22 @@ begin
     p4 := ConfigQuery.FieldByName('PP4').AsFloat / 100 + 1;
     p5 := ConfigQuery.FieldByName('PP5').AsFloat / 100 + 1;
     p6 := ConfigQuery.FieldByName('PP6').AsFloat / 100 + 1;
-    p := ConfigQuery.FieldByName('PP').AsFloat / 100 + 1;
+    pp := ConfigQuery.FieldByName('PP').AsFloat / 100 + 1;
 
   // VARIACION DE COSTO
   qT.sql.Text := 'SELECT * FROM "Articulo" WHERE CODIGO=' + cod;
   qT.open;
+  //GANANCIA
+  if qT.FieldByName('PORCENTAJE').AsFloat > 0 then
+    pp := ((qT.FieldByName('PORCENTAJE').AsFloat) / 100+1)
+  else
+    pp := 1;
+  //FLETE
+  if qT.FieldByName('ImpOtros').AsFloat > 0 then
+    fle := ((qT.FieldByName('ImpOtros').AsFloat) / 100+1)
+  else
+    fle :=1;
+  cost := cost * fle;
   // PROCENTAJE DE VARIACION (costo * 100 / ultcosto) / 100
   if qT.FieldByName('ULTCOSTO').AsFloat <> 0 then
     porc := ((cost * 100 / qT.FieldByName('ULTCOSTO').AsFloat) / 100)
@@ -220,10 +232,10 @@ begin
     p6 := roundp(qT.FieldByName('PRECIO6').AsFloat * porc)
   else
     p := roundp(cost * p6);
-  if qT.FieldByName('PRECIO').AsFloat <> 0 then
-    p := roundp(qT.FieldByName('PRECIO').AsFloat * porc)
-  else
-    p := roundp(cost * p);
+//  if qT.FieldByName('PRECIO').AsFloat <> 0 then
+//    p := roundp(qT.FieldByName('PRECIO').AsFloat * porc)
+//  else
+    p := roundp(cost * pp);
   //
   qQ.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE + ' + cant +
     ', ULTCOSTO = COSTO ' + ', COSTO = ' + floattostr(cost) + ', PRECIO = ' +
@@ -537,6 +549,7 @@ begin
 with dm do begin
   if fech = '' then
     fech := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
+  if ctan='' then exit;
   qT.sql.Text := 'select * from "Cuenta" where "Cuenta".CODIGO=' + ctan;
   qT.open;
   qQ.sql.Text :=

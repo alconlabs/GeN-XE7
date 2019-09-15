@@ -62,7 +62,6 @@ object ConfiguracionForm: TConfiguracionForm
       ParentFont = False
       TabOrder = 0
       OnClick = BitBtn1Click
-      ExplicitWidth = 62
     end
     object BitBtn2: TBitBtn
       Left = 1
@@ -99,7 +98,6 @@ object ConfiguracionForm: TConfiguracionForm
       ParentFont = False
       TabOrder = 1
       OnClick = BitBtn2Click
-      ExplicitWidth = 62
     end
   end
   object PageControl1: TPageControl
@@ -107,14 +105,12 @@ object ConfiguracionForm: TConfiguracionForm
     Top = 0
     Width = 717
     Height = 572
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 728
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
-      ExplicitWidth = 720
       object Label43: TLabel
         Left = 3
         Top = 3
@@ -889,7 +885,6 @@ object ConfiguracionForm: TConfiguracionForm
     end
     object TabSheet1: TTabSheet
       Caption = 'Parametros'
-      ExplicitWidth = 720
       object Label1: TLabel
         Left = 16
         Top = 24
@@ -1037,7 +1032,6 @@ object ConfiguracionForm: TConfiguracionForm
     object TabSheet2: TTabSheet
       Caption = 'Lista de Precios'
       ImageIndex = 2
-      ExplicitWidth = 720
       object Label2: TLabel
         Left = 47
         Top = 56

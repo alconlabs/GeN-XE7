@@ -62,7 +62,7 @@ object FProductos: TFProductos
       end
       object IVADBCBLabel: TLabel
         Left = 454
-        Top = 113
+        Top = 86
         Width = 59
         Height = 13
         Caption = 'Tasa de IVA'
@@ -158,7 +158,7 @@ object FProductos: TFProductos
       end
       object Label33: TLabel
         Left = 467
-        Top = 88
+        Top = 115
         Width = 46
         Height = 13
         Caption = 'Ganancia'
@@ -166,7 +166,7 @@ object FProductos: TFProductos
       end
       object Label34: TLabel
         Left = 592
-        Top = 86
+        Top = 113
         Width = 10
         Height = 13
         Caption = '%'
@@ -323,9 +323,9 @@ object FProductos: TFProductos
         Visible = False
         OnClick = PaintBox1Click
       end
-      object Label8: TLabel
+      object IVADBCBPorcLabel: TLabel
         Left = 592
-        Top = 113
+        Top = 86
         Width = 10
         Height = 13
         Caption = '%'
@@ -335,6 +335,7 @@ object FProductos: TFProductos
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        Visible = False
       end
       object DescripcionDBEdit: TDBEdit
         Left = 15
@@ -345,7 +346,7 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         TabOrder = 0
       end
-      object DBEdit1: TDBEdit
+      object CantidadDBEdit: TDBEdit
         Left = 90
         Top = 175
         Width = 73
@@ -416,12 +417,12 @@ object FProductos: TFProductos
       end
       object GanaciaDBEdit: TDBEdit
         Left = 519
-        Top = 86
+        Top = 113
         Width = 65
         Height = 21
         DataField = 'PORCENTAJE'
         DataSource = DM.dstArticulo
-        TabOrder = 5
+        TabOrder = 6
         OnExit = GanaciaDBEditExit
       end
       object CodigoBarraEdit: TDBEdit
@@ -450,7 +451,7 @@ object FProductos: TFProductos
       end
       object IVADBComboBox: TDBLookupComboBox
         Left = 519
-        Top = 113
+        Top = 86
         Width = 65
         Height = 21
         DataField = 'IVA'
@@ -458,7 +459,8 @@ object FProductos: TFProductos
         KeyField = 'CODIGO'
         ListField = 'TASA'
         ListSource = DM.dstIVA
-        TabOrder = 6
+        TabOrder = 5
+        Visible = False
         OnEnter = IVADBComboBoxEnter
         OnExit = IVADBComboBoxExit
       end

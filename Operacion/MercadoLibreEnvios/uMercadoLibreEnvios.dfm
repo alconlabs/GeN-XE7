@@ -49,6 +49,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       ParentBackground = False
       TabOrder = 0
+      Visible = False
       OnClick = pPrepararMensajesClick
       object lTituloPrepararMensajes: TLabel
         Left = 17
@@ -270,7 +271,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       ParentBackground = False
       TabOrder = 5
       OnClick = pDespacharDemoradasClick
-      object Label3: TLabel
+      object lTituloPrepararDemoradas: TLabel
         Left = 17
         Top = 17
         Width = 65
@@ -283,7 +284,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label4: TLabel
+      object lVentasPrepararDemoradas: TLabel
         Left = 17
         Top = 33
         Width = 42
@@ -541,6 +542,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       Align = alTop
       ParentBackground = False
       TabOrder = 1
+      Visible = False
       OnClick = pDespacharMensajesClick
       object lTituloDespacharMensajes: TLabel
         Left = 17

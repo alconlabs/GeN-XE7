@@ -204,6 +204,7 @@ uses LoginF, BuscaFactura, AnularVtaF, incremento, PagoIVAF, LibroDiarioF,
 
 procedure TFullMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  if not dm.HayBase then Exit;
   If not sinGrabar then
     DM.DejarUsuario;
 end;
@@ -215,6 +216,7 @@ begin
     try
       // CONECTAR BASE DE DATOS
       // CONTROL DE USUARIOS
+      if not DM.HayBase then Exit;
         TraerConfig;
         Query.SQL.Text :=
           'Select * From "Usuario" Where (NOMBRE=''admin'' and "password"=''admin'')';
@@ -270,12 +272,13 @@ begin
           CrearPedido1.Visible := False;
         end;
       end;
-    finally
-//      Query.Close;
       FullMainForm.caption := 'Civeloo GeN v'+version+' - [' + Empresa + '] - ' + Licencia +
         ' - [USUARIO: ' + Usuario + '] MODULO COMPLETO ';
       if Actualizar then Close;
       FormatearFecha;
+    finally
+//      Query.Close;
+      if not DM.HayBase then Close;
     end;
   end;
 end;

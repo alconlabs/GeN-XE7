@@ -102,13 +102,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BitBtn4Click(Sender: TObject);
-    procedure tVendedorAfterInsert(DataSet: TDataSet);
     procedure IVADBComboBoxChange(Sender: TObject);
     procedure DBEdit24Exit(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure tVendedorAfterPost(DataSet: TDataSet);
-    procedure tVendedorAfterDelete(DataSet: TDataSet);
-    procedure tVendedorAfterCancel(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -208,28 +204,6 @@ end;
 procedure TVendedorForm.DBEdit24Exit(Sender: TObject);
 begin
   AceptarBitBtn.SetFocus;
-end;
-
-procedure TVendedorForm.tVendedorAfterCancel(DataSet: TDataSet);
-begin
-  dm.tVendedor.Transaction.RollbackRetaining;
-end;
-
-procedure TVendedorForm.tVendedorAfterDelete(DataSet: TDataSet);
-begin
-  dm.tVendedor.Transaction.CommitRetaining;
-end;
-
-procedure TVendedorForm.tVendedorAfterInsert(DataSet: TDataSet);
-begin
-  dm.tVendedor.FieldByName('CtaTipo').AsString := '50';
-  dm.tVendedor.FieldByName('CtaNombre').AsString := '50';
-  dm.tVendedor.FieldByName('CtaAnticipo').AsString := '25';
-end;
-
-procedure TVendedorForm.tVendedorAfterPost(DataSet: TDataSet);
-begin
-  dm.tVendedor.Transaction.CommitRetaining;
 end;
 
 end.

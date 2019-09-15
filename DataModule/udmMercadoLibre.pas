@@ -218,8 +218,10 @@ type
 
 var
   dmML: TdmML;
-  teI: Integer;
+  teI,tmI,
+  tfeI,tfmI: Integer;
   tObtenerEnvio: array [0 .. 9999 - 1] of TTObtenerEnvio;
+  tObtenerMensajes: array [0 .. 9999 - 1] of TTObtenerMensajes;
 
 const
   whereNot_delivered=' (orders.tags LIKE ''%not_delivered%'')';
@@ -241,10 +243,11 @@ const
     +' shipments.tracking_method LIKE ''%Express'' '
   +')';
   whereNoMode=' (shipments.mode='''')';
-  whereEmbalado=' (despachados.embalado=''S'')';
-  whereNoEmbalado=' (NOT(despachados.embalado=''S''))';
+  whereEqtiquetaImpresa=' (shipments.substatus=''printed'')';
+  whereEmbalado=' (despachados.embalado=''S'') OR '+whereEqtiquetaImpresa;
+// AND NOT(despachados.embalado='S') AND ((shipments.substatus is null) or (shipments.substatus='ready_to_print')) --whereNoEmbalado
+  whereNoEmbalado=' (NOT(despachados.embalado=''S'') AND ((shipments.substatus IS NULL) OR ('+whereReady_to_ship+')))';
   whereDelayed='(shipments.substatus=''delayed'')';
-  whereEqtiquetaImpresa='(shipments.substatus=''printed'')';
   whereEtiquetaLista='(shipments.substatus=''ready_to_print'')';
   whereNoLeido=' (messages.date_read='''')';
   whereEsperandoRetiro=' (shipments.substatus=''waiting_for_withdrawal'')';
@@ -292,12 +295,16 @@ const
   sqlPrepararEnviosItems=sqlPreparar;
   sqlPrepararFlex=sqlPreparar+' AND '+whereFlex;
   sqlPrepararAcordar=sqlPreparar+' AND '+whereNoMode;
+  sqlPrepararDemoradas=sqlPreparar+' AND '+whereDelayed;
   sqlPrepararMensajes=sqlMensajesNoLeido+' AND '+whereSinEnviar+' AND '+whereNoEmbalado;//+groupOrder;
-  sqlDespachar=sqlItems+' WHERE '+whereSinEnviar+' AND '+whereEmbalado;
-  sqlDespacharDemoradas=sqlDespachar+' AND '+whereDelayed;
-  sqlDespacharEnvios=sqlPrepararEnvios+' AND '+whereEmbalado+'';
+
+  sqlDespachar=sqlItems+' WHERE '+wherePaid+' AND '+whereNot_delivered+' AND (NOT '+whereShipped+') AND '+whereEmbalado;
+  sqlDespacharEnvios=sqlDespachar+' AND '+whereReady_to_ship+' AND (NOT'+whereFlex+')';
   sqlDespacharFlex=sqlDespachar+' AND '+whereFlex;
+  sqlDespacharDemoradas=sqlDespachar+' AND '+whereDelayed;
+  sqlDespacharAcordar=sqlDespachar+' AND '+whereNoMode;
   sqlDespacharMensajes=sqlMensajesNoLeido+' AND '+whereSinEnviar+' AND '+whereEmbalado;//+''+groupOrder;
+
   sqlTransito=sqlItems+' WHERE '+whereShipped;
   sqlTransitoCamino=sqlTransito+' AND '+whereEnCamino;
   sqlTransitoEsperandoRetiro=sqlTransito+' AND '+whereEsperandoRetiro;
@@ -1317,13 +1324,14 @@ begin
             end;
           end;
   end;
+  Inc(tfmI);
   Terminate;
 end;
 
 constructor TTObtenerMensajes.Create;
 begin
   FreeOnTerminate := True;
-  inherited Create(True); // llamamos al constructor del padre (TThread)
+  inherited Create(False); // llamamos al constructor del padre (TThread)
   vQuery := TFDQuery.Create(nil);
   vQuery.Connection:=dmML.dbMain;
 //  vJ := TJSONValue.Create;
@@ -1372,26 +1380,6 @@ with DMR do begin
       jEnvio := TJSONObject.ParseJSONValue(RESTRequest1.Response.Content);
     end;
   end;
-//  with DMR do begin
-//    try
-//      if  accessToken='' then ObtenerRefreshToken;
-//  //curl -X GET “https://api.mercadolibre.com/messages/packs/$pack_id/sellers/$user_id?access_token=$ACCESS_TOKEN”
-//  //      tRest := TTRest.Create(
-//      Inc(tI);
-//      tRest[tI] := TTRest.Create(
-//        url,
-//        '/shipments/'+vId+'?'+''+'client_id='+clientId+
-//        '&client_secret='+clientSecret+'&access_token='+accessToken,
-//        'application/json',
-//        rmGET
-//      );
-////      tRest[tI].vJSONValue := jEnvio;
-////      if not tRest[tI].Terminated then
-//        tRest[tI].WaitFor;
-//    finally
-//      jEnvio:=tRest[tI].vJSONValue;
-//    end;
-//  end;
       if Assigned(jEnvio) then
       if (jEnvio<>nil) then
       if jEnvio.Owned then
@@ -1410,6 +1398,8 @@ with DMR do begin
           begin
             Insert;
             FieldByName('id').AsString := vId;
+
+          end;
             FieldByName('mode').AsString := jEnvio.GetValue<string>('mode');
             FieldByName('created_by').AsString := jEnvio.GetValue<string>('created_by');
             FieldByName('order_id').AsString := jEnvio.GetValue<string>('order_id');
@@ -1418,13 +1408,9 @@ with DMR do begin
             FieldByName('site_id').AsString := jEnvio.GetValue<string>('site_id');
             FieldByName('status').AsString := jEnvio.GetValue<string>('status');
             FieldByName('substatus').AsString := jEnvio.GetValue<string>('substatus');
-//            FieldByName('status_history').AsString := jEnvio.GetValue<TJSONValue>('status_history').ToString;
-//            if FieldByName('substatus').AsString<>'' then
-//              FieldByName('substatus_history').AsString := jEnvio.GetValue<TJSONValue>('substatus_history').ToString;
             FieldByName('date_created').AsString := jEnvio.GetValue<string>('date_created');
             FieldByName('last_updated').AsString := jEnvio.GetValue<string>('last_updated');
             FieldByName('tracking_number').AsString := jEnvio.GetValue<string>('tracking_number');
-            FieldByName('tracking_method').AsString := jEnvio.GetValue<string>('tracking_method');
             FieldByName('service_id').AsString := jEnvio.GetValue<string>('service_id');
             FieldByName('carrier_info').AsString := jEnvio.GetValue<TJSONValue>('carrier_info').ToString;
             FieldByName('sender_id').AsString := jEnvio.GetValue<string>('sender_id');
@@ -1438,18 +1424,18 @@ with DMR do begin
             FieldByName('date_first_printed').AsString := jEnvio.GetValue<string>('date_first_printed');
             FieldByName('market_place').AsString := jEnvio.GetValue<string>('market_place');
             FieldByName('return_details').AsString := jEnvio.GetValue<string>('return_details');
-//            FieldByName('tags').AsString := jEnvio.GetValue<TJSONValue>('tags').ToString;
             FieldByName('return_tracking_number').AsString := jEnvio.GetValue<string>('return_tracking_number');
             FieldByName('cost_components').AsString := jEnvio.GetValue<TJSONValue>('cost_components').ToString;
-          end;
-//            FieldByName('tags').AsString := jEnvio.GetValue<TJSONValue>('tags').ToString;
-//            if FieldByName('tags').AsString<>'[]' then
-//            begin
-//              FieldByName('delay').AsString := jEnvio.GetValue<TJSONValue>('delay').ToString;
-//              FieldByName('type').AsString := jEnvio.GetValue<TJSONValue>('type').ToString;
-//              FieldByName('logistic_type').AsString := jEnvio.GetValue<string>('logistic_type');
-//              FieldByName('application_id').AsString := jEnvio.GetValue<string>('application_id');
-//            end;
+
+            FieldByName('tags').AsString := jEnvio.GetValue<TJSONValue>('tags').ToString;
+            if FieldByName('tags').AsString<>'[]' then
+            begin
+              FieldByName('delay').AsString := jEnvio.GetValue<TJSONValue>('delay').ToString;
+              FieldByName('type').AsString := jEnvio.GetValue<TJSONValue>('type').ToString;
+              FieldByName('logistic_type').AsString := jEnvio.GetValue<string>('logistic_type');
+              FieldByName('application_id').AsString := jEnvio.GetValue<string>('application_id');
+            end;
+          FieldByName('tracking_method').AsString := jEnvio.GetValue<string>('tracking_method');
           FieldByName('status').AsString := jEnvio.GetValue<string>('status');
           FieldByName('substatus').AsString := jEnvio.GetValue<string>('substatus');
           if FieldByName('substatus').AsString<>'' then
@@ -1460,6 +1446,7 @@ with DMR do begin
         end;
       end;
       jEnvio.Free;
+Inc(tfeI);
 Terminate;
 end;
 

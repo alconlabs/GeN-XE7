@@ -212,7 +212,7 @@ begin
 //    dm.qImprimir.Transaction.Commit;
 //  end;
   dm.qImprimir.SQL.Text := 'Select * from "Imprimir"';
-  dm.qImprimir.Open;
+  dm.qImprimir.Active:=True;
   dm.qImprimir.Last;
   dm.tConfiguracion.Open;
   dm.tConfiguracion.Edit;

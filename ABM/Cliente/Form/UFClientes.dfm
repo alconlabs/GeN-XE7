@@ -26,15 +26,11 @@ object FClientes: TFClientes
     Top = 0
     Width = 559
     Height = 429
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 488
-    ExplicitHeight = 454
     object TabSheet1: TTabSheet
       Caption = 'Informaci'#243'n General'
-      ExplicitWidth = 480
-      ExplicitHeight = 426
       object Label2: TLabel
         Left = 50
         Top = 39
@@ -230,8 +226,6 @@ object FClientes: TFClientes
     object TabSheet2: TTabSheet
       Caption = 'Notas'
       ImageIndex = 1
-      ExplicitWidth = 480
-      ExplicitHeight = 426
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -241,15 +235,11 @@ object FClientes: TFClientes
         DataField = 'Notas'
         DataSource = DM.dstCliente
         TabOrder = 0
-        ExplicitWidth = 480
-        ExplicitHeight = 426
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
-      ExplicitWidth = 480
-      ExplicitHeight = 426
       object Label15: TLabel
         Left = 105
         Top = 158
@@ -381,8 +371,6 @@ object FClientes: TFClientes
     object TabSheet4: TTabSheet
       Caption = 'Datos Secundarios'
       ImageIndex = 3
-      ExplicitWidth = 480
-      ExplicitHeight = 426
       object Label19: TLabel
         Left = 16
         Top = 39
@@ -669,10 +657,6 @@ object FClientes: TFClientes
     object TabSheet5: TTabSheet
       Caption = 'Parametros'
       ImageIndex = 4
-      ExplicitLeft = 3
-      ExplicitTop = 27
-      ExplicitWidth = 512
-      ExplicitHeight = 426
       object Label13: TLabel
         Left = 2
         Top = 34
@@ -848,12 +832,11 @@ object FClientes: TFClientes
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
-    ExplicitHeight = 454
     object Label1: TLabel
       Left = 1
       Top = 51
       Width = 73
-      Height = 14
+      Height = 13
       Align = alTop
       Alignment = taCenter
       Caption = 'Nro. Cta'
@@ -863,7 +846,7 @@ object FClientes: TFClientes
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitWidth = 144
+      ExplicitWidth = 48
     end
     object SiBitBtn: TBitBtn
       Left = 1
@@ -899,9 +882,6 @@ object FClientes: TFClientes
       ParentFont = False
       TabOrder = 0
       OnClick = SiBitBtnClick
-      ExplicitLeft = 33
-      ExplicitTop = 272
-      ExplicitWidth = 80
     end
     object NoBitBtn: TBitBtn
       Left = 1
@@ -920,13 +900,10 @@ object FClientes: TFClientes
       ParentFont = False
       TabOrder = 1
       OnClick = NoBitBtnClick
-      ExplicitLeft = 33
-      ExplicitTop = 348
-      ExplicitWidth = 80
     end
     object ImprimirBitBtn: TBitBtn
       Left = 1
-      Top = 89
+      Top = 85
       Width = 73
       Height = 50
       Align = alTop
@@ -939,9 +916,7 @@ object FClientes: TFClientes
       ParentFont = False
       TabOrder = 2
       OnClick = ImprimirBitBtnClick
-      ExplicitLeft = 33
-      ExplicitTop = 154
-      ExplicitWidth = 80
+      ExplicitTop = 88
     end
     object BuscarBitBtn: TBitBtn
       Left = 1
@@ -958,13 +933,12 @@ object FClientes: TFClientes
       ParentFont = False
       TabOrder = 3
       OnClick = BuscarBitBtnClick
-      ExplicitWidth = 144
     end
     object CodigoDBEdit: TDBEdit
       Left = 1
-      Top = 65
+      Top = 64
       Width = 73
-      Height = 24
+      Height = 21
       Align = alTop
       DataField = 'CODIGO'
       DataSource = DM.dstCliente
@@ -1006,10 +980,6 @@ object FClientes: TFClientes
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
-      ExplicitLeft = 2
-      ExplicitTop = 422
-      ExplicitWidth = 120
-      ExplicitHeight = 32
     end
   end
 end

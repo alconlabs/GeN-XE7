@@ -1127,7 +1127,6 @@ object DM: TDM
       'Database=C:\Users\DeGsoft\Documents\Civeloo\GeN\db\GeN.FDB'
       'CharacterSet=WIN1252'
       'DriverID=FB')
-    Connected = True
     LoginPrompt = False
     Left = 176
   end
@@ -1302,7 +1301,7 @@ object DM: TDM
     Top = 144
   end
   object dsqImprimir: TDataSource
-    DataSet = qIIBB
+    DataSet = qImprimir
     Left = 376
     Top = 384
   end
@@ -1709,6 +1708,7 @@ object DM: TDM
     Top = 720
   end
   object tArticulo: TFDTable
+    AfterInsert = tArticuloAfterInsert
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
@@ -1726,6 +1726,7 @@ object DM: TDM
     Top = 48
   end
   object tCliente: TFDTable
+    AfterInsert = tClienteAfterInsert
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
@@ -1789,6 +1790,7 @@ object DM: TDM
     Top = 376
   end
   object tProveedor: TFDTable
+    AfterInsert = tProveedorAfterInsert
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
@@ -1836,6 +1838,7 @@ object DM: TDM
     Top = 616
   end
   object tVendedor: TFDTable
+    AfterInsert = tVendedorAfterInsert
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True

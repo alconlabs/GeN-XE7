@@ -63,6 +63,5 @@ begin
   Application.Title := 'Civeloo GeN';
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFullMainForm, FullMainForm);
-  Application.CreateForm(TPagoForm, PagoForm);
   Application.Run;
 end.
