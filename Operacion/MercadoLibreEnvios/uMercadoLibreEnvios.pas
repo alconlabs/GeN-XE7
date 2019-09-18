@@ -59,10 +59,10 @@ type
     Panel6: TPanel;
     lTransito: TLabel;
     lVentasTransito: TLabel;
-    Panel2: TPanel;
-    Label1: TLabel;
-    Label2: TLabel;
-    Panel3: TPanel;
+    pDespacharAcordar: TPanel;
+    lTituloDespacharAcordar: TLabel;
+    lVentasDespacharAcordar: TLabel;
+    pPrepararDemoradas: TPanel;
     lTituloPrepararDemoradas: TLabel;
     lVentasPrepararDemoradas: TLabel;
     procedure FormCreate(Sender: TObject);
@@ -182,20 +182,37 @@ begin
   with dmML do
   begin
     lVentasPreparar.Caption := CantidadVentas(sqlPreparar);
+//    lVentasPreparar.Visible:=(lVentasPreparar.Caption<>'0 ventas');
     lVentasPrepararEnvios.Caption:=CantidadVentas(sqlPrepararEnvios);
+    pPrepararEnvios.Visible:=(lVentasPrepararEnvios.Caption<>'0 ventas');
     lVentasPrepararFlex.Caption := CantidadVentas(sqlPrepararFlex);
+    pPrepararFlex.Visible:=(lVentasPrepararFlex.Caption<>'0 ventas');
     lVentasPrepararAcordar.Caption := CantidadVentas(sqlPrepararAcordar);
+    pPrepararAcordar.Visible:=(lVentasPrepararAcordar.Caption<>'0 ventas');
     lVentasPrepararMensajes.Caption := CantidadVentas(sqlPrepararMensajes);
+    pPrepararMensajes.Visible:=(lVentasPrepararMensajes.Caption<>'0 ventas');
     lVentasPrepararDemoradas.Caption := CantidadVentas(sqlPrepararDemoradas);
+    pPrepararDemoradas.Visible:=(lVentasPrepararDemoradas.Caption<>'0 ventas');
     lVentasDespachar.Caption := CantidadVentas(sqlDespachar);
+    pDespachar.Visible:=(lVentasDespachar.Caption<>'0 ventas');
     lVentasDespacharDemoradas.Caption := CantidadVentas(sqlDespacharDemoradas);
+    pDespacharDemoradas.Visible:=(lVentasDespacharDemoradas.Caption<>'0 ventas');
     lVentasDespacharColecta.Caption := CantidadVentas(sqlDespacharEnvios);
+    pDespacharColecta.Visible:=(lVentasDespacharColecta.Caption<>'0 ventas');
     lVentasDespacharFlex.Caption := CantidadVentas(sqlDespacharFlex);
+    pDespacharFlex.Visible:=(lVentasDespacharFlex.Caption<>'0 ventas');
     lVentasDespacharMensajes.Caption := CantidadVentas(sqlDespacharMensajes);
-    lVentasTransito.Caption := CantidadVentas(sqlTransito);
-    lVentasTransitoCamino.Caption := CantidadVentas(sqlTransitoCamino);
-    lVentasTransitoEsperandoRetiro.Caption := CantidadVentas(sqlTransitoEsperandoRetiro);
-    lVentasTransitoMensajes.Caption := CantidadVentas(sqlTransitoMensajes);
+    pDespacharMensajes.Visible:=(lVentasDespacharMensajes.Caption<>'0 ventas');
+    lVentasDespacharAcordar.Caption := CantidadVentas(sqlDespacharAcordar);
+    pDespacharAcordar.Visible:=(lVentasDespacharAcordar.Caption<>'0 ventas');
+//    lVentasTransito.Caption := CantidadVentas(sqlTransito);
+//    pTransito.Visible:=(lVentasTransito.Caption<>'0 ventas');
+//    lVentasTransitoCamino.Caption := CantidadVentas(sqlTransitoCamino);
+//    pTransitoCamino.Visible:=(lVentasTransitoCamino.Caption<>'0 ventas');
+//    lVentasTransitoEsperandoRetiro.Caption := CantidadVentas(sqlTransitoEsperandoRetiro);
+//    pTransitoEsperandoRetiro.Visible:=(lVentasTransitoEsperandoRetiro.Caption<>'0 ventas');
+//    lVentasTransitoMensajes.Caption := CantidadVentas(sqlTransitoMensajes);
+//    pTransitoMensajes.Visible:=(lVentasTransitoMensajes.Caption<>'0 ventas');
   end;
 end;
 
@@ -237,7 +254,7 @@ end;
 
 procedure TfMercadoLibreEnvios.Preparar;
 begin
-  Timer1.Interval:=((1000*60)*10);
+  Timer1.Interval:=((1000*60)*60);
   with dmr do
     with dmML do
       begin

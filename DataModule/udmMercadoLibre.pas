@@ -229,8 +229,10 @@ const
   wherePaid=' (orders.status=''paid'')';
 //  whereDelivered='(shipments.status=''delivered'')';
   whereReady_to_ship=' (shipments.status=''ready_to_ship'')';
+  whereReadyToPrint='((shipments.substatus=''ready_to_print'') OR (shipments.substatus=''ready_to_pack''))';
   whereShipped=' (shipments.status=''shipped'')';
   whereNoStatus=' (shipments.status='''')';
+  whereNoSubStatus='((shipments.substatus is null) OR (shipments.substatus=''''))';
   whereCancelled=' (shipments.status=''cancelled'')';
   whereSMMe1=' (shipments.mode=''me1'')';
   whereSMMe2=' (shipments.mode=''me2'')';
@@ -243,10 +245,9 @@ const
     +' shipments.tracking_method LIKE ''%Express'' '
   +')';
   whereNoMode=' (shipments.mode='''')';
-  whereEqtiquetaImpresa=' (shipments.substatus=''printed'')';
-  whereEmbalado=' (despachados.embalado=''S'') OR '+whereEqtiquetaImpresa;
-// AND NOT(despachados.embalado='S') AND ((shipments.substatus is null) or (shipments.substatus='ready_to_print')) --whereNoEmbalado
-  whereNoEmbalado=' (NOT(despachados.embalado=''S'') AND ((shipments.substatus IS NULL) OR ('+whereReady_to_ship+')))';
+  whereEqtiquetaImpresa=' (shipments.substatus=''printed'') OR (shipments.substatus=''ready_for_pickup'')';
+  whereEmbalado=' ((despachados.embalado=''S'') OR '+whereEqtiquetaImpresa+')';
+  whereNoEmbalado=' (NOT('+whereEmbalado+') AND ('+whereNoSubStatus+' OR '+whereReadyToPrint+'))';
   whereDelayed='(shipments.substatus=''delayed'')';
   whereEtiquetaLista='(shipments.substatus=''ready_to_print'')';
   whereNoLeido=' (messages.date_read='''')';

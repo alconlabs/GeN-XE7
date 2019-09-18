@@ -1497,6 +1497,8 @@ begin
     FieldByName('Unidad').AsString := 'c/u';
     FieldByName('FechaCompUlt').AsDateTime := Date;
     FieldByName('Costo').AsFloat := 0;
+    FieldByName('Disponible').AsInteger := 0;
+    FieldByName('PORCENTAJE').AsFloat := 0;
     FieldByName('ImpOtros').AsInteger := 0;
     FieldByName('Tasa').AsInteger := 21;
     FieldByName('PRECIO').AsInteger := 0;

@@ -257,7 +257,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         ParentFont = False
       end
     end
-    object Panel3: TPanel
+    object pPrepararDemoradas: TPanel
       AlignWithMargins = True
       Left = 6
       Top = 406
@@ -703,7 +703,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         ParentFont = False
       end
     end
-    object Panel2: TPanel
+    object pDespacharAcordar: TPanel
       AlignWithMargins = True
       Left = 6
       Top = 326
@@ -717,7 +717,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
       ParentBackground = False
       TabOrder = 5
       OnClick = pPrepararAcordarClick
-      object Label1: TLabel
+      object lTituloDespacharAcordar: TLabel
         Left = 17
         Top = 17
         Width = 146
@@ -731,7 +731,7 @@ object fMercadoLibreEnvios: TfMercadoLibreEnvios
         ParentFont = False
         OnClick = pPrepararAcordarClick
       end
-      object Label2: TLabel
+      object lVentasDespacharAcordar: TLabel
         Left = 17
         Top = 33
         Width = 42

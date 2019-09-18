@@ -641,6 +641,10 @@ object EmpresaForm: TEmpresaForm
     object TabSheet2: TTabSheet
       Caption = 'Notas'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -655,6 +659,10 @@ object EmpresaForm: TEmpresaForm
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label52: TLabel
         Left = 142
         Top = 83

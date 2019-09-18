@@ -83,8 +83,6 @@ type
     procedure IVADBComboBoxChange(Sender: TObject);
     procedure SiBitBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure tEmpresaAfterCancel(DataSet: TDataSet);
-    procedure tEmpresaAfterDelete(DataSet: TDataSet);
     procedure Image1Click(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
@@ -120,14 +118,6 @@ begin
 //  dm.ConfigQuery.Open;
   DM.TraerConfig;
   Close;
-end;
-
-procedure TEmpresaForm.tEmpresaAfterCancel(DataSet: TDataSet);
-begin//  dm.tEmpresa.Transaction.RollbackRetaining;
-end;
-
-procedure TEmpresaForm.tEmpresaAfterDelete(DataSet: TDataSet);
-begin//  dm.tEmpresa.Transaction.CommitRetaining;
 end;
 
 procedure TEmpresaForm.NoBitBtnClick(Sender: TObject);

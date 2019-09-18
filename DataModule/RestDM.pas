@@ -777,11 +777,11 @@ procedure TDMR.ObtenerOrder;
 var
   jOrderRecent, order_items, buyer, item, shipping : TJSONValue;
   i, io, order_id,order_status,buyer_id,item_id,item_title,seller_sku,
-  order_items_quantity, last_updated,sj, hoy, ayer : string;
+  order_items_quantity, date_last_updated,sj, hoy, ayer : string;
   n, r, l, ro, no, paging_total: Integer;
 begin
   hoy := formatdatetime('yyyy-mm-dd', now-7);
-  ayer := formatdatetime('yyyy-mm-dd', now-3);
+//  ayer := formatdatetime('yyyy-mm-dd', now-20);
   with dmML do
     with tOrders do
     begin
@@ -789,16 +789,21 @@ begin
         teI:=0;tfeI:=0;
         tmI:=0;tfmI:=0;
         tI:=0;tfI:=0;
-//dmml.dbmain.ExecSQL('DELETE FROM orders');
         i:='0';
         if seller_id='' then ObtenerSeller;
+        Open(sqlOrders);
+        Last;
+        if tOrdersdate_last_updated.AsString<>'' then
+          hoy:=tOrdersdate_last_updated.AsString
+        else
+           hoy:=hoy+'T00:00:00.000-00:00';
         repeat
           Inc(pag);
           ObtenerConsultaRest('orders/search?seller='+seller_id
           +'&order.status=paid'
           +'&tags=not_delivered'
 //          +'&order.date_created.from='+ayer+'T00:00:00.000-00:00'
-          +'&order.date_last_updated.from='+hoy+'T00:00:00.000-00:00'
+          +'&order.date_last_updated.from='+hoy
           +'&offset='+IntToStr(pag)
           ,'');
           jOrderRecent := TJSONObject.ParseJSONValue(RESTRequest1.Response.Content);
@@ -823,8 +828,8 @@ begin
                   Insert;
                   tOrdersid.AsString := order_id;
                 end;
-                last_updated:=jOrderRecent.GetValue<string>('results['+i+'].date_last_updated');
-                if not (tOrdersdate_last_updated.AsString = last_updated) then begin
+                date_last_updated:=jOrderRecent.GetValue<string>('results['+i+'].date_last_updated');
+                if not (tOrdersdate_last_updated.AsString = date_last_updated) then begin
                                   //                tOrdersid.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].id').ToString;//2054151756,
                   tOrderscomments.AsString := jOrderRecent.GetValue<string>('results['+i+'].comments');//null,
                   tOrdersstatus_detail.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].status_detail').ToString;//{},
@@ -842,7 +847,6 @@ begin
   //                tOrdersshipping.AsString := jOrderRecent.GetValue<string>('results['+i+'].shipping');//{},
   //                shipping := jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping');
   //                id := shipping.GetValue<string>('id');
-                  tOrdersshipping.AsString:=(jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
   //                tOrdersshipping.AsString := ObtenerShipping(order_id, jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping'));
 //                  if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
 //                  ObtenerShipping(tOrdersshipping.AsString);
@@ -854,15 +858,16 @@ begin
                   tOrdersfeedback.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].feedback').ToString;//{},
                   tOrderstags.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
                   ObtenerDespachados(order_id);
-                  tOrdersdate_last_updated.AsString := last_updated;
+                  tOrdersdate_last_updated.AsString := date_last_updated;
+                  ObtenerMessages(order_id,seller_id);
+
+                  if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
+                  tOrdersshipping.AsString:=(jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
                   tOrdersstatus.AsString := jOrderRecent.GetValue<string>('results['+i+'].status');//"paid",
                   tOrderstags.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
-                  tOrdersshipping.AsString:=(jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
-                  if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
+                  ObtenerShipping(tOrdersshipping.AsString);
 
-                  ObtenerMessages(order_id,seller_id);
                 end;
-                ObtenerShipping(tOrdersshipping.AsString);
                 if ((tOrders.State=dsEdit) or (tOrders.State=dsInsert)) then tOrders.Post;
                 dmML.dbMain.CommitRetaining;
                 Application.ProcessMessages;
@@ -1067,7 +1072,7 @@ var
 begin
   with dmML do
   begin
-    if id='0' then
+    if (id='0') or (id='') then
     begin
       with tShipments do
       begin
@@ -1181,50 +1186,48 @@ begin
             Insert;
             FieldByName('id').AsString := vId;
           end;
-            last_updated := jEnvio.GetValue<string>('last_updated');
-            if not(last_updated=FieldByName('last_updated').AsString) then begin
-              FieldByName('last_updated').AsString := last_updated;
-              FieldByName('mode').AsString := jEnvio.GetValue<string>('mode');
-              FieldByName('created_by').AsString := jEnvio.GetValue<string>('created_by');
-              FieldByName('order_id').AsString := jEnvio.GetValue<string>('order_id');
-              FieldByName('order_cost').AsString := jEnvio.GetValue<string>('order_cost');
-              FieldByName('base_cost').AsString := jEnvio.GetValue<string>('base_cost');
-              FieldByName('site_id').AsString := jEnvio.GetValue<string>('site_id');
-              FieldByName('status').AsString := jEnvio.GetValue<string>('status');
-              FieldByName('substatus').AsString := jEnvio.GetValue<string>('substatus');
-              FieldByName('date_created').AsString := jEnvio.GetValue<string>('date_created');
-              FieldByName('tracking_number').AsString := jEnvio.GetValue<string>('tracking_number');
-              FieldByName('service_id').AsString := jEnvio.GetValue<string>('service_id');
-              FieldByName('carrier_info').AsString := jEnvio.GetValue<TJSONValue>('carrier_info').ToString;
-              FieldByName('sender_id').AsString := jEnvio.GetValue<string>('sender_id');
-              FieldByName('sender_address').AsString := jEnvio.GetValue<TJSONValue>('sender_address').ToString;
-              FieldByName('receiver_id').AsString := jEnvio.GetValue<string>('receiver_id');
-              FieldByName('receiver_address').AsString := jEnvio.GetValue<TJSONValue>('receiver_address').ToString;
-              FieldByName('shipping_items').AsString := jEnvio.GetValue<TJSONValue>('shipping_items').ToString;
-    //          FieldByName('shipping_option').AsString := jEnvio.GetValue<TJSONValue>('shipping_option').ToString
-              FieldByName('shipping_option').AsString := dmML.ObtenerShipping_option(jEnvio.GetValue<TJSONValue>('shipping_option'));
-              FieldByName('comments').AsString := jEnvio.GetValue<string>('comments');
-              FieldByName('date_first_printed').AsString := jEnvio.GetValue<string>('date_first_printed');
-              FieldByName('market_place').AsString := jEnvio.GetValue<string>('market_place');
-              FieldByName('return_details').AsString := jEnvio.GetValue<string>('return_details');
-              FieldByName('return_tracking_number').AsString := jEnvio.GetValue<string>('return_tracking_number');
-              FieldByName('cost_components').AsString := jEnvio.GetValue<TJSONValue>('cost_components').ToString;
+          last_updated:=jEnvio.GetValue<string>('last_updated');
+          if not(last_updated=FieldByName('last_updated').AsString) then begin
 
-              FieldByName('tags').AsString := jEnvio.GetValue<TJSONValue>('tags').ToString;
-              if FieldByName('tags').AsString<>'[]' then
-              begin
-                FieldByName('delay').AsString := jEnvio.GetValue<TJSONValue>('delay').ToString;
-                FieldByName('type').AsString := jEnvio.GetValue<TJSONValue>('type').ToString;
-                FieldByName('logistic_type').AsString := jEnvio.GetValue<string>('logistic_type');
-                FieldByName('application_id').AsString := jEnvio.GetValue<string>('application_id');
-              end;
+          FieldByName('status').AsString := jEnvio.GetValue<string>('status');
+          FieldByName('substatus').AsString := jEnvio.GetValue<string>('substatus');
+          FieldByName('shipping_option').AsString := dmML.ObtenerShipping_option(jEnvio.GetValue<TJSONValue>('shipping_option'));
+          FieldByName('tracking_method').AsString := jEnvio.GetValue<string>('tracking_method');
 
-              FieldByName('tracking_method').AsString := jEnvio.GetValue<string>('tracking_method');
-              FieldByName('status').AsString := jEnvio.GetValue<string>('status');
-              FieldByName('substatus').AsString := jEnvio.GetValue<string>('substatus');
-              if FieldByName('substatus').AsString<>'' then
-                FieldByName('substatus_history').AsString := jEnvio.GetValue<TJSONValue>('substatus_history').ToString;
+            FieldByName('last_updated').AsString := last_updated;
+            FieldByName('created_by').AsString := jEnvio.GetValue<string>('created_by');
+            FieldByName('order_id').AsString := jEnvio.GetValue<string>('order_id');
+            FieldByName('order_cost').AsString := jEnvio.GetValue<string>('order_cost');
+            FieldByName('base_cost').AsString := jEnvio.GetValue<string>('base_cost');
+            FieldByName('site_id').AsString := jEnvio.GetValue<string>('site_id');
+            FieldByName('date_created').AsString := jEnvio.GetValue<string>('date_created');
+            FieldByName('tracking_number').AsString := jEnvio.GetValue<string>('tracking_number');
+            FieldByName('service_id').AsString := jEnvio.GetValue<string>('service_id');
+            FieldByName('carrier_info').AsString := jEnvio.GetValue<TJSONValue>('carrier_info').ToString;
+            FieldByName('sender_id').AsString := jEnvio.GetValue<string>('sender_id');
+            FieldByName('sender_address').AsString := jEnvio.GetValue<TJSONValue>('sender_address').ToString;
+            FieldByName('receiver_id').AsString := jEnvio.GetValue<string>('receiver_id');
+            FieldByName('receiver_address').AsString := jEnvio.GetValue<TJSONValue>('receiver_address').ToString;
+            FieldByName('shipping_items').AsString := jEnvio.GetValue<TJSONValue>('shipping_items').ToString;
+
+            FieldByName('comments').AsString := jEnvio.GetValue<string>('comments');
+            FieldByName('date_first_printed').AsString := jEnvio.GetValue<string>('date_first_printed');
+            FieldByName('market_place').AsString := jEnvio.GetValue<string>('market_place');
+            FieldByName('return_details').AsString := jEnvio.GetValue<string>('return_details');
+            FieldByName('return_tracking_number').AsString := jEnvio.GetValue<string>('return_tracking_number');
+            FieldByName('cost_components').AsString := jEnvio.GetValue<TJSONValue>('cost_components').ToString;
+
+            FieldByName('tags').AsString := jEnvio.GetValue<TJSONValue>('tags').ToString;
+            if FieldByName('tags').AsString<>'[]' then
+            begin
+              FieldByName('delay').AsString := jEnvio.GetValue<TJSONValue>('delay').ToString;
+              FieldByName('type').AsString := jEnvio.GetValue<TJSONValue>('type').ToString;
+              FieldByName('logistic_type').AsString := jEnvio.GetValue<string>('logistic_type');
+              FieldByName('application_id').AsString := jEnvio.GetValue<string>('application_id');
             end;
+            if FieldByName('substatus').AsString<>'' then
+              FieldByName('substatus_history').AsString := jEnvio.GetValue<TJSONValue>('substatus_history').ToString;
+          end;
           Post;
           dmML.dbMain.CommitRetaining;
           Application.ProcessMessages;

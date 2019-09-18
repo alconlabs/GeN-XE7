@@ -982,7 +982,8 @@ end;
 
 procedure TOperacionForm.FEContadoExit(Sender: TObject);
 begin
-  if FEContado.Text = '' then CalculaTotales;
+//  if FEContado.Text = '' then
+    CalculaTotales;
   ProcesarBitBtn.SetFocus;
 end;
 
