@@ -1193,6 +1193,7 @@ begin
           FieldByName('substatus').AsString := jEnvio.GetValue<string>('substatus');
           FieldByName('shipping_option').AsString := dmML.ObtenerShipping_option(jEnvio.GetValue<TJSONValue>('shipping_option'));
           FieldByName('tracking_method').AsString := jEnvio.GetValue<string>('tracking_method');
+          FieldByName('mode').AsString := jEnvio.GetValue<string>('mode');
 
             FieldByName('last_updated').AsString := last_updated;
             FieldByName('created_by').AsString := jEnvio.GetValue<string>('created_by');

@@ -224,14 +224,15 @@ var
   tObtenerMensajes: array [0 .. 9999 - 1] of TTObtenerMensajes;
 
 const
-  whereNot_delivered=' (orders.tags LIKE ''%not_delivered%'')';
+  whereNoDelivered=' ((orders.tags is null) or (orders.tags LIKE ''%not_delivered%''))';
   whereDelivered=' (orders.tags LIKE ''%delivered%'')';
   wherePaid=' (orders.status=''paid'')';
 //  whereDelivered='(shipments.status=''delivered'')';
   whereReady_to_ship=' (shipments.status=''ready_to_ship'')';
   whereReadyToPrint='((shipments.substatus=''ready_to_print'') OR (shipments.substatus=''ready_to_pack''))';
   whereShipped=' (shipments.status=''shipped'')';
-  whereNoStatus=' (shipments.status='''')';
+  whereNoStatus=' ((shipments.status is null) or (shipments.status=''''))';
+  whereNoShipped=' ('+whereNoStatus+' or NOT('+whereShipped+'))';
   whereNoSubStatus='((shipments.substatus is null) OR (shipments.substatus=''''))';
   whereCancelled=' (shipments.status=''cancelled'')';
   whereSMMe1=' (shipments.mode=''me1'')';
@@ -244,18 +245,19 @@ const
 //  +' OR (shipping_option.shipping_method_id=''507045'')'
     +' shipments.tracking_method LIKE ''%Express'' '
   +')';
-  whereNoMode=' (shipments.mode='''')';
+  whereNoMode=' ((shipments.mode is null) OR (shipments.mode=''''))';
   whereEqtiquetaImpresa=' (shipments.substatus=''printed'') OR (shipments.substatus=''ready_for_pickup'')';
-  whereEmbalado=' ((despachados.embalado=''S'') OR '+whereEqtiquetaImpresa+')';
-  whereNoEmbalado=' (NOT('+whereEmbalado+') AND ('+whereNoSubStatus+' OR '+whereReadyToPrint+'))';
+  whereEmbalado=' (despachados.embalado=''S'')';
+  whereNoEmbalado=' (NOT'+whereEmbalado+' AND ('+whereNoSubStatus+' OR '+whereReadyToPrint+'))';
+
   whereDelayed='(shipments.substatus=''delayed'')';
   whereEtiquetaLista='(shipments.substatus=''ready_to_print'')';
-  whereNoLeido=' (messages.date_read='''')';
+  whereNoLeido=' ((messages.date_read is null) or (messages.date_read=''''))';
   whereEsperandoRetiro=' (shipments.substatus=''waiting_for_withdrawal'')';
-  whereEnCamino=' (shipments.substatus='''')';
+  whereEnCamino=' ((shipments.substatus is null) or (shipments.substatus=''''))';
   whereEnvio=' ('+whereSMMe1+' OR '+whereSMMe2+')';
-  whereSinEnviar=whereNot_delivered;//+whereReady_to_ship+' OR '+whereNoStatus+')';
-  whereNoSubject=' (messages.subject='''')';
+  whereSinEnviar=whereNoDelivered;//+whereReady_to_ship+' OR '+whereNoStatus+')';
+  whereNoSubject=' ((messages.subject is null) or (messages.subject=''''))';
   orderMessages=' ORDER BY messages.id DESC';
   groupOrder=' GROUP BY orders.id';
   groupBuyer=' GROUP BY orders.buyer';
@@ -291,16 +293,16 @@ const
   sqlMensajesNoLeido=sqlMensajes+' AND '+whereNoLeido;
   sqlItems=sqlSelectOrderItems+sqlOrderFrom;
 //  sqlPreparar=sqlItems+sqlOrderWhere;
-  sqlPreparar=sqlItems+' WHERE '+wherePaid+' AND '+whereNot_delivered+' AND (NOT '+whereShipped+') AND '+whereNoEmbalado;
-  sqlPrepararEnvios=sqlPreparar+' AND '+whereReady_to_ship+' AND (NOT'+whereFlex+')';
+  sqlPreparar=sqlItems+' WHERE '+wherePaid+' AND '+whereNoDelivered+' AND '+whereNoShipped+' AND '+whereNoEmbalado;
+  sqlPrepararEnvios=sqlPreparar+' AND '+whereReady_to_ship+' AND '+whereReadyToPrint+' AND (NOT'+whereFlex+') AND (NOT'+whereNoMode+')';
   sqlPrepararEnviosItems=sqlPreparar;
   sqlPrepararFlex=sqlPreparar+' AND '+whereFlex;
   sqlPrepararAcordar=sqlPreparar+' AND '+whereNoMode;
   sqlPrepararDemoradas=sqlPreparar+' AND '+whereDelayed;
   sqlPrepararMensajes=sqlMensajesNoLeido+' AND '+whereSinEnviar+' AND '+whereNoEmbalado;//+groupOrder;
 
-  sqlDespachar=sqlItems+' WHERE '+wherePaid+' AND '+whereNot_delivered+' AND (NOT '+whereShipped+') AND '+whereEmbalado;
-  sqlDespacharEnvios=sqlDespachar+' AND '+whereReady_to_ship+' AND (NOT'+whereFlex+')';
+  sqlDespachar=sqlItems+' WHERE '+wherePaid+' AND '+whereNoDelivered+' AND (NOT '+whereShipped+') AND '+whereEmbalado;
+  sqlDespacharEnvios=sqlDespachar+' AND '+whereReady_to_ship+' AND (NOT'+whereFlex+') AND (NOT'+whereNoMode+')';
   sqlDespacharFlex=sqlDespachar+' AND '+whereFlex;
   sqlDespacharDemoradas=sqlDespachar+' AND '+whereDelayed;
   sqlDespacharAcordar=sqlDespachar+' AND '+whereNoMode;
