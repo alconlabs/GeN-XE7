@@ -265,7 +265,7 @@ begin
 //dmml.dbmain.ExecSQL('DELETE FROM orders');
 //dmml.dbmain.ExecSQL('DELETE FROM shipments');
 //        ObtenerOrderRecent;
-//        ObtenerOrder;
+        ObtenerOrder;
         while (teI<tfeI)and(tmI<tfmI) do begin
           Application.ProcessMessages;
         end;

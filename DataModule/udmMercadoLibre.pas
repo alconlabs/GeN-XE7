@@ -238,6 +238,8 @@ const
   whereSMMe1=' (shipments.mode=''me1'')';
   whereSMMe2=' (shipments.mode=''me2'')';
   whereSMCustom=' (shipments.mode=''custom'')';
+  whereInPackingList=' (shipments.substatus=''in_packing_list'')';
+  whereNoInPackingList=' NOT('+whereInPackingList+')';
   whereFlex=' ('//' shipments.tracking_number=shipments.id';
 //  +'(shipping_option.shipping_method_id=''506245'')'
 //  +' OR (shipping_option.shipping_method_id=''506345'')'
@@ -249,7 +251,7 @@ const
   whereEqtiquetaImpresa=' (shipments.substatus=''printed'') OR (shipments.substatus=''ready_for_pickup'')';
   whereEmbalado=' (despachados.embalado=''S'')';
   whereNoEmbalado=' (NOT'+whereEmbalado+' AND ('+whereNoSubStatus+' OR '+whereReadyToPrint+'))';
-
+  whereNoNoEmbalado=' NOT('+whereNoEmbalado+')';
   whereDelayed='(shipments.substatus=''delayed'')';
   whereEtiquetaLista='(shipments.substatus=''ready_to_print'')';
   whereNoLeido=' ((messages.date_read is null) or (messages.date_read=''''))';
@@ -301,7 +303,7 @@ const
   sqlPrepararDemoradas=sqlPreparar+' AND '+whereDelayed;
   sqlPrepararMensajes=sqlMensajesNoLeido+' AND '+whereSinEnviar+' AND '+whereNoEmbalado;//+groupOrder;
 
-  sqlDespachar=sqlItems+' WHERE '+wherePaid+' AND '+whereNoDelivered+' AND (NOT '+whereShipped+') AND '+whereEmbalado;
+  sqlDespachar=sqlItems+' WHERE '+wherePaid+' AND '+whereNoDelivered+' AND '+whereNoShipped+' AND '+whereNoNoEmbalado+' AND '+whereNoInPackingList;
   sqlDespacharEnvios=sqlDespachar+' AND '+whereReady_to_ship+' AND (NOT'+whereFlex+') AND (NOT'+whereNoMode+')';
   sqlDespacharFlex=sqlDespachar+' AND '+whereFlex;
   sqlDespacharDemoradas=sqlDespachar+' AND '+whereDelayed;

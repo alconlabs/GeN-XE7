@@ -856,18 +856,18 @@ begin
                   tOrdersbuyer.AsString := ObtenerBuyer(jOrderRecent.GetValue<TJSONValue>('results['+i+'].buyer'));
                   tOrdersseller.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].seller').ToString;//{},
                   tOrdersfeedback.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].feedback').ToString;//{},
-                  tOrderstags.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
+
                   ObtenerDespachados(order_id);
                   tOrdersdate_last_updated.AsString := date_last_updated;
                   ObtenerMessages(order_id,seller_id);
+                end;
 
-                  if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
                   tOrdersshipping.AsString:=(jOrderRecent.GetValue<TJSONValue>('results['+i+'].shipping')).GetValue<string>('id');
+                  if tOrdersshipping.AsString ='' then tOrdersshipping.AsString:='0';
                   tOrdersstatus.AsString := jOrderRecent.GetValue<string>('results['+i+'].status');//"paid",
                   tOrderstags.AsString := jOrderRecent.GetValue<TJSONValue>('results['+i+'].tags').ToString;//[]
                   ObtenerShipping(tOrdersshipping.AsString);
 
-                end;
                 if ((tOrders.State=dsEdit) or (tOrders.State=dsInsert)) then tOrders.Post;
                 dmML.dbMain.CommitRetaining;
                 Application.ProcessMessages;
@@ -1186,8 +1186,6 @@ begin
             Insert;
             FieldByName('id').AsString := vId;
           end;
-          last_updated:=jEnvio.GetValue<string>('last_updated');
-          if not(last_updated=FieldByName('last_updated').AsString) then begin
 
           FieldByName('status').AsString := jEnvio.GetValue<string>('status');
           FieldByName('substatus').AsString := jEnvio.GetValue<string>('substatus');
@@ -1195,6 +1193,8 @@ begin
           FieldByName('tracking_method').AsString := jEnvio.GetValue<string>('tracking_method');
           FieldByName('mode').AsString := jEnvio.GetValue<string>('mode');
 
+          last_updated:=jEnvio.GetValue<string>('last_updated');
+          if not(last_updated=FieldByName('last_updated').AsString) then begin
             FieldByName('last_updated').AsString := last_updated;
             FieldByName('created_by').AsString := jEnvio.GetValue<string>('created_by');
             FieldByName('order_id').AsString := jEnvio.GetValue<string>('order_id');
@@ -1229,6 +1229,9 @@ begin
             if FieldByName('substatus').AsString<>'' then
               FieldByName('substatus_history').AsString := jEnvio.GetValue<TJSONValue>('substatus_history').ToString;
           end;
+
+
+
           Post;
           dmML.dbMain.CommitRetaining;
           Application.ProcessMessages;
