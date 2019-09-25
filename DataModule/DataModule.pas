@@ -212,6 +212,7 @@ type
     procedure ActualizarNroComp(tipo,comp: string);
     procedure AgregarRetPer(tipo:string;codigo:Integer;noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib:double);
     procedure AgregarSiapCmpCompAlicuota(codigo:Integer;ivaId,ivaBaseImp,ivaAlic:String);
+    procedure AgregarSiapVtaCompAlicuota(codigo:Integer;ivaId,ivaBaseImp,ivaAlic:String);
     procedure ExportarTabla(tabla:string);
     procedure ImportarTabla(tabla:string);
     function HayBase:Boolean;
@@ -1610,6 +1611,25 @@ begin
   with qSdb do
     begin
       Open('Select * from SiapCmpCompAlicuota where Codigo=:C and IvaId=:I',[codigo,ivaId]);
+      if RecordCount>0 then
+        Edit
+      else
+      begin
+        Insert;
+        FieldByName('Codigo').AsInteger := codigo;
+      end;
+      FieldByName('IvaId').AsString := ivaId;
+      FieldByName('IvaBaseImp').AsString := ivaBaseImp;
+      FieldByName('IvaAlic').AsString := ivaAlic;
+      Post;
+    end;
+end;
+
+procedure TDM.AgregarSiapVtaCompAlicuota;
+begin
+  with qSdb do
+    begin
+      Open('Select * from SiapVtaCompAlicuota where Codigo=:C and IvaId=:I',[codigo,ivaId]);
       if RecordCount>0 then
         Edit
       else

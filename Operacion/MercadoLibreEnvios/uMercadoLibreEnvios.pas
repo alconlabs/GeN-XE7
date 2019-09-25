@@ -103,6 +103,8 @@ procedure TfMercadoLibreEnvios.FormCreate(Sender: TObject);
 begin
   dmML := TdmML.Create(Self);
   DMR := TDMR.Create(Self);
+  dmml.dbmain.ExecSQL('DELETE FROM orders');
+  dmml.dbmain.ExecSQL('DELETE FROM shipments');
 end;
 
 procedure TfMercadoLibreEnvios.FormShow(Sender: TObject);
@@ -262,8 +264,6 @@ begin
         tProgressBar.Enabled:=True;
         FDQuery1.Close;
         Application.ProcessMessages;
-//dmml.dbmain.ExecSQL('DELETE FROM orders');
-//dmml.dbmain.ExecSQL('DELETE FROM shipments');
 //        ObtenerOrderRecent;
         ObtenerOrder;
         while (teI<tfeI)and(tmI<tfmI) do begin

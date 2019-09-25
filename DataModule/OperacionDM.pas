@@ -2040,6 +2040,7 @@ with dm do begin
             Insert;
             tSiapVtaCompCodigo.AsInteger:=StrToInt(cod);
           end;
+          CantIva:=0;
           tSiapVtaCompCbteFch.AsString:=FormatDateTime('yyyymmdd',(qQ.FieldByName('FECHA').AsDateTime));
           let:=ObtenerValor('CbteTipo', 'Codigo', 'Letra',QuotedStr(qQ.FieldByName('LETRA').AsString));
           tSiapVtaCompCbteTipo.AsString:=FormatFloat('000',StrToFloat(let));
@@ -2106,7 +2107,7 @@ with dm do begin
                 else
                 begin
                   Inc(CantIva);
-                  AgregarSiapCmpCompAlicuota(
+                  AgregarSiapVtaCompAlicuota(
                     StrToInt(cod),
                     FormatFloat('0000',(StrToInt(FieldByName('ID').AsString))),//Código alícuota IVA
                     FormatFloat('000000000000000',(FieldByName('BASEIMP').Asfloat*100)),//Neto Gravado alícuota  Importe Total

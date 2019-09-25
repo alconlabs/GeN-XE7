@@ -200,11 +200,13 @@ begin
       frxDBDataset1.DataSet:=dm.qSdbReporte;
       dm.qSdbReporte.Open(s + siap + w );
       ExportarReporteTXT(siap);
-      dm.qSdbReporte.Open(s + siap+'Alicuota'
+      s:=
+      s + siap+'Alicuota'
        +' inner join '+ siap +' on '+ siap +'.Codigo='+ siap +'Alicuota.Codigo'
        + w
-       +' Order By '+ siap +'Alicuota.Codigo'
-      );
+       +' Order By '+ siap +'Alicuota.Codigo';
+
+      dm.qSdbReporte.Open(s);
       ExportarReporteTXT(siap+'Alicuota');
     end;
   finally

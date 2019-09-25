@@ -70,28 +70,28 @@ object fEditorReporte: TfEditorReporte
       'CbteFch=CbteFch'
       'CbteTipo=CbteTipo'
       'PtoVta=PtoVta'
-      'CbteNro=CbteNro'
-      'DespNro=DespNro'
+      'CbteDesde=CbteDesde'
+      'CbteHasta=CbteHasta'
       'DocTipo=DocTipo'
       'DocNro=DocNro'
       'DocNomb=DocNomb'
-      'ImpTotal=ImpTotal'
-      'ImpNoGra=ImpNoGra'
-      'ImpOpEx=ImpOpEx'
-      'ImpPercIva=ImpPercIva'
-      'ImpPercNac=ImpPercNac'
-      'ImpPercIIBB=ImpPercIIBB'
-      'ImpPercMuni=ImpPercMuni'
-      'ImpImpInt=ImpImpInt'
       'MonId=MonId'
       'MonCotiz=MonCotiz'
       'IvaCant=IvaCant'
       'CodOper=CodOper'
-      'ImpCredFisc=ImpCredFisc'
+      'FchVtoPago=FchVtoPago'
+      'IvaId_1=IvaId_1'
+      'ImpNeto=ImpNeto'
+      'ImpNoGra=ImpNoGra'
+      'ImpOpEx=ImpOpEx'
+      'ImpIva=ImpIva'
+      'ImpPercGral=ImpPercGral'
+      'ImpPercNoCat=ImpPercNoCat'
+      'ImpPercIIBB=ImpPercIIBB'
+      'ImpPercMuni=ImpPercMuni'
+      'ImpImpInt=ImpImpInt'
       'ImpOtrTrib=ImpOtrTrib'
-      'CUIT=CUIT'
-      'Denom=Denom'
-      'ImpIvaCom=ImpIvaCom')
+      'ImpTotal=ImpTotal')
     DataSet = qSdb
     BCDToCurrency = False
     Left = 24
@@ -102,7 +102,7 @@ object fEditorReporte: TfEditorReporte
     UseFileCache = True
     ShowProgress = True
     OverwritePrompt = False
-    CreationTime = 43701.371943796290000000
+    CreationTime = 43732.889505231480000000
     DataOnly = True
     Separator = ';'
     OEMCodepage = False
@@ -122,7 +122,7 @@ object fEditorReporte: TfEditorReporte
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 43670.750645671300000000
-    ReportOptions.LastChange = 43701.371837268500000000
+    ReportOptions.LastChange = 43732.888935763900000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -203,9 +203,8 @@ object fEditorReporte: TfEditorReporte
           Memo.UTF8W = (
             
               '[frxDBDataset1."CbteTipo"][frxDBDataset1."PtoVta"][frxDBDataset1' +
-              '."CbteNro"][frxDBDataset1."DocTipo"][frxDBDataset1."DocNro"][frx' +
-              'DBDataset1."IvaBaseImp"][frxDBDataset1."IvaId"][frxDBDataset1."I' +
-              'vaAlic"]')
+              '."CbteDesde"][frxDBDataset1."IvaBaseImp"][frxDBDataset1."IvaId"]' +
+              '[frxDBDataset1."IvaAlic"]')
           ParentFont = False
           Formats = <
             item
@@ -285,7 +284,7 @@ object fEditorReporte: TfEditorReporte
   object FDQuery1: TFDQuery
     Connection = FirebirdConnection
     SQL.Strings = (
-      'SELECT * from "Venta"')
+      '')
     Left = 487
     Top = 48
   end
@@ -470,11 +469,13 @@ object fEditorReporte: TfEditorReporte
     Active = True
     Connection = sdb
     SQL.Strings = (
-      'select * from SiapCmpCompAlicuota'
+      'select * from'
+      'SiapVtaCompAlicuota'
       
-        ' inner join SiapCmpComp on SiapCmpComp.Codigo=SiapCmpCompAlicuot' +
-        'a.Codigo'
-      ' Order By SiapCmpCompAlicuota.Codigo')
+        'inner join SiapVtaComp on SiapVtaComp.Codigo=SiapVtaCompAlicuota' +
+        '.Codigo'
+      'where CbteFch >= 20190801 and CbteFch <= 20190831'
+      'Order By SiapVtaCompAlicuota.Codigo')
     Left = 608
     Top = 48
   end
