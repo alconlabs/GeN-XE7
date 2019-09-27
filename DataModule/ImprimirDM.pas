@@ -191,11 +191,16 @@ var
   archivoPDF,
   ctipo,nctipo :string;
 begin
-  ctipo := 'REMITO';
+  if rpt='X' then
+  begin
+    ctipo := 'REMITO';
+    rpt := reporte;
+  end else
   if ((rpt='A') or (rpt='B') or (rpt='C')) then
   begin
     ctipo := 'FACTURA';
     nctipo := '';
+    rpt := reporte;
   end
   else
   if ((rpt='NCA') or (rpt='NCB') or (rpt='NCC')) then
@@ -389,23 +394,6 @@ end;
 Function TImprimirDataModule.OPER;
 begin
   Result := operSql
-//    '  "Cliente".NOMBRE,' + '  "Cliente".TITULAR,' +
-//    '  "Cliente".DIRECCION,' + '  "Cliente".DIRECCIONCOMERCIAL,' +
-//    '  "Articulo".DESCRIPCION,' + '  "Articulo".UNIDAD,' +
-//    '  "OperacionItem".ARTICULO,' + '  "OperacionItem".CANTIDAD,' +
-//    '  "OperacionItem".PRECIO,' + '  "OperacionItem".OPERACION,' +
-//    '  ("OperacionItem".PRECIO * "OperacionItem".CANTIDAD ) as PREXCANT,' +
-//    '  "OperacionItem".SERVICIO,' + '  "OperacionItem".DESCRIPCION AS DESCR,' +
-//    '  "Operacion".CODIGO,' + '  "Operacion".LETRA,' + '  "Operacion".FECHA,' +
-//    '  "Operacion".COMPROBANTE,' + '  "Operacion".IVA3,' +
-//    '  "Operacion".TOTAL,' + '  "Operacion".CONTADO,' + '  "Operacion".CLIENTE,'
-//    + '  "Operacion".SUBTOTAL,' + '  "Operacion".DESCUENTO,' +
-//    '  "Operacion".IMPUESTO,' + '  "Operacion".IVA2,' + '  "Operacion".IVA1,' +
-//    '  "Operacion".EXCENTO,' + '  "Operacion".SALDO,' + '  "Operacion".PAGADO' +
-//    ' FROM' + '  "Operacion"' +
-//    '  INNER JOIN "OperacionItem" ON ("Operacion".CODIGO = "OperacionItem".OPERACION)'
-//    +'  INNER JOIN "Articulo" ON ("OperacionItem".ARTICULO = "Articulo".CODIGO)'
-//    +'  INNER JOIN "Cliente" ON ("Operacion".CLIENTE = "Cliente".CODIGO)'
     +' WHERE' + '  ("Operacion".CODIGO = ' + nro + ' )'
     +' AND ("Operacion".TIPO = ' + QuotedStr(tipo) + ' )'
     +' AND ("Operacion".LETRA = ' + QuotedStr(let) + ' )';

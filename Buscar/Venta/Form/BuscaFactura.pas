@@ -140,8 +140,8 @@ begin
     with ImprimirDataModule do
       case TipoRadioGroup.ItemIndex of
         0 : Impr(ImprimirDataModule.VTA(nro, letra), letra);
-        1 : Impr(oper(nro, 'PED', letra), 'CTicket');
-        2 : Impr(ImprimirDataModule.PRE(nro, letra), 'P'+letra);//'Presupuesto');
+        1 : Impr(oper(nro, 'PED', letra), letra);//'CTicket');
+        2 : Impr(ImprimirDataModule.PRE(nro, letra), 'P'+letra);
       end;
     ImprimirDataModule.Free;
   end;

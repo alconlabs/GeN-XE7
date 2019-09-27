@@ -214,7 +214,7 @@ begin
   dm.qImprimir.SQL.Text := 'Select * from "Imprimir"';
   dm.qImprimir.Active:=True;
   dm.qImprimir.Last;
-  dm.tConfiguracion.Open;
+  dm.tConfiguracion.Active:=True;
   dm.tConfiguracion.Edit;
 end;
 

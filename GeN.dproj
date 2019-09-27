@@ -292,10 +292,6 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Report\EditorReporteUnit.pas">
-            <Form>fEditorReporte</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="SubOperacion\RetencionesPercepciones\ufRetPerc.pas">
             <Form>fRetPerc</Form>
             <FormType>dfm</FormType>

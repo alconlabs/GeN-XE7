@@ -1114,7 +1114,7 @@ with dm do begin
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
-      Impr(oper(IntToStr(nro), tipo, let), 'CTicket');
+      Impr(oper(IntToStr(nro), tipo, let), let);
     ImprimirDataModule.Free;
   end;
 end;

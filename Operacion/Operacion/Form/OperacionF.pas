@@ -69,9 +69,7 @@ type
     bRetPer: TButton;
     procedure ClienteBitBtnClick(Sender: TObject);
     procedure RJustifyEdit(var ThisEdit: TEdit);
-    procedure TraeNombreCliente;
     procedure AgregarBitBtnClick(Sender: TObject);
-    procedure CalculaTotales;
     procedure QuitarBitBtnClick(Sender: TObject);
     procedure ProcesarBitBtnClick(Sender: TObject);
     procedure CheckBox1Click(Sender: TObject);
@@ -88,18 +86,20 @@ type
     procedure cbTipoChange(Sender: TObject);
     procedure NuevoBitBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure TraerArticulo(codigoArticulo:string; PR,CAN:Double);
-    function NetoGravado(costo,ganancia,flete:double):double;
     procedure PercEditExit(Sender: TObject);
     procedure DescuentoBitBtnClick(Sender: TObject);
-    procedure Nuevo;
-    procedure TraerRemito(codigo: string);
     procedure EnviarEmailCheckBoxClick(Sender: TObject);
     procedure bRetPerClick(Sender: TObject);
     procedure ComprobanteEditExit(Sender: TObject);
   private
     { Private declarations }
     salir : Boolean;
+    procedure Nuevo;
+    procedure TraerRemito(codigo: string);
+    procedure TraerArticulo(codigoArticulo:string; PR,CAN:Double);
+    procedure TraeNombreCliente;
+    procedure CalculaTotales;
+    function NetoGravado(costo,ganancia,flete:double):double;
   public
   { Public declarations }
     OK, Proveedor, FPagoOK, Compra, Pedido: Boolean;
@@ -333,41 +333,47 @@ begin
     //PRECIO
     if (SGFact.Cells[4, i] = '') then SGFact.Cells[4, i] := '0';
     PR := StrToFloat(SGFact.Cells[4, i]);
-    //TOTAL
-    if (SGFact.Cells[5, i] = '') then SGFact.Cells[5, i] := '0';
-    TOT := StrToFloat(SGFact.Cells[5, i]);
 //    if not((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then PR := OperacionDataModule.CalcularIVA((PR),TIVA);
     if esB then PR := dm.CalcularIVA((PR),TIVA);//es B
+        //TOTAL
+    if (SGFact.Cells[5, i] = '') then SGFact.Cells[5, i] := '0';
+    TOT := StrToFloat(SGFact.Cells[5, i]);
     //DESCUENTO
     if (SGFact.Cells[7, i] = '') then SGFact.Cells[7, i] := '0';
-    des := (SGFact.Cells[7, i]);
-//      if Pos( '%', des ) >0 then
-//        begin
-//          DSC := StrToFloat( StringReplace(des, '%', '', [rfReplaceAll, rfIgnoreCase]) )/100;
-//          PRD := PR-(PR*DSC);
-//          DSC := PR-PRD;
-//        end
-//      else
-        DSC := StrToFloat(des);
-//    //TOTAL
-//    TOT := (PR*CAN);//-DSC;
-    NG := (PR*CAN)-DSC;
-//    SGFact.Cells[5, i] := FloatToStr(TOT);
+    DSC := StrToFloat(SGFact.Cells[7, i]);
     //IVA
+    NG:=TOT;
     if esA then IVA := dm.CalcularIVA((NG),TIVA)-NG
     else if esB then IVA := dm.SacarIVA((NG),TIVA);
     SGFact.Cells[10, i] := FloatToStr(IVA);
+    //CalcularDescuento
+    if DSC>0 then
+    begin
+      if esA then
+      begin
+        TOT:=NG+IVA;
+        TOT:=TOT-DSC;
+        IVA := dm.SacarIVA((TOT),TIVA);
+        NG:=TOT-IVA;
+      end
+      else if esB then
+      begin
+        TOT:=TOT-DSC;
+        IVA := dm.SacarIVA((TOT),TIVA);
+        NG:=TOT;
+      end
+      else NG:=TOT-DSC;
+      SGFact.Cells[10, i] := FloatToStr(IVA);
+    end;
     // NG
     if esB then NG := NG - IVA;
-//    else NG := TOT;
     SGFact.Cells[8, i] := FloatToStr(NG);
     //
     if (SGFact.Cells[9, i] = '') then SGFact.Cells[9, i] := '0';
-    // Calcula el Ultimo Costo
+    if SGFact.Cells[9, i] <> '0' then reparaciones := reparaciones + StrToFloat(SGFact.Cells[9, i]);
+//    // Calcula el Ultimo Costo
 //    if (SGFact.Cells[11, i] = '') then SGFact.Cells[11, i] := '0';
 //    if SGFact.Cells[11, i] <> '0' then UltCosto := UltCosto + StrToFloat(SGFact.Cells[11, i]);
-    //
-    if SGFact.Cells[9, i] <> '0' then reparaciones := reparaciones + StrToFloat(SGFact.Cells[9, i]);
 
   // Calcula el monto para cobrar el impuesto de ventas
     if not esC then dm.AgregarMtIva(TIVA,NG,IVA);

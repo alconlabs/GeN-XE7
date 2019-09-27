@@ -50,7 +50,6 @@ uses
   Vcl.Themes,
   Vcl.Styles,
   udmMercadoLibre in 'DataModule\udmMercadoLibre.pas' {dmML: TDataModule},
-  EditorReporteUnit in 'Report\EditorReporteUnit.pas' {fEditorReporte},
   ufRetPerc in 'SubOperacion\RetencionesPercepciones\ufRetPerc.pas' {fRetPerc},
   PagoF in 'Operacion\Pago\Form\PagoF.pas' {PagoForm};
 

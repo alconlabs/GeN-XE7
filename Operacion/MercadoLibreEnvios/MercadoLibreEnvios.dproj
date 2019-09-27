@@ -89,8 +89,8 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Build>14</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=Civeloo ;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.14;InternalName=Mercado Libre Envios;LegalCopyright=Civeloo ;LegalTrademarks=Civeloo ;OriginalFilename=MercadoLibreEnvios.exe;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=www.civeloo.com</VerInfo_Keys>
+        <VerInfo_Build>15</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=Civeloo ;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.15;InternalName=Mercado Libre Envios;LegalCopyright=Civeloo ;LegalTrademarks=Civeloo ;OriginalFilename=MercadoLibreEnvios.exe;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=www.civeloo.com</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>

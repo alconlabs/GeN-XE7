@@ -1127,6 +1127,7 @@ object DM: TDM
       'Database=C:\Users\DeGsoft\Documents\Civeloo\GeN\db\GeN.FDB'
       'CharacterSet=WIN1252'
       'DriverID=FB')
+    Connected = True
     LoginPrompt = False
     Left = 176
   end
@@ -1709,28 +1710,34 @@ object DM: TDM
   end
   object tArticulo: TFDTable
     AfterInsert = tArticuloAfterInsert
+    IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Articulo"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Articulo"'
     Left = 264
   end
   object tCategoria: TFDTable
+    IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Categoria"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Categoria"'
     Left = 264
     Top = 48
   end
   object tCliente: TFDTable
     AfterInsert = tClienteAfterInsert
+    IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Cliente"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Cliente"'
     Left = 264
     Top = 97
@@ -1740,6 +1747,7 @@ object DM: TDM
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Config"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Config"'
     Left = 264
     Top = 144
@@ -1749,6 +1757,7 @@ object DM: TDM
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Cuenta"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Cuenta"'
     Left = 264
     Top = 192
@@ -1758,6 +1767,7 @@ object DM: TDM
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Iva"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Iva"'
     Left = 264
     Top = 232
@@ -1767,6 +1777,7 @@ object DM: TDM
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"LibroIVAventa"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"LibroIVAventa"'
     Left = 264
     Top = 280
@@ -1776,15 +1787,18 @@ object DM: TDM
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Material"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Material"'
     Left = 264
     Top = 328
   end
   object tMarca: TFDTable
+    IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Marca"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Marca"'
     Left = 264
     Top = 376
@@ -1796,11 +1810,13 @@ object DM: TDM
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Proveedor"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Proveedor"'
     Left = 264
     Top = 424
   end
   object tEmpresa: TFDTable
+    IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
@@ -1811,19 +1827,23 @@ object DM: TDM
     Top = 472
   end
   object tRubro: TFDTable
+    IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Rubro"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Rubro"'
     Left = 264
     Top = 520
   end
   object tSubCategoria: TFDTable
+    IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"SubCategoria"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"SubCategoria"'
     Left = 264
     Top = 568
@@ -1833,6 +1853,7 @@ object DM: TDM
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Usuario"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Usuario"'
     Left = 264
     Top = 616
@@ -1843,6 +1864,7 @@ object DM: TDM
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Venta"'
+    UpdateOptions.KeyFields = 'CODIGO'
     TableName = '"Venta"'
     Left = 264
     Top = 662
