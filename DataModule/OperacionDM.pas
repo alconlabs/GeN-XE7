@@ -1620,6 +1620,7 @@ begin
 with dm do begin
   with qT do
   begin
+    Transaction.StartTransaction;
     SQL.Text := 'DELETE FROM "Articulo" ;';
     ExecSQL;
     SQL.Text :=

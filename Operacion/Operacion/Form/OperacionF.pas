@@ -172,9 +172,7 @@ begin
       TASA := dm.qOperacion.FieldByName('TASA').AsString;
       if TASA='105' then TASA := '10.5';
       {iva}SGFact.Cells[6, Cuenta] := TASA;
-      {tot}SGFact.Cells[5, Cuenta] :=
-        Format('%8.2f', [StrToFloat(SGFact.Cells[4, Cuenta]) *
-        StrToFloat(SGFact.Cells[3, Cuenta])]);
+      {tot}SGFact.Cells[5, Cuenta] := Format('%8.2f', [(PR * CAN)]);
       Cuenta := Cuenta + 1;
       FEContado.Text:='0';
       CalculaTotales;
@@ -335,7 +333,7 @@ begin
     PR := StrToFloat(SGFact.Cells[4, i]);
 //    if not((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then PR := OperacionDataModule.CalcularIVA((PR),TIVA);
     if esB then PR := dm.CalcularIVA((PR),TIVA);//es B
-        //TOTAL
+    //TOTAL
     if (SGFact.Cells[5, i] = '') then SGFact.Cells[5, i] := '0';
     TOT := StrToFloat(SGFact.Cells[5, i]);
     //DESCUENTO
@@ -344,7 +342,7 @@ begin
     //IVA
     NG:=TOT;
     if esA then IVA := dm.CalcularIVA((NG),TIVA)-NG
-    else if esB then IVA := dm.SacarIVA((NG),TIVA);
+    else if esB then IVA := dm.CalcularIVA((NG),TIVA)-NG;//dm.SacarIVA((NG),TIVA);
     SGFact.Cells[10, i] := FloatToStr(IVA);
     //CalcularDescuento
     if DSC>0 then
@@ -358,15 +356,16 @@ begin
       end
       else if esB then
       begin
+        TOT:=NG+IVA;
         TOT:=TOT-DSC;
         IVA := dm.SacarIVA((TOT),TIVA);
-        NG:=TOT;
+        NG:=TOT-IVA;
       end
       else NG:=TOT-DSC;
       SGFact.Cells[10, i] := FloatToStr(IVA);
     end;
     // NG
-    if esB then NG := NG - IVA;
+    //if esB then NG := NG - IVA;
     SGFact.Cells[8, i] := FloatToStr(NG);
     //
     if (SGFact.Cells[9, i] = '') then SGFact.Cells[9, i] := '0';

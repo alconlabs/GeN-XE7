@@ -128,6 +128,7 @@ type
     Consulta: TFDScript;
     qSdbReporte: TFDQuery;
     dsQuery: TDataSource;
+    TransactionFB: TFDTransaction;
 
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
@@ -302,18 +303,14 @@ end;
 
 procedure TDM.DejarUsuario;
 begin
-//  if (Transaccion.Params.Text <> 'read') and (Transaccion.Params.Text <> '') then
   begin
     TraerUsuario;
     if Control <> '' then
     begin
-//      Query.SQL.Text :=
       BaseDatosFB.ExecSQL(
         'update "Control" set MAQUINA=' + QuotedStr(Maquina) +
         ' where CODIGO=' + Control
       );
-//      Query.ExecSQL;
-//      Query.Transaction.Commit;
     end;
   end;
 end;

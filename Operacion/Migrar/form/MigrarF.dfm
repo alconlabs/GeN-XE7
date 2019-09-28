@@ -151,8 +151,8 @@ object MigrarForm: TMigrarForm
     OnClick = ExportarButtonClick
   end
   object OpenTextFileDialog1: TOpenTextFileDialog
-    Left = 48
-    Top = 240
+    Left = 45
+    Top = 237
   end
   object Timer1: TTimer
     Enabled = False
@@ -164,7 +164,7 @@ object MigrarForm: TMigrarForm
     FileName = 'Articulos.csv'
     Filter = 'CSV files only|*.csv'
     EncodingIndex = 4
-    Left = 152
-    Top = 240
+    Left = 146
+    Top = 237
   end
 end

@@ -923,6 +923,7 @@ object DM: TDM
   end
   object FDTable1: TFDTable
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     Left = 176
@@ -930,6 +931,7 @@ object DM: TDM
   end
   object FDQuery1: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     Left = 176
     Top = 96
   end
@@ -1127,12 +1129,13 @@ object DM: TDM
       'Database=C:\Users\DeGsoft\Documents\Civeloo\GeN\db\GeN.FDB'
       'CharacterSet=WIN1252'
       'DriverID=FB')
-    Connected = True
     LoginPrompt = False
-    Left = 176
+    Transaction = TransactionFB
+    Left = 160
   end
   object ConfigQuery: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'SELECT'
       
@@ -1234,6 +1237,7 @@ object DM: TDM
   end
   object qODM: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     Left = 424
     Top = 184
   end
@@ -1333,6 +1337,7 @@ object DM: TDM
   end
   object Query: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'SELECT'
       
@@ -1384,6 +1389,7 @@ object DM: TDM
   end
   object qArticulo: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'SELECT'
       
@@ -1459,6 +1465,7 @@ object DM: TDM
   end
   object qCaja: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'SELECT '
       '  ("LibroDiario".DEBE - "LibroDiario".HABER) AS "SubTotal",'
@@ -1481,6 +1488,7 @@ object DM: TDM
   end
   object qCompra: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'SELECT    '#39'proveedor'#39'  As Empresa,'
       '          "Proveedor".NOMBRE,   "Proveedor".TITULAR,'
@@ -1522,6 +1530,7 @@ object DM: TDM
   end
   object qCliente: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'Select * from "Cliente"'
       'order by CODIGO asc')
@@ -1530,6 +1539,7 @@ object DM: TDM
   end
   object qCuenta: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'select * from "Cuenta"'
       'order by DESCRIPCION')
@@ -1538,6 +1548,7 @@ object DM: TDM
   end
   object qEmpresa: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'SELECT '
       '  "LibroDiario".CODIGO,'
@@ -1567,6 +1578,7 @@ object DM: TDM
   end
   object qGanancia: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'SELECT '
       '  "LibroDiario".CODIGO,'
@@ -1596,6 +1608,7 @@ object DM: TDM
   end
   object qIIBB: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'Select * from "IIBB"')
     Left = 344
@@ -1603,6 +1616,7 @@ object DM: TDM
   end
   object qImprimir: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'select * from "Imprimir"')
     Left = 344
@@ -1610,6 +1624,7 @@ object DM: TDM
   end
   object qLibroDiario: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'SELECT'
       ' '#39'YYYMMDD'#39' AS SubTotal,'
@@ -1632,11 +1647,13 @@ object DM: TDM
   end
   object qLibro: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     Left = 344
     Top = 480
   end
   object qProveedor: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'Select * from "Proveedor"')
     Left = 344
@@ -1644,6 +1661,7 @@ object DM: TDM
   end
   object qOperacion: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'SELECT'
       '  '#39'Mi Empresa'#39' As Empresa,'
@@ -1689,6 +1707,7 @@ object DM: TDM
   end
   object qVendedor: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'select * from "Vendedor"')
     Left = 344
@@ -1696,6 +1715,7 @@ object DM: TDM
   end
   object qUsuario: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'select * from "Usuario"')
     Left = 344
@@ -1703,6 +1723,7 @@ object DM: TDM
   end
   object qTarjeta: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     SQL.Strings = (
       'select * from "Tarjeta"')
     Left = 344
@@ -1712,6 +1733,7 @@ object DM: TDM
     AfterInsert = tArticuloAfterInsert
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Articulo"'
@@ -1722,6 +1744,7 @@ object DM: TDM
   object tCategoria: TFDTable
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Categoria"'
@@ -1734,6 +1757,7 @@ object DM: TDM
     AfterInsert = tClienteAfterInsert
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Cliente"'
@@ -1744,6 +1768,7 @@ object DM: TDM
   end
   object tConfiguracion: TFDTable
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Config"'
@@ -1754,6 +1779,7 @@ object DM: TDM
   end
   object tCuenta: TFDTable
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Cuenta"'
@@ -1764,6 +1790,7 @@ object DM: TDM
   end
   object tIVA: TFDTable
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Iva"'
@@ -1774,6 +1801,7 @@ object DM: TDM
   end
   object tLibroIVAventa: TFDTable
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"LibroIVAventa"'
@@ -1784,6 +1812,7 @@ object DM: TDM
   end
   object tMaterial: TFDTable
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Material"'
@@ -1795,6 +1824,7 @@ object DM: TDM
   object tMarca: TFDTable
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Marca"'
@@ -1807,6 +1837,7 @@ object DM: TDM
     AfterInsert = tProveedorAfterInsert
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Proveedor"'
@@ -1818,6 +1849,7 @@ object DM: TDM
   object tEmpresa: TFDTable
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Empresa"'
@@ -1829,6 +1861,7 @@ object DM: TDM
   object tRubro: TFDTable
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Rubro"'
@@ -1840,6 +1873,7 @@ object DM: TDM
   object tSubCategoria: TFDTable
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"SubCategoria"'
@@ -1850,6 +1884,7 @@ object DM: TDM
   end
   object tUsuario: TFDTable
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Usuario"'
@@ -1861,6 +1896,7 @@ object DM: TDM
   object tVendedor: TFDTable
     AfterInsert = tVendedorAfterInsert
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     UpdateOptions.UpdateTableName = '"Venta"'
@@ -1871,20 +1907,24 @@ object DM: TDM
   end
   object qQ: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     Left = 424
     Top = 40
   end
   object qTemp: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     Left = 424
   end
   object qT: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     Left = 424
     Top = 88
   end
   object qD: TFDQuery
     Connection = BaseDatosFB
+    Transaction = TransactionFB
     Left = 424
     Top = 136
   end
@@ -2802,10 +2842,11 @@ object DM: TDM
           '')
       end>
     Connection = sdb
+    Transaction = TransactionFB
     Params = <>
     Macros = <>
-    Left = 176
-    Top = 448
+    Left = 88
+    Top = 240
   end
   object qSdbReporte: TFDQuery
     Connection = sdb
@@ -2818,5 +2859,9 @@ object DM: TDM
     DataSet = Query
     Left = 192
     Top = 384
+  end
+  object TransactionFB: TFDTransaction
+    Connection = BaseDatosFB
+    Left = 192
   end
 end

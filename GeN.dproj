@@ -100,10 +100,10 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.44;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.45;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <UWP_DelphiLogo44>GeN-Logo-44x44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>GeN-Logo-150x150.png</UWP_DelphiLogo150>
-        <VerInfo_Build>44</VerInfo_Build>
+        <VerInfo_Build>45</VerInfo_Build>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
         <VerInfo_Release>0</VerInfo_Release>
         <PF_KeyStorePass>8519479B645855D8A342711DD129E36881D0051BA043979397B40FAB8E363C94DB04A3D7E3401C39C1CC5752FACFC338BAF83613042722C3164B45C2E5BA22DBC90AF35DEE98A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
@@ -120,11 +120,10 @@
         <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>GeN-Logo-44x44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>GeN-Logo-150x150.png</UWP_DelphiLogo150>
-        <PF_KeyStorePass>8519479B5F86078CCF7B7131D12CE37981B20541A00D978D97E60FBE8E6C3C8ADB57A3DEE3551C63C1E35725FAC7C317BA95360204642291163A459CE5B722BEC916F341D513FACCBFF83B13722B859DF7C9330C</PF_KeyStorePass>
-        <VerInfo_Release>3</VerInfo_Release>
+        <PF_KeyStorePass>8519479B5F865585A304712AD15DE33A81940557A005978797B40FAA8E6D3CD0DB48A3D6E3181C3AC1B85752FAB3C36BBABA361304262290166845ECE5BA2290C95DF35DD544A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
+        <VerInfo_Release>4</VerInfo_Release>
         <VerInfo_AutoIncVersion>false</VerInfo_AutoIncVersion>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.0.3.0;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <PF_UWPDistributionType>Store</PF_UWPDistributionType>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.0.4.0;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <BT_BuildType>AppStore</BT_BuildType>
     </PropertyGroup>
     <ItemGroup>
@@ -337,36 +336,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\DetalleCtaCte.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>DetalleCtaCte.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\CTicket.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>CTicket.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\CuentaCaja.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>CuentaCaja.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="ayuda\cobrador.htm" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -374,16 +343,6 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\</RemoteDir>
                         <RemoteName>cobrador.htm</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\RendicionCobrador.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>RendicionCobrador.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -407,6 +366,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\codebar.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>codebar.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-aut.png" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -414,6 +380,13 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\img\</RemoteDir>
                         <RemoteName>conf-sis-fe-conf-aut.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\DetalleCtaCte.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>DetalleCtaCte.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -447,6 +420,20 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\ContratoLeasing.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ContratoLeasing.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\RendicionCliente.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>RendicionCliente.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\conf-sis.png" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -454,16 +441,6 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\img\</RemoteDir>
                         <RemoteName>conf-sis.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\C.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>C.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -477,16 +454,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\A.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>A.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="ayuda\plan.htm" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -497,26 +464,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\FacturaC.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>FacturaC.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\NotaCredito.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>NotaCredito.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="Bin\GeN\img\boton_stock.gif" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -524,6 +471,20 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\img\</RemoteDir>
                         <RemoteName>boton_stock.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\CDuplicado.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CDuplicado.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\CPTriplicado..fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CPTriplicado..fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -547,13 +508,10 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\Presupuesto.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\ListaPrecios.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>Presupuesto.fr3</RemoteName>
+                        <RemoteName>ListaPrecios.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -577,36 +535,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\RendicionCliente.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>RendicionCliente.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\Compra.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>Compra.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\ProveedoresDetalle.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>ProveedoresDetalle.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="Bin\GeN\db\icudt30.dll" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -617,32 +545,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\SociosDetalle.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>SociosDetalle.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png" Configuration="Debug" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
                     </Platform>
                     <Platform Name="Win32">
                         <RemoteDir>Assest\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\Articulos.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>Articulos.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -676,16 +584,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\codebar.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>codebar.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-grab.png" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -706,23 +604,10 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\CCuadruplicado.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\LibroDiario.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>CCuadruplicado.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\PlanillaCobrador.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>PlanillaCobrador.fr3</RemoteName>
+                        <RemoteName>LibroDiario.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -736,6 +621,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\TElectronica.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>TElectronica.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\gen_listado.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -746,6 +638,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\COriginal.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>COriginal.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\caja.htm" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -753,26 +652,6 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\</RemoteDir>
                         <RemoteName>caja.htm</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\ContratoLeasing.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>ContratoLeasing.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\NCTElectronica.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>NCTElectronica.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -796,23 +675,17 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\ListaPrecios.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\FacturaCuadruplicado.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>ListaPrecios.fr3</RemoteName>
+                        <RemoteName>FacturaCuadruplicado.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\CuentaCajaFecha.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\CTicket.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>CuentaCajaFecha.fr3</RemoteName>
+                        <RemoteName>CTicket.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -836,6 +709,27 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\Proveedores.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Proveedores.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\cOriginalLogo.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>cOriginalLogo.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\NCElectronica.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>NCElectronica.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\gen_operaciones_comprar.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -856,73 +750,10 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\Cobrador.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\RetencionIngresosBrutos.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>Cobrador.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\Proveedores.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>Proveedores.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\Cheques.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>Cheques.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\ComprobanteCuadruplicado.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>ComprobanteCuadruplicado.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\ClientesDetalle.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>ClientesDetalle.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\LibroDiario.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>LibroDiario.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\EstadoCtaProv.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>EstadoCtaProv.fr3</RemoteName>
+                        <RemoteName>RetencionIngresosBrutos.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -966,6 +797,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\CNCredito.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CNCredito.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\gen_preview_ticket.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -986,6 +824,20 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\Compra.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Compra.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\CPDuplicado.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CPDuplicado.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\gen_abm_vendedor.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -996,33 +848,10 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\Carton.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\ProveedoresDetalle.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>Carton.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\CNCredito.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>CNCredito.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\COriginal.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>COriginal.fr3</RemoteName>
+                        <RemoteName>ProveedoresDetalle.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1054,16 +883,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\ListaPreciosCompleta.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>ListaPreciosCompleta.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="Bin\GeN\db\ib_util.dll" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1071,6 +890,13 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\db\</RemoteDir>
                         <RemoteName>ib_util.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\Articulos.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Articulos.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1164,6 +990,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\FacturaSimple.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>FacturaSimple.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Bin\GeN\db\icuin30.dll" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1174,12 +1007,47 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\RendicionCobrador.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>RendicionCobrador.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\GananciaXvta.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>GananciaXvta.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\Entrega.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Entrega.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Bin\GeN\bin\icuin30.dll" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
                     </Platform>
                     <Platform Name="Win32">
                         <RemoteName>icuin30.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\FacturaDuplicadoMediaHoja.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>FacturaDuplicadoMediaHoja.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\SociosDetalle.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>SociosDetalle.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1213,16 +1081,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\Clientes.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>Clientes.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-csr-emp-abm.png" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1233,16 +1091,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\CDuplicado.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>CDuplicado.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="ayuda\img\gen_configuracion_empresa.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1250,16 +1098,6 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\img\</RemoteDir>
                         <RemoteName>gen_configuracion_empresa.jpg</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\PreciosTodos.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>PreciosTodos.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1283,13 +1121,10 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\LibroIVAVentas.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\FacturaC.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>LibroIVAVentas.fr3</RemoteName>
+                        <RemoteName>FacturaC.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1343,6 +1178,34 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\CuentaCajaFecha.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CuentaCajaFecha.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\PlanesCuotas.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>PlanesCuotas.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\SiapVtaCompAlicuota.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>SiapVtaCompAlicuota.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\PreciosTodos.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>PreciosTodos.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Bin\GeN\db\DeG" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1353,16 +1216,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\PagoVendedor.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>PagoVendedor.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="ayuda\cuentacorriente.htm" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1370,6 +1223,20 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\</RemoteDir>
                         <RemoteName>cuentacorriente.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\PlanillaCobrador.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>PlanillaCobrador.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\Cobrador.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Cobrador.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1393,6 +1260,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\Presupuesto.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Presupuesto.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\clientes.htm" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1400,6 +1274,20 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\</RemoteDir>
                         <RemoteName>clientes.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\NCTicket.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>NCTicket.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\ClientesTotal.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ClientesTotal.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1442,16 +1330,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\RetencionIngresosBrutos.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>RetencionIngresosBrutos.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="Bin\GeN\img\Thumbs.db" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1459,6 +1337,13 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\img\</RemoteDir>
                         <RemoteName>Thumbs.db</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\NotaCredito.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>NotaCredito.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1472,6 +1357,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\LibroIVAVentas.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>LibroIVAVentas.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\crearpedido.htm" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1482,26 +1374,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\cOriginalLogo.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>cOriginalLogo.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\COriginalsLogo.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>COriginalsLogo.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="ayuda\img\gen_abm_cobrador.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1509,16 +1381,6 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\img\</RemoteDir>
                         <RemoteName>gen_abm_cobrador.jpg</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\B.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>B.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1541,6 +1403,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\CPCuadruplicado.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CPCuadruplicado.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\gen_abm_cliente.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1551,33 +1420,10 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\FacturaDuplicadoMediaHoja.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\CPOriginal.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>FacturaDuplicadoMediaHoja.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\CPTriplicado..fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>CPTriplicado..fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\EstadoCuenta.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>EstadoCuenta.fr3</RemoteName>
+                        <RemoteName>CPOriginal.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1620,53 +1466,52 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\TElectronica.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\DeudoresPorCredito.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>TElectronica.fr3</RemoteName>
+                        <RemoteName>DeudoresPorCredito.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\PlanesCuotas.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\FElectronica.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>PlanesCuotas.fr3</RemoteName>
+                        <RemoteName>FElectronica.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\LibroBancos.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\SiapCmpComp.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>LibroBancos.fr3</RemoteName>
+                        <RemoteName>SiapCmpComp.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\Entrega.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\VendedoresDetalle.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>Entrega.fr3</RemoteName>
+                        <RemoteName>VendedoresDetalle.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\PagoCobrador.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\ListaPreciosCompleta.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>PagoCobrador.fr3</RemoteName>
+                        <RemoteName>ListaPreciosCompleta.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\ProveedoresTotal.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ProveedoresTotal.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\CuentaCaja.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CuentaCaja.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1690,13 +1535,17 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\ServVenta.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\PresupuestoMediaHoja.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>ServVenta.fr3</RemoteName>
+                        <RemoteName>PresupuestoMediaHoja.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\A.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>A.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1707,6 +1556,13 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\img\</RemoteDir>
                         <RemoteName>gen_abm_rubro.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\CTriplicado..fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>CTriplicado..fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1730,6 +1586,20 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\ClientesDetalle.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ClientesDetalle.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\ComprobanteCuadruplicado.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ComprobanteCuadruplicado.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Bin\GeN\bin\ib_util.dll" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1749,16 +1619,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\FacturaDuplicado.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>FacturaDuplicado.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="Bin\GeN\bin\intl\fbintl.conf" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1766,6 +1626,13 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\intl\</RemoteDir>
                         <RemoteName>fbintl.conf</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\SiapCmpCompAlicuota.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>SiapCmpCompAlicuota.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1779,6 +1646,27 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\EstadoCuenta.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>EstadoCuenta.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\PagoCobrador.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>PagoCobrador.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\LibroIVAventasSiap.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>LibroIVAventasSiap.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\gen_operaciones_crearpedido.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1786,16 +1674,6 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\img\</RemoteDir>
                         <RemoteName>gen_operaciones_crearpedido.jpg</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\FacturaCuadruplicado.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>FacturaCuadruplicado.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1809,13 +1687,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\CPCuadruplicado.fr3" Configuration="Release" Class="File">
+                <DeployFile LocalName="Bin\GeN\img\splashscreenROPA.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
                     </Platform>
                     <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>CPCuadruplicado.fr3</RemoteName>
+                        <RemoteDir>.\img\</RemoteDir>
+                        <RemoteName>splashscreenROPA.jpg</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1849,33 +1727,17 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Bin\GeN\img\splashscreenROPA.jpg" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\LibroBancos.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
-                        <RemoteDir>.\img\</RemoteDir>
-                        <RemoteName>splashscreenROPA.jpg</RemoteName>
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>LibroBancos.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\NCTicket.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\LibroIVAventasAlicuotaSiap.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>NCTicket.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\ProveedoresTotal.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>ProveedoresTotal.fr3</RemoteName>
+                        <RemoteName>LibroIVAventasAlicuotaSiap.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1886,6 +1748,20 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\img\</RemoteDir>
                         <RemoteName>gen_servidor.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\C.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>C.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\ean.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ean.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1909,13 +1785,10 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\FElectronica.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\Cheques.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>FElectronica.fr3</RemoteName>
+                        <RemoteName>Cheques.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1939,6 +1812,20 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\COriginalsLogo.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>COriginalsLogo.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\ServVenta.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>ServVenta.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="GeN-Logo-44x44.png" Configuration="Debug" Class="UWP_DelphiLogo44">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1946,6 +1833,13 @@
                     <Platform Name="Win32">
                         <RemoteDir>Assets\</RemoteDir>
                         <RemoteName>Logo44x44.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\LibroIVACompras.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>LibroIVACompras.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1965,16 +1859,6 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\</RemoteDir>
                         <RemoteName>gananciaxvta.htm</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\ClientesTotal.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>ClientesTotal.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -2018,23 +1902,10 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\CPOriginal.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\PagoVendedor.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>CPOriginal.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\VendedoresDetalle.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>VendedoresDetalle.fr3</RemoteName>
+                        <RemoteName>PagoVendedor.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -2048,6 +1919,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\Carton.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Carton.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-crt.png" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -2058,13 +1936,10 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\PresupuestoMediaHoja.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\Clientes.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>PresupuestoMediaHoja.fr3</RemoteName>
+                        <RemoteName>Clientes.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -2098,13 +1973,10 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\LibroIVACompras.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\LibroIVAventasSiapDetalle.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>LibroIVACompras.fr3</RemoteName>
+                        <RemoteName>LibroIVAventasSiapDetalle.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -2117,13 +1989,17 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\NCElectronica.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\NCTElectronica.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>NCElectronica.fr3</RemoteName>
+                        <RemoteName>NCTElectronica.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\EstadoCtaProv.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>EstadoCtaProv.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -2147,16 +2023,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\Precios.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>Precios.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="Bin\GeN\img\boton_cobranza.gif" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -2167,33 +2033,10 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\DeudoresPorCredito.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\SiapVtaComp.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>DeudoresPorCredito.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\FacturaSimple.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>FacturaSimple.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\ean.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>ean.fr3</RemoteName>
+                        <RemoteName>SiapVtaComp.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -2217,26 +2060,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\GananciaXvta.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>GananciaXvta.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Report\CTriplicado..fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                    <Platform Name="Win32">
-                        <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>CTriplicado..fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="Bin\GeN\bin\icuuc30.dll" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -2256,13 +2079,17 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Report\CPDuplicado.fr3" Configuration="Release" Class="File">
-                    <Platform Name="All Platforms">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
+                <DeployFile LocalName="Report\rpt\CCuadruplicado.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
-                        <RemoteName>CPDuplicado.fr3</RemoteName>
+                        <RemoteName>CCuadruplicado.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\FacturaDuplicado.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>FacturaDuplicado.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -2286,6 +2113,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Report\rpt\Precios.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>Precios.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\gen_menu.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -2293,6 +2127,13 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\img\</RemoteDir>
                         <RemoteName>gen_menu.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Report\rpt\B.fr3" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\rpt\</RemoteDir>
+                        <RemoteName>B.fr3</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
