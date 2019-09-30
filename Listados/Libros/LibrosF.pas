@@ -114,9 +114,9 @@ begin
     end;
   end;
   dm.qLibro.SQL.Text := 'SELECT ' +
-//    QuotedStr(DM.ConfigQuery.FieldByName('Nombre').AsString) + ' AS Empresa, ' +
-//    '  ' + QuotedStr(DateToStr(DTP1.Date)) + ' AS Desde,  ' + '  ' +
-//    QuotedStr(DateToStr(DTP2.Date)) + ' AS Hasta, ' +
+  QuotedStr(DM.ConfigQuery.FieldByName('Nombre').AsString) + ' AS Empresa, ' +
+  QuotedStr(DateToStr(DTP1.Date)) + ' AS Desde,  ' +
+  QuotedStr(DateToStr(DTP2.Date)) + ' AS Hasta, ' +
   sql + ' WHERE'
   +' (FECHA > ' + QuotedStr(DateToStr(DTP1.Date-1)) + ' ) AND '
   +' (FECHA < ' + QuotedStr(DateToStr(DTP2.Date+1)) + ' )   '

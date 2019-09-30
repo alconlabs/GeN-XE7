@@ -119,6 +119,7 @@ object LibrosForm: TLibrosForm
         9B6FDBA02DAD00B402D00B402F1D00B5006F1D398313F30EEFDBDFA840CF5D01
         6805A03FFFD9}
       ShowHint = True
+      Visible = False
       OnClick = iExpClick
     end
     object bProcesar: TBitBtn
