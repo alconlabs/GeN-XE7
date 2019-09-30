@@ -1036,10 +1036,9 @@ procedure TOperacionForm.FormKeyPress(Sender: TObject; var Key: Char);
 begin
   if Key = #13 then { if it's an enter key }
   begin
-    Key := #0; { eat enter key }
-    Perform(WM_NEXTDLGCTL, 0, 0); { move to next control }
+      Key := #0; { eat enter key }
+      Perform(WM_NEXTDLGCTL, 0, 0); { move to next control }
   end;
-
 end;
 
 procedure TOperacionForm.CantidadBitBtnClick(Sender: TObject);

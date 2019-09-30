@@ -85,7 +85,7 @@ object FProductos: TFProductos
       end
       object Label5: TLabel
         Left = 448
-        Top = 155
+        Top = 139
         Width = 65
         Height = 13
         Caption = 'Costo + Flete:'
@@ -98,7 +98,7 @@ object FProductos: TFProductos
       end
       object DBText1: TDBText
         Left = 519
-        Top = 155
+        Top = 139
         Width = 106
         Height = 17
         DataSource = DM.dstArticulo
@@ -111,7 +111,7 @@ object FProductos: TFProductos
       end
       object IVADBTLabel: TLabel
         Left = 484
-        Top = 195
+        Top = 190
         Width = 29
         Height = 16
         Caption = 'IVA:'
@@ -144,7 +144,7 @@ object FProductos: TFProductos
       end
       object Label4: TLabel
         Left = 485
-        Top = 242
+        Top = 160
         Width = 28
         Height = 13
         Caption = 'Neto'
@@ -179,7 +179,7 @@ object FProductos: TFProductos
       end
       object IVADBText: TDBText
         Left = 519
-        Top = 189
+        Top = 184
         Width = 144
         Height = 29
         DataSource = DM.dstArticulo
@@ -407,11 +407,12 @@ object FProductos: TFProductos
       end
       object PrecioCtaCteDBEdit: TDBEdit
         Left = 519
-        Top = 239
+        Top = 157
         Width = 97
         Height = 21
         DataField = 'PRECIO'
         DataSource = DM.dstArticulo
+        Enabled = False
         TabOrder = 7
         OnExit = PrecioCtaCteDBEditExit
       end
@@ -996,7 +997,6 @@ object FProductos: TFProductos
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitTop = 51
       ExplicitWidth = 40
     end
     object BitBtn1: TBitBtn
@@ -1067,7 +1067,6 @@ object FProductos: TFProductos
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitTop = 64
     end
     object BitBtn4: TBitBtn
       Left = 1
@@ -1094,8 +1093,6 @@ object FProductos: TFProductos
       Caption = 'Importar'
       TabOrder = 4
       OnClick = bImportarClick
-      ExplicitLeft = 6
-      ExplicitTop = 58
     end
     object bExportar: TButton
       Left = 1
@@ -1106,7 +1103,6 @@ object FProductos: TFProductos
       Caption = 'Exportar'
       TabOrder = 5
       OnClick = bExportarClick
-      ExplicitTop = 51
     end
   end
   object ButtonPanel: TPanel

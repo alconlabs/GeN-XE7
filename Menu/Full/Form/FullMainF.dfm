@@ -353,6 +353,7 @@ object FullMainForm: TFullMainForm
       object MIGRAR1: TMenuItem
         Caption = 'MIGRAR'
         Hint = 'MIGRAR DESDE VERSIONES ANTERIORES'
+        Visible = False
         object MigrarArticulos: TMenuItem
           Caption = 'ARTICULOS'
           OnClick = MigrarArticulosClick
@@ -364,6 +365,7 @@ object FullMainForm: TFullMainForm
       end
       object VaciarBasedeDatos1: TMenuItem
         Caption = 'RESTAURAR SISTEMA'
+        Visible = False
         OnClick = VaciarBasedeDatos1Click
       end
     end

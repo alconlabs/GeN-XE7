@@ -637,7 +637,7 @@ end;
 
 procedure TFProductos.Calcular;
 var
-  costo, flete: Double;
+  costo, neto, flete: Double;
 begin
   if CostoDBEdit.Text = '' then CostoDBEdit.Text := '0';
   if FleteDBEdit.Text = '' then FleteDBEdit.Text := '0';
@@ -658,7 +658,9 @@ begin
    Precio5DBEdit.Text := FloatToStr(costo * Precio5);
    Precio6DBEdit.Text := FloatToStr(costo * Precio6);
    DBText1.Caption := FloatToStr( costo );
-   IVADBText.Caption := FloatToStr( CalcularIVA( StrToFloat(PrecioCtaCteDBEdit.Text),tasa));
+   neto:=StrToFloat(PrecioCtaCteDBEdit.Text);
+   tasa:=StrToFloat(dm.TraerValor('Iva', 'TASA', VarToStr(IVADBComboBox.KeyValue)));
+   IVADBText.Caption := FloatToStr(CalcularIVA(neto,tasa));
   end;
 end;
 
