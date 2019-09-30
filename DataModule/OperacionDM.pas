@@ -1686,49 +1686,76 @@ with dm do begin
     + ' CODIGO '
     + ', DESCRIPCION '
     + ', ULTCOSTO, COSTO, PRECIO'
-//    +', PRECIO1, PRECIO2'
+    +', PRECIO1, PRECIO2'
     + ', DISPONIBLE'
     + ', PORCENTAJE, IMPOTROS, UNIDAD, TASA, IIBB, CTANOMBRE, CTATIPO, CTAANTICIPO, CTAIIBB '
     + ', FECHA, FECHACOMPULT, CODIGOBARRA'
     + ', CATEGORIA, COLOR, MARCA, PROVEEDOR, RUBRO, SUBCATEGORIA'
     + ' ) VALUES ( '
     + (codigo) + ', '
-    + QuotedStr(descripcion)
-    + ', '+ costo +', ' + costo + ', ' + precio
+//    + QuotedStr(descripcion)
+//    + ', '+ costo +', ' + costo + ', ' + precio
 //    + ', ' + precio1 + ', ' + precio2
-    + ', ' + disponible
-    + ', '+ porcentaje +', 5, ''c/u'', '+ tasa +', 1, 13, 13, 13, 66'
-    + ', '+ QuotedStr(fecha) +', ' + QuotedStr(fechacompult) + ', ' + QuotedStr(codigobarra)
-    + ', '+ categoria +', 0, 0, '+ proveedor +', '+ rubro +', '+ subcategoria +' )';
-//            D.ExecSQL;
+//    + ', ' + disponible
+//    + ', '+ porcentaje +', 5, ''c/u'', '+ tasa +', 1, 13, 13, 13, 66'
+//    + ', '+ QuotedStr(fecha) +', ' + QuotedStr(fechacompult) + ', ' + QuotedStr(codigobarra)
+//    + ', '+ categoria +', 0, 0, '+ proveedor +', '+ rubro +', '+ subcategoria
+      +' DESCRIPCION = ' + QuotedStr(descripcion)
+      +', ULTCOSTO =' +ultcosto// COSTO
+      +', COSTO = ' + costo
+      +', PRECIO = ' + precio
+    +', PRECIO1 = ' + precio1
+    +', PRECIO2 = ' + precio2
+      +', DISPONIBLE = ' + disponible
+      +', PORCENTAJE = ' + porcentaje
+    +', IMPOTROS = ' +impotros//5
+    +', UNIDAD = ' +unidad//''c/u''
+      +', TASA = ' + tasa
+    +', IIBB = ' +iibb//1
+    +', CTANOMBRE = ' +ctanombre// 13
+    +', CTATIPO = ' +ctatipo// 13
+    +', CTAANTICIPO = ' +ctaanticipo//13
+    +', CTAIIBB = ' +ctaiibb//66
+      +', FECHACOMPULT = ' +fechacompult//FECHA
+      +', FECHA = ' + QuotedStr(fecha)
+      +', CODIGOBARRA = ' + QuotedStr(codigobarra)
+    +', CATEGORIA = ' +categoria
+    +', COLOR = ' +color//0
+    +', MARCA = ' +marca//0
+    +', PROVEEDOR = ' + proveedor
+    +', RUBRO = ' + rubro
+    +', SUBCATEGORIA = ' + subcategoria
+
+
+    +' )';
   end
     else
       qQ.SQL.Text := 'UPDATE "Articulo" SET'
       +' DESCRIPCION = ' + QuotedStr(descripcion)
-      +', ULTCOSTO = COSTO'
+      +', ULTCOSTO =' +ultcosto// COSTO
       +', COSTO = ' + costo
       +', PRECIO = ' + precio
-//      +', PRECIO1 = ' + precio1
-//      +', PRECIO2 = ' + precio2
+    +', PRECIO1 = ' + precio1
+    +', PRECIO2 = ' + precio2
       +', DISPONIBLE = ' + disponible
       +', PORCENTAJE = ' + porcentaje
-//              +', IMPOTROS = 5' +
-//              +', UNIDAD = ''c/u''' +
+    +', IMPOTROS = ' +impotros//5
+    +', UNIDAD = ' +unidad//''c/u''
       +', TASA = ' + tasa
-//              +', IIBB = 1' +
-//              +', CTANOMBRE = 13' +
-//              +', CTATIPO = 13' +
-//              +', CTAANTICIPO = 13' +
-//              +', CTAIIBB = 66' +
-      +', FECHACOMPULT = FECHA'
+    +', IIBB = ' +iibb//1
+    +', CTANOMBRE = ' +ctanombre// 13
+    +', CTATIPO = ' +ctatipo// 13
+    +', CTAANTICIPO = ' +ctaanticipo//13
+    +', CTAIIBB = ' +ctaiibb//66
+      +', FECHACOMPULT = ' +fechacompult//FECHA
       +', FECHA = ' + QuotedStr(fecha)
       +', CODIGOBARRA = ' + QuotedStr(codigobarra)
-//      +', CATEGORIA = ' + categoria
-//              +', COLOR = 0' +
-//              +', MARCA = 0' +
-//      +', PROVEEDOR = ' + proveedor
-//      +', RUBRO = ' + rubro
-//      +', SUBCATEGORIA = ' + subcategoria
+    +', CATEGORIA = ' +categoria
+    +', COLOR = ' +color//0
+    +', MARCA = ' +marca//0
+    +', PROVEEDOR = ' + proveedor
+    +', RUBRO = ' + rubro
+    +', SUBCATEGORIA = ' + subcategoria
       +' WHERE '
       +' CODIGO ='+ (codigo);
 //      +' CODIGOBARRA = ' + QuotedStr(codigobarra);

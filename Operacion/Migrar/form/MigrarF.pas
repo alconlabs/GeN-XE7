@@ -264,39 +264,19 @@ procedure TMigrarForm.ImportarArticulo;
 var
   csv : TStringList;
   fila : TStringList;
-  i, j, cb
-  , codigo
-  , descripcion
-  , ultcosto
-  , costo
-  , precio
-  , precio1
-  , precio2
-  , disponible
-  , porcentaje
-  , impotros
-  , unidad
-  , tasa
-  , iibb
-  , ctanombre
-  , ctatipo
-  , ctaanticipo
-  , ctaiibb
-  , fecha
-  , fechacompult
-  , codigobarra
-  , categoria
-  , color
-  , marca
-  , proveedor
-  , rubro
-  , subcategoria
+  i, j, cb,
+  codigo,descripcion,costo,ultcosto,precio1,precio2,precio3,precio4,precio5,
+  precio6,precio,porcentaje,ultprecio,marca,color,categoria,subcategoria,
+  ubicacion,unidad,disponible,enproduccion,notas,iva, tasa,impotros,iibb,
+  stockminimo,stockmaximo, stockvendido,fechacompult,lista,procedencia
+  ,codigobarra, rubro,proveedor,garantia,fecha,pedido,stock, existente
+  ,actual,marcadocontado,marcadolista,marcadofinal,preparado,ctanombre,
+  ctatipo,ctaanticipo,ctaiibb,estado,vence,vencimiento
   : Integer;
   campo : string;
 begin
   cb:=0;
   costo:=0;
-
 	try
 		csv := TStringList.Create;
 		// cargar a partir del fichero csv
@@ -322,37 +302,69 @@ begin
         campo:=Trim(fila[j]);
 //        if campo='CODIGOBARRA' then cb:=j else if campo='COSTO' then costo:=j;
 
-        Case IndexStr(campo, ['CODIGO', 'DESCRIPCION', 'ULTCOSTO','COSTO'
-        ,'PRECIO','PRECIO1','PRECIO2','DISPONIBLE','PORCENTAJE','IMPOTROS'
-        ,'UNIDAD','TASA','IIBB','CTANOMBRE','CTATIPO','CTAANTICIPO','CTAIIBB'
-        ,'FECHA','FECHACOMPULT','CODIGOBARRA','CATEGORIA','COLOR','MARCA'
-        ,'PROVEEDOR','RUBRO','SUBCATEGORIA']) of
+        Case IndexStr(campo, [
+        'CODIGO', 'DESCRIPCION', 'COSTO', 'ULTCOSTO', 'PRECIO1', 'PRECIO2'
+        , 'PRECIO3', 'PRECIO4', 'PRECIO5', 'PRECIO6', 'PRECIO', 'PORCENTAJE'
+        , 'ULTPRECIO', 'MARCA', 'COLOR', 'CATEGORIA', 'SUBCATEGORIA'
+        , 'UBICACION', 'UNIDAD', 'DISPONIBLE', 'ENPRODUCCION', 'NOTAS', 'IVA'
+        , 'TASA', 'IMPOTROS', 'IIBB', 'STOCKMINIMO', 'STOCKMAXIMO'
+        , 'STOCKVENDIDO', 'FECHACOMPULT', 'LISTA', 'PROCEDENCIA', 'CODIGOBARRA'
+        , 'RUBRO', 'PROVEEDOR', 'GARANTIA', 'FECHA', 'PEDIDO', 'STOCK'
+        , 'EXISTENTE', 'ACTUAL', 'MARCADOCONTADO', 'MARCADOLISTA'
+        , 'MARCADOFINAL', 'PREPARADO', 'CTANOMBRE', 'CTATIPO', 'CTAANTICIPO'
+        , 'CTAIIBB', 'ESTADO', 'VENCE', 'VENCIMIENTO']) of
         0 : codigo:=j;
         1 : descripcion:=j;
-        2 : ultcosto:=j;
-        3 : costo:=j;
-        4 : precio:=j;
-        5 : precio1:=j;
-        6 : precio2:=j;
-        7 : disponible:=j;
-        8 : porcentaje:=j;
-        9 : impotros:=j;
-        10 : unidad:=j;
-        11 : tasa:=j;
-        12 : iibb:=j;
-        13 : ctanombre:=j;
-        14 : ctatipo:=j;
-        15 : ctaanticipo:=j;
-        16 : ctaiibb:=j;
-        17 : fecha:=j;
-        18 : fechacompult:=j;
-        19 : codigobarra:=j;
-        20 : categoria:=j;
-        21 : color:=j;
-        22 : marca:=j;
-        23 : proveedor:=j;
-        24 : rubro:=j;
-        25 : subcategoria:=j;
+        2 : costo:=j;
+        3 : ultcosto:=j;
+        4 : precio1:=j;
+        5 : precio2:=j;
+        6 : precio3:=j;
+        7 : precio4:=j;
+        8 : precio5:=j;
+        9 : precio6:=j;
+        10 : precio:=j;
+        11 : porcentaje:=j;
+        12 : ultprecio:=j;
+        13 : marca:=j;
+        14 : color:=j;
+        15 : categoria:=j;
+        16 : subcategoria:=j;
+        17 : ubicacion:=j;
+        18 : unidad:=j;
+        19 : disponible:=j;
+        20 : enproduccion:=j;
+        21 : notas:=j;
+        22 : iva:=j;
+        23 : tasa:=j;
+        24 : impotros:=j;
+        25 : iibb:=j;
+        26 : stockminimo:=j;
+        27 : stockmaximo:=j;
+        28 : stockvendido:=j;
+        29 : fechacompult:=j;
+        30 : lista:=j;
+        31 : procedencia:=j;
+        32 : codigobarra:=j;
+        33 : rubro:=j;
+        34 : proveedor:=j;
+        35 : garantia:=j;
+        36 : fecha:=j;
+        37 : pedido:=j;
+        38 : stock:=j;
+        39 : existente:=j;
+        40 : actual:=j;
+        41 : marcadocontado:=j;
+        42 : marcadolista:=j;
+        43 : marcadofinal:=j;
+        44 : preparado:=j;
+        45 : ctanombre:=j;
+        46 : ctatipo:=j;
+        47 : ctaanticipo:=j;
+        48 : ctaiibb:=j;
+        49 : estado:=j;
+        50 : vence:=j;
+        51 : vencimiento:=j;
 //        else ShowMessage('Unknown!');
         end;
 

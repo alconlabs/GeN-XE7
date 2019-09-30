@@ -332,10 +332,6 @@ object ProveedorForm: TProveedorForm
     object TabSheet2: TTabSheet
       Caption = 'Notas'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -349,10 +345,6 @@ object ProveedorForm: TProveedorForm
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label15: TLabel
         Left = 0
         Top = 136
@@ -593,14 +585,10 @@ object ProveedorForm: TProveedorForm
     object TabSheet4: TTabSheet
       Caption = 'Datos Secundarios'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label19: TLabel
         Left = 0
         Top = 0
-        Width = 130
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Nombre del Titular'
@@ -611,11 +599,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 130
       end
       object Label12: TLabel
         Left = 0
         Top = 240
-        Width = 40
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Email'
@@ -626,11 +615,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 40
       end
       object Label28: TLabel
         Left = 0
         Top = 280
-        Width = 78
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Messenger'
@@ -641,11 +631,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 78
       end
       object Label23: TLabel
         Left = 0
         Top = 40
-        Width = 27
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'DNI'
@@ -656,11 +647,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 27
       end
       object Label26: TLabel
         Left = 0
         Top = 80
-        Width = 43
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Rubro'
@@ -670,11 +662,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 43
       end
       object Label5: TLabel
         Left = 0
         Top = 360
-        Width = 32
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Pais'
@@ -685,11 +678,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 32
       end
       object Label21: TLabel
         Left = 0
         Top = 120
-        Width = 99
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Codigo Postal'
@@ -700,11 +694,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 99
       end
       object Label22: TLabel
         Left = 0
         Top = 160
-        Width = 110
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Codigo de Area'
@@ -714,11 +709,12 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 110
       end
       object Label10: TLabel
         Left = 0
         Top = 200
-        Width = 68
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Extenci'#243'n'
@@ -729,6 +725,7 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 68
       end
       object Label8: TLabel
         Left = 261
@@ -745,7 +742,7 @@ object ProveedorForm: TProveedorForm
       object Label18: TLabel
         Left = 0
         Top = 320
-        Width = 87
+        Width = 427
         Height = 16
         Align = alTop
         Caption = 'Dias Cr'#233'dito'
@@ -756,6 +753,7 @@ object ProveedorForm: TProveedorForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 87
       end
       object DBEdit16: TDBEdit
         Left = 0

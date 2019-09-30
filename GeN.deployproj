@@ -14,45 +14,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\DetalleCtaCte.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>DetalleCtaCte.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\CTicket.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>CTicket.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\CuentaCaja.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>CuentaCaja.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="ayuda\cobrador.htm" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\</RemoteDir>
             <RemoteName>cobrador.htm</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\RendicionCobrador.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>RendicionCobrador.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -77,9 +41,27 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\codebar.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>codebar.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\conf-sis-fe-conf-aut.png" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>conf-sis-fe-conf-aut.png</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\DetalleCtaCte.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>DetalleCtaCte.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -113,18 +95,27 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="ayuda\img\conf-sis.png" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\hlp\img\</RemoteDir>
-            <RemoteName>conf-sis.png</RemoteName>
+        <DeployFile Include="Report\rpt\ContratoLeasing.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>ContratoLeasing.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\C.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\RendicionCliente.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>C.fr3</RemoteName>
+            <RemoteName>RendicionCliente.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ayuda\img\conf-sis.png" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\hlp\img\</RemoteDir>
+            <RemoteName>conf-sis.png</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -140,15 +131,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\A.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>A.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="ayuda\plan.htm" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\</RemoteDir>
             <RemoteName>plan.htm</RemoteName>
@@ -158,27 +140,27 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\FacturaC.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>FacturaC.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\NotaCredito.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>NotaCredito.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="Bin\GeN\img\boton_stock.gif" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\img\</RemoteDir>
             <RemoteName>boton_stock.gif</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\CDuplicado.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>CDuplicado.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\CPTriplicado..fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>CPTriplicado..fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -203,9 +185,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\Presupuesto.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\ListaPrecios.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>Presupuesto.fr3</RemoteName>
+            <RemoteName>ListaPrecios.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -230,33 +212,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\RendicionCliente.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>RendicionCliente.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\Compra.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>Compra.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\ProveedoresDetalle.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ProveedoresDetalle.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="Bin\GeN\db\icudt30.dll" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\db\</RemoteDir>
             <RemoteName>icudt30.dll</RemoteName>
@@ -266,27 +221,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\SociosDetalle.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>SociosDetalle.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png" Condition="'$(Config)'=='Debug'">
             <RemoteDir>GeN\Assest\</RemoteDir>
             <RemoteName>delphi_UwpDefault_44.png</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\Articulos.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>Articulos.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -320,15 +257,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\codebar.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>codebar.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="ayuda\img\conf-sis-fe-conf-grab.png" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>conf-sis-fe-conf-grab.png</RemoteName>
@@ -347,18 +275,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\CCuadruplicado.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\LibroDiario.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>CCuadruplicado.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\PlanillaCobrador.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>PlanillaCobrador.fr3</RemoteName>
+            <RemoteName>LibroDiario.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -374,6 +293,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\TElectronica.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>TElectronica.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\gen_listado.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_listado.jpg</RemoteName>
@@ -383,27 +311,18 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\COriginal.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>COriginal.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\caja.htm" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\</RemoteDir>
             <RemoteName>caja.htm</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\ContratoLeasing.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ContratoLeasing.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\NCTElectronica.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>NCTElectronica.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -428,18 +347,18 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\ListaPrecios.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\FacturaCuadruplicado.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ListaPrecios.fr3</RemoteName>
+            <RemoteName>FacturaCuadruplicado.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\CuentaCajaFecha.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\CTicket.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>CuentaCajaFecha.fr3</RemoteName>
+            <RemoteName>CTicket.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -464,6 +383,33 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\Proveedores.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>Proveedores.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\cOriginalLogo.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>cOriginalLogo.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\NCElectronica.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>NCElectronica.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\gen_operaciones_comprar.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_operaciones_comprar.jpg</RemoteName>
@@ -482,63 +428,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\Cobrador.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\RetencionIngresosBrutos.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>Cobrador.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\Proveedores.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>Proveedores.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\Cheques.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>Cheques.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\ComprobanteCuadruplicado.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ComprobanteCuadruplicado.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\ClientesDetalle.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ClientesDetalle.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\LibroDiario.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>LibroDiario.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\EstadoCtaProv.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>EstadoCtaProv.fr3</RemoteName>
+            <RemoteName>RetencionIngresosBrutos.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -581,6 +473,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\CNCredito.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>CNCredito.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\gen_preview_ticket.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_preview_ticket.jpg</RemoteName>
@@ -599,6 +500,24 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\Compra.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>Compra.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\CPDuplicado.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>CPDuplicado.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\gen_abm_vendedor.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_abm_vendedor.jpg</RemoteName>
@@ -608,27 +527,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\Carton.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\ProveedoresDetalle.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>Carton.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\CNCredito.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>CNCredito.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\COriginal.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>COriginal.fr3</RemoteName>
+            <RemoteName>ProveedoresDetalle.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -662,18 +563,18 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\ListaPreciosCompleta.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ListaPreciosCompleta.fr3</RemoteName>
+        <DeployFile Include="Bin\GeN\db\ib_util.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\db\</RemoteDir>
+            <RemoteName>ib_util.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Bin\GeN\db\ib_util.dll" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\db\</RemoteDir>
-            <RemoteName>ib_util.dll</RemoteName>
+        <DeployFile Include="Report\rpt\Articulos.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>Articulos.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -761,6 +662,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\FacturaSimple.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>FacturaSimple.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Bin\GeN\db\icuin30.dll" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\db\</RemoteDir>
             <RemoteName>icuin30.dll</RemoteName>
@@ -770,9 +680,54 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\RendicionCobrador.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>RendicionCobrador.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\GananciaXvta.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>GananciaXvta.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\Entrega.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>Entrega.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Bin\GeN\bin\icuin30.dll" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\</RemoteDir>
             <RemoteName>icuin30.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\FacturaDuplicadoMediaHoja.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>FacturaDuplicadoMediaHoja.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\SociosDetalle.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>SociosDetalle.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -806,15 +761,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\Clientes.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>Clientes.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="ayuda\img\conf-sis-fe-conf-csr-emp-abm.png" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>conf-sis-fe-conf-csr-emp-abm.png</RemoteName>
@@ -824,27 +770,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\CDuplicado.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>CDuplicado.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="ayuda\img\gen_configuracion_empresa.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_configuracion_empresa.jpg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\PreciosTodos.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>PreciosTodos.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -869,9 +797,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\LibroIVAVentas.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\FacturaC.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>LibroIVAVentas.fr3</RemoteName>
+            <RemoteName>FacturaC.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -923,6 +851,42 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\CuentaCajaFecha.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>CuentaCajaFecha.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\PlanesCuotas.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>PlanesCuotas.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\SiapVtaCompAlicuota.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>SiapVtaCompAlicuota.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\PreciosTodos.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>PreciosTodos.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Bin\GeN\db\DeG" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\db\</RemoteDir>
             <RemoteName>DeG</RemoteName>
@@ -932,18 +896,27 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\PagoVendedor.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>PagoVendedor.fr3</RemoteName>
+        <DeployFile Include="ayuda\cuentacorriente.htm" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\hlp\</RemoteDir>
+            <RemoteName>cuentacorriente.htm</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="ayuda\cuentacorriente.htm" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\hlp\</RemoteDir>
-            <RemoteName>cuentacorriente.htm</RemoteName>
+        <DeployFile Include="Report\rpt\PlanillaCobrador.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>PlanillaCobrador.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\Cobrador.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>Cobrador.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -968,9 +941,36 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\Presupuesto.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>Presupuesto.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\clientes.htm" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\</RemoteDir>
             <RemoteName>clientes.htm</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\NCTicket.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>NCTicket.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\ClientesTotal.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>ClientesTotal.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1013,18 +1013,18 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\RetencionIngresosBrutos.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>RetencionIngresosBrutos.fr3</RemoteName>
+        <DeployFile Include="Bin\GeN\img\Thumbs.db" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\img\</RemoteDir>
+            <RemoteName>Thumbs.db</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Bin\GeN\img\Thumbs.db" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\img\</RemoteDir>
-            <RemoteName>Thumbs.db</RemoteName>
+        <DeployFile Include="Report\rpt\NotaCredito.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>NotaCredito.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1040,6 +1040,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\LibroIVAVentas.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>LibroIVAVentas.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\crearpedido.htm" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\</RemoteDir>
             <RemoteName>crearpedido.htm</RemoteName>
@@ -1049,36 +1058,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\cOriginalLogo.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>cOriginalLogo.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\COriginalsLogo.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>COriginalsLogo.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="ayuda\img\gen_abm_cobrador.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_abm_cobrador.jpg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\B.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>B.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1104,6 +1086,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\CPCuadruplicado.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>CPCuadruplicado.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\gen_abm_cliente.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_abm_cliente.jpg</RemoteName>
@@ -1113,27 +1104,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\FacturaDuplicadoMediaHoja.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\CPOriginal.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>FacturaDuplicadoMediaHoja.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\CPTriplicado..fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>CPTriplicado..fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\EstadoCuenta.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>EstadoCuenta.fr3</RemoteName>
+            <RemoteName>CPOriginal.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1177,45 +1150,63 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\TElectronica.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\DeudoresPorCredito.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>TElectronica.fr3</RemoteName>
+            <RemoteName>DeudoresPorCredito.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\PlanesCuotas.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\FElectronica.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>PlanesCuotas.fr3</RemoteName>
+            <RemoteName>FElectronica.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\LibroBancos.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\SiapCmpComp.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>LibroBancos.fr3</RemoteName>
+            <RemoteName>SiapCmpComp.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\Entrega.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\VendedoresDetalle.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>Entrega.fr3</RemoteName>
+            <RemoteName>VendedoresDetalle.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\PagoCobrador.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\ListaPreciosCompleta.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>PagoCobrador.fr3</RemoteName>
+            <RemoteName>ListaPreciosCompleta.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\ProveedoresTotal.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>ProveedoresTotal.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\CuentaCaja.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>CuentaCaja.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1240,9 +1231,18 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\ServVenta.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\PresupuestoMediaHoja.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ServVenta.fr3</RemoteName>
+            <RemoteName>PresupuestoMediaHoja.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\A.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>A.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1252,6 +1252,15 @@
         <DeployFile Include="ayuda\img\gen_abm_rubro.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_abm_rubro.jpg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\CTriplicado..fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>CTriplicado..fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1276,6 +1285,24 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\ClientesDetalle.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>ClientesDetalle.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\ComprobanteCuadruplicado.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>ComprobanteCuadruplicado.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Bin\GeN\bin\ib_util.dll" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\</RemoteDir>
             <RemoteName>ib_util.dll</RemoteName>
@@ -1294,18 +1321,18 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\FacturaDuplicado.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>FacturaDuplicado.fr3</RemoteName>
+        <DeployFile Include="Bin\GeN\bin\intl\fbintl.conf" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\intl\</RemoteDir>
+            <RemoteName>fbintl.conf</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Bin\GeN\bin\intl\fbintl.conf" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\intl\</RemoteDir>
-            <RemoteName>fbintl.conf</RemoteName>
+        <DeployFile Include="Report\rpt\SiapCmpCompAlicuota.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>SiapCmpCompAlicuota.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1321,18 +1348,36 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="ayuda\img\gen_operaciones_crearpedido.jpg" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\hlp\img\</RemoteDir>
-            <RemoteName>gen_operaciones_crearpedido.jpg</RemoteName>
+        <DeployFile Include="Report\rpt\EstadoCuenta.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>EstadoCuenta.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\FacturaCuadruplicado.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\PagoCobrador.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>FacturaCuadruplicado.fr3</RemoteName>
+            <RemoteName>PagoCobrador.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\LibroIVAventasSiap.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>LibroIVAventasSiap.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ayuda\img\gen_operaciones_crearpedido.jpg" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\hlp\img\</RemoteDir>
+            <RemoteName>gen_operaciones_crearpedido.jpg</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1348,9 +1393,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\CPCuadruplicado.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>CPCuadruplicado.fr3</RemoteName>
+        <DeployFile Include="Bin\GeN\img\splashscreenROPA.jpg" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\img\</RemoteDir>
+            <RemoteName>splashscreenROPA.jpg</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1375,27 +1420,18 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Bin\GeN\img\splashscreenROPA.jpg" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\img\</RemoteDir>
-            <RemoteName>splashscreenROPA.jpg</RemoteName>
+        <DeployFile Include="Report\rpt\LibroBancos.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>LibroBancos.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\NCTicket.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\LibroIVAventasAlicuotaSiap.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>NCTicket.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\ProveedoresTotal.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ProveedoresTotal.fr3</RemoteName>
+            <RemoteName>LibroIVAventasAlicuotaSiap.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1405,6 +1441,24 @@
         <DeployFile Include="ayuda\img\gen_servidor.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_servidor.jpg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\C.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>C.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\ean.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>ean.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1429,9 +1483,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\FElectronica.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\Cheques.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>FElectronica.fr3</RemoteName>
+            <RemoteName>Cheques.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1456,11 +1510,38 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\COriginalsLogo.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>COriginalsLogo.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\ServVenta.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>ServVenta.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="GeN-Logo-44x44.png" Condition="'$(Config)'=='Debug'">
             <RemoteDir>GeN\Assets\</RemoteDir>
             <RemoteName>Logo44x44.png</RemoteName>
             <DeployClass>UWP_DelphiLogo44</DeployClass>
             <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\LibroIVACompras.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>LibroIVACompras.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
@@ -1477,15 +1558,6 @@
         <DeployFile Include="ayuda\gananciaxvta.htm" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\</RemoteDir>
             <RemoteName>gananciaxvta.htm</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\ClientesTotal.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ClientesTotal.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1528,18 +1600,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\CPOriginal.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\PagoVendedor.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>CPOriginal.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\VendedoresDetalle.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>VendedoresDetalle.fr3</RemoteName>
+            <RemoteName>PagoVendedor.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1555,6 +1618,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\Carton.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>Carton.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\conf-sis-fe-conf-crt.png" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>conf-sis-fe-conf-crt.png</RemoteName>
@@ -1564,9 +1636,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\PresupuestoMediaHoja.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\Clientes.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>PresupuestoMediaHoja.fr3</RemoteName>
+            <RemoteName>Clientes.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1600,9 +1672,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\LibroIVACompras.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\LibroIVAventasSiapDetalle.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>LibroIVACompras.fr3</RemoteName>
+            <RemoteName>LibroIVAventasSiapDetalle.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1618,9 +1690,18 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\NCElectronica.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\NCTElectronica.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>NCElectronica.fr3</RemoteName>
+            <RemoteName>NCTElectronica.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\EstadoCtaProv.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>EstadoCtaProv.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1645,15 +1726,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\Precios.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>Precios.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="Bin\GeN\img\boton_cobranza.gif" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\img\</RemoteDir>
             <RemoteName>boton_cobranza.gif</RemoteName>
@@ -1663,27 +1735,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\DeudoresPorCredito.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\SiapVtaComp.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>DeudoresPorCredito.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\FacturaSimple.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>FacturaSimple.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\ean.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ean.fr3</RemoteName>
+            <RemoteName>SiapVtaComp.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1708,24 +1762,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\GananciaXvta.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>GananciaXvta.fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="Report\CTriplicado..fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>CTriplicado..fr3</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="Bin\GeN\bin\icuuc30.dll" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\</RemoteDir>
             <RemoteName>icuuc30.dll</RemoteName>
@@ -1744,9 +1780,18 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\CPDuplicado.fr3" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="Report\rpt\CCuadruplicado.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>CPDuplicado.fr3</RemoteName>
+            <RemoteName>CCuadruplicado.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\FacturaDuplicado.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>FacturaDuplicado.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1771,9 +1816,27 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Report\rpt\Precios.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>Precios.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\gen_menu.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_menu.jpg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Report\rpt\B.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>B.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>

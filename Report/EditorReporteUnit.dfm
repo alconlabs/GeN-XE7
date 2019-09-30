@@ -74,8 +74,9 @@ object fEditorReporte: TfEditorReporte
       'EDEPARTAMENTO=EDEPARTAMENTO'
       'EPROVINCIA=EPROVINCIA'
       'ECUIT=ECUIT'
-      'EIIBB=EIIBB'
+      'EWEB=EWEB'
       'EFECHA=EFECHA'
+      'EIIBB=EIIBB'
       'CTIPO=CTIPO'
       'NCTIPO=NCTIPO'
       'NOMBRE=NOMBRE'
@@ -84,6 +85,7 @@ object fEditorReporte: TfEditorReporte
       'DIRECCIONCOMERCIAL=DIRECCIONCOMERCIAL'
       'CIVA=CIVA'
       'CCUIT=CCUIT'
+      'EMAIL=EMAIL'
       'DESCRIPCION=DESCRIPCION'
       'UNIDAD=UNIDAD'
       'AIVA=AIVA'
@@ -93,27 +95,28 @@ object fEditorReporte: TfEditorReporte
       'PRECIO=PRECIO'
       'OPERACION=OPERACION'
       'PREXCANT=PREXCANT'
+      'VIIMPUESTO=VIIMPUESTO'
       'SERVICIO=SERVICIO'
       'DESCR=DESCR'
-      'VIIMPUESTO=VIIMPUESTO'
       'CODIGO=CODIGO'
       'LETRA=LETRA'
       'FECHA=FECHA'
+      'CB=CB'
       'COMPROBANTE=COMPROBANTE'
       'TERMINOS=TERMINOS'
-      'IVA3=IVA3'
+      'VDESC=VDESC'
       'TOTAL=TOTAL'
       'CONTADO=CONTADO'
       'CLIENTE=CLIENTE'
       'SUBTOTAL=SUBTOTAL'
       'DESCUENTO=DESCUENTO'
       'IMPUESTO=IMPUESTO'
-      'IVA2=IVA2'
       'IVA1=IVA1'
+      'IVA2=IVA2'
+      'IVA3=IVA3'
       'EXCENTO=EXCENTO'
       'SALDO=SALDO'
-      'PAGADO=PAGADO'
-      'CB=CB')
+      'PAGADO=PAGADO')
     DataSet = OperacionFDQuery
     BCDToCurrency = False
     Left = 24
@@ -144,7 +147,7 @@ object fEditorReporte: TfEditorReporte
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 39416.849051458300000000
-    ReportOptions.LastChange = 42889.914748287000000000
+    ReportOptions.LastChange = 43736.804182662000000000
     ReportOptions.Picture.Data = {
       0954474946496D61676547494638396150003200F70000FDFDFDFCFCFCFBFBFB
       F9F9F9030303FAFAFA010101F8F8F8020202040404F7F7F70606060505050707
@@ -302,7 +305,7 @@ object fEditorReporte: TfEditorReporte
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
         Frame.Typ = []
-        Top = 472.441250000000000000
+        Top = 555.590910000000000000
         Width = 718.110700000000000000
       end
       object MasterData1: TfrxMasterData
@@ -331,7 +334,7 @@ object fEditorReporte: TfEditorReporte
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
             'DESCRIPCION')
@@ -363,7 +366,7 @@ object fEditorReporte: TfEditorReporte
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
@@ -378,7 +381,7 @@ object fEditorReporte: TfEditorReporte
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
@@ -394,7 +397,7 @@ object fEditorReporte: TfEditorReporte
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
@@ -410,7 +413,7 @@ object fEditorReporte: TfEditorReporte
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
@@ -427,7 +430,7 @@ object fEditorReporte: TfEditorReporte
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
@@ -461,7 +464,7 @@ object fEditorReporte: TfEditorReporte
           DataSetName = 'FacturafrxDBDataset'
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDataset1."DESCRIPCION"]')
+            '[frxDBDataset1."ARTICULO"] [frxDBDataset1."DESCRIPCION"]')
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
@@ -539,10 +542,17 @@ object fEditorReporte: TfEditorReporte
       object GroupFooter1: TfrxGroupFooter
         FillType = ftBrush
         Frame.Typ = []
-        Height = 52.913420000000000000
+        Height = 136.063080000000000000
         Top = 359.055350000000000000
         Width = 718.110700000000000000
         Stretched = True
+        object Shape5: TfrxShapeView
+          AllowVectorExport = True
+          Top = 52.913420000000000000
+          Width = 718.110700000000000000
+          Height = 45.354360000000000000
+          Frame.Typ = []
+        end
         object Shape3: TfrxShapeView
           AllowVectorExport = True
           Width = 718.110700000000000000
@@ -643,6 +653,46 @@ object fEditorReporte: TfEditorReporte
           ParentFont = False
           VAlign = vaCenter
         end
+        object Memo24: TfrxMemoView
+          AllowVectorExport = True
+          Left = 313.700990000000000000
+          Top = 56.692950000000000000
+          Width = 400.630180000000000000
+          Height = 18.897650000000000000
+          DataSet = frxDBDataset1
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsItalic]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            'CAE: [frxDBDataset1."VDESC"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo25: TfrxMemoView
+          AllowVectorExport = True
+          Left = 476.220780000000000000
+          Top = 75.590600000000000000
+          Width = 238.110390000000000000
+          Height = 18.897650000000000000
+          DataSet = frxDBDataset1
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsItalic]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Fecha Vto.: [frxDBDataset1."TERMINOS"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
       end
       object GroupHeader2: TfrxGroupHeader
         FillType = ftBrush
@@ -690,7 +740,9 @@ object fEditorReporte: TfEditorReporte
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            'Pto.Vta. / Nro [frxDBDataset1."PTOVTA"]-[frxDBDataset1."CODIGO"]')
+            
+              'Pto.Vta. / Nro [frxDBDataset1."PTOVTA"]-[frxDBDataset1."COMPROBA' +
+              'NTE"]')
           ParentFont = False
           Formats = <
             item
@@ -720,23 +772,6 @@ object fEditorReporte: TfEditorReporte
           HAlign = haRight
           Memo.UTF8W = (
             'Fecha: [frxDBDataset1."FECHA"]')
-          ParentFont = False
-        end
-        object Memo19: TfrxMemoView
-          AllowVectorExport = True
-          Left = 317.480520000000000000
-          Top = 49.133890000000000000
-          Width = 83.149660000000000000
-          Height = 37.795300000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = 14211288
-          Font.Height = -8
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'DOCUMENTO NO VALIDO COMO FACTURA')
           ParentFont = False
         end
         object Memo3: TfrxMemoView
@@ -771,14 +806,14 @@ object fEditorReporte: TfEditorReporte
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            'ORIGINAL')
+            'REMITO')
           ParentFont = False
         end
         object Picture1: TfrxPictureView
           AllowVectorExport = True
           Left = 3.779530000000000000
-          Top = 6.559060000000000000
-          Width = 313.700990000000000000
+          Top = 2.779529999999990000
+          Width = 192.756030000000000000
           Height = 71.811070000000000000
           Frame.Typ = []
           Picture.Data = {
@@ -1167,7 +1202,7 @@ object fEditorReporte: TfEditorReporte
         object frxDBDataset1ECODIGOAREA: TfrxMemoView
           AllowVectorExport = True
           Left = 3.779530000000000000
-          Top = 79.370130000000000000
+          Top = 68.031540000000000000
           Width = 313.700990000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
@@ -1193,7 +1228,7 @@ object fEditorReporte: TfEditorReporte
         object frxDBDataset1ECP: TfrxMemoView
           AllowVectorExport = True
           Left = 3.779530000000000000
-          Top = 98.267780000000000000
+          Top = 90.708720000000000000
           Width = 393.071120000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
@@ -1379,7 +1414,7 @@ object fEditorReporte: TfEditorReporte
         object frxDBDataset1ETITULAR: TfrxMemoView
           AllowVectorExport = True
           Left = 136.063080000000000000
-          Top = 60.472480000000000000
+          Top = 34.015770000000000000
           Width = 181.417440000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
@@ -1413,11 +1448,31 @@ object fEditorReporte: TfEditorReporte
             'I.V.A.: [frxDBDataset1."EIVA"]')
           ParentFont = False
         end
+        object frxDBDataset1EWEB: TfrxMemoView
+          AllowVectorExport = True
+          Left = 113.385900000000000000
+          Top = 3.779529999999990000
+          Width = 204.094620000000000000
+          Height = 18.897650000000000000
+          DataField = 'EWEB'
+          DataSet = frxDBDataset1
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDataset1."EWEB"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
       end
     end
   end
   object VentasFDQuery1: TFDQuery
-    Active = True
     Connection = FirebirdConnection
     SQL.Strings = (
       'SELECT '
@@ -1432,7 +1487,7 @@ object fEditorReporte: TfEditorReporte
         '      "Cliente".NOMBRE,  "Cliente".TITULAR, "Cliente".DIRECCION,' +
         ' "Cliente".DIRECCIONCOMERCIAL, "Cliente".IVA as CIVA, "Cliente".' +
         'CUIT as CCUIT,'
-      ''
+      '      '#39'www.civeloo.com'#39' as EWEB,'
       #39'FACTURA'#39' as CTIPO, '#39'COD.6'#39' as NCTIPO,'
       '      '
       
@@ -1448,7 +1503,7 @@ object fEditorReporte: TfEditorReporte
       
         '      "VentaItem".SERVICIO, "VentaItem".DESCRIPCION AS DESCR, "V' +
         'entaItem".IMPUESTO as VIIMPUESTO,'
-      '      '
+      '      "Venta".DESCRIPCION as VDESC,'
       '      "Venta".CODIGO,   "Venta".LETRA,   "Venta".FECHA,'
       
         '      "Venta".COMPROBANTE, "Venta".TERMINOS ,   "Venta".IVA3,   ' +
@@ -1580,70 +1635,62 @@ object fEditorReporte: TfEditorReporte
     Active = True
     Connection = FirebirdConnection
     SQL.Strings = (
-      'SELECT '
+      'SELECT'
       
-        #39'1'#39' as PtoVta, '#39'CIVELOO'#39' as Empresa, '#39'Diego E. Guillen'#39' as ETITU' +
-        'LAR,'
+        #39'2'#39' As PtoVta,'#39'Gamer Zone'#39' As Empresa,'#39'Cinthia Veronica Lopez'#39' A' +
+        's ETITULAR,'
       
-        #39'Monotributo'#39' as EIVA, '#39'2804'#39' as ECODIGOAREA, '#39'029814'#39' as ETELEF' +
-        'ONO,'
-      #39'V.Autiero 1255'#39' as EDIRECCIONCOMERCIAL, '#39'9120'#39' as ECP,'
+        #39'Responsable Inscripto'#39' As EIVA,'#39'2804'#39' As ECODIGOAREA,'#39#39' As ETEL' +
+        'EFONO,'
+      #39'Espana 315'#39' As EDIRECCIONCOMERCIAL,'#39'9120'#39' As ECP,'
+      #39'Puerto Madryn'#39' As ECIUDAD,'#39'Biedma'#39' As EDEPARTAMENTO,'
+      #39'Chubut'#39' As EPROVINCIA,'#39'27341273329'#39' As ECUIT,'
+      #39'www.gamerzone.com.ar'#39' As EWEB,'#39'01/01/2018'#39' As EFECHA,'
+      #39'0'#39' As EIIBB, '#39'REMITO'#39' as CTIPO, '#39#39' as NCTIPO, "Cliente".NOMBRE,'
       
-        #39'Puerto Maryn'#39' as ECIUDAD, '#39'Biedma'#39' as EDEPARTAMENTO, '#39'Chubut'#39' a' +
-        's EPROVINCIA,'
-      
-        #39'20314661967'#39' as ECUIT, '#39'45789827'#39' as EIIBB, '#39'27/03/1985'#39' as EFE' +
-        'CHA,'
-      ''
-      #39'FACTURA'#39' as CTIPO, '#39'COD.6'#39' as NCTIPO,'
-      ''
-      '"Cliente".NOMBRE,  "Cliente".TITULAR, "Cliente".DIRECCION,'
-      
-        '"Cliente".DIRECCIONCOMERCIAL, "Cliente".IVA as CIVA, "Cliente".C' +
-        'UIT as CCUIT,'
-      ''
+        '"Cliente".TITULAR, "Cliente".DIRECCION, "Cliente".DIRECCIONCOMER' +
+        'CIAL,'
+      '"Cliente".IVA as CIVA, "Cliente".CUIT as CCUIT, "Cliente".EMAIL,'
       
         '"Articulo".DESCRIPCION, "Articulo".UNIDAD, "Articulo".IVA as AIV' +
         'A,'
-      ''
-      
-        '"OperacionItem".ARTICULO, "OperacionItem".CANTIDAD, "OperacionIt' +
-        'em".COSTO AS VIDESCUENTO,'
-      '"OperacionItem".PRECIO, "OperacionItem".OPERACION,'
+      '"OperacionItem".ARTICULO,  "OperacionItem".CANTIDAD,'
+      '"OperacionItem".COSTO AS VIDESCUENTO,  "OperacionItem".PRECIO,'
+      '"OperacionItem".OPERACION,'
       
         '("OperacionItem".PRECIO * "OperacionItem".CANTIDAD ) as PREXCANT' +
         ','
-      '"OperacionItem".SERVICIO, "OperacionItem".DESCRIPCION AS DESCR,'
       
-        '"OperacionItem".IMPUESTO as VIIMPUESTO, "Operacion".CODIGO, "Ope' +
-        'racion".LETRA,'
-      
-        '"Operacion".FECHA, "Operacion".COMPROBANTE, "Operacion".TERMINOS' +
-        ','
-      
-        '"Operacion".IVA3, "Operacion".TOTAL, "Operacion".CONTADO, "Opera' +
-        'cion".CLIENTE,'
-      
-        '"Operacion".SUBTOTAL, "Operacion".DESCUENTO, "Operacion".IMPUEST' +
+        '"OperacionItem".IMPUESTO as VIIMPUESTO,  "OperacionItem".SERVICI' +
         'O,'
       
-        '"Operacion".IVA2, "Operacion".IVA1, "Operacion".EXCENTO, "Operac' +
-        'ion".SALDO,'
-      '"Operacion".PAGADO, '#39'20121231237'#39'as CB'
-      'FROM "Operacion"'
+        '"OperacionItem".DESCRIPCION AS DESCR, "Operacion".CODIGO,  "Oper' +
+        'acion".LETRA,'
       
-        '  INNER JOIN "OperacionItem" ON ("Operacion".CODIGO = "Operacion' +
-        'Item".OPERACION)'
+        '"Operacion".FECHA, "Operacion".COMPROBANTE AS CB, "Operacion".CO' +
+        'MPROBANTE,'
       
-        '  INNER JOIN "Articulo" ON ("OperacionItem".ARTICULO = "Articulo' +
-        '".CODIGO)'
+        '"Operacion".TERMINOS, "Operacion".DESCRIPCION as VDESC, "Operaci' +
+        'on".TOTAL,'
+      '"Operacion".CONTADO,  "Operacion".CLIENTE, "Operacion".SUBTOTAL,'
+      '"Operacion".DESCUENTO, "Operacion".IMPUESTO, "Operacion".IVA1,'
+      '"Operacion".IVA2, "Operacion".IVA3, "Operacion".EXCENTO,'
+      '"Operacion".SALDO, "Operacion".PAGADO'
+      'FROM  "Operacion"'
       
-        '  INNER JOIN "Cliente" ON ("Operacion".CLIENTE = "Cliente".CODIG' +
-        'O)')
+        'INNER JOIN "OperacionItem" ON ("Operacion".CODIGO = "OperacionIt' +
+        'em".OPERACION)'
+      
+        'INNER JOIN "Articulo" ON ("OperacionItem".ARTICULO = "Articulo".' +
+        'CODIGO)'
+      'INNER JOIN "Cliente" ON ("Operacion".CLIENTE = "Cliente".CODIGO)'
+      'WHERE'
+      '("Operacion".CODIGO = 59 )'
+      'AND ("Operacion".TIPO = '#39'PED'#39' )'
+      'AND ("Operacion".LETRA = '#39'X'#39' )')
     Left = 447
   end
   object tLibroIVAventa: TFDQuery
-    Active = True
     Connection = FirebirdConnection
     SQL.Strings = (
       'SELECT * from "LibroIVAventa"')

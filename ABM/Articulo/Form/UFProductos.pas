@@ -101,11 +101,9 @@ type
     MarcaBitBtn: TBitBtn;
     CategoriaDBLookupComboBox: TDBLookupComboBox;
     CategoriaBitBtn: TBitBtn;
-    Label29: TLabel;
     Label1: TLabel;
     CodigoDBEdit: TDBEdit;
     BitBtn4: TBitBtn;
-    DBNavigator1: TDBNavigator;
     Label24: TLabel;
     CodigoBarraEdit: TDBEdit;
     CodigoBarraBitBtn: TBitBtn;
@@ -114,6 +112,10 @@ type
     Label35: TLabel;
     IVADBComboBox: TDBLookupComboBox;
     IVADBCBPorcLabel: TLabel;
+    ButtonPanel: TPanel;
+    DBNavigator1: TDBNavigator;
+    bImportar: TButton;
+    bExportar: TButton;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -139,6 +141,8 @@ type
     procedure GanaciaDBEditExit(Sender: TObject);
     procedure IVADBComboBoxEnter(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure bImportarClick(Sender: TObject);
+    procedure bExportarClick(Sender: TObject);
   private
     { Private declarations }
     tasa: Double;
@@ -317,6 +321,7 @@ with dm do begin
   dm.tMarca.Active := True;
   tCategoria.Active := True;
   tIVA.Active := True;
+  dm.tCuenta.Active:=True;
 //  with DM do
 //  begin
     //ConfigQuery.Open;
@@ -338,7 +343,6 @@ with dm do begin
     IVADBTLabel.Visible:=True;
     IVADBCBPorcLabel.Visible:=True;
   end;
-  dm.tCuenta.Active:=True;
   dm.tArticulo.Insert;
   nuevo;
 end;
@@ -405,11 +409,11 @@ begin
   with dm do begin
   //if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
   //  else
-    if IVADBComboBox.Text='' then tasa:=21
-    else
-      tasa:=StrToFloat(IVADBComboBox.Text);
-    if tasa=10.5 then t:='105' else t:=FloatToStr(tasa);
-    tArticulo.FieldByName('Tasa').AsInteger := StrToInt(t);
+//    if IVADBComboBox.Text='' then tasa:=21
+//    else tasa:=StrToFloat(IVADBComboBox.Text);
+//    if tasa=10.5 then t:='105' else t:=FloatToStr(tasa);
+    if tasa<100 then t:=FloatToStr(tasa*10) else t:=FloatToStr(tasa);
+    tArticulo.FieldByName('IVA').AsInteger := StrToInt(t);
   end;
 end;
 
@@ -597,6 +601,33 @@ begin
   dm.tProveedor.Close;
   dm.tProveedor.Open;
   dm.tProveedor.Last;
+end;
+
+procedure TFProductos.bExportarClick(Sender: TObject);
+begin
+  with dm do
+  begin
+    tProveedor.Cancel;
+    ExportarTabla('Articulo');
+  end;
+end;
+
+procedure TFProductos.bImportarClick(Sender: TObject);
+begin
+  with dm do
+  begin
+    tArticulo.Cancel;
+    tArticulo.Active := False;
+    tSubCategoria.Active := False;
+    tProveedor.Active := False;
+    tRubro.Active := False;
+    tMarca.Active := False;
+    tCategoria.Active := False;
+    tIVA.Active := False;
+    tCuenta.Active:=False;
+    ImportarTabla('Articulo');
+  end;
+  Close;
 end;
 
 procedure TFProductos.BitBtn13Click(Sender: TObject);

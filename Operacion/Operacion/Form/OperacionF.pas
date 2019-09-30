@@ -170,8 +170,8 @@ begin
       if PR=0 then PR := dm.qOperacion.FieldByName('PRECIO' + PrecioLabel.Caption).AsFloat;
       {precio}SGFact.Cells[4, Cuenta] := FloatToStr(PR);
       TASA := dm.qOperacion.FieldByName('TASA').AsString;
-      if TASA='105' then TASA := '10.5';
-      {iva}SGFact.Cells[6, Cuenta] := TASA;
+//      if TASA='105' then TASA := '10.5';
+      {iva}SGFact.Cells[6, Cuenta] := dm.TraerValor('Iva', 'TASA', TASA);
       {tot}SGFact.Cells[5, Cuenta] := Format('%8.2f', [(PR * CAN)]);
       Cuenta := Cuenta + 1;
       FEContado.Text:='0';

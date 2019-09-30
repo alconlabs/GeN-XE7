@@ -2,8 +2,8 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2019/03/21 17:42:58.000.347,=C:\Users\DeGsoft\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/03/21 17:44:10.000.248,C:\Users\DeGsoft\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Report\EditorReporteUnit.dfm</Transaction>
-    <Transaction>2019/03/21 17:44:10.000.248,C:\Users\DeGsoft\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Report\EditorReporteUnit.pas</Transaction>
-    <Transaction>2019/03/21 17:44:25.000.255,C:\Users\DeGsoft\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Report\EditorReporteProject.dproj</Transaction>
+    <Transaction>2019/03/21 17:44:10.000.248,C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Report\EditorReporteUnit.pas=C:\Users\DeGsoft\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/03/21 17:44:10.000.248,C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Report\EditorReporteUnit.dfm=C:\Users\DeGsoft\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2019/03/21 17:44:25.000.255,C:\Users\DeGsoft\Documents\GitHub\GeN-XE7\Report\EditorReporteProject.dproj=C:\Users\DeGsoft\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
   </Transactions>
 </BorlandProject>

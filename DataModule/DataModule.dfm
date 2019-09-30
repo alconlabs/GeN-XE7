@@ -922,6 +922,9 @@ object DM: TDM
     Top = 48
   end
   object FDTable1: TFDTable
+    BeforeInsert = FDTable1BeforeInsert
+    BeforeEdit = FDTable1BeforeEdit
+    AfterPost = FDTable1AfterPost
     Connection = BaseDatosFB
     Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
@@ -1105,7 +1108,7 @@ object DM: TDM
   end
   object FDBatchMoveSQLWriter1: TFDBatchMoveSQLWriter
     Connection = BaseDatosFB
-    TableName = '"Proveedor"'
+    Transaction = TransactionFB
     Left = 176
     Top = 288
   end
@@ -1730,7 +1733,10 @@ object DM: TDM
     Top = 720
   end
   object tArticulo: TFDTable
+    BeforeInsert = tArticuloBeforeInsert
     AfterInsert = tArticuloAfterInsert
+    BeforeEdit = tArticuloBeforeEdit
+    AfterPost = tArticuloAfterPost
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     Transaction = TransactionFB
@@ -1742,6 +1748,9 @@ object DM: TDM
     Left = 264
   end
   object tCategoria: TFDTable
+    BeforeInsert = tCategoriaBeforeInsert
+    BeforeEdit = tCategoriaBeforeEdit
+    AfterPost = tCategoriaAfterPost
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     Transaction = TransactionFB
@@ -1754,7 +1763,10 @@ object DM: TDM
     Top = 48
   end
   object tCliente: TFDTable
+    BeforeInsert = tClienteBeforeInsert
     AfterInsert = tClienteAfterInsert
+    BeforeEdit = tClienteBeforeEdit
+    AfterPost = tClienteAfterPost
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     Transaction = TransactionFB
@@ -1767,6 +1779,9 @@ object DM: TDM
     Top = 97
   end
   object tConfiguracion: TFDTable
+    BeforeInsert = tConfiguracionBeforeInsert
+    BeforeEdit = tConfiguracionBeforeEdit
+    AfterPost = tConfiguracionAfterPost
     Connection = BaseDatosFB
     Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
@@ -1778,6 +1793,9 @@ object DM: TDM
     Top = 144
   end
   object tCuenta: TFDTable
+    BeforeInsert = tCuentaBeforeInsert
+    BeforeEdit = tCuentaBeforeEdit
+    AfterPost = tCuentaAfterPost
     Connection = BaseDatosFB
     Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
@@ -1789,6 +1807,9 @@ object DM: TDM
     Top = 192
   end
   object tIVA: TFDTable
+    BeforeInsert = tIVABeforeInsert
+    BeforeEdit = tIVABeforeEdit
+    AfterPost = tIVAAfterPost
     Connection = BaseDatosFB
     Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
@@ -1800,6 +1821,9 @@ object DM: TDM
     Top = 232
   end
   object tLibroIVAventa: TFDTable
+    BeforeInsert = tLibroIVAventaBeforeInsert
+    BeforeEdit = tLibroIVAventaBeforeEdit
+    AfterPost = tLibroIVAventaAfterPost
     Connection = BaseDatosFB
     Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
@@ -1811,6 +1835,9 @@ object DM: TDM
     Top = 280
   end
   object tMaterial: TFDTable
+    BeforeInsert = tMaterialBeforeInsert
+    BeforeEdit = tMaterialBeforeEdit
+    AfterPost = tMaterialAfterPost
     Connection = BaseDatosFB
     Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
@@ -1822,6 +1849,9 @@ object DM: TDM
     Top = 328
   end
   object tMarca: TFDTable
+    BeforeInsert = tMarcaBeforeInsert
+    BeforeEdit = tMarcaBeforeEdit
+    AfterPost = tMarcaAfterPost
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     Transaction = TransactionFB
@@ -1834,7 +1864,10 @@ object DM: TDM
     Top = 376
   end
   object tProveedor: TFDTable
+    BeforeInsert = tProveedorBeforeInsert
     AfterInsert = tProveedorAfterInsert
+    BeforeEdit = tProveedorBeforeEdit
+    AfterPost = tProveedorAfterPost
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     Transaction = TransactionFB
@@ -1847,6 +1880,9 @@ object DM: TDM
     Top = 424
   end
   object tEmpresa: TFDTable
+    BeforeInsert = tEmpresaBeforeInsert
+    BeforeEdit = tEmpresaBeforeEdit
+    AfterPost = tEmpresaAfterPost
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     Transaction = TransactionFB
@@ -1859,6 +1895,9 @@ object DM: TDM
     Top = 472
   end
   object tRubro: TFDTable
+    BeforeInsert = tRubroBeforeInsert
+    BeforeEdit = tRubroBeforeEdit
+    AfterPost = tRubroAfterPost
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     Transaction = TransactionFB
@@ -1871,6 +1910,9 @@ object DM: TDM
     Top = 520
   end
   object tSubCategoria: TFDTable
+    BeforeInsert = tSubCategoriaBeforeInsert
+    BeforeEdit = tSubCategoriaBeforeEdit
+    AfterPost = tSubCategoriaAfterPost
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     Transaction = TransactionFB
@@ -1883,6 +1925,9 @@ object DM: TDM
     Top = 568
   end
   object tUsuario: TFDTable
+    BeforeInsert = tUsuarioBeforeInsert
+    BeforeEdit = tUsuarioBeforeEdit
+    AfterPost = tUsuarioAfterPost
     Connection = BaseDatosFB
     Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
@@ -1894,7 +1939,10 @@ object DM: TDM
     Top = 616
   end
   object tVendedor: TFDTable
+    BeforeInsert = tVendedorBeforeInsert
     AfterInsert = tVendedorAfterInsert
+    BeforeEdit = tVendedorBeforeEdit
+    AfterPost = tVendedorAfterPost
     Connection = BaseDatosFB
     Transaction = TransactionFB
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]

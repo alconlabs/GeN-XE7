@@ -138,6 +138,54 @@ type
     procedure tArticuloAfterInsert(DataSet: TDataSet);
     procedure tProveedorAfterInsert(DataSet: TDataSet);
     procedure tVendedorAfterInsert(DataSet: TDataSet);
+    procedure tProveedorAfterPost(DataSet: TDataSet);
+    procedure tArticuloAfterPost(DataSet: TDataSet);
+    procedure tProveedorBeforeInsert(DataSet: TDataSet);
+    procedure tProveedorBeforeEdit(DataSet: TDataSet);
+    procedure tArticuloBeforeEdit(DataSet: TDataSet);
+    procedure tArticuloBeforeInsert(DataSet: TDataSet);
+    procedure tCategoriaAfterPost(DataSet: TDataSet);
+    procedure tCategoriaBeforeEdit(DataSet: TDataSet);
+    procedure tCategoriaBeforeInsert(DataSet: TDataSet);
+    procedure tClienteBeforeInsert(DataSet: TDataSet);
+    procedure tClienteBeforeEdit(DataSet: TDataSet);
+    procedure tClienteAfterPost(DataSet: TDataSet);
+    procedure tConfiguracionAfterPost(DataSet: TDataSet);
+    procedure tConfiguracionBeforeEdit(DataSet: TDataSet);
+    procedure tConfiguracionBeforeInsert(DataSet: TDataSet);
+    procedure tCuentaBeforeEdit(DataSet: TDataSet);
+    procedure tCuentaBeforeInsert(DataSet: TDataSet);
+    procedure tCuentaAfterPost(DataSet: TDataSet);
+    procedure tIVAAfterPost(DataSet: TDataSet);
+    procedure tIVABeforeInsert(DataSet: TDataSet);
+    procedure tIVABeforeEdit(DataSet: TDataSet);
+    procedure tLibroIVAventaAfterPost(DataSet: TDataSet);
+    procedure tLibroIVAventaBeforeEdit(DataSet: TDataSet);
+    procedure tLibroIVAventaBeforeInsert(DataSet: TDataSet);
+    procedure tMaterialAfterPost(DataSet: TDataSet);
+    procedure tMaterialBeforeInsert(DataSet: TDataSet);
+    procedure tMaterialBeforeEdit(DataSet: TDataSet);
+    procedure tMarcaBeforeEdit(DataSet: TDataSet);
+    procedure tMarcaBeforeInsert(DataSet: TDataSet);
+    procedure tMarcaAfterPost(DataSet: TDataSet);
+    procedure tEmpresaAfterPost(DataSet: TDataSet);
+    procedure tEmpresaBeforeEdit(DataSet: TDataSet);
+    procedure tEmpresaBeforeInsert(DataSet: TDataSet);
+    procedure tRubroBeforeInsert(DataSet: TDataSet);
+    procedure tRubroBeforeEdit(DataSet: TDataSet);
+    procedure tRubroAfterPost(DataSet: TDataSet);
+    procedure tSubCategoriaBeforeInsert(DataSet: TDataSet);
+    procedure tSubCategoriaBeforeEdit(DataSet: TDataSet);
+    procedure tSubCategoriaAfterPost(DataSet: TDataSet);
+    procedure tUsuarioAfterPost(DataSet: TDataSet);
+    procedure tUsuarioBeforeEdit(DataSet: TDataSet);
+    procedure tUsuarioBeforeInsert(DataSet: TDataSet);
+    procedure tVendedorBeforeInsert(DataSet: TDataSet);
+    procedure tVendedorBeforeEdit(DataSet: TDataSet);
+    procedure tVendedorAfterPost(DataSet: TDataSet);
+    procedure FDTable1AfterPost(DataSet: TDataSet);
+    procedure FDTable1BeforeEdit(DataSet: TDataSet);
+    procedure FDTable1BeforeInsert(DataSet: TDataSet);
   private
     { Private declarations }
     bd, ejecutable : string;
@@ -591,6 +639,66 @@ begin
   ),Fmt);
 end;
 
+procedure TDM.tIVAAfterPost(DataSet: TDataSet);
+begin
+  tIVA.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tIVABeforeEdit(DataSet: TDataSet);
+begin
+  tIVA.Transaction.StartTransaction;
+end;
+
+procedure TDM.tIVABeforeInsert(DataSet: TDataSet);
+begin
+  tIVA.Transaction.StartTransaction;
+end;
+
+procedure TDM.tLibroIVAventaAfterPost(DataSet: TDataSet);
+begin
+  tLibroIVAventa.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tLibroIVAventaBeforeEdit(DataSet: TDataSet);
+begin
+  tLibroIVAventa.Transaction.StartTransaction;
+end;
+
+procedure TDM.tLibroIVAventaBeforeInsert(DataSet: TDataSet);
+begin
+  tLibroIVAventa.Transaction.StartTransaction;
+end;
+
+procedure TDM.tMarcaAfterPost(DataSet: TDataSet);
+begin
+  tMarca.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tMarcaBeforeEdit(DataSet: TDataSet);
+begin
+  tMarca.Transaction.StartTransaction;
+end;
+
+procedure TDM.tMarcaBeforeInsert(DataSet: TDataSet);
+begin
+  tMarca.Transaction.StartTransaction;
+end;
+
+procedure TDM.tMaterialAfterPost(DataSet: TDataSet);
+begin
+  tMaterial.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tMaterialBeforeEdit(DataSet: TDataSet);
+begin
+  tMaterial.Transaction.StartTransaction;
+end;
+
+procedure TDM.tMaterialBeforeInsert(DataSet: TDataSet);
+begin
+  tMaterial.Transaction.StartTransaction;
+end;
+
 procedure TDM.tProveedorAfterInsert(DataSet: TDataSet);
 begin
   with tProveedor do begin
@@ -598,6 +706,21 @@ begin
     FieldByName('CtaTipo').AsString := '13';
     FieldByName('CtaAnticipo').AsString := '36';
   end;
+end;
+
+procedure TDM.tProveedorAfterPost(DataSet: TDataSet);
+begin
+  tProveedor.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tProveedorBeforeEdit(DataSet: TDataSet);
+begin
+  tProveedor.Transaction.StartTransaction;
+end;
+
+procedure TDM.tProveedorBeforeInsert(DataSet: TDataSet);
+begin
+  tProveedor.Transaction.StartTransaction;
 end;
 
 function TDM.Descargar;
@@ -683,6 +806,21 @@ begin
   Query.Open;
   result := Query.Fields[0].AsInteger + 1;
   Query.Close;
+end;
+
+procedure TDM.FDTable1AfterPost(DataSet: TDataSet);
+begin
+  FDTable1.Transaction.CommitRetaining;
+end;
+
+procedure TDM.FDTable1BeforeEdit(DataSet: TDataSet);
+begin
+  FDTable1.Transaction.StartTransaction;
+end;
+
+procedure TDM.FDTable1BeforeInsert(DataSet: TDataSet);
+begin
+  FDTable1.Transaction.StartTransaction;
 end;
 
 procedure TDM.FormatearFecha;
@@ -853,6 +991,51 @@ begin
   result := Query.Fields.Fields[0].AsString;
 end;
 
+procedure TDM.tRubroAfterPost(DataSet: TDataSet);
+begin
+  tRubro.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tRubroBeforeEdit(DataSet: TDataSet);
+begin
+  tRubro.Transaction.StartTransaction;
+end;
+
+procedure TDM.tRubroBeforeInsert(DataSet: TDataSet);
+begin
+  tRubro.Transaction.StartTransaction;
+end;
+
+procedure TDM.tSubCategoriaAfterPost(DataSet: TDataSet);
+begin
+  tSubCategoria.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tSubCategoriaBeforeEdit(DataSet: TDataSet);
+begin
+  tSubCategoria.Transaction.StartTransaction;
+end;
+
+procedure TDM.tSubCategoriaBeforeInsert(DataSet: TDataSet);
+begin
+  tSubCategoria.Transaction.StartTransaction;
+end;
+
+procedure TDM.tUsuarioAfterPost(DataSet: TDataSet);
+begin
+  tUsuario.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tUsuarioBeforeEdit(DataSet: TDataSet);
+begin
+  tUsuario.Transaction.StartTransaction;
+end;
+
+procedure TDM.tUsuarioBeforeInsert(DataSet: TDataSet);
+begin
+  tUsuario.Transaction.StartTransaction;
+end;
+
 procedure TDM.tVendedorAfterInsert(DataSet: TDataSet);
 begin
   with tVendedor do begin
@@ -860,6 +1043,21 @@ begin
     FieldByName('CtaNombre').AsString := '50';
     FieldByName('CtaAnticipo').AsString := '25';
   end;
+end;
+
+procedure TDM.tVendedorAfterPost(DataSet: TDataSet);
+begin
+  tVendedor.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tVendedorBeforeEdit(DataSet: TDataSet);
+begin
+  tVendedor.Transaction.StartTransaction;
+end;
+
+procedure TDM.tVendedorBeforeInsert(DataSet: TDataSet);
+begin
+  tVendedor.Transaction.StartTransaction;
 end;
 
 procedure TDM.AgregarValor;
@@ -1386,6 +1584,7 @@ begin
     try
       Open('SELECT '+campo+' FROM ' + tabla + codigo);
       result := Fields.Fields[0].AsString;
+      if result='' then result:='0';
     finally
       vQuery.Free;
     end;
@@ -1467,15 +1666,16 @@ end;
 
 function  TDM.CalcularIVA;
 begin
-  if porcentaje = 105 then porcentaje := 10.5;
-//  Result := monto + (monto * (porcentaje / 100));
-  Result := monto*(porcentaje/100+1);
+//  if porcentaje = 105 then porcentaje := 10.5;
+  if porcentaje<100 then porcentaje:=(porcentaje*10);
+  Result := monto*(porcentaje/1000+1);
 end;
 
 function  TDM.SacarIVA;
 begin
-  if porcentaje = 105 then porcentaje := 10.5;
-  Result := monto-monto/(porcentaje/100+1);
+//  if porcentaje = 105 then porcentaje := 10.5;
+  if porcentaje<100 then porcentaje:=(porcentaje*10);
+  Result := monto-monto/(porcentaje/1000+1);
 end;
 
 procedure TDM.tArticuloAfterInsert(DataSet: TDataSet);
@@ -1505,6 +1705,36 @@ begin
   end;
 end;
 
+procedure TDM.tArticuloAfterPost(DataSet: TDataSet);
+begin
+  tArticulo.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tArticuloBeforeEdit(DataSet: TDataSet);
+begin
+  tArticulo.Transaction.StartTransaction;
+end;
+
+procedure TDM.tArticuloBeforeInsert(DataSet: TDataSet);
+begin
+  tArticulo.Transaction.StartTransaction;
+end;
+
+procedure TDM.tCategoriaAfterPost(DataSet: TDataSet);
+begin
+  tCategoria.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tCategoriaBeforeEdit(DataSet: TDataSet);
+begin
+  tCategoria.Transaction.StartTransaction;
+end;
+
+procedure TDM.tCategoriaBeforeInsert(DataSet: TDataSet);
+begin
+  tCategoria.Transaction.StartTransaction;
+end;
+
 procedure TDM.tClienteAfterInsert(DataSet: TDataSet);
 begin
   with tCliente do begin
@@ -1513,6 +1743,66 @@ begin
     FieldByName('CtaAnticipo').AsString := '9';
     FieldByName('Vendedor').AsString := '0';
   end;
+end;
+
+procedure TDM.tClienteAfterPost(DataSet: TDataSet);
+begin
+  tCliente.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tClienteBeforeEdit(DataSet: TDataSet);
+begin
+  tCliente.Transaction.StartTransaction;
+end;
+
+procedure TDM.tClienteBeforeInsert(DataSet: TDataSet);
+begin
+  tCliente.Transaction.StartTransaction;
+end;
+
+procedure TDM.tConfiguracionAfterPost(DataSet: TDataSet);
+begin
+  tConfiguracion.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tConfiguracionBeforeEdit(DataSet: TDataSet);
+begin
+  tConfiguracion.Transaction.StartTransaction;
+end;
+
+procedure TDM.tConfiguracionBeforeInsert(DataSet: TDataSet);
+begin
+  tConfiguracion.Transaction.StartTransaction;
+end;
+
+procedure TDM.tCuentaAfterPost(DataSet: TDataSet);
+begin
+  tCuenta.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tCuentaBeforeEdit(DataSet: TDataSet);
+begin
+  tCuenta.Transaction.StartTransaction;
+end;
+
+procedure TDM.tCuentaBeforeInsert(DataSet: TDataSet);
+begin
+  tCuenta.Transaction.StartTransaction;
+end;
+
+procedure TDM.tEmpresaAfterPost(DataSet: TDataSet);
+begin
+  tEmpresa.Transaction.CommitRetaining;
+end;
+
+procedure TDM.tEmpresaBeforeEdit(DataSet: TDataSet);
+begin
+  tEmpresa.Transaction.StartTransaction;
+end;
+
+procedure TDM.tEmpresaBeforeInsert(DataSet: TDataSet);
+begin
+  tEmpresa.Transaction.StartTransaction;
 end;
 
 function TDM.TraerAlicuota;
@@ -1684,8 +1974,6 @@ procedure TDM.ExportarTabla;
 begin
     SaveDialog1.FileName := tabla+'.csv';
     SaveDialog1.Execute;
-//    if SaveDialog1.FileName<>'' then
-//    begin
       try
         with FDTable1 do begin
           if Active then Active := False;
@@ -1713,45 +2001,34 @@ begin
         end;
       finally
         FDTable1.EnableControls;
+        FDTable1.Active := False;
       end;
-//    end;
 end;
 
 procedure TDM.ImportarTabla;
 begin
   OpenDialog1.Execute();
   try
-//    // Create text reader and set FDBatchMode as owner. Then
-//    // FDBatchMove will automatically manage the reader instance.
-//    with TFDBatchMoveTextReader.Create(FDBatchMove) do begin
-//      // Set text data file name
-//      FileName := OpenDialog1.FileName;
-//      // Setup file format
-//      DataDef.Separator := ';';
-//      DataDef.WithFieldNames := True;
-//    end;
-//    // Create dataset writer and set FDBatchMode as owner. Then
-//    // FDBatchMove will automatically manage the writer instance.
-//    with TFDBatchMoveSQLWriter.Create(FDBatchMove) do begin
-//    // Set destination dataset
-//      Connection := FDConnection1;
-//      TableName := '"'+tabla+'"';
-//    end;
-//    // Analyze source text file structure
-//    with FDBatchMove do begin
-//      Options := [poIdentityInsert,poCreateDest,poSkipUnmatchedDestFields,poUseTransactions];
-//      Mode := dmAppendUpdate;
-//      GuessFormat;
-//      Execute;
-//    end;
-    FDBatchMoveTextReader1.FileName := OpenDialog1.FileName;
-    FDBatchMoveTextReader1.DataDef.Separator := ';';
-    FDBatchMoveTextReader1.DataDef.WithFieldNames := True;
-    FDBatchMove1.Mode := dmAppendUpdate;
-    FDBatchMove1.GuessFormat;
-    FDBatchMove1.Execute;
+    BaseDatosFB.StartTransaction;
+    with FDBatchMoveTextReader1 do
+    begin
+      FileName := OpenDialog1.FileName;
+      DataDef.Separator := ';';
+      DataDef.WithFieldNames := True;
+    end;
+    with FDBatchMoveSQLWriter1 do
+    begin
+      TableName := '"'+tabla+'"';
+    end;
+    with FDBatchMove1 do
+    begin
+      Mode := dmAppendUpdate;
+      GuessFormat;
+      Execute;
+    end;
+    BaseDatosFB.CommitRetaining;
   finally
-  //
+//
   end;
 end;
 

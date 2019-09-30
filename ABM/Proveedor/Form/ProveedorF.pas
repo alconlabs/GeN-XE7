@@ -135,8 +135,6 @@ begin
   dm.tUsuario.Close;
   dm.tCuenta.Close;
   dm.ImportarTabla('Proveedor');
-//  dm.tProveedor.Edit;
-//  dm.tProveedor.Post;
   Close;
 end;
 

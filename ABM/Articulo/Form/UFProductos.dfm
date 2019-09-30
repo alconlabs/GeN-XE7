@@ -24,8 +24,8 @@ object FProductos: TFProductos
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 656
-    Height = 468
+    Width = 719
+    Height = 427
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
@@ -454,7 +454,7 @@ object FProductos: TFProductos
         Top = 86
         Width = 65
         Height = 21
-        DataField = 'IVA'
+        DataField = 'TASA'
         DataSource = DM.dstArticulo
         KeyField = 'CODIGO'
         ListField = 'TASA'
@@ -468,15 +468,11 @@ object FProductos: TFProductos
     object TabSheet3: TTabSheet
       Caption = 'Notas'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
-        Width = 648
-        Height = 440
+        Width = 711
+        Height = 399
         Align = alClient
         DataField = 'Notas'
         DataSource = DM.dstArticulo
@@ -486,10 +482,6 @@ object FProductos: TFProductos
     object TabSheet2: TTabSheet
       Caption = 'Informaci'#243'n Adicional'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label6: TLabel
         Left = 351
         Top = 116
@@ -748,10 +740,6 @@ object FProductos: TFProductos
     object TabSheet4: TTabSheet
       Caption = 'Precios'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label11: TLabel
         Left = 185
         Top = 221
@@ -872,10 +860,6 @@ object FProductos: TFProductos
     object TabSheet5: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label50: TLabel
         Left = 185
         Top = 51
@@ -992,46 +976,36 @@ object FProductos: TFProductos
     end
   end
   object Panel3: TPanel
-    Left = 656
+    Left = 719
     Top = 0
-    Width = 138
-    Height = 468
+    Width = 75
+    Height = 427
     Align = alRight
-    Color = clBlack
     ParentBackground = False
     TabOrder = 1
-    object Label29: TLabel
-      Left = 45
-      Top = 206
-      Width = 46
-      Height = 13
-      Caption = 'Grabar?'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
     object Label1: TLabel
-      Left = 48
-      Top = 22
-      Width = 40
+      Left = 1
+      Top = 76
+      Width = 73
       Height = 13
+      Align = alTop
       Caption = 'C'#243'digo'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitTop = 51
+      ExplicitWidth = 40
     end
     object BitBtn1: TBitBtn
-      Left = 28
-      Top = 145
-      Width = 80
+      Left = 1
+      Top = 326
+      Width = 73
       Height = 50
-      Caption = 'Si'
+      Align = alBottom
+      Caption = 'Grabar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -1061,10 +1035,11 @@ object FProductos: TFProductos
       OnClick = BitBtn1Click
     end
     object BitBtn2: TBitBtn
-      Left = 28
-      Top = 225
-      Width = 80
+      Left = 1
+      Top = 376
+      Width = 73
       Height = 50
+      Align = alBottom
       Caption = 'No'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -1078,10 +1053,11 @@ object FProductos: TFProductos
       OnClick = BitBtn2Click
     end
     object CodigoDBEdit: TDBEdit
-      Left = 25
-      Top = 41
-      Width = 86
+      Left = 1
+      Top = 89
+      Width = 73
       Height = 32
+      Align = alTop
       DataField = 'CODIGO'
       DataSource = DM.dstArticulo
       Font.Charset = DEFAULT_CHARSET
@@ -1091,13 +1067,15 @@ object FProductos: TFProductos
       Font.Style = []
       ParentFont = False
       TabOrder = 2
+      ExplicitTop = 64
     end
     object BitBtn4: TBitBtn
-      Left = 28
-      Top = 352
-      Width = 80
-      Height = 50
-      Caption = 'Buscar F5'
+      Left = 1
+      Top = 1
+      Width = 73
+      Height = 25
+      Align = alTop
+      Caption = 'Buscar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
       Font.Height = -11
@@ -1107,13 +1085,45 @@ object FProductos: TFProductos
       TabOrder = 3
       OnClick = BitBtn4Click
     end
+    object bImportar: TButton
+      Left = 1
+      Top = 51
+      Width = 73
+      Height = 25
+      Align = alTop
+      Caption = 'Importar'
+      TabOrder = 4
+      OnClick = bImportarClick
+      ExplicitLeft = 6
+      ExplicitTop = 58
+    end
+    object bExportar: TButton
+      Left = 1
+      Top = 26
+      Width = 73
+      Height = 25
+      Align = alTop
+      Caption = 'Exportar'
+      TabOrder = 5
+      OnClick = bExportarClick
+      ExplicitTop = 51
+    end
+  end
+  object ButtonPanel: TPanel
+    Left = 0
+    Top = 427
+    Width = 794
+    Height = 41
+    Align = alBottom
+    TabOrder = 2
     object DBNavigator1: TDBNavigator
-      Left = 10
-      Top = 427
-      Width = 120
+      Left = 1
+      Top = 1
+      Width = 792
       Height = 36
       DataSource = DM.dstArticulo
       VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete]
+      Align = alTop
       Hints.Strings = (
         'Primer registro'
         'Registro anterior'
@@ -1127,7 +1137,7 @@ object FProductos: TFProductos
         'Refrescar datos')
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 4
+      TabOrder = 0
     end
   end
 end
