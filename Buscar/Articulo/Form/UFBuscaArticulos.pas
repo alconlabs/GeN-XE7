@@ -52,7 +52,6 @@ type
       Shift: TShiftState);
     procedure CategoriaEditKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure CodigoEditExit(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure VerTodosBitBtnClick(Sender: TObject);
     procedure imprimir_exportarImageClick(Sender: TObject);
@@ -121,30 +120,7 @@ begin
     if Precio = 'Costo' then
       Precio := 'Costo';
   end;
-  {dm.qArticulo.SQL.Text := 'SELECT' +
-    '    ("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*0.01)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
-    + '  "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
-    + '  "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'
-    + '  "Articulo".PRECIO,  "Articulo".PORCENTAJE,  "Articulo".ULTPRECIO,  "Articulo".UBICACION,'
-    + '  "Articulo".UNIDAD,  "Articulo".DISPONIBLE,  "Articulo".ENPRODUCCION,  "Articulo".NOTAS,'
-    + '  "Articulo".IVA,  "Articulo".TASA,  "Articulo".IMPOTROS,  "Articulo".IIBB,'
-    + '  "Articulo".STOCKMINIMO,  "Articulo".STOCKMAXIMO,  "Articulo".STOCKVENDIDO,  "Articulo".FECHACOMPULT,'
-    + '  "Articulo".LISTA,  "Articulo".PROCEDENCIA,  "Articulo".CODIGOBARRA,  "Articulo".GARANTIA,'
-    + '  "Articulo".FECHA,  "Articulo".PEDIDO,  "Articulo".STOCK,  "Articulo".EXISTENTE,'
-    + '  "Articulo".ACTUAL,  "Articulo".MARCADOCONTADO,  "Articulo".MARCADOLISTA,  "Articulo".MARCADOFINAL,'
-    + '  "Articulo".PREPARADO,  "Articulo".CTANOMBRE,  "Articulo".CTATIPO,  "Articulo".CTAANTICIPO,'
-    + '  "Articulo".CTAIIBB,  "Articulo".ESTADO,  "Articulo".VENCE,  "Articulo".VENCIMIENTO,'
-    + '  "Marca".DESCRIPCION AS MARCA,  "Color".DESCRIPCION AS COLOR,  "Categoria".DESCRIPCION AS CATEGORIA,'
-    + '  "SubCategoria".DESCRIPCION AS SUBCATEGORIA,  "Rubro".DESCRIPCION AS RUBRO,  "Proveedor".NOMBRE AS PROVEEDOR'
-    + '  FROM' + '  "Articulo"' +
-    '  INNER JOIN "Marca" ON ("Articulo".MARCA = "Marca".CODIGO)' +
-    '  INNER JOIN "Color" ON ("Articulo".COLOR = "Color".CODIGO)' +
-    '  INNER JOIN "Categoria" ON ("Articulo".CATEGORIA = "Categoria".CODIGO)' +
-    '  INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCategoria".CODIGO)'
-    + '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
-    '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +  }
   articulos := 'SELECT'
-//    + ' ROUND(("Articulo".Precio+"Articulo".Precio * ("Articulo".Tasa*0.01)),2) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
     + ' iif( "Articulo".Tasa = 105, "Articulo".Precio*1.105, "Articulo".Precio*1.21 ) as precioIVA,'
     + ' "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
     + ' "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
@@ -170,7 +146,7 @@ begin
   dm.qArticulo.SQL.Text:= articulos
     +'  WHERE (PROVEEDOR like ' + QuotedStr(ProveedorEdit.Text + '%') + ')'
     +'  ORDER BY   "Articulo".DESCRIPCION';
-  if (DM.ConfigQuery.FieldByName('CodigoBarra').AsString) = 'SI ' then
+  if (DM.ConfigQuery.FieldByName('CodigoBarra').AsString) = 'SI' then
     CodigoEdit.SetFocus
   else
     DescripcionEdit.SetFocus;
@@ -192,37 +168,15 @@ end;
 
 procedure TFBuscaArticulo.buscar;
 begin
-  {dm.qArticulo.SQL.Text := 'SELECT' +
-    '    ("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*0.01)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
-    + '  "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
-    + '  "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'
-    + '  "Articulo".PRECIO,  "Articulo".PORCENTAJE,  "Articulo".ULTPRECIO,  "Articulo".UBICACION,'
-    + '  "Articulo".UNIDAD,  "Articulo".DISPONIBLE,  "Articulo".ENPRODUCCION,  "Articulo".NOTAS,'
-    + '  "Articulo".IVA,  "Articulo".TASA,  "Articulo".IMPOTROS,  "Articulo".IIBB,'
-    + '  "Articulo".STOCKMINIMO,  "Articulo".STOCKMAXIMO,  "Articulo".STOCKVENDIDO,  "Articulo".FECHACOMPULT,'
-    + '  "Articulo".LISTA,  "Articulo".PROCEDENCIA,  "Articulo".CODIGOBARRA,  "Articulo".GARANTIA,'
-    + '  "Articulo".FECHA,  "Articulo".PEDIDO,  "Articulo".STOCK,  "Articulo".EXISTENTE,'
-    + '  "Articulo".ACTUAL,  "Articulo".MARCADOCONTADO,  "Articulo".MARCADOLISTA,  "Articulo".MARCADOFINAL,'
-    + '  "Articulo".PREPARADO,  "Articulo".CTANOMBRE,  "Articulo".CTATIPO,  "Articulo".CTAANTICIPO,'
-    + '  "Articulo".CTAIIBB,  "Articulo".ESTADO,  "Articulo".VENCE,  "Articulo".VENCIMIENTO,'
-    + '  "Marca".DESCRIPCION AS MARCA,  "Color".DESCRIPCION AS COLOR,  "Categoria".DESCRIPCION AS CATEGORIA,'
-    + '  "SubCategoria".DESCRIPCION AS SUBCATEGORIA,  "Rubro".DESCRIPCION AS RUBRO,  "Proveedor".NOMBRE AS PROVEEDOR'
-    + '  FROM' + '  "Articulo"' +
-    '  INNER JOIN "Marca" ON ("Articulo".MARCA = "Marca".CODIGO)' +
-    '  INNER JOIN "Color" ON ("Articulo".COLOR = "Color".CODIGO)' +
-    '  INNER JOIN "Categoria" ON ("Articulo".CATEGORIA = "Categoria".CODIGO)' +
-    '  INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCategoria".CODIGO)'
-    + '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
-    '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' +}
   with dm do begin
     qArticulo.SQL.Text:= articulos+' WHERE '+
-//    'AND ("Articulo".DESCRIPCION Containing '+QuotedStr(DescripcionEdit.Text)+')'+
     ' (upper("Articulo".DESCRIPCION) Containing '+QuotedStr(UpperCase(DescripcionEdit.Text))+')'+
     'AND ("Marca".DESCRIPCION like '+QuotedStr(MarcaEdit.Text + '%')+')'+
     'AND ("Rubro".DESCRIPCION like '+QuotedStr(RubroEdit.Text + '%')+')'+
     'AND ("Categoria".DESCRIPCION like '+QuotedStr(CategoriaEdit.Text + '%')+')'+
     'AND (upper("Proveedor".NOMBRE) Containing '+QuotedStr(UpperCase(ProveedorEdit.Text))+')';
-    if CodigoEdit.Text<>'' then qArticulo.SQL.Text := qArticulo.SQL.Text + 'AND (CODIGOBARRA like ' + QuotedStr(CodigoEdit.Text + '%') + ')';
+    if CodigoEdit.Text<>'' then qArticulo.SQL.Text := qArticulo.SQL.Text
+    + 'AND (CODIGOBARRA like ' + QuotedStr('%'+CodigoEdit.Text+'%') + ')';
     if EnStockCheckBox.Checked then qArticulo.SQL.Text := qArticulo.SQL.Text+'AND ("Articulo".Disponible > 0)';
     qArticulo.SQL.Text := qArticulo.SQL.Text+ ' ORDER BY   "Articulo".DESCRIPCION';
     qArticulo.Open;
@@ -251,28 +205,6 @@ begin
   RubroEdit.Text := '';
   ProveedorEdit.Text := '';
   CodigoEdit.Text := '';
-  {dm.qArticulo.SQL.Text := 'SELECT' +
-    '    ("Articulo".Precio-"Articulo".Precio * ("Articulo".Tasa*0.01)) as precioIVA,  "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
-    + '  "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
-    + '  "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'
-    + '  "Articulo".PRECIO,  "Articulo".PORCENTAJE,  "Articulo".ULTPRECIO,  "Articulo".UBICACION,'
-    + '  "Articulo".UNIDAD,  "Articulo".DISPONIBLE,  "Articulo".ENPRODUCCION,  "Articulo".NOTAS,'
-    + '  "Articulo".IVA,  "Articulo".TASA,  "Articulo".IMPOTROS,  "Articulo".IIBB,'
-    + '  "Articulo".STOCKMINIMO,  "Articulo".STOCKMAXIMO,  "Articulo".STOCKVENDIDO,  "Articulo".FECHACOMPULT,'
-    + '  "Articulo".LISTA,  "Articulo".PROCEDENCIA,  "Articulo".CODIGOBARRA,  "Articulo".GARANTIA,'
-    + '  "Articulo".FECHA,  "Articulo".PEDIDO,  "Articulo".STOCK,  "Articulo".EXISTENTE,'
-    + '  "Articulo".ACTUAL,  "Articulo".MARCADOCONTADO,  "Articulo".MARCADOLISTA,  "Articulo".MARCADOFINAL,'
-    + '  "Articulo".PREPARADO,  "Articulo".CTANOMBRE,  "Articulo".CTATIPO,  "Articulo".CTAANTICIPO,'
-    + '  "Articulo".CTAIIBB,  "Articulo".ESTADO,  "Articulo".VENCE,  "Articulo".VENCIMIENTO,'
-    + '  "Marca".DESCRIPCION AS MARCA,  "Color".DESCRIPCION AS COLOR,  "Categoria".DESCRIPCION AS CATEGORIA,'
-    + '  "SubCategoria".DESCRIPCION AS SUBCATEGORIA,  "Rubro".DESCRIPCION AS RUBRO,  "Proveedor".NOMBRE AS PROVEEDOR'
-    + '  FROM' + '  "Articulo"' +
-    '  INNER JOIN "Marca" ON ("Articulo".MARCA = "Marca".CODIGO)' +
-    '  INNER JOIN "Color" ON ("Articulo".COLOR = "Color".CODIGO)' +
-    '  INNER JOIN "Categoria" ON ("Articulo".CATEGORIA = "Categoria".CODIGO)' +
-    '  INNER JOIN "SubCategoria" ON ("Articulo".SUBCATEGORIA = "SubCategoria".CODIGO)'
-    + '  INNER JOIN "Rubro" ON ("Articulo".RUBRO = "Rubro".CODIGO)' +
-    '  INNER JOIN "Proveedor" ON ("Articulo".PROVEEDOR = "Proveedor".CODIGO)' + }
   dm.qArticulo.SQL.Text:= articulos
     +'  ORDER BY   "Articulo".DESCRIPCION';
   dm.qArticulo.Open;
@@ -297,11 +229,6 @@ procedure TFBuscaArticulo.CategoriaEditKeyUp(Sender: TObject; var Key: Word;
 begin
   if (not DBGrid1.Focused = True) and (Length(CategoriaEdit.Text) > 1) then
     buscar;
-end;
-
-procedure TFBuscaArticulo.CodigoEditExit(Sender: TObject);
-begin
-  // DescripcionEdit.SetFocus;
 end;
 
 procedure TFBuscaArticulo.FormKeyUp(Sender: TObject; var Key: Word;

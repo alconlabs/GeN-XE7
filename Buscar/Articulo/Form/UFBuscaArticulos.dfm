@@ -208,7 +208,6 @@ object FBuscaArticulo: TFBuscaArticulo
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      OnExit = CodigoEditExit
       OnKeyUp = CodigoEditKeyUp
     end
     object DescripcionEdit: TEdit
