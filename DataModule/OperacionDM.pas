@@ -611,16 +611,16 @@ with dm do begin
     tarj := qT.FieldByName('TARJETA').AsFloat;
     impu := qT.FieldByName('IMPUESTO').AsFloat;
     aIva := qT.FieldByName('ALICIVA').AsInteger;
-    if (let='A') and (let='B') then
+    if (let='A') or (let='B') then
     begin
       i10 := DM.TraerValor2('AlicIva', 'IMPORTE', IntToStr(aIva), 'ID', '4');
-      if i10=0 then i10 := qT.FieldByName('IVA1').AsFloat;
+//      if i10=0 then i10 := qT.FieldByName('IVA1').AsFloat;
       n10 := DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '4');
-      if n10=0 then n10 := qT.FieldByName('SUBTOTAL').AsFloat;
+//      if n10=0 then n10 := qT.FieldByName('SUBTOTAL').AsFloat;
       i21 := DM.TraerValor2('AlicIva', 'IMPORTE', IntToStr(aIva), 'ID', '5');
-      if i21=0 then i21 := qT.FieldByName('IVA2').AsFloat;
+//      if i21=0 then i21 := qT.FieldByName('IVA2').AsFloat;
       n21 := DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '5');
-      if n21=0 then n21 := qT.FieldByName('SUBTOTAL').AsFloat;
+//    if n21=0 then n21 := qT.FieldByName('SUBTOTAL').AsFloat;
     end;
     comv := qT.FieldByName('COSTO').AsFloat;
     deud := qT.FieldByName('DEUDA').AsFloat;
