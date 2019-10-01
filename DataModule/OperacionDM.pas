@@ -39,9 +39,6 @@ type
     IIBB, cmv: Double;
     jsResponse: TJSONValue;
     function ProcVTA
-//    (let, cod, fech, ven, cui, ctan: string; pre, pgr,impr: Boolean;
-//      cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
-//      int, n10, n21, i10, i21, deud, ulc: Double):Boolean;
      (pvta, com,
       let, cod, fech, ven, cui, ctan: string; pre, pgr, impr: Boolean;
       cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,

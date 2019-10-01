@@ -332,7 +332,7 @@ begin
     if (SGFact.Cells[4, i] = '') then SGFact.Cells[4, i] := '0';
     PR := StrToFloat(SGFact.Cells[4, i]);
 //    if not((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then PR := OperacionDataModule.CalcularIVA((PR),TIVA);
-    if esB then PR := dm.CalcularIVA((PR),TIVA);//es B
+//    if esB then PR := dm.CalcularIVA((PR),TIVA);//es B
     //TOTAL
     if (SGFact.Cells[5, i] = '') then SGFact.Cells[5, i] := '0';
     TOT := StrToFloat(SGFact.Cells[5, i]);
@@ -407,14 +407,14 @@ begin
       desc:= desc + DSC;
     end;
 
-  Exento := RoundTo(NE,-2);
-  NG21 := RoundTo(NG21,-2);
-  NG105 := RoundTo(NG105,-2);
-  NGO := RoundTo(NGO,-2);
-  IVA21 := RoundTo(IVA21,-2);
-  IVA105 := RoundTo(IVA105,-2);
-  IVAO := RoundTo(IVAO,-2);
-  desc:=  RoundTo((desc),-2);
+  Exento := (NE,-2);
+  NG21 := (NG21,-2);
+  NG105 := (NG105,-2);
+  NGO := (NGO,-2);
+  IVA21 := (IVA21,-2);
+  IVA105 := (IVA105,-2);
+  IVAO := (IVAO,-2);
+  desc:=  ((desc),-2);
 
   RP := RoundTo((pagCueIva+ pagCueOtr+ perIIBB+ perImpMun+ impInt+ otrTrib),-2);
 
@@ -840,13 +840,6 @@ begin
         Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
       else
         ok := ProcVTA
-//         (cbTipo.Text, ClienteEdit.Text,
-//          FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-//          VendedorEdit.Text, CuitEdit.Text, CtaNombre, TipoRadioGroup.ItemIndex=1,
-//          PagareCheckBox.Checked, impr, costo, Impuesto,
-//          StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
-//          subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
-//          Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto);
         (PuntoVentaEdit.Text, ComprobanteEdit.Text,
          cbTipo.Text, ClienteEdit.Text,
          FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),

@@ -239,6 +239,8 @@ const
   whereSMMe2=' (shipments.mode=''me2'')';
   whereSMCustom=' (shipments.mode=''custom'')';
   whereInPackingList=' (shipments.substatus=''in_packing_list'')';
+  whereAuthorizedByCarrier=' (shipments.substatus=''authorized_by_carrier'')';
+  whereNoAuthorizedByCarrier=' NOT('+whereAuthorizedByCarrier+')';
   whereNoInPackingList=' NOT('+whereInPackingList+')';
   whereFlex=' ('//' shipments.tracking_number=shipments.id';
 //  +'(shipping_option.shipping_method_id=''506245'')'
@@ -303,7 +305,7 @@ const
   sqlPrepararDemoradas=sqlPreparar+' AND '+whereDelayed;
   sqlPrepararMensajes=sqlMensajesNoLeido+' AND '+whereSinEnviar+' AND '+whereNoEmbalado;//+groupOrder;
 
-  sqlDespachar=sqlItems+' WHERE '+wherePaid+' AND '+whereNoDelivered+' AND '+whereNoShipped+' AND '+whereNoNoEmbalado+' AND '+whereNoInPackingList;
+  sqlDespachar=sqlItems+' WHERE '+wherePaid+' AND '+whereNoDelivered+' AND '+whereNoShipped+' AND '+whereNoNoEmbalado+' AND '+whereNoInPackingList+' AND '+whereNoAuthorizedByCarrier;
   sqlDespacharEnvios=sqlDespachar+' AND '+whereReady_to_ship+' AND (NOT'+whereFlex+') AND (NOT'+whereNoMode+')';
   sqlDespacharFlex=sqlDespachar+' AND '+whereFlex;
   sqlDespacharDemoradas=sqlDespachar+' AND '+whereDelayed;
