@@ -26,7 +26,6 @@ uses
   ProveedorF in 'ABM\Proveedor\Form\ProveedorF.pas' {ProveedorForm},
   Precios in 'Listados\Precios\Form\Precios.pas' {ListaPreciosForm},
   OperacionDM in 'DataModule\OperacionDM.pas' {OperacionDataModule: TDataModule},
-  MigrarF in 'Operacion\Migrar\form\MigrarF.pas' {MigrarForm},
   VaciarBaseF in 'Operacion\VaciarBase\Form\VaciarBaseF.pas' {VaciarBaseForm},
   Unit1 in 'Exportar\Excel\Unit1.pas' {Form1},
   UFSelProdFact in 'SubOperacion\SelecionarPrecio\Form\UFSelProdFact.pas' {FSelProdFact},

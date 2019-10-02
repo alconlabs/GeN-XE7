@@ -215,9 +215,6 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Operacion\Migrar\form\MigrarF.pas">
-            <Form>MigrarForm</Form>
-        </DCCReference>
         <DCCReference Include="Operacion\VaciarBase\Form\VaciarBaseF.pas">
             <Form>VaciarBaseForm</Form>
         </DCCReference>
