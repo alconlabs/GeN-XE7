@@ -197,7 +197,7 @@ uses LoginF, BuscaFactura, AnularVtaF, incremento, PagoIVAF, LibroDiarioF,
   UFProductos, ProveedorF, UFClientes, VendedorF, RubroF,
   UFCategorias, UFBuscaArticulos, CajaLF,
   GananciasL, Precios, ListadoClientes, BuscaCompra, EmpresaF, ConfiguracionF,
-  VaciarBaseF, MigrarF, main, OperacionF,
+  VaciarBaseF, main, OperacionF,
   LibrosF, PagoF;
 
 {$R *.dfm}
@@ -446,13 +446,13 @@ end;
 
 procedure TFullMainForm.MigrarArticulosClick(Sender: TObject);
 begin
-  MigrarForm := TMigrarForm.Create(self);
-  MigrarForm.tabla := 'Articulo';
-  try
-    MigrarForm.ShowModal;
-  finally
-    MigrarForm.Free;
-  end;
+//  MigrarForm := TMigrarForm.Create(self);
+//  MigrarForm.tabla := 'Articulo';
+//  try
+//    MigrarForm.ShowModal;
+//  finally
+//    MigrarForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.Aumentarporporcentaje1Click(Sender: TObject);
@@ -540,13 +540,13 @@ end;
 
 procedure TFullMainForm.MigrarVentasClick(Sender: TObject);
 begin
-  MigrarForm := TMigrarForm.Create(self);
-  MigrarForm.tabla := 'Venta';
-  try
-    MigrarForm.ShowModal;
-  finally
-    MigrarForm.Free;
-  end;
+//  MigrarForm := TMigrarForm.Create(self);
+//  MigrarForm.tabla := 'Venta';
+//  try
+//    MigrarForm.ShowModal;
+//  finally
+//    MigrarForm.Free;
+//  end;
 end;
 
 procedure TFullMainForm.ListadePrecios1Click(Sender: TObject);
