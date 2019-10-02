@@ -2912,4 +2912,13 @@ object DM: TDM
     Connection = BaseDatosFB
     Left = 192
   end
+  object FDBatchMoveTextWriter1: TFDBatchMoveTextWriter
+    DataDef.Fields = <>
+    Left = 176
+    Top = 432
+  end
+  object FDBatchMoveDataSetReader1: TFDBatchMoveDataSetReader
+    Left = 176
+    Top = 480
+  end
 end

@@ -610,6 +610,8 @@ begin
     tProveedor.Cancel;
     ExportarTabla('Articulo');
   end;
+  ShowMessage('Exportación Finalizada!');
+  Close;
 end;
 
 procedure TFProductos.bImportarClick(Sender: TObject);
@@ -627,6 +629,7 @@ begin
     tCuenta.Active:=False;
     ImportarTabla('Articulo');
   end;
+  ShowMessage('Importación Finalizada!');
   Close;
 end;
 

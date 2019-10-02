@@ -129,6 +129,8 @@ type
     qSdbReporte: TFDQuery;
     dsQuery: TDataSource;
     TransactionFB: TFDTransaction;
+    FDBatchMoveTextWriter1: TFDBatchMoveTextWriter;
+    FDBatchMoveDataSetReader1: TFDBatchMoveDataSetReader;
 
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
@@ -273,7 +275,7 @@ const
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
     'ClientesL', 'CompraL', 'VentaL', 'Empresa', 'Configuracion', 'Backup',
     'Migrar', 'Licencia');
-  version='201910010855';
+  version='201910021111';
 
 type
   TCompartido = record
@@ -1981,11 +1983,15 @@ begin
           Active := True;
           DisableControls;
         end;
-        with TFDBatchMoveDataSetReader.Create(FDBatchMove1) do begin
+        //with TFDBatchMoveDataSetReader.Create(FDBatchMove1) do begin
+        with FDBatchMoveDataSetReader1 do
+        begin
           DataSet := FDTable1;
           Optimise := False;
         end;
-        with TFDBatchMoveTextWriter.Create(FDBatchMove1) do begin
+        //with TFDBatchMoveTextWriter.Create(FDBatchMove1) do begin
+        with FDBatchMoveTextWriter1 do
+        begin
           // Set text data file name
           FileName := SaveDialog1.FileName;
           // Setup file format
@@ -1993,6 +1999,8 @@ begin
           DataDef.WithFieldNames := True;
         end;
         with FDBatchMove1 do begin
+          Reader := FDBatchMoveDataSetReader1;
+          Writer := FDBatchMoveTextWriter1;
           // Use "always insert record" mode
           Mode := dmAlwaysInsert;
           // Erase destination dataset before moving data
@@ -2022,6 +2030,8 @@ begin
     end;
     with FDBatchMove1 do
     begin
+      Reader := FDBatchMoveTextReader1;
+      Writer := FDBatchMoveSQLWriter1;
       Mode := dmAppendUpdate;
       GuessFormat;
       Execute;

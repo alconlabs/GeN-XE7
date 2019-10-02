@@ -6,7 +6,7 @@
 #define MyAppPublisher "Civeloo"
 #define MyAppURL "http://www.civeloo.com/"
 #define MyAppExeName "GeN.exe"
-#define MyAppPath "C:\GitHub\GeN-XE7\Bin\GeN"
+#define MyAppPath "C:\GitHub\GeN-XE7\Win32\Release"
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
@@ -22,10 +22,10 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppPublisher}\{#MyAppName}
 DefaultGroupName={#MyAppPublisher}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile={#MyAppPath}\bin\LICENSE-2.0.txt
+LicenseFile={#MyAppPath}\LICENSE-2.0.txt
 OutputDir=C:\GitHub\GeN-XE7\Instalador
 OutputBaseFilename=Instalar{#MyAppName}
-SetupIconFile={#MyAppPath}\bin\DeGsoft.ico
+SetupIconFile={#MyAppPath}\DeGsoft.ico
 Compression=lzma
 SolidCompression=true
 VersionInfoVersion=19
@@ -48,7 +48,7 @@ Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription
 
 [Files]
 ;Source: C:\Civeloo\GeN\bin\GeN.exe; DestDir: {app}; Flags: ignoreversion
-Source: {#MyAppPath}\bin\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: {#MyAppPath}\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: {#MyAppPath}\db\*; DestDir: {app}\db\; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: {#MyAppPath}\hlp\*; DestDir: {app}\hlp\; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: {#MyAppPath}\img\*; DestDir: {app}\img\; Flags: ignoreversion recursesubdirs createallsubdirs
