@@ -412,7 +412,6 @@ object FProductos: TFProductos
         Height = 21
         DataField = 'PRECIO'
         DataSource = DM.dstArticulo
-        Enabled = False
         TabOrder = 7
         OnExit = PrecioCtaCteDBEditExit
       end

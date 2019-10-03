@@ -198,7 +198,7 @@ begin
     fle := ((qT.FieldByName('ImpOtros').AsFloat) / 100+1)
   else
     fle :=1;
-  cost := cost * fle;
+  //cost := cost * fle;
   // PROCENTAJE DE VARIACION (costo * 100 / ultcosto) / 100
   if qT.FieldByName('ULTCOSTO').AsFloat <> 0 then
     porc := ((cost * 100 / qT.FieldByName('ULTCOSTO').AsFloat) / 100)

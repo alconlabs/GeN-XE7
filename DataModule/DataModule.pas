@@ -14,7 +14,7 @@ uses
   FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
   FireDAC.FMXUI.Wait, FireDAC.Comp.UI, FireDAC.Comp.BatchMove.DataSet,
   FireDAC.Comp.BatchMove, FireDAC.Comp.BatchMove.Text, FireDAC.Comp.BatchMove.SQL,
-  FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, FireDAC.Comp.Script;
+  FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, FireDAC.Comp.Script, System.Math;
 
 type
   TDM = class(TDataModule)
@@ -267,6 +267,7 @@ type
     procedure ExportarTabla(tabla:string);
     procedure ImportarTabla(tabla:string);
     function HayBase:Boolean;
+    function CalculaGanancia(c,f,p : double):double;
   end;
 
 const
@@ -275,7 +276,7 @@ const
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
     'ClientesL', 'CompraL', 'VentaL', 'Empresa', 'Configuracion', 'Backup',
     'Migrar', 'Licencia');
-  version='201910021111';
+  version='201910031235';
 
 type
   TCompartido = record
@@ -2114,6 +2115,12 @@ end;
 function TDM.HayBase;
 begin
   result := FileExists(Path+'db\GeN.FDB');
+end;
+
+function TDM.CalculaGanancia(c,f,p : double):double;
+begin
+  c := c+(c*(f)/100);
+  result := RoundTo(((p*100)/c)-100,-2);
 end;
 
 end.

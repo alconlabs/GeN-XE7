@@ -518,9 +518,17 @@ end;
 
 procedure TFProductos.PrecioCtaCteDBEditExit(Sender: TObject);
 begin
-//  Calcular;
+//  c := StrToFloat(CostoDBEdit.Text);
+//  f := (c * (StrToFloat(FleteDBEdit.Text) / 100));
+//  c := c+f;
+//  p := StrToFloat(PrecioCtaCteDBEdit.Text);
+//  g := RoundTo(((p*100)/c)-100,-2);
+  GanaciaDBEdit.Text:=FloatToStr(DM.CalculaGanancia(StrToFloat(CostoDBEdit.Text),StrToFloat(FleteDBEdit.Text),StrToFloat(PrecioCtaCteDBEdit.Text)));
+  Calcular;
   BitBtn1.SetFocus;
 end;
+
+
 
 procedure TFProductos.CategoriaBitBtnClick(Sender: TObject);
 begin
@@ -547,11 +555,12 @@ end;
 
 procedure TFProductos.CategoriaDBLookupComboBoxEnter(Sender: TObject);
 begin
-with dm do begin
-  tCategoria.Close;
-  tCategoria.Open;
-  tCategoria.Last;
-end;
+  with dm do
+  begin
+    tCategoria.Close;
+    tCategoria.Open;
+    tCategoria.Last;
+  end;
 end;
 
 procedure TFProductos.MarcaBitBtnClick(Sender: TObject);
