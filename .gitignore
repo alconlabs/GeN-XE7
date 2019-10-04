@@ -220,3 +220,8 @@ _history/
 
 __history/
 *.exe
+*.exe
+*.local
+*.identcache
+*.res
+*.stat
