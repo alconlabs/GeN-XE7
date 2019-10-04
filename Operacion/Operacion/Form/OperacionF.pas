@@ -407,22 +407,22 @@ begin
       desc:= desc + DSC;
     end;
 
-  Exento := RoundTo(NE,-4);
-  NG21 := RoundTo(NG21,-4);
-  NG105 := RoundTo(NG105,-4);
-  NGO := RoundTo(NGO,-4);
-  IVA21 := RoundTo(IVA21,-4);
-  IVA105 := RoundTo(IVA105,-4);
-  IVAO := RoundTo(IVAO,-4);
-  desc:=  RoundTo((desc),-4);
+  Exento := RoundTo(NE,-2);
+  NG21 := RoundTo(NG21,-2);
+  NG105 := RoundTo(NG105,-2);
+  NGO := RoundTo(NGO,-2);
+  IVA21 := RoundTo(IVA21,-2);
+  IVA105 := RoundTo(IVA105,-2);
+  IVAO := RoundTo(IVAO,-2);
+  desc:=  RoundTo((desc),-2);
 
-  RP := RoundTo((pagCueIva+ pagCueOtr+ perIIBB+ perImpMun+ impInt+ otrTrib),-4);
+  RP := RoundTo((pagCueIva+ pagCueOtr+ perIIBB+ perImpMun+ impInt+ otrTrib),-2);
 
-  subtotal:= RoundTo((NG21 + NG105 + NGO + Exento + Interes),-4);
+  subtotal:= RoundTo((NG21 + NG105 + NGO + Exento + Interes),-2);
 
-  Impuesto := RoundTo((IVA21 + IVA105 + IVAO),-4);
+  Impuesto := RoundTo((IVA21 + IVA105 + IVAO),-2);
 
-  Total := RoundTo((subtotal + Impuesto + RP),-4);
+  Total := RoundTo((subtotal + Impuesto + RP),-2);
 
   // escribe los valores en las celdas
   SGTotal.Cells[1, 0] := Format('%8.2n', [subtotal]);

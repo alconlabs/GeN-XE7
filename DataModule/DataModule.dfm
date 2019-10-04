@@ -1114,6 +1114,8 @@ object DM: TDM
   end
   object FDBatchMoveTextReader1: TFDBatchMoveTextReader
     DataDef.Fields = <>
+    DataDef.FormatSettings.ThousandSeparator = ','
+    DataDef.FormatSettings.DecimalSeparator = '.'
     Left = 176
     Top = 240
   end

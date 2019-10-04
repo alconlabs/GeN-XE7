@@ -276,7 +276,7 @@ const
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
     'ClientesL', 'CompraL', 'VentaL', 'Empresa', 'Configuracion', 'Backup',
     'Migrar', 'Licencia');
-  version='201910031235';
+  version='201910041149';
 
 type
   TCompartido = record
@@ -1688,7 +1688,7 @@ begin
     FieldByName('CtaTipo').AsString := '13';
     FieldByName('CtaAnticipo').AsString := '13';
     FieldByName('CtaIIBB').AsString := '66';
-    FieldByName('CODIGOBARRA').AsString := '0';
+//    FieldByName('CODIGOBARRA').AsString := '0';
     FieldByName('Color').AsString := '0';
     FieldByName('Categoria').AsString := '0';
     FieldByName('SubCategoria').AsString := '0';

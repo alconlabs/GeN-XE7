@@ -606,28 +606,28 @@ with dm do begin
     sal := qT.FieldByName('SALDO').AsFloat;
     cont := qT.FieldByName('CONTADO').AsFloat;
     pag := qT.FieldByName('PAGADO').AsFloat;
-    tot := qT.FieldByName('TOTAL').AsFloat;
+    tot := RoundTo(qT.FieldByName('TOTAL').AsFloat,-2);
     cheq := qT.FieldByName('CHEQUE').AsFloat;
     tarj := qT.FieldByName('TARJETA').AsFloat;
-    impu := qT.FieldByName('IMPUESTO').AsFloat;
+    impu := RoundTo(qT.FieldByName('IMPUESTO').AsFloat,-2);
     aIva := qT.FieldByName('ALICIVA').AsInteger;
     if (let='A') or (let='B') then
     begin
-      i10 := DM.TraerValor2('AlicIva', 'IMPORTE', IntToStr(aIva), 'ID', '4');
+      i10 := RoundTo(DM.TraerValor2('AlicIva', 'IMPORTE', IntToStr(aIva), 'ID', '4'),-2);
 //      if i10=0 then i10 := qT.FieldByName('IVA1').AsFloat;
-      n10 := DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '4');
+      n10 := RoundTo(DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '4'),-2);
 //      if n10=0 then n10 := qT.FieldByName('SUBTOTAL').AsFloat;
-      i21 := DM.TraerValor2('AlicIva', 'IMPORTE', IntToStr(aIva), 'ID', '5');
+      i21 := RoundTo(DM.TraerValor2('AlicIva', 'IMPORTE', IntToStr(aIva), 'ID', '5'),-2);
 //      if i21=0 then i21 := qT.FieldByName('IVA2').AsFloat;
-      n21 := DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '5');
+      n21 := RoundTo(DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '5'),-2);
 //    if n21=0 then n21 := qT.FieldByName('SUBTOTAL').AsFloat;
     end;
     comv := qT.FieldByName('COSTO').AsFloat;
     deud := qT.FieldByName('DEUDA').AsFloat;
     com := qT.FieldByName('COMISION').AsFloat;
     des := qT.FieldByName('DESCUENTO').AsFloat;
-    sbt := qT.FieldByName('SUBTOTAL').AsFloat;
-    tot := qT.FieldByName('TOTAL').AsFloat;
+    sbt := RoundTo(qT.FieldByName('SUBTOTAL').AsFloat,-2);
+//    tot := qT.FieldByName('TOTAL').AsFloat;
     if qT.FieldByName('PAGARE').AsString = 's' then
       pgr := True;
     qT.Close;
