@@ -530,7 +530,7 @@ object OperacionForm: TOperacionForm
     ParentBackground = False
     TabOrder = 0
     object ProcesarBitBtn: TBitBtn
-      Left = 707
+      Left = 706
       Top = 4
       Width = 80
       Height = 50

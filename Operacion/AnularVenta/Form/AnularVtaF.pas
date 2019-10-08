@@ -37,7 +37,7 @@ var
 
 implementation
 
-uses BuscaFactura;
+uses BuscarOperacion;
 
 {$R *.dfm}
 
@@ -56,21 +56,21 @@ end;
 
 procedure TFAnulaReimp.buscarBitBtnClick(Sender: TObject);
 begin
-  BuscaFacturaForm := TBuscaFacturaForm.Create(self);
-  BuscaFacturaForm.anular := true;
+  BuscarOperacionForm := TBuscarOperacionForm.Create(self);
+  BuscarOperacionForm.anular := true;
   try
-    BuscaFacturaForm.ShowModal;
-    salir := BuscaFacturaForm.salir;
+    BuscarOperacionForm.ShowModal;
+    salir := BuscarOperacionForm.salir;
     if salir then Exit;
   finally
-    if BuscaFacturaForm.TipoRadioGroup.ItemIndex=0 then
+    if BuscarOperacionForm.TipoRadioGroup.ItemIndex=0 then
       begin
-        nroEdit.Text := BuscaFacturaForm.Codigo;
+        nroEdit.Text := BuscarOperacionForm.Codigo;
         BitBtn1.Click;
       end
     else
       ShowMessage('Solo se pueden anular Facturas!!!');
-    BuscaFacturaForm.Free;
+    BuscarOperacionForm.Free;
   end;
   Close;
 end;

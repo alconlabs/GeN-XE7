@@ -131,6 +131,7 @@ type
     TransactionFB: TFDTransaction;
     FDBatchMoveTextWriter1: TFDBatchMoveTextWriter;
     FDBatchMoveDataSetReader1: TFDBatchMoveDataSetReader;
+    FDBatchMoveDataSetWriter1: TFDBatchMoveDataSetWriter;
 
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
@@ -271,12 +272,86 @@ type
   end;
 
 const
+  version='201910081114';
   v: array [0 .. 22] of string = ('MenuExpress', 'MenuStock', 'Articulos',
     'VaciarBase', 'Vender', 'Comprar', 'AnularVenta', 'RetiroCaja', 'Rubro',
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
     'ClientesL', 'CompraL', 'VentaL', 'Empresa', 'Configuracion', 'Backup',
     'Migrar', 'Licencia');
-  version='201910041149';
+  clienteSql =
+    ' "Cliente".NOMBRE,  "Cliente".TITULAR, "Cliente".DIRECCION, "Cliente".DIRECCIONCOMERCIAL, "Cliente".IVA as CIVA, "Cliente".CUIT as CCUIT, "Cliente".EMAIL';
+  articuloSql =
+    ' "Articulo".DESCRIPCION, "Articulo".UNIDAD, "Articulo".IVA as AIVA';
+  ventaItemSql =
+    ' "VentaItem".ARTICULO, "VentaItem".CANTIDAD, "VentaItem".COSTO AS VIDESCUENTO,'
+    +' "VentaItem".PRECIO, "VentaItem".OPERACION,'
+    +' ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT,'
+    +' "VentaItem".SERVICIO, "VentaItem".DESCRIPCION AS DESCR,'
+    +' "VentaItem".IMPUESTO as VIIMPUESTO';
+  ivaVtaSql = ' "LibroIVAventa".NG1, "LibroIVAventa".IVA1, "LibroIVAventa".NG2, "LibroIVAventa".IVA2, "LibroIVAventa".NG3';
+  presupuestoTSql = ' "Presupuesto".CODIGO, "Presupuesto".LETRA, "Presupuesto".DESCRIPCION as VDESC,'
+    +' "Presupuesto".FECHA, "Presupuesto".COMPROBANTE, "Presupuesto".COMPROBANTE AS CB,'
+    + ' "Presupuesto".IVA3, "Presupuesto".TOTAL, "Presupuesto".CONTADO, "Presupuesto".CLIENTE,'
+    + ' "Presupuesto".SUBTOTAL, "Presupuesto".DESCUENTO, "Presupuesto".IMPUESTO, "Presupuesto".TERMINOS,'
+    + ' "Presupuesto".IVA2, "Presupuesto".IVA1, "Presupuesto".EXCENTO, "Presupuesto".SALDO,'
+    + ' "Presupuesto".PAGADO' + ' FROM "Presupuesto"';
+  presupuestoSql = clienteSql + ',' + articuloSql + ',' +
+    ' "PresupuestoItem".ARTICULO, "PresupuestoItem".CANTIDAD,'
+    +' "PresupuestoItem".PRECIO, "PresupuestoItem".COSTO AS VIDESCUENTO,'
+    + ' "PresupuestoItem".OPERACION,'
+    +' ("PresupuestoItem".PRECIO * "PresupuestoItem".CANTIDAD ) as PREXCANT,'
+    + ' "PresupuestoItem".SERVICIO, "PresupuestoItem".IMPUESTO as VIIMPUESTO,'
+    +' "PresupuestoItem".DESCRIPCION AS DESCR,'
+    + presupuestoTSql +
+    ' INNER JOIN "PresupuestoItem" ON ("Presupuesto".CODIGO = "PresupuestoItem".OPERACION)'
+    + ' INNER JOIN "Articulo" ON ("PresupuestoItem".ARTICULO = "Articulo".CODIGO)'
+    + ' INNER JOIN "Cliente" ON ("Presupuesto".CLIENTE = "Cliente".CODIGO)';
+  OperacionItemSql =
+    '  "OperacionItem".ARTICULO,  "OperacionItem".CANTIDAD, "OperacionItem".COSTO AS VIDESCUENTO,' +
+    '  "OperacionItem".PRECIO,' + '  "OperacionItem".OPERACION,' +
+    '  ("OperacionItem".PRECIO * "OperacionItem".CANTIDAD ) as PREXCANT, "OperacionItem".IMPUESTO as VIIMPUESTO,' +
+    '  "OperacionItem".SERVICIO,' + '  "OperacionItem".DESCRIPCION AS DESCR';
+  OperacionSql =
+    ' "Operacion".CODIGO,' + '  "Operacion".LETRA,' + '  "Operacion".FECHA, "Operacion".COMPROBANTE AS CB,' +
+    ' "Operacion".COMPROBANTE, "Operacion".TERMINOS, "Operacion".DESCRIPCION as VDESC,' +
+    ' "Operacion".TOTAL,' + '  "Operacion".CONTADO,' + '  "Operacion".CLIENTE,'+
+    ' "Operacion".SUBTOTAL,' + ' "Operacion".DESCUENTO,' +
+    ' "Operacion".IMPUESTO,' + ' "Operacion".IVA1, "Operacion".IVA2, "Operacion".IVA3,' +
+    ' "Operacion".EXCENTO,' + ' "Operacion".SALDO,' + ' "Operacion".PAGADO' +
+    ' FROM  "Operacion"';
+  OperSql =
+    clienteSql
+    +','+ articuloSql
+    +','+ OperacionItemSql
+//    +','+ ivaVtaSql
+    +','+ OperacionSql
+    +'  INNER JOIN "OperacionItem" ON ("Operacion".CODIGO = "OperacionItem".OPERACION)'
+    +'  INNER JOIN "Articulo" ON ("OperacionItem".ARTICULO = "Articulo".CODIGO)'
+    +'  INNER JOIN "Cliente" ON ("Operacion".CLIENTE = "Cliente".CODIGO)';
+  ventaTSql =' "Venta".CODIGO,' + '  "Venta".LETRA,' + '  "Venta".DESCRIPCION as VDESC,' +
+    '  "Venta".FECHA,' + '  "Venta".COMPROBANTE,' + '  "Venta".TERMINOS,'+
+    '  "Venta".TOTAL,' + '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' +
+    '  "Venta".SUBTOTAL,' + '  "Venta".DESCUENTO,' + '  "Venta".IMPUESTO,' +
+    '  "Venta".EXCENTO,' + '  "Venta".SALDO,' + '  "Venta".PAGADO'
+    + ' FROM'
+    + ' "Venta"';
+  vtaSql =
+    clienteSql
+    +','+ articuloSql
+    +','+ ventaItemSql
+    +','+ ivaVtaSql
+    +','+ ventaTSql
+    + ' LEFT JOIN "LibroIVAventa" ON ("Venta".CODIGO = "LibroIVAventa".FACTURA)'
+    //+ ' INNER JOIN "VentaItem" ON ("LibroIVAventa".FACTURA = "VentaItem".OPERACION)'
+    + ' INNER JOIN "VentaItem" ON ("Venta".CODIGO = "VentaItem".OPERACION)'
+    + ' INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CODIGO)'
+    + ' INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)' ;
+  compraTSql =' "Compra".CODIGO, "Compra".LETRA, "Compra".DESCRIPCION as VDESC,' +
+    ' "Compra".FECHA, "Compra".COMPROBANTE, "Compra".TERMINOS,'+
+    ' "Compra".TOTAL, "Compra".CONTADO, "Compra".CLIENTE,' +
+    ' "Compra".SUBTOTAL, "Compra".DESCUENTO, "Compra".IMPUESTO,' +
+    ' "Compra".EXCENTO, "Compra".SALDO, "Compra".PAGADO'
+    + ' FROM "Venta"';
 
 type
   TCompartido = record
@@ -832,6 +907,7 @@ begin
   begin
     DecimalSeparator := '.';
     ThousandSeparator := ',';
+    ListSeparator := ';';
     ShortDateFormat := 'mm/dd/yyyy';
   end;
 end;
@@ -2015,26 +2091,45 @@ begin
 end;
 
 procedure TDM.ImportarTabla;
+var i:integer;
 begin
+  OpenDialog1.Filter := 'Csv files (*.csv)|*.CSV';
   OpenDialog1.Execute();
   try
     BaseDatosFB.StartTransaction;
     with FDBatchMoveTextReader1 do
     begin
       FileName := OpenDialog1.FileName;
-      DataDef.Separator := ';';
-      DataDef.WithFieldNames := True;
+      DataDef.Separator := ',';
+      DataDef.FormatSettings.DecimalSeparator:=',';
+      DataDef.FormatSettings.ThousandSeparator:=#0;
+      DataDef.Delimiter := #0;  //** opcional, para campos sin QUOTED VALUES "valor" que es la opción default del componente
+      Datadef.RecordFormat := rfCustom; //**
+      for i := 0 to Datadef.Fields.Count-1         //  ** para evitar problemas con campos FLOAT paso todos los campos a String.
+          do  Datadef.Fields[i].DataType := atString;    // ** De no hacerlo he tenido errores [FireDAC][Comp][DM]-607. Bad text value [17,5] format for mapping item [->B]. '10,24' is not a valid integer value.
+//  for i := 0 to Datadef.Fields.Count-1         //  debemos antes agregar los campos el FDMentable sino obtenemos un error de que no puede crear el dataset.
+//            do  fdmemtable1.FieldDefs.Add(Datadef.Fields[i].FieldName,ftString, 20, False);
+      DataDef.WithFieldNames := True; // setear si tiene los nombres de campo en primera linea
     end;
     with FDBatchMoveSQLWriter1 do
     begin
       TableName := '"'+tabla+'"';
     end;
+//    with FDBatchMoveDataSetWriter1 do
+//    begin
+//      DataSet:= tArticulo;
+//      // Do not set Optimise to True, if dataset is attached to UI
+//      Optimise := False;
+//    end;
     with FDBatchMove1 do
     begin
       Reader := FDBatchMoveTextReader1;
       Writer := FDBatchMoveSQLWriter1;
+//      Writer := FDBatchMoveDataSetWriter1;
       Mode := dmAppendUpdate;
       GuessFormat;
+//Analyze := ([ taDelimSep,taHeader,taFields]); // este comando crea la estructura de datos según adivina leyendo los primeros registros
+//AnalyzeSample := 50;  // El default es 10, con esto profundizamos el analisis para adivinar estructura de tabla y campos
       Execute;
     end;
     BaseDatosFB.CommitRetaining;

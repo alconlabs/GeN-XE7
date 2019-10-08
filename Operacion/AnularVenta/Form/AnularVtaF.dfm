@@ -1,7 +1,7 @@
 object FAnulaReimp: TFAnulaReimp
   Left = 573
   Top = 224
-  Caption = 'Anular Venta'
+  Caption = 'Anular'
   ClientHeight = 184
   ClientWidth = 318
   Color = clBtnFace

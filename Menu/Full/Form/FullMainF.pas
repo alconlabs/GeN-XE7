@@ -100,6 +100,8 @@ type
     MigrarArticulos: TMenuItem;
     MigrarVentas: TMenuItem;
     REMITO: TMenuItem;
+    AnularVenta: TMenuItem;
+    AnularCompra: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ProveedoresClick(Sender: TObject);
@@ -133,7 +135,6 @@ type
     procedure CrearPedido1Click(Sender: TObject);
     procedure PagosaProveedores1Click(Sender: TObject);
     procedure CuentaCorriente1Click(Sender: TObject);
-    procedure AnularVenta1Click(Sender: TObject);
     procedure Cuentas1Click(Sender: TObject);
     procedure Productos1Click(Sender: TObject);
     procedure Caja3Click(Sender: TObject);
@@ -180,6 +181,8 @@ type
     procedure MigrarArticulosClick(Sender: TObject);
     procedure MigrarVentasClick(Sender: TObject);
     procedure REMITOClick(Sender: TObject);
+    procedure AnularVentaClick(Sender: TObject);
+    procedure AnularCompraClick(Sender: TObject);
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
@@ -193,7 +196,7 @@ var
 
 implementation
 
-uses LoginF, BuscaFactura, AnularVtaF, incremento, PagoIVAF, LibroDiarioF,
+uses LoginF, BuscarOperacion, AnularOperacion, incremento, PagoIVAF, LibroDiarioF,
   UFProductos, ProveedorF, UFClientes, VendedorF, RubroF,
   UFCategorias, UFBuscaArticulos, CajaLF,
   GananciasL, Precios, ListadoClientes, BuscaCompra, EmpresaF, ConfiguracionF,
@@ -528,13 +531,33 @@ OperacionForm := TOperacionForm.Create(self);
   end;
 end;
 
+procedure TFullMainForm.AnularCompraClick(Sender: TObject);
+begin
+  AnularOperacionForm := TAnularOperacionForm.Create(self);
+  try
+    AnularOperacionForm.ShowModal;
+  finally
+    AnularOperacionForm.Free;
+  end;
+end;
+
+procedure TFullMainForm.AnularVentaClick(Sender: TObject);
+begin
+  AnularOperacionForm := TAnularOperacionForm.Create(self);
+  try
+    AnularOperacionForm.ShowModal;
+  finally
+    AnularOperacionForm.Free;
+  end;
+end;
+
 procedure TFullMainForm.VENTAS1Click(Sender: TObject);
 begin
-  BuscaFacturaForm := TBuscaFacturaForm.Create(self);
+  BuscarOperacionForm := TBuscarOperacionForm.Create(self);
   try
-    BuscaFacturaForm.ShowModal;
+    BuscarOperacionForm.ShowModal;
   finally
-    BuscaFacturaForm.Free;
+    BuscarOperacionForm.Free;
   end;
 end;
 
@@ -1042,17 +1065,6 @@ begin
 //  finally
 //    GestionCobranzaForm.Free;
 //  end;
-end;
-
-procedure TFullMainForm.AnularVenta1Click(Sender: TObject);
-begin
-  // WinExec(PAnsiChar(AnsiString(path + 'AnularVenta.exe')), SW_SHOWNORMAL);
-  FAnulaReimp := TFAnulaReimp.Create(self);
-  try
-    FAnulaReimp.ShowModal;
-  finally
-    FAnulaReimp.Free;
-  end;
 end;
 
 end.

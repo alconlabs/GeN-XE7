@@ -225,3 +225,10 @@ __history/
 *.identcache
 *.res
 *.stat
+Operacion/MercadoLibreEnvios/MercadoLibreEnvios.identcache
+Operacion/MercadoLibreEnvios/MercadoLibreEnvios.stat
+Instalador/InstalarGeN.exe
+GeN.identcache
+GeN.res
+GeN.stat
+GeN.dproj.local

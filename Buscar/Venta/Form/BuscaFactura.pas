@@ -43,7 +43,7 @@ type
   public
     { Public declarations }
     Codigo, CodProve, Tipo: String;
-    salir, Cancela, anular: boolean;
+    salir, Cancela, anular, Compra: boolean;
   end;
 
 var
@@ -75,12 +75,16 @@ begin
     where:='WHERE '+anulada;
 
   ImprimirDataModule := TImprimirDataModule.Create(self);
-
-  case TipoRadioGroup.ItemIndex of
-    0 : sql := 'SELECT ' + ImprimirDataModule.ventaTSql;
-    1 : sql := 'SELECT ' + ImprimirDataModule.OperacionSql;
-    2 : sql := 'SELECT ' + ImprimirDataModule.presupuestoTSql;
-  end;
+  if Compra then
+    begin
+      sql := 'SELECT ' + compraTSql;
+    end
+    else
+    case TipoRadioGroup.ItemIndex of
+      0 : sql := 'SELECT ' + ventaTSql;
+      1 : sql := 'SELECT ' + OperacionSql;
+      2 : sql := 'SELECT ' + presupuestoTSql;
+    end;
 
   ImprimirDataModule.Free;
   dm.qOperacion.SQL.Text := sql + where;
