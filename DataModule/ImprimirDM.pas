@@ -128,13 +128,13 @@ begin
   if rpt='X' then
   begin
     ctipo := 'REMITO';
-    rpt := reporte;
+    rpt := 'COriginal';//reporte;
   end else
   if ((rpt='A') or (rpt='B') or (rpt='C')) then
   begin
     ctipo := 'FACTURA';
     nctipo := '';
-    rpt := reporte;
+    //rpt := reporte;
   end
   else
   if ((rpt='NCA') or (rpt='NCB') or (rpt='NCC')) then

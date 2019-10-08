@@ -142,12 +142,12 @@
     <Transaction>2019/09/01 18:46:06.000.331,=C:\GitHub\GeN-XE7\Operacion\Pago\Form\PagoF.pas</Transaction>
     <Transaction>2019/09/27 16:16:50.000.346,C:\GitHub\GeN-XE7\Report\EditorReporteUnit.pas=</Transaction>
     <Transaction>2019/10/02 13:01:41.000.959,C:\GitHub\GeN-XE7\Operacion\Migrar\form\MigrarF.pas=</Transaction>
-    <Transaction>2019/10/07 11:33:46.260,C:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscarOperacion.dfm=C:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscaFactura.dfm</Transaction>
-    <Transaction>2019/10/07 11:33:46.260,C:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscarOperacion.pas=C:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscaFactura.pas</Transaction>
-    <Transaction>2019/10/07 11:41:49.731,C:\GitHub\GeN-XE7\Buscar\Operacion\BuscarOperacion.pas=C:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscarOperacion.pas</Transaction>
-    <Transaction>2019/10/07 11:41:49.731,C:\GitHub\GeN-XE7\Buscar\Operacion\BuscarOperacion.dfm=C:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscarOperacion.dfm</Transaction>
-    <Transaction>2019/10/07 12:40:29.354,C:\GitHub\GeN-XE7\Operacion\AnularOperacion\AnularOperacion.dfm=C:\GitHub\GeN-XE7\Operacion\AnularVenta\Form\AnularVtaF.dfm</Transaction>
-    <Transaction>2019/10/07 12:40:29.354,C:\GitHub\GeN-XE7\Operacion\AnularOperacion\AnularOperacion.pas=C:\GitHub\GeN-XE7\Operacion\AnularVenta\Form\AnularVtaF.pas</Transaction>
+    <Transaction>2019/10/07 11:33:46.000.260,C:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscarOperacion.dfm=C:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscaFactura.dfm</Transaction>
+    <Transaction>2019/10/07 11:33:46.000.260,C:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscarOperacion.pas=C:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscaFactura.pas</Transaction>
+    <Transaction>2019/10/07 11:41:49.000.731,C:\GitHub\GeN-XE7\Buscar\Operacion\BuscarOperacion.pas=C:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscarOperacion.pas</Transaction>
+    <Transaction>2019/10/07 11:41:49.000.731,C:\GitHub\GeN-XE7\Buscar\Operacion\BuscarOperacion.dfm=C:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscarOperacion.dfm</Transaction>
+    <Transaction>2019/10/07 12:40:29.000.354,C:\GitHub\GeN-XE7\Operacion\AnularOperacion\AnularOperacion.dfm=C:\GitHub\GeN-XE7\Operacion\AnularVenta\Form\AnularVtaF.dfm</Transaction>
+    <Transaction>2019/10/07 12:40:29.000.354,C:\GitHub\GeN-XE7\Operacion\AnularOperacion\AnularOperacion.pas=C:\GitHub\GeN-XE7\Operacion\AnularVenta\Form\AnularVtaF.pas</Transaction>
   </Transactions>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>

@@ -147,7 +147,7 @@ object fEditorReporte: TfEditorReporte
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 39416.849051458300000000
-    ReportOptions.LastChange = 43736.804182662000000000
+    ReportOptions.LastChange = 43746.552472523200000000
     ReportOptions.Picture.Data = {
       0954474946496D61676547494638396150003200F70000FDFDFDFCFCFCFBFBFB
       F9F9F9030303FAFAFA010101F8F8F8020202040404F7F7F70606060505050707
@@ -653,46 +653,6 @@ object fEditorReporte: TfEditorReporte
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo24: TfrxMemoView
-          AllowVectorExport = True
-          Left = 313.700990000000000000
-          Top = 56.692950000000000000
-          Width = 400.630180000000000000
-          Height = 18.897650000000000000
-          DataSet = frxDBDataset1
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsItalic]
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            'CAE: [frxDBDataset1."VDESC"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo25: TfrxMemoView
-          AllowVectorExport = True
-          Left = 476.220780000000000000
-          Top = 75.590600000000000000
-          Width = 238.110390000000000000
-          Height = 18.897650000000000000
-          DataSet = frxDBDataset1
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsItalic]
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            'Fecha Vto.: [frxDBDataset1."TERMINOS"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
       end
       object GroupHeader2: TfrxGroupHeader
         FillType = ftBrush
@@ -740,9 +700,7 @@ object fEditorReporte: TfEditorReporte
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            
-              'Pto.Vta. / Nro [frxDBDataset1."PTOVTA"]-[frxDBDataset1."COMPROBA' +
-              'NTE"]')
+            'Pto.Vta. / Nro [frxDBDataset1."PTOVTA"]-[frxDBDataset1."CODIGO"]')
           ParentFont = False
           Formats = <
             item
@@ -806,7 +764,7 @@ object fEditorReporte: TfEditorReporte
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            'REMITO')
+            '[frxDBDataset1."CTIPO"]')
           ParentFont = False
         end
         object Picture1: TfrxPictureView

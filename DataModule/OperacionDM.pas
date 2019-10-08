@@ -1026,12 +1026,15 @@ with dm do begin
   // INSERTA EN LA TABLA OPERACION
   qQ.sql.Text :=
     'Insert Into "Operacion" (CODIGO, TIPO, LETRA, CLIENTE, VENDEDOR' +
-    ', SUBTOTAL, DESCUENTO, FECHA,' + ' IMPUESTO, TOTAL, CONTADO, CHEQUE' +
+    ', SUBTOTAL, DESCUENTO, FECHA,' +
+    ' IMPUESTO, IVA1, IVA2,'+
+    ' TOTAL, CONTADO, CHEQUE' +
     ', TARJETA, OTROS, SALDO, PAGADO, PAGARE, COSTO'+
     ', DEUDA, COMISION, ALICIVA'+
-    ') Values ' + '(' + IntToStr(nro) + ', ' + quotedstr(tipo) + ', ' + quotedstr(let) +
-    ', ' + cod + ', ' + ven + ', ' + ' ' + floattostr(sbt) + ', ' +
-    floattostr(des) + ', ' + quotedstr(fech) + ', ' + floattostr(impu) + ', ' +
+    ') Values ' + '(' + IntToStr(nro) + ', ' + quotedstr(tipo) + ', ' +
+    quotedstr(let) + ', ' + cod + ', ' + ven + ', ' + ' ' +
+    floattostr(sbt) + ', ' +floattostr(des) + ', ' + quotedstr(fech) + ', ' +
+    floattostr(impu)+', '+floattostr(i10)+', '+floattostr(i21)+', '+
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
     floattostr(pag) + ',' + quotedstr(pagare) + ',' + floattostr(cmv) + ',' +
