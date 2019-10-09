@@ -1118,7 +1118,6 @@ object DM: TDM
     DataDef.Separator = ';'
     DataDef.RecordFormat = rfCustom
     DataDef.FormatSettings.ThousandSeparator = #0
-    DataDef.FormatSettings.DecimalSeparator = '.'
     Encoding = ecUTF8
     Left = 176
     Top = 240
