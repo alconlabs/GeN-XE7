@@ -30,7 +30,6 @@ type
   private
     { Private declarations }
     procedure AgregarAlicIva(cod,id: integer; bImp,imp: double);
-    function InsertarAlicIva:Integer;
   public
     { Public declarations }
     comp, a, pagare, cae, vto, mensaje//, ptovta, tipocbte
@@ -74,8 +73,8 @@ type
     Procedure Asiento(ctan, nro, fech, det, d, h: string);
     Procedure LibroDiario(oper, nro, let, cod, fech: string; pgr: Boolean;
       tot, pag, cheq, ch3q, cont, tarj, impu, deud, cmv, comv: Double);
-    Procedure LibroIVAvta(fec, nro, cod, cui, n10, n21, i10, i21, tot: string);
-    Procedure LibroIVACompra(fec, nro, cod, com, n10, n21, n3, i10, i21, i3, per, ret, tot: string);
+    Procedure LibroIVAvta(fec, nro, cli, cui, n10, n21, i10, i21, tot: string);
+    Procedure LibroIVACompra(fec, nro, cli, com, n10, n21, n3, i10, i21, i3, per, ret, tot: string);
     Function MesLetra(fech: TDate): string;
     Function CostMercVend(ulc, cost: Double): Double;
     procedure VarCos(cod, cant: string; cost: Double);
@@ -93,6 +92,7 @@ type
     procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impIva, impTotal, asocTipo, asocNro, n10, n21, i10, i21:string);
     procedure ActualizarSiapVtaComp(where:string);
     procedure ActualizarSiapCmpComp(where:string);
+    function InsertarAlicIva:Integer;
   end;
 
 var
@@ -519,7 +519,7 @@ begin
 with dm do begin
   qQ.sql.Text :=
     'Insert Into "LibroIVAventa" (FECHA, FACTURA, CLIENTE, CUIT, NG1, NG2, IVA1, IVA2, ITF) Values ( '
-    + quotedstr(fec) + ', ' + quotedstr(nro) + ', ' + quotedstr(cod) + ', ' +
+    + quotedstr(fec) + ', ' + quotedstr(nro) + ', ' + quotedstr(cli) + ', ' +
     quotedstr(cui) + ', ' + n10 + ', ' + n21 + ', ' + (i10) + ', ' + (i21) +
     ', ' + (tot) + ')';
   qQ.ExecSQL;
@@ -534,7 +534,7 @@ with dm do begin
     'Insert Into "LibroIVAcompra" (FECHA, FACTURA, PROVEEDOR, CUIT, '+
     ' NG1, NG2, NG3, IVA1, IVA2, IVA3,'+
     ' OEIIBB, IDERPYPAC, ITF) Values ( '
-    + quotedstr(fec) + ', ' + quotedstr(nro) + ', ' + quotedstr(cod) + ', ' +quotedstr(com)
+    + quotedstr(fec) + ', ' + quotedstr(nro) + ', ' + quotedstr(cli) + ', ' +quotedstr(com)
     + ', ' + n10 + ', ' + n21 + ', ' + n3 + ', ' + (i10) + ', ' + (i21)+ ', ' + (i3)
     + ', ' + per + ', ' + (ret) + ', ' + (tot) + ')';
   qQ.ExecSQL;

@@ -1590,7 +1590,6 @@ object fEditorReporte: TfEditorReporte
     Top = 200
   end
   object OperacionFDQuery: TFDQuery
-    Active = True
     Connection = FirebirdConnection
     SQL.Strings = (
       'SELECT'
@@ -1643,9 +1642,9 @@ object fEditorReporte: TfEditorReporte
         'CODIGO)'
       'INNER JOIN "Cliente" ON ("Operacion".CLIENTE = "Cliente".CODIGO)'
       'WHERE'
-      '("Operacion".CODIGO = 59 )'
-      'AND ("Operacion".TIPO = '#39'PED'#39' )'
-      'AND ("Operacion".LETRA = '#39'X'#39' )')
+      '("Operacion".CODIGO = 71 )'
+      '--AND ("Operacion".TIPO = '#39'PED'#39' )'
+      '--AND ("Operacion".LETRA = '#39'X'#39' )')
     Left = 447
   end
   object tLibroIVAventa: TFDQuery

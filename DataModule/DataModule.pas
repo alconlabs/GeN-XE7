@@ -294,7 +294,7 @@ const
     + ' "Presupuesto".IVA3, "Presupuesto".TOTAL, "Presupuesto".CONTADO, "Presupuesto".CLIENTE,'
     + ' "Presupuesto".SUBTOTAL, "Presupuesto".DESCUENTO, "Presupuesto".IMPUESTO, "Presupuesto".TERMINOS,'
     + ' "Presupuesto".IVA2, "Presupuesto".IVA1, "Presupuesto".EXCENTO, "Presupuesto".SALDO,'
-    + ' "Presupuesto".PAGADO' + ' FROM "Presupuesto"';
+    + ' "Presupuesto".PAGADO, "Presupuesto".ANULADA' + ' FROM "Presupuesto"';
   presupuestoSql = clienteSql + ',' + articuloSql + ',' +
     ' "PresupuestoItem".ARTICULO, "PresupuestoItem".CANTIDAD,'
     +' "PresupuestoItem".PRECIO, "PresupuestoItem".COSTO AS VIDESCUENTO,'
@@ -317,13 +317,12 @@ const
     ' "Operacion".TOTAL,' + '  "Operacion".CONTADO,' + '  "Operacion".CLIENTE,'+
     ' "Operacion".SUBTOTAL,' + ' "Operacion".DESCUENTO,' +
     ' "Operacion".IMPUESTO,' + ' "Operacion".IVA1, "Operacion".IVA2, "Operacion".IVA3,' +
-    ' "Operacion".EXCENTO,' + ' "Operacion".SALDO,' + ' "Operacion".PAGADO' +
+    ' "Operacion".EXCENTO,' + ' "Operacion".SALDO,' + ' "Operacion".PAGADO, "Operacion".ANULADA' +
     ' FROM  "Operacion"';
   OperSql =
     clienteSql
     +','+ articuloSql
     +','+ OperacionItemSql
-//    +','+ ivaVtaSql
     +','+ OperacionSql
     +'  INNER JOIN "OperacionItem" ON ("Operacion".CODIGO = "OperacionItem".OPERACION)'
     +'  INNER JOIN "Articulo" ON ("OperacionItem".ARTICULO = "Articulo".CODIGO)'
@@ -332,27 +331,47 @@ const
     '  "Venta".FECHA,' + '  "Venta".COMPROBANTE,' + '  "Venta".TERMINOS,'+
     '  "Venta".TOTAL,' + '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' +
     '  "Venta".SUBTOTAL,' + '  "Venta".DESCUENTO,' + '  "Venta".IMPUESTO,' +
-    '  "Venta".EXCENTO,' + '  "Venta".SALDO,' + '  "Venta".PAGADO'
+    '  "Venta".IVA1, "Venta".IVA2, "Venta".IVA3,' +
+    '  "Venta".EXCENTO,' + '  "Venta".SALDO,' + '  "Venta".PAGADO, "Venta".ANULADA'
     + ' FROM'
     + ' "Venta"';
   vtaSql =
     clienteSql
     +','+ articuloSql
     +','+ ventaItemSql
-    +','+ ivaVtaSql
     +','+ ventaTSql
-    + ' LEFT JOIN "LibroIVAventa" ON ("Venta".CODIGO = "LibroIVAventa".FACTURA)'
-    //+ ' INNER JOIN "VentaItem" ON ("LibroIVAventa".FACTURA = "VentaItem".OPERACION)'
     + ' INNER JOIN "VentaItem" ON ("Venta".CODIGO = "VentaItem".OPERACION)'
     + ' INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CODIGO)'
     + ' INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)' ;
+  vtaLibroIvaSql =
+    ivaVtaSql
+    +','+ vtaSql
+    + ' LEFT JOIN "LibroIVAventa" ON ("Venta".CODIGO = "LibroIVAventa".FACTURA)';
   compraTSql =' "Compra".CODIGO, "Compra".LETRA, "Compra".DESCRIPCION as VDESC,' +
     ' "Compra".FECHA, "Compra".COMPROBANTE, "Compra".TERMINOS,'+
-    ' "Compra".TOTAL, "Compra".CONTADO, "Compra".CLIENTE,' +
+    ' "Compra".TOTAL, "Compra".CONTADO, "Compra".PROVEEDOR,' +
     ' "Compra".SUBTOTAL, "Compra".DESCUENTO, "Compra".IMPUESTO,' +
-    ' "Compra".EXCENTO, "Compra".SALDO, "Compra".PAGADO'
-    + ' FROM "Venta"';
-
+    ' "Compra".IVA1, "Compra".IVA2, "Compra".IVA3,' +
+    ' "Compra".EXCENTO, "Compra".SALDO, "Compra".PAGADO, "Compra".ANULADA' +
+    ' FROM "Compra"';
+  proveedorSql =
+    ' "Proveedor".NOMBRE,  "Proveedor".TITULAR, "Proveedor".DIRECCION, "Proveedor".DIRECCIONCOMERCIAL, "Proveedor".IVA as CIVA, "Proveedor".CUIT as CCUIT, "Proveedor".EMAIL';
+  empresaSql =
+    ' "Empresa".NOMBRE,  "Proveedor".TITULAR, "Proveedor".DIRECCION, "Proveedor".DIRECCIONCOMERCIAL, "Proveedor".IVA as CIVA, "Proveedor".CUIT as CCUIT, "Proveedor".EMAIL';
+  compraItemSql =
+    ' "CompraItem".ARTICULO, "CompraItem".CANTIDAD, "CompraItem".COSTO AS VIDESCUENTO,'
+    +' "CompraItem".PRECIO, "CompraItem".OPERACION,'
+    +' ("CompraItem".PRECIO * "CompraItem".CANTIDAD ) as PREXCANT,'
+    +' "CompraItem".SERVICIO, "CompraItem".DESCRIPCION AS DESCR,'
+    +' "CompraItem".IMPUESTO as VIIMPUESTO';
+  compSql =
+    proveedorSql
+    +','+ articuloSql
+    +','+ compraItemSql
+    +','+ compraTSql
+    + ' INNER JOIN "CompraItem" ON ("Compra".CODIGO = "CompraItem".OPERACION)'
+    + ' INNER JOIN "Articulo" ON ("CompraItem".ARTICULO = "Articulo".CODIGO)'
+    + ' INNER JOIN "Proveedor" ON ("Compra".PROVEEDOR = "Proveedor".CODIGO)' ;
 type
   TCompartido = record
     Numero: Integer;

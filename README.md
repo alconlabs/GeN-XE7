@@ -17,7 +17,7 @@ Stock. Ventas. Facturación. Remitos. Clientes. Vendedores. Proveedores. Servici
 DESCARGALO GRATIS!!!
 
 Instalación
-https://sourceforge.net/projects/gen-xe7/files/InstalarGeN.exe/download
+http://civeloo.com
 
 Actualización
 https://sourceforge.net/projects/gen-xe7/files/ActualizarGeN.exe/download

@@ -79,31 +79,11 @@ object BuscarOperacionForm: TBuscarOperacionForm
       ParentFont = False
       TabOrder = 1
     end
-    object TipoRadioGroup: TRadioGroup
-      Left = 692
-      Top = 4
-      Width = 91
-      Height = 57
-      Caption = 'Tipo'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ItemIndex = 0
-      Items.Strings = (
-        'Factura'
-        'Remito'
-        'Presupuesto')
-      ParentFont = False
-      TabOrder = 2
-      OnClick = TipoRadioGroupClick
-    end
   end
   object Panel2: TPanel
-    Left = 717
+    Left = 692
     Top = 67
-    Width = 75
+    Width = 100
     Height = 399
     Align = alRight
     BevelOuter = bvLowered
@@ -112,7 +92,7 @@ object BuscarOperacionForm: TBuscarOperacionForm
     object Image1: TImage
       Left = 1
       Top = 298
-      Width = 73
+      Width = 98
       Height = 50
       Hint = 'EXPORTAR A EXCEL EN FORMATO CSV'
       Align = alBottom
@@ -192,23 +172,10 @@ object BuscarOperacionForm: TBuscarOperacionForm
       ExplicitTop = 243
       ExplicitWidth = 80
     end
-    object Label11: TLabel
-      Left = 3
-      Top = 107
-      Width = 77
-      Height = 13
-      Caption = 'Enviar email?'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
     object SiBitBtn: TBitBtn
       Left = 1
       Top = 348
-      Width = 73
+      Width = 98
       Height = 50
       Align = alBottom
       Caption = ' '
@@ -225,8 +192,8 @@ object BuscarOperacionForm: TBuscarOperacionForm
     end
     object FacturarBitBtn: TBitBtn
       Left = 1
-      Top = 51
-      Width = 73
+      Top = 123
+      Width = 98
       Height = 50
       Align = alTop
       Caption = '&Facturar'
@@ -245,7 +212,7 @@ object BuscarOperacionForm: TBuscarOperacionForm
     object todoBitBtn: TBitBtn
       Left = 1
       Top = 1
-      Width = 73
+      Width = 98
       Height = 50
       Align = alTop
       Caption = 'TODO'
@@ -292,11 +259,48 @@ object BuscarOperacionForm: TBuscarOperacionForm
       TabOrder = 3
       OnClick = EnviarEmailCheckBoxClick
     end
+    object AnuladaCheckBox: TCheckBox
+      Left = 1
+      Top = 173
+      Width = 98
+      Height = 17
+      Align = alTop
+      Caption = 'Anuladas?'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 4
+    end
+    object TipoRadioGroup: TRadioGroup
+      Left = 1
+      Top = 51
+      Width = 98
+      Height = 72
+      Align = alTop
+      Caption = 'Tipo'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ItemIndex = 0
+      Items.Strings = (
+        'Factura'
+        'Remito'
+        'Presupuesto'
+        'Compra')
+      ParentFont = False
+      TabOrder = 5
+      OnClick = TipoRadioGroupClick
+    end
   end
   object DBGrid1: TDBGrid
     Left = 0
     Top = 67
-    Width = 717
+    Width = 692
     Height = 399
     Align = alClient
     DataSource = DM.dsqOperacion
@@ -359,6 +363,11 @@ object BuscarOperacionForm: TBuscarOperacionForm
         Expanded = False
         FieldName = 'PAGADO'
         Width = 83
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ANULADA'
         Visible = True
       end>
   end

@@ -201,7 +201,7 @@ uses LoginF, BuscarOperacion, AnularOperacion, incremento, PagoIVAF, LibroDiario
   UFCategorias, UFBuscaArticulos, CajaLF,
   GananciasL, Precios, ListadoClientes, BuscaCompra, EmpresaF, ConfiguracionF,
   VaciarBaseF, main, OperacionF,
-  LibrosF, PagoF;
+  LibrosF, PagoF, CancelOrderView;
 
 {$R *.dfm}
 
@@ -506,11 +506,21 @@ end;
 procedure TFullMainForm.COMPRAS1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'CompraL.exe')), SW_SHOWNORMAL);
-  BuscaCompraForm := TBuscaCompraForm.Create(self);
-  try
-    BuscaCompraForm.ShowModal;
-  finally
-    BuscaCompraForm.Free;
+//  BuscaCompraForm := TBuscaCompraForm.Create(self);
+//  try
+//    BuscaCompraForm.ShowModal;
+//  finally
+//    BuscaCompraForm.Free;
+//  end;
+  BuscarOperacionForm := TBuscarOperacionForm.Create(self);
+  with BuscarOperacionForm do
+  begin
+    try
+      esCompra:=True;
+      ShowModal;
+    finally
+      Free;
+    end;
   end;
 end;
 
@@ -523,31 +533,48 @@ begin
 //  finally
 //    VenderForm.Free;
 //  end;
-OperacionForm := TOperacionForm.Create(self);
-  try
-    OperacionForm.ShowModal;
-  finally
-    OperacionForm.Free;
+  OperacionForm := TOperacionForm.Create(self);
+  with OperacionForm do
+  begin
+    try
+      ShowModal;
+    finally
+      Free;
+    end;
   end;
 end;
 
 procedure TFullMainForm.AnularCompraClick(Sender: TObject);
 begin
-  AnularOperacionForm := TAnularOperacionForm.Create(self);
+//  AnularOperacionForm := TAnularOperacionForm.Create(self);
+//  try
+//    AnularOperacionForm.ShowModal;
+//  finally
+//    AnularOperacionForm.Free;
+//  end;
+  FCancelOrderView := TFCancelOrderView.Create(Self);
+  FCancelOrderView.tipo := 'Compra';
   try
-    AnularOperacionForm.ShowModal;
+    FCancelOrderView.ShowModal;
   finally
-    AnularOperacionForm.Free;
+    FCancelOrderView.Free;
   end;
 end;
 
 procedure TFullMainForm.AnularVentaClick(Sender: TObject);
 begin
-  AnularOperacionForm := TAnularOperacionForm.Create(self);
+//  AnularOperacionForm := TAnularOperacionForm.Create(self);
+//  try
+//    AnularOperacionForm.ShowModal;
+//  finally
+//    AnularOperacionForm.Free;
+//  end;
+  FCancelOrderView := TFCancelOrderView.Create(Self);;
+  FCancelOrderView.tipo := 'Venta';
   try
-    AnularOperacionForm.ShowModal;
+    FCancelOrderView.ShowModal;
   finally
-    AnularOperacionForm.Free;
+    FCancelOrderView.Free;
   end;
 end;
 

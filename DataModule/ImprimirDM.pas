@@ -19,6 +19,7 @@ type
     frxCSVExport1: TfrxCSVExport;
     frxReport1: TfrxReport;
     Function VTA(nro, let: string): string;
+    Function COMP(nro, let: string): string;
     Function OPER(nro, tipo, let: string): string;
     Function PRE(nro, let: string): string;
     Function PlanillaCobrador(nro, let: string): string;
@@ -325,12 +326,23 @@ begin
   Result := QuotedStr(cb)+' as CB, '+vtaSql+w;
 end;
 
-Function TImprimirDataModule.OPER;
+function TImprimirDataModule.OPER;
+var
+  w,cb,cae,vto : string;
 begin
-  Result := operSql
-    +' WHERE' + '  ("Operacion".CODIGO = ' + nro + ' )'
-    +' AND ("Operacion".TIPO = ' + QuotedStr(tipo) + ' )'
-    +' AND ("Operacion".LETRA = ' + QuotedStr(let) + ' )';
+  w := ' WHERE ("Operacion".CODIGO = '+nro+') AND ("Operacion".LETRA = '+QuotedStr(let)+')';
+  dm.Query.sql.Text:='Select "Operacion".DESCRIPCION, "Operacion".TERMINOS  From "Operacion" '+w;
+  dm.Query.Open;
+  tipo := DM.TraerTipoCbte(let);
+  cae := dm.Query.FieldByName('DESCRIPCION').AsString;
+  vto := dm.Query.FieldByName('TERMINOS').AsString;
+  dm.Query.Close;
+  cb := CodigoBarraElectronico(CUIT,tipo,PuntoVenta,cae,vto);
+  Result := QuotedStr(cb)+' as CB, '+operSql+w;
+//  Result := operSql
+//    +' WHERE' + '  ("Operacion".CODIGO = ' + nro + ' )'
+//    +' AND ("Operacion".TIPO = ' + QuotedStr(tipo) + ' )'
+//    +' AND ("Operacion".LETRA = ' + QuotedStr(let) + ' )';
 end;
 
 Function TImprimirDataModule.PlanillaCobrador;
@@ -344,6 +356,21 @@ begin
     ' INNER JOIN "Cobrador" ON ("CtaCte".COBRADOR = "Cobrador".CODIGO)' +
     ' WHERE ("CtaCte".OPERACION = ' + nro + ')' +
     ' ORDER BY "CtaCteItem".CUOTA';
+end;
+
+function TImprimirDataModule.COMP(nro, let: string): string;
+var
+  w,cb,tipo,cae,vto : string;
+begin
+  w := ' WHERE ("Compra".CODIGO = '+nro+') AND ("Compra".LETRA = '+QuotedStr(let)+')';
+  dm.Query.sql.Text:='Select "Compra".DESCRIPCION, "Compra".TERMINOS  From "Compra" '+w;
+  dm.Query.Open;
+  tipo := DM.TraerTipoCbte(let);
+  cae := dm.Query.FieldByName('DESCRIPCION').AsString;
+  vto := dm.Query.FieldByName('TERMINOS').AsString;
+  dm.Query.Close;
+  cb := CodigoBarraElectronico(CUIT,tipo,PuntoVenta,cae,vto);
+  Result := QuotedStr(cb)+' as CB, '+compSql+w;
 end;
 
 Function TImprimirDataModule.Contrato;

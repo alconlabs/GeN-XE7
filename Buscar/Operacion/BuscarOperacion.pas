@@ -19,10 +19,10 @@ type
     DBGrid1: TDBGrid;
     FacturarBitBtn: TBitBtn;
     Image1: TImage;
-    TipoRadioGroup: TRadioGroup;
     todoBitBtn: TBitBtn;
     EnviarEmailCheckBox: TCheckBox;
-    Label11: TLabel;
+    AnuladaCheckBox: TCheckBox;
+    TipoRadioGroup: TRadioGroup;
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure DBGrid1DblClick(Sender: TObject);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
@@ -43,7 +43,7 @@ type
   public
     { Public declarations }
     Codigo, CodProve, Tipo: String;
-    salir, Cancela, anular, Compra: boolean;
+    salir, Cancela, anular, esCompra: boolean;
   end;
 
 var
@@ -58,26 +58,28 @@ uses OperacionF;
 procedure TBuscarOperacionForm.ActualizarGrilla;
 var sql, where,anulada,buscar:string;
 begin
-  anulada := '(ANULADA IS NULL)';
+  if not AnuladaCheckBox.Checked then anulada := ' (ANULADA IS NULL) ';
   if ((nro <> '') or (letra <> '')) then
-    buscar := '(CODIGO like ' + QuotedStr(nro + '%') + '  ) '
+    buscar := ' (CODIGO like ' + QuotedStr(nro + '%') + '  ) '
     + ' AND (LETRA like ' + QuotedStr(letra + '%') + ' )';
-  if (buscar <> '') then
-    where:='WHERE '+buscar+' AND '+anulada
+  if (buscar = '') then
+  begin
+    if anulada<>'' then where := ' WHERE '+anulada;
+  end
   else
-    where:='WHERE '+anulada;
-  if Compra then
-    begin
-      sql := 'SELECT ' + compraTSql;
-    end
-    else
-    case TipoRadioGroup.ItemIndex of
-      0 : sql := 'SELECT ' + ventaTSql;
-      1 : sql := 'SELECT ' + OperacionSql;
-      2 : sql := 'SELECT ' + presupuestoTSql;
-    end;
-  dm.qOperacion.SQL.Text := sql + where;
-  dm.qOperacion.Open;
+  begin
+    where := ' WHERE '+buscar;
+    if anulada<>'' then where := where +' AND '+anulada;
+  end;
+  if esCompra then TipoRadioGroup.ItemIndex:=3;
+  case TipoRadioGroup.ItemIndex of
+    0 : sql := 'SELECT ' + ventaTSql;
+    1 : sql := 'SELECT ' + OperacionSql;
+    2 : sql := 'SELECT ' + presupuestoTSql;
+    3 : sql := 'SELECT ' + compraTSql;
+  end;
+//  dm.qOperacion.SQL.Text := sql + where;
+  dm.qOperacion.Open(sql + where);
   dm.qOperacion.Last;
 end;
 
@@ -125,7 +127,7 @@ var
 begin
   Codigo := dm.qOperacion.FieldByName('CODIGO').AsString;
   // IMPRIMIR
-  if not ( anular and ((dm.ConfigQuery.FieldByName('Imprimir').AsString ) <> 'SI')) then
+  if (not anular) and (dm.ConfigQuery.FieldByName('Imprimir').AsString = 'SI') then
   begin
     nro := dm.qOperacion.FieldByName('CODIGO').AsString;
     letra := dm.qOperacion.FieldByName('LETRA').AsString;
@@ -135,6 +137,7 @@ begin
         0 : Impr(ImprimirDataModule.VTA(nro, letra), letra);
         1 : Impr(oper(nro, 'PED', letra), letra);//'CTicket');
         2 : Impr(ImprimirDataModule.PRE(nro, letra), 'P'+letra);
+        3 : Impr(ImprimirDataModule.COMP(nro, letra), letra);
       end;
     ImprimirDataModule.Free;
   end;
@@ -153,7 +156,6 @@ var sql:string;
 begin
   ActualizarGrilla('','');
 end;
-
 
 procedure TBuscarOperacionForm.DBGrid1DblClick(Sender: TObject);
 begin

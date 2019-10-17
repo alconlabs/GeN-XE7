@@ -50,7 +50,11 @@ uses
   Vcl.Styles,
   udmMercadoLibre in 'DataModule\udmMercadoLibre.pas' {dmML: TDataModule},
   ufRetPerc in 'SubOperacion\RetencionesPercepciones\ufRetPerc.pas' {fRetPerc},
-  PagoF in 'Operacion\Pago\Form\PagoF.pas' {PagoForm};
+  PagoF in 'Operacion\Pago\Form\PagoF.pas' {PagoForm},
+  CancelOrderView in 'Operacion\CancelOrder\Views\CancelOrderView.pas' {FCancelOrderView},
+  CancelOrderModel in 'Operacion\CancelOrder\Models\CancelOrderModel.pas',
+  CancelOrderViewModel in 'Operacion\CancelOrder\ViewModels\CancelOrderViewModel.pas',
+  CancelOrderService in 'Operacion\CancelOrder\Services\CancelOrderService.pas';
 
 {$R *.res}
 

@@ -1700,7 +1700,8 @@ object DM: TDM
       '  "Venta".IVA1,'
       '  "Venta".EXCENTO,'
       '  "Venta".SALDO,'
-      '  "Venta".PAGADO'
+      '  "Venta".PAGADO,'
+      '  "Venta".ANULADA'
       ' FROM'
       '  "Venta"'
       
