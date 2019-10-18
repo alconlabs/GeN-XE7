@@ -22,7 +22,7 @@ object LibrosForm: TLibrosForm
   object DBGrid1: TDBGrid
     Left = 0
     Top = 0
-    Width = 640
+    Width = 694
     Height = 468
     Align = alClient
     DataSource = DM.dsqLibro
@@ -34,21 +34,21 @@ object LibrosForm: TLibrosForm
     TitleFont.Style = []
   end
   object Panel2: TPanel
-    Left = 640
+    Left = 694
     Top = 0
-    Width = 154
+    Width = 100
     Height = 468
     Align = alRight
-    Color = clBlack
     ParentBackground = False
     TabOrder = 1
+    ExplicitLeft = 700
     object iExp: TImage
-      Left = 37
-      Top = 69
-      Width = 80
+      Left = 1
+      Top = 51
+      Width = 98
       Height = 50
       Hint = 'EXPORTAR A EXCEL EN FORMATO CSV'
-      Align = alCustom
+      Align = alTop
       ParentShowHint = False
       Picture.Data = {
         0A544A504547496D61676537080000FFD8FFE000104A46494600010200006400
@@ -123,11 +123,12 @@ object LibrosForm: TLibrosForm
       OnClick = iExpClick
     end
     object bProcesar: TBitBtn
-      Left = 41
-      Top = 390
-      Width = 80
+      Left = 1
+      Top = 417
+      Width = 98
       Height = 50
-      Caption = 'procesar'
+      Align = alBottom
+      Caption = 'Procesar'
       Default = True
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -155,12 +156,16 @@ object LibrosForm: TLibrosForm
       ParentFont = False
       TabOrder = 0
       OnClick = bProcesarClick
+      ExplicitLeft = 41
+      ExplicitTop = 390
+      ExplicitWidth = 80
     end
     object bImprimir: TBitBtn
-      Left = 37
-      Top = 9
-      Width = 80
+      Left = 1
+      Top = 1
+      Width = 98
       Height = 50
+      Align = alTop
       Caption = 'Imprimir'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clPurple
@@ -170,72 +175,88 @@ object LibrosForm: TLibrosForm
       ParentFont = False
       TabOrder = 1
       OnClick = bImprimirClick
+      ExplicitTop = -16
     end
     object GroupBox1: TGroupBox
-      Left = 7
-      Top = 128
-      Width = 141
-      Height = 121
+      Left = 1
+      Top = 151
+      Width = 98
+      Height = 92
+      Align = alTop
       Caption = ' Fechas '
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 2
+      ExplicitTop = 101
       object Label2: TLabel
-        Left = 10
-        Top = 66
-        Width = 22
+        Left = 2
+        Top = 49
+        Width = 94
         Height = 13
+        Align = alTop
         Caption = 'Fin:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 22
       end
       object Label1: TLabel
-        Left = 12
-        Top = 20
-        Width = 36
+        Left = 2
+        Top = 15
+        Width = 94
         Height = 13
+        Align = alTop
         Caption = 'Inicio:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        ExplicitWidth = 36
       end
       object DTP1: TDateTimePicker
-        Left = 12
-        Top = 39
-        Width = 113
+        Left = 2
+        Top = 28
+        Width = 94
         Height = 21
+        Align = alTop
         Date = 43466.000000000000000000
         Time = 0.873243958296370700
         TabOrder = 0
         OnCloseUp = DTP1CloseUp
+        ExplicitLeft = 12
+        ExplicitTop = 39
+        ExplicitWidth = 113
       end
       object DTP2: TDateTimePicker
-        Left = 12
-        Top = 85
-        Width = 113
+        Left = 2
+        Top = 62
+        Width = 94
         Height = 21
+        Align = alTop
         Date = 43830.000000000000000000
         Time = 0.873295891200541500
         TabOrder = 1
         OnCloseUp = DTP2CloseUp
+        ExplicitLeft = 12
+        ExplicitTop = 85
+        ExplicitWidth = 113
       end
     end
     object bSiap: TButton
-      Left = 40
-      Top = 312
-      Width = 80
+      Left = 1
+      Top = 101
+      Width = 98
       Height = 50
+      Align = alTop
       Caption = 'SIAP'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -245,6 +266,7 @@ object LibrosForm: TLibrosForm
       ParentFont = False
       TabOrder = 3
       OnClick = bSiapClick
+      ExplicitTop = 73
     end
   end
 end

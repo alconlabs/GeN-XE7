@@ -127,6 +127,7 @@ end;
 procedure TLibrosForm.FormDestroy(Sender: TObject);
 begin
 //  EnvioRamTerminado;
+  dm.qLibro.Close;
 end;
 
 procedure TLibrosForm.FormShow(Sender: TObject);

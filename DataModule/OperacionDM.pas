@@ -824,8 +824,8 @@ with dm do begin
 //      IIBB := (tot - impu) * (qQ.FieldByName('COEF1').AsFloat *
 //        qQ.FieldByName('COEF2').AsFloat * qQ.FieldByName('PORCENTAJE').AsFloat);
     qQ.sql.Text :=
-      'Insert Into "PresupuestoItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-      + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
+      'Insert Into "PresupuestoItem" (OPERACION, ARTICULO, CANTIDAD, COSTO, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
+      + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +'0'+', '+
       (mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
       quotedstr(mat[1, i]) + ');';
     qQ.ExecSQL;
@@ -1044,8 +1044,9 @@ with dm do begin
   for i := 1 to High(mat[0]) do
   begin
     qQ.sql.Text :=
-      'Insert Into "OperacionItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-      + ' ( ' + IntToStr(nro) + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
+      'Insert Into "OperacionItem" (OPERACION, ARTICULO, CANTIDAD, COSTO'+
+      ', PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
+      + ' ( ' + IntToStr(nro) + ', ' + (mat[0, i]) + ', ' + (mat[3, i])+', '+'0'+', '+
       (mat[4, i]) + ', ' + mat[6, i] + ', ' + IntToStr(nro) + ', ' +
       quotedstr(mat[1, i]) + ');';
     qQ.ExecSQL;
@@ -1154,10 +1155,11 @@ with dm do begin
   for i := 1 to High(mat[0]) do
   begin
     qQ.sql.Text :=
-      'Insert Into "CompraItem" (OPERACION, ARTICULO, CANTIDAD, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-      + ' ( ' + (nro) + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
-      (mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
-      quotedstr(mat[1, i]) + ');';
+      'Insert Into "CompraItem" (OPERACION, ARTICULO, CANTIDAD, COSTO'+
+      ',PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
+      + ' ( ' + (nro) + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +'0'+', '+
+      (mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' + quotedstr(mat[1, i]) +
+      ');';
     qQ.ExecSQL;
   end;
   // Insertar en la tabla de CtaCte
@@ -2057,7 +2059,7 @@ with dm do begin
 //    qQ.First;
     while not qQ.Eof do
     begin
-      with tSiapVtaComp do
+      with tSdb do
       begin
         cod:=qQ.FieldByName('CODIGO').AsString;
         Open('SELECT * FROM SiapVtaComp WHERE Codigo='+cod);
@@ -2066,15 +2068,15 @@ with dm do begin
         else
           begin
             Insert;
-            tSiapVtaCompCodigo.AsInteger:=StrToInt(cod);
+            FieldByName('Codigo').AsInteger:=StrToInt(cod);
           end;
           CantIva:=0;
-          tSiapVtaCompCbteFch.AsString:=FormatDateTime('yyyymmdd',(qQ.FieldByName('FECHA').AsDateTime));
+          FieldByName('CbteFch').AsString:=FormatDateTime('yyyymmdd',(qQ.FieldByName('FECHA').AsDateTime));
           let:=ObtenerValor('CbteTipo', 'Codigo', 'Letra',QuotedStr(qQ.FieldByName('LETRA').AsString));
-          tSiapVtaCompCbteTipo.AsString:=FormatFloat('000',StrToFloat(let));
-          tSiapVtaCompPtoVta.AsString:=FormatFloat('00000',StrToFloat(PuntoVenta));
-          tSiapVtaCompCbteDesde.AsString:=FormatFloat('00000000000000000000',(qQ.FieldByName('CbteDesde').AsFloat));
-          tSiapVtaCompCbteHasta.AsString:=FormatFloat('00000000000000000000',(qQ.FieldByName('CbteHasta').AsFloat));
+          FieldByName('CbteTipo').AsString:=FormatFloat('000',StrToFloat(let));
+          FieldByName('PtoVta').AsString:=FormatFloat('00000',StrToFloat(PuntoVenta));
+          FieldByName('CbteDesde').AsString:=FormatFloat('00000000000000000000',(qQ.FieldByName('CbteDesde').AsFloat));
+          FieldByName('CbteHasta').AsString:=FormatFloat('00000000000000000000',(qQ.FieldByName('CbteHasta').AsFloat));
           DocNro:=qQ.FieldByName('CUIT').AsString;
           if DocNro='' then DocNro:=qQ.FieldByName('DNI').AsString;
           if DocNro.Length < 11  then DocTipo :='96' else DocTipo := '80';
@@ -2083,14 +2085,14 @@ with dm do begin
               DocNro:='20222222223';
               DocTipo := '80';
             end;
-          tSiapVtaCompDocTipo.AsString:=DocTipo;
-          tSiapVtaCompDocNro.AsString:=FormatFloat('00000000000000000000',StrToFloat(DocNro));
-          tSiapVtaCompDocNomb.AsString:=FormatMaskText('000000000000000000000000000000',(qQ.FieldByName('NomCli').AsString));
-          tSiapVtaCompMonId.AsString:='PES';
-          tSiapVtaCompMonCotiz.AsString:=FormatFloat('0000000000',(1*1000000));
-          tSiapVtaCompCodOper.AsString:='0';
-          tSiapVtaCompFchVtoPago.AsString:=FormatFloat('00000000',(0*100));
-          tSiapVtaCompImpNeto.AsString:=FormatFloat('000000000000000',(qQ.FieldByName('ImpNeto').AsFloat*100));
+          FieldByName('DocTipo').AsString:=DocTipo;
+          FieldByName('DocNro').AsString:=FormatFloat('00000000000000000000',StrToFloat(DocNro));
+          FieldByName('DocNomb').AsString:=FormatMaskText('000000000000000000000000000000',(qQ.FieldByName('NomCli').AsString));
+          FieldByName('MonId').AsString:='PES';
+          FieldByName('MonCotiz').AsString:=FormatFloat('0000000000',(1*1000000));
+          FieldByName('CodOper').AsString:='0';
+          FieldByName('FchVtoPago').AsString:=FormatFloat('00000000',(0*100));
+          FieldByName('ImpNeto').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('ImpNeto').AsFloat*100));
 
           with qSdb do
           begin
@@ -2107,15 +2109,15 @@ with dm do begin
             end;
           end;
 
-          tSiapVtaCompImpNoGra.AsString:=FormatFloat('000000000000000',(noGra*100));
-          tSiapVtaCompImpIVA.AsString:=FormatFloat('000000000000000',(qQ.FieldByName('ImpIVA').AsFloat*100));
-          tSiapVtaCompImpPercGral.AsString:=FormatFloat('000000000000000',(pagCueIva*100));
-          tSiapVtaCompImpPercNoCat.AsString:=FormatFloat('000000000000000',(pagCueOtr*100));
-          tSiapVtaCompImpPercIIBB.AsString:=FormatFloat('000000000000000',(perIIBB*100));
-          tSiapVtaCompImpPercMuni.AsString:=FormatFloat('000000000000000',(perImpMun*100));
-          tSiapVtaCompImpImpInt.AsString:=FormatFloat('000000000000000',(impInt*100));
-          tSiapVtaCompImpOtrTrib.AsString:=FormatFloat('000000000000000',(otrTrib*100));
-          tSiapVtaCompImpTotal.AsString:=FormatFloat('000000000000000',(qQ.FieldByName('TOTAL').AsFloat*100));
+          FieldByName('ImpNoGra').AsString:=FormatFloat('000000000000000',(noGra*100));
+          FieldByName('ImpIVA').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('ImpIVA').AsFloat*100));
+          FieldByName('ImpPercGral').AsString:=FormatFloat('000000000000000',(pagCueIva*100));
+          FieldByName('ImpPercNoCat').AsString:=FormatFloat('000000000000000',(pagCueOtr*100));
+          FieldByName('ImpPercIIBB').AsString:=FormatFloat('000000000000000',(perIIBB*100));
+          FieldByName('ImpPercMuni').AsString:=FormatFloat('000000000000000',(perImpMun*100));
+          FieldByName('ImpImpInt').AsString:=FormatFloat('000000000000000',(impInt*100));
+          FieldByName('ImpOtrTrib').AsString:=FormatFloat('000000000000000',(otrTrib*100));
+          FieldByName('ImpTotal').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('TOTAL').AsFloat*100));
 
           AlicIva := qQ.FieldByName('AlicIVA').AsString;
           if AlicIva<>'' then
@@ -2146,8 +2148,8 @@ with dm do begin
               end;
             end;
 
-          tSiapVtaCompIvaCant.AsString:=IntToStr(CantIva);
-          tSiapVtaCompImpOpEx.AsString:=FormatFloat('000000000000000',(impOpEx*100));
+          FieldByName('IvaCant').AsString:=IntToStr(CantIva);
+          FieldByName('ImpOpEx').AsString:=FormatFloat('000000000000000',(impOpEx*100));
           Post;
           qQ.Next;
         end;
@@ -2188,7 +2190,7 @@ begin
 //    sdb.ExecSQL('delete from SiapCmpComp');
     while not qQ.Eof do
     begin
-      with qODM do
+      with tSdb do
       begin
         CantIva:=0;
         impOpEx:=0;
@@ -2209,7 +2211,12 @@ begin
           DocNro:=qQ.FieldByName('CUIT').AsString;
           if DocNro='' then DocNro:=qQ.FieldByName('DNI').AsString;
           if DocNro.Length < 11  then DocTipo :='96' else DocTipo := '80';
-          FieldByName('DocTipo').AsString:=DocTipo;//PROVEEDOR Código de Documento del vendedor	L2
+//          FieldByName('DocTipo').AsString:=DocTipo;//PROVEEDOR Código de Documento del vendedor	L2
+          if (DocNro='') then
+            begin
+              DocNro:='20222222223';
+              DocTipo := '80';
+            end;
           FieldByName('DocNro').AsString:=FormatFloat('00000000000000000000',StrToFloat(DocNro));//PROVEEDOR Número de identificaión del vendedor	L20
           FieldByName('DocNomb').AsString:=FormatMaskText('000000000000000000000000000000',(qQ.FieldByName('DocNomb').AsString));//PROVEEDOR Apellido y Nombre del vendedor	L30
           FieldByName('ImpTotal').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('TOTAL').AsFloat*100));//Totales (cálculo automático)	L15

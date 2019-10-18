@@ -950,141 +950,12 @@ object DM: TDM
     Left = 88
     Top = 48
   end
-  object tSiapVtaComp: TFDQuery
+  object tSdb: TFDQuery
     Connection = sdb
     SQL.Strings = (
       'SELECT * FROM SiapVtaComp')
     Left = 88
     Top = 96
-    object tSiapVtaCompCodigo: TIntegerField
-      FieldName = 'Codigo'
-      Origin = 'Codigo'
-    end
-    object tSiapVtaCompCbteFch: TWideMemoField
-      FieldName = 'CbteFch'
-      Origin = 'CbteFch'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompCbteTipo: TWideMemoField
-      FieldName = 'CbteTipo'
-      Origin = 'CbteTipo'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompPtoVta: TWideMemoField
-      FieldName = 'PtoVta'
-      Origin = 'PtoVta'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompCbteDesde: TWideMemoField
-      FieldName = 'CbteDesde'
-      Origin = 'CbteDesde'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompCbteHasta: TWideMemoField
-      FieldName = 'CbteHasta'
-      Origin = 'CbteHasta'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompDocTipo: TWideMemoField
-      FieldName = 'DocTipo'
-      Origin = 'DocTipo'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompDocNro: TWideMemoField
-      FieldName = 'DocNro'
-      Origin = 'DocNro'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompDocNomb: TWideMemoField
-      FieldName = 'DocNomb'
-      Origin = 'DocNomb'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompMonId: TWideMemoField
-      FieldName = 'MonId'
-      Origin = 'MonId'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompMonCotiz: TWideMemoField
-      FieldName = 'MonCotiz'
-      Origin = 'MonCotiz'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompIvaCant: TWideMemoField
-      FieldName = 'IvaCant'
-      Origin = 'IvaCant'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompCodOper: TWideMemoField
-      FieldName = 'CodOper'
-      Origin = 'CodOper'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompFchVtoPago: TWideMemoField
-      FieldName = 'FchVtoPago'
-      Origin = 'FchVtoPago'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompIvaId: TWideMemoField
-      FieldName = 'IvaId'
-      Origin = 'IvaId'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpNeto: TWideMemoField
-      FieldName = 'ImpNeto'
-      Origin = 'ImpNeto'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpNoGra: TWideMemoField
-      FieldName = 'ImpNoGra'
-      Origin = 'ImpNoGra'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpOpEx: TWideMemoField
-      FieldName = 'ImpOpEx'
-      Origin = 'ImpOpEx'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpIva: TWideMemoField
-      FieldName = 'ImpIva'
-      Origin = 'ImpIva'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpPercGral: TWideMemoField
-      FieldName = 'ImpPercGral'
-      Origin = 'ImpPercGral'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpPercNoCat: TWideMemoField
-      FieldName = 'ImpPercNoCat'
-      Origin = 'ImpPercNoCat'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpPercIIBB: TWideMemoField
-      FieldName = 'ImpPercIIBB'
-      Origin = 'ImpPercIIBB'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpPercMuni: TWideMemoField
-      FieldName = 'ImpPercMuni'
-      Origin = 'ImpPercMuni'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpImpInt: TWideMemoField
-      FieldName = 'ImpImpInt'
-      Origin = 'ImpImpInt'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpOtrTrib: TWideMemoField
-      FieldName = 'ImpOtrTrib'
-      Origin = 'ImpOtrTrib'
-      BlobType = ftWideMemo
-    end
-    object tSiapVtaCompImpTotal: TWideMemoField
-      FieldName = 'ImpTotal'
-      Origin = 'ImpTotal'
-      BlobType = ftWideMemo
-    end
   end
   object mtIVA: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -1137,6 +1008,8 @@ object DM: TDM
       'Database=C:\Users\DeGsoft\Documents\Civeloo\GeN\db\GeN.FDB'
       'CharacterSet=WIN1252'
       'DriverID=FB')
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
     LoginPrompt = False
     Transaction = TransactionFB
     Left = 160

@@ -57,7 +57,7 @@ begin
   //    salir := BuscarOperacionForm.salir;
   //    if salir then Exit;
     finally
-      if TipoRadioGroup.ItemIndex=0 then
+      if (TipoRadioGroup.ItemIndex=0) or (TipoRadioGroup.ItemIndex=3) then
         begin
           Self.Codigo := Codigo;
   //        BitBtn1.Click;
