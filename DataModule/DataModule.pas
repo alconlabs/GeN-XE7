@@ -246,7 +246,7 @@ type
   end;
 
 const
-  version='201910191229';
+  version='201910190830';
   v: array [0 .. 22] of string = ('MenuExpress', 'MenuStock', 'Articulos',
     'VaciarBase', 'Vender', 'Comprar', 'AnularVenta', 'RetiroCaja', 'Rubro',
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
@@ -942,6 +942,7 @@ begin
     4 : result:='8';
     5 : result:='11';
     6 : result:='13';
+    else result:='0';
   end;
 end;
 

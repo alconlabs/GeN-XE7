@@ -366,9 +366,9 @@ begin
         // LIBRO IVA
         if (let = 'A') or (let = 'B') then
           if esCompra then
-            OperacionDataModule.LibroIVACompra(fech, nro, cli, cui, FloatToStr(n10),
-              FloatToStr(n21), FloatToStr(n3), FloatToStr(i10), FloatToStr(i21),
-              FloatToStr(i3), FloatToStr(per), FloatToStr(ret), FloatToStr(tot))
+            OperacionDataModule.LibroIVACompra(fech, nro, cli, cui, FloatToStr(-n10),
+              FloatToStr(-n21), FloatToStr(-n3), FloatToStr(-i10), FloatToStr(-i21),
+              FloatToStr(-i3), FloatToStr(-per), FloatToStr(-ret), FloatToStr(-tot))
           else
             OperacionDataModule.LibroIVAvta(fech, nro, cli, cui, FloatToStr(-n10), FloatToStr(-n21),
               FloatToStr(-i10), FloatToStr(-i21), FloatToStr(-tot));

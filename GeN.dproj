@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>GeN.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -120,11 +120,11 @@
         <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>GeN-Logo-44x44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>GeN-Logo-150x150.png</UWP_DelphiLogo150>
-        <VerInfo_Release>8</VerInfo_Release>
+        <VerInfo_Release>9</VerInfo_Release>
         <VerInfo_AutoIncVersion>false</VerInfo_AutoIncVersion>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.0.8.0;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.0.9.0;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <BT_BuildType>AppStore</BT_BuildType>
-        <PF_KeyStorePass>8519479B5F86078CCF7BE531A45A7BA5819E0544A01C97EF97BC0FF08E723CD8DB42A384E34B1C30C1EA5730FA9DC338BAE2360A044B22FC162B45DFE5E522CFC948F34CD576FAD0BFE4AF4607021D58F7C9330C</PF_KeyStorePass>
+        <PF_KeyStorePass>8519479B645855D8A342711DD129E36881D0051BA043979397B40FAB8E363C94DB04A3D7E3401C39C1CC5752FACFC338BAF83613042722C3164B45C2E5BA22DBC90AF35DEE98A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
         <PF_UWPDistributionType>Store</PF_UWPDistributionType>
     </PropertyGroup>
     <ItemGroup>
