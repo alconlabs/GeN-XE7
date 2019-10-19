@@ -43,7 +43,7 @@ type
   public
     { Public declarations }
     Codigo, CodProve, Tipo: String;
-    salir, Cancela, anular, esCompra: boolean;
+    salir, Cancela, anular, esCompra, esNotaCredito: boolean;
   end;
 
 var
@@ -64,21 +64,36 @@ begin
     + ' AND (LETRA like ' + QuotedStr(letra + '%') + ' )';
   if (buscar = '') then
   begin
-    if anulada<>'' then where := ' WHERE '+anulada;
+    if anulada<>'' then where := anulada;
   end
   else
   begin
-    where := ' WHERE '+buscar;
-    if anulada<>'' then where := where +' AND '+anulada;
+    where := buscar;
+    if anulada<>'' then
+    begin
+      if where<>'' then where := where +' AND ';
+      where := where + anulada;
+    end;
   end;
-  if esCompra then TipoRadioGroup.ItemIndex:=3;
+  if TipoRadioGroup.ItemIndex=1 then//esRemito
+  begin
+    if where<>'' then where := where +' AND ';
+    where := where + '(TIPO=''PED'')';
+  end 
+  else
+    if TipoRadioGroup.ItemIndex=4 then//esNotadeCredito
+    begin
+      if where<>'' then where := where +' AND ';
+      where := where + '(TIPO like ''NC%'')';
+    end;  
   case TipoRadioGroup.ItemIndex of
     0 : sql := 'SELECT ' + ventaTSql;
     1 : sql := 'SELECT ' + OperacionSql;
     2 : sql := 'SELECT ' + presupuestoTSql;
     3 : sql := 'SELECT ' + compraTSql;
+    4 : sql := 'SELECT ' + OperacionSql;
   end;
-//  dm.qOperacion.SQL.Text := sql + where;
+  if where<>'' then where := ' WHERE ' + where;
   dm.qOperacion.Open(sql + where);
   dm.qOperacion.Last;
 end;
@@ -104,6 +119,8 @@ begin
     SiBitBtn.Caption := 'Seleccionar';
     Image1.Visible := False;
   end;
+  if esCompra then TipoRadioGroup.ItemIndex:=3
+  else if esNotaCredito then TipoRadioGroup.ItemIndex:=4;
   todoBitBtn.Click;
 end;
 
@@ -138,6 +155,7 @@ begin
         1 : Impr(oper(nro, 'PED', letra), letra);//'CTicket');
         2 : Impr(ImprimirDataModule.PRE(nro, letra), 'P'+letra);
         3 : Impr(ImprimirDataModule.COMP(nro, letra), letra);
+        4 : Impr(oper(nro, 'NC' + letra, letra), 'NC' + letra);
       end;
     ImprimirDataModule.Free;
   end;

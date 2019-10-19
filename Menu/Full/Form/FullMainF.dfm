@@ -5,7 +5,7 @@ object FullMainForm: TFullMainForm
   BiDiMode = bdLeftToRight
   BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
   Caption = 'Civeloo GeN - Menu Principal'
-  ClientHeight = 9
+  ClientHeight = 5
   ClientWidth = 668
   Color = clBtnFace
   ParentFont = True
@@ -24,13 +24,13 @@ object FullMainForm: TFullMainForm
     Left = 0
     Top = 0
     Width = 668
-    Height = 9
+    Height = 5
     Align = alClient
     TabOrder = 0
     ExplicitWidth = 534
     ExplicitHeight = 0
     ControlData = {
-      4C0000000A450000EE0000000000000000000000000000000000000000000000
+      4C0000000A450000840000000000000000000000000000000000000000000000
       000000004C000000000000000000000001000000E0D057007335CF11AE690800
       2B2E126208000000000000004C0000000114020000000000C000000000000046
       8000000000000000000000000000000000000000000000000000000000000000
@@ -335,6 +335,10 @@ object FullMainForm: TFullMainForm
       object VENTAS1: TMenuItem
         Caption = 'VENTAS'
         OnClick = VENTAS1Click
+      end
+      object ListadoNotaCredito: TMenuItem
+        Caption = 'NOTA DE CREDITO'
+        OnClick = ListadoNotaCreditoClick
       end
     end
     object Configuracion1: TMenuItem

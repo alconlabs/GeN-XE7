@@ -452,7 +452,7 @@ begin
           else if reporte = 'COriginal' then
             reporte := 'CNCredito';
           with ImprimirDataModule do
-            Impr(oper(cod, 'NC' + let, let), 'NC' + let); // reporte);
+            Impr(oper(cod, 'NC' + let, let), 'NC' + let);
           ImprimirDataModule.Free;
         end;
 //          // IMPRIMIR

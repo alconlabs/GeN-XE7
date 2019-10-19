@@ -102,6 +102,7 @@ type
     REMITO: TMenuItem;
     AnularVenta: TMenuItem;
     AnularCompra: TMenuItem;
+    ListadoNotaCredito: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ProveedoresClick(Sender: TObject);
@@ -183,6 +184,7 @@ type
     procedure REMITOClick(Sender: TObject);
     procedure AnularVentaClick(Sender: TObject);
     procedure AnularCompraClick(Sender: TObject);
+    procedure ListadoNotaCreditoClick(Sender: TObject);
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
@@ -607,6 +609,20 @@ begin
     ListaPreciosForm.ShowModal;
   finally
     ListaPreciosForm.Free;
+  end;
+end;
+
+procedure TFullMainForm.ListadoNotaCreditoClick(Sender: TObject);
+begin
+  BuscarOperacionForm := TBuscarOperacionForm.Create(self);
+  with BuscarOperacionForm do
+  begin
+    try
+      esNotaCredito:=True;
+      ShowModal;
+    finally
+      Free;
+    end;
   end;
 end;
 

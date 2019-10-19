@@ -192,7 +192,7 @@ object BuscarOperacionForm: TBuscarOperacionForm
     end
     object FacturarBitBtn: TBitBtn
       Left = 1
-      Top = 123
+      Top = 153
       Width = 98
       Height = 50
       Align = alTop
@@ -208,6 +208,7 @@ object BuscarOperacionForm: TBuscarOperacionForm
       TabOrder = 1
       Visible = False
       OnClick = FacturarBitBtnClick
+      ExplicitTop = 123
     end
     object todoBitBtn: TBitBtn
       Left = 1
@@ -261,7 +262,7 @@ object BuscarOperacionForm: TBuscarOperacionForm
     end
     object AnuladaCheckBox: TCheckBox
       Left = 1
-      Top = 173
+      Top = 203
       Width = 98
       Height = 17
       Align = alTop
@@ -273,12 +274,13 @@ object BuscarOperacionForm: TBuscarOperacionForm
       Font.Style = []
       ParentFont = False
       TabOrder = 4
+      ExplicitTop = 173
     end
     object TipoRadioGroup: TRadioGroup
       Left = 1
       Top = 51
       Width = 98
-      Height = 72
+      Height = 102
       Align = alTop
       Caption = 'Tipo'
       Font.Charset = DEFAULT_CHARSET
@@ -291,7 +293,8 @@ object BuscarOperacionForm: TBuscarOperacionForm
         'Factura'
         'Remito'
         'Presupuesto'
-        'Compra')
+        'Compra'
+        'Nota Credito')
       ParentFont = False
       TabOrder = 5
       OnClick = TipoRadioGroupClick
