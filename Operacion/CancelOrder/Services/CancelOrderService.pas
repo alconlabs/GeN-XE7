@@ -12,7 +12,7 @@ type
   TCancelOrderService = Class
   private
     ImprimirDataModule: TImprimirDataModule;
-    nro, tipo, comp, let, cod, fech, ven, cui, cno, a, cli, asocNro, nctipo,
+    nro, tipo, let, comp, cod, fech, ven, cui, cno, a, cli, asocNro, nctipo,
       cbteAsoc, masOmenos, sql, cae, vto, pagare: string;
     pre, pgr, esCompra: Boolean;
     noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib, cost, com,
@@ -76,8 +76,8 @@ begin
   inherited Create;
   nro := '';
   tipo := '';
-  comp := '';
   let := '';
+  comp := '';
   cod := '';
   fech := '';
   ven := '';
@@ -145,8 +145,8 @@ end;
 procedure TCancelOrderService.Execute;
 begin
   with dm do
-//    with OperacionDataModule do
     begin
+      OperacionDataModule := TOperacionDataModule.Create(nil);
       BaseDatosFB.StartTransaction;
       dm.FormatearFecha;
       esCompra := (tipo = 'Compra');
@@ -188,7 +188,7 @@ begin
         if ven = '' then
           ven := '0';
         let := qT.FieldByName('LETRA').AsString;
-        comp := qT.FieldByName('COMPROBANTE').AsString;
+        asocNro := qT.FieldByName('COMPROBANTE').AsString;
         sal := qT.FieldByName('SALDO').AsFloat;
         cont := qT.FieldByName('CONTADO').AsFloat;
         pag := qT.FieldByName('PAGADO').AsFloat;
@@ -275,6 +275,12 @@ begin
             OperacionDataModule.WSFE(fech, 'NC' + let, '1', '96', cui, comp, FloatToStr(sbt),
               FloatToStr(impu), FloatToStr(tot), let, asocNro, FloatToStr(n10),
               FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
+
+            cae := OperacionDataModule.cae;
+            comp := OperacionDataModule.comp;
+            vto := OperacionDataModule.vto;
+            //mensaje := OperacionDataModule.mensaje;
+
             if cae = '' then
               Exit; // if mensaje <> 'Ok' then Exit;
             if comp <> '' then
@@ -455,16 +461,8 @@ begin
             Impr(oper(cod, 'NC' + let, let), 'NC' + let);
           ImprimirDataModule.Free;
         end;
-//          // IMPRIMIR
-//          if (dm.ConfigQuery.FieldByName('Imprimir').AsString) <> 'NO' then
-//          begin
-//            ImprimirDataModule := TImprimirDataModule.Create(nil);
-//            with ImprimirDataModule do
-//              //Impr(vta((nro), let), let);
-//              Impr(oper(cod, 'NC' + let, let), 'NC' + let); // reporte);
-//            ImprimirDataModule.Free;
-//          end;
       end;
+      OperacionDataModule.Free;
     end;
 end;
 

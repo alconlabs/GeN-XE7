@@ -21,7 +21,6 @@ uses
   CajaLF in 'Listados\Caja\Form\CajaLF.pas' {CajaLForm},
   BuscarVendedor in 'Buscar\Vendedor\Form\BuscarVendedor.pas' {BuscarVendedorForm},
   UFBuscaArticulos in 'Buscar\Articulo\Form\UFBuscaArticulos.pas' {FBuscaArticulo},
-  AnularOperacion in 'Operacion\AnularOperacion\AnularOperacion.pas' {FAnulaReimp},
   RubroF in 'ABM\Rubro\Form\RubroF.pas' {RubroForm},
   ProveedorF in 'ABM\Proveedor\Form\ProveedorF.pas' {ProveedorForm},
   Precios in 'Listados\Precios\Form\Precios.pas' {ListaPreciosForm},

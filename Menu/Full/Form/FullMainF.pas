@@ -198,7 +198,7 @@ var
 
 implementation
 
-uses LoginF, BuscarOperacion, AnularOperacion, incremento, PagoIVAF, LibroDiarioF,
+uses LoginF, BuscarOperacion, incremento, PagoIVAF, LibroDiarioF,
   UFProductos, ProveedorF, UFClientes, VendedorF, RubroF,
   UFCategorias, UFBuscaArticulos, CajaLF,
   GananciasL, Precios, ListadoClientes, BuscaCompra, EmpresaF, ConfiguracionF,

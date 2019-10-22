@@ -246,7 +246,7 @@ type
   end;
 
 const
-  version='201910190830';
+  version='201910221304';
   v: array [0 .. 22] of string = ('MenuExpress', 'MenuStock', 'Articulos',
     'VaciarBase', 'Vender', 'Comprar', 'AnularVenta', 'RetiroCaja', 'Rubro',
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
@@ -455,7 +455,7 @@ procedure TDM.TraerConfig;
 begin
   if (ConfigQuery.Active) then ConfigQuery.Close;
 
-ConfigQuery.SQL.Text := 'SELECT '
+ConfigQuery.Open('SELECT '
 +'"Config".CODIGO, "Config".NROFACTURA, "Config"."FechaInicio", "Config".PP1, '
 +'"Config".PP2, "Config".PP3, "Config".PP4, "Config".PP5, "Config".PP6, '
 +'"Config".PP7, "Config".PP8, "Config".PP9, "Config".PP, "Config"."CtaCompra", '
@@ -492,8 +492,7 @@ ConfigQuery.SQL.Text := 'SELECT '
 +'"Imprimir".DESCRIPCION, "Imprimir".REPORTE '
 +'FROM "Config" '
 +' INNER JOIN "Imprimir" ON ("Config"."ImprimirTipo" = "Imprimir".CODIGO) '
-+' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO) ';
-  ConfigQuery.Open;
++' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO) ');
   Empresa := ConfigQuery.FieldByName('NOMBRE').AsString;
   PuntoVenta := ConfigQuery.FieldByName('PtoVta').AsString;
   Titular := ConfigQuery.FieldByName('TITULAR').AsString;

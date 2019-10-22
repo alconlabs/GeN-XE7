@@ -100,10 +100,10 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.54;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.55;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <UWP_DelphiLogo44>GeN-Logo-44x44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>GeN-Logo-150x150.png</UWP_DelphiLogo150>
-        <VerInfo_Build>54</VerInfo_Build>
+        <VerInfo_Build>55</VerInfo_Build>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
         <VerInfo_Release>0</VerInfo_Release>
         <PF_KeyStorePass>85190DA36405559EA3757169D17BE32C819C055DA057979397B50FF08E723CD8DB05A38FE3431C4DC1CC572EFA9CC37ABAF83612047422E0166545C2E5F1228CC90AB967EE98A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
@@ -124,7 +124,7 @@
         <VerInfo_AutoIncVersion>false</VerInfo_AutoIncVersion>
         <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.0.9.0;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <BT_BuildType>AppStore</BT_BuildType>
-        <PF_KeyStorePass>8519479B645855D8A342711DD129E36881D0051BA043979397B40FAB8E363C94DB04A3D7E3401C39C1CC5752FACFC338BAF83613042722C3164B45C2E5BA22DBC90AF35DEE98A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
+        <PF_KeyStorePass>8519479B5F86078CCF7BE531A45A7BA5E4540519A05A97D897C80FA28E363C94DB04A390E34B1C31C1B15774FAD1C339BABA3609043F22FC1657458CE5A722CFC949F31FD555FAFEBFE4AF0D07551D589201330C</PF_KeyStorePass>
         <PF_UWPDistributionType>Store</PF_UWPDistributionType>
     </PropertyGroup>
     <ItemGroup>
@@ -196,9 +196,6 @@
         <DCCReference Include="Buscar\Articulo\Form\UFBuscaArticulos.pas">
             <Form>FBuscaArticulo</Form>
             <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Operacion\AnularOperacion\AnularOperacion.pas">
-            <Form>FAnulaReimp</Form>
         </DCCReference>
         <DCCReference Include="ABM\Rubro\Form\RubroF.pas">
             <Form>RubroForm</Form>
