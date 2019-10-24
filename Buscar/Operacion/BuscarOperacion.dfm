@@ -189,6 +189,8 @@ object BuscarOperacionForm: TBuscarOperacionForm
       ParentFont = False
       TabOrder = 0
       OnClick = SiBitBtnClick
+      ExplicitLeft = 6
+      ExplicitTop = 354
     end
     object FacturarBitBtn: TBitBtn
       Left = 1
@@ -208,7 +210,6 @@ object BuscarOperacionForm: TBuscarOperacionForm
       TabOrder = 1
       Visible = False
       OnClick = FacturarBitBtnClick
-      ExplicitTop = 123
     end
     object todoBitBtn: TBitBtn
       Left = 1
@@ -274,7 +275,6 @@ object BuscarOperacionForm: TBuscarOperacionForm
       Font.Style = []
       ParentFont = False
       TabOrder = 4
-      ExplicitTop = 173
     end
     object TipoRadioGroup: TRadioGroup
       Left = 1

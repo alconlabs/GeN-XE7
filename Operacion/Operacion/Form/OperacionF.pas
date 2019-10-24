@@ -819,7 +819,8 @@ begin
         Comision, Impuesto, StrToFloat(FECheque.Text), 0,
         StrToFloat(FEContado.Text), Total, subtotal, desc,
         StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text), Saldo, Pagado,
-        Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
+        Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto,
+        noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib)
       else
       if TipoRadioGroup.ItemIndex=1 then
         ProcPresup(cbTipo.Text, ClienteEdit.Text,
@@ -837,7 +838,8 @@ begin
         PagareCheckBox.Checked, impr, costo, Comision, Impuesto,
         StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
         subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
-        Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
+        Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto,
+        noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib)
       else
         ok := ProcVTA
         (PuntoVentaEdit.Text, ComprobanteEdit.Text,
@@ -1086,21 +1088,24 @@ end;
 
 procedure TOperacionForm.TraerRemito;
 begin
-  dm.qOperacion.SQL.Text := 'SELECT CLIENTE FROM  "Operacion" WHERE CODIGO='+codigo;
-  dm.qOperacion.Open;
-  ClienteEdit.Text := dm.qOperacion.FieldByName('CLIENTE').AsString;
-  TraeNombreCliente;
-  dm.qOperacion.SQL.Text := 'SELECT ARTICULO, PRECIO, CANTIDAD FROM "OperacionItem"'+
-  ' WHERE OPERACION = '+codigo;
-  dm.qOperacion.Open;
-  while not dm.qOperacion.eof do
+  with dm do
+  with qRemito do
   begin
-    TraerArticulo(
-      dm.qOperacion.FieldByName('ARTICULO').AsString,
-      dm.qOperacion.FieldByName('PRECIO').AsFloat,
-      dm.qOperacion.FieldByName('CANTIDAD').AsFloat
-    );
-    dm.qOperacion.Next;
+    Open('SELECT CLIENTE FROM  "Operacion" WHERE CODIGO='+codigo);
+    ClienteEdit.Text := FieldByName('CLIENTE').AsString;
+    TraeNombreCliente;
+    Open('SELECT ARTICULO, PRECIO, CANTIDAD FROM "OperacionItem"'+
+    ' WHERE OPERACION = '+codigo);
+    First;
+    while not Eof do
+    begin
+      TraerArticulo(
+        FieldByName('ARTICULO').AsString,
+        FieldByName('PRECIO').AsFloat,
+        FieldByName('CANTIDAD').AsFloat
+      );
+      Next;
+    end;
   end;
 end;
 

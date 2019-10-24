@@ -34,6 +34,7 @@ type
     { Private declarations }
     sql, rpt, siap, tabla : string;
     procedure EnvioRamTerminado;
+    function FechaDesdeHasta(tabla:string):string;
   public
     Cancela, Venta, Compra: Boolean;
     Reporte, Cuenta: String;
@@ -63,6 +64,13 @@ Procedure TLibrosForm.EnvioRamTerminado;
 begin
 //  UnmapViewOfFile(Compartido);
 //  CloseHandle(FicheroM);
+end;
+
+function TLibrosForm.FechaDesdeHasta(tabla: string): string;
+begin
+  result:=' WHERE'
+    +' ("'+tabla+'".FECHA > ' + QuotedStr(DateToStr(DTP1.Date-1)) + ' ) AND '
+    +' ("'+tabla+'".FECHA < ' + QuotedStr(DateToStr(DTP2.Date+1)) + ' )   ';
 end;
 
 procedure TLibrosForm.FormCreate(Sender: TObject);
@@ -98,17 +106,23 @@ begin
 end;
 
 procedure TLibrosForm.bProcesarClick(Sender: TObject);
-var
-  where : string;
 begin
-  where := ' WHERE'
-  +' ("'+tabla+'".FECHA > ' + QuotedStr(DateToStr(DTP1.Date-1)) + ' ) AND '
-  +' ("'+tabla+'".FECHA < ' + QuotedStr(DateToStr(DTP2.Date+1)) + ' )   ';
   OperacionDataModule := TOperacionDataModule.Create(self);
   with OperacionDataModule do begin
     try
-      if Venta then ActualizarSiapVtaComp(where)
-      else if Compra then ActualizarSiapCmpComp(where);
+      if Venta then
+      begin
+        ActualizarSiap
+          ('Vta',
+            DateToStr(DTP1.Date-1),
+            DateToStr(DTP2.Date+1)
+          );
+      end
+      else if Compra then ActualizarSiap
+        ('Cmp',
+          DateToStr(DTP1.Date-1),
+          DateToStr(DTP2.Date+1)
+        );
     finally
       Free;
     end;

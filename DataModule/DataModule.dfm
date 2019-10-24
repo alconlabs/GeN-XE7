@@ -2804,4 +2804,51 @@ object DM: TDM
     Left = 176
     Top = 528
   end
+  object qRemito: TFDQuery
+    Connection = BaseDatosFB
+    Transaction = TransactionFB
+    SQL.Strings = (
+      'SELECT'
+      '  '#39'Mi Empresa'#39' As Empresa,'
+      '  "Cliente".NOMBRE,'
+      '  "Cliente".TITULAR,'
+      '  "Cliente".DIRECCION,'
+      '  "Cliente".DIRECCIONCOMERCIAL,'
+      '  "Articulo".DESCRIPCION,'
+      '  "VentaItem".OPERACION,'
+      '  "VentaItem".ARTICULO,'
+      '  "VentaItem".CANTIDAD,'
+      '  "VentaItem".PRECIO,'
+      '  ("VentaItem".PRECIO * "VentaItem".CANTIDAD ) as PREXCANT,'
+      '  "VentaItem".SERVICIO,'
+      '  "VentaItem".DESCRIPCION AS DESCR,'
+      '  "Venta".CODIGO,'
+      '  "Venta".LETRA,'
+      '  "Venta".FECHA,'
+      '  "Venta".COMPROBANTE,'
+      '  "Venta".IVA3,'
+      '  "Venta".TOTAL,'
+      '  "Venta".CONTADO,'
+      '  "Venta".CLIENTE,'
+      '  "Venta".SUBTOTAL,'
+      '  "Venta".DESCUENTO,'
+      '  "Venta".IMPUESTO,'
+      '  "Venta".IVA2,'
+      '  "Venta".IVA1,'
+      '  "Venta".EXCENTO,'
+      '  "Venta".SALDO,'
+      '  "Venta".PAGADO,'
+      '  "Venta".ANULADA'
+      ' FROM'
+      '  "Venta"'
+      
+        '  INNER JOIN "VentaItem" ON ("Venta".CODIGO = "VentaItem".OPERAC' +
+        'ION)'
+      
+        '  INNER JOIN "Articulo" ON ("VentaItem".ARTICULO = "Articulo".CO' +
+        'DIGO)'
+      '  INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)')
+    Left = 344
+    Top = 768
+  end
 end

@@ -1,4 +1,4 @@
-unit DataModule;
+ï»¿unit DataModule;
 
 interface
 
@@ -106,6 +106,7 @@ type
     FDBatchMoveTextWriter1: TFDBatchMoveTextWriter;
     FDBatchMoveDataSetReader1: TFDBatchMoveDataSetReader;
     FDBatchMoveDataSetWriter1: TFDBatchMoveDataSetWriter;
+    qRemito: TFDQuery;
 
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
@@ -175,7 +176,7 @@ type
     procedure GetBuildInfo;//(V1, V2, V3, V4: Word);
     procedure CrearTable(nombre: string);
     procedure IniciarModificacionTabla(nombreTabla:string);
-    procedure AgregarCampoModificacionTabla(nombreCampo: string;tipo: TFieldType;tamaño: Integer);
+    procedure AgregarCampoModificacionTabla(nombreCampo: string;tipo: TFieldType;tamaÃ±o: Integer);
     procedure TerminarModificacionTabla;
     procedure ObtenerSO;
     procedure ActualizarVersion;
@@ -243,10 +244,11 @@ type
     procedure ImportarTabla(tabla:string);
     function HayBase:Boolean;
     function CalculaGanancia(c,f,p : double):double;
+    procedure AgregarSiapCompAlicuota(tipo:string;codigo:Integer;ivaId,ivaBaseImp,ivaAlic:String);
   end;
 
 const
-  version='201910221304';
+  version='201910232326';
   v: array [0 .. 22] of string = ('MenuExpress', 'MenuStock', 'Articulos',
     'VaciarBase', 'Vender', 'Comprar', 'AnularVenta', 'RetiroCaja', 'Rubro',
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
@@ -670,7 +672,7 @@ begin
 //  Consulta.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
 //    + ' USER ''SYSDBA'' PASSWORD ''masterkey''; ' + Consulta.Script.Text;
 //  Consulta.ExecuteScript;
-//  ShowMessage('Base de Datos Restaurada con éxito!!!');
+//  ShowMessage('Base de Datos Restaurada con Ã©xito!!!');
 //  webUrl := '';
 //  webRes := '';
 //  webUsr := '';
@@ -1275,7 +1277,7 @@ end;
 
 procedure TDM.AgregarCampoModificacionTabla;
 begin
-  FDTable1.FieldDefs.Add(nombreCampo, tipo, tamaño, False);
+  FDTable1.FieldDefs.Add(nombreCampo, tipo, tamaÃ±o, False);
 end;
 
 procedure TDM.TerminarModificacionTabla;
@@ -1364,7 +1366,7 @@ begin
           ), 23, 12);
       if actualiza <>'' then
         if TextoAfecha(actualiza) > TextoAfecha(version) then
-          if MessageDlg('Nueva actualización disponible, descargar?',
+          if MessageDlg('Nueva actualizaciÃ³n disponible, descargar?',
             mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
           begin
             ShellExecute(0,'open',
@@ -1461,8 +1463,8 @@ begin
       InsertRecord([9,'RB','RECIBOS B']);
       InsertRecord([10,'NVB','NOTAS DE VENTA AL CONTADO B']);
       InsertRecord([11,'C',' Factura C ']);
-      InsertRecord([12,'NDC','Nota de Débito C ']);
-      InsertRecord([13,'NCC',' Nota de Crédito C ']);
+      InsertRecord([12,'NDC','Nota de DÃ©bito C ']);
+      InsertRecord([13,'NCC',' Nota de CrÃ©dito C ']);
       InsertRecord([15,'RC','Recibo C ']);
       InsertRecord([17,'','LIQUIDACION DE SERVICIOS PUBLICOS CLASE A']);
       InsertRecord([18,'','LIQUIDACION DE SERVICIOS PUBLICOS CLASE B']);
@@ -1477,9 +1479,9 @@ begin
       InsertRecord([29,'','LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C']);
       InsertRecord([33,'','LIQUIDACION PRIMARIA DE GRANOS']);
       InsertRecord([34,'','COMPROBANTES A DEL APARTADO A INCISO F R G N 1415']);
-      InsertRecord([35,'','COMPROBANTES B DEL ANEXO I, APARTADO A, INC. F), RG N° 1415']);
-      InsertRecord([37,'','NOTAS DE DEBITO O DOCUMENTO EQUIVALENTE QUE CUMPLAN CON LA R.G. N° 1415']);
-      InsertRecord([38,'','NOTAS DE CREDITO O DOCUMENTO EQUIVALENTE QUE CUMPLAN CON LA R.G. N° 1415']);
+      InsertRecord([35,'','COMPROBANTES B DEL ANEXO I, APARTADO A, INC. F), RG NÂ° 1415']);
+      InsertRecord([37,'','NOTAS DE DEBITO O DOCUMENTO EQUIVALENTE QUE CUMPLAN CON LA R.G. NÂ° 1415']);
+      InsertRecord([38,'','NOTAS DE CREDITO O DOCUMENTO EQUIVALENTE QUE CUMPLAN CON LA R.G. NÂ° 1415']);
       InsertRecord([39,'','OTROS COMPROBANTES A QUE CUMPLEN CON LA R G 1415']);
       InsertRecord([40,'','OTROS COMPROBANTES B QUE CUMPLAN CON LA R.G. 1415']);
       InsertRecord([43,'','NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B']);
@@ -1551,17 +1553,17 @@ sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapVtaComp ('//Siap Comprobantes de Ven
   +'CbteFch TEXT,'//FECHA Formato dd/mm/aaaa
   +'CbteTipo TEXT,'//COMPROBANTES Tipo
   +'PtoVta TEXT,'//COMPROBANTES PV
-  +'CbteDesde TEXT,'//COMPROBANTES Número Desde
-  +'CbteHasta TEXT,'//COMPROBANTES Número Hasta
-  +'DocTipo TEXT,'//CLIENTE	"Código de Documento del Comprador"
+  +'CbteDesde TEXT,'//COMPROBANTES NÃºmero Desde
+  +'CbteHasta TEXT,'//COMPROBANTES NÃºmero Hasta
+  +'DocTipo TEXT,'//CLIENTE	"CÃ³digo de Documento del Comprador"
   +'DocNro TEXT,'//CLIENTE CUIT
   +'DocNomb TEXT,'//CLIENTE Apellido y Nombre del Cliente
   +'MonId TEXT,'//Moneda
   +'MonCotiz TEXT,'//Tipo de cambio
-  +'IvaCant TEXT,'//Cantidad alícuotas I.V.A.
-  +'CodOper TEXT,'//Código de operación
+  +'IvaCant TEXT,'//Cantidad alÃ­cuotas I.V.A.
+  +'CodOper TEXT,'//CÃ³digo de operaciÃ³n
   +'FchVtoPago TEXT,'//Fecha vto. pago (formato aaaa/mm/dd)
-  +'IvaId TEXT,'//Código alícuota IVA
+  +'IvaId TEXT,'//CÃ³digo alÃ­cuota IVA
   +'ImpNeto TEXT,'//Neto Gravado
   +'ImpNoGra TEXT,'//Monto que no integra el precio neto gravado
   +'ImpOpEx TEXT,'//Operaciones Exentas
@@ -1572,14 +1574,14 @@ sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapVtaComp ('//Siap Comprobantes de Ven
   +'ImpPercMuni TEXT,'//PERCEPCIONES Municipales
   +'ImpImpInt TEXT,'//Impuestos Internos
   +'ImpOtrTrib TEXT,'//Otros Tributos
-  +'ImpTotal TEXT'//Totales (cálculo automático)
+  +'ImpTotal TEXT'//Totales (cÃ¡lculo automÃ¡tico)
 +')');
 
 sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapVtaCompAlicuota ('//Siap Comprobantes de Compras
   +'Codigo INTEGER,'
-  +'IvaId TEXT,'//Código alícuota IVA
-  +'IvaBaseImp TEXT,'//Neto Gravado alícuota
-  +'IvaAlic TEXT'//IVA alícuota
+  +'IvaId TEXT,'//CÃ³digo alÃ­cuota IVA
+  +'IvaBaseImp TEXT,'//Neto Gravado alÃ­cuota
+  +'IvaAlic TEXT'//IVA alÃ­cuota
 +')');
 
 sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapCmpComp ('//Siap Comprobantes de Compras
@@ -1587,12 +1589,12 @@ sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapCmpComp ('//Siap Comprobantes de Com
   +'CbteFch TEXT,'//FECHA Formato dd/mm/aaaa	L8
   +'CbteTipo TEXT,'//COMPROBANTES Tipo	L3
   +'PtoVta TEXT,'//COMPROBANTES PV	L5
-  +'CbteNro TEXT,'//COMPROBANTES Número		L20
-  +'DespNro TEXT,'//COMPROBANTES Número Despacho  de Importación	L16
-  +'DocTipo TEXT,'//PROVEEDOR Código de Documento del vendedor	L2
-  +'DocNro TEXT,'//PROVEEDOR Número de identificaión del vendedor	L20
+  +'CbteNro TEXT,'//COMPROBANTES NÃºmero		L20
+  +'DespNro TEXT,'//COMPROBANTES NÃºmero Despacho  de ImportaciÃ³n	L16
+  +'DocTipo TEXT,'//PROVEEDOR CÃ³digo de Documento del vendedor	L2
+  +'DocNro TEXT,'//PROVEEDOR NÃºmero de identificaiÃ³n del vendedor	L20
   +'DocNomb TEXT,'//PROVEEDOR Apellido y Nombre del vendedor	L30
-  +'ImpTotal TEXT,'//Totales (cálculo automático)	L15
+  +'ImpTotal TEXT,'//Totales (cÃ¡lculo automÃ¡tico)	L15
   +'ImpNoGra TEXT,'//Monto que no integra el precio neto gravado	L15
   +'ImpOpEx TEXT,'//Operaciones Exentas	L15
   +'ImpPercIva TEXT,'//PERCEPCIONES Percepc y retenc. IVA	L15
@@ -1600,31 +1602,31 @@ sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapCmpComp ('//Siap Comprobantes de Com
   +'ImpPercIIBB TEXT,'//PERCEPCIONES IIBB	L15
   +'ImpPercMuni TEXT,'//PERCEPCIONES Municipales	L15
   +'ImpImpInt TEXT,'//Impuestos Internos	L15
-  +'MonId TEXT,'//Código de Moneda	L3
+  +'MonId TEXT,'//CÃ³digo de Moneda	L3
   +'MonCotiz TEXT,'//Tipo de cambio	L10
-  +'IvaCant TEXT,'//Cantidad alícuotas I.V.A.	L1
-  +'CodOper TEXT,'//Código de operación	L1
+  +'IvaCant TEXT,'//Cantidad alÃ­cuotas I.V.A.	L1
+  +'CodOper TEXT,'//CÃ³digo de operaciÃ³n	L1
   +'ImpCredFisc TEXT,'//Credito Fiscal Computable	L15
   +'ImpOtrTrib TEXT,'//Otros Tributos	L15
   +'CUIT TEXT,'//CUIT emisor/corredor	L11
-  +'Denom TEXT,'//Denominación emisor/corredor	L30
-  +'ImpIvaCom TEXT'//IVA comisión	L15
-//  +'IvaId1 TEXT,'//Código alícuota IVA 1
-//  +'IvaBaseImp1 TEXT,'//Neto Gravado alícuota 1 Importe Total
-//  +'IvaAlic1 TEXT,'//IVA alícuota 1
-//  +'IvaId2 TEXT,'//Código alícuota IVA 2
-//  +'IvaBaseImp2 TEXT,'//Neto Gravado alícuota 2 Importe Total
-//  +'IvaAlic2 TEXT,'//IVA alícuota 2
-//  +'IvaId3 TEXT,'//Código alícuota IVA 3
-//  +'IvaBaseImp3 TEXT,'//Neto Gravado alícuota 3 Importe Total
-//  +'IvaAlic3 TEXT'//IVA alícuota 3
+  +'Denom TEXT,'//DenominaciÃ³n emisor/corredor	L30
+  +'ImpIvaCom TEXT'//IVA comisiÃ³n	L15
+//  +'IvaId1 TEXT,'//CÃ³digo alÃ­cuota IVA 1
+//  +'IvaBaseImp1 TEXT,'//Neto Gravado alÃ­cuota 1 Importe Total
+//  +'IvaAlic1 TEXT,'//IVA alÃ­cuota 1
+//  +'IvaId2 TEXT,'//CÃ³digo alÃ­cuota IVA 2
+//  +'IvaBaseImp2 TEXT,'//Neto Gravado alÃ­cuota 2 Importe Total
+//  +'IvaAlic2 TEXT,'//IVA alÃ­cuota 2
+//  +'IvaId3 TEXT,'//CÃ³digo alÃ­cuota IVA 3
+//  +'IvaBaseImp3 TEXT,'//Neto Gravado alÃ­cuota 3 Importe Total
+//  +'IvaAlic3 TEXT'//IVA alÃ­cuota 3
 +')');
 
 sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapCmpCompAlicuota ('//Siap Comprobantes de Compras
   +'Codigo INTEGER,'
-  +'IvaId TEXT,'//Código alícuota IVA
-  +'IvaBaseImp TEXT,'//Neto Gravado alícuota
-  +'IvaAlic TEXT'//IVA alícuota
+  +'IvaId TEXT,'//CÃ³digo alÃ­cuota IVA
+  +'IvaBaseImp TEXT,'//Neto Gravado alÃ­cuota
+  +'IvaAlic TEXT'//IVA alÃ­cuota
 +')');
 
  end;
@@ -1984,6 +1986,26 @@ begin
     end;
 end;
 
+procedure TDM.AgregarSiapCompAlicuota(tipo: string; codigo: Integer; ivaId,
+  ivaBaseImp, ivaAlic: String);
+begin
+  with qSdb do
+    begin
+      Open('Select * from Siap'+tipo+'CompAlicuota where Codigo=:C and IvaId=:I',[codigo,ivaId]);
+      if RecordCount>0 then
+        Edit
+      else
+      begin
+        Insert;
+        FieldByName('Codigo').AsInteger := codigo;
+      end;
+      FieldByName('IvaId').AsString := ivaId;
+      FieldByName('IvaBaseImp').AsString := ivaBaseImp;
+      FieldByName('IvaAlic').AsString := ivaAlic;
+      Post;
+    end;
+end;
+
 procedure TDM.AgregarSiapVtaCompAlicuota;
 begin
   with qSdb do
@@ -2096,7 +2118,7 @@ begin
       DataDef.Separator := ',';
       DataDef.FormatSettings.DecimalSeparator:=',';
       DataDef.FormatSettings.ThousandSeparator:=#0;
-      DataDef.Delimiter := #0;  //** opcional, para campos sin QUOTED VALUES "valor" que es la opción default del componente
+      DataDef.Delimiter := #0;  //** opcional, para campos sin QUOTED VALUES "valor" que es la opciï¿½n default del componente
       Datadef.RecordFormat := rfCustom; //**
       for i := 0 to Datadef.Fields.Count-1         //  ** para evitar problemas con campos FLOAT paso todos los campos a String.
           do  Datadef.Fields[i].DataType := atString;    // ** De no hacerlo he tenido errores [FireDAC][Comp][DM]-607. Bad text value [17,5] format for mapping item [->B]. '10,24' is not a valid integer value.
@@ -2121,7 +2143,7 @@ begin
 //      Writer := FDBatchMoveDataSetWriter1;
       Mode := dmAppendUpdate;
       GuessFormat;
-//Analyze := ([ taDelimSep,taHeader,taFields]); // este comando crea la estructura de datos según adivina leyendo los primeros registros
+//Analyze := ([ taDelimSep,taHeader,taFields]); // este comando crea la estructura de datos segï¿½n adivina leyendo los primeros registros
 //AnalyzeSample := 50;  // El default es 10, con esto profundizamos el analisis para adivinar estructura de tabla y campos
       Execute;
     end;

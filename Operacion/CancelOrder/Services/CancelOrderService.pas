@@ -289,11 +289,20 @@ begin
         end;
         // Marcar la Factura como anulada y poner los saldos en cero
         BaseDatosFB.ExecSQL(
-          // qQ.sql.Text :=
           'Update "' + tipo + '" set ANULADA = ''S'' where CODIGO = ' + nro);
-        // qQ.ExecSQL;
+
         // AlicuotaIVA
-        aIva := OperacionDataModule.InsertarAlicIva;
+        with qT do
+        begin
+          Open('Select ID, BASEIMP, IMPORTE'
+            +' from "AlicIva"'
+            +' where  "AlicIva".CODIGO='+IntToStr(aIva));
+          aIva := UltimoRegistro('AlicIva', 'CODIGO');
+          OperacionDataModule.AgregarAlicIva(aIva,
+            StrToInt(FieldByName('ID').Asstring),
+            FieldByName('BASEIMP').AsFloat,
+            FieldByName('IMPORTE').AsFloat);
+        end;
         // INSERTA EN LA TABLA OPERACION
         if tipo = 'Compra' then
           nctipo := 'CNC'

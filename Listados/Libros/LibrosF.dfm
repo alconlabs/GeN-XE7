@@ -41,7 +41,6 @@ object LibrosForm: TLibrosForm
     Align = alRight
     ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = 700
     object iExp: TImage
       Left = 1
       Top = 51
@@ -156,9 +155,6 @@ object LibrosForm: TLibrosForm
       ParentFont = False
       TabOrder = 0
       OnClick = bProcesarClick
-      ExplicitLeft = 41
-      ExplicitTop = 390
-      ExplicitWidth = 80
     end
     object bImprimir: TBitBtn
       Left = 1
@@ -175,7 +171,6 @@ object LibrosForm: TLibrosForm
       ParentFont = False
       TabOrder = 1
       OnClick = bImprimirClick
-      ExplicitTop = -16
     end
     object GroupBox1: TGroupBox
       Left = 1
@@ -191,7 +186,6 @@ object LibrosForm: TLibrosForm
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 2
-      ExplicitTop = 101
       object Label2: TLabel
         Left = 2
         Top = 49
@@ -232,9 +226,6 @@ object LibrosForm: TLibrosForm
         Time = 0.873243958296370700
         TabOrder = 0
         OnCloseUp = DTP1CloseUp
-        ExplicitLeft = 12
-        ExplicitTop = 39
-        ExplicitWidth = 113
       end
       object DTP2: TDateTimePicker
         Left = 2
@@ -243,12 +234,9 @@ object LibrosForm: TLibrosForm
         Height = 21
         Align = alTop
         Date = 43830.000000000000000000
-        Time = 0.873295891200541500
+        Time = 0.873295891200541600
         TabOrder = 1
         OnCloseUp = DTP2CloseUp
-        ExplicitLeft = 12
-        ExplicitTop = 85
-        ExplicitWidth = 113
       end
     end
     object bSiap: TButton
@@ -266,7 +254,6 @@ object LibrosForm: TLibrosForm
       ParentFont = False
       TabOrder = 3
       OnClick = bSiapClick
-      ExplicitTop = 73
     end
   end
 end
