@@ -245,10 +245,11 @@ type
     function HayBase:Boolean;
     function CalculaGanancia(c,f,p : double):double;
     procedure AgregarSiapCompAlicuota(tipo:string;codigo:Integer;ivaId,ivaBaseImp,ivaAlic:String);
+    procedure ImportarProveedor;
   end;
 
 const
-  version='201910232326';
+  version='201910242016';
   v: array [0 .. 22] of string = ('MenuExpress', 'MenuStock', 'Articulos',
     'VaciarBase', 'Vender', 'Comprar', 'AnularVenta', 'RetiroCaja', 'Rubro',
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
@@ -2103,6 +2104,118 @@ begin
         FDTable1.EnableControls;
         FDTable1.Active := False;
       end;
+end;
+
+procedure TDM.ImportarProveedor;
+var
+  i,id: integer;
+  fDMemTable: TFDMemTable;
+  fDBatchMove: TFDBatchMove;
+begin
+  OpenDialog1.Filter := 'Csv files (*.csv)|*.CSV';
+//  opendialog1.InitialDir := GetCurrentDir;
+  if OpenDialog1.Execute
+    then
+      begin
+         fDMemTable := TFDMemTable.create(Self); // creamos
+        fDBatchMove := TFDBatchMove.Create(Self);
+//          dataSource1.DataSet := fdmemtable1;   // vinculamos la tabla al datasource
+      //Create text reader and set FDBatchMode as owner. Then
+  // FDBatchMove will automatically manage the reader instance.
+  with TFDBatchMoveTextReader.Create(fDBatchMove)
+  do begin
+    // Set text data file name
+    FileName := OpenDialog1.FileName;
+    // Setup file format
+    DataDef.Separator := ',';//edsepara.Text[1]; // ** indicamos separador de campos en este caso ';'
+    DataDef.Delimiter := #0;//** opcional, para campos sin QUOTED VALUES "valor" que es la opción default del componente
+    Datadef.RecordFormat := rfCustom; //**
+     for i := 0 to Datadef.Fields.Count-1         //  ** para evitar problemas con campos FLOAT paso todos los campos a String.
+            do  Datadef.Fields[i].DataType := atString;    // ** De no hacerlo he tenido errores [FireDAC][Comp][DM]-607. Bad text value [17,5] format for mapping item [->B]. '10,24' is not a valid integer value.
+    for i := 0 to Datadef.Fields.Count-1         //  debemos antes agregar los campos el FDMentable sino obtenemos un error de que no puede crear el dataset.
+            do  fDMemTable.FieldDefs.Add(Datadef.Fields[i].FieldName,ftString, 50, False);
+    DataDef.WithFieldNames := True; // setear si tiene los nombres de campo en primera linea
+  end;
+
+  // Create dataset writer and set FDBatchMode as owner. Then
+  // FDBatchMove will automatically manage the writer instance.
+  with TFDBatchMoveDataSetWriter.Create(fDBatchMove) do begin
+    // Set destination dataset
+    DataSet := fDMemTable;
+    // Do not set Optimise to True, if dataset is attached to UI
+    Optimise := False;
+  end;
+  // Analyze source text file structure
+  fDBatchMove.GuessFormat;
+  fDBatchMove.Analyze := ([ taDelimSep,taHeader,taFields]); // este comando crea la estructura de datos según adivina leyendo los primeros registros
+  fDBatchMove.AnalyzeSample := 50;  // El default es 10, con esto profundizamos el analisis para adivinar estructura de tabla y campos
+      fDBatchMove.Execute;   // y Eureka!   Tenemos los datos en la tabla y visibles en el Dbgrid
+    end;
+
+  fDMemTable.first;
+
+  while not fDMemTable.Eof do
+  begin
+    with qProveedor do
+    begin
+      id := fdmemtable.Fields.Fields[0].AsInteger;
+      Open('SELECT * FROM "Proveedor" WHERE CODIGO=:I',[id]);
+      if RecordCount>0 then
+        Edit
+      else
+      begin
+        Insert;
+        Fields.Fields[0].AsInteger := id;
+      end;
+      Fields.Fields[1].AsString := fDMemTable.Fields.Fields[1].AsString;
+      Fields.Fields[2].AsString := fDMemTable.Fields.Fields[2].AsString;
+      Fields.Fields[3].AsString := fDMemTable.Fields.Fields[3].AsString;
+      Fields.Fields[4].AsString := fDMemTable.Fields.Fields[4].AsString;
+      Fields.Fields[5].AsString := fDMemTable.Fields.Fields[5].AsString;
+      Fields.Fields[6].AsString := fDMemTable.Fields.Fields[6].AsString;
+      Fields.Fields[7].AsString := fDMemTable.Fields.Fields[7].AsString;
+      Fields.Fields[8].AsString := fDMemTable.Fields.Fields[8].AsString;
+      Fields.Fields[9].AsString := fDMemTable.Fields.Fields[9].AsString;
+      Fields.Fields[10].AsString := fDMemTable.Fields.Fields[10].AsString;
+      Fields.Fields[11].AsString := fDMemTable.Fields.Fields[11].AsString;
+      Fields.Fields[12].AsString := fDMemTable.Fields.Fields[12].AsString;
+      Fields.Fields[13].AsString := fDMemTable.Fields.Fields[13].AsString;
+      Fields.Fields[14].AsString := fDMemTable.Fields.Fields[14].AsString;
+      Fields.Fields[15].AsString := fDMemTable.Fields.Fields[15].AsString;
+      Fields.Fields[16].AsString := fDMemTable.Fields.Fields[16].AsString;
+      Fields.Fields[17].AsString := fDMemTable.Fields.Fields[17].AsString;
+      Fields.Fields[18].AsString := fDMemTable.Fields.Fields[18].AsString;
+      Fields.Fields[19].AsString := fDMemTable.Fields.Fields[19].AsString;
+      Fields.Fields[20].AsString := fDMemTable.Fields.Fields[20].AsString;
+      Fields.Fields[21].AsString := fDMemTable.Fields.Fields[21].AsString;
+      Fields.Fields[22].AsString := fDMemTable.Fields.Fields[22].AsString;
+      Fields.Fields[23].AsString := fDMemTable.Fields.Fields[23].AsString;
+      Fields.Fields[24].AsString := fDMemTable.Fields.Fields[24].AsString;
+      Fields.Fields[25].AsString := fDMemTable.Fields.Fields[25].AsString;
+      Fields.Fields[26].AsString := fDMemTable.Fields.Fields[26].AsString;
+      Fields.Fields[27].AsString := fDMemTable.Fields.Fields[27].AsString;
+      Fields.Fields[28].AsString := fDMemTable.Fields.Fields[28].AsString;
+      Fields.Fields[29].AsString := fDMemTable.Fields.Fields[29].AsString;
+      Fields.Fields[30].AsString := fDMemTable.Fields.Fields[30].AsString;
+      Fields.Fields[31].AsString := fDMemTable.Fields.Fields[31].AsString;
+      Fields.Fields[32].AsString := fDMemTable.Fields.Fields[32].AsString;
+      Fields.Fields[33].AsString := fDMemTable.Fields.Fields[33].AsString;
+      Fields.Fields[34].AsString := fDMemTable.Fields.Fields[34].AsString;
+      Fields.Fields[35].AsString := fDMemTable.Fields.Fields[35].AsString;
+      Fields.Fields[36].AsString := fDMemTable.Fields.Fields[36].AsString;
+      Fields.Fields[37].AsString := fDMemTable.Fields.Fields[37].AsString;
+      Fields.Fields[38].AsString := fDMemTable.Fields.Fields[38].AsString;
+      Fields.Fields[39].AsString := fDMemTable.Fields.Fields[39].AsString;
+      Fields.Fields[40].AsString := fDMemTable.Fields.Fields[40].AsString;
+      Fields.Fields[41].AsString := fDMemTable.Fields.Fields[41].AsString;
+      Fields.Fields[42].AsString := fDMemTable.Fields.Fields[42].AsString;
+      Post;
+    end;
+    fDMemTable.Next
+  end;
+  fDMemTable.free;    //  destruimos componentes para eliminar datos default y cargados anteriormente
+  fDBatchMove.Free;    //   idem anterior
+  qProveedor.Close;
 end;
 
 procedure TDM.ImportarTabla;

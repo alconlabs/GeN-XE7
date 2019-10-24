@@ -155,6 +155,8 @@ object LibrosForm: TLibrosForm
       ParentFont = False
       TabOrder = 0
       OnClick = bProcesarClick
+      ExplicitLeft = 6
+      ExplicitTop = 418
     end
     object bImprimir: TBitBtn
       Left = 1
@@ -234,7 +236,7 @@ object LibrosForm: TLibrosForm
         Height = 21
         Align = alTop
         Date = 43830.000000000000000000
-        Time = 0.873295891200541600
+        Time = 0.873295891200541500
         TabOrder = 1
         OnCloseUp = DTP2CloseUp
       end

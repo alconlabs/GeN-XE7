@@ -34,7 +34,7 @@ type
     { Private declarations }
     sql, rpt, siap, tabla : string;
     procedure EnvioRamTerminado;
-    function FechaDesdeHasta(tabla:string):string;
+//    function FechaDesdeHasta(tabla:string):string;
   public
     Cancela, Venta, Compra: Boolean;
     Reporte, Cuenta: String;
@@ -66,12 +66,12 @@ begin
 //  CloseHandle(FicheroM);
 end;
 
-function TLibrosForm.FechaDesdeHasta(tabla: string): string;
-begin
-  result:=' WHERE'
-    +' ("'+tabla+'".FECHA > ' + QuotedStr(DateToStr(DTP1.Date-1)) + ' ) AND '
-    +' ("'+tabla+'".FECHA < ' + QuotedStr(DateToStr(DTP2.Date+1)) + ' )   ';
-end;
+//function TLibrosForm.FechaDesdeHasta(tabla: string): string;
+//begin
+//  result:=' WHERE'
+//    +' ("'+tabla+'".FECHA > ' + QuotedStr(DateToStr(DTP1.Date-1)) + ' ) AND '
+//    +' ("'+tabla+'".FECHA < ' + QuotedStr(DateToStr(DTP2.Date+1)) + ' )   ';
+//end;
 
 procedure TLibrosForm.FormCreate(Sender: TObject);
 begin
@@ -114,14 +114,14 @@ begin
       begin
         ActualizarSiap
           ('Vta',
-            DateToStr(DTP1.Date-1),
-            DateToStr(DTP2.Date+1)
+            DateToStr(DTP1.Date),
+            DateToStr(DTP2.Date)
           );
       end
       else if Compra then ActualizarSiap
         ('Cmp',
-          DateToStr(DTP1.Date-1),
-          DateToStr(DTP2.Date+1)
+          DateToStr(DTP1.Date),
+          DateToStr(DTP2.Date)
         );
     finally
       Free;
@@ -129,11 +129,11 @@ begin
   end;
   dm.qLibro.SQL.Text := 'SELECT ' +
   QuotedStr(DM.ConfigQuery.FieldByName('Nombre').AsString) + ' AS Empresa, ' +
-  QuotedStr(DateToStr(DTP1.Date)) + ' AS Desde,  ' +
-  QuotedStr(DateToStr(DTP2.Date)) + ' AS Hasta, ' +
+//  QuotedStr(DateToStr(DTP1.Date)) + ' AS Desde,  ' +
+//  QuotedStr(DateToStr(DTP2.Date)) + ' AS Hasta, ' +
   sql + ' WHERE'
-  +' (FECHA > ' + QuotedStr(DateToStr(DTP1.Date-1)) + ' ) AND '
-  +' (FECHA < ' + QuotedStr(DateToStr(DTP2.Date+1)) + ' )   '
+  +' (FECHA >= ' + QuotedStr(DateToStr(DTP1.Date)) + ' ) AND '
+  +' (FECHA <= ' + QuotedStr(DateToStr(DTP2.Date)) + ' )   '
   + 'ORDER BY CODIGO';
   dm.qLibro.Open;
 end;

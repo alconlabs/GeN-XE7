@@ -2184,7 +2184,8 @@ end;
 
 procedure TOperacionDataModule.ActualizarSiap(tipo, desde, hasta: string);
 var
-  cod,let,DocTipo,AlicIVA,DocNro,tabla,tabla1,sql,where,tipoRetPer,cbteDesde,cbteHasta:string;
+  cod,let,DocTipo,AlicIVA,DocNro,tabla,tabla1,sql,where,tipoRetPer,cbteDesde,
+  cbteHasta,terminos : string;
   impOpEx,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib,noGra
   : Double;
   CantIva : Integer;
@@ -2217,6 +2218,7 @@ begin
       +' "'+tabla+'".CODIGO,'
       +' "'+tabla+'".LETRA,'
       +' "'+tabla+'".FECHA,'
+      +' "'+tabla+'".TERMINOS,'
       +' "'+tabla+'".TOTAL,'
       +' "'+tabla+'".COMPROBANTE AS CbteDesde,'
       +' "'+tabla+'".COMPROBANTE AS CbteHasta,'
@@ -2231,8 +2233,8 @@ begin
       +' FROM "'+tabla+'"'
       +' LEFT JOIN "'+tabla1+'" ON "'+tabla1+'".CODIGO = "'+tabla+'".'+tabla1+''
       +' WHERE'
-      +' ("'+tabla+'".FECHA > ' + QuotedStr(desde) + ' ) AND '
-      +' ("'+tabla+'".FECHA < ' + QuotedStr(hasta) + ' )'+where;
+      +' ("'+tabla+'".FECHA >= ' + QuotedStr(desde) + ' ) AND '
+      +' ("'+tabla+'".FECHA <= ' + QuotedStr(hasta) + ' )'+where;
       qQ.Open(sql);
       while not qQ.Eof do
       begin
@@ -2258,7 +2260,7 @@ begin
             if (cbteDesde='') then cbteDesde:='0';
             cbteHasta := qQ.FieldByName('CbteHasta').AsString;
             if (cbteHasta='') then cbteHasta:='0';
-                        DocNro:=qQ.FieldByName('CUIT').AsString;
+            DocNro:=qQ.FieldByName('CUIT').AsString;
             if DocNro='' then DocNro:=qQ.FieldByName('DNI').AsString;
             if DocNro.Length < 11  then DocTipo :='96' else DocTipo := '80';
             if (DocNro='') then
@@ -2290,10 +2292,11 @@ begin
             FieldByName('MonId').AsString:='PES';
             FieldByName('MonCotiz').AsString:=FormatFloat('0000000000',(1*1000000));
             FieldByName('CodOper').AsString:='0';
-
             if tabla='Compra' then
             begin
-              FieldByName('PtoVta').AsString:=FormatFloat('00000',StrToFloat(qQ.FieldByName('TERMINOS').AsString));//COMPROBANTES PV	L5
+              terminos := qQ.FieldByName('TERMINOS').AsString;
+              if (terminos='') then terminos := '0';
+              FieldByName('PtoVta').AsString:=FormatFloat('00000',StrToFloat(terminos));//COMPROBANTES PV	L5
               FieldByName('CbteNro').AsString:=FormatFloat('00000000000000000000',StrToInt(cbteDesde));  //COMPROBANTES Número		L20
               FieldByName('DespNro').AsString:=FormatMaskText('0000000000000000','');//COMPROBANTES Número Despacho  de Importación	L16
               FieldByName('ImpPercIva').AsString:=FormatFloat('000000000000000',(pagCueIva*100));//PERCEPCIONES Percepc y retenc. IVA	L15
@@ -2302,8 +2305,6 @@ begin
               FieldByName('CUIT').AsString:=FormatFloat('00000000000',(0*100));//CUIT emisor/corredor	L11
               FieldByName('Denom').AsString:=FormatMaskText('000000000000000000000000000000','');//Denominación emisor/corredor	L30
               FieldByName('ImpIvaCom').AsString:=FormatFloat('000000000000000',(0*100));//IVA comisión	L15
-
-
             end
             else
             begin
@@ -2311,16 +2312,13 @@ begin
               FieldByName('CbteHasta').AsString:=FormatFloat('00000000000000000000',StrToInt(cbteHasta));
               FieldByName('PtoVta').AsString:=FormatFloat('00000',StrToFloat(PuntoVenta));
               FieldByName('DocTipo').AsString:=DocTipo;
-
-            FieldByName('FchVtoPago').AsString:=FormatFloat('00000000',(0*100));
-            FieldByName('ImpNeto').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('ImpNeto').AsFloat*100));
-            FieldByName('ImpTotal').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('TOTAL').AsFloat*100));
-            FieldByName('ImpIVA').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('ImpIVA').AsFloat*100));
-            FieldByName('ImpPercGral').AsString:=FormatFloat('000000000000000',(pagCueIva*100));
-            FieldByName('ImpPercNoCat').AsString:=FormatFloat('000000000000000',(pagCueOtr*100));
-
+              FieldByName('FchVtoPago').AsString:=FormatFloat('00000000',(0*100));
+              FieldByName('ImpNeto').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('ImpNeto').AsFloat*100));
+              FieldByName('ImpTotal').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('TOTAL').AsFloat*100));
+              FieldByName('ImpIVA').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('ImpIVA').AsFloat*100));
+              FieldByName('ImpPercGral').AsString:=FormatFloat('000000000000000',(pagCueIva*100));
+              FieldByName('ImpPercNoCat').AsString:=FormatFloat('000000000000000',(pagCueOtr*100));
             end;
-
             AlicIva := qQ.FieldByName('AlicIVA').AsString;
             if AlicIva<>'' then
               with qT do

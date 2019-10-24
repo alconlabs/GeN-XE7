@@ -1,4 +1,4 @@
-unit ProveedorF;
+﻿unit ProveedorF;
 
 interface
 
@@ -134,7 +134,9 @@ begin
   dm.tProveedor.Close;
   dm.tUsuario.Close;
   dm.tCuenta.Close;
-  dm.ImportarTabla('Proveedor');
+  //dm.ImportarTabla('Proveedor');
+  dm.ImportarProveedor;
+
   Close;
 end;
 
