@@ -155,8 +155,6 @@ object LibrosForm: TLibrosForm
       ParentFont = False
       TabOrder = 0
       OnClick = bProcesarClick
-      ExplicitLeft = 6
-      ExplicitTop = 418
     end
     object bImprimir: TBitBtn
       Left = 1

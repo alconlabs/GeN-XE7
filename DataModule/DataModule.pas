@@ -214,6 +214,7 @@ type
     function TextoAfecha(StrDate : string):TDateTime;
     function ReadTextFile(FileName : String):string;
     function UltimoRegistro(T, c: String): integer;
+    function UltimoRegistroSdb(T, c: String): integer;
     { function Gratis(arch: String): boolean; }
     procedure FormatearFecha;
     function existeOpenSSL():boolean;
@@ -879,6 +880,14 @@ begin
   Query.Open;
   result := Query.Fields[0].AsInteger + 1;
   Query.Close;
+end;
+
+function TDM.UltimoRegistroSdb(T, c: String): integer;
+var v : Variant;
+begin
+    v := sdb.ExecSQLScalar('Select Max ( '+c+' ) From "'+T+'"');
+    if v=null then v:=0;
+    result := v+1;
 end;
 
 procedure TDM.FDTable1AfterPost(DataSet: TDataSet);

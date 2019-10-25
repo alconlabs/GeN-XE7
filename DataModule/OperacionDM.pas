@@ -2184,7 +2184,7 @@ end;
 
 procedure TOperacionDataModule.ActualizarSiap(tipo, desde, hasta: string);
 var
-  cod,let,DocTipo,AlicIVA,DocNro,tabla,tabla1,sql,where,tipoRetPer,cbteDesde,
+  cod,let,letCod,nc,codigo,DocTipo,AlicIVA,DocNro,tabla,tabla1,sql,where,tipoRetPer,cbteDesde,
   cbteHasta,terminos : string;
   impOpEx,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib,noGra
   : Double;
@@ -2193,24 +2193,29 @@ begin
 //  tipo:='SiapVtaComp';
   with dm do
   begin
-    //sdb.ExecSQL('DELETE FROM '+tipo+'');
+    sdb.ExecSQL('DELETE FROM Siap'+tipo+'Comp');
+    sdb.ExecSQL('DELETE FROM Siap'+tipo+'CompAlicuota');
     if tipo='Vta' then
     begin
       tabla := 'Venta';
       tipoRetPer := 'VENTA';
       let := '';
+      nc := '';
       CantIva := 0;
       tabla1 := 'Cliente';
       where:='';
+      codigo :='CbteDesde';
     end
     else
     begin
       tabla := 'Compra';
       tipoRetPer := 'COMPRA';
       let := '';
+      nc := '';
       CantIva := 0;
       tabla1 := 'Proveedor';
       where:='';
+      codigo :='CbteNro';
     end;
     while tabla<>'' do
     begin
@@ -2240,9 +2245,13 @@ begin
       begin
         with tSdb do
         begin
-          cod:=qQ.FieldByName('ALICIVA').AsString;
-          if cod='' then cod:='0';
-          Open('SELECT * FROM Siap'+tipo+'Comp WHERE Codigo='+cod);
+          cod := IntToStr(UltimoRegistroSdb('Siap'+tipo+'Comp', 'Codigo'));
+          let := qQ.FieldByName('LETRA').AsString;
+          letCod := dm.TraerTipoCbte(nc+let);
+          letCod := FormatFloat('000',StrToFloat(letCod));
+          cbteDesde := qQ.FieldByName('CbteDesde').AsString;
+          if (cbteDesde='') then cbteDesde:='0';
+          Open('SELECT * FROM Siap'+tipo+'Comp WHERE '+codigo+'=:C AND CbteTipo=:T',[cbteDesde,letCod]);
           if RowsAffected>0 then
             Edit
           else
@@ -2253,11 +2262,7 @@ begin
             CantIva:=0;
             FieldByName('CbteFch').AsString:=FormatDateTime('yyyymmdd',(qQ.FieldByName('FECHA').AsDateTime));
             //let:=ObtenerValor('CbteTipo', 'Codigo', 'Letra',QuotedStr(qQ.FieldByName('LETRA').AsString));
-            let := let + qQ.FieldByName('LETRA').AsString;
-            let:=dm.TraerTipoCbte(let);
-            FieldByName('CbteTipo').AsString:=FormatFloat('000',StrToFloat(let));
-            cbteDesde := qQ.FieldByName('CbteDesde').AsString;
-            if (cbteDesde='') then cbteDesde:='0';
+            FieldByName('CbteTipo').AsString := letCod;
             cbteHasta := qQ.FieldByName('CbteHasta').AsString;
             if (cbteHasta='') then cbteHasta:='0';
             DocNro:=qQ.FieldByName('CUIT').AsString;
@@ -2282,6 +2287,7 @@ begin
                 otrTrib := FieldByName('OtrTrib').AsFloat;
               end;
             end;
+            FieldByName('DocTipo').AsString:=DocTipo;
             FieldByName('DocNro').AsString:=FormatFloat('00000000000000000000',StrToFloat(DocNro));
             FieldByName('DocNomb').AsString:=FormatMaskText('000000000000000000000000000000',(qQ.FieldByName('DocNomb').AsString));
             FieldByName('ImpNoGra').AsString:=FormatFloat('000000000000000',(noGra*100));
@@ -2292,6 +2298,7 @@ begin
             FieldByName('MonId').AsString:='PES';
             FieldByName('MonCotiz').AsString:=FormatFloat('0000000000',(1*1000000));
             FieldByName('CodOper').AsString:='0';
+            FieldByName('ImpTotal').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('TOTAL').AsFloat*100));
             if tabla='Compra' then
             begin
               terminos := qQ.FieldByName('TERMINOS').AsString;
@@ -2311,15 +2318,18 @@ begin
               FieldByName('CbteDesde').AsString:=FormatFloat('00000000000000000000',StrToInt(cbteDesde));
               FieldByName('CbteHasta').AsString:=FormatFloat('00000000000000000000',StrToInt(cbteHasta));
               FieldByName('PtoVta').AsString:=FormatFloat('00000',StrToFloat(PuntoVenta));
-              FieldByName('DocTipo').AsString:=DocTipo;
               FieldByName('FchVtoPago').AsString:=FormatFloat('00000000',(0*100));
               FieldByName('ImpNeto').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('ImpNeto').AsFloat*100));
-              FieldByName('ImpTotal').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('TOTAL').AsFloat*100));
               FieldByName('ImpIVA').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('ImpIVA').AsFloat*100));
               FieldByName('ImpPercGral').AsString:=FormatFloat('000000000000000',(pagCueIva*100));
               FieldByName('ImpPercNoCat').AsString:=FormatFloat('000000000000000',(pagCueOtr*100));
             end;
-            AlicIva := qQ.FieldByName('AlicIVA').AsString;
+            impOpEx := 0;
+            if let='C' then
+              CantIva := 0
+            else
+            begin
+              AlicIva := qQ.FieldByName('AlicIVA').AsString;
             if AlicIva<>'' then
               with qT do
               begin
@@ -2347,6 +2357,7 @@ begin
                   Next;
                 end;
               end;
+            end;
             FieldByName('IvaCant').AsString:=IntToStr(CantIva);
             FieldByName('ImpOpEx').AsString:=FormatFloat('000000000000000',(impOpEx*100));
             Post;
@@ -2358,16 +2369,18 @@ begin
         tabla:='Operacion';
         tabla1 := 'Cliente';
         tipoRetPer := 'NVENTA';
-        let:='NC';
+        let := '';
+        nc := '';
         CantIva := 0;
         where := ' AND ("Operacion".TIPO LIKE ''NC%'')';
       end else
       if (tabla='Compra') then
-      begin//nota de credito
+      begin//nota de credito compra
         tabla:='Operacion';
         tabla1 := 'Cliente';
         tipoRetPer := 'NCOMPRA';
-        let:='CNC';
+        let := '';
+        nc := 'CNC';
         CantIva := 0;
         where := ' AND ("Operacion".TIPO LIKE ''CNC%'')';
       end
