@@ -828,7 +828,7 @@ with dm do begin
 //        qQ.FieldByName('COEF2').AsFloat * qQ.FieldByName('PORCENTAJE').AsFloat);
     qQ.sql.Text :=
       'Insert Into "PresupuestoItem" (OPERACION, ARTICULO, CANTIDAD, COSTO, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-      + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +'0'+', '+
+      + ' ( ' + nro + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +(mat[7, i])+', '+
       (mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' +
       quotedstr(mat[1, i]) + ');';
     qQ.ExecSQL;
@@ -920,7 +920,8 @@ with dm do begin
       if (mat[1, i]= 'Deuda CtaCte') then
         ctaCte := True;
       qQ.SQL.Text :=
-        'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, COSTO, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
+        'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, '+
+        'COSTO, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
         +' ( ' +(nro)+ ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
         (mat[7, i]) + ', ' +(mat[4, i]) + ', ' + mat[6, i] + ', ' + (nro) + ', ' +
         quotedstr(mat[1, i]) + ');';
@@ -1049,7 +1050,7 @@ with dm do begin
     qQ.sql.Text :=
       'Insert Into "OperacionItem" (OPERACION, ARTICULO, CANTIDAD, COSTO'+
       ', PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-      + ' ( ' + IntToStr(nro) + ', ' + (mat[0, i]) + ', ' + (mat[3, i])+', '+'0'+', '+
+      + ' ( ' + IntToStr(nro) + ', ' + (mat[0, i]) + ', ' + (mat[3, i])+', '+(mat[7, i])+', '+
       (mat[4, i]) + ', ' + mat[6, i] + ', ' + IntToStr(nro) + ', ' +
       quotedstr(mat[1, i]) + ');';
     qQ.ExecSQL;
@@ -1161,7 +1162,7 @@ with dm do begin
     qQ.sql.Text :=
       'Insert Into "CompraItem" (OPERACION, ARTICULO, CANTIDAD, COSTO'+
       ',PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-      + ' ( ' + (nro) + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +'0'+', '+
+      + ' ( ' + (nro) + ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +(mat[7, i])+', '+
       (mat[4, i]) + ', ' + mat[6, i] + ', ' + nro + ', ' + quotedstr(mat[1, i]) +
       ');';
     qQ.ExecSQL;

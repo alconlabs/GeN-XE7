@@ -96,7 +96,7 @@ type
     salir : Boolean;
     procedure Nuevo;
     procedure TraerRemito(codigo: string);
-    procedure TraerArticulo(codigoArticulo:string; PR,CAN:Double);
+    procedure TraerArticulo(codigoArticulo:string; PR,CAN,DES:Double);
     procedure TraeNombreCliente;
     procedure CalculaTotales;
     function NetoGravado(costo,ganancia,flete:double):double;
@@ -173,6 +173,7 @@ begin
 //      if TASA='105' then TASA := '10.5';
       {iva}SGFact.Cells[6, Cuenta] := dm.TraerValor('Iva', 'TASA', TASA);
       {tot}SGFact.Cells[5, Cuenta] := Format('%8.2f', [(PR * CAN)]);
+      {descuento}SGFact.Cells[7, Cuenta] := FloatToStr(DES);
       Cuenta := Cuenta + 1;
       FEContado.Text:='0';
       CalculaTotales;
@@ -542,6 +543,7 @@ If ClienteEdit.Text <> '' then
           if catIVA='Responsable Inscripto' then
             if cliIVA='Responsable Inscripto' then cbTipo.ItemIndex := 0
             else cbTipo.ItemIndex := 6;
+
         if TipoRadioGroup.ItemIndex = 0 then
         begin
           DM.Query.Close;
@@ -620,7 +622,6 @@ begin
         salir := FBuscaCliente.salir;
         if salir then Exit;
         ClienteEdit.Text := dm.qCliente.FieldByName('CODIGO').AsString;
-//      with FBuscaCliente do
         TraeNombreCliente;
     finally
       FBuscaCliente.Free;
@@ -718,7 +719,7 @@ begin
       FSelProdFact.ShowModal;
     finally
       If FSelProdFact.Cancela = False then
-      TraerArticulo(FSelProdFact.Edit1.Text,StrToFloat(FSelProdFact.FloatEdit1.Text),StrToFloat(FSelProdFact.CantidadEdit.Text));
+      TraerArticulo(FSelProdFact.Edit1.Text,StrToFloat(FSelProdFact.FloatEdit1.Text),StrToFloat(FSelProdFact.CantidadEdit.Text),0);
     end;
   end
   else
@@ -734,7 +735,7 @@ begin
     finally
       If dm.qArticulo.Active = True then
       begin
-        TraerArticulo(dm.qArticulo.FieldByName('CODIGO').AsString,0,1);
+        TraerArticulo(dm.qArticulo.FieldByName('CODIGO').AsString,0,1,0);
       end;
       FBuscaArticulo.Free;
       dm.qOperacion.Close;
@@ -795,6 +796,12 @@ begin
         begin
           mat[c, r] := SGFact.Cells[c, r];
         end;
+
+      if TipoRadioGroup.ItemIndex=2 then
+      begin
+        cbTipo.ItemIndex := 29;
+      end;
+
       if Compra then
       begin
         if (PuntoVentaEdit.Text='') or (ComprobanteEdit.Text='') then begin
@@ -902,29 +909,32 @@ begin
 //    // Label14.Visible := True;
 //    // Cuenta := 1;
 //  end;
+  if TipoRadioGroup.ItemIndex=2 then OperacionForm.Caption := 'PEDIDO';
+
   if Compra then
-    begin
-      OperacionForm.Caption := 'COMPRA';
-      ClienteBitBtn.Caption := 'Proveedor';
+  begin
+    OperacionForm.Caption := 'COMPRA';
+    ClienteBitBtn.Caption := 'Proveedor';
 //      Label1.Caption := ClienteBitBtn.Caption+':';
-      TipoRadioGroup.ItemIndex:=0;
-      pPago.Visible:=False;
-      lPrecio.Visible:=False;
-      ClienteBitBtn.Click;
-    end  else
-    if TipoRadioGroup.ItemIndex=2 then
-      begin
-        OperacionForm.Caption := 'PEDIDO';
-        cbTipo.ItemIndex := 29;
-      end else
-      if codRem<>'' then
-        TraerRemito(codRem)
-        else//es vta
-          begin
-            PuntoVentaEdit.Text := PuntoVenta;
-            ClienteBitBtn.Click;
-            ComprobanteEdit.Text := dm.ObtenerNroComp(cbTipo.Text);
-          end;
+    TipoRadioGroup.ItemIndex:=0;
+    pPago.Visible:=False;
+    lPrecio.Visible:=False;
+    ClienteBitBtn.Click;
+  end
+  else
+//  if TipoRadioGroup.ItemIndex=2 then
+//  begin
+//    OperacionForm.Caption := 'PEDIDO';
+//    cbTipo.ItemIndex := 29;
+//  end
+  if codRem<>'' then
+    TraerRemito(codRem)
+  else//es vta
+  begin
+    PuntoVentaEdit.Text := PuntoVenta;
+    ClienteBitBtn.Click;
+    ComprobanteEdit.Text := dm.ObtenerNroComp(cbTipo.Text);
+  end;
   if salir then
     PostMessage(Self.Handle, WM_CLOSE, 0, 0);
 end;
@@ -1094,7 +1104,7 @@ begin
     Open('SELECT CLIENTE FROM  "Operacion" WHERE CODIGO='+codigo);
     ClienteEdit.Text := FieldByName('CLIENTE').AsString;
     TraeNombreCliente;
-    Open('SELECT ARTICULO, PRECIO, CANTIDAD FROM "OperacionItem"'+
+    Open('SELECT ARTICULO, PRECIO, CANTIDAD, COSTO FROM "OperacionItem"'+
     ' WHERE OPERACION = '+codigo);
     First;
     while not Eof do
@@ -1102,7 +1112,8 @@ begin
       TraerArticulo(
         FieldByName('ARTICULO').AsString,
         FieldByName('PRECIO').AsFloat,
-        FieldByName('CANTIDAD').AsFloat
+        FieldByName('CANTIDAD').AsFloat,
+        FieldByName('COSTO').AsFloat
       );
       Next;
     end;
