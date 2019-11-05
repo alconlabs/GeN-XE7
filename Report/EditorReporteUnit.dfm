@@ -147,7 +147,7 @@ object fEditorReporte: TfEditorReporte
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 39416.849051458300000000
-    ReportOptions.LastChange = 43746.552472523200000000
+    ReportOptions.LastChange = 43774.530227187500000000
     ReportOptions.Picture.Data = {
       0954474946496D61676547494638396150003200F70000FDFDFDFCFCFCFBFBFB
       F9F9F9030303FAFAFA010101F8F8F8020202040404F7F7F70606060505050707
@@ -337,8 +337,9 @@ object fEditorReporte: TfEditorReporte
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            'DESCRIPCION')
+            ' DESCRIPCION')
           ParentFont = False
+          VAlign = vaCenter
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
@@ -372,6 +373,7 @@ object fEditorReporte: TfEditorReporte
           Memo.UTF8W = (
             'TOTAL')
           ParentFont = False
+          VAlign = vaCenter
         end
         object Memo9: TfrxMemoView
           AllowVectorExport = True
@@ -387,6 +389,7 @@ object fEditorReporte: TfEditorReporte
           Memo.UTF8W = (
             'CANT.')
           ParentFont = False
+          VAlign = vaCenter
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
@@ -403,6 +406,7 @@ object fEditorReporte: TfEditorReporte
           Memo.UTF8W = (
             'P.UNIT.')
           ParentFont = False
+          VAlign = vaCenter
         end
         object Memo17: TfrxMemoView
           AllowVectorExport = True
@@ -417,7 +421,7 @@ object fEditorReporte: TfEditorReporte
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            '$ IVA')
+            'DESC.')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -462,9 +466,21 @@ object fEditorReporte: TfEditorReporte
           Width = 404.409710000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDataset1."ARTICULO"] [frxDBDataset1."DESCRIPCION"]')
+            ' [frxDBDataset1."ARTICULO"] [frxDBDataset1."DESCRIPCION"]')
+          ParentFont = False
+          VAlign = vaCenter
+          Formats = <
+            item
+            end
+            item
+            end>
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
@@ -472,10 +488,17 @@ object fEditorReporte: TfEditorReporte
           Width = 30.015770000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDataset1."UNIDAD"]')
+          ParentFont = False
+          VAlign = vaCenter
         end
         object Memo8: TfrxMemoView
           AllowVectorExport = True
@@ -483,21 +506,38 @@ object fEditorReporte: TfEditorReporte
           Width = 75.370130000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '[(<frxDBDataset1."CANTIDAD">*<frxDBDataset1."PRECIO">)]')
+            
+              '[(<frxDBDataset1."PREXCANT">-<frxDBDataset1."VIDESCUENTO">)*(IIF' +
+              '(<frxDBDataset1."IMPUESTO">='#39'0'#39',1,<frxDBDataset1."VIIMPUESTO">/1' +
+              '00+1))]')
+          ParentFont = False
+          VAlign = vaCenter
         end
         object Memo12: TfrxMemoView
           AllowVectorExport = True
-          Left = 3.000000000000000000
+          Left = 1.000000000000000000
           Width = 54.472480000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDataset1."CANTIDAD"]')
+          ParentFont = False
+          VAlign = vaCenter
         end
         object Memo1: TfrxMemoView
           AllowVectorExport = True
@@ -505,10 +545,17 @@ object fEditorReporte: TfEditorReporte
           Width = 75.370130000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDataset1."PRECIO"]')
+          ParentFont = False
+          VAlign = vaCenter
         end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
@@ -516,10 +563,17 @@ object fEditorReporte: TfEditorReporte
           Width = 52.692950000000000000
           Height = 18.897650000000000000
           DataSetName = 'FacturafrxDBDataset'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDataset1."VIIMPUESTO"]')
+            '[frxDBDataset1."VIDESCUENTO"]')
+          ParentFont = False
+          VAlign = vaCenter
         end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
@@ -535,8 +589,9 @@ object fEditorReporte: TfEditorReporte
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDataset1."AIVA"]')
+            '[<frxDBDataset1."VIIMPUESTO">]')
           ParentFont = False
+          VAlign = vaCenter
         end
       end
       object GroupFooter1: TfrxGroupFooter
@@ -1590,6 +1645,7 @@ object fEditorReporte: TfEditorReporte
     Top = 200
   end
   object OperacionFDQuery: TFDQuery
+    Active = True
     Connection = FirebirdConnection
     SQL.Strings = (
       'SELECT'
