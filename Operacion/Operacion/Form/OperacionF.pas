@@ -273,6 +273,13 @@ begin
   fRetPerc := TfRetPerc.Create(Self);
   with fRetPerc do begin
     try
+      eNoGra.Text := FloatToStr(noGra);
+      ePagCueIva.Text := FloatToStr(pagCueIva);
+      ePagCueOtr.Text := FloatToStr(pagCueOtr);
+      ePerIIBB.Text := FloatToStr(perIIBB);
+      ePerImpMun.Text := FloatToStr(perImpMun);
+      eImpInt.Text := FloatToStr(impInt);
+      eOtrTrib.Text := FloatToStr(otrTrib);
       ShowModal;
     finally
       noGra := StrToFloat(eNoGra.Text);
@@ -341,28 +348,32 @@ begin
     if (SGFact.Cells[7, i] = '') then SGFact.Cells[7, i] := '0';
     DSC := StrToFloat(SGFact.Cells[7, i]);
     //IVA
+    if Compra then TOT := TOT - DSC;
     NG:=TOT;
-    if esA then IVA := dm.CalcularIVA((NG),TIVA)-NG
-    else if esB then IVA := dm.CalcularIVA((NG),TIVA)-NG;//dm.SacarIVA((NG),TIVA);
-    SGFact.Cells[10, i] := FloatToStr(IVA);
     //CalcularDescuento
-    if DSC>0 then
+//    if DSC>0 then
     begin
-      if esA then
+      if (esA or esB) then
       begin
-        TOT:=NG+IVA;
-        TOT:=TOT-DSC;
+
+        if esA then IVA := dm.CalcularIVA((NG),TIVA)-NG
+        else if esB then IVA := dm.CalcularIVA((NG),TIVA)-NG;//dm.SacarIVA((NG),TIVA);
+ //       SGFact.Cells[10, i] := FloatToStr(IVA);
+
+        TOT := NG+IVA;
+        if not Compra then TOT := TOT-DSC;
         IVA := dm.SacarIVA((TOT),TIVA);
-        NG:=TOT-IVA;
+        NG := TOT-IVA;
       end
-      else if esB then
-      begin
-        TOT:=NG+IVA;
-        TOT:=TOT-DSC;
-        IVA := dm.SacarIVA((TOT),TIVA);
-        NG:=TOT-IVA;
-      end
-      else NG:=TOT-DSC;
+//      else if esB then
+//      begin
+//        TOT:=NG+IVA;
+//        TOT:=TOT-DSC;
+//        IVA := dm.SacarIVA((TOT),TIVA);
+//        NG:=TOT-IVA;
+//      end
+      else if not Compra then NG := TOT-DSC;
+
       SGFact.Cells[10, i] := FloatToStr(IVA);
     end;
     // NG
@@ -417,7 +428,7 @@ begin
   IVAO := RoundTo(IVAO,-2);
   desc:=  RoundTo((desc),-2);
 
-  RP := RoundTo((pagCueIva+ pagCueOtr+ perIIBB+ perImpMun+ impInt+ otrTrib),-2);
+  RP := RoundTo((pagCueIva + pagCueOtr + perIIBB + perImpMun + impInt + otrTrib + noGra),-2);
 
   subtotal:= RoundTo((NG21 + NG105 + NGO + Exento + Interes),-2);
 
@@ -428,7 +439,7 @@ begin
   // escribe los valores en las celdas
   SGTotal.Cells[1, 0] := Format('%8.2n', [subtotal]);
   SGTotal.Cells[1, 1] := Format('%8.2n', [desc]);
-  SGTotal.Cells[1, 2] := Format('%8.2n', [Impuesto+RP]);
+  SGTotal.Cells[1, 2] := Format('%8.2n', [Impuesto]);
   SGTotal.Cells[1, 3] := Format('%8.2n', [Interes]);
   SGTotal.Cells[1, 4] := Format('%8.2n', [Total]);
 
