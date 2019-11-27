@@ -33,7 +33,7 @@ type
     Listados1: TMenuItem;
     Cheques2: TMenuItem;
     Productos1: TMenuItem;
-    AnularVenta1: TMenuItem;
+    Anular: TMenuItem;
     ListadePrecios1: TMenuItem;
     Configuracion1: TMenuItem;
     Clientes1: TMenuItem;
@@ -103,6 +103,8 @@ type
     AnularVenta: TMenuItem;
     AnularCompra: TMenuItem;
     ListadoNotaCredito: TMenuItem;
+    Bonificar: TMenuItem;
+    BonificarCompra: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ProveedoresClick(Sender: TObject);
@@ -185,6 +187,7 @@ type
     procedure AnularVentaClick(Sender: TObject);
     procedure AnularCompraClick(Sender: TObject);
     procedure ListadoNotaCreditoClick(Sender: TObject);
+    procedure BonificarCompraClick(Sender: TObject);
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
@@ -269,7 +272,7 @@ begin
           CuentaCorriente1.Visible := False;
           Aumentarporporcentaje1.Visible := False;
           // AnularVenta1.Visible := False;
-          AnularVenta1.Visible := False;
+          Anular.Visible := False;
           // DevolverMercadera1.Visible := False;
           // Retenciones1.Visible := False;
     //      ReImprimir.Visible := False;
@@ -353,6 +356,18 @@ begin
 //  finally
 //    BackUpForm.Free;
 //  end;
+end;
+
+procedure TFullMainForm.BonificarCompraClick(Sender: TObject);
+begin
+  FCancelOrderView := TFCancelOrderView.Create(Self);
+  FCancelOrderView.tipo := 'Compra';
+  FCancelOrderView.esBonificar := True;
+  try
+    FCancelOrderView.ShowModal;
+  finally
+    FCancelOrderView.Free;
+  end;
 end;
 
 procedure TFullMainForm.Productos1Click(Sender: TObject);

@@ -12,19 +12,21 @@ type
   TCancelOrderService = Class
   private
     ImprimirDataModule: TImprimirDataModule;
-    nro, tipo, let, comp, cod, fech, ven, cui, cno, a, cli, asocNro, nctipo,
+    nro, tipo, bonificar, let, comp, cod, fech, ven, cui, cno, a, cli, asocNro, nctipo,
       cbteAsoc, masOmenos, sql, cae, vto, pagare: string;
-    pre, pgr, esCompra: Boolean;
+    pre, pgr, esCompra, esBonificar : Boolean;
     noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib, cost, com,
       impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag, int, n10, n21,
       i10, i21, deud, ulc, cmv, comv, n3, i3, per, ret: Double;
     aIva, pvta: Integer;
   public
-    constructor Create(Vnro, Vtipo: string);
+    constructor Create(Vnro, Vtipo, Vcomp, Vbonificar: string);
     destructor Destroy; override;
 
     property Pnro: string read nro write nro;
     property Ptipo: string read tipo write tipo;
+    property Pbonificar: string read bonificar write bonificar;
+    property Pcomp: string read comp write comp;
     // property Plet: string read let write let;
     // property Pcod: string read cod write cod;
     // property Pfech: string read fech write fech;
@@ -134,6 +136,8 @@ begin
 
   Pnro := Vnro;
   Ptipo := Vtipo;
+  Pbonificar := Vbonificar;
+  Pcomp := Vcomp;
 end;
 
 destructor TCancelOrderService.Destroy;
@@ -149,7 +153,13 @@ begin
       OperacionDataModule := TOperacionDataModule.Create(nil);
       BaseDatosFB.StartTransaction;
       dm.FormatearFecha;
+
+      if (bonificar <> '') then
+      begin
+        esBonificar := True;
+      end;
       esCompra := (tipo = 'Compra');
+
       if esCompra then
         masOmenos := '-'
       else
@@ -183,46 +193,62 @@ begin
       // mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       else
       begin
+
         fech := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
         ven := qT.FieldByName('VENDEDOR').AsString;
-        if ven = '' then
-          ven := '0';
+        if ven = '' then ven := '0';
         let := qT.FieldByName('LETRA').AsString;
         asocNro := qT.FieldByName('COMPROBANTE').AsString;
-        sal := qT.FieldByName('SALDO').AsFloat;
-        cont := qT.FieldByName('CONTADO').AsFloat;
-        pag := qT.FieldByName('PAGADO').AsFloat;
-        tot := RoundTo(qT.FieldByName('TOTAL').AsFloat, -2);
-        cheq := qT.FieldByName('CHEQUE').AsFloat;
-        ch3q := qT.FieldByName('OTROS').AsFloat;
-        tarj := qT.FieldByName('TARJETA').AsFloat;
-        impu := RoundTo(qT.FieldByName('IMPUESTO').AsFloat, -2);
-        i10 := RoundTo(qT.FieldByName('IVA1').AsFloat, -2);
-        i21 := RoundTo(qT.FieldByName('IVA2').AsFloat, -2);
-        i3 := RoundTo(qT.FieldByName('IVA3').AsFloat, -2);
-        aIva := qT.FieldByName('ALICIVA').AsInteger;
         vto := qT.FieldByName('TERMINOS').AsString;
         pvta := qT.FieldByName('EMPRESA').AsInteger;
-        per := qT.FieldByName('IIBB').AsFloat;
-        ret := qT.FieldByName('MINIMP').AsFloat;
-        des := qT.FieldByName('DESCUENTO').AsFloat;
-        sbt := RoundTo(qT.FieldByName('SUBTOTAL').AsFloat, -2);
-        // tot := qT.FieldByName('TOTAL').AsFloat;
-        if (let = 'A') or (let = 'B') then
+
+        if esBonificar then
         begin
-          i10 := RoundTo(dm.TraerValor2('AlicIva', 'IMPORTE', inttostr(aIva),
-            'ID', '4'), -2);
-          // if i10=0 then i10 := qT.FieldByName('IVA1').AsFloat;
-          n10 := RoundTo(dm.TraerValor2('AlicIva', 'BASEIMP', inttostr(aIva),
-            'ID', '4'), -2);
-          // if n10=0 then n10 := qT.FieldByName('SUBTOTAL').AsFloat;
-          i21 := RoundTo(dm.TraerValor2('AlicIva', 'IMPORTE', inttostr(aIva),
-            'ID', '5'), -2);
-          // if i21=0 then i21 := qT.FieldByName('IVA2').AsFloat;
-          n21 := RoundTo(dm.TraerValor2('AlicIva', 'BASEIMP', inttostr(aIva),
-            'ID', '5'), -2);
-          // if n21=0 then n21 := qT.FieldByName('SUBTOTAL').AsFloat;
+          n21 := StrToFloat(bonificar);
+          if let='A' then i21 := dm.CalcularIVA((n21),21)-n21
+          else if let='B' then i21 := dm.CalcularIVA((n21),21)-n21;
+          sbt := n21;
+          impu := i21;
+          tot := sbt + impu;
+          cont := tot;
+          pag := cont;
+        end
+        else
+        begin
+          sal := qT.FieldByName('SALDO').AsFloat;
+          cont := qT.FieldByName('CONTADO').AsFloat;
+          pag := qT.FieldByName('PAGADO').AsFloat;
+          tot := RoundTo(qT.FieldByName('TOTAL').AsFloat, -2);
+          cheq := qT.FieldByName('CHEQUE').AsFloat;
+          ch3q := qT.FieldByName('OTROS').AsFloat;
+          tarj := qT.FieldByName('TARJETA').AsFloat;
+          impu := RoundTo(qT.FieldByName('IMPUESTO').AsFloat, -2);
+          i10 := RoundTo(qT.FieldByName('IVA1').AsFloat, -2);
+          i21 := RoundTo(qT.FieldByName('IVA2').AsFloat, -2);
+          i3 := RoundTo(qT.FieldByName('IVA3').AsFloat, -2);
+          aIva := qT.FieldByName('ALICIVA').AsInteger;
+          per := qT.FieldByName('IIBB').AsFloat;
+          ret := qT.FieldByName('MINIMP').AsFloat;
+          des := qT.FieldByName('DESCUENTO').AsFloat;
+          sbt := RoundTo(qT.FieldByName('SUBTOTAL').AsFloat, -2);
+          // tot := qT.FieldByName('TOTAL').AsFloat;
+          if (let = 'A') or (let = 'B') then
+          begin
+            i10 := RoundTo(dm.TraerValor2('AlicIva', 'IMPORTE', inttostr(aIva),
+              'ID', '4'), -2);
+            // if i10=0 then i10 := qT.FieldByName('IVA1').AsFloat;
+            n10 := RoundTo(dm.TraerValor2('AlicIva', 'BASEIMP', inttostr(aIva),
+              'ID', '4'), -2);
+            // if n10=0 then n10 := qT.FieldByName('SUBTOTAL').AsFloat;
+            i21 := RoundTo(dm.TraerValor2('AlicIva', 'IMPORTE', inttostr(aIva),
+              'ID', '5'), -2);
+            // if i21=0 then i21 := qT.FieldByName('IVA2').AsFloat;
+            n21 := RoundTo(dm.TraerValor2('AlicIva', 'BASEIMP', inttostr(aIva),
+              'ID', '5'), -2);
+            // if n21=0 then n21 := qT.FieldByName('SUBTOTAL').AsFloat;
+          end;
         end;
+
         if esCompra then
           cli := qT.FieldByName('PROVEEDOR').AsString
         else
@@ -287,22 +313,36 @@ begin
               ActualizarNroComp('NC' + let, comp);
           end;
         end;
-        // Marcar la Factura como anulada y poner los saldos en cero
-        BaseDatosFB.ExecSQL(
-          'Update "' + tipo + '" set ANULADA = ''S'' where CODIGO = ' + nro);
+
 
         // AlicuotaIVA
-        with qT do
+        aIva := UltimoRegistro('AlicIva', 'CODIGO');
+        if esBonificar then
         begin
-          Open('Select ID, BASEIMP, IMPORTE'
-            +' from "AlicIva"'
-            +' where  "AlicIva".CODIGO='+IntToStr(aIva));
-          aIva := UltimoRegistro('AlicIva', 'CODIGO');
+//          aIva := UltimoRegistro('AlicIva', 'CODIGO');
           OperacionDataModule.AgregarAlicIva(aIva,
-            StrToInt(FieldByName('ID').Asstring),
-            FieldByName('BASEIMP').AsFloat,
-            FieldByName('IMPORTE').AsFloat);
+            5,
+            n21,
+            i21);
+        end
+        else
+        begin
+          with qT do
+            begin
+              Open('Select ID, BASEIMP, IMPORTE'
+                +' from "AlicIva"'
+                +' where  "AlicIva".CODIGO='+IntToStr(aIva));
+//              aIva := UltimoRegistro('AlicIva', 'CODIGO');
+              OperacionDataModule.AgregarAlicIva(aIva,
+                StrToInt(FieldByName('ID').Asstring),
+                FieldByName('BASEIMP').AsFloat,
+                FieldByName('IMPORTE').AsFloat);
+              // Marcar la Factura como anulada y poner los saldos en cero
+              BaseDatosFB.ExecSQL(
+              'Update "' + tipo + '" set ANULADA = ''S'' where CODIGO = ' + nro);
+            end;
         end;
+
         // INSERTA EN LA TABLA OPERACION
         if tipo = 'Compra' then
           nctipo := 'CNC'
@@ -334,24 +374,38 @@ begin
         BaseDatosFB.ExecSQL( // qQ.sql.Text :=
           sql); // qQ.ExecSQL;
         // Insertar en la tabla de OPERACIONITEM
-        qT.Open( // qT.sql.Text :=
-          'Select * From "' + tipo + 'Item" Where OPERACION = ' + nro); // qT.open;
-        qT.First;
-        while not qT.Eof do
+        if esBonificar then
         begin
-          BaseDatosFB.ExecSQL( // qQ.sql.Text :=
+          BaseDatosFB.ExecSQL(
             'Insert Into "OperacionItem" (OPERACION, ARTICULO, CANTIDAD' +
             ', COSTO, PRECIO, IMPUESTO'+
             ', SERVICIO, DESCRIPCION) Values' + ' ( ' + cod +
-            ', ' + qT.FieldByName('ARTICULO').AsString + ', ' + qT.FieldByName('CANTIDAD').AsString +
-            ',' + qT.FieldByName('COSTO').AsString + ', ' + qT.FieldByName('PRECIO').AsString + ', ' + qT.FieldByName('IMPUESTO').AsString +
-            ', ' + nro + ', ' + QuotedStr(qT.FieldByName('DESCRIPCION').AsString) + ');');
-          // qQ.ExecSQL;
-          // Actualizar la tabla de Articulos
-          OperacionDataModule.ActualizarCantidadArticulo(qT.FieldByName('ARTICULO').AsString,
-            masOmenos + ' ' + qT.FieldByName('CANTIDAD').AsString);
-          qT.Next;
+            ', 0, 1' +
+            ',' + FloatToStr(n21) + ', ' + FloatToStr(sbt) + ', ' + FloatToStr(i21) +
+            ', ' + nro + ', ' + QuotedStr('BONIFICACION') + ');');
+        end
+        else
+        begin
+          qT.Open( // qT.sql.Text :=
+          'Select * From "' + tipo + 'Item" Where OPERACION = ' + nro); // qT.open;
+          qT.First;
+          while not qT.Eof do
+          begin
+            BaseDatosFB.ExecSQL( // qQ.sql.Text :=
+              'Insert Into "OperacionItem" (OPERACION, ARTICULO, CANTIDAD' +
+              ', COSTO, PRECIO, IMPUESTO'+
+              ', SERVICIO, DESCRIPCION) Values' + ' ( ' + cod +
+              ', ' + qT.FieldByName('ARTICULO').AsString + ', ' + qT.FieldByName('CANTIDAD').AsString +
+              ',' + qT.FieldByName('COSTO').AsString + ', ' + qT.FieldByName('PRECIO').AsString + ', ' + qT.FieldByName('IMPUESTO').AsString +
+              ', ' + nro + ', ' + QuotedStr(qT.FieldByName('DESCRIPCION').AsString) + ');');
+            // qQ.ExecSQL;
+            // Actualizar la tabla de Articulos
+            OperacionDataModule.ActualizarCantidadArticulo(qT.FieldByName('ARTICULO').AsString,
+              masOmenos + ' ' + qT.FieldByName('CANTIDAD').AsString);
+            qT.Next;
+          end;
         end;
+
         //
         BaseDatosFB.ExecSQL( // qQ.sql.Text :=
           'Insert Into "CbtesAsoc" (' +

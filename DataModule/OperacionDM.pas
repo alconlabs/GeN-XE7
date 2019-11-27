@@ -2300,7 +2300,7 @@ begin
             FieldByName('MonCotiz').AsString:=FormatFloat('0000000000',(1*1000000));
             FieldByName('CodOper').AsString:='0';
             FieldByName('ImpTotal').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('TOTAL').AsFloat*100));
-            if tabla='Compra' then
+            if (tabla='Compra') or (tipoRetPer='NCOMPRA') then
             begin
               terminos := qQ.FieldByName('TERMINOS').AsString;
               if (terminos='') then terminos := '0';

@@ -12,6 +12,7 @@ type
   private
     CancelOrderModel : TCancelOrderModel;
     CancelOrderService : TCancelOrderService;
+//    _noGra, _pagCueIva, _pagCueOtr, _perIIBB, _perImpMun, _impInt, _otrTrib : Double;
     function GetCodigo: string;
     function GetTipo: string;
     procedure SetCodigo(const Value: string);
@@ -21,10 +22,18 @@ type
     destructor Destroy; override;
 
     procedure FindButton;
-    procedure YesButton(codigo,tipo:string);
+    procedure YesButton(codigo,tipo,comp,bonificar:string);
+//    procedure RetPerc(noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib);
 
     property Codigo: string read GetCodigo write SetCodigo;
     property Tipo: string read GetTipo write SetTipo;
+//    property noGra: double read _noGra write _noGra;
+//    property pagCueIva: double read _pagCueIva write _pagCueIva;
+//    property pagCueOtr: double read _pagCueOtr write _pagCueOtr;
+//    property perIIBB: double read _perIIBB write _perIIBB;
+//    property perImpMun_: double read _perImpMun write _perImpMun;
+//    property impInt: double read _impInt write _impInt;
+//    property otrTrib: double read _otrTrib write _otrTrib;
   end;
 
 implementation
@@ -93,7 +102,7 @@ procedure TCancelOrderViewModel.YesButton;
 begin
   if (codigo<>'') and (tipo<>'') then
   begin
-    CancelOrderService := TCancelOrderService.Create(codigo,tipo);
+    CancelOrderService := TCancelOrderService.Create(codigo,tipo,comp,bonificar);
     CancelOrderService.Execute;
     CancelOrderService.Free;
   end;

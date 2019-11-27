@@ -15,20 +15,28 @@ type
     NoBitBtn: TBitBtn;
     findBitBtn: TBitBtn;
     ClientPanel: TPanel;
-    nroEdit: TEdit;
     LetterLabel: TLabel;
     TitleLabel: TLabel;
+    nroEdit: TEdit;
+    bonificarLabel: TLabel;
+    bonificarEdit: TEdit;
+    compLabel: TLabel;
+    compEdit: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure findBitBtnClick(Sender: TObject);
     procedure yesBitBtnClick(Sender: TObject);
     procedure NoBitBtnClick(Sender: TObject);
+//    procedure bRetPerClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     FCancelOrderViewModel: TCancelOrderViewModel;
   public
     { Public declarations }
     tipo : string;
+    esBonificar : Boolean;
+//    noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib: Double;
   end;
 
 var
@@ -37,6 +45,32 @@ var
 implementation
 
 {$R *.dfm}
+
+//procedure TFCancelOrderView.bRetPerClick(Sender: TObject);
+//begin
+//  fRetPerc := TfRetPerc.Create(Self);
+//  with fRetPerc do begin
+//    try
+//      eNoGra.Text := FloatToStr(noGra);
+//      ePagCueIva.Text := FloatToStr(pagCueIva);
+//      ePagCueOtr.Text := FloatToStr(pagCueOtr);
+//      ePerIIBB.Text := FloatToStr(perIIBB);
+//      ePerImpMun.Text := FloatToStr(perImpMun);
+//      eImpInt.Text := FloatToStr(impInt);
+//      eOtrTrib.Text := FloatToStr(otrTrib);
+//      ShowModal;
+//    finally
+//      noGra := StrToFloat(eNoGra.Text);
+//      pagCueIva := StrToFloat(ePagCueIva.Text);
+//      pagCueOtr := StrToFloat(ePagCueOtr.Text);
+//      perIIBB := StrToFloat(ePerIIBB.Text);
+//      perImpMun := StrToFloat(ePerImpMun.Text);
+//      impInt := StrToFloat(eImpInt.Text);
+//      otrTrib := StrToFloat(eOtrTrib.Text);
+//      Free;
+//    end;
+//  end;
+//end;
 
 procedure TFCancelOrderView.findBitBtnClick(Sender: TObject);
 begin
@@ -58,6 +92,18 @@ begin
   FCancelOrderViewModel.Free;
 end;
 
+procedure TFCancelOrderView.FormShow(Sender: TObject);
+begin
+  if esBonificar then
+  begin
+    bonificarEdit.Visible := True;
+    bonificarLabel.Visible := True;
+    compEdit.Visible := True;
+    compLabel.Visible := True;
+    Caption := 'Bonificar';
+  end;
+end;
+
 procedure TFCancelOrderView.NoBitBtnClick(Sender: TObject);
 begin
   Close;
@@ -65,7 +111,11 @@ end;
 
 procedure TFCancelOrderView.yesBitBtnClick(Sender: TObject);
 begin
-  FCancelOrderViewModel.YesButton(nroEdit.Text,tipo);
+  with FCancelOrderViewModel do
+  begin
+    YesButton(nroEdit.Text,tipo,compEdit.Text,bonificarEdit.Text);
+//    RetPerc(noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib);
+  end;
   Close;
 end;
 

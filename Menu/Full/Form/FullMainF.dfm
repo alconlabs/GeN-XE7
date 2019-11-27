@@ -67,7 +67,7 @@ object FullMainForm: TFullMainForm
         Visible = False
         OnClick = Aumentarporporcentaje1Click
       end
-      object AnularVenta1: TMenuItem
+      object Anular: TMenuItem
         Caption = 'ANULAR'
         object AnularVenta: TMenuItem
           Caption = 'VENTA'
@@ -76,6 +76,13 @@ object FullMainForm: TFullMainForm
         object AnularCompra: TMenuItem
           Caption = 'COMPRA'
           OnClick = AnularCompraClick
+        end
+      end
+      object Bonificar: TMenuItem
+        Caption = 'BONIFICAR'
+        object BonificarCompra: TMenuItem
+          Caption = 'COMPRA'
+          OnClick = BonificarCompraClick
         end
       end
     end

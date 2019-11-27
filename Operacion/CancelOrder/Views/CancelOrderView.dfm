@@ -14,6 +14,7 @@ object FCancelOrderView: TFCancelOrderView
   Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object RightPanel: TPanel
@@ -122,14 +123,14 @@ object FCancelOrderView: TFCancelOrderView
       Width = 529
       Height = 20
       Align = alTop
-      Caption = 'Comprobante:'
+      Caption = 'Comprobante Asociado:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitWidth = 114
+      ExplicitWidth = 193
     end
   end
   object ClientPanel: TPanel
@@ -139,6 +140,8 @@ object FCancelOrderView: TFCancelOrderView
     Height = 285
     Align = alClient
     TabOrder = 2
+    ExplicitLeft = -5
+    ExplicitTop = 27
     object LetterLabel: TLabel
       Left = 1
       Top = 29
@@ -156,6 +159,39 @@ object FCancelOrderView: TFCancelOrderView
       ParentFont = False
       ExplicitWidth = 16
     end
+    object bonificarLabel: TLabel
+      Left = 1
+      Top = 236
+      Width = 454
+      Height = 20
+      Align = alBottom
+      Caption = 'Bonificar:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      Visible = False
+      ExplicitLeft = 2
+      ExplicitTop = 214
+    end
+    object compLabel: TLabel
+      Left = 1
+      Top = 188
+      Width = 454
+      Height = 20
+      Align = alBottom
+      Caption = 'Comprobante:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      Visible = False
+      ExplicitWidth = 114
+    end
     object nroEdit: TEdit
       Left = 1
       Top = 1
@@ -169,6 +205,42 @@ object FCancelOrderView: TFCancelOrderView
       Font.Style = []
       ParentFont = False
       TabOrder = 0
+      ExplicitLeft = 2
+      ExplicitTop = 9
+    end
+    object bonificarEdit: TEdit
+      Left = 1
+      Top = 256
+      Width = 454
+      Height = 28
+      Align = alBottom
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      Visible = False
+      ExplicitLeft = -4
+      ExplicitTop = 128
+    end
+    object compEdit: TEdit
+      Left = 1
+      Top = 208
+      Width = 454
+      Height = 28
+      Align = alBottom
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+      Visible = False
+      ExplicitLeft = 2
+      ExplicitTop = 174
     end
   end
 end
