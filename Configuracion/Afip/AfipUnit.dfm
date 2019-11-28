@@ -38,7 +38,6 @@ object AfipForm: TAfipForm
       Caption = '3 - CRT'
       TabOrder = 0
       OnClick = CRTButtonClick
-      ExplicitWidth = 121
     end
     object CSRButton: TButton
       Left = 1
@@ -49,7 +48,6 @@ object AfipForm: TAfipForm
       Caption = '2 - CSR'
       TabOrder = 1
       OnClick = CSRButtonClick
-      ExplicitWidth = 121
     end
     object AyudaButton: TButton
       Left = 1
@@ -60,7 +58,6 @@ object AfipForm: TAfipForm
       Caption = '?'
       TabOrder = 2
       OnClick = AyudaButtonClick
-      ExplicitWidth = 121
     end
     object Button1: TButton
       Left = 1
@@ -71,7 +68,6 @@ object AfipForm: TAfipForm
       Caption = '4 - Autorizar'
       TabOrder = 3
       OnClick = Button1Click
-      ExplicitWidth = 121
     end
     object PuntoVentaButton: TButton
       Left = 1
@@ -82,7 +78,6 @@ object AfipForm: TAfipForm
       Caption = '1 - Punto Venta'
       TabOrder = 4
       OnClick = PuntoVentaButtonClick
-      ExplicitWidth = 121
     end
     object OpensslButton: TButton
       Left = 1
@@ -93,7 +88,6 @@ object AfipForm: TAfipForm
       Caption = '0 - OpenSSL'
       TabOrder = 5
       OnClick = OpensslButtonClick
-      ExplicitWidth = 121
     end
     object ProbarButton: TButton
       Left = 1
@@ -104,7 +98,6 @@ object AfipForm: TAfipForm
       Caption = '5 - Probar'
       TabOrder = 6
       OnClick = ProbarButtonClick
-      ExplicitWidth = 121
     end
     object SubscripcionButton: TButton
       Left = 1
@@ -121,7 +114,6 @@ object AfipForm: TAfipForm
       ParentFont = False
       TabOrder = 7
       OnClick = SubscripcionButtonClick
-      ExplicitWidth = 121
     end
   end
   object Memo1: TMemo
@@ -131,7 +123,6 @@ object AfipForm: TAfipForm
     Height = 281
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 520
   end
   object SaveTextFileDialog1: TSaveTextFileDialog
     Left = 312

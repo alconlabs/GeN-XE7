@@ -99,9 +99,9 @@ begin
         // -subj "/C=AR/O=subj_o/CN=subj_cn/serialNumber=CUIT subj_cuit" -out pedido
         pfx:=' pkcs12 -export -inkey "'+ruta+'MiClavePrivada" -in "'+ruta+'certificado.crt" -out "'+ruta+'certificado.pfx"';
         Ejecutar(openssl+key);
-        Sleep(1000);
+        Sleep(5000);
         Ejecutar(openssl+csr);
-        Sleep(1000);
+        Sleep(10000);
         Memo1.Lines.LoadFromFile(ruta+'MiPedido.CSR');
         SaveTextFileDialog1.FileName:=System.IOUtils.TPath.GetDocumentsPath()+'\MiPedido.CSR';
         SaveTextFileDialog1.Execute();
