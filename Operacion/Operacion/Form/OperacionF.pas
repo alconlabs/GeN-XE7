@@ -324,9 +324,12 @@ begin
   if FEContado.Text='' then FEContado.Text:='0';
   CONT := StrToFloat( FEContado.Text );
   PR:=0;
-  if (cbTipo.ItemIndex<6) then esA:=true;
-  if (cbTipo.ItemIndex>5) and (cbTipo.ItemIndex<11) then esB:=true;
-  if (cbTipo.ItemIndex>10) and (cbTipo.ItemIndex<15) then esC:=true;
+//  if (cbTipo.ItemIndex<6) then esA := True;
+  esA := (cbTipo.ItemIndex<5);
+//  if (cbTipo.ItemIndex>5) and (cbTipo.ItemIndex<11) then esB:=true;
+  esB := ((cbTipo.ItemIndex>4) and (cbTipo.ItemIndex<10));
+//  if (cbTipo.ItemIndex>10) and (cbTipo.ItemIndex<15) then esC:=true;
+  esC := ((cbTipo.ItemIndex>9) and (cbTipo.ItemIndex<14));
   dm.VaciarMtIVA;
   For i := 1 to SGFact.RowCount - 1 do
   begin
@@ -388,7 +391,7 @@ begin
 
   // Calcula el monto para cobrar el impuesto de ventas
     if not esC then dm.AgregarMtIva(TIVA,NG,IVA);
-    if ((cbTipo.ItemIndex = 29) or (cbTipo.ItemIndex = 11)) then
+    if ((cbTipo.ItemIndex = 28) or (cbTipo.ItemIndex = 10)) then
     begin
       NGO:= NGO + NG;
     end
@@ -549,11 +552,11 @@ If ClienteEdit.Text <> '' then
           PagareCheckBox.Checked := True;
         // IVA
         cliIVA := dm.qOperacion.FieldByName('IVA').AsString;
-        if catIVA='Responsable Monotributo' then cbTipo.ItemIndex := 11
+        if catIVA='Responsable Monotributo' then cbTipo.ItemIndex := 10
         else
           if catIVA='Responsable Inscripto' then
             if cliIVA='Responsable Inscripto' then cbTipo.ItemIndex := 0
-            else cbTipo.ItemIndex := 6;
+            else cbTipo.ItemIndex := 5;
 
         if TipoRadioGroup.ItemIndex = 0 then
         begin
@@ -617,9 +620,9 @@ begin
           (dm.qProveedor.FieldByName('IVA').AsString = 'RI') then cbTipo.ItemIndex := 0
         else
         if (dm.qProveedor.FieldByName('IVA').AsString = 'RI') then
-          cbTipo.ItemIndex := 6
+          cbTipo.ItemIndex := 5
         else
-          cbTipo.ItemIndex := 11;
+          cbTipo.ItemIndex := 10;
       end;
     finally
       FBuscaProve.Free;
@@ -680,7 +683,7 @@ DescuentoForm.DescuentoEdit.Text := FloatToStr(Saldo) ;
         d := StrToFloat(de);
       SGFact.Cells[7, SGFact.Row] := Format('%8.2f', [d]);
 //      SGFact.Cells[7, SGFact.Row] := DescuentoForm.DescuentoEdit.Text;
-      if cbTipo.ItemIndex<>1 then
+      if cbTipo.ItemIndex<>0 then
       begin
         p:=StrToFloat(SGFact.Cells[4, SGFact.Row]);
         c:=StrToFloat(SGFact.Cells[3, SGFact.Row]);
@@ -810,7 +813,7 @@ begin
 
       if TipoRadioGroup.ItemIndex=2 then
       begin
-        cbTipo.ItemIndex := 29;
+        cbTipo.ItemIndex := 28;
       end;
 
       if Compra then
@@ -927,16 +930,17 @@ begin
     OperacionForm.Caption := 'COMPRA';
     ClienteBitBtn.Caption := 'Proveedor';
 //      Label1.Caption := ClienteBitBtn.Caption+':';
-    TipoRadioGroup.ItemIndex:=0;
-    pPago.Visible:=False;
-    lPrecio.Visible:=False;
+    TipoRadioGroup.ItemIndex := 0;
+    pPago.Visible := False;
+    lPrecio.Visible := False;
+    cbTipo.Enabled := True;
     ClienteBitBtn.Click;
   end
   else
 //  if TipoRadioGroup.ItemIndex=2 then
 //  begin
 //    OperacionForm.Caption := 'PEDIDO';
-//    cbTipo.ItemIndex := 29;
+//    cbTipo.ItemIndex := 28;
 //  end
   if codRem<>'' then
     TraerRemito(codRem)
