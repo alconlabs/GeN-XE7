@@ -563,12 +563,6 @@ end;
 
 procedure TFullMainForm.AnularCompraClick(Sender: TObject);
 begin
-//  AnularOperacionForm := TAnularOperacionForm.Create(self);
-//  try
-//    AnularOperacionForm.ShowModal;
-//  finally
-//    AnularOperacionForm.Free;
-//  end;
   FCancelOrderView := TFCancelOrderView.Create(Self);
   FCancelOrderView.tipo := 'Compra';
   try
@@ -580,12 +574,6 @@ end;
 
 procedure TFullMainForm.AnularVentaClick(Sender: TObject);
 begin
-//  AnularOperacionForm := TAnularOperacionForm.Create(self);
-//  try
-//    AnularOperacionForm.ShowModal;
-//  finally
-//    AnularOperacionForm.Free;
-//  end;
   FCancelOrderView := TFCancelOrderView.Create(Self);;
   FCancelOrderView.tipo := 'Venta';
   try

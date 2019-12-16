@@ -22,7 +22,7 @@ type
     destructor Destroy; override;
 
     procedure FindButton;
-    procedure YesButton(codigo,tipo,comp,bonificar:string);
+    procedure YesButton(codigo,tipo,comp,bonificar,fecha :string);
 //    procedure RetPerc(noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib);
 
     property Codigo: string read GetCodigo write SetCodigo;
@@ -102,7 +102,7 @@ procedure TCancelOrderViewModel.YesButton;
 begin
   if (codigo<>'') and (tipo<>'') then
   begin
-    CancelOrderService := TCancelOrderService.Create(codigo,tipo,comp,bonificar);
+    CancelOrderService := TCancelOrderService.Create(codigo,tipo,comp,bonificar,fecha);
     CancelOrderService.Execute;
     CancelOrderService.Free;
   end;

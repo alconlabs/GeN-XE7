@@ -229,10 +229,12 @@ type
     function Actualizar:Boolean;
     function ObtenerValor(tabla, campo, codigo, valor: string):string;
     procedure AgregarMtIva(tasa,neto,imp:Double);
+    procedure LlenarMtIva(codigo :string);
     procedure VaciarMtIva;
     function CalcularIVA(monto,porcentaje:Double):Double;
     function SacarIVA(monto,porcentaje:Double):Double;
     function TraerAlicuota(tasa:string):string;
+    function TraerTasaAlicuota(codigo:string):string;
     function TraerValorX(tabla, campo, codigo, valor: string):string;
     function CantidadAlicIva(codigo:string):string;
     function TraerCodLetra(letra:string):string;
@@ -250,7 +252,7 @@ type
   end;
 
 const
-  version='201911051151';
+  version='201912161027';
   v: array [0 .. 22] of string = ('MenuExpress', 'MenuStock', 'Articulos',
     'VaciarBase', 'Vender', 'Comprar', 'AnularVenta', 'RetiroCaja', 'Rubro',
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
@@ -637,6 +639,27 @@ begin
   NroNCC := IniFile.ReadString('NRO', 'NCC', '');
   thunderbird := IniFile.ReadString('EMAIL', 'EXE', '');
   IniFile.Destroy;
+end;
+
+procedure TDM.LlenarMtIva;
+begin
+  VaciarMtIVA;
+  qQ.Open('select * from "AlicIva" where CODIGO=:C',[codigo]);
+  with qQ do
+    if RecordCount>0 then
+    begin
+      First;
+      while not Eof do
+      begin
+        AgregarMtIva(
+          StrToFloat(TraerTasaAlicuota(FieldByName('ID').AsString)),
+          FieldByName('BASEIMP').AsFloat,
+          FieldByName('IMPORTE').AsFloat
+        );
+        Next;
+      end;
+    end;
+  qQ.Close;
 end;
 
 procedure TDM.EscribirINI;
@@ -1736,7 +1759,9 @@ begin
 end;
 
 procedure TDM.VaciarMtIva;
+var i :Integer;
 begin
+  i:= mtIVA.RecordCount;
   with mtIVA do
   begin
     First;
@@ -1892,6 +1917,11 @@ end;
 function TDM.TraerAlicuota;
 begin
   result := TraerValorX('Iva','CODIGO','Tasa',tasa);
+end;
+
+function TDM.TraerTasaAlicuota;
+begin
+  result := TraerValorX('Iva','Tasa','CODIGO',codigo);
 end;
 
 function TDM.CantidadAlicIva;

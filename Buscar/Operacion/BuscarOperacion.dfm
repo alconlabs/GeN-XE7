@@ -189,8 +189,6 @@ object BuscarOperacionForm: TBuscarOperacionForm
       ParentFont = False
       TabOrder = 0
       OnClick = SiBitBtnClick
-      ExplicitLeft = 6
-      ExplicitTop = 354
     end
     object FacturarBitBtn: TBitBtn
       Left = 1
@@ -321,7 +319,7 @@ object BuscarOperacionForm: TBuscarOperacionForm
       item
         Expanded = False
         FieldName = 'CODIGO'
-        Title.Caption = 'NRO'
+        Title.Caption = 'COD'
         Width = 45
         Visible = True
       end
@@ -336,6 +334,11 @@ object BuscarOperacionForm: TBuscarOperacionForm
         Expanded = False
         FieldName = 'FECHA'
         Width = 131
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'COMPROBANTE'
         Visible = True
       end
       item

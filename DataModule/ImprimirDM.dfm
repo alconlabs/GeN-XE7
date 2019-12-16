@@ -47,7 +47,7 @@ object ImprimirDataModule: TImprimirDataModule
     DataOnly = True
     Separator = ','
     OEMCodepage = False
-    UTF8 = True
+    UTF8 = False
     OpenAfterExport = False
     NoSysSymbols = True
     ForcedQuotes = False

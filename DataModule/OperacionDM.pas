@@ -70,7 +70,9 @@ type
     procedure FactRem(codRem,let, cod, fech, ven, cui, ctan: string; pre, pgr,impr: Boolean;
       cost, comv, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
       int, n10, n21, i10, i21, deud, ulc,
-      noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib: Double);
+//      noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib: Double);
+      n3, i3, exc, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib
+     : Double);
     Procedure Asiento(ctan, nro, fech, det, d, h: string);
     Procedure LibroDiario(oper, nro, let, cod, fech: string; pgr: Boolean;
       tot, pag, cheq, ch3q, cont, tarj, impu, deud, cmv, comv: Double);
@@ -90,7 +92,8 @@ type
       categoria, color, marca, proveedor, rubro, subcategoria : string);
     procedure ActualizarCantidadArticulo(codigo,cantidad:string);
     procedure DataSetToCsv(psRutaFichero : String);
-    procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impIva, impTotal, asocTipo, asocNro, n10, n21, i10, i21:string);
+//    procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impIva, impTotal, asocTipo, asocNro, n10, n21, i10, i21, impEx :string);
+    procedure WSFE(cbteFecha, let, concepto, docTipo, docNro, cbte, impNeto, impIva, impTotal, asocTipo, asocNro, impEx :string);
     procedure ActualizarSiapVtaComp(desde,hasta:string);
     procedure ActualizarSiapCmpComp(desde,hasta:string);
     function InsertarAlicIva:Integer;
@@ -567,7 +570,7 @@ var
   let, cod, fech, ven, cui, cno, a, cli, asocNro, CbteAsoc: string;
   pre, pgr: Boolean;
   cost, com, impu, cheq, cont, tot, sbt, des, tarj, otr, sal, pag, int, n10, n21,
-    i10, i21, deud, ulc, comv: Double;
+    i10, i21, deud, ulc, comv, exc: Double;
   aIva: Integer;
 begin
 with dm do begin
@@ -625,6 +628,9 @@ with dm do begin
       n21 := RoundTo(DM.TraerValor2('AlicIva', 'BASEIMP', IntToStr(aIva), 'ID', '5'),-2);
 //    if n21=0 then n21 := qT.FieldByName('SUBTOTAL').AsFloat;
     end;
+
+    LlenarMtIva(IntToStr(aIva));
+
     comv := qT.FieldByName('COSTO').AsFloat;
     deud := qT.FieldByName('DEUDA').AsFloat;
     com := qT.FieldByName('COMISION').AsFloat;
@@ -650,7 +656,10 @@ with dm do begin
       begin
         LeerINI;
         comp:=ObtenerNroComp('NC'+let);
-        WSFE( fech, 'NC'+let, '1', '96', cui, comp, FloatToStr(sbt), FloatToStr(impu), floattostr(tot), let, asocNro, FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
+        WSFE(
+          fech, 'NC'+let, '1', '96', cui, comp, FloatToStr(sbt), FloatToStr(impu), floattostr(tot), let, asocNro
+        //, FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21)
+        , FloatToStr(exc));
         if cae = '' then Exit;//if mensaje <> 'Ok' then Exit;
         if comp<>'' then ActualizarNroComp('NC'+let,comp);
       end;
@@ -883,8 +892,9 @@ with dm do begin
   if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
   begin
     WSFE(fech, let, '1', '99', cui, comp,  FloatToStr(sbt), FloatToStr(impu),
-     floattostr(tot), '0', '0', FloatToStr(n10), FloatToStr(n21), FloatToStr(i10),
-     FloatToStr(i21));
+     FloatToStr(tot), '0', '0',
+//     FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21),
+     FloatToStr(exc));
     if cae = '' then exit;
   end;
   //actualiza el nro de factura
@@ -896,7 +906,8 @@ with dm do begin
     ' IIBB, TOTAL, CONTADO, CHEQUE,' +
     ' TARJETA, OTROS, SALDO,'+
     ' PAGADO, PAGARE, COSTO,'+
-    ' DEUDA, COMISION, DESCRIPCION, ALICIVA'+
+    ' DEUDA, COMISION, DESCRIPCION,'+
+    ' ALICIVA'+
     ') Values ('+
     QuotedStr(comp)+', '+QuotedStr(vto)+', '+(nro)+', '+QuotedStr(let)+', '+cod+', '+
     floattostr(sbt)+', '+floattostr(des)+', '+QuotedStr(fech)+', '+
@@ -904,7 +915,8 @@ with dm do begin
     floattostr(IIBB)+', '+floattostr(tot)+', '+floattostr(cont)+', '+floattostr(cheq)+', '+
     floattostr(tarj)+', '+floattostr(otr)+', '+floattostr(sal)+', '+
     floattostr(pag)+', '+QuotedStr(pagare)+', '+floattostr(cmv)+', '+
-    floattostr(deud)+', '+floattostr(comv)+', '+QuotedStr(cae)+', '+IntToStr(aIva)+
+    floattostr(deud)+', '+floattostr(comv)+', '+QuotedStr(cae)+', '+
+    IntToStr(aIva)+
     ')';
   qQ.ExecSQL;
   // Insertar en la tabla de VENTAITEM
@@ -1834,10 +1846,10 @@ begin
     begin
       jsResponse := FacturaAfip( cbteFecha, dm.TraerTipoCbte(let), concepto,
       docTipo, docNro, cbte, impNeto, impTotal,
-      '0', ImpIva, '0', '0', '1',
+      '0', ImpIva, '0', impEx, '1',
       dm.TraerTipoCbte(asocTipo), asocNro,
       '1', '0', '0', '0',
-      n10, n21, i10, i21,//'0', '0', '0',
+      //n10, n21, i10, i21,//'0', '0', '0',
       'PES', 'impuesto', 'null',
       'null', 'null', '', '', '', '');
       if jsResponse = nil then
@@ -1885,7 +1897,9 @@ with dm do begin
     IIBB := (tot - impu) * (qQ.FieldByName('PORCENTAJE').AsFloat/100);
   if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
   begin
-    WSFE(fech, let, '1', '96', cui, comp,  FloatToStr(sbt), FloatToStr(impu), floattostr(tot), '0', '0', FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
+    WSFE(fech, let, '1', '96', cui, comp,  FloatToStr(sbt), FloatToStr(impu), floattostr(tot), '0', '0'
+    //, FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21)
+    , FloatToStr(exc));
     if cae = '' then exit;
   end;
   //actualiza el nro de factura
@@ -2185,8 +2199,10 @@ end;
 
 procedure TOperacionDataModule.ActualizarSiap(tipo, desde, hasta: string);
 var
-  cod,let,letCod,nc,codigo,DocTipo,AlicIVA,DocNro,tabla,tabla1,sql,where,tipoRetPer,cbteDesde,
-  cbteHasta,terminos : string;
+  cod,let,letCod,nc,codigo,DocTipo,AlicIVA,DocNro,tabla,tabla1,tabla2,sql,where,
+  tipoRetPer,cbteDesde,cbteHasta,terminos
+  ,codAlicIva
+  : string;
   impOpEx,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib,noGra
   : Double;
   CantIva : Integer;
@@ -2204,6 +2220,7 @@ begin
       nc := '';
       CantIva := 0;
       tabla1 := 'Cliente';
+      tabla2 := 'Cliente';
       where:='';
       codigo :='CbteDesde';
     end
@@ -2215,6 +2232,7 @@ begin
       nc := '';
       CantIva := 0;
       tabla1 := 'Proveedor';
+      tabla2 := 'Proveedor';
       where:='';
       codigo :='CbteNro';
     end;
@@ -2228,16 +2246,16 @@ begin
       +' "'+tabla+'".TOTAL,'
       +' "'+tabla+'".COMPROBANTE AS CbteDesde,'
       +' "'+tabla+'".COMPROBANTE AS CbteHasta,'
-      +' "'+tabla1+'".NOMBRE AS DocNomb,'
-      +' "'+tabla1+'".DOCUMENTO AS DNI,'
-      +' "'+tabla1+'".CUIT AS CUIT,'
+      +' "'+tabla2+'".NOMBRE AS DocNomb,'
+      +' "'+tabla2+'".DOCUMENTO AS DNI,'
+      +' "'+tabla2+'".CUIT AS CUIT,'
       +' "'+tabla+'".IMPUESTO AS ImpIVA,'
       +' "'+tabla+'".IVA1,'
       +' "'+tabla+'".IVA2,'
       +' "'+tabla+'".SUBTOTAL AS ImpNeto,'
       +' "'+tabla+'".ALICIVA'
       +' FROM "'+tabla+'"'
-      +' LEFT JOIN "'+tabla1+'" ON "'+tabla1+'".CODIGO = "'+tabla+'".'+tabla1+''
+      +' LEFT JOIN "'+tabla2+'" ON "'+tabla2+'".CODIGO = "'+tabla+'".'+tabla1+''
       +' WHERE'
       +' ("'+tabla+'".FECHA >= ' + QuotedStr(desde) + ' ) AND '
       +' ("'+tabla+'".FECHA <= ' + QuotedStr(hasta) + ' )'+where;
@@ -2276,7 +2294,7 @@ begin
               end;
             with qSdb do
             begin
-              Open('select * from RetPer where Codigo=:C and Tipo=:T',[cod,tipoRetPer]);
+              Open('select * from RetPer where Codigo=:C and Tipo=:T',[qQ.FieldByName('Codigo').AsString,tipoRetPer]);
               if RecordCount>0 then
               begin
                 noGra := FieldByName('NoGra').AsFloat;
@@ -2309,10 +2327,13 @@ begin
               FieldByName('DespNro').AsString:=FormatMaskText('0000000000000000','');//COMPROBANTES Número Despacho  de Importación	L16
               FieldByName('ImpPercIva').AsString:=FormatFloat('000000000000000',(pagCueIva*100));//PERCEPCIONES Percepc y retenc. IVA	L15
               FieldByName('ImpPercNac').AsString:=FormatFloat('000000000000000',(pagCueOtr*100));//PERCEPCIONES Perc. otros imp. Nac.	L15
-              FieldByName('ImpCredFisc').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('ImpIVA').AsFloat*100));// Credito Fiscal Computable	L15
-              FieldByName('CUIT').AsString:=FormatFloat('00000000000',(0*100));//CUIT emisor/corredor	L11
+              if let='B' then // Credito Fiscal Computable	L15
+                FieldByName('ImpCredFisc').AsString:=FormatFloat('000000000000000',0)
+              else
+                FieldByName('ImpCredFisc').AsString:=FormatFloat('000000000000000',(qQ.FieldByName('ImpIVA').AsFloat*100));
+              FieldByName('CUIT').AsString:=FormatFloat('00000000000',0);//CUIT emisor/corredor	L11
               FieldByName('Denom').AsString:=FormatMaskText('000000000000000000000000000000','');//Denominación emisor/corredor	L30
-              FieldByName('ImpIvaCom').AsString:=FormatFloat('000000000000000',(0*100));//IVA comisión	L15
+              FieldByName('ImpIvaCom').AsString:=FormatFloat('000000000000000',0);//IVA comisión	L15
             end
             else
             begin
@@ -2326,7 +2347,7 @@ begin
               FieldByName('ImpPercNoCat').AsString:=FormatFloat('000000000000000',(pagCueOtr*100));
             end;
             impOpEx := 0;
-            if let='C' then
+            if (let='C') or ((tabla='Compra') and (let='B')) then
               CantIva := 0
             else
             begin
@@ -2369,9 +2390,10 @@ begin
       begin//nota de credito
         tabla:='Operacion';
         tabla1 := 'Cliente';
+        tabla2 := 'Cliente';
         tipoRetPer := 'NVENTA';
         let := '';
-        nc := '';
+        nc := 'NC';
         CantIva := 0;
         where := ' AND ("Operacion".TIPO LIKE ''NC%'')';
       end else
@@ -2379,9 +2401,10 @@ begin
       begin//nota de credito compra
         tabla:='Operacion';
         tabla1 := 'Cliente';
+        tabla2 := 'Proveedor';
         tipoRetPer := 'NCOMPRA';
         let := '';
-        nc := 'CNC';
+        nc := 'NC';
         CantIva := 0;
         where := ' AND ("Operacion".TIPO LIKE ''CNC%'')';
       end
@@ -2539,7 +2562,7 @@ begin
           );
           Next;
         end;
-        VaciarMtIVA;
+        //VaciarMtIVA;
       end;
 end;
 

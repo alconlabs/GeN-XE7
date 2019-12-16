@@ -170,7 +170,6 @@ begin
       if PR=0 then PR := dm.qOperacion.FieldByName('PRECIO' + PrecioLabel.Caption).AsFloat;
       {precio}SGFact.Cells[4, Cuenta] := FloatToStr(PR);
       TASA := dm.qOperacion.FieldByName('TASA').AsString;
-//      if TASA='105' then TASA := '10.5';
       {iva}SGFact.Cells[6, Cuenta] := dm.TraerValor('Iva', 'TASA', TASA);
       {tot}SGFact.Cells[5, Cuenta] := Format('%8.2f', [(PR * CAN)]);
       {descuento}SGFact.Cells[7, Cuenta] := FloatToStr(DES);
@@ -388,9 +387,8 @@ begin
 //    // Calcula el Ultimo Costo
 //    if (SGFact.Cells[11, i] = '') then SGFact.Cells[11, i] := '0';
 //    if SGFact.Cells[11, i] <> '0' then UltCosto := UltCosto + StrToFloat(SGFact.Cells[11, i]);
-
-  // Calcula el monto para cobrar el impuesto de ventas
     if not esC then dm.AgregarMtIva(TIVA,NG,IVA);
+  // Calcula el monto para cobrar el impuesto de ventas
     if ((cbTipo.ItemIndex = 28) or (cbTipo.ItemIndex = 10)) then
     begin
       NGO:= NGO + NG;
@@ -409,18 +407,19 @@ begin
           IVA105 := IVA105 + IVA;
         end
         else
-        if TIVA = 0 then
+//        if TIVA = 0 then
+//        begin
+//          NE := NE + NG;
+//        end
+//        else
         begin
-          NE := NE + NG;
-        end
-        else
-         begin
           NGO := NGO + NG;
           IVAO := IVAO + IVA;
         end;
     end;
-      desc:= desc + DSC;
+    desc:= desc + DSC;
     end;
+
 
   Exento := RoundTo(NE,-2);
   NG21 := RoundTo(NG21,-2);
@@ -860,7 +859,8 @@ begin
         StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
         subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
         Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto,
-        noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib)
+        //noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib)
+        NGO , IVAO, Exento, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib)
       else
         ok := ProcVTA
         (PuntoVentaEdit.Text, ComprobanteEdit.Text,

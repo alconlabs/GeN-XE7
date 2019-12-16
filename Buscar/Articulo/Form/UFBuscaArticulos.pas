@@ -121,7 +121,8 @@ begin
       Precio := 'Costo';
   end;
   articulos := 'SELECT'
-    + ' iif( "Articulo".Tasa = 105, "Articulo".Precio*1.105, "Articulo".Precio*1.21 ) as precioIVA,'
+    //+ ' iif( "Articulo".Tasa = 105, "Articulo".Precio*1.105, "Articulo".Precio*1.21 ) as precioIVA,'
+    + '      iif( "Articulo".IVA < 100, "Articulo".Precio*("Articulo".IVA*0.01+1), "Articulo".Precio*("Articulo".IVA*0.001+1) ) as precioIVA,'
     + ' "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
     + ' "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
     + ' "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'

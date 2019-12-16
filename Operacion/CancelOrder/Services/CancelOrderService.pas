@@ -12,21 +12,22 @@ type
   TCancelOrderService = Class
   private
     ImprimirDataModule: TImprimirDataModule;
-    nro, tipo, bonificar, let, comp, cod, fech, ven, cui, cno, a, cli, asocNro, nctipo,
+    nro, tipo, bonificar, let, comp, cod, fecha, ven, cui, cno, a, cli, asocNro, nctipo,
       cbteAsoc, masOmenos, sql, cae, vto, pagare: string;
     pre, pgr, esCompra, esBonificar : Boolean;
     noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib, cost, com,
       impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag, int, n10, n21,
-      i10, i21, deud, ulc, cmv, comv, n3, i3, per, ret: Double;
+      i10, i21, deud, ulc, cmv, comv, n3, i3, per, ret, exc: Double;
     aIva, pvta: Integer;
   public
-    constructor Create(Vnro, Vtipo, Vcomp, Vbonificar: string);
+    constructor Create(Vnro, Vtipo, Vcomp, Vbonificar, Vfecha: string);
     destructor Destroy; override;
 
     property Pnro: string read nro write nro;
     property Ptipo: string read tipo write tipo;
     property Pbonificar: string read bonificar write bonificar;
     property Pcomp: string read comp write comp;
+    property Pfecha: string read fecha write fecha;
     // property Plet: string read let write let;
     // property Pcod: string read cod write cod;
     // property Pfech: string read fech write fech;
@@ -81,7 +82,7 @@ begin
   let := '';
   comp := '';
   cod := '';
-  fech := '';
+  fecha := '';
   ven := '';
   cui := '';
   cno := '';
@@ -133,11 +134,12 @@ begin
   ret := 0;
   aIva := 0;
   pvta := 0;
-
+  exc := 0;
   Pnro := Vnro;
   Ptipo := Vtipo;
   Pbonificar := Vbonificar;
   Pcomp := Vcomp;
+  Pfecha := Vfecha;
 end;
 
 destructor TCancelOrderService.Destroy;
@@ -194,7 +196,7 @@ begin
       else
       begin
 
-        fech := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
+        //fech := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
         ven := qT.FieldByName('VENDEDOR').AsString;
         if ven = '' then ven := '0';
         let := qT.FieldByName('LETRA').AsString;
@@ -247,6 +249,7 @@ begin
               'ID', '5'), -2);
             // if n21=0 then n21 := qT.FieldByName('SUBTOTAL').AsFloat;
           end;
+          LlenarMtIva(IntToStr(aIva));
         end;
 
         if esCompra then
@@ -298,9 +301,10 @@ begin
           begin
             LeerINI;
             comp := ObtenerNroComp('NC' + let);
-            OperacionDataModule.WSFE(fech, 'NC' + let, '1', '96', cui, comp, FloatToStr(sbt),
-              FloatToStr(impu), FloatToStr(tot), let, asocNro, FloatToStr(n10),
-              FloatToStr(n21), FloatToStr(i10), FloatToStr(i21));
+            OperacionDataModule.WSFE(fecha, 'NC' + let, '1', '96', cui, comp, FloatToStr(sbt),
+              FloatToStr(impu), FloatToStr(tot), let, asocNro
+              //, FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21)
+              , FloatToStr(exc));
 
             cae := OperacionDataModule.cae;
             comp := OperacionDataModule.comp;
@@ -316,10 +320,9 @@ begin
 
 
         // AlicuotaIVA
-        aIva := UltimoRegistro('AlicIva', 'CODIGO');
         if esBonificar then
         begin
-//          aIva := UltimoRegistro('AlicIva', 'CODIGO');
+          aIva := UltimoRegistro('AlicIva', 'CODIGO');
           OperacionDataModule.AgregarAlicIva(aIva,
             5,
             n21,
@@ -332,7 +335,7 @@ begin
               Open('Select ID, BASEIMP, IMPORTE'
                 +' from "AlicIva"'
                 +' where  "AlicIva".CODIGO='+IntToStr(aIva));
-//              aIva := UltimoRegistro('AlicIva', 'CODIGO');
+              aIva := UltimoRegistro('AlicIva', 'CODIGO');
               OperacionDataModule.AgregarAlicIva(aIva,
                 StrToInt(FieldByName('ID').Asstring),
                 FieldByName('BASEIMP').AsFloat,
@@ -362,7 +365,7 @@ begin
           + QuotedStr(comp) + ', ' + QuotedStr(vto) + ', ' + (cod) +
           ', ' + QuotedStr(nctipo) + ', ' + QuotedStr(let) +
           ', ' + cli + ', ' + ven + ', ' + FloatToStr(sbt) +
-          ', ' + FloatToStr(des) + ', ' + QuotedStr(fech) + ', ' + FloatToStr(impu) +
+          ', ' + FloatToStr(des) + ', ' + QuotedStr(fecha) + ', ' + FloatToStr(impu) +
           ', ' + floattostr(i10) + ', ' + floattostr(i21) + ', '+ floattostr(i3)+
           ', ' + FloatToStr(tot) + ', ' + FloatToStr(cont) +
           ', ' + FloatToStr(cheq) + ', ' + FloatToStr(tarj) + ', ' +
@@ -411,7 +414,7 @@ begin
           'Insert Into "CbtesAsoc" (' +
           ' CODIGO, TIPO, PTOVTA, NRO, CUIT, CBTEFCH' + ' ) Values' + ' (' +
           cbteAsoc + ', ' + dm.TraerTipoCbte(let) + ', ' + PuntoVenta + ', ' +
-          QuotedStr(asocNro) + ', ' + QuotedStr(cui) + ', ' + QuotedStr(fech) +
+          QuotedStr(asocNro) + ', ' + QuotedStr(cui) + ', ' + QuotedStr(fecha) +
           ')'); // qQ.ExecSQL;
         // Borrar los Items de la factura de la tabla "VentaItem"
         // qQ.sql.Text := 'DELETE FROM "VentaItem" WHERE "VentaItem".OPERACION=' + nro;
@@ -424,9 +427,9 @@ begin
         sql := 'Update "CtaCte" Set SALDO = SALDO - ' + FloatToStr(sal) +
           ' Where ';
         if esCompra then
-          sql := sql + 'CLIENTE'
+          sql := sql + 'PROVEEDOR'
         else
-          sql := sql + 'PROVEEDOR';
+          sql := sql + 'CLIENTE';
         sql := sql + ' = ' + cli;
         BaseDatosFB.ExecSQL(
           /// /qQ.sql.Text :=
@@ -435,11 +438,11 @@ begin
         // LIBRO IVA
         if (let = 'A') or (let = 'B') then
           if esCompra then
-            OperacionDataModule.LibroIVACompra(fech, nro, cli, cui, FloatToStr(-n10),
+            OperacionDataModule.LibroIVACompra(fecha, nro, cli, cui, FloatToStr(-n10),
               FloatToStr(-n21), FloatToStr(-n3), FloatToStr(-i10), FloatToStr(-i21),
               FloatToStr(-i3), FloatToStr(-per), FloatToStr(-ret), FloatToStr(-tot))
           else
-            OperacionDataModule.LibroIVAvta(fech, nro, cli, cui, FloatToStr(-n10), FloatToStr(-n21),
+            OperacionDataModule.LibroIVAvta(fecha, nro, cli, cui, FloatToStr(-n10), FloatToStr(-n21),
               FloatToStr(-i10), FloatToStr(-i21), FloatToStr(-tot));
         // en blanco
         // Retenciones y Percepciones
@@ -450,59 +453,59 @@ begin
         // GENERAR INDICE
         // ------------------------------------------------------------------------------
         if esCompra then
-          OperacionDataModule.LibroDiario('COMPRA', nro, let, cod, fech, pgr, tot, pag, cheq, ch3q,
+          OperacionDataModule.LibroDiario('COMPRA', nro, let, cod, fecha, pgr, tot, pag, cheq, ch3q,
             cont, tarj, impu, deud, cmv, 0)
         else
         begin
           // VENTAS
-          OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaVenta').AsString, a, fech,
+          OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaVenta').AsString, a, fecha,
           (nro + ' - ' + let + ' - ' + cod), floattostr(tot), '0');
           // renglon  - VENTAS
           // si es factura A
           if let = 'A' then
-            OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaIVADebitoFiscal').AsString, a, fech,
+            OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaIVADebitoFiscal').AsString, a, fecha,
               (nro + ' - ' + let + ' - ' + cod), floattostr(impu), '0');
           // renglon  - IVA DEBITO FISCAL
           // PAGO DE CUENTA CORRIENTE
           if ((pag) > (tot - deud)) then
-            OperacionDataModule.Asiento(cno, a, fech, (nro + ' - ' + let + ' - ' + cod + ' - ' + cui),
+            OperacionDataModule.Asiento(cno, a, fecha, (nro + ' - ' + let + ' - ' + cod + ' - ' + cui),
               floattostr(pag - (tot - deud)), '0'); // renglon  - DEUDORES POR VENTA
           // a
           // PAGO CON
           // CAJA (EFECTIVO)
           if (cont) > 0.04 then
-            OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaCaja').AsString, a, fech,
+            OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaCaja').AsString, a, fecha,
               (nro + ' - ' + let + ' - ' + cod), '0', floattostr(pag));
           // DSXVTA (CUENTA CORRIENTE)
           if (sal > 0.04) AND (pgr <> True) then
-            OperacionDataModule.Asiento(cno, a, fech, (nro + ' - ' + let + ' - ' + cod), '0',
+            OperacionDataModule.Asiento(cno, a, fecha, (nro + ' - ' + let + ' - ' + cod), '0',
               floattostr(sal));
           // DOC A COBRAR (CON DOCUMENTOS (PAGARE))
           if (pag < tot) AND (pgr = True) then
             OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaDocumentoACobrar').AsString, a,
-              fech, (nro + ' - ' + let + ' - ' + cod), floattostr(sal), '0');
+              fecha, (nro + ' - ' + let + ' - ' + cod), floattostr(sal), '0');
           // VALOR AL COBRO (PAGO CON CHEQUE)
           if (cheq) > 0.04 then
-            OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaValorAlCobro').AsString, a, fech,
+            OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaValorAlCobro').AsString, a, fecha,
               (nro + ' - ' + let + ' - ' + cod), '0', floattostr(cheq));
           // -----------------------------------1------------------------------------------
           // MERCADERIAS DE REVENTA
-          OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaMercaderia').AsString, a, fech,
+          OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaMercaderia').AsString, a, fecha,
             (nro + ' - ' + let + ' - ' + cod), floattostr(cmv), '0');
           // a
           // CMV
-          OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaCMV').AsString, a, fech,
+          OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaCMV').AsString, a, fecha,
             (nro + ' - ' + let + ' - ' + cod), '0', floattostr(cmv));
           // -----------------------------------2------------------------------------------
           if com > 0 then
           begin
             // COMISION VENDEDOR A PAGAR
             OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaComisionVendedorAPagar').AsString,
-              a, fech, (nro + ' - ' + let + ' - ' + cod), floattostr(com), '0');
+              a, fecha, (nro + ' - ' + let + ' - ' + cod), floattostr(com), '0');
             // a
             // COMISION VENDEDOR
             OperacionDataModule.Asiento(dm.ConfigQuery.FieldByName('CtaComisionVendedor').AsString, a,
-              fech, (nro + ' - ' + let + ' - ' + cod), '0', floattostr(com));
+              fecha, (nro + ' - ' + let + ' - ' + cod), '0', floattostr(com));
            end;
         end;
         // -----------------------------------3------------------------------------------

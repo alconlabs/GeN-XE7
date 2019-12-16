@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, CancelOrderViewModel;
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, CancelOrderViewModel, Vcl.ComCtrls;
 
 type
   TFCancelOrderView = class(TForm)
@@ -22,6 +22,7 @@ type
     bonificarEdit: TEdit;
     compLabel: TLabel;
     compEdit: TEdit;
+    fechaDateTimePicker: TDateTimePicker;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure findBitBtnClick(Sender: TObject);
@@ -94,6 +95,7 @@ end;
 
 procedure TFCancelOrderView.FormShow(Sender: TObject);
 begin
+  fechaDateTimePicker.Date := now;
   if esBonificar then
   begin
     bonificarEdit.Visible := True;
@@ -113,7 +115,7 @@ procedure TFCancelOrderView.yesBitBtnClick(Sender: TObject);
 begin
   with FCancelOrderViewModel do
   begin
-    YesButton(nroEdit.Text,tipo,compEdit.Text,bonificarEdit.Text);
+    YesButton(nroEdit.Text,tipo,compEdit.Text,bonificarEdit.Text,FormatDateTime('mm/dd/yyyy', fechaDateTimePicker.DateTime));
 //    RetPerc(noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib);
   end;
   Close;

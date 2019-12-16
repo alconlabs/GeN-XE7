@@ -109,6 +109,19 @@ object FCancelOrderView: TFCancelOrderView
       TabOrder = 0
       OnClick = findBitBtnClick
     end
+    object fechaDateTimePicker: TDateTimePicker
+      Left = 1
+      Top = 29
+      Width = 73
+      Height = 21
+      Align = alTop
+      Date = 43810.000000000000000000
+      Time = 0.784737245368887700
+      TabOrder = 3
+      ExplicitLeft = 5
+      ExplicitTop = 55
+      ExplicitWidth = 186
+    end
   end
   object TopPanel: TPanel
     Left = 0
@@ -140,8 +153,6 @@ object FCancelOrderView: TFCancelOrderView
     Height = 285
     Align = alClient
     TabOrder = 2
-    ExplicitLeft = -5
-    ExplicitTop = 27
     object LetterLabel: TLabel
       Left = 1
       Top = 29
@@ -173,8 +184,7 @@ object FCancelOrderView: TFCancelOrderView
       Font.Style = [fsBold]
       ParentFont = False
       Visible = False
-      ExplicitLeft = 2
-      ExplicitTop = 214
+      ExplicitWidth = 77
     end
     object compLabel: TLabel
       Left = 1
@@ -205,8 +215,6 @@ object FCancelOrderView: TFCancelOrderView
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      ExplicitLeft = 2
-      ExplicitTop = 9
     end
     object bonificarEdit: TEdit
       Left = 1
@@ -222,8 +230,6 @@ object FCancelOrderView: TFCancelOrderView
       ParentFont = False
       TabOrder = 1
       Visible = False
-      ExplicitLeft = -4
-      ExplicitTop = 128
     end
     object compEdit: TEdit
       Left = 1
@@ -239,8 +245,6 @@ object FCancelOrderView: TFCancelOrderView
       ParentFont = False
       TabOrder = 2
       Visible = False
-      ExplicitLeft = 2
-      ExplicitTop = 174
     end
   end
 end
