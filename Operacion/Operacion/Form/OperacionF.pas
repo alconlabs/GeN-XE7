@@ -168,7 +168,7 @@ begin
       {nombre}SGFact.Cells[1, Cuenta] := dm.qOperacion.FieldByName('DESCRIPCION').AsString;
       {cantidad}SGFact.Cells[3, Cuenta] := FloatToStr(CAN);
       if PR=0 then PR := dm.qOperacion.FieldByName('PRECIO' + PrecioLabel.Caption).AsFloat;
-      {precio}SGFact.Cells[4, Cuenta] := FloatToStr(PR);
+      {precio}SGFact.Cells[4, Cuenta] := Format('%8.2f', [(PR)]);
       TASA := dm.qOperacion.FieldByName('TASA').AsString;
       {iva}SGFact.Cells[6, Cuenta] := dm.TraerValor('Iva', 'TASA', TASA);
       {tot}SGFact.Cells[5, Cuenta] := Format('%8.2f', [(PR * CAN)]);
@@ -387,7 +387,7 @@ begin
 //    // Calcula el Ultimo Costo
 //    if (SGFact.Cells[11, i] = '') then SGFact.Cells[11, i] := '0';
 //    if SGFact.Cells[11, i] <> '0' then UltCosto := UltCosto + StrToFloat(SGFact.Cells[11, i]);
-    if not esC then dm.AgregarMtIva(TIVA,NG,IVA);
+    if not esC then dm.AgregarMtIva(TIVA,RoundTo(NG,-2),RoundTo(IVA,-2));
   // Calcula el monto para cobrar el impuesto de ventas
     if ((cbTipo.ItemIndex = 28) or (cbTipo.ItemIndex = 10)) then
     begin
@@ -419,7 +419,6 @@ begin
     end;
     desc:= desc + DSC;
     end;
-
 
   Exento := RoundTo(NE,-2);
   NG21 := RoundTo(NG21,-2);

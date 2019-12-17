@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DataModule, Grids, DBGrids, DB, ExtCtrls, StdCtrls, Mask,
   DBCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw, IBX.IBQuery,
-  IBX.IBCustomDataSet, IBX.IBTable, Vcl.Imaging.jpeg, OperacionDM;
+  IBX.IBCustomDataSet, IBX.IBTable, Vcl.Imaging.jpeg, OperacionDM
+  ,Math;
 
 const
   EAN_izqA: array [0 .. 9] of PChar = ('0001101', '0011001', '0010011',
@@ -660,19 +661,19 @@ begin
   with DM do
   begin
    if GanaciaDBEdit.Text = '0' then
-     PrecioCtaCteDBEdit.Text := FloatToStr(costo * PrecioCtaCte)
+     PrecioCtaCteDBEdit.Text := FloatToStr(RoundTo((costo * PrecioCtaCte),-2))
    else
-    PrecioCtaCteDBEdit.Text := FloatToStr( costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1) );
-   Precio1DBEdit.Text := FloatToStr(costo * Precio1);
-   Precio2DBEdit.Text := FloatToStr(costo * Precio2);
-   Precio3DBEdit.Text := FloatToStr(costo * Precio3);
-   Precio4DBEdit.Text := FloatToStr(costo * Precio4);
-   Precio5DBEdit.Text := FloatToStr(costo * Precio5);
-   Precio6DBEdit.Text := FloatToStr(costo * Precio6);
-   DBText1.Caption := FloatToStr( costo );
-   neto:=StrToFloat(PrecioCtaCteDBEdit.Text);
-   tasa:=StrToFloat(dm.TraerValor('Iva', 'TASA', VarToStr(IVADBComboBox.KeyValue)));
-   IVADBText.Caption := FloatToStr(CalcularIVA(neto,tasa));
+    PrecioCtaCteDBEdit.Text := FloatToStr( RoundTo((costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),-2));
+   Precio1DBEdit.Text := FloatToStr(RoundTo((costo * Precio1),-2));
+   Precio2DBEdit.Text := FloatToStr(RoundTo((costo * Precio2),-2));
+   Precio3DBEdit.Text := FloatToStr(RoundTo((costo * Precio3),-2));
+   Precio4DBEdit.Text := FloatToStr(RoundTo((costo * Precio4),-2));
+   Precio5DBEdit.Text := FloatToStr(RoundTo((costo * Precio5),-2));
+   Precio6DBEdit.Text := FloatToStr(RoundTo((costo * Precio6),-2));
+   DBText1.Caption := FloatToStr(RoundTo(( costo ),-2));
+   neto:=RoundTo((StrToFloat(PrecioCtaCteDBEdit.Text)),-2);
+   tasa:=RoundTo((StrToFloat(dm.TraerValor('Iva', 'TASA', VarToStr(IVADBComboBox.KeyValue)))),-2);
+   IVADBText.Caption := FloatToStr(RoundTo((CalcularIVA(neto,tasa)),-2));
   end;
 end;
 

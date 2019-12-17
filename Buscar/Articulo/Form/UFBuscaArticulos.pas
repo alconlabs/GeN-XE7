@@ -75,7 +75,11 @@ implementation
 
 procedure TFBuscaArticulo.FormCreate(Sender: TObject);
 begin
-  DM.ConfigQuery.Open;
+  with dm do
+  begin
+    if ConfigQuery.Active then ConfigQuery.Open;
+    if qArticulo.Active then qArticulo.Open;
+  end;
 end;
 
 procedure TFBuscaArticulo.FormKeyDown(Sender: TObject; var Key: Word;

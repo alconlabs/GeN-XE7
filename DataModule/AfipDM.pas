@@ -234,7 +234,8 @@ var
   jsRequest, J, JSONAlicIva10, JSONAlicIva21, JSONIva,
   JSONAlicIvaItem: TJSONObject;
   JSONAlicIva : TJSONArray;
-  cuit, pass, ptovta : string;
+  cuit, pass, ptovta
+  : string;
   local: boolean;
 begin
   with dm do begin
