@@ -23,6 +23,7 @@ type
     compLabel: TLabel;
     compEdit: TEdit;
     fechaDateTimePicker: TDateTimePicker;
+    bRetPer: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure findBitBtnClick(Sender: TObject);
@@ -30,6 +31,7 @@ type
     procedure NoBitBtnClick(Sender: TObject);
 //    procedure bRetPerClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure bRetPerClick(Sender: TObject);
   private
     { Private declarations }
     FCancelOrderViewModel: TCancelOrderViewModel;
@@ -37,7 +39,7 @@ type
     { Public declarations }
     tipo : string;
     esBonificar : Boolean;
-//    noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib: Double;
+    noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib: Double;
   end;
 
 var
@@ -47,31 +49,35 @@ implementation
 
 {$R *.dfm}
 
-//procedure TFCancelOrderView.bRetPerClick(Sender: TObject);
-//begin
-//  fRetPerc := TfRetPerc.Create(Self);
-//  with fRetPerc do begin
-//    try
-//      eNoGra.Text := FloatToStr(noGra);
-//      ePagCueIva.Text := FloatToStr(pagCueIva);
-//      ePagCueOtr.Text := FloatToStr(pagCueOtr);
-//      ePerIIBB.Text := FloatToStr(perIIBB);
-//      ePerImpMun.Text := FloatToStr(perImpMun);
-//      eImpInt.Text := FloatToStr(impInt);
-//      eOtrTrib.Text := FloatToStr(otrTrib);
-//      ShowModal;
-//    finally
-//      noGra := StrToFloat(eNoGra.Text);
-//      pagCueIva := StrToFloat(ePagCueIva.Text);
-//      pagCueOtr := StrToFloat(ePagCueOtr.Text);
-//      perIIBB := StrToFloat(ePerIIBB.Text);
-//      perImpMun := StrToFloat(ePerImpMun.Text);
-//      impInt := StrToFloat(eImpInt.Text);
-//      otrTrib := StrToFloat(eOtrTrib.Text);
-//      Free;
-//    end;
-//  end;
-//end;
+uses ufRetPerc;
+
+procedure TFCancelOrderView.bRetPerClick(Sender: TObject);
+begin
+  fRetPerc := TfRetPerc.Create(Self);
+  with fRetPerc do begin
+    try
+      eNoGra.Text := FloatToStr(noGra);
+      ePagCueIva.Text := FloatToStr(pagCueIva);
+      ePagCueOtr.Text := FloatToStr(pagCueOtr);
+      ePerIIBB.Text := FloatToStr(perIIBB);
+      ePerImpMun.Text := FloatToStr(perImpMun);
+      eImpInt.Text := FloatToStr(impInt);
+      eOtrTrib.Text := FloatToStr(otrTrib);
+      ShowModal;
+    finally
+      noGra := StrToFloat(eNoGra.Text);
+      pagCueIva := StrToFloat(ePagCueIva.Text);
+      pagCueOtr := StrToFloat(ePagCueOtr.Text);
+      perIIBB := StrToFloat(ePerIIBB.Text);
+      perImpMun := StrToFloat(ePerImpMun.Text);
+      impInt := StrToFloat(eImpInt.Text);
+      otrTrib := StrToFloat(eOtrTrib.Text);
+      Free;
+    end;
+  end;
+//  FEContado.Text := '0';
+//  CalculaTotales;
+end;
 
 procedure TFCancelOrderView.findBitBtnClick(Sender: TObject);
 begin
@@ -104,6 +110,13 @@ begin
     compLabel.Visible := True;
     Caption := 'Bonificar';
   end;
+  noGra := 0;
+  pagCueIva := 0;
+  pagCueOtr := 0;
+  perIIBB := 0;
+  perImpMun := 0;
+  impInt := 0;
+  otrTrib := 0;
 end;
 
 procedure TFCancelOrderView.NoBitBtnClick(Sender: TObject);
@@ -115,8 +128,8 @@ procedure TFCancelOrderView.yesBitBtnClick(Sender: TObject);
 begin
   with FCancelOrderViewModel do
   begin
+    SetRetPerc(noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib);
     YesButton(nroEdit.Text,tipo,compEdit.Text,bonificarEdit.Text,FormatDateTime('mm/dd/yyyy', fechaDateTimePicker.DateTime));
-//    RetPerc(noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib);
   end;
   Close;
 end;

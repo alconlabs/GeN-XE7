@@ -12,7 +12,7 @@ type
   private
     CancelOrderModel : TCancelOrderModel;
     CancelOrderService : TCancelOrderService;
-//    _noGra, _pagCueIva, _pagCueOtr, _perIIBB, _perImpMun, _impInt, _otrTrib : Double;
+    _noGra, _pagCueIva, _pagCueOtr, _perIIBB, _perImpMun, _impInt, _otrTrib : Double;
     function GetCodigo: string;
     function GetTipo: string;
     procedure SetCodigo(const Value: string);
@@ -23,17 +23,20 @@ type
 
     procedure FindButton;
     procedure YesButton(codigo,tipo,comp,bonificar,fecha :string);
-//    procedure RetPerc(noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib);
+    procedure SetRetPerc(noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib : Double);
+    procedure GetRetPerc();
 
     property Codigo: string read GetCodigo write SetCodigo;
     property Tipo: string read GetTipo write SetTipo;
-//    property noGra: double read _noGra write _noGra;
-//    property pagCueIva: double read _pagCueIva write _pagCueIva;
-//    property pagCueOtr: double read _pagCueOtr write _pagCueOtr;
-//    property perIIBB: double read _perIIBB write _perIIBB;
-//    property perImpMun_: double read _perImpMun write _perImpMun;
-//    property impInt: double read _impInt write _impInt;
-//    property otrTrib: double read _otrTrib write _otrTrib;
+
+    property PnoGra: double read _noGra write _noGra;
+    property PpagCueIva: double read _pagCueIva write _pagCueIva;
+    property PpagCueOtr: double read _pagCueOtr write _pagCueOtr;
+    property PperIIBB: double read _perIIBB write _perIIBB;
+    property PperImpMun: double read _perImpMun write _perImpMun;
+    property PimpInt: double read _impInt write _impInt;
+    property PotrTrib: double read _otrTrib write _otrTrib;
+
   end;
 
 implementation
@@ -83,9 +86,30 @@ begin
    Result := CancelOrderModel.Codigo;
 end;
 
+procedure TCancelOrderViewModel.GetRetPerc;
+begin
+  PpagCueIva := CancelOrderModel.pagCueIva;
+  PpagCueOtr := CancelOrderModel.pagCueOtr;
+  PperIIBB := CancelOrderModel.perIIBB;
+  PperImpMun := CancelOrderModel.perImpMun;
+  PimpInt := CancelOrderModel.impInt;
+  PotrTrib := CancelOrderModel.otrTrib;
+end;
+
 function TCancelOrderViewModel.GetTipo: string;
 begin
    Result := CancelOrderModel.Tipo;
+end;
+
+procedure TCancelOrderViewModel.SetRetPerc(noGra, pagCueIva, pagCueOtr, perIIBB,
+  perImpMun, impInt, otrTrib: Double);
+begin
+  CancelOrderModel.pagCueIva := pagCueIva;
+  CancelOrderModel.pagCueOtr := pagCueOtr;
+  CancelOrderModel.perIIBB := perIIBB;
+  CancelOrderModel.perImpMun := perImpMun;
+  CancelOrderModel.impInt := impInt;
+  CancelOrderModel.otrTrib := otrTrib;
 end;
 
 procedure TCancelOrderViewModel.SetCodigo(const Value: string);
@@ -98,11 +122,13 @@ begin
   CancelOrderModel.Tipo := Value;
 end;
 
-procedure TCancelOrderViewModel.YesButton;
+procedure TCancelOrderViewModel.YesButton(codigo,tipo,comp,bonificar,fecha :string);
 begin
   if (codigo<>'') and (tipo<>'') then
   begin
-    CancelOrderService := TCancelOrderService.Create(codigo,tipo,comp,bonificar,fecha);
+    GetRetPerc();
+    CancelOrderService := TCancelOrderService.Create(codigo,tipo,comp,bonificar,fecha,
+    PnoGra, PpagCueIva, PpagCueOtr, PperIIBB, PperImpMun, PimpInt, PotrTrib);
     CancelOrderService.Execute;
     CancelOrderService.Free;
   end;

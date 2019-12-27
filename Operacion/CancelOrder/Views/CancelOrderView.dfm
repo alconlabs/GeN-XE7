@@ -118,9 +118,24 @@ object FCancelOrderView: TFCancelOrderView
       Date = 43810.000000000000000000
       Time = 0.784737245368887700
       TabOrder = 3
-      ExplicitLeft = 5
-      ExplicitTop = 55
-      ExplicitWidth = 186
+    end
+    object bRetPer: TButton
+      Left = 1
+      Top = 50
+      Width = 73
+      Height = 31
+      Hint = 'Retenciones y Percepciones'
+      Align = alTop
+      Caption = 'Ret. y Percep.'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 4
+      WordWrap = True
+      OnClick = bRetPerClick
     end
   end
   object TopPanel: TPanel

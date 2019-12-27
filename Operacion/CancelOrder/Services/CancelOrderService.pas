@@ -20,7 +20,8 @@ type
       i10, i21, deud, ulc, cmv, comv, n3, i3, per, ret, exc: Double;
     aIva, pvta: Integer;
   public
-    constructor Create(Vnro, Vtipo, Vcomp, Vbonificar, Vfecha: string);
+    constructor Create(Vnro, Vtipo, Vcomp, Vbonificar, Vfecha: string;
+    VnoGra, VpagCueIva, VpagCueOtr, VperIIBB, VperImpMun, VimpInt, VotrTrib :Double);
     destructor Destroy; override;
 
     property Pnro: string read nro write nro;
@@ -28,6 +29,13 @@ type
     property Pbonificar: string read bonificar write bonificar;
     property Pcomp: string read comp write comp;
     property Pfecha: string read fecha write fecha;
+    property PnoGra :double read noGra write noGra;
+    property PpagCueIva :double read pagCueIva write pagCueIva;
+    property PpagCueOtr :double read pagCueOtr write pagCueOtr;
+    property PperIIBB :double read perIIBB write perIIBB;
+    property PperImpMun :double read perImpMun write perImpMun;
+    property PimpInt :double read impInt write impInt;
+    property PotrTrib :double read otrTrib write otrTrib;
     // property Plet: string read let write let;
     // property Pcod: string read cod write cod;
     // property Pfech: string read fech write fech;
@@ -140,6 +148,13 @@ begin
   Pbonificar := Vbonificar;
   Pcomp := Vcomp;
   Pfecha := Vfecha;
+  PnoGra := noGra;
+  PpagCueIva :=  VpagCueIva;
+  PpagCueOtr :=  VpagCueOtr;
+  PperIIBB :=  VperIIBB;
+  PperImpMun :=  VperImpMun;
+  PimpInt :=  VimpInt;
+  PotrTrib :=  VotrTrib;
 end;
 
 destructor TCancelOrderService.Destroy;
@@ -382,8 +397,8 @@ begin
           BaseDatosFB.ExecSQL(
             'Insert Into "OperacionItem" (OPERACION, ARTICULO, CANTIDAD' +
             ', COSTO, PRECIO, IMPUESTO'+
-            ', SERVICIO, DESCRIPCION) Values' + ' ( ' + cod +
-            ', 0, 1' +
+            ', SERVICIO, DESCRIPCION) Values' + ' ( ' +
+            cod + ', 0, 1' +
             ',' + FloatToStr(n21) + ', ' + FloatToStr(sbt) + ', ' + FloatToStr(i21) +
             ', ' + nro + ', ' + QuotedStr('BONIFICACION') + ');');
         end
@@ -446,7 +461,7 @@ begin
               FloatToStr(-i10), FloatToStr(-i21), FloatToStr(-tot));
         // en blanco
         // Retenciones y Percepciones
-        dm.AgregarRetPer('N' + UpperCase(tipo), StrToInt(nro), noGra, pagCueIva,
+        dm.AgregarRetPer('N' + UpperCase(tipo), StrToInt(cod), noGra, pagCueIva,
           pagCueOtr, perIIBB, perImpMun, impInt, otrTrib);
         // Insertar en la tabla LibroDiario
         a := inttostr(dm.UltimoRegistro('LibroDiario', 'ASIENTO'));

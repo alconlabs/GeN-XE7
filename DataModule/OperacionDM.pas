@@ -2201,7 +2201,7 @@ procedure TOperacionDataModule.ActualizarSiap(tipo, desde, hasta: string);
 var
   cod,let,letCod,nc,codigo,DocTipo,AlicIVA,DocNro,tabla,tabla1,tabla2,sql,where,
   tipoRetPer,cbteDesde,cbteHasta,terminos
-  ,codAlicIva
+  ,codAlicIva,s
   : string;
   impOpEx,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib,noGra
   : Double;
@@ -2294,6 +2294,7 @@ begin
               end;
             with qSdb do
             begin
+            s:='select * from RetPer where Codigo='+ qQ.FieldByName('Codigo').AsString +' and Tipo='+tipoRetPer;
               Open('select * from RetPer where Codigo=:C and Tipo=:T',[qQ.FieldByName('Codigo').AsString,tipoRetPer]);
               if RecordCount>0 then
               begin
