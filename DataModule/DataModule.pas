@@ -249,10 +249,12 @@ type
     function CalculaGanancia(c,f,p : double):double;
     procedure AgregarSiapCompAlicuota(tipo:string;codigo:Integer;ivaId,ivaBaseImp,ivaAlic:String);
     procedure ImportarProveedor;
+    function GenerarContraseña(Texto:string):string;
+    procedure ImportarCsv(tabla: string);
   end;
 
 const
-  version='201912171955';
+  version='202002211124';
   v: array [0 .. 22] of string = ('MenuExpress', 'MenuStock', 'Articulos',
     'VaciarBase', 'Vender', 'Comprar', 'AnularVenta', 'RetiroCaja', 'Rubro',
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
@@ -365,11 +367,11 @@ var
   Compartido: PCompartido;
   FicheroM: THandle;
   Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa,
-  PuntoVenta, Titular, CUIT, IngresosBrutos, reporte, catIVA: string;
+  PuntoVenta, TITULAR, DIRECCIONCOMERCIAL, PROVINCIA, CIUDAD, CUIT, EMAIL, IngresosBrutos, reporte, catIVA: string;
   Permiso: Integer;
   LoginOK, Cancelar, envEmail, microsoftStore: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
-  webUrl, webRes, webUsr, webPsw, webUpd,
+  webUrl, webRes, webSecretUsr, webSecretKey, webUsr, webPsw, webUpd,
   afipUrl, afipRes, afipUsr, afipPsw,
   operNC, openSSl,
   NroA, NroNCA, NroB, NroNCB, NroC, NroNCC,
@@ -501,9 +503,13 @@ ConfigQuery.Open('SELECT '
 +' INNER JOIN "Empresa" ON ("Config"."Empresa" = "Empresa".CODIGO) ');
   Empresa := ConfigQuery.FieldByName('NOMBRE').AsString;
   PuntoVenta := ConfigQuery.FieldByName('PtoVta').AsString;
-  Titular := ConfigQuery.FieldByName('TITULAR').AsString;
+  TITULAR := ConfigQuery.FieldByName('TITULAR').AsString;
+  DIRECCIONCOMERCIAL := ConfigQuery.FieldByName('DIRECCIONCOMERCIAL').AsString;
+  PROVINCIA := ConfigQuery.FieldByName('PROVINCIA').AsString;
+  CIUDAD := ConfigQuery.FieldByName('CIUDAD').AsString;
   Fecha := FormatDateTime('mm/dd/yyyy hh:mm:ss', now);
   CUIT := ConfigQuery.FieldByName('CUIT').AsString;
+  EMAIL := ConfigQuery.FieldByName('EMAIL').AsString;
   reporte := ConfigQuery.FieldByName('Reporte').AsString;
   IngresosBrutos := ConfigQuery.FieldByName('IIBB').AsString;
   if IngresosBrutos='' then IngresosBrutos:='0';
@@ -622,6 +628,8 @@ begin
   BasedeDatos := IniFile.ReadString('BD', 'DBase', '');
   webUrl := IniFile.ReadString('WEB', 'URL', '');
   webRes := IniFile.ReadString('WEB', 'RES', '');
+  webSecretUsr := IniFile.ReadString('WEB', 'SU', '');
+  webSecretKey := IniFile.ReadString('WEB', 'SK', '');
   webUsr := IniFile.ReadString('WEB', 'USR', '');
   webPsw := IniFile.ReadString('WEB', 'PSW', '');
   webUpd := IniFile.ReadString('WEB', 'UPD', '');
@@ -669,6 +677,8 @@ begin
   IniFile := TIniFile.Create(Path + 'db\' + 'DeG');
   IniFile.WriteString('WEB', 'URL', webUrl);
   IniFile.WriteString('WEB', 'RES', webRes);
+  IniFile.WriteString('WEB', 'SU', webSecretUsr);
+  IniFile.WriteString('WEB', 'SK', webSecretKey);
   IniFile.WriteString('WEB', 'USR', webUsr);
   IniFile.WriteString('WEB', 'PSW', webPsw);
   IniFile.WriteString('WEB', 'UPD', webUpd);
@@ -1175,6 +1185,30 @@ begin
     );
 //  Query.ExecSQL;
 //  Query.Transaction.Commit;
+end;
+
+function TDM.GenerarContraseña(Texto: string): string;
+//const
+//  // Caracteres Utilizados para Generar la Contraseña Automaticamnete.
+//  Texto = ';0123abcdefg456789ABCDEFGHIJKLhijklmnoMNOPQRSTpqrstuvUVWwXxYyZz';
+var
+//  Result : String;
+  Dato : String;
+begin
+//begin
+//  Result := ';';;
+  Texto := StringReplace(Texto, ' ', '', [rfReplaceAll, rfIgnoreCase]);
+  Dato :=
+    Dato+Texto[1+Random(Length(Texto))] +
+    Dato+Texto[1+Random(Length(Texto))] +
+    Dato+Texto[1+Random(Length(Texto))] +
+    Dato+Texto[1+Random(Length(Texto))] +
+    Dato+Texto[1+Random(Length(Texto))] +
+    Dato+Texto[1+Random(Length(Texto))] +
+    Dato+Texto[1+Random(Length(Texto))] +
+    Dato+Texto[1+Random(Length(Texto))];
+  Sleep(40);
+  Result := Dato;
 end;
 
 procedure TDM.GetBuildInfo;
@@ -2144,6 +2178,73 @@ begin
         FDTable1.Active := False;
       end;
 end;
+
+procedure TDM.ImportarCsv(tabla: string);
+var
+  i,id: integer;
+  fDMemTable: TFDMemTable;
+  fDBatchMove: TFDBatchMove;
+begin
+  OpenDialog1.Filter := 'Csv files (*.csv)|*.CSV';
+  if (OpenDialog1.Execute) then
+  begin
+    fDMemTable := TFDMemTable.create(Self);
+    fDBatchMove := TFDBatchMove.Create(Self);
+    with TFDBatchMoveTextReader.Create(fDBatchMove)do
+    begin
+      // Set text data file name
+      FileName := OpenDialog1.FileName;
+      // Setup file format
+      DataDef.Separator := ',';//edsepara.Text[1]; // ** indicamos separador de campos en este caso ';'
+      DataDef.Delimiter := #0;//** opcional, para campos sin QUOTED VALUES "valor" que es la opción default del componente
+      Datadef.RecordFormat := rfCustom; //**
+      for i := 0 to Datadef.Fields.Count-1         //  ** para evitar problemas con campos FLOAT paso todos los campos a String.
+              do  Datadef.Fields[i].DataType := atString;    // ** De no hacerlo he tenido errores [FireDAC][Comp][DM]-607. Bad text value [17,5] format for mapping item [->B]. '10,24' is not a valid integer value.
+      for i := 0 to Datadef.Fields.Count-1         //  debemos antes agregar los campos el FDMentable sino obtenemos un error de que no puede crear el dataset.
+              do  fDMemTable.FieldDefs.Add(Datadef.Fields[i].FieldName,ftString, 50, False);
+      DataDef.WithFieldNames := True; // setear si tiene los nombres de campo en primera linea
+    end;
+    // Create dataset writer and set FDBatchMode as owner. Then
+    // FDBatchMove will automatically manage the writer instance.
+    with TFDBatchMoveDataSetWriter.Create(fDBatchMove) do begin
+      // Set destination dataset
+      DataSet := fDMemTable;
+      // Do not set Optimise to True, if dataset is attached to UI
+      Optimise := False;
+    end;
+    // Analyze source text file structure
+    fDBatchMove.GuessFormat;
+    fDBatchMove.Analyze := ([ taDelimSep,taHeader,taFields]); // este comando crea la estructura de datos según adivina leyendo los primeros registros
+    fDBatchMove.AnalyzeSample := 50;  // El default es 10, con esto profundizamos el analisis para adivinar estructura de tabla y campos
+    fDBatchMove.Execute;   // y Eureka!   Tenemos los datos en la tabla y visibles en el Dbgrid
+  end;
+  fDMemTable.first;
+  while not fDMemTable.Eof do
+  begin
+    with Query do
+    begin
+      id := fdmemtable.Fields.Fields[0].AsInteger;
+      Open('SELECT * FROM "'+tabla+'" WHERE CODIGO=:I',[id]);
+      if RecordCount>0 then
+        Edit
+      else
+      begin
+        Insert;
+        Fields.Fields[0].AsInteger := id;
+      end;
+      for i := 1 to (Fields.Count-1) do
+      begin
+        Fields.Fields[i].AsString := fDMemTable.Fields.Fields[i].AsString;
+      end;
+      Post;
+    end;
+    fDMemTable.Next
+  end;
+  fDMemTable.free;//destruimos componentes para eliminar datos default y cargados anteriormente
+  fDBatchMove.Free;//idem anterior
+  Query.Close;
+end;
+
 
 procedure TDM.ImportarProveedor;
 var

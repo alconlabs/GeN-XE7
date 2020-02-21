@@ -213,11 +213,11 @@ object EmpresaForm: TEmpresaForm
         ParentFont = False
       end
       object Label20: TLabel
-        Left = 19
+        Left = 7
         Top = 88
-        Width = 114
+        Width = 126
         Height = 13
-        Caption = 'Direcci'#243'n Comercial'
+        Caption = 'Direcci'#243'n Facturaci'#243'n'
         FocusControl = DBEdit3
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
@@ -272,7 +272,7 @@ object EmpresaForm: TEmpresaForm
         Width = 30
         Height = 13
         Caption = 'CUIT'
-        FocusControl = DBEdit22
+        FocusControl = CUITDBEdit
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -11
@@ -435,6 +435,55 @@ object EmpresaForm: TEmpresaForm
         Font.Style = [fsBold]
         ParentFont = False
       end
+      object Label17: TLabel
+        Left = 350
+        Top = 67
+        Width = 4
+        Height = 13
+        Caption = '*'
+      end
+      object Label18: TLabel
+        Left = 350
+        Top = 91
+        Width = 4
+        Height = 13
+        Caption = '*'
+      end
+      object Label29: TLabel
+        Left = 674
+        Top = 121
+        Width = 4
+        Height = 13
+        Caption = '*'
+      end
+      object Label30: TLabel
+        Left = 674
+        Top = 43
+        Width = 4
+        Height = 13
+        Caption = '*'
+      end
+      object Label31: TLabel
+        Left = 674
+        Top = 94
+        Width = 4
+        Height = 13
+        Caption = '*'
+      end
+      object Label32: TLabel
+        Left = 237
+        Top = 160
+        Width = 4
+        Height = 13
+        Caption = '*'
+      end
+      object Label33: TLabel
+        Left = 237
+        Top = 211
+        Width = 4
+        Height = 13
+        Caption = '*'
+      end
       object DBEdit9: TDBEdit
         Left = 140
         Top = 280
@@ -474,7 +523,7 @@ object EmpresaForm: TEmpresaForm
       object DBEdit18: TDBEdit
         Left = 140
         Top = 256
-        Width = 82
+        Width = 97
         Height = 21
         DataField = 'CodigoArea'
         DataSource = DM.dstEmpresa
@@ -579,7 +628,7 @@ object EmpresaForm: TEmpresaForm
         DataSource = DM.dstEmpresa
         TabOrder = 17
       end
-      object DBEdit22: TDBEdit
+      object CUITDBEdit: TDBEdit
         Left = 473
         Top = 40
         Width = 201
@@ -591,7 +640,7 @@ object EmpresaForm: TEmpresaForm
       object IVADBComboBox: TDBComboBox
         Left = 472
         Top = 91
-        Width = 201
+        Width = 202
         Height = 21
         DataField = 'IVA'
         DataSource = DM.dstEmpresa
@@ -631,7 +680,7 @@ object EmpresaForm: TEmpresaForm
       object DBEdit11: TDBEdit
         Left = 471
         Top = 220
-        Width = 201
+        Width = 203
         Height = 21
         DataField = 'WEB'
         DataSource = DM.dstEmpresa
@@ -641,10 +690,6 @@ object EmpresaForm: TEmpresaForm
     object TabSheet2: TTabSheet
       Caption = 'Notas'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -659,10 +704,6 @@ object EmpresaForm: TEmpresaForm
     object TabSheet3: TTabSheet
       Caption = 'Contabilidad'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label52: TLabel
         Left = 142
         Top = 83
@@ -685,7 +726,7 @@ object EmpresaForm: TEmpresaForm
         Caption = 'Anticipo'
       end
       object Label50: TLabel
-        Left = 225
+        Left = 191
         Top = 51
         Width = 162
         Height = 13
@@ -698,7 +739,7 @@ object EmpresaForm: TEmpresaForm
         ParentFont = False
       end
       object DBLookupComboBox3: TDBLookupComboBox
-        Left = 225
+        Left = 191
         Top = 163
         Width = 351
         Height = 21
@@ -710,7 +751,7 @@ object EmpresaForm: TEmpresaForm
         TabOrder = 0
       end
       object DBLookupComboBox1: TDBLookupComboBox
-        Left = 225
+        Left = 191
         Top = 123
         Width = 351
         Height = 21
@@ -722,7 +763,7 @@ object EmpresaForm: TEmpresaForm
         TabOrder = 1
       end
       object CuentaDBLookupComboBox: TDBLookupComboBox
-        Left = 225
+        Left = 191
         Top = 83
         Width = 351
         Height = 21

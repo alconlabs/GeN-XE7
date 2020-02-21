@@ -50,7 +50,7 @@ type
     Label26: TLabel;
     Label27: TLabel;
     DBEdit21: TDBEdit;
-    DBEdit22: TDBEdit;
+    CUITDBEdit: TDBEdit;
     IVADBComboBox: TDBComboBox;
     DBEdit19: TDBEdit;
     Label23: TLabel;
@@ -76,6 +76,13 @@ type
     DBLookupComboBox2: TDBLookupComboBox;
     Label15: TLabel;
     DBEdit11: TDBEdit;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label29: TLabel;
+    Label30: TLabel;
+    Label31: TLabel;
+    Label32: TLabel;
+    Label33: TLabel;
     procedure NoBitBtnClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);

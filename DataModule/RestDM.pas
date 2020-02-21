@@ -26,7 +26,7 @@ type
     url,res,
     item, sku, id, e: string;
     termino : boolean;
-public
+  public
     constructor Create(
       vUrl, vResource, vAccept//, vClientId, vClientSecret, vAccessToken, vSeller_id, vQ, vLimit
       : string;
@@ -58,11 +58,11 @@ type
     procedure GetRESTCategories(resource: string);
     procedure IniciarREST;
 
-
     procedure ObtenerOrder_items(order_id:string;j:TJSONValue);
     procedure ObtenerShipping(id:string);
     function ObtenerBuyer(j:TJSONValue):string;
     procedure ObtenerEnvio1(vId:string);
+    function GeNREST(_method : TRESTRequestMethod;_resource,_bearer,_body : string): TJSONValue;
   public
     { Public declarations }
     JSONValue1 : TJSONValue;
@@ -93,6 +93,13 @@ type
     procedure AbrirEnBrowser(LURL:string);
     function Obtener(resource:string):TJSONValue;
     procedure ObtenerOrder;
+    procedure WebLogin;
+    procedure WebRegister;
+    function WebCSR: String;
+    procedure WebCrt(_crt: String);
+    function WebWsfe(_body:string):TJSONValue;
+    function WebLicencia: string;
+    procedure WebPago;
   end;
 
 const
@@ -1229,9 +1236,6 @@ begin
             if FieldByName('substatus').AsString<>'' then
               FieldByName('substatus_history').AsString := jEnvio.GetValue<TJSONValue>('substatus_history').ToString;
           end;
-
-
-
           Post;
           dmML.dbMain.CommitRetaining;
           Application.ProcessMessages;
@@ -1242,6 +1246,159 @@ begin
     vQuery.Active:=False;
     vQuery.Free;
   end;
+end;
+
+function TDMR.GeNREST(_method : TRESTRequestMethod;_resource,_bearer,_body : string): TJSONValue;
+begin
+  try
+    ResetRESTComponentsToDefaults;
+    with RESTClient1 do
+    begin
+//      Accept := 'application/json, text/plain; q=0.9, text/html;q=0.8,';
+//      AcceptCharset := 'utf-8, *;q=0.8';
+//      AllowCookies := True;
+//      AutoCreateParams := True;
+      BaseURL := webUrl;
+//      ContentType := 'application/json';
+//      FallbackCharsetEncoding := 'utf-8';
+//      HandleRedirects := True;
+//      SynchronizedEvents := True;
+//      UserAgent := 'Embarcadero RESTClient/1.0';
+    end;
+    with RESTRequest1 do
+    begin
+//      Accept := 'application/json, text/plain; q=0.9, text/html;q=0.8,';
+//      AcceptCharset := 'utf-8, *;q=0.8';
+//      AutoCreateParams := True;
+      Client := RESTClient1;
+//      HandleRedirects := True;
+      Method := _method;//rmPOST;
+      if (_bearer <> '') then
+      begin
+        Params.AddHeader('Authorization', 'Bearer ' + _bearer);
+        Params.ParameterByName('Authorization').Options := [poDoNotEncode];
+      end;
+      if (_body <> '') then Params.AddItem('body', _body, TRESTRequestParameterKind.pkREQUESTBODY, [], TRESTContentType.ctAPPLICATION_JSON);
+      Resource := webRes + _resource;
+      Execute();
+      result := RESTRequest1.Response.JSONValue;
+    end;
+  except
+    on e : exception do
+    begin
+      //ShowMessage ('Clase de error: ' + e.ClassName + chr(13) + chr(13) + 'Mensaje del error: ' + e.Message);
+      result:=nil;
+    end;
+  end;
+end;
+
+procedure TDMR.WebCrt(_crt: String);
+var _body,result: string;
+begin
+  _crt := StringReplace(_crt, #$D#$A, '', [rfReplaceAll]);
+  _body := '{"cuit":"'+CUIT+'", "crt":"'+_crt+'"}';
+  GeNREST(rmPut,'WSAAs/'+webUsr,webUpd,_body);
+end;
+
+function TDMR.WebCSR: String;
+begin
+  result := GeNREST(rmGet,'usuarios/'+webUsr,webUpd,'').GetValue<string>('WSAA.Csr');
+end;
+
+procedure TDMR.WebLogin;
+var
+  jsRequest : TJSONObject;
+begin
+    try
+      webUpd:='';
+      jsRequest := TJSONObject.Create();
+      jsRequest.AddPair('username', webSecretUsr);
+      jsRequest.AddPair('password', webSecretKey);
+      webUpd := GeNREST(rmPost,'login/authenticate','',jsRequest.ToString).GetValue<string>();
+    finally
+      DM.EscribirINI;
+      jsRequest.Free;
+    end;
+end;
+
+procedure TDMR.WebPago;
+var
+  jsRequest : TJSONObject;
+begin
+    try
+      jsRequest := TJSONObject.Create();
+      jsRequest.AddPair('Nombre', Titular);
+      jsRequest.AddPair('Email', Email);
+      GeNREST(rmPost,'login/pagar','',jsRequest.ToString);
+    finally
+      jsRequest.Free;
+    end;
+end;
+
+procedure TDMR.WebRegister;
+var
+  jsRequest, JSONWSAAItem : TJSONObject;
+  JSONWSAA : TJSONArray;
+begin
+//POST https://gen.com.ar/app/api/login/register HTTP/1.1
+//Host: gen.com.ar
+//Content-Length: 162
+//Content-Type: application/json
+//{"Name":"23333333333", "Password":"1234", "WSAA":{"Cuit":23333333333, "Ptovta":"1", "Empresa":"Civeloo", "Nombre":"Diego Ezequiel Guillén"} }
+//  DMR := TDMR.Create(Self);
+//  with DMR do
+//  begin
+    try
+      jsRequest := TJSONObject.Create();
+      jsRequest.AddPair('Nombre',WebUsr);
+      jsRequest.AddPair('Contraseña', WebPsw);
+      jsRequest.AddPair('Email', EMAIL);
+      JSONWSAA := TJSONArray.Create;
+      DM.TraerConfig;
+      JSONWSAAItem := TJSONObject.Create;
+      with JSONWSAAItem do
+      begin
+        AddPair('Cuit', CUIT);
+        AddPair('Ptovta', PuntoVenta);
+        AddPair('Empresa', Empresa);
+        AddPair('Nombre', TITULAR);
+        AddPair('Provincia', PROVINCIA);
+        AddPair('Ciudad', CIUDAD);
+        AddPair('Direccion', DIRECCIONCOMERCIAL);
+        AddPair('Iva', catIVA);
+      end;
+//      JSONWSAA.Add(JSONWSAAItem);
+      jsRequest.AddPair('WSAA', JSONWSAAItem);
+      webUsr := DMR.GeNREST(rmPost,'Usuarios',webUpd,jsRequest.ToString).GetValue<string>();
+      DM.EscribirINI;
+    finally
+//      jsRequest.Free;
+//      JSONWSAAItem.Free;
+//      JSONWSAA.Free;
+    end;
+//  end;
+end;
+
+function TDMR.WebLicencia: string;
+var r: string;
+begin
+  try
+    r := GeNREST(rmGet,'Usuarios/'+WebUsr,webUpd,'').GetValue<string>('Licencia');
+  finally
+    result := r;
+  end;
+end;
+
+function TDMR.WebWsfe(_body: string): TJSONValue;
+var jR, jO : TJSONObject; jV : TJSONValue; s : string;
+begin
+  jO := GeNREST(rmPost,'AFIPs',webUpd,_body).GetValue<TJSONObject>();
+  jR := TJSONObject.Create();
+    jR.AddPair('nro', jO.GetValue<string>('nro'));
+    jR.AddPair('mensaje', jO.GetValue<string>('mensaje'));
+    jR.AddPair('cae', jO.GetValue<string>('cae'));
+    jR.AddPair('vto', jO.GetValue<string>('vto'));
+  result := jR;
 end;
 
 end.

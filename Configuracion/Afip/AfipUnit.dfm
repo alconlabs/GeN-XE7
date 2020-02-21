@@ -12,6 +12,7 @@ object AfipForm: TAfipForm
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -55,7 +56,15 @@ object AfipForm: TAfipForm
       Width = 98
       Height = 25
       Align = alTop
+      BiDiMode = bdLeftToRight
       Caption = '?'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentBiDiMode = False
+      ParentFont = False
       TabOrder = 2
       OnClick = AyudaButtonClick
     end
@@ -87,6 +96,7 @@ object AfipForm: TAfipForm
       Align = alBottom
       Caption = '0 - OpenSSL'
       TabOrder = 5
+      Visible = False
       OnClick = OpensslButtonClick
     end
     object ProbarButton: TButton

@@ -809,10 +809,10 @@ begin
           mat[c, r] := SGFact.Cells[c, r];
         end;
 
-      if TipoRadioGroup.ItemIndex=2 then
-      begin
-        cbTipo.ItemIndex := 28;
-      end;
+//      if TipoRadioGroup.ItemIndex=2 then
+//      begin
+//        cbTipo.ItemIndex := 29;
+//      end;
 
       if Compra then
       begin
@@ -832,7 +832,7 @@ begin
       end
       else
       if TipoRadioGroup.ItemIndex=2 then
-      ProcOPER('PED', 'X', ClienteEdit.Text,
+      ProcOPER('PED', cbTipo.Text, ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
         VendedorEdit.Text, '', CtaNombre, False, PagareCheckBox.Checked, impr, costo,
         Comision, Impuesto, StrToFloat(FECheque.Text), 0,
@@ -1013,6 +1013,7 @@ end;
 
 procedure TOperacionForm.FormCreate(Sender: TObject);
 begin
+  DM.TraerConfig;
   cbTipo.Items.Add('A'); // 1	Factura A	20100917	NULL
   cbTipo.Items.Add('A'); // 2	Nota de Débito A	20100917	NULL
   cbTipo.Items.Add('A'); // 3	Nota de Crédito A	20100917	NULL

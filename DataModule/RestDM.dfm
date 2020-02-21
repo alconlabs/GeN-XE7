@@ -1,8 +1,8 @@
 object DMR: TDMR
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 416
-  Width = 602
+  Height = 621
+  Width = 898
   object RESTResponseCategories: TRESTResponse
     ContentType = 'application/json'
     Left = 112

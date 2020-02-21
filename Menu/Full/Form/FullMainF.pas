@@ -105,6 +105,7 @@ type
     ListadoNotaCredito: TMenuItem;
     Bonificar: TMenuItem;
     BonificarCompra: TMenuItem;
+    IniciarSesion1: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ProveedoresClick(Sender: TObject);
@@ -188,10 +189,12 @@ type
     procedure AnularCompraClick(Sender: TObject);
     procedure ListadoNotaCreditoClick(Sender: TObject);
     procedure BonificarCompraClick(Sender: TObject);
+    procedure IniciarSesion1Click(Sender: TObject);
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
     sinGrabar: boolean;
+    procedure Logueado;
   public
     { Public declarations }
   end;
@@ -206,7 +209,7 @@ uses LoginF, BuscarOperacion, incremento, PagoIVAF, LibroDiarioF,
   UFCategorias, UFBuscaArticulos, CajaLF,
   GananciasL, Precios, ListadoClientes, BuscaCompra, EmpresaF, ConfiguracionF,
   VaciarBaseF, main, OperacionF,
-  LibrosF, PagoF, CancelOrderView;
+  LibrosF, PagoF, CancelOrderView, WebLoginF, RestDM;
 
 {$R *.dfm}
 
@@ -280,8 +283,21 @@ begin
           CrearPedido1.Visible := False;
         end;
       end;
-      FullMainForm.caption := 'Civeloo GeN v'+version+' - [' + Empresa + '] - ' + Licencia +
-        ' - [USUARIO: ' + Usuario + '] MODULO COMPLETO ';
+      FullMainForm.caption := 'Civeloo GeN v'+version+' [OFFLINE]';
+      if (webUpd<>'') then
+      begin
+        DMR := TDMR.Create(Self);
+        try
+          DMR.WebLogin;
+          if (webUpd<>'') then
+          begin
+            Licencia := DMR.WebLicencia;
+            if (Licencia<>'') then Logueado;
+          end;
+        finally
+          DMR.Free;
+        end;
+      end;
       if Actualizar then Close;
       FormatearFecha;
     finally
@@ -640,6 +656,11 @@ begin
 //  end;
 end;
 
+procedure TFullMainForm.Logueado;
+begin
+  FullMainForm.caption := 'Civeloo GeN v'+version +' - [' + Empresa + '] - [USUARIO: ' + Usuario + '] - MODULO COMPLETO - [VENCE: ' + Licencia + ']';
+end;
+
 procedure TFullMainForm.Contable1Click(Sender: TObject);
 begin
   WinExec(PAnsiChar(AnsiString(path + 'MenuContable.exe')), SW_SHOWNORMAL);
@@ -681,6 +702,20 @@ begin
 //  finally
 //    IngresosBrutosForm.Free;
 //  end;
+end;
+
+procedure TFullMainForm.IniciarSesion1Click(Sender: TObject);
+begin
+  WebLoginForm := TWebLoginForm.Create(Self);
+    with WebLoginForm do
+    begin
+      try
+        ShowModal;
+      finally
+        Free;
+        if (webUpd<>'') then Logueado;
+      end;
+    end;
 end;
 
 procedure TFullMainForm.IPODEGASTO1Click(Sender: TObject);

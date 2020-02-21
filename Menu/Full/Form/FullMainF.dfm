@@ -28,7 +28,7 @@ object FullMainForm: TFullMainForm
     Align = alClient
     TabOrder = 0
     ExplicitWidth = 534
-    ExplicitHeight = 0
+    ExplicitHeight = 4
     ControlData = {
       4C0000000A450000840000000000000000000000000000000000000000000000
       000000004C000000000000000000000001000000E0D057007335CF11AE690800
@@ -385,6 +385,10 @@ object FullMainForm: TFullMainForm
         Caption = 'RESTAURAR SISTEMA'
         Visible = False
         OnClick = VaciarBasedeDatos1Click
+      end
+      object IniciarSesion1: TMenuItem
+        Caption = 'INICIAR SESION'
+        OnClick = IniciarSesion1Click
       end
     end
     object N1: TMenuItem

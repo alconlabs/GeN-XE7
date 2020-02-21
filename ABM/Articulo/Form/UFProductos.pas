@@ -410,8 +410,8 @@ begin
   with dm do begin
   //if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
   //  else
-//    if IVADBComboBox.Text='' then tasa:=21
-//    else tasa:=StrToFloat(IVADBComboBox.Text);
+    if IVADBComboBox.Text='' then tasa:=21
+    else tasa:=StrToFloat(IVADBComboBox.Text);
 //    if tasa=10.5 then t:='105' else t:=FloatToStr(tasa);
     if tasa<100 then t:=FloatToStr(tasa*10) else t:=FloatToStr(tasa);
     tArticulo.FieldByName('IVA').AsInteger := StrToInt(t);
@@ -637,7 +637,7 @@ begin
     tCategoria.Active := False;
     tIVA.Active := False;
     tCuenta.Active:=False;
-    ImportarTabla('Articulo');
+    ImportarCsv('Articulo');//ImportarTabla('Articulo');
   end;
   ShowMessage('Importación Finalizada!');
   Close;

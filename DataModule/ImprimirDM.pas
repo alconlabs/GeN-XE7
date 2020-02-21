@@ -126,10 +126,15 @@ var
   archivoPDF,
   ctipo,nctipo :string;
 begin
-  if rpt='X' then
+//  if rpt='X' then
+//  begin
+//    ctipo := '';//'REMITO';
+//    rpt := 'COriginal';//reporte;
+  if ((rpt='X') or (rpt='PEDX') or (rpt='PEDA') or (rpt='PEDB') or (rpt='PEDC')) then
   begin
     ctipo := 'REMITO';
-    rpt := 'COriginal';//reporte;
+    rpt := StringReplace(rpt, 'PED', '', [rfReplaceAll]);
+    if (rpt='X') then rpt:='B';
   end else
   if ((rpt='A') or (rpt='B') or (rpt='C')) then
   begin

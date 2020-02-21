@@ -1022,14 +1022,19 @@ with dm do begin
   result := true;
   end;
 end;
-
-Procedure TOperacionDataModule.ProcOPER; // PROCESA UNA OPERACION
+// PROCESA UNA OPERACION
+Procedure TOperacionDataModule.ProcOPER(tipo, let, cod, fech, ven, cui, ctan: string;
+      pre, pgr, impr: Boolean; cost, comv, impu, cheq, ch3q, cont, tot, sbt, des,
+      tarj, otr, sal, pag, int, n10, n21, i10, i21, deud, ulc,
+      noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib: Double);
 var
-  a, pagare: string;
+  a, pagare, rpt: string;
   nro, i, aiva: integer;
   IIBB, cmv: Double;
 begin
 with dm do begin
+  rpt := tipo+let;
+//  let := StringReplace(let, 'X', '', [rfReplaceAll]);
   BaseDatosFB.StartTransaction;
   pagare := '0';
   nro := (DM.UltimoRegistro('Operacion', 'CODIGO'));
@@ -1132,7 +1137,7 @@ with dm do begin
   begin
     ImprimirDataModule := TImprimirDataModule.Create(self);
     with ImprimirDataModule do
-      Impr(oper(IntToStr(nro), tipo, let), let);
+      Impr(oper(IntToStr(nro), tipo, let), rpt);
     ImprimirDataModule.Free;
   end;
 end;
@@ -1848,10 +1853,10 @@ begin
       docTipo, docNro, cbte, impNeto, impTotal,
       '0', ImpIva, '0', impEx, '1',
       dm.TraerTipoCbte(asocTipo), asocNro,
-      '1', '0', '0', '0',
+      '', '0', '0', '0',
       //n10, n21, i10, i21,//'0', '0', '0',
-      'PES', 'impuesto', 'null',
-      'null', 'null', '', '', '', '');
+      'PES', 'impuesto', '',
+      '', '', '', '', '', '');
       if jsResponse = nil then
         exit
       else
@@ -2030,7 +2035,7 @@ with dm do begin
 end;
 end;
 
-procedure TOperacionDataModule.AgregarAlicIva;
+procedure TOperacionDataModule.AgregarAlicIva(cod,id: integer; bImp,imp: double);
 begin
   with dm do
   begin
@@ -2201,7 +2206,7 @@ procedure TOperacionDataModule.ActualizarSiap(tipo, desde, hasta: string);
 var
   cod,let,letCod,nc,codigo,DocTipo,AlicIVA,DocNro,tabla,tabla1,tabla2,sql,where,
   tipoRetPer,cbteDesde,cbteHasta,terminos
-  ,codAlicIva,s
+  ,codAlicIva
   : string;
   impOpEx,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib,noGra
   : Double;
@@ -2294,7 +2299,6 @@ begin
               end;
             with qSdb do
             begin
-            s:='select * from RetPer where Codigo='+ qQ.FieldByName('Codigo').AsString +' and Tipo='+tipoRetPer;
               Open('select * from RetPer where Codigo=:C and Tipo=:T',[qQ.FieldByName('Codigo').AsString,tipoRetPer]);
               if RecordCount>0 then
               begin

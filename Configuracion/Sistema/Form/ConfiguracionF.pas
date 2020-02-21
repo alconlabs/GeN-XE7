@@ -138,6 +138,7 @@ uses AfipUnit;
 procedure TConfiguracionForm.BitBtn1Click(Sender: TObject);
 begin
   if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
+  if (webUpd = '') then
     if not dm.existeOpenSSL() then
       dm.tConfiguracion.FieldByName('ImprimirTipo').AsInteger:=1;
   dm.tConfiguracion.Post;

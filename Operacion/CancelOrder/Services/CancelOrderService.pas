@@ -226,7 +226,7 @@ begin
           else if let='B' then i21 := dm.CalcularIVA((n21),21)-n21;
           sbt := n21;
           impu := i21;
-          tot := sbt + impu;
+          tot := sbt + impu + (noGra + pagCueIva + pagCueOtr + perIIBB + perImpMun + impInt + otrTrib);
           cont := tot;
           pag := cont;
         end
@@ -350,14 +350,17 @@ begin
               Open('Select ID, BASEIMP, IMPORTE'
                 +' from "AlicIva"'
                 +' where  "AlicIva".CODIGO='+IntToStr(aIva));
-              aIva := UltimoRegistro('AlicIva', 'CODIGO');
-              OperacionDataModule.AgregarAlicIva(aIva,
-                StrToInt(FieldByName('ID').Asstring),
+              if qt.RecordCount>0 then
+              begin
+                aIva := UltimoRegistro('AlicIva', 'CODIGO');
+                OperacionDataModule.AgregarAlicIva(aIva,
+                FieldByName('ID').AsInteger,//StrToInt(FieldByName('ID').Asstring),
                 FieldByName('BASEIMP').AsFloat,
                 FieldByName('IMPORTE').AsFloat);
-              // Marcar la Factura como anulada y poner los saldos en cero
-              BaseDatosFB.ExecSQL(
-              'Update "' + tipo + '" set ANULADA = ''S'' where CODIGO = ' + nro);
+                // Marcar la Factura como anulada y poner los saldos en cero
+                BaseDatosFB.ExecSQL(
+                'Update "' + tipo + '" set ANULADA = ''S'' where CODIGO = ' + nro);
+              end;
             end;
         end;
 

@@ -32,8 +32,10 @@ type
     procedure OpensslButtonClick(Sender: TObject);
     procedure ProbarButtonClick(Sender: TObject);
     procedure SubscripcionButtonClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    procedure OfflineCSR;
   public
     { Public declarations }
   end;
@@ -45,7 +47,7 @@ implementation
 
 {$R *.dfm}
 
-uses DataModule, EmpresaF, AfipDM;
+uses DataModule, EmpresaF, AfipDM, RestDM;
 
 procedure TAfipForm.AyudaButtonClick(Sender: TObject);
 begin
@@ -67,11 +69,57 @@ begin
   if FileExists(f) then
   begin
     Memo1.Lines.LoadFromFile(f);
-    Memo1.Lines.SaveToFile(Path+'db\certificado.crt');
+    if (webUpd = '') then
+      Memo1.Lines.SaveToFile(Path+'db\certificado.crt')
+    else
+      begin
+        DMR := TDMR.Create(Self);
+        try
+          DMR.WebCRT(Memo1.Text);
+        finally
+          DMR.Free;
+        end;
+      end;
   end;
 end;
 
 procedure TAfipForm.CSRButtonClick(Sender: TObject);
+begin
+  if (webUpd = '') then
+    OfflineCSR
+  else
+  begin
+    DMR := TDMR.Create(Self);
+    try
+      Memo1.Lines.Text := DMR.WebCSR;
+    finally
+      DMR.Free;
+//        Memo1.Lines.LoadFromFile(ruta+'MiPedido.CSR');
+      SaveTextFileDialog1.FileName:=System.IOUtils.TPath.GetDocumentsPath()+'\MiPedido.CSR';
+      SaveTextFileDialog1.Execute();
+      Memo1.Lines.SaveToFile(SaveTextFileDialog1.FileName);
+      ShellExecute(Handle,'open','http://www.afip.gob.ar/ws/WSAA/wsaa_obtener_certificado_produccion.pdf',nil,nil,SW_NORMAL);
+    end;
+  end;
+end;
+
+procedure TAfipForm.FormCreate(Sender: TObject);
+var
+  r: string;
+begin
+  r := Path+'db\certificado.crt';
+  if FileExists(r) then
+    Memo1.Lines.LoadFromFile(r)
+  else
+    Memo1.Lines.add('No se encuentra certificado, por favor generarlo');
+end;
+
+procedure TAfipForm.FormShow(Sender: TObject);
+begin
+  ProbarButton.Visible := (webUpd = '');
+end;
+
+procedure TAfipForm.OfflineCSR;
 var
   key, csr, pfx, ruta, f : string;
   m : TStringList;
@@ -123,17 +171,6 @@ begin
   end;
 end;
 
-procedure TAfipForm.FormCreate(Sender: TObject);
-var
-  r: string;
-begin
-  r := Path+'db\certificado.crt';
-  if FileExists(r) then
-    Memo1.Lines.LoadFromFile(r)
-  else
-    Memo1.Lines.add('No se encuentra certificado, por favor generarlo');
-end;
-
 procedure TAfipForm.OpensslButtonClick(Sender: TObject);
 begin
   ShellExecute(Handle,'open','https://slproweb.com/products/Win32OpenSSL.html',nil,nil,SW_NORMAL);
@@ -157,9 +194,7 @@ end;
 
 procedure TAfipForm.SubscripcionButtonClick(Sender: TObject);
 begin
-  ShellExecute(Handle,'open',
-          'http://civeloo.com/'
-          ,nil,nil,SW_NORMAL);
+  ShellExecute(Handle,'open', 'http://civeloo.com/' ,nil,nil,SW_NORMAL);
 end;
 
 end.

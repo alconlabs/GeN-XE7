@@ -53,7 +53,8 @@ uses
   CancelOrderView in 'Operacion\CancelOrder\Views\CancelOrderView.pas' {FCancelOrderView},
   CancelOrderModel in 'Operacion\CancelOrder\Models\CancelOrderModel.pas',
   CancelOrderViewModel in 'Operacion\CancelOrder\ViewModels\CancelOrderViewModel.pas',
-  CancelOrderService in 'Operacion\CancelOrder\Services\CancelOrderService.pas';
+  CancelOrderService in 'Operacion\CancelOrder\Services\CancelOrderService.pas',
+  WebLoginF in 'Configuracion\WebLogin\WebLoginF.pas' {WebLoginForm};
 
 {$R *.res}
 

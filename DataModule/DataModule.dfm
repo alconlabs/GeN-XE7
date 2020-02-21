@@ -2788,6 +2788,7 @@ object DM: TDM
     Top = 384
   end
   object TransactionFB: TFDTransaction
+    Options.StopOptions = [xoIfCmdsInactive, xoIfAutoStarted, xoFinishRetaining]
     Connection = BaseDatosFB
     Left = 192
   end
@@ -2850,5 +2851,15 @@ object DM: TDM
       '  INNER JOIN "Cliente" ON ("Venta".CLIENTE = "Cliente".CODIGO)')
     Left = 344
     Top = 768
+  end
+  object FDMemTable1: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired]
+    UpdateOptions.CheckRequired = False
+    Left = 24
+    Top = 96
   end
 end
