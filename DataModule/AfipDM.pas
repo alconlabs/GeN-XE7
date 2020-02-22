@@ -257,8 +257,8 @@ begin
         if DocNro.Length < 11  then DocTipo := '96' else DocTipo := '80';
     if (WebUsr<>'') then jsRequest.AddPair('Id', WebUsr);
     //ptovta:=IntToStr(dm.ObtenerConfig('Empresa'));
-    jsRequest.AddPair('Ptovta', PuntoVenta);//ptovta);
-    jsRequest.AddPair('Tipocbte', tipocbte);
+    jsRequest.AddPair('PtoVta', PuntoVenta);//ptovta);
+    jsRequest.AddPair('TipoCbte', tipocbte);
     jsRequest.AddPair('Cuit', cuit);
     if (WebPsw<>'') then jsRequest.AddPair('Pass', WebPsw);
     jsRequest.AddPair('Concepto', concepto);
@@ -1032,26 +1032,6 @@ e := mes+'/'+dia+'/'+año;
 //    ADetIVA[0]              := DetIva21;
 //    Request.FeDetReq[0].Iva := ADetIva;
 //  end;
-
-  regfeiva := f.GetValue<TJSONValue>('AlicIva');
-  alic := TJSONArray(regfeiva).Size;
-  SetLength(ADetIva,alic);
-  if alic>0 then
-  begin
-    for i := 0 to alic-1 do
-    begin
-      ADetIVA[i] := AlicIva.Create;
-    end;
-  Request.FeDetReq[0].Iva := ADetIva;
-  for i := 0 to alic-1 do
-    begin
-      n := IntToStr(i);
-//      n := regfeiva.ToString;
-      Request.FeDetReq[0].Iva[i].Id := StrToInt(regfeiva.GetValue<string>('['+n+'].Id'));
-      Request.FeDetReq[0].Iva[i].BaseImp  := StrToFloat(regfeiva.GetValue<string>('['+n+'].BaseImp'));
-      Request.FeDetReq[0].Iva[i].importe  := StrToFloat(regfeiva.GetValue<string>('['+n+'].Importe'));
-    end;
-  end;
 // si lleva documento vinculado
 //  i:= dbTipoCbte.KeyValue;
 //  if (i IN [2,3,7,8]) then
@@ -1071,26 +1051,29 @@ e := mes+'/'+dia+'/'+año;
 //    Request.FeDetReq[0].CbtesAsoc[0].PtoVta := f.GetValue<Integer>('regfeasocPtoVta');//STRTOINT(edtCompVincPto.Text);    //  Punto de venta de la nc
 //    Request.FeDetReq[0].CbtesAsoc[0].Nro    := f.GetValue<Int64>('regfeasocNro');//STRTOINT64(edtCompVincComp.Text);    //  numero de la (nc/nd)
 //  end;
-  regfeCbteAsoc := f.GetValue<TJSONValue>('CbtesAsoc');
-  cbteAsocSize := TJSONArray(regfeCbteAsoc).Size;
-  SetLength(ACbtesAsoc,cbteAsocSize);
-  if cbteAsocSize>0 then
+  if ( f.TryGetValue<TJSONValue>('CbteAsoc',regfeCbteAsoc) ) then
   begin
+    //regfeCbteAsoc := f.GetValue<TJSONValue>('CbtesAsoc');
+    cbteAsocSize := TJSONArray(regfeCbteAsoc).Size;
+    SetLength(ACbtesAsoc,cbteAsocSize);
+    if cbteAsocSize>0 then
+    begin
+      for i := 0 to cbteAsocSize-1 do
+      begin
+        ACbtesAsoc[i] := CbteAsoc.Create;
+      end;
+    Request.FeDetReq[0].CbtesAsoc := ACbtesAsoc;
     for i := 0 to cbteAsocSize-1 do
-    begin
-      ACbtesAsoc[i] := CbteAsoc.Create;
-    end;
-  Request.FeDetReq[0].CbtesAsoc := ACbtesAsoc;
-  for i := 0 to cbteAsocSize-1 do
-    begin
-      n := IntToStr(i);
-      Request.FeDetReq[0].CbtesAsoc[i].Tipo := regfeCbteAsoc.GetValue<Integer>('['+n+'].Tipo');
-      Request.FeDetReq[0].CbtesAsoc[i].PtoVta  := regfeCbteAsoc.GetValue<Integer>('['+n+'].PtoVta');
-      Request.FeDetReq[0].CbtesAsoc[i].Nro  := regfeCbteAsoc.GetValue<Int64>('['+n+'].Nro');
+      begin
+        n := IntToStr(i);
+        Request.FeDetReq[0].CbtesAsoc[i].Tipo := regfeCbteAsoc.GetValue<Integer>('['+n+'].Tipo');
+        Request.FeDetReq[0].CbtesAsoc[i].PtoVta  := regfeCbteAsoc.GetValue<Integer>('['+n+'].PtoVta');
+        Request.FeDetReq[0].CbtesAsoc[i].Nro  := regfeCbteAsoc.GetValue<Int64>('['+n+'].Nro');
+      end;
     end;
   end;
 
-  iva:=false;
+//  iva:=false;
 
   auth.Cuit  := StrToInt64(CUIT);//f.GetValue<Int64>('cuit');//cuit;
   auth.token := token;
@@ -1098,11 +1081,11 @@ e := mes+'/'+dia+'/'+año;
 
   //   FeCabReq
   Request.FeCabReq.CantReg  := 1;  //   cantidad de registros
-  Request.FeCabReq.CbteTipo := f.GetValue<Integer>('tipocbte');//1;    //   1=fc.A 2=nd.A 3=nc.A    6=fc.B 7=nd.B 8=nc.B
-  Request.FeCabReq.PtoVta   := f.GetValue<Integer>('ptovta');//2;    //   Punto de venta
+  Request.FeCabReq.CbteTipo := f.GetValue<Integer>('TipoCbte');//1;    //   1=fc.A 2=nd.A 3=nc.A    6=fc.B 7=nd.B 8=nc.B
+  Request.FeCabReq.PtoVta   := f.GetValue<Integer>('PtoVta');//2;    //   Punto de venta
 
   //   FecDetReq
-  Request.FeDetReq[0].Concepto := f.GetValue<Integer>('concepto');//1;   //   1=productos, 2=servicios, 3=ambos
+  Request.FeDetReq[0].Concepto := f.GetValue<Integer>('Concepto');//1;   //   1=productos, 2=servicios, 3=ambos
   Request.FeDetReq[0].DocTipo  := f.GetValue<Integer>('DocTipo');//80; //80 -cuit   86 - cuil   96-dni
   Request.FeDetReq[0].DocNro   := f.GetValue<Int64>('DocNro');//20000000001; //cuit del cliente
 
@@ -1118,8 +1101,30 @@ e := mes+'/'+dia+'/'+año;
   Request.FeDetReq[0].ImpNeto    := f.GetValue<Double>('ImpNeto');//100;
   Request.FeDetReq[0].ImpOpEx    := f.GetValue<Double>('ImpOpEx');//0;
 //  if (f.GetValue<String>('n10')<>'0') or (f.GetValue<String>('n21')<>'0') then
-  if alic>0 then
-    Request.FeDetReq[0].ImpIva := f.GetValue<Double>('ImpIVA');//21;
+  if (f.TryGetValue<TJSONValue>('AlicIva',regfeiva)) then
+  begin
+    //regfeiva := f.GetValue<TJSONValue>('AlicIva');
+    alic := TJSONArray(regfeiva).Size;
+    SetLength(ADetIva,alic);
+    if alic>0 then
+    begin
+      for i := 0 to alic-1 do
+      begin
+        ADetIVA[i] := AlicIva.Create;
+      end;
+    Request.FeDetReq[0].Iva := ADetIva;
+    for i := 0 to alic-1 do
+      begin
+        n := IntToStr(i);
+  //      n := regfeiva.ToString;
+        Request.FeDetReq[0].Iva[i].Id := StrToInt(regfeiva.GetValue<string>('['+n+'].Id'));
+        Request.FeDetReq[0].Iva[i].BaseImp  := StrToFloat(regfeiva.GetValue<string>('['+n+'].BaseImp'));
+        Request.FeDetReq[0].Iva[i].importe  := StrToFloat(regfeiva.GetValue<string>('['+n+'].Importe'));
+      end;
+    end;
+    if alic>0 then Request.FeDetReq[0].ImpIva := f.GetValue<Double>('ImpIVA');//21;
+  end;
+
   Request.FeDetReq[0].ImpTrib    := f.GetValue<Double>('ImpTrib');//0;  //si tiene percepciones de IIBB o IVA van aca
 
   if Request.FeDetReq[0].Concepto <> 1 then
