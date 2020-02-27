@@ -2254,11 +2254,10 @@ var
 begin
   OpenDialog1.Filter := 'Csv files (*.csv)|*.CSV';
 //  opendialog1.InitialDir := GetCurrentDir;
-  if OpenDialog1.Execute
-    then
-      begin
-         fDMemTable := TFDMemTable.create(Self); // creamos
-        fDBatchMove := TFDBatchMove.Create(Self);
+  if OpenDialog1.Execute then
+  begin
+  fDMemTable := TFDMemTable.create(Self); // creamos
+  fDBatchMove := TFDBatchMove.Create(Self);
 //          dataSource1.DataSet := fdmemtable1;   // vinculamos la tabla al datasource
       //Create text reader and set FDBatchMode as owner. Then
   // FDBatchMove will automatically manage the reader instance.

@@ -29,7 +29,7 @@ type
     Label6: TLabel;
     Label3: TLabel;
     DBText1: TDBText;
-    DBText3: TDBText;
+    NetoDBText: TDBText;
     BitBtn1: TBitBtn;
     VerTodosBitBtn: TBitBtn;
     ivaLabel: TLabel;
@@ -126,7 +126,9 @@ begin
   end;
   articulos := 'SELECT'
     //+ ' iif( "Articulo".Tasa = 105, "Articulo".Precio*1.105, "Articulo".Precio*1.21 ) as precioIVA,'
-    + '      iif( "Articulo".IVA < 100, "Articulo".Precio*("Articulo".IVA*0.01+1), "Articulo".Precio*("Articulo".IVA*0.001+1) ) as precioIVA,'
+//    + '      iif( "Articulo".IVA < 100, "Articulo".Precio*("Articulo".IVA*0.01+1), "Articulo".Precio*("Articulo".IVA*0.001+1) ) as precioIVA,'
+    + ' iif( "Articulo".IVA < 100, "Articulo".'+Precio+'*("Articulo".IVA*0.01+1), "Articulo".'+Precio+'*("Articulo".IVA*0.001+1) ) as precioIVA,'
+    + ' "Articulo".'+Precio+' as precioNeto,'
     + ' "Articulo".DESCRIPCION,  "Articulo".CODIGO,'
     + ' "Articulo".COSTO,  "Articulo".ULTCOSTO,  "Articulo".PRECIO1,  "Articulo".PRECIO2,'
     + ' "Articulo".PRECIO3,  "Articulo".PRECIO4,  "Articulo".PRECIO5,  "Articulo".PRECIO6,'

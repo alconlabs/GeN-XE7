@@ -323,13 +323,13 @@ object FBuscaArticulo: TFBuscaArticulo
       ExplicitTop = 116
       ExplicitWidth = 80
     end
-    object DBText3: TDBText
+    object NetoDBText: TDBText
       Left = 1
       Top = 149
       Width = 73
       Height = 33
       Align = alTop
-      DataField = 'PRECIO'
+      DataField = 'precioNeto'
       DataSource = DM.dsqArticulo
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
