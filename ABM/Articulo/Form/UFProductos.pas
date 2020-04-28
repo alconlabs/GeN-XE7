@@ -7,7 +7,7 @@ uses
   Dialogs, DataModule, Grids, DBGrids, DB, ExtCtrls, StdCtrls, Mask,
   DBCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw, IBX.IBQuery,
   IBX.IBCustomDataSet, IBX.IBTable, Vcl.Imaging.jpeg, OperacionDM
-  ,Math;
+  ,Math, Vcl.ExtDlgs;
 
 const
   EAN_izqA: array [0 .. 9] of PChar = ('0001101', '0011001', '0010011',
@@ -117,6 +117,9 @@ type
     DBNavigator1: TDBNavigator;
     bImportar: TButton;
     bExportar: TButton;
+    Image1: TImage;
+    OpenPictureDialog1: TOpenPictureDialog;
+    Label8: TLabel;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -144,8 +147,10 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure bImportarClick(Sender: TObject);
     procedure bExportarClick(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
   private
     { Private declarations }
+    iip:string;
     tasa: Double;
     procedure Calcular;
   public
@@ -289,8 +294,12 @@ end;
 
 procedure TFProductos.BitBtn1Click(Sender: TObject);
 begin
-with dm do begin
+  with dm do begin
   desc := CodigoDBEdit.Text;
+  // guardar imagen
+    //iip := GetImgItemPath(CodigoDBEdit.Text);
+    if (Image1.Picture.Graphic <> nil) then
+      Image1.Picture.SaveToFile(iip);
   If (dm.tArticulo.State = dsEdit) or (dm.tArticulo.State = dsInsert) And
     (
       (DescripcionDBEdit.Text<>'') and
@@ -366,7 +375,9 @@ end;
 
 procedure TFProductos.BitBtn4Click(Sender: TObject);
 begin
-with dm do begin
+  iip := '';
+  Image1.Picture := nil;
+  with dm do begin
   TabSheet1.PageControl.ActivePageIndex := 0;
   dm.tArticulo.Cancel;
   FBuscaArticulo := TFBuscaArticulo.Create(Self);
@@ -377,6 +388,8 @@ with dm do begin
       dm.tArticulo.Locate('CODIGO', dm.qArticulo.FieldByName('CODIGO').AsInteger, []);
     FBuscaArticulo.Free;
   end;
+  iip := GetImgItemPath(CodigoDBEdit.Text);
+  if (FileExists(iip)) then Image1.Picture.LoadFromFile(iip);
   dm.tArticulo.Edit;
   Codifica(CodigoBarraEdit.Text);
 end;
@@ -389,6 +402,12 @@ begin
     Key := #0; { eat enter key }
     Perform(WM_NEXTDLGCTL, 0, 0); { move to next control }
   end;
+end;
+
+procedure TFProductos.Image1Click(Sender: TObject);
+begin
+  OpenPictureDialog1.Execute();
+  if OpenPictureDialog1.FileName<>'' then Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
 end;
 
 procedure TFProductos.IVADBComboBoxEnter(Sender: TObject);

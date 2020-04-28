@@ -1020,7 +1020,7 @@ object ConfiguracionForm: TConfiguracionForm
       end
       object ConfigurarFEButton: TButton
         Left = 343
-        Top = 111
+        Top = 110
         Width = 57
         Height = 25
         Caption = 'Configurar'

@@ -2,11 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GeN"
-#define MyAppVersion "202002212122"
+#define MyAppVersion "202004281607"
 #define MyAppPublisher "Civeloo"
 #define MyAppURL "http://www.civeloo.com/"
 #define MyAppExeName "GeN.exe"
-#define MyAppPath "C:\GitHub\GeN-XE7\Win32\Release"
+#define MyAppPath "C:\GitHub\GeN-XE7"
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
@@ -23,18 +23,18 @@ DefaultDirName={pf}\{#MyAppPublisher}\{#MyAppName}
 DefaultGroupName={#MyAppPublisher}\{#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile={#MyAppPath}\LICENSE-2.0.txt
-OutputDir=C:\GitHub\GeN-XE7\Instalador
+OutputDir={#MyAppPath}\Instalador
 OutputBaseFilename=Instalar{#MyAppName}
-SetupIconFile={#MyAppPath}\DeGsoft.ico
+SetupIconFile={#MyAppPath}\GeN.ico
 Compression=lzma
 SolidCompression=true
-VersionInfoVersion=19
+VersionInfoVersion=20
 VersionInfoCompany={#MyAppPublisher}
 VersionInfoDescription=ERP
 VersionInfoTextVersion={#MyAppVersion}
 VersionInfoCopyright={#MyAppPublisher}
 VersionInfoProductName={#MyAppName}
-VersionInfoProductVersion=19
+VersionInfoProductVersion=20
 VersionInfoProductTextVersion={#MyAppVersion}
 ;SignTool=signtool
 ;SignedUninstaller=yes
@@ -45,14 +45,16 @@ Name: spanish; MessagesFile: compiler:Languages\Spanish.isl
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}
 Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked; OnlyBelowVersion: 0,6.1
+;Name: dbserver; Description: Instalar Servidor de Bases de Datos;
 
 [Files]
 ;Source: C:\Civeloo\GeN\bin\GeN.exe; DestDir: {app}; Flags: ignoreversion
-Source: {#MyAppPath}\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: {#MyAppPath}\Win32\Release\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: {#MyAppPath}\db\*; DestDir: {app}\db\; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: {#MyAppPath}\hlp\*; DestDir: {app}\hlp\; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: {#MyAppPath}\img\*; DestDir: {app}\img\; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: {#MyAppPath}\rpt\*; DestDir: {app}\rpt\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: {#MyAppPath}\lib\*; DestDir: {app}\bin\; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -64,6 +66,7 @@ Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}; Filen
 
 [Run]
 ;Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}; Flags: nowait postinstall skipifsilent
+Filename: "https://firebirdsql.org/en/firebird-2-5/"; Parameters: "/Q";  Flags: shellexec runasoriginaluser; StatusMsg: "Instalaservidor de bases de datos"; OnlyBelowVersion: 0,6.2.8400
 
 [Registry]
 ; keys for 32-bit systems
@@ -79,4 +82,4 @@ Root: HKCU64; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFla
     Flags: uninsdeletekeyifempty uninsdeletevalue; Check: IsWin64
 Root: HKLM64; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; \
     ValueType: String; ValueName: {app}\bin\{#MyAppExeName}; ValueData: "RUNASADMIN"; \
-    Flags: uninsdeletekeyifempty uninsdeletevalue; Check: IsWin64
+

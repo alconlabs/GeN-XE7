@@ -525,11 +525,12 @@ If ClienteEdit.Text <> '' then
     else
       begin
         ClienteLabel.Caption := dm.qOperacion.FieldByName('NOMBRE').AsString;
-        lPrecio.Caption := dm.qOperacion.FieldByName('DIRECCION').AsString;
+        // lPrecio.Caption := dm.qOperacion.FieldByName('DIRECCION').AsString;
         // DireccionLabel.Caption := dm.qOperacion.FieldByName('DIRECCIONCOMERCIAL').AsString;
         // Label13.Caption := dm.qOperacion.FieldByName('TELEFONO').AsString;
         // Label14.Caption := dm.qOperacion.FieldByName('CELULAR').AsString;
-        PrecioLabel.Caption := dm.qOperacion.FieldByName('PRECIO').AsString;
+        Precio := dm.qOperacion.FieldByName('PRECIO').AsString;
+        PrecioLabel.Caption := Precio;
 //        if PrecioLabel.Caption = '' then PrecioLabel.Caption := '0';
         // Label19.Caption := dm.qOperacion.FieldByName('TERMINOS').AsString;
         // Label23.Caption := DateToStr(IncDay(now,dm.qOperacion.FieldByName('DIASCREDITO').AsInteger));

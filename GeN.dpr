@@ -54,7 +54,8 @@ uses
   CancelOrderModel in 'Operacion\CancelOrder\Models\CancelOrderModel.pas',
   CancelOrderViewModel in 'Operacion\CancelOrder\ViewModels\CancelOrderViewModel.pas',
   CancelOrderService in 'Operacion\CancelOrder\Services\CancelOrderService.pas',
-  WebLoginF in 'Configuracion\WebLogin\WebLoginF.pas' {WebLoginForm};
+  WebLoginF in 'Configuracion\WebLogin\WebLoginF.pas' {WebLoginForm},
+  WooCommerceFormUnit in 'Configuracion\WooCommerce\WooCommerceFormUnit.pas' {WooCommerceForm};
 
 {$R *.res}
 

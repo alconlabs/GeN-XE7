@@ -4,7 +4,7 @@ object FullMainForm: TFullMainForm
   Align = alTop
   BiDiMode = bdLeftToRight
   BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
-  Caption = 'Civeloo GeN - Menu Principal'
+  Caption = 'GeN'
   ClientHeight = 5
   ClientWidth = 668
   Color = clBtnFace
@@ -389,6 +389,10 @@ object FullMainForm: TFullMainForm
       object IniciarSesion1: TMenuItem
         Caption = 'INICIAR SESION'
         OnClick = IniciarSesion1Click
+      end
+      object WooCommerce1: TMenuItem
+        Caption = 'WOOCOMMERCE'
+        OnClick = WooCommerce1Click
       end
     end
     object N1: TMenuItem

@@ -1,8 +1,6 @@
-﻿# GeN 2019 - Sistema de Gestión para Comercios
+﻿# GeN - Sistema de Gestión para Comercios
 
-AHORRATE EL CONTADOR AHORA PODES LLEVAR DE MANERA AUTOMATICA LOS INGRESOS BRUTOS!!!
-
-Ahora con Factura Electrónica AFIP.
+AHÓRRATE EL CONTADOR AHORA PODES LLEVAR DE MANERA AUTOMÁTICA LOS INGRESOS BRUTOS!!!
 
 Con el puedes comprar, vender, llevar stock, proveedores, pedidos, inventarios, ingresos brutos. 
 Y la mas variable y flexible forma de obtener reportes. 
@@ -12,9 +10,45 @@ GeN es eso y mucho mas…
 
 LO QUE USTED NECESITA PARA SU PYME O COMERCIO.
 
-Stock. Ventas. Facturación. Remitos. Clientes. Vendedores. Proveedores. Servicios. Presupuestos. Pedidos. IVA. Ingresos Brutos. Caja.
+STOCK:
+Lleva tu inventario al día y que no te falte nada. 
 
-DESCARGALO GRATIS!!!
+PROVEEDORES:
+Carga compras, actualiza stock y cambia precios.
+
+VENTAS:
+Descuenta stock y lleva caja.
+REMITOS: 
+Arma pedidos para luego facturarlos.
+FACTURACION:
+Factura Electrónica AFIP, totalmente integrada... factura rápido!!!
+
+CLIENTES:
+Lleva distintos precios, realiza notas de créditos y presupuestos personalizados.
+
+VENDEDORES.
+
+CONTABILIDAD:
+IVA. 
+INGRESOS BRUTOS.
+
+TU COMPRA INCLUYE 
+
+- Enlace de descarga.
+- Soporte x 1 mes con Facturación Electrónica + Monotributo.
+- Colaboración con el proyecto Open Source GeN-XE7 (github).
+
+OPCIONAL (costo adicional)
+- Programación a medida.
+- Instalación y configuración
+- Contabilidad
+- Soporte
+- Web
+- Email
+- Tienda Online
+- SEO
+- App Android
+- Movil App
 
 Instalación
 http://civeloo.com

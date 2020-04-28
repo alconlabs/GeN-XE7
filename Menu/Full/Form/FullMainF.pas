@@ -106,6 +106,7 @@ type
     Bonificar: TMenuItem;
     BonificarCompra: TMenuItem;
     IniciarSesion1: TMenuItem;
+    WooCommerce1: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ProveedoresClick(Sender: TObject);
@@ -190,6 +191,7 @@ type
     procedure ListadoNotaCreditoClick(Sender: TObject);
     procedure BonificarCompraClick(Sender: TObject);
     procedure IniciarSesion1Click(Sender: TObject);
+    procedure WooCommerce1Click(Sender: TObject);
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
@@ -209,7 +211,7 @@ uses LoginF, BuscarOperacion, incremento, PagoIVAF, LibroDiarioF,
   UFCategorias, UFBuscaArticulos, CajaLF,
   GananciasL, Precios, ListadoClientes, BuscaCompra, EmpresaF, ConfiguracionF,
   VaciarBaseF, main, OperacionF,
-  LibrosF, PagoF, CancelOrderView, WebLoginF, RestDM;
+  LibrosF, PagoF, CancelOrderView, WebLoginF, RestDM, WooCommerceFormUnit;
 
 {$R *.dfm}
 
@@ -1086,6 +1088,16 @@ end;
 procedure TFullMainForm.VerStock1Click(Sender: TObject);
 begin
   WinExec(PAnsiChar(AnsiString(path + 'Stock.exe')), SW_SHOWNORMAL);
+end;
+
+procedure TFullMainForm.WooCommerce1Click(Sender: TObject);
+begin
+  WooCommerceForm := TWooCommerceForm.Create(self);
+  try
+    WooCommerceForm.ShowModal;
+  finally
+    WooCommerceForm.Free;
+  end;
 end;
 
 procedure TFullMainForm.CrearCredito1Click(Sender: TObject);

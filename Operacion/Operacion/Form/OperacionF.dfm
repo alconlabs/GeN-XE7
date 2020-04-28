@@ -403,9 +403,9 @@ object OperacionForm: TOperacionForm
     object Label16: TLabel
       Left = 319
       Top = 5
-      Width = 59
+      Width = 55
       Height = 13
-      Caption = 'Vendedor:'
+      Caption = 'Vendedor'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -431,9 +431,9 @@ object OperacionForm: TOperacionForm
     object lPrecio: TLabel
       Left = 265
       Top = 5
-      Width = 41
+      Width = 37
       Height = 13
-      Caption = 'Precio:'
+      Caption = 'Precio'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11

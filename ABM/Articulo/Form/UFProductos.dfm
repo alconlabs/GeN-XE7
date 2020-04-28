@@ -573,6 +573,23 @@ object FProductos: TFProductos
         Caption = 'Cod.Prov.'
         FocusControl = DBEdit2
       end
+      object Image1: TImage
+        Left = 66
+        Top = 185
+        Width = 197
+        Height = 192
+        Proportional = True
+        Stretch = True
+        OnClick = Image1Click
+      end
+      object Label8: TLabel
+        Left = 25
+        Top = 185
+        Width = 35
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Imagen'
+      end
       object DBEdit6: TDBEdit
         Left = 406
         Top = 115
@@ -1134,5 +1151,10 @@ object FProductos: TFProductos
       ShowHint = True
       TabOrder = 0
     end
+  end
+  object OpenPictureDialog1: TOpenPictureDialog
+    Filter = 'JPG (*.jpg)|*.jpg'
+    Left = 40
+    Top = 380
   end
 end

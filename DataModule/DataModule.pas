@@ -251,10 +251,11 @@ type
     procedure ImportarProveedor;
     function GenerarContraseña(Texto:string):string;
     procedure ImportarCsv(tabla: string);
+    function GetImgItemPath(cod:string):string;
   end;
 
 const
-  version='202002212122';
+  version='202004281607';
   v: array [0 .. 22] of string = ('MenuExpress', 'MenuStock', 'Articulos',
     'VaciarBase', 'Vender', 'Comprar', 'AnularVenta', 'RetiroCaja', 'Rubro',
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
@@ -372,6 +373,7 @@ var
   LoginOK, Cancelar, envEmail, microsoftStore: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
   webUrl, webRes, webSecretUsr, webSecretKey, webUsr, webPsw, webUpd,
+  wpSite, wooCommerceKey, wooCommerceSecret, wPUsername, wPPassword, wpSincronize,
   afipUrl, afipRes, afipUsr, afipPsw,
   operNC, openSSl,
   NroA, NroNCA, NroB, NroNCB, NroC, NroNCC,
@@ -646,6 +648,12 @@ begin
   NroC := IniFile.ReadString('NRO', 'C', '');
   NroNCC := IniFile.ReadString('NRO', 'NCC', '');
   thunderbird := IniFile.ReadString('EMAIL', 'EXE', '');
+  wpSite := IniFile.ReadString('WooCommerce', 'Site', '');
+  wooCommerceKey := IniFile.ReadString('WooCommerce', 'WooCommerceKey', '');
+  wooCommerceSecret := IniFile.ReadString('WooCommerce', 'WooCommerceSecret', '');
+  wPUsername := IniFile.ReadString('WooCommerce', 'WPUsername', '');
+  wPPassword := IniFile.ReadString('WooCommerce', 'WPPassword', '');
+  wpSincronize := IniFile.ReadString('WooCommerce', 'WPSincronize', '');
   IniFile.Destroy;
 end;
 
@@ -695,6 +703,12 @@ begin
   IniFile.WriteString('NRO', 'C', NroC);
   IniFile.WriteString('NRO', 'NCC', NroNCC);
   IniFile.WriteString('EMAIL', 'EXE', thunderbird);
+  IniFile.WriteString('WooCommerce', 'Site', wpSite);
+  IniFile.WriteString('WooCommerce', 'WooCommerceKey', wooCommerceKey);
+  IniFile.WriteString('WooCommerce', 'WooCommerceSecret', wooCommerceSecret);
+  IniFile.WriteString('WooCommerce', 'WPUsername', wPUsername);
+  IniFile.WriteString('WooCommerce', 'WPPassword', wPPassword);
+  IniFile.WriteString('WooCommerce', 'WPSincronize', wpSincronize);
   IniFile.Destroy;
   LeerINI;
 end;
@@ -1229,6 +1243,11 @@ begin
     V4 := dwFileVersionLS and $FFFF;
   end;
   FreeMem(VerInfo, VerInfoSize);
+end;
+
+function TDM.GetImgItemPath(cod: string): string;
+begin
+  result := (path + 'img\item\[1]'+cod+'.jpg');
 end;
 
 procedure TDM.ActualizarValor;
@@ -2196,6 +2215,8 @@ begin
       FileName := OpenDialog1.FileName;
       // Setup file format
       DataDef.Separator := ',';//edsepara.Text[1]; // ** indicamos separador de campos en este caso ';'
+      DataDef.FormatSettings.DecimalSeparator:=',';
+      DataDef.FormatSettings.ThousandSeparator:=#0;
       DataDef.Delimiter := #0;//** opcional, para campos sin QUOTED VALUES "valor" que es la opción default del componente
       Datadef.RecordFormat := rfCustom; //**
       for i := 0 to Datadef.Fields.Count-1         //  ** para evitar problemas con campos FLOAT paso todos los campos a String.

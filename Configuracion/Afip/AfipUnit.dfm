@@ -87,6 +87,8 @@ object AfipForm: TAfipForm
       Caption = '1 - Punto Venta'
       TabOrder = 4
       OnClick = PuntoVentaButtonClick
+      ExplicitLeft = 6
+      ExplicitTop = 149
     end
     object OpensslButton: TButton
       Left = 1
@@ -96,7 +98,6 @@ object AfipForm: TAfipForm
       Align = alBottom
       Caption = '0 - OpenSSL'
       TabOrder = 5
-      Visible = False
       OnClick = OpensslButtonClick
     end
     object ProbarButton: TButton
