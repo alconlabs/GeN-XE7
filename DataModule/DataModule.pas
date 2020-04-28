@@ -255,7 +255,7 @@ type
   end;
 
 const
-  version='202004281607';
+  version='202004282016';
   v: array [0 .. 22] of string = ('MenuExpress', 'MenuStock', 'Articulos',
     'VaciarBase', 'Vender', 'Comprar', 'AnularVenta', 'RetiroCaja', 'Rubro',
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
@@ -1246,8 +1246,12 @@ begin
 end;
 
 function TDM.GetImgItemPath(cod: string): string;
+var dirName:string;
 begin
-  result := (path + 'img\item\[1]'+cod+'.jpg');
+  dirName := path + 'img\item';
+  if (not directoryexists(dirName))then
+    CreateDir(dirName);
+  result := (dirName+'\[1]'+cod+'.jpg');
 end;
 
 procedure TDM.ActualizarValor;
