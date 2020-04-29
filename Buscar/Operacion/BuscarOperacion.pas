@@ -58,7 +58,7 @@ uses OperacionF;
 procedure TBuscarOperacionForm.ActualizarGrilla;
 var sql, where,anulada,buscar:string;
 begin
-  if not AnuladaCheckBox.Checked then anulada := ' (ANULADA IS NULL) ';
+  if (not AnuladaCheckBox.Checked) then anulada := ' (ANULADA IS NULL) ';
   if ((nro <> '') or (letra <> '')) then
     buscar := ' (CODIGO like ' + QuotedStr(nro + '%') + '  ) '
     + ' AND (LETRA like ' + QuotedStr(letra + '%') + ' )';
@@ -165,7 +165,11 @@ end;
 
 procedure TBuscarOperacionForm.TipoRadioGroupClick(Sender: TObject);
 begin
-  FacturarBitBtn.Visible := (TipoRadioGroup.ItemIndex=1);
+  if (TipoRadioGroup.ItemIndex=1) then
+  begin
+    if (wpSync) then dm.WooCommerceGeN('GetOrders');
+    FacturarBitBtn.Visible := True;
+  end;
   todoBitBtn.Click;
 end;
 

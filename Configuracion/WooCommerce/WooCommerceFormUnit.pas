@@ -46,7 +46,7 @@ implementation
 procedure TWooCommerceForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    with dm do
-    if (BaseDatosFB.Connected = False) then BaseDatosFB.Connected:=True;;
+    if (BaseDatosFB.Connected = False) then BaseDatosFB.Connected:=True;
 end;
 
 procedure TWooCommerceForm.FormShow(Sender: TObject);
@@ -57,8 +57,7 @@ begin
   wooCommerceSecretEdit.Text := wooCommerceSecret;
   wPUsernameEdit.Text := wPUsername;
   wPPasswordEdit.Text := wPPassword;
-  if (wpSincronize<>'')then
-    AutoSincronizarCheckBox.Checked := StrToBool(wpSincronize);
+  AutoSincronizarCheckBox.Checked := wpSync;
 end;
 
 procedure TWooCommerceForm.NoBitBtnClick(Sender: TObject);
@@ -77,7 +76,7 @@ begin
     wooCommerceSecret := wooCommerceSecretEdit.Text;
     wPUsername := wPUsernameEdit.Text;
     wPPassword := wPPasswordEdit.Text;
-    wpSincronize := BoolToStr( AutoSincronizarCheckBox.Checked );
+    wpSync := AutoSincronizarCheckBox.Checked;
     DM.EscribirINI;
   end;
 
@@ -91,8 +90,11 @@ end;
 
 procedure TWooCommerceForm.SincronizarBitBtnClick(Sender: TObject);
 begin
-  dm.BaseDatosFB.Close;
-  WinExec(PAnsiChar(AnsiString('WooCommerceGeN.exe')), SW_SHOWNORMAL);
+  with dm do
+  begin
+    WooCommerceGeN('');
+    WooCommerceGeN('GetOrders');
+  end;
 end;
 
 end.

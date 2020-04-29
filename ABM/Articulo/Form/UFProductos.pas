@@ -28,7 +28,7 @@ type
     TabSheet1: TTabSheet;
     TabSheet3: TTabSheet;
     Panel3: TPanel;
-    BitBtn1: TBitBtn;
+    SaveBitBtn: TBitBtn;
     BitBtn2: TBitBtn;
     Label2: TLabel;
     Label14: TLabel;
@@ -120,7 +120,7 @@ type
     Image1: TImage;
     OpenPictureDialog1: TOpenPictureDialog;
     Label8: TLabel;
-    procedure BitBtn1Click(Sender: TObject);
+    procedure SaveBitBtnClick(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BitBtn4Click(Sender: TObject);
@@ -148,11 +148,14 @@ type
     procedure bImportarClick(Sender: TObject);
     procedure bExportarClick(Sender: TObject);
     procedure Image1Click(Sender: TObject);
+    procedure DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
   private
     { Private declarations }
     iip:string;
     tasa: Double;
     procedure Calcular;
+    procedure Save;
+    procedure GetImage;
   public
     desc: string;
     { Public declarations }
@@ -292,26 +295,9 @@ begin
   end;
 end;
 
-procedure TFProductos.BitBtn1Click(Sender: TObject);
+procedure TFProductos.SaveBitBtnClick(Sender: TObject);
 begin
-  with dm do begin
-  desc := CodigoDBEdit.Text;
-  // guardar imagen
-    //iip := GetImgItemPath(CodigoDBEdit.Text);
-    if (Image1.Picture.Graphic <> nil) then
-      Image1.Picture.SaveToFile(iip);
-  If (dm.tArticulo.State = dsEdit) or (dm.tArticulo.State = dsInsert) And
-    (
-      (DescripcionDBEdit.Text<>'') and
-      (CantidadDBEdit.Text<>'') and
-      (CostoDBEdit.Text<>'') and
-      (PrecioCtaCteDBEdit.Text<>'')
-    ) then
-    dm.tArticulo.Post
-  else
-      ShowMessage('COMPLETE TODOS LOS CAMPOS');
-end;
-  Close;
+ Save;
 end;
 
 procedure TFProductos.BitBtn2Click(Sender: TObject);
@@ -322,40 +308,40 @@ end;
 
 procedure TFProductos.FormCreate(Sender: TObject);
 begin
-with dm do begin
-  // DM := TDM.Create(Self);
-  dm.tArticulo.Active := True;
-  dm.tSubCategoria.Active := True;
-  dm.tProveedor.Active := True;
-  dm.tRubro.Active := True;
-  dm.tMarca.Active := True;
-  tCategoria.Active := True;
-  tIVA.Active := True;
-  dm.tCuenta.Active:=True;
-//  with DM do
-//  begin
-    //ConfigQuery.Open;
-//    TraerConfig;
-//    Precio1 := ConfigQuery.FieldByName('PP1').AsFloat / 100 + 1;
-//    Precio2 := ConfigQuery.FieldByName('PP2').AsFloat / 100 + 1;
-//    Precio3 := ConfigQuery.FieldByName('PP3').AsFloat / 100 + 1;
-//    Precio4 := ConfigQuery.FieldByName('PP4').AsFloat / 100 + 1;
-//    Precio5 := ConfigQuery.FieldByName('PP5').AsFloat / 100 + 1;
-//    Precio6 := ConfigQuery.FieldByName('PP6').AsFloat / 100 + 1;
-//    PrecioCtaCte := ConfigQuery.FieldByName('PP').AsFloat / 100 + 1;
-//  end;
-  QTemp.Close;
-  if catIVA = 'Responsable Inscripto' then
-  begin
-    IVADBCBLabel.Visible:=True;
-    IVADBComboBox.Visible:=True;
-    IVADBText.Visible:=True;
-    IVADBTLabel.Visible:=True;
-    IVADBCBPorcLabel.Visible:=True;
+  with dm do begin
+    // DM := TDM.Create(Self);
+    dm.tArticulo.Active := True;
+    dm.tSubCategoria.Active := True;
+    dm.tProveedor.Active := True;
+    dm.tRubro.Active := True;
+    dm.tMarca.Active := True;
+    tCategoria.Active := True;
+    tIVA.Active := True;
+    dm.tCuenta.Active:=True;
+  //  with DM do
+  //  begin
+      //ConfigQuery.Open;
+  //    TraerConfig;
+  //    Precio1 := ConfigQuery.FieldByName('PP1').AsFloat / 100 + 1;
+  //    Precio2 := ConfigQuery.FieldByName('PP2').AsFloat / 100 + 1;
+  //    Precio3 := ConfigQuery.FieldByName('PP3').AsFloat / 100 + 1;
+  //    Precio4 := ConfigQuery.FieldByName('PP4').AsFloat / 100 + 1;
+  //    Precio5 := ConfigQuery.FieldByName('PP5').AsFloat / 100 + 1;
+  //    Precio6 := ConfigQuery.FieldByName('PP6').AsFloat / 100 + 1;
+  //    PrecioCtaCte := ConfigQuery.FieldByName('PP').AsFloat / 100 + 1;
+  //  end;
+    QTemp.Close;
+    if catIVA = 'Responsable Inscripto' then
+    begin
+      IVADBCBLabel.Visible:=True;
+      IVADBComboBox.Visible:=True;
+      IVADBText.Visible:=True;
+      IVADBTLabel.Visible:=True;
+      IVADBCBPorcLabel.Visible:=True;
+    end;
+    dm.tArticulo.Insert;
+    nuevo;
   end;
-  dm.tArticulo.Insert;
-  nuevo;
-end;
 end;
 
 procedure TFProductos.FormDestroy(Sender: TObject);
@@ -375,24 +361,22 @@ end;
 
 procedure TFProductos.BitBtn4Click(Sender: TObject);
 begin
-  iip := '';
-  Image1.Picture := nil;
-  with dm do begin
-  TabSheet1.PageControl.ActivePageIndex := 0;
-  dm.tArticulo.Cancel;
-  FBuscaArticulo := TFBuscaArticulo.Create(Self);
-  try
-    FBuscaArticulo.ShowModal;
-  finally
-    If dm.qArticulo.Active = True then
-      dm.tArticulo.Locate('CODIGO', dm.qArticulo.FieldByName('CODIGO').AsInteger, []);
-    FBuscaArticulo.Free;
+  with dm do
+  begin
+    TabSheet1.PageControl.ActivePageIndex := 0;
+    dm.tArticulo.Cancel;
+    FBuscaArticulo := TFBuscaArticulo.Create(Self);
+    try
+      FBuscaArticulo.ShowModal;
+    finally
+      If dm.qArticulo.Active = True then
+        dm.tArticulo.Locate('CODIGO', dm.qArticulo.FieldByName('CODIGO').AsInteger, []);
+      FBuscaArticulo.Free;
+    end;
+    GetImage;
+    dm.tArticulo.Edit;
+    Codifica(CodigoBarraEdit.Text);
   end;
-  iip := GetImgItemPath(CodigoDBEdit.Text);
-  if (FileExists(iip)) then Image1.Picture.LoadFromFile(iip);
-  dm.tArticulo.Edit;
-  Codifica(CodigoBarraEdit.Text);
-end;
 end;
 
 procedure TFProductos.FormKeyPress(Sender: TObject; var Key: Char);
@@ -439,6 +423,8 @@ end;
 
 Procedure TFProductos.nuevo;
 begin
+  iip := '';
+  Image1.Picture := nil;
 //  IVADBEdit.Field.AsFloat := 0;
 //  CodigoDBEdit.Text:=IntToStr(DM.UltimoRegistro('Articulo', 'CODIGO'));
 //  CostoDBEdit.Field.AsFloat := 0;
@@ -448,7 +434,7 @@ end;
 
 procedure TFProductos.RubroBitBtnClick(Sender: TObject);
 begin
-  WinExec(PAnsiChar(AnsiString(Path + 'Rubro.exe')), SW_SHOWNORMAL);
+  //WinExec(PAnsiChar(AnsiString(Path + 'Rubro.exe')), SW_SHOWNORMAL);
   { RubroForm:=RubroForm.Create(self);
     try
     RubroForm.ShowModal;
@@ -469,6 +455,25 @@ begin
   dm.tRubro.Close;
   dm.tRubro.Open;
   dm.tRubro.Last;
+end;
+
+procedure TFProductos.Save;
+begin
+  with dm do
+  begin
+    desc := CodigoDBEdit.Text;
+    // guardar imagen
+    if (Image1.Picture.Graphic <> nil) then Image1.Picture.SaveToFile(iip);
+    if (tArticulo.State = dsEdit) or (tArticulo.State = dsInsert) then
+    if ((DescripcionDBEdit.Text<>'') and (CantidadDBEdit.Text<>'') and (CostoDBEdit.Text<>'') and (PrecioCtaCteDBEdit.Text<>'')) then
+     begin
+      tArticulo.Post;
+      if (wpSync) then WooCommerceGeN(desc);
+      if Dialogs.MessageDlg('Articulo grabado con éxito.  Salir?', mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then Close;
+      end
+     else
+      ShowMessage('COMPLETE TODOS LOS CAMPOS');
+  end;
 end;
 
 procedure TFProductos.CodigoBarraBitBtnClick(Sender: TObject);
@@ -518,7 +523,15 @@ end;
 procedure TFProductos.GanaciaDBEditExit(Sender: TObject);
 begin
   Calcular;
-  BitBtn1.SetFocus;
+  SaveBitBtn.SetFocus;
+end;
+
+procedure TFProductos.GetImage;
+begin
+  iip := '';
+  Image1.Picture := nil;
+  iip := DM.GetImgItemPath(CodigoDBEdit.Text);
+  if (FileExists(iip)) then Image1.Picture.LoadFromFile(iip);
 end;
 
 procedure TFProductos.PaintBox1Click(Sender: TObject);
@@ -545,7 +558,7 @@ begin
 //  g := RoundTo(((p*100)/c)-100,-2);
   GanaciaDBEdit.Text:=FloatToStr(DM.CalculaGanancia(StrToFloat(CostoDBEdit.Text),StrToFloat(FleteDBEdit.Text),StrToFloat(PrecioCtaCteDBEdit.Text)));
   Calcular;
-  BitBtn1.SetFocus;
+  SaveBitBtn.SetFocus;
 end;
 
 
@@ -622,7 +635,7 @@ end;
 
 procedure TFProductos.DBEdit14Exit(Sender: TObject);
 begin
-  BitBtn1.SetFocus;
+  SaveBitBtn.SetFocus;
 end;
 
 procedure TFProductos.DBLookupComboBox4Enter(Sender: TObject);
@@ -630,6 +643,22 @@ begin
   dm.tProveedor.Close;
   dm.tProveedor.Open;
   dm.tProveedor.Last;
+end;
+
+procedure TFProductos.DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
+begin
+  case Button of
+    nbFirst : GetImage;
+    nbPrior : GetImage;
+    nbNext : GetImage;
+    nbLast : GetImage;
+    nbInsert : nuevo;
+//    nbDelete : nuevo;
+//    nbEdit : BtnName := 'nbEdit';
+//    nbPost : Save;
+    nbCancel : GetImage;
+//    nbRefresh: GetImage;
+  end;
 end;
 
 procedure TFProductos.bExportarClick(Sender: TObject);

@@ -1015,7 +1015,7 @@ object FProductos: TFProductos
       ParentFont = False
       ExplicitWidth = 40
     end
-    object BitBtn1: TBitBtn
+    object SaveBitBtn: TBitBtn
       Left = 1
       Top = 326
       Width = 73
@@ -1044,11 +1044,10 @@ object FProductos: TFProductos
         3338F38F000033333333333333A223333333333333338F830000333333333333
         333A333333333333333338330000333333333333333333333333333333333333
         0000}
-      ModalResult = 6
       NumGlyphs = 2
       ParentFont = False
       TabOrder = 0
-      OnClick = BitBtn1Click
+      OnClick = SaveBitBtnClick
     end
     object BitBtn2: TBitBtn
       Left = 1
@@ -1134,7 +1133,7 @@ object FProductos: TFProductos
       Width = 792
       Height = 36
       DataSource = DM.dstArticulo
-      VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete]
+      VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete, nbEdit, nbCancel]
       Align = alTop
       Hints.Strings = (
         'Primer registro'
@@ -1150,6 +1149,9 @@ object FProductos: TFProductos
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
+      OnClick = DBNavigator1Click
+      ExplicitLeft = 0
+      ExplicitTop = 2
     end
   end
   object OpenPictureDialog1: TOpenPictureDialog

@@ -190,6 +190,7 @@ type
     procedure ActualizarTriggerFecha;
     procedure CrearTablasIva;
     procedure CrearTablaCbteAsoc;
+    function EjecutarYEsperar(sPrograma: String; Visibilidad: Integer): Integer;
   public
   const
     NumThreads: Integer = 4;
@@ -252,10 +253,11 @@ type
     function GenerarContraseña(Texto:string):string;
     procedure ImportarCsv(tabla: string);
     function GetImgItemPath(cod:string):string;
+    procedure WooCommerceGeN(id:string);
   end;
 
 const
-  version='202004282016';
+  version='202004291952';
   v: array [0 .. 22] of string = ('MenuExpress', 'MenuStock', 'Articulos',
     'VaciarBase', 'Vender', 'Comprar', 'AnularVenta', 'RetiroCaja', 'Rubro',
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
@@ -370,10 +372,10 @@ var
   Usuario, Licencia, U, Path, Oculto, Control, Maquina, Fecha, Empresa,
   PuntoVenta, TITULAR, DIRECCIONCOMERCIAL, PROVINCIA, CIUDAD, CUIT, EMAIL, IngresosBrutos, reporte, catIVA: string;
   Permiso: Integer;
-  LoginOK, Cancelar, envEmail, microsoftStore: boolean;
+  LoginOK, Cancelar, envEmail, microsoftStore, wpSync: boolean;
   detalle, memo, BasedeDatos, mode: string; // revisar
   webUrl, webRes, webSecretUsr, webSecretKey, webUsr, webPsw, webUpd,
-  wpSite, wooCommerceKey, wooCommerceSecret, wPUsername, wPPassword, wpSincronize,
+  wpSite, wooCommerceKey, wooCommerceSecret, wpUsername, wpPassword,
   afipUrl, afipRes, afipUsr, afipPsw,
   operNC, openSSl,
   NroA, NroNCA, NroB, NroNCB, NroC, NroNCC,
@@ -624,6 +626,7 @@ end;
 procedure TDM.LeerINI;
 Var
   IniFile: TIniFile;
+  var s:string;
 begin
   IniFile := TIniFile.Create(Path + 'db\' + 'DeG');
   bd := IniFile.ReadString('BD', 'Path', '');
@@ -653,7 +656,8 @@ begin
   wooCommerceSecret := IniFile.ReadString('WooCommerce', 'WooCommerceSecret', '');
   wPUsername := IniFile.ReadString('WooCommerce', 'WPUsername', '');
   wPPassword := IniFile.ReadString('WooCommerce', 'WPPassword', '');
-  wpSincronize := IniFile.ReadString('WooCommerce', 'WPSincronize', '');
+  s := IniFile.ReadString('WooCommerce', 'WPSync', '');
+  if (s<>'') then wpSync := StrToBool(s);
   IniFile.Destroy;
 end;
 
@@ -708,7 +712,7 @@ begin
   IniFile.WriteString('WooCommerce', 'WooCommerceSecret', wooCommerceSecret);
   IniFile.WriteString('WooCommerce', 'WPUsername', wPUsername);
   IniFile.WriteString('WooCommerce', 'WPPassword', wPPassword);
-  IniFile.WriteString('WooCommerce', 'WPSincronize', wpSincronize);
+  IniFile.WriteString('WooCommerce', 'WPSync', BoolToStr(wpSync));
   IniFile.Destroy;
   LeerINI;
 end;
@@ -935,6 +939,14 @@ begin
     v := sdb.ExecSQLScalar('Select Max ( '+c+' ) From "'+T+'"');
     if v=null then v:=0;
     result := v+1;
+end;
+
+procedure TDM.WooCommerceGeN(id: string);
+begin
+  BaseDatosFB.Connected := False;
+  if(id<>'') then id := ' '+id;
+  EjecutarYEsperar( 'WooCommerceGeN.exe'+id, SW_SHOWNORMAL );
+  if (BaseDatosFB.Connected = False) then BaseDatosFB.Connected:=True;
 end;
 
 procedure TDM.FDTable1AfterPost(DataSet: TDataSet);
@@ -2508,6 +2520,39 @@ function TDM.CalculaGanancia(c,f,p : double):double;
 begin
   c := c+(c*(f)/100);
   result := RoundTo(((p*100)/c)-100,-2);
+end;
+
+function TDM.EjecutarYEsperar( sPrograma: String; Visibilidad: Integer ): Integer;
+var
+  sAplicacion: array[0..512] of char;
+  DirectorioActual: array[0..255] of char;
+  DirectorioTrabajo: String;
+  InformacionInicial: TStartupInfo;
+  InformacionProceso: TProcessInformation;
+  iResultado, iCodigoSalida: DWord;
+begin
+  StrPCopy( sAplicacion, sPrograma );
+  GetDir( 0, DirectorioTrabajo );
+  StrPCopy( DirectorioActual, DirectorioTrabajo );
+  FillChar( InformacionInicial, Sizeof( InformacionInicial ), #0 );
+  InformacionInicial.cb := Sizeof( InformacionInicial );
+
+  InformacionInicial.dwFlags := STARTF_USESHOWWINDOW;
+  InformacionInicial.wShowWindow := Visibilidad;
+  CreateProcess( nil, sAplicacion, nil, nil, False,
+                 CREATE_NEW_CONSOLE or NORMAL_PRIORITY_CLASS,
+                 nil, nil, InformacionInicial, InformacionProceso );
+
+  // Espera hasta que termina la ejecución
+  repeat
+    iCodigoSalida := WaitForSingleObject( InformacionProceso.hProcess, 1000 );
+    Application.ProcessMessages;
+  until ( iCodigoSalida <> WAIT_TIMEOUT );
+
+  GetExitCodeProcess( InformacionProceso.hProcess, iResultado );
+  //MessageBeep( 0 );
+  CloseHandle( InformacionProceso.hProcess );
+  Result := iResultado;
 end;
 
 end.

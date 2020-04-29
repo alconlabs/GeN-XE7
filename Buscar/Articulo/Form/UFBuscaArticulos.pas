@@ -77,7 +77,8 @@ procedure TFBuscaArticulo.FormCreate(Sender: TObject);
 begin
   with dm do
   begin
-    if ConfigQuery.Active then ConfigQuery.Open;
+    //if ConfigQuery.Active then ConfigQuery.Open;
+    TraerConfig;
     if qArticulo.Active then qArticulo.Open;
   end;
 end;

@@ -163,7 +163,6 @@ object WooCommerceForm: TWooCommerceForm
       Align = alBottom
       Caption = 'Auto Sincronizar'
       TabOrder = 5
-      Visible = False
     end
   end
   object PanelRight: TPanel

@@ -5,7 +5,7 @@ object FullMainForm: TFullMainForm
   BiDiMode = bdLeftToRight
   BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
   Caption = 'GeN'
-  ClientHeight = 5
+  ClientHeight = 7
   ClientWidth = 668
   Color = clBtnFace
   ParentFont = True
@@ -24,13 +24,13 @@ object FullMainForm: TFullMainForm
     Left = 0
     Top = 0
     Width = 668
-    Height = 5
+    Height = 7
     Align = alClient
     TabOrder = 0
     ExplicitWidth = 534
     ExplicitHeight = 4
     ControlData = {
-      4C0000000A450000840000000000000000000000000000000000000000000000
+      4C0000000A450000B90000000000000000000000000000000000000000000000
       000000004C000000000000000000000001000000E0D057007335CF11AE690800
       2B2E126208000000000000004C0000000114020000000000C000000000000046
       8000000000000000000000000000000000000000000000000000000000000000
