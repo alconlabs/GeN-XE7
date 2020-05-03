@@ -1150,8 +1150,6 @@ object FProductos: TFProductos
       ShowHint = True
       TabOrder = 0
       OnClick = DBNavigator1Click
-      ExplicitLeft = 0
-      ExplicitTop = 2
     end
   end
   object OpenPictureDialog1: TOpenPictureDialog

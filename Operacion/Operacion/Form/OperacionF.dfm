@@ -530,7 +530,7 @@ object OperacionForm: TOperacionForm
     ParentBackground = False
     TabOrder = 0
     object ProcesarBitBtn: TBitBtn
-      Left = 707
+      Left = 708
       Top = 4
       Width = 80
       Height = 50
@@ -586,7 +586,7 @@ object OperacionForm: TOperacionForm
       OnClick = VendedorBitBtnClick
     end
     object AgregarBitBtn: TBitBtn
-      Left = 314
+      Left = 309
       Top = 4
       Width = 80
       Height = 50
@@ -604,7 +604,7 @@ object OperacionForm: TOperacionForm
       OnClick = AgregarBitBtnClick
     end
     object NuevoBitBtn: TBitBtn
-      Left = 234
+      Left = 231
       Top = 4
       Width = 80
       Height = 50
@@ -623,7 +623,7 @@ object OperacionForm: TOperacionForm
       OnClick = NuevoBitBtnClick
     end
     object QuitarBitBtn: TBitBtn
-      Left = 392
+      Left = 387
       Top = 4
       Width = 80
       Height = 50
@@ -641,7 +641,7 @@ object OperacionForm: TOperacionForm
       OnClick = QuitarBitBtnClick
     end
     object CantidadBitBtn: TBitBtn
-      Left = 470
+      Left = 465
       Top = 4
       Width = 80
       Height = 50
@@ -659,7 +659,7 @@ object OperacionForm: TOperacionForm
       OnClick = CantidadBitBtnClick
     end
     object DescuentoBitBtn: TBitBtn
-      Left = 548
+      Left = 543
       Top = 4
       Width = 90
       Height = 50
@@ -677,7 +677,7 @@ object OperacionForm: TOperacionForm
       OnClick = DescuentoBitBtnClick
     end
     object bRetPer: TButton
-      Left = 164
+      Left = 163
       Top = 4
       Width = 70
       Height = 50
@@ -711,12 +711,13 @@ object OperacionForm: TOperacionForm
     TabOrder = 4
     object SGTotal: TStringGrid
       Left = 1
-      Top = 184
+      Top = 160
       Width = 204
-      Height = 127
+      Height = 151
       BiDiMode = bdRightToLeft
       ColCount = 2
       DefaultColWidth = 100
+      RowCount = 6
       FixedRows = 0
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -726,7 +727,7 @@ object OperacionForm: TOperacionForm
       ParentBiDiMode = False
       ParentFont = False
       ScrollBars = ssNone
-      TabOrder = 0
+      TabOrder = 1
       ColWidths = (
         100
         100)
@@ -735,13 +736,14 @@ object OperacionForm: TOperacionForm
         24
         24
         24
+        24
         24)
     end
     object GroupBox5: TGroupBox
-      Left = 1
+      Left = -1
       Top = 0
       Width = 208
-      Height = 186
+      Height = 161
       Caption = 'Saldo'
       Color = clWhite
       Font.Charset = DEFAULT_CHARSET
@@ -752,7 +754,7 @@ object OperacionForm: TOperacionForm
       ParentBackground = False
       ParentColor = False
       ParentFont = False
-      TabOrder = 1
+      TabOrder = 0
       object LbSaldo: TLabel
         Left = 3
         Top = 19
@@ -769,8 +771,8 @@ object OperacionForm: TOperacionForm
         ParentFont = False
       end
       object TotalLabel: TLabel
-        Left = 5
-        Top = 75
+        Left = 7
+        Top = 49
         Width = 198
         Height = 43
         Alignment = taRightJustify
@@ -784,8 +786,8 @@ object OperacionForm: TOperacionForm
         ParentFont = False
       end
       object GroupBox4: TGroupBox
-        Left = 1
-        Top = 117
+        Left = 5
+        Top = 93
         Width = 66
         Height = 62
         Caption = 'Tipo'
@@ -814,8 +816,8 @@ object OperacionForm: TOperacionForm
         end
       end
       object ComprobanteEdit: TEdit
-        Left = 67
-        Top = 153
+        Left = 71
+        Top = 129
         Width = 134
         Height = 25
         Alignment = taCenter
@@ -835,8 +837,8 @@ object OperacionForm: TOperacionForm
         OnExit = ComprobanteEditExit
       end
       object PuntoVentaEdit: TEdit
-        Left = 67
-        Top = 122
+        Left = 71
+        Top = 98
         Width = 134
         Height = 25
         Alignment = taCenter

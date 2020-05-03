@@ -108,7 +108,7 @@ type
      desc, costo, reparaciones, Total, IIBB, NGIIBB, Exento,
      ComisionVendedor, BalanceAnterior, Interes, BalanceTotal, Deuda, Saldo, Pagado,
      Comision, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib
-    : Double;
+    ,envio :Double;
     CtaNombre, CtaTipo, CtaAnticipo, CtaIIBB, code, Dia, Mes, Ano, TDocumento,
       Tiempo, T2, Precio, ChequeCodCheque, ChequeNumero, ChequeDetalle,
       ChequeCodFactura, ChequeMntCheque, ChequeFecha, ChequeDias, Fecha,
@@ -196,12 +196,13 @@ begin
   SGFact.Cells[3, 1] := '0';
   SGFact.Cells[4, 1] := '0.00';
   SGFact.Cells[5, 1] := '0.00';
-  SGTotal.Cells[0, 0] := 'Sub Total';
-  SGTotal.Cells[0, 1] := 'Descuento';
-  SGTotal.Cells[0, 2] := 'Impuesto';
-  SGTotal.Cells[0, 3] := 'Interes';
-  SGTotal.Cells[0, 4] := 'TOTAL';
-  SGTotal.Cells[0, 5] := 'Saldo';
+  SGTotal.Cells[0, 0] := 'DESCUENTO';
+  SGTotal.Cells[0, 1] := 'INTERES';
+  SGTotal.Cells[0, 2] := 'ENVIO';
+  SGTotal.Cells[0, 3] := 'NETO';
+  SGTotal.Cells[0, 4] := 'IMPUESTO';
+  SGTotal.Cells[0, 5] := 'TOTAL';
+//  SGTotal.Cells[0, 6] := 'Saldo';
   SGTotal.Cells[1, 0] := '0.00';
   SGTotal.Cells[1, 1] := '0.00';
   SGTotal.Cells[1, 2] := '0.00';
@@ -420,6 +421,24 @@ begin
     desc:= desc + DSC;
     end;
 
+  if (Comision>0) then
+  begin
+    TOT := Comision;
+    IVA := dm.SacarIVA(TOT,21);
+    NG := TOT-IVA;
+    NG21 := NG21 + NG;
+    IVA21 := IVA21 + IVA;
+  end;
+
+  if (envio>0) then
+  begin
+    TOT := envio;
+    IVA := dm.SacarIVA(TOT,21);
+    NG := TOT-IVA;
+    NG21 := NG21 + NG;
+    IVA21 := IVA21 + IVA;
+  end;
+
   Exento := RoundTo(NE,-2);
   NG21 := RoundTo(NG21,-2);
   NG105 := RoundTo(NG105,-2);
@@ -427,22 +446,25 @@ begin
   IVA21 := RoundTo(IVA21,-2);
   IVA105 := RoundTo(IVA105,-2);
   IVAO := RoundTo(IVAO,-2);
-  desc:=  RoundTo((desc),-2);
+  desc :=  RoundTo((desc),-2);
+
+  Interes := Comision;
 
   RP := RoundTo((pagCueIva + pagCueOtr + perIIBB + perImpMun + impInt + otrTrib + noGra),-2);
 
-  subtotal:= RoundTo((NG21 + NG105 + NGO + Exento + Interes),-2);
+  subtotal:= RoundTo((NG21 + NG105 + NGO + Exento ),-2);
 
   Impuesto := RoundTo((IVA21 + IVA105 + IVAO),-2);
 
   Total := RoundTo((subtotal + Impuesto + RP),-2);
 
   // escribe los valores en las celdas
-  SGTotal.Cells[1, 0] := Format('%8.2n', [subtotal]);
-  SGTotal.Cells[1, 1] := Format('%8.2n', [desc]);
-  SGTotal.Cells[1, 2] := Format('%8.2n', [Impuesto]);
-  SGTotal.Cells[1, 3] := Format('%8.2n', [Interes]);
-  SGTotal.Cells[1, 4] := Format('%8.2n', [Total]);
+  SGTotal.Cells[1, 0] := Format('%8.2n', [desc]);
+  SGTotal.Cells[1, 1] := Format('%8.2n', [Interes]);
+  SGTotal.Cells[1, 2] := Format('%8.2n', [envio]);
+  SGTotal.Cells[1, 3] := Format('%8.2n', [subtotal]);
+  SGTotal.Cells[1, 4] := Format('%8.2n', [Impuesto]);
+  SGTotal.Cells[1, 5] := Format('%8.2n', [Total]);
 
   if FEContado.Text = '' then FEContado.Text := '0';
   if FECheque.Text = '' then FECheque.Text := '0';
@@ -836,7 +858,7 @@ begin
       ProcOPER('PED', cbTipo.Text, ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
         VendedorEdit.Text, '', CtaNombre, False, PagareCheckBox.Checked, impr, costo,
-        Comision, Impuesto, StrToFloat(FECheque.Text), 0,
+        Comision, envio, Impuesto, StrToFloat(FECheque.Text), 0,
         StrToFloat(FEContado.Text), Total, subtotal, desc,
         StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text), Saldo, Pagado,
         Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto,
@@ -846,7 +868,7 @@ begin
         ProcPresup(cbTipo.Text, ClienteEdit.Text,
           FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
           VendedorEdit.Text, CuitEdit.Text, CtaNombre, True,
-          PagareCheckBox.Checked, costo, Comision, Impuesto,
+          PagareCheckBox.Checked, costo, Comision, envio, Impuesto,
           StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
           Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto)
@@ -855,7 +877,7 @@ begin
         FactRem(codRem,cbTipo.Text, ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
         VendedorEdit.Text, CuitEdit.Text, CtaNombre, TipoRadioGroup.ItemIndex=1,
-        PagareCheckBox.Checked, impr, costo, Comision, Impuesto,
+        PagareCheckBox.Checked, impr, costo, Comision, envio, Impuesto,
         StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
         subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
         Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto,
@@ -867,7 +889,7 @@ begin
          cbTipo.Text, ClienteEdit.Text,
          FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
          VendedorEdit.Text, CuitEdit.Text, CtaNombre, TipoRadioGroup.ItemIndex=1,
-         PagareCheckBox.Checked, impr, costo, Comision, Impuesto,
+         PagareCheckBox.Checked, impr, costo, Comision, envio, Impuesto,
          StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
          subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
          Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Total - Saldo, UltCosto
@@ -1099,7 +1121,6 @@ begin
       .AsString;
     VendedorLabel.Caption := dm.qVendedor.FieldByName
       ('NOMBRE').AsString;
-    Comision := dm.qVendedor.FieldByName('COMISION').AsFloat;
     BuscarVendedorForm.Free;
   end;
 end;
@@ -1117,8 +1138,10 @@ begin
   with dm do
   with qRemito do
   begin
-    Open('SELECT CLIENTE FROM  "Operacion" WHERE CODIGO='+codigo);
+    Open('SELECT CLIENTE, COMISION, ENVIO FROM  "Operacion" WHERE CODIGO='+codigo);
     ClienteEdit.Text := FieldByName('CLIENTE').AsString;
+    Comision := FieldByName('COMISION').AsFloat;
+    envio := FieldByName('ENVIO').AsFloat;
     TraeNombreCliente;
     Open('SELECT ARTICULO, PRECIO, CANTIDAD, COSTO FROM "OperacionItem"'+
     ' WHERE OPERACION = '+codigo);

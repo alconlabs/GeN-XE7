@@ -23,7 +23,6 @@ type
     frxReport1: TfrxReport;
     VentasFDQuery1: TFDQuery;
     FDQuery1: TFDQuery;
-    FirebirdConnection: TFDConnection;
     IBDatabase1: TIBDatabase;
     IBQuery1: TIBQuery;
     db: TIBTransaction;
@@ -33,6 +32,7 @@ type
     tLibroIVAventa: TFDQuery;
     sdb: TFDConnection;
     qSdb: TFDQuery;
+    GenConnection: TFDConnection;
   private
     { Private declarations }
   public

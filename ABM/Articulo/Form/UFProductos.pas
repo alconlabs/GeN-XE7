@@ -156,6 +156,7 @@ type
     procedure Calcular;
     procedure Save;
     procedure GetImage;
+    procedure Load;
   public
     desc: string;
     { Public declarations }
@@ -166,7 +167,6 @@ type
     // procedimiento para validar-corregir los códigos
     procedure EANCorrecto(var num: string);
     Procedure nuevo;
-
   end;
 
 var
@@ -297,7 +297,7 @@ end;
 
 procedure TFProductos.SaveBitBtnClick(Sender: TObject);
 begin
- Save;
+  Save;
 end;
 
 procedure TFProductos.BitBtn2Click(Sender: TObject);
@@ -306,21 +306,20 @@ begin
   Close;
 end;
 
-procedure TFProductos.FormCreate(Sender: TObject);
+procedure TFProductos.Load;
 begin
-  with dm do begin
+  with dm do
+  begin
     // DM := TDM.Create(Self);
-    dm.tArticulo.Active := True;
-    dm.tSubCategoria.Active := True;
-    dm.tProveedor.Active := True;
-    dm.tRubro.Active := True;
-    dm.tMarca.Active := True;
+    tArticulo.Active := True;
+    tSubCategoria.Active := True;
+    tProveedor.Active := True;
+    tRubro.Active := True;
+    tMarca.Active := True;
     tCategoria.Active := True;
     tIVA.Active := True;
-    dm.tCuenta.Active:=True;
-  //  with DM do
-  //  begin
-      //ConfigQuery.Open;
+    tCuenta.Active := True;
+  //    ConfigQuery.Open;
   //    TraerConfig;
   //    Precio1 := ConfigQuery.FieldByName('PP1').AsFloat / 100 + 1;
   //    Precio2 := ConfigQuery.FieldByName('PP2').AsFloat / 100 + 1;
@@ -329,8 +328,8 @@ begin
   //    Precio5 := ConfigQuery.FieldByName('PP5').AsFloat / 100 + 1;
   //    Precio6 := ConfigQuery.FieldByName('PP6').AsFloat / 100 + 1;
   //    PrecioCtaCte := ConfigQuery.FieldByName('PP').AsFloat / 100 + 1;
-  //  end;
-    QTemp.Close;
+//      QTemp.Close;
+  end;
     if catIVA = 'Responsable Inscripto' then
     begin
       IVADBCBLabel.Visible:=True;
@@ -339,9 +338,13 @@ begin
       IVADBTLabel.Visible:=True;
       IVADBCBPorcLabel.Visible:=True;
     end;
-    dm.tArticulo.Insert;
-    nuevo;
-  end;
+    //tArticulo.Insert;
+//    nuevo;
+end;
+
+procedure TFProductos.FormCreate(Sender: TObject);
+begin
+    Load;
 end;
 
 procedure TFProductos.FormDestroy(Sender: TObject);
@@ -469,7 +472,10 @@ begin
      begin
       tArticulo.Post;
       if (wpSync) then WooCommerceGeN(desc);
-      if Dialogs.MessageDlg('Articulo grabado con éxito.  Salir?', mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then Close;
+      if Dialogs.MessageDlg('Articulo grabado con éxito.  Salir?', mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
+        Close
+      else
+        Load;
       end
      else
       ShowMessage('COMPLETE TODOS LOS CAMPOS');

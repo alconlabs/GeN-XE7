@@ -153,8 +153,8 @@
     <Transaction>2019/10/11 10:22:36.000.786,=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
     <Transaction>2019/10/11 10:24:15.000.550,C:\GitHub\GeN-XE7\Unit2.pas=C:\GitHub\GeN-XE7\Operacion\AnularOperacion\ViewModels\CancelOrderViewModel.pas</Transaction>
     <Transaction>2019/10/11 10:49:16.000.709,=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
-    <Transaction>2019/10/11 10:50:44.000.209,C:\GitHub\GeN-XE7\Unit2.pas=C:\GitHub\GeN-XE7\Operacion\CancelOrder\Views\CancelOrderView.pas</Transaction>
     <Transaction>2019/10/11 10:50:44.000.209,C:\GitHub\GeN-XE7\Unit2.dfm=C:\GitHub\GeN-XE7\Operacion\CancelOrder\Views\CancelOrderView.dfm</Transaction>
+    <Transaction>2019/10/11 10:50:44.000.209,C:\GitHub\GeN-XE7\Unit2.pas=C:\GitHub\GeN-XE7\Operacion\CancelOrder\Views\CancelOrderView.pas</Transaction>
     <Transaction>2019/10/11 10:50:54.000.661,C:\GitHub\GeN-XE7\Operacion\AnularOperacion\Models\CancelOrderModel.pas=</Transaction>
     <Transaction>2019/10/11 10:51:07.000.488,C:\GitHub\GeN-XE7\Operacion\AnularOperacion\ViewModels\CancelOrderViewModel.pas=</Transaction>
     <Transaction>2019/10/11 10:52:43.000.919,=C:\GitHub\GeN-XE7\Operacion\CancelOrder\Models\CancelOrderModel.pas</Transaction>
@@ -168,10 +168,12 @@
     <Transaction>2020/01/29 20:25:55.000.217,C:\GitHub\GeN-XE7\Configuracion\WebLogin\WebLoginF.pas=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
     <Transaction>2020/01/29 20:25:55.000.217,C:\GitHub\GeN-XE7\Configuracion\WebLogin\WebLoginF.dfm=C:\GitHub\GeN-XE7\Unit2.dfm</Transaction>
     <Transaction>2020/04/20 11:46:43.000.936,=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
-    <Transaction>2020/04/20 11:48:57.000.187,C:\GitHub\GeN-XE7\Unit2.pas=C:\GitHub\GeN-XE7\Configuracion\WooCommerce\WooCommerce.pas</Transaction>
     <Transaction>2020/04/20 11:48:57.000.187,C:\GitHub\GeN-XE7\Unit2.dfm=C:\GitHub\GeN-XE7\Configuracion\WooCommerce\WooCommerce.dfm</Transaction>
+    <Transaction>2020/04/20 11:48:57.000.187,C:\GitHub\GeN-XE7\Unit2.pas=C:\GitHub\GeN-XE7\Configuracion\WooCommerce\WooCommerce.pas</Transaction>
     <Transaction>2020/04/20 11:50:23.000.346,C:\GitHub\GeN-XE7\Configuracion\WooCommerce\WooCommerce.pas=C:\GitHub\GeN-XE7\Configuracion\WooCommerce\WooCommerceFormUnit.pas</Transaction>
     <Transaction>2020/04/20 11:50:23.000.346,C:\GitHub\GeN-XE7\Configuracion\WooCommerce\WooCommerce.dfm=C:\GitHub\GeN-XE7\Configuracion\WooCommerce\WooCommerceFormUnit.dfm</Transaction>
+    <Transaction>2020/05/02 13:43:42.000.204,=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
+    <Transaction>2020/05/02 13:44:36.000.118,C:\GitHub\GeN-XE7\Actualizar\ActualizarBase.pas=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
   </Transactions>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>

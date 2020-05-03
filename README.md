@@ -1,7 +1,5 @@
 ﻿# GeN - Sistema de Gestión para Comercios
 
-AHÓRRATE EL CONTADOR AHORA PODES LLEVAR DE MANERA AUTOMÁTICA LOS INGRESOS BRUTOS!!!
-
 Con el puedes comprar, vender, llevar stock, proveedores, pedidos, inventarios, ingresos brutos. 
 Y la mas variable y flexible forma de obtener reportes. 
 Esta basado en una solida estructura contable totalmente adaptable a cualquier empresa. 
@@ -31,6 +29,9 @@ VENDEDORES.
 CONTABILIDAD:
 IVA. 
 INGRESOS BRUTOS.
+
+WOOCOMMERCE
+Sincronización con tienda online.
 
 TU COMPRA INCLUYE 
 

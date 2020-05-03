@@ -14,7 +14,8 @@ uses
   FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
   FireDAC.FMXUI.Wait, FireDAC.Comp.UI, FireDAC.Comp.BatchMove.DataSet,
   FireDAC.Comp.BatchMove, FireDAC.Comp.BatchMove.Text, FireDAC.Comp.BatchMove.SQL,
-  FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, FireDAC.Comp.Script, System.Math;
+  FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, FireDAC.Comp.Script, System.Math
+  ,ActualizarBase;
 
 type
   TDM = class(TDataModule)
@@ -166,37 +167,21 @@ type
     procedure FDTable1BeforeInsert(DataSet: TDataSet);
   private
     { Private declarations }
-    bd, ejecutable : string;
-    procedure ActualizarImprimir(reporte:string);
-    procedure ActualizarBase;
-    function ExisteEnTabla(TB_NAME, FLD_NAME: string):Boolean;
-    procedure ActualizarTabla(TB_NAME, FLD_NAME, TYP_NAME: string);
-    procedure CrearTabla(TB_NAME, FLD_NAME, TYP_NAME: string);
-    procedure ActualizarIVA(CODIGO, TASA: string);
+    bd : string;
+    ActualizarBase : TActualizarBase;
     procedure GetBuildInfo;//(V1, V2, V3, V4: Word);
     procedure CrearTable(nombre: string);
     procedure IniciarModificacionTabla(nombreTabla:string);
     procedure AgregarCampoModificacionTabla(nombreCampo: string;tipo: TFieldType;tamaño: Integer);
     procedure TerminarModificacionTabla;
     procedure ObtenerSO;
-    procedure ActualizarVersion;
-    function EsMismaVersion:Boolean;
-    procedure CrearCbtetipo;
-    procedure CrearTablasSiap;
-    procedure ConectarSDB;
-    procedure CrearMtIva;
-    procedure CrearTablaRetPer;
-    procedure ActualizarTrigger(name,active,body:string);
-    procedure ActualizarTriggerFecha;
-    procedure CrearTablasIva;
-    procedure CrearTablaCbteAsoc;
     function EjecutarYEsperar(sPrograma: String; Visibilidad: Integer): Integer;
   public
   const
     NumThreads: Integer = 4;
   public
     { Public declarations }
-    Unidad: string;
+    Unidad, ejecutable: string;
     // Gratis:boolean;
     IniFile: TIniFile;
     V1,       // Major Version
@@ -254,10 +239,19 @@ type
     procedure ImportarCsv(tabla: string);
     function GetImgItemPath(cod:string):string;
     procedure WooCommerceGeN(id:string);
+    function ExisteEnTabla(TB_NAME, FLD_NAME: string):Boolean;
+    procedure ActualizarTabla(TB_NAME, FLD_NAME, TYP_NAME: string);
+    procedure ConectarSDB;
+    procedure CrearMtIva;
+    procedure ActualizarTrigger(name,active,body:string);
+    procedure CrearTabla(TB_NAME, FLD_NAME, TYP_NAME: string);
+    procedure ActualizarIVA(CODIGO, TASA: string);
+    procedure ActualizarVersion;
+    function EsVersion(_v1,_v2,_v3,_v4 :Word):Integer;
   end;
 
 const
-  version='202004291952';
+  version='202005032032';
   v: array [0 .. 22] of string = ('MenuExpress', 'MenuStock', 'Articulos',
     'VaciarBase', 'Vender', 'Comprar', 'AnularVenta', 'RetiroCaja', 'Rubro',
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
@@ -279,7 +273,7 @@ const
     + ' "Presupuesto".IVA3, "Presupuesto".TOTAL, "Presupuesto".CONTADO, "Presupuesto".CLIENTE,'
     + ' "Presupuesto".SUBTOTAL, "Presupuesto".DESCUENTO, "Presupuesto".IMPUESTO, "Presupuesto".TERMINOS,'
     + ' "Presupuesto".IVA2, "Presupuesto".IVA1, "Presupuesto".EXCENTO, "Presupuesto".SALDO,'
-    + ' "Presupuesto".PAGADO, "Presupuesto".ANULADA' + ' FROM "Presupuesto"';
+    + ' "Presupuesto".PAGADO, "Presupuesto".ANULADA, "Presupuesto".COMISION, "Presupuesto".ENVIO' + ' FROM "Presupuesto"';
   presupuestoSql = clienteSql + ',' + articuloSql + ',' +
     ' "PresupuestoItem".ARTICULO, "PresupuestoItem".CANTIDAD,'
     +' "PresupuestoItem".PRECIO, "PresupuestoItem".COSTO AS VIDESCUENTO,'
@@ -302,7 +296,7 @@ const
     ' "Operacion".TOTAL,' + '  "Operacion".CONTADO,' + '  "Operacion".CLIENTE,'+
     ' "Operacion".SUBTOTAL,' + ' "Operacion".DESCUENTO,' +
     ' "Operacion".IMPUESTO,' + ' "Operacion".IVA1, "Operacion".IVA2, "Operacion".IVA3,' +
-    ' "Operacion".EXCENTO,' + ' "Operacion".SALDO,' + ' "Operacion".PAGADO, "Operacion".ANULADA' +
+    ' "Operacion".EXCENTO,' + ' "Operacion".SALDO,' + ' "Operacion".PAGADO, "Operacion".ANULADA, "Operacion".COMISION, "Operacion".ENVIO' +
     ' FROM  "Operacion"';
   OperSql =
     clienteSql
@@ -317,7 +311,7 @@ const
     '  "Venta".TOTAL,' + '  "Venta".CONTADO,' + '  "Venta".CLIENTE,' +
     '  "Venta".SUBTOTAL,' + '  "Venta".DESCUENTO,' + '  "Venta".IMPUESTO,' +
     '  "Venta".IVA1, "Venta".IVA2, "Venta".IVA3,' +
-    '  "Venta".EXCENTO,' + '  "Venta".SALDO,' + '  "Venta".PAGADO, "Venta".ANULADA'
+    '  "Venta".EXCENTO,' + '  "Venta".SALDO,' + '  "Venta".PAGADO, "Venta".ANULADA, "Venta".COMISION, "Venta".ENVIO'
     + ' FROM'
     + ' "Venta"';
   vtaSql =
@@ -337,7 +331,7 @@ const
     ' "Compra".TOTAL, "Compra".CONTADO, "Compra".PROVEEDOR,' +
     ' "Compra".SUBTOTAL, "Compra".DESCUENTO, "Compra".IMPUESTO,' +
     ' "Compra".IVA1, "Compra".IVA2, "Compra".IVA3,' +
-    ' "Compra".EXCENTO, "Compra".SALDO, "Compra".PAGADO, "Compra".ANULADA' +
+    ' "Compra".EXCENTO, "Compra".SALDO, "Compra".PAGADO, "Compra".ANULADA, "Compra".COMISION, "Compra".ENVIO' +
     ' FROM "Compra"';
   proveedorSql =
     ' "Proveedor".NOMBRE,  "Proveedor".TITULAR, "Proveedor".DIRECCION, "Proveedor".DIRECCIONCOMERCIAL, "Proveedor".IVA as CIVA, "Proveedor".CUIT as CCUIT, "Proveedor".EMAIL';
@@ -385,6 +379,7 @@ var
 implementation
 
 {$R *.dfm}
+
 { function TDM.Gratis;
   var
   i: Integer;
@@ -584,7 +579,8 @@ begin
 //  Descargar('https://raw.githubusercontent.com/DeGsoft/GeN-XE7/master/Instalador/Update.iss'
 //  , Path+'Update.iss');
   if not HayBase then Exit;
-  ActualizarBase;
+  ActualizarBase := TActualizarBase.Create();
+  ActualizarBase.Free;
   TraerConfig;
   CrearMtIva;
 end;
@@ -900,25 +896,6 @@ begin
    end;
 end;
 
-procedure TDM.ActualizarImprimir;
-var c:string;
-begin
-  Query.SQL.Text :=
-    'Select * from "Imprimir" WHERE "Imprimir".REPORTE = '+QuotedStr(reporte);
-  Query.Open;
-  if Query.RecordCount = 0 then
-  begin
-    Query.Close;
-    c:=IntToStr(UltimoRegistro('Imprimir', 'CODIGO'));
-//    Query.SQL.Text :=
-    BaseDatosFB.ExecSQL(
-      'INSERT INTO "Imprimir" (CODIGO, DESCRIPCION, REPORTE) VALUES ('+c+', '+QuotedStr(reporte)+', '+QuotedStr(reporte)+')'
-    );
-//    Query.ExecSQL;
-//    Query.Transaction.Commit;
-  end;
-end;
-
 procedure TDM.Ejecutar;
 begin
 //  ShellExecute(0, 'open', PChar(VarToStr( dir )), 'param1 param2', nil,  SW_HIDE);
@@ -945,8 +922,11 @@ procedure TDM.WooCommerceGeN(id: string);
 begin
   BaseDatosFB.Connected := False;
   if(id<>'') then id := ' '+id;
-  EjecutarYEsperar( 'WooCommerceGeN.exe'+id, SW_SHOWNORMAL );
-  if (BaseDatosFB.Connected = False) then BaseDatosFB.Connected:=True;
+  if (EjecutarYEsperar( 'WooCommerceGeN.exe'+id, SW_SHOWNORMAL )=0) then
+    begin
+      BaseDatosFB.Connected:=True;
+      TraerConfig;
+    end;
 end;
 
 procedure TDM.FDTable1AfterPost(DataSet: TDataSet);
@@ -1016,38 +996,38 @@ begin
   end;
 end;
 
-procedure TDM.ActualizarBase;
-begin
-  if ExisteEnTabla('Version', '') then
-  begin
-//    GetBuildInfo;
-    if not EsMismaVersion then
-    begin
-      CopyDir(ejecutable+'hlp', Path);
-      CopyDir(ejecutable+'rpt', Path);
-      CrearCbtetipo;
-      CrearTablasSiap;
-      CrearTablaRetPer;
-      CrearTablasIva;
-      CrearTablaCbteAsoc;
-      ActualizarTriggerFecha;
-      ActualizarVersion;
-    end;
-  end
-  else
-  begin
-    CrearTabla('Version', 'V1', 'VARCHAR(255)');
-    ActualizarTabla('Version', 'V2', 'VARCHAR(255)');
-    ActualizarTabla('Version', 'V3', 'VARCHAR(255)');
-    ActualizarTabla('Version', 'V4', 'VARCHAR(255)');
-    AgregarValor('Version','V1', FloatToStr(v1));
-    ActualizarValor('Version', 'V2', '', FloatToStr(v2));
-    ActualizarValor('Version', 'V3', '', FloatToStr(v3));
-    ActualizarValor('Version', 'V4', '', FloatToStr(v4));
-    ActualizarImprimir('FElectronica');
-    ActualizarImprimir('TElectronica');
-  end;
-end;
+//procedure TDM.ActualizarBase;
+//begin
+//  if ExisteEnTabla('Version', '') then
+//  begin
+////    GetBuildInfo;
+//    if not EsMismaVersion then
+//    begin
+//      CopyDir(ejecutable+'hlp', Path);
+//      CopyDir(ejecutable+'rpt', Path);
+//      CrearCbtetipo;
+//      CrearTablasSiap;
+//      CrearTablaRetPer;
+//      CrearTablasIva;
+//      CrearTablaCbteAsoc;
+//      ActualizarTriggerFecha;
+//      ActualizarVersion;
+//    end;
+//  end
+//  else
+//  begin
+//    CrearTabla('Version', 'V1', 'VARCHAR(255)');
+//    ActualizarTabla('Version', 'V2', 'VARCHAR(255)');
+//    ActualizarTabla('Version', 'V3', 'VARCHAR(255)');
+//    ActualizarTabla('Version', 'V4', 'VARCHAR(255)');
+//    AgregarValor('Version','V1', FloatToStr(v1));
+//    ActualizarValor('Version', 'V2', '', FloatToStr(v2));
+//    ActualizarValor('Version', 'V3', '', FloatToStr(v3));
+//    ActualizarValor('Version', 'V4', '', FloatToStr(v4));
+//    ActualizarImprimir('FElectronica');
+//    ActualizarImprimir('TElectronica');
+//  end;
+//end;
 
 function TDM.ExisteEnTabla;
 begin
@@ -1064,7 +1044,7 @@ end;
 
 procedure TDM.ActualizarTabla;
 begin
-  if not ExisteEnTabla(TB_NAME, FLD_NAME) then
+  if (not ExisteEnTabla(TB_NAME, FLD_NAME)) then
   begin
     BaseDatosFB.ExecSQL(
 //    IBScript1.Script.Text := 'SET NAMES WIN1252; CONNECT ' + quotedstr(BaseDeDatos)
@@ -1487,7 +1467,7 @@ begin
   ActualizarValor('Version', 'V4', '', FloatToStr(v4));
 end;
 
-function TDM.EsMismaVersion;
+function TDM.EsVersion(_v1,_v2,_v3,_v4 :Word):Integer;
 var
   vv1,       // Major Version
   vv2,       // Minor Version
@@ -1498,240 +1478,8 @@ begin
   vv2 := StrToInt(TraerValor('Version','V2',''));
   vv3 := StrToInt(TraerValor('Version','V3',''));
   vv4 := StrToInt(TraerValor('Version','V4',''));
-  result := ( (V1=vv1) and (V2=vv2) and (V3=vv3) and (V4=vv4) );
+  result := ( (vv1-_v1)*100000 + (vv2-_v2)*10000 + (vv3-_v3)*100 + (vv4-_v4) );
 end;
-
-procedure TDM.CrearCbtetipo;
-var
-  TableFound: Boolean;
-begin
-  sdb.ExecSQL('CREATE TABLE IF NOT EXISTS CbteTipo ('//Siap Comprobantes de Ventas
-    +'Codigo INTEGER PRIMARY KEY,'
-    +'Letra TEXT,'
-    +'Desc TEXT'
-   +');');
-//   with TFDTable.Create(nil) do // create a temporary TTable component
-//   begin
-//     try
-//       { set properties of the temporary TTable component }
-//       Active := False;
-//       DatabaseName := ;
-//       Connection := sdb;
-//       TableName := 'CbteTipo';
-//       TableType := ttDefault;
-//       { define fields for the new table }
-//       FieldDefs.Clear;
-//       FieldDefs.Add('Codigo', ftInteger);
-//       FieldDefs.Add('Letra', ftString, 10, False);
-//       FieldDefs.Add('Desc', ftString, 255, False);
-//       FieldDefs.Add('V4', ftString, 255, False);
-//       with FieldDefs.AddFieldDef do begin
-//         Name := 'V1';
-//         DataType := ftString;
-//         Size := 255;
-//         Required := False;
-//       end;
-       { define indexes for the new table }
-//       IndexDefs.Clear;
-//       with IndexDefs.AddIndexDef do begin
-//         Name := '';
-//         Fields := 'First';
-//         Options := [ixPrimary];
-//       end;
-//       TableFound := Exists; // check whether the table already exists
-//       if TableFound then
-//         if MessageDlg('Overwrite existing table ' + nombre + '?',
-//              mtConfirmation, mbYesNoCancel, 0) = mrYes then
-//           TableFound := False;
-//        if not TableFound then
-//        begin
-//          CreateTable(False); // create the table
-//          Open;
-//          Insert;
-//          Fields.Fields[0].Value := FloatToStr(v1);
-  with tCbteTipo do
-  begin
-    Open('Select * from CbteTipo');
-    if RowsAffected=0 then
-    begin
-      InsertRecord([1,'A','FACTURAS A']);
-      InsertRecord([2,'NDA','NOTAS DE DEBITO A']);
-      InsertRecord([3,'NCA','NOTAS DE CREDITO A']);
-      InsertRecord([4,'RA','RECIBOS A']);
-      InsertRecord([5,'NVA','NOTAS DE VENTA AL CONTADO A']);
-      InsertRecord([6,'B','FACTURAS B']);
-      InsertRecord([7,'NDB','NOTAS DE DEBITO B']);
-      InsertRecord([8,'NCB','NOTAS DE CREDITO B']);
-      InsertRecord([9,'RB','RECIBOS B']);
-      InsertRecord([10,'NVB','NOTAS DE VENTA AL CONTADO B']);
-      InsertRecord([11,'C',' Factura C ']);
-      InsertRecord([12,'NDC','Nota de Débito C ']);
-      InsertRecord([13,'NCC',' Nota de Crédito C ']);
-      InsertRecord([15,'RC','Recibo C ']);
-      InsertRecord([17,'','LIQUIDACION DE SERVICIOS PUBLICOS CLASE A']);
-      InsertRecord([18,'','LIQUIDACION DE SERVICIOS PUBLICOS CLASE B']);
-      InsertRecord([19,'','FACTURAS DE EXPORTACION']);
-      InsertRecord([20,'','NOTAS DE DEBITO POR OPERACIONES CON EL EXTERIOR']);
-      InsertRecord([21,'','NOTAS DE CREDITO POR OPERACIONES CON EL EXTERIOR']);
-      InsertRecord([22,'','FACTURAS - PERMISO EXPORTACION SIMPLIFICADO - DTO. 855/97']);
-      InsertRecord([23,'','CPTES "A" DE COMPRA PRIMARIA PARA EL SECTOR PESQUERO MARITIMO']);
-      InsertRecord([24,'','CPTES "A" DE COSIGNACION PRIMARIA PARA EL SECTOR PESQUERO MARITIMO']);
-      InsertRecord([27,'','LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE A']);
-      InsertRecord([28,'','LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B']);
-      InsertRecord([29,'','LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C']);
-      InsertRecord([33,'','LIQUIDACION PRIMARIA DE GRANOS']);
-      InsertRecord([34,'','COMPROBANTES A DEL APARTADO A INCISO F R G N 1415']);
-      InsertRecord([35,'','COMPROBANTES B DEL ANEXO I, APARTADO A, INC. F), RG N° 1415']);
-      InsertRecord([37,'','NOTAS DE DEBITO O DOCUMENTO EQUIVALENTE QUE CUMPLAN CON LA R.G. N° 1415']);
-      InsertRecord([38,'','NOTAS DE CREDITO O DOCUMENTO EQUIVALENTE QUE CUMPLAN CON LA R.G. N° 1415']);
-      InsertRecord([39,'','OTROS COMPROBANTES A QUE CUMPLEN CON LA R G 1415']);
-      InsertRecord([40,'','OTROS COMPROBANTES B QUE CUMPLAN CON LA R.G. 1415']);
-      InsertRecord([43,'','NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B']);
-      InsertRecord([44,'','NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C']);
-      InsertRecord([45,'','NOTA DE DEBITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE A']);
-      InsertRecord([46,'','NOTA DE DEBITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B']);
-      InsertRecord([47,'','NOTA DE DEBITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C']);
-      InsertRecord([48,'','NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE A']);
-      InsertRecord([51,'M','FACTURAS M']);
-      InsertRecord([52,'NDM','NOTAS DE DEBITO M']);
-      InsertRecord([53,'NCM','NOTAS DE CREDITO M']);
-      InsertRecord([54,'RM','RECIBOS M']);
-      InsertRecord([55,'','NOTAS DE VENTA AL CONTADO M']);
-      InsertRecord([56,'','COMPROBANTES M DEL ANEXO I APARTADO A INC F R G N 1415']);
-      InsertRecord([57,'','OTROS COMPROBANTES M QUE CUMPLAN CON LA R G N 1415']);
-      InsertRecord([58,'','CUENTAS DE VENTA Y LIQUIDO PRODUCTO M']);
-      InsertRecord([59,'','LIQUIDACIONES M']);
-      InsertRecord([60,'','CUENTAS DE VENTA Y LIQUIDO PRODUCTO A']);
-      InsertRecord([61,'','CUENTAS DE VENTA Y LIQUIDO PRODUCTO B']);
-      InsertRecord([63,'','LIQUIDACIONES A']);
-      InsertRecord([64,'','LIQUIDACIONES B']);
-      InsertRecord([68,'','LIQUIDACION C']);
-      InsertRecord([81,'','TIQUE FACTURA A CONTROLADORES FISCALES']);
-      InsertRecord([82,'','TIQUE - FACTURA B']);
-      InsertRecord([83,'','TIQUE']);
-      InsertRecord([90,'','NOTA DE CREDITO OTROS COMP QUE NO CUMPLEN CON LA R G 1415 Y SUS MODIF']);
-      InsertRecord([99,'','OTROS COMP QUE NO CUMPLEN CON LA R G 1415 Y SUS MODIF']);
-      InsertRecord([110,'','TIQUE NOTA DE CREDITO']);
-      InsertRecord([112,'','TIQUE NOTA DE CREDITO A']);
-      InsertRecord([113,'','TIQUE NOTA DE CREDITO B']);
-      InsertRecord([115,'','TIQUE NOTA DE DEBITO A']);
-      InsertRecord([116,'','TIQUE NOTA DE DEBITO B']);
-      InsertRecord([118,'','TIQUE FACTURA M']);
-      InsertRecord([119,'','TIQUE NOTA DE CREDITO M']);
-      InsertRecord([120,'','TIQUE NOTA DE DEBITO M']);
-      InsertRecord([331,'','LIQUIDACION SECUNDARIA DE GRANOS']);
-      InsertRecord([332,'','CERTIFICADO DE DEPOSITO DE GRANOS EN PLANTA']);
-  //          Post;
-  //        end;
-  //     finally
-  //       Free; // destroy the temporary TTable when done
-     end;
-   end;
-end;
-
- procedure TDM.CrearTablasSiap;
- begin
-//  ActualizarTabla('LibroIVAventa', 'CBTETIPO', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'PTOVTA', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'CBTEDESDE', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'CBTEHASTA', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'DOCTIPO', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'NOMCLI', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'MONID', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'MONCOTIZ', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'CANTIVA', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'OPCION', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'FCHVTOPAGO', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'ALICIVA', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'IMPNETO', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'NOGRABADO', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'IMPOPEX', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'IMPIVA', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'GENERALES', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'NOCAT', 'VARCHAR(255)');
-//  ActualizarTabla('LibroIVAventa', 'IMPTRIB', 'VARCHAR(255)');
-sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapVtaComp ('//Siap Comprobantes de Ventas
-  +'Codigo INTEGER,'
-  +'CbteFch TEXT,'//FECHA Formato dd/mm/aaaa
-  +'CbteTipo TEXT,'//COMPROBANTES Tipo
-  +'PtoVta TEXT,'//COMPROBANTES PV
-  +'CbteDesde TEXT,'//COMPROBANTES Número Desde
-  +'CbteHasta TEXT,'//COMPROBANTES Número Hasta
-  +'DocTipo TEXT,'//CLIENTE	"Código de Documento del Comprador"
-  +'DocNro TEXT,'//CLIENTE CUIT
-  +'DocNomb TEXT,'//CLIENTE Apellido y Nombre del Cliente
-  +'MonId TEXT,'//Moneda
-  +'MonCotiz TEXT,'//Tipo de cambio
-  +'IvaCant TEXT,'//Cantidad alícuotas I.V.A.
-  +'CodOper TEXT,'//Código de operación
-  +'FchVtoPago TEXT,'//Fecha vto. pago (formato aaaa/mm/dd)
-  +'IvaId TEXT,'//Código alícuota IVA
-  +'ImpNeto TEXT,'//Neto Gravado
-  +'ImpNoGra TEXT,'//Monto que no integra el precio neto gravado
-  +'ImpOpEx TEXT,'//Operaciones Exentas
-  +'ImpIva TEXT,'//I.V.A.
-  +'ImpPercGral TEXT,'//PERCEPCIONES Generales
-  +'ImpPercNoCat TEXT,'//PERCEPCIONES No Cat.
-  +'ImpPercIIBB TEXT,'//PERCEPCIONES IIBB
-  +'ImpPercMuni TEXT,'//PERCEPCIONES Municipales
-  +'ImpImpInt TEXT,'//Impuestos Internos
-  +'ImpOtrTrib TEXT,'//Otros Tributos
-  +'ImpTotal TEXT'//Totales (cálculo automático)
-+')');
-
-sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapVtaCompAlicuota ('//Siap Comprobantes de Compras
-  +'Codigo INTEGER,'
-  +'IvaId TEXT,'//Código alícuota IVA
-  +'IvaBaseImp TEXT,'//Neto Gravado alícuota
-  +'IvaAlic TEXT'//IVA alícuota
-+')');
-
-sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapCmpComp ('//Siap Comprobantes de Compras
-  +'Codigo INTEGER,'
-  +'CbteFch TEXT,'//FECHA Formato dd/mm/aaaa	L8
-  +'CbteTipo TEXT,'//COMPROBANTES Tipo	L3
-  +'PtoVta TEXT,'//COMPROBANTES PV	L5
-  +'CbteNro TEXT,'//COMPROBANTES Número		L20
-  +'DespNro TEXT,'//COMPROBANTES Número Despacho  de Importación	L16
-  +'DocTipo TEXT,'//PROVEEDOR Código de Documento del vendedor	L2
-  +'DocNro TEXT,'//PROVEEDOR Número de identificaión del vendedor	L20
-  +'DocNomb TEXT,'//PROVEEDOR Apellido y Nombre del vendedor	L30
-  +'ImpTotal TEXT,'//Totales (cálculo automático)	L15
-  +'ImpNoGra TEXT,'//Monto que no integra el precio neto gravado	L15
-  +'ImpOpEx TEXT,'//Operaciones Exentas	L15
-  +'ImpPercIva TEXT,'//PERCEPCIONES Percepc y retenc. IVA	L15
-  +'ImpPercNac TEXT,'//PERCEPCIONES Perc. otros imp. Nac.	L15
-  +'ImpPercIIBB TEXT,'//PERCEPCIONES IIBB	L15
-  +'ImpPercMuni TEXT,'//PERCEPCIONES Municipales	L15
-  +'ImpImpInt TEXT,'//Impuestos Internos	L15
-  +'MonId TEXT,'//Código de Moneda	L3
-  +'MonCotiz TEXT,'//Tipo de cambio	L10
-  +'IvaCant TEXT,'//Cantidad alícuotas I.V.A.	L1
-  +'CodOper TEXT,'//Código de operación	L1
-  +'ImpCredFisc TEXT,'//Credito Fiscal Computable	L15
-  +'ImpOtrTrib TEXT,'//Otros Tributos	L15
-  +'CUIT TEXT,'//CUIT emisor/corredor	L11
-  +'Denom TEXT,'//Denominación emisor/corredor	L30
-  +'ImpIvaCom TEXT'//IVA comisión	L15
-//  +'IvaId1 TEXT,'//Código alícuota IVA 1
-//  +'IvaBaseImp1 TEXT,'//Neto Gravado alícuota 1 Importe Total
-//  +'IvaAlic1 TEXT,'//IVA alícuota 1
-//  +'IvaId2 TEXT,'//Código alícuota IVA 2
-//  +'IvaBaseImp2 TEXT,'//Neto Gravado alícuota 2 Importe Total
-//  +'IvaAlic2 TEXT,'//IVA alícuota 2
-//  +'IvaId3 TEXT,'//Código alícuota IVA 3
-//  +'IvaBaseImp3 TEXT,'//Neto Gravado alícuota 3 Importe Total
-//  +'IvaAlic3 TEXT'//IVA alícuota 3
-+')');
-
-sdb.ExecSQL('CREATE TABLE IF NOT EXISTS SiapCmpCompAlicuota ('//Siap Comprobantes de Compras
-  +'Codigo INTEGER,'
-  +'IvaId TEXT,'//Código alícuota IVA
-  +'IvaBaseImp TEXT,'//Neto Gravado alícuota
-  +'IvaAlic TEXT'//IVA alícuota
-+')');
-
- end;
 
  procedure TDM.ConectarSDB;
  var
@@ -2037,21 +1785,6 @@ begin
   EscribirINI;
 end;
 
-procedure TDM.CrearTablaRetPer;
-begin
-  sdb.ExecSQL('CREATE TABLE IF NOT EXISTS RetPer ('
-    +' Codigo INTEGER'
-    +', Tipo  TEXT'
-    +', NoGra REAL'
-    +', PagCueIva REAL'
-    +', PagCueOtr REAL'
-    +', PerIIBB REAL'
-    +', PerImpMun REAL'
-    +', ImpInt REAL'
-    +', OtrTrib REAL'
-  +')');
-end;
-
 procedure TDM.AgregarRetPer;
 begin
   with qSdb do
@@ -2152,26 +1885,6 @@ begin
 //    IBScript1.Transaction.CommitRetaining;
 end;
 
-procedure TDM.ActualizarTriggerFecha;
-var a,b:string;
-begin
-  a:=' ACTIVE BEFORE INSERT';
-  b:=' IF (new."FECHA" IS NULL) THEN new."FECHA" = cast( ''now'' as timestamp);';
-  ActualizarTrigger('CompraFecha_BI',a,b);
-  ActualizarTrigger('ContratoFECHA_BI',a,b);
-  ActualizarTrigger('CtaCteFECHAupdate',a,b);
-  ActualizarTrigger('CtaCteFecha_BI',a,b);
-  ActualizarTrigger('CtaCteItemFECHA_BI',a,b);
-  ActualizarTrigger('FormaPagoFECHA_BI1',a,b);
-  ActualizarTrigger('LibroDiarioFecha_BI',a,b);
-  ActualizarTrigger('LibroIVAcompraFecha_BI',a,b);
-  ActualizarTrigger('LibroIVAventaFecha_BI',a,b);
-  ActualizarTrigger('MovCaja_FECHA',a,b);
-  ActualizarTrigger('OperacionFECHA_BI',a,b);
-  ActualizarTrigger('PresupuestoFecha_BI',a,b);
-  ActualizarTrigger('RendidoVendedorFecha_BI',a,b);
-  ActualizarTrigger('VentaFecha_BI',a,b);
-end;
 
 procedure TDM.ExportarTabla;
 begin
@@ -2442,74 +2155,6 @@ begin
   end;
 end;
 
-procedure TDM.CrearTablasIva;
-begin
-    {
-  <ar:Iva>
-    <ar:AlicIva>
-      <ar:Id>5</ar:Id>  21%
-      <ar:BaseImp>100</ar:BaseImp>
-      <ar:Importe>21</ar:Importe>
-    </ar:AlicIva>
-    <ar:AlicIva>
-      <ar:Id>4</ar:Id>  10.5%
-      <ar:BaseImp>50</ar:BaseImp>
-      <ar:Importe>5.25</ar:Importe>
-    </ar:AlicIva>
-  </ar:Iva>
-  }
-  if not ExisteEnTabla('Iva', '') then
-  begin
-    CrearTabla('Iva', 'CODIGO', 'INTEGER');
-     ActualizarTabla('Iva', 'TASA', 'DOUBLE PRECISION');
-     ActualizarTabla('Iva', 'DESCRIPCION', 'VARCHAR(255)');
-     ActualizarIVA('3', '0');
-     ActualizarIVA('4', '10.5');
-     ActualizarIVA('5', '21');
-     ActualizarIVA('6', '27');
-     ActualizarIVA('8', '5');
-     ActualizarIVA('9', '2.5');
-  end;
-  if not ExisteEnTabla('AlicIva', '') then begin
-    CrearTabla('AlicIva', 'CODIGO', 'INTEGER');
-    ActualizarTabla('AlicIva', 'ID', 'INTEGER');
-    ActualizarTabla('AlicIva', 'BASEIMP', 'DOUBLE PRECISION');
-    ActualizarTabla('AlicIva', 'IMPORTE', 'DOUBLE PRECISION');
-    ActualizarTabla('Operacion', 'ALICIVA', 'INTEGER');
-    ActualizarTabla('Venta', 'ALICIVA', 'INTEGER');
-    ActualizarTabla('CtaCte', 'ALICIVA', 'INTEGER');
-    ActualizarTabla('Presupuesto', 'ALICIVA', 'INTEGER');
-    ActualizarTabla('Compra', 'ALICIVA', 'INTEGER');
-  end;
-end;
-
-procedure TDM.CrearTablaCbteAsoc;
-begin
-  if not ExisteEnTabla('CbtesAsoc', '') then
-    begin
-      {
-      <ar:CbtesAsoc>
-        <ar:CbteAsoc>
-        <ar:Tipo>short</ar:Tipo>
-        <ar:PtoVta>int</ar:PtoVta>
-        <ar:Nro>long</ar:Nro>
-        <ar:Cuit>String</ar:Cuit>
-        <ar:CbteFch>String</ar:CbteFch>
-      </ar:CbteAsoc>
-      }
-      CrearTabla('CbtesAsoc', 'CODIGO', 'INTEGER');
-      ActualizarTabla('CbtesAsoc', 'TIPO', 'INTEGER');
-      ActualizarTabla('CbtesAsoc', 'PTOVTA', 'INTEGER');
-      ActualizarTabla('CbtesAsoc', 'NRO', 'VARCHAR(255)');
-      ActualizarTabla('CbtesAsoc', 'CUIT', 'VARCHAR(255)');
-      ActualizarTabla('CbtesAsoc', 'CBTEFCH', 'VARCHAR(255)');
-      ActualizarTabla('Operacion', 'CBTESASOC', 'INTEGER');
-      ActualizarTabla('Venta', 'CBTESASOC', 'INTEGER');
-      ActualizarTabla('CtaCte', 'CBTESASOC', 'INTEGER');
-      ActualizarTabla('Presupuesto', 'CBTESASOC', 'INTEGER');
-      ActualizarTabla('Compra', 'CBTESASOC', 'INTEGER');
-    end;
-end;
 
 function TDM.HayBase;
 begin
@@ -2552,6 +2197,7 @@ begin
   GetExitCodeProcess( InformacionProceso.hProcess, iResultado );
   //MessageBeep( 0 );
   CloseHandle( InformacionProceso.hProcess );
+  Sleep(1000);
   Result := iResultado;
 end;
 

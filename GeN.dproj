@@ -100,13 +100,12 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.1.0.59;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.0.18.59;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <UWP_DelphiLogo44>GeN-Logo-44x44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>GeN-Logo-150x150.png</UWP_DelphiLogo150>
         <VerInfo_Build>59</VerInfo_Build>
-        <VerInfo_MinorVer>1</VerInfo_MinorVer>
-        <VerInfo_Release>0</VerInfo_Release>
-        <PF_KeyStorePass>85190DA36405559EA3757169D17BE32C819C055DA057979397B50FF08E723CD8DB05A38FE3431C4DC1CC572EFA9CC37ABAF83612047422E0166545C2E5F1228CC90AB967EE98A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
+        <VerInfo_Release>18</VerInfo_Release>
+        <PF_KeyStorePass>54E50DFE644355A9A301713BD13FE36081DA0549A057979297EE0FB48E3E3CD9DB5DA38CE3371C4DC1B0577DFADEC37ABAF93641045722CE16654589E5A6228C18F4B967EE98A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -120,12 +119,13 @@
         <Icon_MainIcon>GeN_Icon.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>GeN-Logo-44x44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>GeN-Logo-150x150.png</UWP_DelphiLogo150>
-        <VerInfo_Release>17</VerInfo_Release>
+        <VerInfo_Release>18</VerInfo_Release>
         <VerInfo_AutoIncVersion>false</VerInfo_AutoIncVersion>
-        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.0.17.0;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Civeloo;FileDescription=$(MSBuildProjectName);FileVersion=1.0.18.0;InternalName=GeN;LegalCopyright=Civeloo;LegalTrademarks=Civeloo;OriginalFilename=GeN;ProgramID=com.civeloo.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <BT_BuildType>AppStore</BT_BuildType>
-        <PF_KeyStorePass>8519479B645855D8A342711DD129E36881D0051BA043979397B40FAB8E363C94DB04A3D7E3401C39C1CC5752FACFC338BAF83613042722C3164B45C2E5BA22DBC90AF35DEE98A8C7D3D83B13722B859DF7C9330C</PF_KeyStorePass>
+        <PF_KeyStorePass>8519479B5F86078CA359716CD16AE34E81C60513A04997C197A00FAA8E6C3C8BDB0CA39AE3191C62C1BB5726FAB3C317BAE9365104262291163B45CFE5942290C916F30AD544FACCD3D83B13722B859DF7C9330C</PF_KeyStorePass>
         <PF_KeyStoreSubject>﻿CN=Civeloo</PF_KeyStoreSubject>
+        <PF_UWPDistributionType>Store</PF_UWPDistributionType>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -309,6 +309,7 @@
             <Form>WooCommerceForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Actualizar\ActualizarBase.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -344,6 +345,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Net.Security.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Net.Security.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="DB\aliases.conf" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
@@ -361,10 +368,22 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Globalization.Calendars.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Globalization.Calendars.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="IMG\gen.jpg" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\img\</RemoteDir>
                         <RemoteName>gen.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Diagnostics.StackTrace.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Diagnostics.StackTrace.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -399,6 +418,12 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\img\</RemoteDir>
                         <RemoteName>boton_licencia.gif</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Collections.Specialized.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Collections.Specialized.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -456,6 +481,18 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\WooCommerceFormUnit.dcu" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>WooCommerceFormUnit.dcu</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Net.WebSockets.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Net.WebSockets.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\ContratoLeasing.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
@@ -480,6 +517,18 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Threading.Overlapped.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Threading.Overlapped.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\icuin30.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>icuin30.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="IMG\excel.gif" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\img\</RemoteDir>
@@ -491,6 +540,12 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\intl\</RemoteDir>
                         <RemoteName>fbintl.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.IO.FileSystem.DriveInfo.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.IO.FileSystem.DriveInfo.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -525,6 +580,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.IO.Compression.ZipFile.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.IO.Compression.ZipFile.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\gen_operaciones_anularventa.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -535,17 +596,16 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Net.Requests.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Net.Requests.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\ListaPrecios.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
                         <RemoteName>ListaPrecios.fr3</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="DB\msvcr80.dll" Configuration="Release" Class="File">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <RemoteName>msvcr80.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -576,13 +636,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="DB\fbembed.dll" Configuration="Release" Class="File">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <RemoteName>fbembed.dll</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="DB\icuuc30.dll" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
@@ -597,19 +650,30 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="DB\gds32.dll" Configuration="Release" Class="File">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <RemoteName>gds32.dll</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png" Configuration="Debug" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
                     </Platform>
                     <Platform Name="Win32">
                         <RemoteDir>Assest\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\WCGeNLib.pdb" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>WCGeNLib.pdb</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Runtime.Handles.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Runtime.Handles.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Collections.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Collections.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -620,6 +684,18 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\</RemoteDir>
                         <RemoteName>vendedor.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Linq.Expressions.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Linq.Expressions.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Data.Common.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Data.Common.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -664,6 +740,12 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
                         <RemoteName>LibroDiario.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Runtime.Extensions.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Runtime.Extensions.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -715,6 +797,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Net.NetworkInformation.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Net.NetworkInformation.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="DB\udf\fbudf.dll" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\db\udf\</RemoteDir>
@@ -729,6 +817,24 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\</RemoteDir>
                         <RemoteName>caja.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Net.WebSockets.Client.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Net.WebSockets.Client.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Runtime.InteropServices.RuntimeInformation.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Runtime.InteropServices.RuntimeInformation.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Xml.XmlSerializer.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Xml.XmlSerializer.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -770,10 +876,22 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.IO.Pipes.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.IO.Pipes.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\Proveedores.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
                         <RemoteName>Proveedores.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Collections.NonGeneric.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Collections.NonGeneric.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -818,6 +936,18 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.ComponentModel.EventBasedAsync.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.ComponentModel.EventBasedAsync.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Diagnostics.Tools.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Diagnostics.Tools.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\vender.htm" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -825,13 +955,6 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\</RemoteDir>
                         <RemoteName>vender.htm</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="DB\ib_util.dll" Configuration="Release" Class="File">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <RemoteName>ib_util.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -893,6 +1016,18 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Text.RegularExpressions.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Text.RegularExpressions.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.ComponentModel.TypeConverter.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.ComponentModel.TypeConverter.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\gen_abm_vendedor.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -903,10 +1038,52 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\msvcr80.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>msvcr80.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Text.Encoding.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Text.Encoding.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\ProveedoresDetalle.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
                         <RemoteName>ProveedoresDetalle.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Threading.Thread.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Threading.Thread.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Xml.XmlDocument.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Xml.XmlDocument.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Reflection.Extensions.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Reflection.Extensions.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.IO.FileSystem.Primitives.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.IO.FileSystem.Primitives.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\WooCommerceGeN.exe.config" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>WooCommerceGeN.exe.config</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -917,6 +1094,12 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\</RemoteDir>
                         <RemoteName>login.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Threading.Timer.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Threading.Timer.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -949,6 +1132,18 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\icuuc30.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>icuuc30.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.IO.IsolatedStorage.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.IO.IsolatedStorage.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\rubro.htm" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -959,6 +1154,18 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Reflection.Primitives.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Reflection.Primitives.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Net.Ping.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Net.Ping.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\gen_buscar_venta.jpg" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -966,6 +1173,18 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\img\</RemoteDir>
                         <RemoteName>gen_buscar_venta.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Runtime.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Runtime.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Runtime.Serialization.Json.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Runtime.Serialization.Json.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -999,6 +1218,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\icudt30.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>icudt30.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\FacturaSimple.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
@@ -1006,10 +1231,28 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Globalization.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Globalization.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Net.Http.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Net.Http.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="DB\firebird.log" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <RemoteName>firebird.log</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\Microsoft.Win32.Primitives.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>Microsoft.Win32.Primitives.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1034,6 +1277,36 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\fbembed.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>fbembed.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.IO.UnmanagedMemoryStream.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.IO.UnmanagedMemoryStream.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Diagnostics.Debug.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Diagnostics.Debug.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Threading.Tasks.Parallel.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Threading.Tasks.Parallel.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.ValueTuple.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.ValueTuple.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\FacturaDuplicadoMediaHoja.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
@@ -1052,6 +1325,30 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\img\</RemoteDir>
                         <RemoteName>empresa.bmp</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Runtime.Serialization.Primitives.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Runtime.Serialization.Primitives.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Security.Cryptography.Algorithms.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Security.Cryptography.Algorithms.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Xml.XPath.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Xml.XPath.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\msvcp80.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>msvcp80.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1082,6 +1379,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Security.Cryptography.Csp.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Security.Cryptography.Csp.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-csr-emp-abm.png" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1106,6 +1409,12 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\img\</RemoteDir>
                         <RemoteName>gen_configuracion_empresa.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Linq.Parallel.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Linq.Parallel.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1197,6 +1506,18 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Net.NameResolution.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Net.NameResolution.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Collections.Concurrent.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Collections.Concurrent.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\PreciosTodos.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
@@ -1235,10 +1556,22 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Console.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Console.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\Cobrador.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
                         <RemoteName>Cobrador.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Resources.Writer.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Resources.Writer.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1286,6 +1619,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.ObjectModel.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.ObjectModel.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\ClientesTotal.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
@@ -1293,10 +1632,40 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.IO.FileSystem.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.IO.FileSystem.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Runtime.Serialization.Xml.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Runtime.Serialization.Xml.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="IMG\GeN_Icon.ico" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\img\</RemoteDir>
                         <RemoteName>GeN_Icon.ico</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Security.Cryptography.X509Certificates.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Security.Cryptography.X509Certificates.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Linq.Queryable.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Linq.Queryable.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Security.Principal.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Security.Principal.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1327,6 +1696,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Net.Sockets.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Net.Sockets.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\LibroIVAVentas.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
@@ -1341,6 +1716,30 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\</RemoteDir>
                         <RemoteName>crearpedido.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\FirebirdSql.Data.FirebirdClient.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>FirebirdSql.Data.FirebirdClient.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\WooCommerce.NET.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>WooCommerce.NET.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.IO.MemoryMappedFiles.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.IO.MemoryMappedFiles.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Resources.ResourceManager.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Resources.ResourceManager.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1360,6 +1759,12 @@
                     </Platform>
                     <Platform Name="Win32">
                         <RemoteName>GeN.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Runtime.Numerics.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Runtime.Numerics.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1391,6 +1796,12 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
                         <RemoteName>CPOriginal.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.IO.Compression.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.IO.Compression.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1451,6 +1862,24 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Net.Primitives.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Net.Primitives.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\WCGeNLib.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>WCGeNLib.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Reflection.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Reflection.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\ListaPreciosCompleta.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
@@ -1472,10 +1901,22 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\WooCommerce.NET.pdb" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>WooCommerce.NET.pdb</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="DB\udf\ib_udf.sql" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\db\udf\</RemoteDir>
                         <RemoteName>ib_udf.sql</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Dynamic.Runtime.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Dynamic.Runtime.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1517,6 +1958,24 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\db\udf\</RemoteDir>
                         <RemoteName>fbudf.txt</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\gds32.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>gds32.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Net.WebHeaderCollection.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Net.WebHeaderCollection.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Text.Encoding.Extensions.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Text.Encoding.Extensions.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1623,6 +2082,18 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Threading.Tasks.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Threading.Tasks.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\WooCommerceGeN.exe" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>WooCommerceGeN.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\img\conf-sis-fe-conf-csr-ped-afip.png" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1644,6 +2115,24 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
                         <RemoteName>LibroIVAventasAlicuotaSiap.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Threading.ThreadPool.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Threading.ThreadPool.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Runtime.InteropServices.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Runtime.InteropServices.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Security.Claims.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Security.Claims.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1712,6 +2201,18 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.IO.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.IO.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.IO.FileSystem.Watcher.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.IO.FileSystem.Watcher.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="ayuda\comprar.htm" Configuration="Release" Class="File">
                     <Platform Name="All Platforms">
                         <Overwrite>true</Overwrite>
@@ -1719,6 +2220,18 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\</RemoteDir>
                         <RemoteName>comprar.htm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Security.Cryptography.Primitives.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Security.Cryptography.Primitives.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.AppContext.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.AppContext.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1743,6 +2256,12 @@
                     <Platform Name="Win32">
                         <RemoteDir>Assets\</RemoteDir>
                         <RemoteName>Logo44x44.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Resources.Reader.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Resources.Reader.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1780,6 +2299,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\WooCommerceGeN.pdb" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>WooCommerceGeN.pdb</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="IMG\gen.gif" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\img\</RemoteDir>
@@ -1807,6 +2332,18 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Threading.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Threading.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Xml.XDocument.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Xml.XDocument.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\PagoVendedor.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
@@ -1814,10 +2351,34 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Diagnostics.FileVersionInfo.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Diagnostics.FileVersionInfo.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\netstandard.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>netstandard.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\Carton.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
                         <RemoteName>Carton.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\ib_util.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>ib_util.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Xml.ReaderWriter.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Xml.ReaderWriter.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1831,10 +2392,28 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Diagnostics.Tracing.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Diagnostics.Tracing.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Drawing.Primitives.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Drawing.Primitives.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\Clientes.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
                         <RemoteName>Clientes.fr3</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Diagnostics.Process.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Diagnostics.Process.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1882,6 +2461,24 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Runtime.CompilerServices.VisualC.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Runtime.CompilerServices.VisualC.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Globalization.Extensions.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Globalization.Extensions.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Security.Cryptography.Encoding.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Security.Cryptography.Encoding.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\NCTElectronica.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
@@ -1916,6 +2513,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Diagnostics.Contracts.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Diagnostics.Contracts.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Report\rpt\SiapVtaComp.fr3" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\rpt\</RemoteDir>
@@ -1923,10 +2526,15 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="DB\msvcp80.dll" Configuration="Release" Class="File">
+                <DeployFile LocalName="lib\System.ComponentModel.dll" Configuration="Release" Class="File">
                     <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <RemoteName>msvcp80.dll</RemoteName>
+                        <RemoteName>System.ComponentModel.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Diagnostics.TextWriterTraceListener.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Diagnostics.TextWriterTraceListener.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1974,10 +2582,28 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.ComponentModel.Primitives.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.ComponentModel.Primitives.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Diagnostics.TraceSource.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Diagnostics.TraceSource.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="IMG\logo.jpg" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\img\</RemoteDir>
                         <RemoteName>logo.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Security.SecureString.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Security.SecureString.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -2005,6 +2631,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lib\System.Linq.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Linq.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="DB\intl\fbintl.conf" Configuration="Release" Class="File">
                     <Platform Name="Win32">
                         <RemoteDir>.\intl\</RemoteDir>
@@ -2026,6 +2658,18 @@
                     <Platform Name="Win32">
                         <RemoteDir>.\hlp\img\</RemoteDir>
                         <RemoteName>gen_abm.jpg</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Xml.XPath.XDocument.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Xml.XPath.XDocument.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lib\System.Runtime.Serialization.Formatters.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <RemoteName>System.Runtime.Serialization.Formatters.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

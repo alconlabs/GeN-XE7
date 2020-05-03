@@ -14,6 +14,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Net.Security.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Net.Security.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="DB\aliases.conf" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\</RemoteDir>
             <RemoteName>aliases.conf</RemoteName>
@@ -32,9 +41,27 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Globalization.Calendars.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Globalization.Calendars.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="IMG\gen.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\img\</RemoteDir>
             <RemoteName>gen.jpg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Diagnostics.StackTrace.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Diagnostics.StackTrace.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -71,6 +98,15 @@
         <DeployFile Include="IMG\boton_licencia.gif" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\img\</RemoteDir>
             <RemoteName>boton_licencia.gif</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Collections.Specialized.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Collections.Specialized.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -131,6 +167,24 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\WooCommerceFormUnit.dcu" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>WooCommerceFormUnit.dcu</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Net.WebSockets.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Net.WebSockets.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\ContratoLeasing.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>ContratoLeasing.fr3</RemoteName>
@@ -158,6 +212,24 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Threading.Overlapped.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Threading.Overlapped.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\icuin30.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>icuin30.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="IMG\excel.gif" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\img\</RemoteDir>
             <RemoteName>excel.gif</RemoteName>
@@ -170,6 +242,15 @@
         <DeployFile Include="DB\intl\fbintl.dll" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\intl\</RemoteDir>
             <RemoteName>fbintl.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.IO.FileSystem.DriveInfo.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.IO.FileSystem.DriveInfo.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -212,6 +293,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.IO.Compression.ZipFile.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.IO.Compression.ZipFile.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\gen_operaciones_anularventa.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_operaciones_anularventa.jpg</RemoteName>
@@ -221,18 +311,18 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Report\rpt\ListaPrecios.fr3" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\rpt\</RemoteDir>
-            <RemoteName>ListaPrecios.fr3</RemoteName>
+        <DeployFile Include="lib\System.Net.Requests.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Net.Requests.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="DB\msvcr80.dll" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\</RemoteDir>
-            <RemoteName>msvcr80.dll</RemoteName>
+        <DeployFile Include="Report\rpt\ListaPrecios.fr3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\rpt\</RemoteDir>
+            <RemoteName>ListaPrecios.fr3</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -266,15 +356,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="DB\fbembed.dll" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\</RemoteDir>
-            <RemoteName>fbembed.dll</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="DB\icuuc30.dll" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\</RemoteDir>
             <RemoteName>icuuc30.dll</RemoteName>
@@ -293,15 +374,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="DB\gds32.dll" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\</RemoteDir>
-            <RemoteName>gds32.dll</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png" Condition="'$(Config)'=='Debug'">
             <RemoteDir>GeN\Assest\</RemoteDir>
             <RemoteName>delphi_UwpDefault_44.png</RemoteName>
@@ -311,9 +383,54 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\WCGeNLib.pdb" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>WCGeNLib.pdb</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Runtime.Handles.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Runtime.Handles.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Collections.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Collections.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\vendedor.htm" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\</RemoteDir>
             <RemoteName>vendedor.htm</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Linq.Expressions.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Linq.Expressions.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Data.Common.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Data.Common.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -359,6 +476,15 @@
         <DeployFile Include="Report\rpt\LibroDiario.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>LibroDiario.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Runtime.Extensions.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Runtime.Extensions.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -419,6 +545,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Net.NetworkInformation.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Net.NetworkInformation.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="DB\udf\fbudf.dll" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\db\udf\</RemoteDir>
             <RemoteName>fbudf.dll</RemoteName>
@@ -431,6 +566,33 @@
         <DeployFile Include="ayuda\caja.htm" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\</RemoteDir>
             <RemoteName>caja.htm</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Net.WebSockets.Client.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Net.WebSockets.Client.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Runtime.InteropServices.RuntimeInformation.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Runtime.InteropServices.RuntimeInformation.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Xml.XmlSerializer.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Xml.XmlSerializer.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -482,9 +644,27 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.IO.Pipes.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.IO.Pipes.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\Proveedores.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>Proveedores.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Collections.NonGeneric.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Collections.NonGeneric.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -536,18 +716,27 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="ayuda\vender.htm" Condition="'$(Config)'=='Release'">
-            <RemoteDir>GeN\hlp\</RemoteDir>
-            <RemoteName>vender.htm</RemoteName>
+        <DeployFile Include="lib\System.ComponentModel.EventBasedAsync.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.ComponentModel.EventBasedAsync.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="DB\ib_util.dll" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="lib\System.Diagnostics.Tools.dll" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\</RemoteDir>
-            <RemoteName>ib_util.dll</RemoteName>
+            <RemoteName>System.Diagnostics.Tools.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ayuda\vender.htm" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\hlp\</RemoteDir>
+            <RemoteName>vender.htm</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -617,9 +806,45 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Text.RegularExpressions.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Text.RegularExpressions.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.ComponentModel.TypeConverter.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.ComponentModel.TypeConverter.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\gen_abm_vendedor.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_abm_vendedor.jpg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\msvcr80.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>msvcr80.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Text.Encoding.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Text.Encoding.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -635,9 +860,63 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Threading.Thread.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Threading.Thread.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Xml.XmlDocument.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Xml.XmlDocument.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Reflection.Extensions.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Reflection.Extensions.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.IO.FileSystem.Primitives.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.IO.FileSystem.Primitives.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\WooCommerceGeN.exe.config" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>WooCommerceGeN.exe.config</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\login.htm" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\</RemoteDir>
             <RemoteName>login.htm</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Threading.Timer.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Threading.Timer.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -680,6 +959,24 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\icuuc30.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>icuuc30.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.IO.IsolatedStorage.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.IO.IsolatedStorage.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\rubro.htm" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\</RemoteDir>
             <RemoteName>rubro.htm</RemoteName>
@@ -689,9 +986,45 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Reflection.Primitives.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Reflection.Primitives.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Net.Ping.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Net.Ping.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\gen_buscar_venta.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_buscar_venta.jpg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Runtime.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Runtime.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Runtime.Serialization.Json.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Runtime.Serialization.Json.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -725,6 +1058,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\icudt30.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>icudt30.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\FacturaSimple.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>FacturaSimple.fr3</RemoteName>
@@ -734,9 +1076,36 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Globalization.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Globalization.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Net.Http.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Net.Http.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="DB\firebird.log" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\</RemoteDir>
             <RemoteName>firebird.log</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\Microsoft.Win32.Primitives.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>Microsoft.Win32.Primitives.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -770,6 +1139,51 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\fbembed.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>fbembed.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.IO.UnmanagedMemoryStream.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.IO.UnmanagedMemoryStream.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Diagnostics.Debug.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Diagnostics.Debug.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Threading.Tasks.Parallel.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Threading.Tasks.Parallel.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.ValueTuple.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.ValueTuple.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\FacturaDuplicadoMediaHoja.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>FacturaDuplicadoMediaHoja.fr3</RemoteName>
@@ -791,6 +1205,42 @@
         <DeployFile Include="IMG\empresa.bmp" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\img\</RemoteDir>
             <RemoteName>empresa.bmp</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Runtime.Serialization.Primitives.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Runtime.Serialization.Primitives.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Security.Cryptography.Algorithms.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Security.Cryptography.Algorithms.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Xml.XPath.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Xml.XPath.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\msvcp80.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>msvcp80.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -824,6 +1274,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Security.Cryptography.Csp.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Security.Cryptography.Csp.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\conf-sis-fe-conf-csr-emp-abm.png" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>conf-sis-fe-conf-csr-emp-abm.png</RemoteName>
@@ -845,6 +1304,15 @@
         <DeployFile Include="ayuda\img\gen_configuracion_empresa.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_configuracion_empresa.jpg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Linq.Parallel.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Linq.Parallel.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -941,6 +1409,24 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Net.NameResolution.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Net.NameResolution.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Collections.Concurrent.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Collections.Concurrent.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\PreciosTodos.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>PreciosTodos.fr3</RemoteName>
@@ -986,9 +1472,27 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Console.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Console.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\Cobrador.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>Cobrador.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Resources.Writer.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Resources.Writer.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1040,6 +1544,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.ObjectModel.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.ObjectModel.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\ClientesTotal.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>ClientesTotal.fr3</RemoteName>
@@ -1049,9 +1562,54 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.IO.FileSystem.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.IO.FileSystem.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Runtime.Serialization.Xml.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Runtime.Serialization.Xml.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="IMG\GeN_Icon.ico" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\img\</RemoteDir>
             <RemoteName>GeN_Icon.ico</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Security.Cryptography.X509Certificates.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Security.Cryptography.X509Certificates.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Linq.Queryable.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Linq.Queryable.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Security.Principal.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Security.Principal.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1085,6 +1643,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Net.Sockets.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Net.Sockets.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\LibroIVAVentas.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>LibroIVAVentas.fr3</RemoteName>
@@ -1097,6 +1664,42 @@
         <DeployFile Include="ayuda\crearpedido.htm" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\</RemoteDir>
             <RemoteName>crearpedido.htm</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\FirebirdSql.Data.FirebirdClient.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>FirebirdSql.Data.FirebirdClient.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\WooCommerce.NET.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>WooCommerce.NET.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.IO.MemoryMappedFiles.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.IO.MemoryMappedFiles.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Resources.ResourceManager.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Resources.ResourceManager.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1121,6 +1724,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
             <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="lib\System.Runtime.Numerics.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Runtime.Numerics.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
         </DeployFile>
         <DeployFile Include="Report\rpt\CPCuadruplicado.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
@@ -1152,6 +1764,15 @@
         <DeployFile Include="Report\rpt\CPOriginal.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>CPOriginal.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.IO.Compression.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.IO.Compression.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1222,6 +1843,33 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Net.Primitives.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Net.Primitives.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\WCGeNLib.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>WCGeNLib.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Reflection.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Reflection.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\ListaPreciosCompleta.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>ListaPreciosCompleta.fr3</RemoteName>
@@ -1249,9 +1897,27 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\WooCommerce.NET.pdb" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>WooCommerce.NET.pdb</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="DB\udf\ib_udf.sql" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\db\udf\</RemoteDir>
             <RemoteName>ib_udf.sql</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Dynamic.Runtime.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Dynamic.Runtime.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1297,6 +1963,33 @@
         <DeployFile Include="DB\udf\fbudf.txt" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\db\udf\</RemoteDir>
             <RemoteName>fbudf.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\gds32.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>gds32.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Net.WebHeaderCollection.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Net.WebHeaderCollection.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Text.Encoding.Extensions.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Text.Encoding.Extensions.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1420,6 +2113,24 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Threading.Tasks.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Threading.Tasks.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\WooCommerceGeN.exe" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>WooCommerceGeN.exe</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\conf-sis-fe-conf-csr-ped-afip.png" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>conf-sis-fe-conf-csr-ped-afip.png</RemoteName>
@@ -1441,6 +2152,33 @@
         <DeployFile Include="Report\rpt\LibroIVAventasAlicuotaSiap.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>LibroIVAventasAlicuotaSiap.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Threading.ThreadPool.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Threading.ThreadPool.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Runtime.InteropServices.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Runtime.InteropServices.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Security.Claims.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Security.Claims.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1519,9 +2257,45 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.IO.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.IO.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.IO.FileSystem.Watcher.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.IO.FileSystem.Watcher.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\comprar.htm" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\</RemoteDir>
             <RemoteName>comprar.htm</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Security.Cryptography.Primitives.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Security.Cryptography.Primitives.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.AppContext.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.AppContext.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1551,6 +2325,15 @@
             <RemoteName>Logo44x44.png</RemoteName>
             <DeployClass>UWP_DelphiLogo44</DeployClass>
             <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Resources.Reader.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Resources.Reader.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
@@ -1591,6 +2374,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\WooCommerceGeN.pdb" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>WooCommerceGeN.pdb</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="IMG\gen.gif" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\img\</RemoteDir>
             <RemoteName>gen.gif</RemoteName>
@@ -1618,9 +2410,45 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Threading.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Threading.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Xml.XDocument.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Xml.XDocument.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\PagoVendedor.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>PagoVendedor.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Diagnostics.FileVersionInfo.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Diagnostics.FileVersionInfo.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\netstandard.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>netstandard.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1636,6 +2464,24 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\ib_util.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>ib_util.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Xml.ReaderWriter.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Xml.ReaderWriter.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="ayuda\img\conf-sis-fe-conf-crt.png" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>conf-sis-fe-conf-crt.png</RemoteName>
@@ -1645,9 +2491,36 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Diagnostics.Tracing.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Diagnostics.Tracing.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Drawing.Primitives.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Drawing.Primitives.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\Clientes.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>Clientes.fr3</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Diagnostics.Process.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Diagnostics.Process.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1699,6 +2572,33 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Runtime.CompilerServices.VisualC.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Runtime.CompilerServices.VisualC.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Globalization.Extensions.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Globalization.Extensions.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Security.Cryptography.Encoding.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Security.Cryptography.Encoding.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\NCTElectronica.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>NCTElectronica.fr3</RemoteName>
@@ -1735,6 +2635,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Diagnostics.Contracts.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Diagnostics.Contracts.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Report\rpt\SiapVtaComp.fr3" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\rpt\</RemoteDir>
             <RemoteName>SiapVtaComp.fr3</RemoteName>
@@ -1744,9 +2653,18 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="DB\msvcp80.dll" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="lib\System.ComponentModel.dll" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\</RemoteDir>
-            <RemoteName>msvcp80.dll</RemoteName>
+            <RemoteName>System.ComponentModel.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Diagnostics.TextWriterTraceListener.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Diagnostics.TextWriterTraceListener.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1798,9 +2716,36 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.ComponentModel.Primitives.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.ComponentModel.Primitives.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Diagnostics.TraceSource.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Diagnostics.TraceSource.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="IMG\logo.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\img\</RemoteDir>
             <RemoteName>logo.jpg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Security.SecureString.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Security.SecureString.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1834,6 +2779,15 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="lib\System.Linq.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Linq.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="DB\intl\fbintl.conf" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\intl\</RemoteDir>
             <RemoteName>fbintl.conf</RemoteName>
@@ -1855,6 +2809,24 @@
         <DeployFile Include="ayuda\img\gen_abm.jpg" Condition="'$(Config)'=='Release'">
             <RemoteDir>GeN\hlp\img\</RemoteDir>
             <RemoteName>gen_abm.jpg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Xml.XPath.XDocument.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Xml.XPath.XDocument.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="lib\System.Runtime.Serialization.Formatters.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>GeN\</RemoteDir>
+            <RemoteName>System.Runtime.Serialization.Formatters.dll</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
