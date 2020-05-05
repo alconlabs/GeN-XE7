@@ -388,6 +388,7 @@ object FullMainForm: TFullMainForm
       end
       object IniciarSesion1: TMenuItem
         Caption = 'INICIAR SESION'
+        Visible = False
         OnClick = IniciarSesion1Click
       end
       object WooCommerce1: TMenuItem

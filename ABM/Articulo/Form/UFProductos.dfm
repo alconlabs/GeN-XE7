@@ -31,14 +31,14 @@ object FProductos: TFProductos
     TabOrder = 0
     TabStop = False
     object TabSheet1: TTabSheet
-      Caption = 'Detalles'
-      object Label2: TLabel
-        Left = 14
+      Caption = 'DETALLE'
+      object NombreLabel: TLabel
+        Left = 15
         Top = 82
-        Width = 68
+        Width = 44
         Height = 13
         Alignment = taRightJustify
-        Caption = 'Descripci'#243'n'
+        Caption = 'Nombre'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -11
@@ -466,21 +466,38 @@ object FProductos: TFProductos
       end
     end
     object TabSheet3: TTabSheet
-      Caption = 'Notas'
+      Caption = 'DESCRIPCION'
       ImageIndex = 2
-      object DBMemo1: TDBMemo
+      object DesLargaDBMemo: TDBMemo
         Left = 0
         Top = 0
         Width = 711
-        Height = 399
+        Height = 378
+        Hint = 'DESCRIPCION LARGA'
         Align = alClient
-        DataField = 'Notas'
+        DataField = 'DESLARGA'
         DataSource = DM.dstArticulo
+        ScrollBars = ssBoth
         TabOrder = 0
+        ExplicitHeight = 302
+      end
+      object NotasDBEdit: TDBEdit
+        Left = 0
+        Top = 378
+        Width = 711
+        Height = 21
+        Hint = 'DESCRIPCION CORTA'
+        Align = alBottom
+        DataField = 'NOTAS'
+        DataSource = DM.dstArticulo
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 1
+        ExplicitTop = 302
       end
     end
     object TabSheet2: TTabSheet
-      Caption = 'Informaci'#243'n Adicional'
+      Caption = 'OTROS'
       ImageIndex = 2
       object Label6: TLabel
         Left = 351
@@ -755,7 +772,7 @@ object FProductos: TFProductos
       end
     end
     object TabSheet4: TTabSheet
-      Caption = 'Precios'
+      Caption = 'PRECIO'
       ImageIndex = 3
       object Label11: TLabel
         Left = 185
@@ -875,7 +892,7 @@ object FProductos: TFProductos
       end
     end
     object TabSheet5: TTabSheet
-      Caption = 'Contabilidad'
+      Caption = 'CONTABILIDAD'
       ImageIndex = 4
       object Label50: TLabel
         Left = 185
@@ -1006,6 +1023,7 @@ object FProductos: TFProductos
       Width = 73
       Height = 13
       Align = alTop
+      Alignment = taCenter
       Caption = 'C'#243'digo'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText

@@ -30,7 +30,7 @@ type
     Panel3: TPanel;
     SaveBitBtn: TBitBtn;
     BitBtn2: TBitBtn;
-    Label2: TLabel;
+    NombreLabel: TLabel;
     Label14: TLabel;
     Label23: TLabel;
     DescripcionDBEdit: TDBEdit;
@@ -49,7 +49,7 @@ type
     CostoDBEdit: TDBEdit;
     Label4: TLabel;
     PrecioCtaCteDBEdit: TDBEdit;
-    DBMemo1: TDBMemo;
+    DesLargaDBMemo: TDBMemo;
     TabSheet2: TTabSheet;
     Label6: TLabel;
     Label15: TLabel;
@@ -120,6 +120,7 @@ type
     Image1: TImage;
     OpenPictureDialog1: TOpenPictureDialog;
     Label8: TLabel;
+    NotasDBEdit: TDBEdit;
     procedure SaveBitBtnClick(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);

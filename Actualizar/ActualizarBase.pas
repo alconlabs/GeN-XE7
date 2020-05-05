@@ -17,6 +17,7 @@ type
     procedure ActualizarImprimir(reporte: string);
     procedure AgregarEnvio;
     procedure Reportes;
+    procedure Articulo;
   public
     constructor Create();
     destructor Destroy; override;
@@ -47,28 +48,30 @@ begin
       ActualizarImprimir('TElectronica');
     end;
     // GetBuildInfo;
-    if (EsVersion(1, 0, 15, 0) < 0) then
+    if (EsVersion(1, 0, 18, 0) < 0) then
     begin
-      CopyDir(ejecutable + 'hlp', Path);
-      CrearCbtetipo;
-      CrearTablasSiap;
-      CrearTablaRetPer;
-      CrearTablasIva;
-      CrearTablaCbteAsoc;
-      ActualizarTriggerFecha;
-      if (EsVersion(1, 0, 18, 0) < 0) then
-      begin
+        if (EsVersion(1, 0, 16, 0) < 0) then
+        begin
+          CopyDir(ejecutable + 'hlp', Path);
+          CrearCbtetipo;
+          CrearTablasSiap;
+          CrearTablaRetPer;
+          CrearTablasIva;
+          CrearTablaCbteAsoc;
+          ActualizarTriggerFecha;
+        end;
         AgregarEnvio;
         Reportes;
-      end;
-      ActualizarVersion;
+        Articulo;
     end;
+    ActualizarVersion;
   end;
 end;
 
 procedure TActualizarBase.Reportes;
 begin
-  with DM do CopyDir(ejecutable + 'rpt', Path);
+  with DM do
+    CopyDir(ejecutable + 'rpt', Path);
 end;
 
 procedure TActualizarBase.CrearCbtetipo;
@@ -397,6 +400,17 @@ begin
       for i := 0 to High(tb) do
         ActualizarTabla(tb[i], n, t);
     end;
+  end;
+end;
+
+procedure TActualizarBase.Articulo;
+var t,c :string;
+begin
+  t := 'Articulo';
+  with DM do
+  begin
+    ActualizarTabla(t, 'DESLARGA', 'BLOB');
+    ActualizarTabla(t, 'RESERVA', 'VARCHAR(10)');
   end;
 end;
 
