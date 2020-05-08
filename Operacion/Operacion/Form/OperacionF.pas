@@ -67,6 +67,7 @@ type
     TipoRadioGroup: TRadioGroup;
     PuntoVentaEdit: TEdit;
     bRetPer: TButton;
+    NotasBitBtn: TBitBtn;
     procedure ClienteBitBtnClick(Sender: TObject);
     procedure RJustifyEdit(var ThisEdit: TEdit);
     procedure AgregarBitBtnClick(Sender: TObject);
@@ -91,6 +92,7 @@ type
     procedure EnviarEmailCheckBoxClick(Sender: TObject);
     procedure bRetPerClick(Sender: TObject);
     procedure ComprobanteEditExit(Sender: TObject);
+    procedure NotasBitBtnClick(Sender: TObject);
   private
     { Private declarations }
     salir : Boolean;
@@ -112,7 +114,7 @@ type
     CtaNombre, CtaTipo, CtaAnticipo, CtaIIBB, code, Dia, Mes, Ano, TDocumento,
       Tiempo, T2, Precio, ChequeCodCheque, ChequeNumero, ChequeDetalle,
       ChequeCodFactura, ChequeMntCheque, ChequeFecha, ChequeDias, Fecha,
-      FechaVence, iv, DetalleFactura: string;
+      FechaVence, iv, DetalleFactura, notas: string;
     Tipo: Char;
     FechaVencimiento: TDate;
     codRem : String;
@@ -728,6 +730,11 @@ begin
   Result := costo + (costo * (flete/100)) + (costo * (ganancia/100));
 end;
 
+procedure TOperacionForm.NotasBitBtnClick(Sender: TObject);
+begin
+  ShowMessage(notas);
+end;
+
 procedure TOperacionForm.AgregarBitBtnClick(Sender: TObject);
 var i : Integer;
 begin
@@ -846,7 +853,7 @@ begin
         end else
         ProcCompra(PuntoVentaEdit.Text, cbTipo.Text, ClienteEdit.Text,
           FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-          VendedorEdit.Text, CuitEdit.Text, ComprobanteEdit.Text, CtaNombre,
+          VendedorEdit.Text, CuitEdit.Text, ComprobanteEdit.Text, CtaNombre, notas,
           PagareCheckBox.Checked, costo, Impuesto, StrToFloat(FECheque.Text),
           StrToFloat(FECheque.Text), StrToFloat(FEContado.Text), Total,
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
@@ -857,7 +864,7 @@ begin
       if TipoRadioGroup.ItemIndex=2 then
       ProcOPER('PED', cbTipo.Text, ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-        VendedorEdit.Text, '', CtaNombre, False, PagareCheckBox.Checked, impr, costo,
+        VendedorEdit.Text, '', CtaNombre, notas, False, PagareCheckBox.Checked, impr, costo,
         Comision, envio, Impuesto, StrToFloat(FECheque.Text), 0,
         StrToFloat(FEContado.Text), Total, subtotal, desc,
         StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text), Saldo, Pagado,
@@ -867,7 +874,7 @@ begin
       if TipoRadioGroup.ItemIndex=1 then
         ProcPresup(cbTipo.Text, ClienteEdit.Text,
           FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-          VendedorEdit.Text, CuitEdit.Text, CtaNombre, True,
+          VendedorEdit.Text, CuitEdit.Text, CtaNombre, notas, True,
           PagareCheckBox.Checked, costo, Comision, envio, Impuesto,
           StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
           subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
@@ -876,7 +883,7 @@ begin
       if codRem<>'' then
         FactRem(codRem,cbTipo.Text, ClienteEdit.Text,
         FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-        VendedorEdit.Text, CuitEdit.Text, CtaNombre, TipoRadioGroup.ItemIndex=1,
+        VendedorEdit.Text, CuitEdit.Text, CtaNombre, notas, TipoRadioGroup.ItemIndex=1,
         PagareCheckBox.Checked, impr, costo, Comision, envio, Impuesto,
         StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
         subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
@@ -888,7 +895,7 @@ begin
         (PuntoVentaEdit.Text, ComprobanteEdit.Text,
          cbTipo.Text, ClienteEdit.Text,
          FormatDateTime('mm/dd/yyyy hh:mm:ss', FechaDateTimePicker.DateTime),
-         VendedorEdit.Text, CuitEdit.Text, CtaNombre, TipoRadioGroup.ItemIndex=1,
+         VendedorEdit.Text, CuitEdit.Text, CtaNombre, notas, TipoRadioGroup.ItemIndex=1,
          PagareCheckBox.Checked, impr, costo, Comision, envio, Impuesto,
          StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
          subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
@@ -1138,10 +1145,11 @@ begin
   with dm do
   with qRemito do
   begin
-    Open('SELECT CLIENTE, COMISION, ENVIO FROM  "Operacion" WHERE CODIGO='+codigo);
+    Open('select CLIENTE, COMISION, ENVIO, NOTAS from "Operacion" where CODIGO = '+codigo);
     ClienteEdit.Text := FieldByName('CLIENTE').AsString;
     Comision := FieldByName('COMISION').AsFloat;
     envio := FieldByName('ENVIO').AsFloat;
+    notas := FieldByName('NOTAS').AsString;
     TraeNombreCliente;
     Open('SELECT ARTICULO, PRECIO, CANTIDAD, COSTO FROM "OperacionItem"'+
     ' WHERE OPERACION = '+codigo);

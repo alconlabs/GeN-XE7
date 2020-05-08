@@ -15,9 +15,11 @@ type
     procedure CrearTablaCbteAsoc;
     procedure ActualizarTriggerFecha;
     procedure ActualizarImprimir(reporte: string);
-    procedure AgregarEnvio;
+//    procedure AgregarEnvio;
     procedure Reportes;
     procedure Articulo;
+    procedure AgregarCampoEnTablas(tablas: TArray<string>; nombre,
+      tipo: string);
   public
     constructor Create();
     destructor Destroy; override;
@@ -31,7 +33,9 @@ implementation
 uses DataModule;
 
 procedure TActualizarBase.OnCreate;
+var _tbo : TArray<string>;
 begin
+  _tbo := TArray<string>.Create('Operacion', 'Venta', 'Compra', 'Presupuesto','CtaCte');
   with DM do
   begin
     if (not ExisteEnTabla('Version', '')) then
@@ -48,21 +52,25 @@ begin
       ActualizarImprimir('TElectronica');
     end;
     // GetBuildInfo;
-    if (EsVersion(1, 0, 18, 0) < 0) then
+    if (EsVersion(1, 0, 19, 0) < 0) then
     begin
-        if (EsVersion(1, 0, 16, 0) < 0) then
-        begin
-          CopyDir(ejecutable + 'hlp', Path);
-          CrearCbtetipo;
-          CrearTablasSiap;
-          CrearTablaRetPer;
-          CrearTablasIva;
-          CrearTablaCbteAsoc;
-          ActualizarTriggerFecha;
-        end;
-        AgregarEnvio;
-        Reportes;
-        Articulo;
+      if (EsVersion(1, 0, 18, 0) < 0) then
+      begin
+          if (EsVersion(1, 0, 16, 0) < 0) then
+          begin
+            CopyDir(ejecutable + 'hlp', Path);
+            CrearCbtetipo;
+            CrearTablasSiap;
+            CrearTablaRetPer;
+            CrearTablasIva;
+            CrearTablaCbteAsoc;
+            ActualizarTriggerFecha;
+          end;
+          AgregarCampoEnTablas(_tbo,'ENVIO','DOUBLE PRECISION DEFAULT 0');//AgregarEnvio;
+          Reportes;
+      end;
+      Articulo;
+      AgregarCampoEnTablas(_tbo,'NOTAS','BLOB');
     end;
     ActualizarVersion;
   end;
@@ -383,22 +391,35 @@ begin
   end;
 end;
 
-procedure TActualizarBase.AgregarEnvio;
-var
-  n, t: string;
-  i: integer;
-  tb: TArray<string>;
+//procedure TActualizarBase.AgregarEnvio;
+//var
+//  n, t: string;
+//  i: integer;
+//  tb: TArray<string>;
+//begin
+//  with DM do
+//  begin
+//    n := 'ENVIO';
+//    if (not ExisteEnTabla('Operacion', n)) then
+//    begin
+//      t := 'DOUBLE PRECISION DEFAULT 0';
+//      tb := TArray<string>.Create('Operacion', 'Venta', 'Compra', 'Presupuesto',
+//        'CtaCte');
+//      for i := 0 to High(tb) do
+//        ActualizarTabla(tb[i], n, t);
+//    end;
+//  end;
+//end;
+
+procedure TActualizarBase.AgregarCampoEnTablas(tablas : TArray<string>; nombre,tipo : string);
+var i: integer;
 begin
   with DM do
   begin
-    n := 'ENVIO';
-    if (not ExisteEnTabla('Operacion', n)) then
+    if (not ExisteEnTabla(tablas[0], nombre)) then
     begin
-      t := 'DOUBLE PRECISION DEFAULT 0';
-      tb := TArray<string>.Create('Operacion', 'Venta', 'Compra', 'Presupuesto',
-        'CtaCte');
-      for i := 0 to High(tb) do
-        ActualizarTabla(tb[i], n, t);
+      for i := 0 to High(tablas) do
+        ActualizarTabla(tablas[i], nombre, tipo);
     end;
   end;
 end;
@@ -411,6 +432,37 @@ begin
   begin
     ActualizarTabla(t, 'DESLARGA', 'BLOB');
     ActualizarTabla(t, 'RESERVA', 'VARCHAR(10)');
+    ActualizarTabla(t, 'INDIVIDUAL', 'SMALLINT');
+    ActualizarTabla(t, 'MODIFICADO', 'TIMESTAMP');
+    ActualizarTabla(t, 'SLUG', 'VARCHAR(20)');
+    ActualizarTabla(t, 'ENLACE', 'VARCHAR(255)');
+    ActualizarTabla(t, 'TIPO', 'VARCHAR(20)');
+    ActualizarTabla(t, 'DESTACADO', 'SMALLINT');
+    ActualizarTabla(t, 'VISIBLE', 'VARCHAR(20)');
+    ActualizarTabla(t, 'REBAJADODESDE', 'TIMESTAMP');
+    ActualizarTabla(t, 'REBAJADOHASTA', 'TIMESTAMP');
+    ActualizarTabla(t, 'VIRTUAL', 'SMALLINT');
+    ActualizarTabla(t, 'DESCARGAR', 'SMALLINT');
+    ActualizarTabla(t, 'DESCARGA', 'INTEGER');
+    ActualizarTabla(t, 'DESCARGARLIMITE', 'INTEGER');
+    ActualizarTabla(t, 'DESCARGAREXPIRA', 'INTEGER');
+    ActualizarTabla(t, 'URLEXTERNA', 'VARCHAR(255)');
+    ActualizarTabla(t, 'BOTON', 'VARCHAR(255)');
+    ActualizarTabla(t, 'ESTADOIMPUESTO', 'VARCHAR(20)');
+    ActualizarTabla(t, 'CLASEIMPUESTO', 'VARCHAR(20)');
+    ActualizarTabla(t, 'ESTADOSTOCK', 'VARCHAR(20)');
+    ActualizarTabla(t, 'PESO', 'DOUBLE PRECISION');
+    ActualizarTabla(t, 'DIMENSION', 'INTEGER');
+    ActualizarTabla(t, 'CLASEENVIO', 'VARCHAR(50)');
+    ActualizarTabla(t, 'VALORACION', 'SMALLINT');
+    ActualizarTabla(t, 'VENTADIRIGIDA', 'INTEGER');
+    ActualizarTabla(t, 'VENTACRUZADA', 'INTEGER');
+    ActualizarTabla(t, 'PADRE', 'INTEGER');
+    ActualizarTabla(t, 'NOTACOMPRA', 'BLOB');
+    ActualizarTabla(t, 'ETIQUETA', 'INTEGER');
+    ActualizarTabla(t, 'ATRIBUTO', 'INTEGER');
+    ActualizarTabla(t, 'ATRIBUTOPORDEFECTO', 'INTEGER');
+    ActualizarTabla(t, 'META', 'INTEGER');
   end;
 end;
 

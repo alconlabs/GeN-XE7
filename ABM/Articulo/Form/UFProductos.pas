@@ -29,119 +29,109 @@ type
     TabSheet3: TTabSheet;
     Panel3: TPanel;
     SaveBitBtn: TBitBtn;
-    BitBtn2: TBitBtn;
-    NombreLabel: TLabel;
-    Label14: TLabel;
-    Label23: TLabel;
+    NoBitBtn: TBitBtn;
+    DescripcionLabel: TLabel;
+    CantidadLabel: TLabel;
+    ProveedorLabel: TLabel;
     DescripcionDBEdit: TDBEdit;
     CantidadDBEdit: TDBEdit;
-    DBLookupComboBox4: TDBLookupComboBox;
-    BitBtn13: TBitBtn;
+    ProveedorDBLookupComboBox: TDBLookupComboBox;
     IVADBCBLabel: TLabel;
-    Label19: TLabel;
-    Label10: TLabel;
-    Label5: TLabel;
-    DBText1: TDBText;
-    IVADBTLabel: TLabel;
-    Label28: TLabel;
-    Label21: TLabel;
+    FleteLabel: TLabel;
+    CostoLabel: TLabel;
     FleteDBEdit: TDBEdit;
     CostoDBEdit: TDBEdit;
-    Label4: TLabel;
-    PrecioCtaCteDBEdit: TDBEdit;
+    NetoLabel: TLabel;
+    NetoDBEdit: TDBEdit;
     DesLargaDBMemo: TDBMemo;
     TabSheet2: TTabSheet;
-    Label6: TLabel;
-    Label15: TLabel;
-    Label17: TLabel;
-    Label18: TLabel;
-    Label20: TLabel;
-    DBEdit6: TDBEdit;
-    DBEdit5: TDBEdit;
-    DBEdit7: TDBEdit;
-    DBEdit8: TDBEdit;
-    DBEdit17: TDBEdit;
-    DBEdit9: TDBEdit;
-    Label9: TLabel;
-    DBEdit21: TDBEdit;
-    Label32: TLabel;
-    Label33: TLabel;
-    Label34: TLabel;
+    GanaciaLabel: TLabel;
     GanaciaDBEdit: TDBEdit;
     TabSheet4: TTabSheet;
-    Label11: TLabel;
-    Label12: TLabel;
-    Label13: TLabel;
-    Label7: TLabel;
-    Label31: TLabel;
-    Label3: TLabel;
-    Label22: TLabel;
+    Precio5Label: TLabel;
+    Precio1Label: TLabel;
+    Precio2Label: TLabel;
+    Precio6Label: TLabel;
+    Precio3Label: TLabel;
+    Precio4Label: TLabel;
     Precio1DBEdit: TDBEdit;
     Precio2DBEdit: TDBEdit;
     Precio3DBEdit: TDBEdit;
     Precio6DBEdit: TDBEdit;
     Precio4DBEdit: TDBEdit;
     Precio5DBEdit: TDBEdit;
-    IVADBText: TDBText;
     TabSheet5: TTabSheet;
-    Label50: TLabel;
+    CuentaLabel: TLabel;
     CuentaDBLookupComboBox: TDBLookupComboBox;
-    DBLookupComboBox1: TDBLookupComboBox;
-    DBLookupComboBox2: TDBLookupComboBox;
-    DBLookupComboBox7: TDBLookupComboBox;
-    Label54: TLabel;
-    Label53: TLabel;
-    Label51: TLabel;
-    Label52: TLabel;
-    Label25: TLabel;
-    Label26: TLabel;
-    Label27: TLabel;
-    RubroDBLookupComboBox: TDBLookupComboBox;
-    RubroBitBtn: TBitBtn;
-    MarcaDBLookupComboBox: TDBLookupComboBox;
-    MarcaBitBtn: TBitBtn;
-    CategoriaDBLookupComboBox: TDBLookupComboBox;
-    CategoriaBitBtn: TBitBtn;
+    TipoDBLookupComboBox: TDBLookupComboBox;
+    IIBBDBLookupComboBox: TDBLookupComboBox;
+    AnticipoDBLookupComboBox: TDBLookupComboBox;
+    AnticipoLabel: TLabel;
+    IIBBLabel: TLabel;
+    TipoLabel: TLabel;
     Label1: TLabel;
     CodigoDBEdit: TDBEdit;
     BitBtn4: TBitBtn;
-    Label24: TLabel;
-    CodigoBarraEdit: TDBEdit;
-    CodigoBarraBitBtn: TBitBtn;
-    PaintBox1: TImage;
-    DBEdit2: TDBEdit;
-    Label35: TLabel;
     IVADBComboBox: TDBLookupComboBox;
-    IVADBCBPorcLabel: TLabel;
     ButtonPanel: TPanel;
     DBNavigator1: TDBNavigator;
     bImportar: TButton;
     bExportar: TButton;
-    Image1: TImage;
     OpenPictureDialog1: TOpenPictureDialog;
-    Label8: TLabel;
     NotasDBEdit: TDBEdit;
+    CodigoBarraPaintBox: TImage;
+    CostoFleteDBText: TDBText;
+    CostoFleteLabel: TLabel;
+    IVADBTLabel: TLabel;
+    IVADBText: TDBText;
+    OtrosDerechoPanel: TPanel;
+    OtrosIzquierdoPanel: TPanel;
+    ReservaDBComboBox: TDBComboBox;
+    ReservaLabel: TLabel;
+    FechaCompUltDBEdit: TDBEdit;
+    Label20: TLabel;
+    StockVendidoDBEdit: TDBEdit;
+    StockVendidoLabel: TLabel;
+    DBEditStockMaximo: TDBEdit;
+    StockMaximoLabel: TLabel;
+    StockMinimoDBEdit: TDBEdit;
+    StockMinimoLabel: TLabel;
+    ProcedenciaDBEdit: TDBEdit;
+    Label32: TLabel;
+    UbicacionDBEdit: TDBEdit;
+    UbicacionLabel: TLabel;
+    UnidadDBEdit: TDBEdit;
+    Label9: TLabel;
+    RubroLabel: TLabel;
+    MarcaLabel: TLabel;
+    CategoriaLabel: TLabel;
+    StockLabel: TLabel;
+    Image1: TImage;
+    ImagenLabel: TLabel;
+    CodigoBarraLabel: TLabel;
+    RubroDBLookupComboBox: TDBLookupComboBox;
+    MarcaDBLookupComboBox: TDBLookupComboBox;
+    CategoriaDBLookupComboBox: TDBLookupComboBox;
+    StockDBEdit: TDBEdit;
+    CodigoBarraEdit: TDBEdit;
+    IndividualCheckBox: TCheckBox;
     procedure SaveBitBtnClick(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
+    procedure NoBitBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BitBtn4Click(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
-    procedure RubroBitBtnClick(Sender: TObject);
     procedure CodigoBarraBitBtnClick(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Precio6DBEditExit(Sender: TObject);
-    procedure CategoriaBitBtnClick(Sender: TObject);
-    procedure MarcaBitBtnClick(Sender: TObject);
     procedure DBEdit14Exit(Sender: TObject);
-    procedure BitBtn13Click(Sender: TObject);
     procedure MarcaDBLookupComboBoxKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure DBLookupComboBox4Enter(Sender: TObject);
+    procedure ProveedorDBLookupComboBoxEnter(Sender: TObject);
     procedure CategoriaDBLookupComboBoxEnter(Sender: TObject);
     procedure RubroDBLookupComboBoxEnter(Sender: TObject);
     procedure MarcaDBLookupComboBoxEnter(Sender: TObject);
-    procedure PaintBox1Click(Sender: TObject);
-    procedure PrecioCtaCteDBEditExit(Sender: TObject);
+    procedure CodigoBarraPaintBoxClick(Sender: TObject);
+    procedure NetoDBEditExit(Sender: TObject);
     procedure IVADBComboBoxExit(Sender: TObject);
     procedure GanaciaDBEditExit(Sender: TObject);
     procedure IVADBComboBoxEnter(Sender: TObject);
@@ -150,6 +140,7 @@ type
     procedure bExportarClick(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
+    procedure CodigoBarraLabelClick(Sender: TObject);
   private
     { Private declarations }
     iip:string;
@@ -157,6 +148,8 @@ type
     procedure Calcular;
     procedure Save;
     procedure GetImage;
+    procedure GetIndividual;
+    procedure GetArticulo;
     procedure Load;
   public
     desc: string;
@@ -242,7 +235,7 @@ begin
         matrix := matrix + EAN_dcha[StrToInt(num[13])];
         matrix := matrix + 'x0x'; // barra final
 //        Dibujar(matrix);
-        PaintBox1.Visible:=True;
+        CodigoBarraPaintBox.Visible:=True;
       end;
     8:
       begin
@@ -260,11 +253,11 @@ begin
         matrix := matrix + EAN_dcha[StrToInt(num[8])];
         matrix := matrix + 'x0x';
 //        Dibujar(matrix);
-        PaintBox1.Visible:=True;
+        CodigoBarraPaintBox.Visible:=True;
       end
   else
 //    ShowMessage('LONGITUD DE CODIGO NO VALIDA');
-    PaintBox1.Visible:=False;
+    CodigoBarraPaintBox.Visible:=False;
   end;
 end;
 
@@ -272,27 +265,27 @@ procedure TFProductos.Dibujar(matrix: string);
 var
   i: integer;
 begin
-  with PaintBox1 do
+  with CodigoBarraPaintBox do
   begin
     Canvas.Brush.Color := clWhite;
-    Canvas.FillRect(Rect(0, 0, PaintBox1.Width, PaintBox1.Height));
+    Canvas.FillRect(Rect(0, 0, CodigoBarraPaintBox.Width, CodigoBarraPaintBox.Height));
     Canvas.Pen.Color := clBlack;
   end;
   for i := 1 to Length(matrix) do
     if matrix[i] = '1' then
-      PaintBox1.Canvas.PolyLine([Point(10 + i, 10), Point(10 + i, 50)])
+      CodigoBarraPaintBox.Canvas.PolyLine([Point(10 + i, 10), Point(10 + i, 50)])
     else if matrix[i] = 'x' then
-      PaintBox1.Canvas.PolyLine([Point(10 + i, 10), Point(10 + i, 55)]);
+      CodigoBarraPaintBox.Canvas.PolyLine([Point(10 + i, 10), Point(10 + i, 55)]);
   if Length(CodigoBarraEdit.Text) = 13 then
   begin
-    PaintBox1.Canvas.TextOut(3, 50, CodigoBarraEdit.Text[1]);
-    PaintBox1.Canvas.TextOut(17, 50, copy(CodigoBarraEdit.Text, 2, 6));
-    PaintBox1.Canvas.TextOut(63, 50, copy(CodigoBarraEdit.Text, 8, 6));
+    CodigoBarraPaintBox.Canvas.TextOut(3, 50, CodigoBarraEdit.Text[1]);
+    CodigoBarraPaintBox.Canvas.TextOut(17, 50, copy(CodigoBarraEdit.Text, 2, 6));
+    CodigoBarraPaintBox.Canvas.TextOut(63, 50, copy(CodigoBarraEdit.Text, 8, 6));
   end
   else if Length(CodigoBarraEdit.Text) = 8 then
   begin
-    PaintBox1.Canvas.TextOut(16, 50, copy(CodigoBarraEdit.Text, 1, 4));
-    PaintBox1.Canvas.TextOut(48, 50, copy(CodigoBarraEdit.Text, 5, 4));
+    CodigoBarraPaintBox.Canvas.TextOut(16, 50, copy(CodigoBarraEdit.Text, 1, 4));
+    CodigoBarraPaintBox.Canvas.TextOut(48, 50, copy(CodigoBarraEdit.Text, 5, 4));
   end;
 end;
 
@@ -301,7 +294,7 @@ begin
   Save;
 end;
 
-procedure TFProductos.BitBtn2Click(Sender: TObject);
+procedure TFProductos.NoBitBtnClick(Sender: TObject);
 begin
   dm.tArticulo.Cancel;
   Close;
@@ -337,15 +330,15 @@ begin
       IVADBComboBox.Visible:=True;
       IVADBText.Visible:=True;
       IVADBTLabel.Visible:=True;
-      IVADBCBPorcLabel.Visible:=True;
     end;
     //tArticulo.Insert;
 //    nuevo;
+  PageControl1.ActivePageIndex := 0;
 end;
 
 procedure TFProductos.FormCreate(Sender: TObject);
 begin
-    Load;
+  Load;
 end;
 
 procedure TFProductos.FormDestroy(Sender: TObject);
@@ -377,9 +370,8 @@ begin
         dm.tArticulo.Locate('CODIGO', dm.qArticulo.FieldByName('CODIGO').AsInteger, []);
       FBuscaArticulo.Free;
     end;
-    GetImage;
     dm.tArticulo.Edit;
-    Codifica(CodigoBarraEdit.Text);
+    GetArticulo;
   end;
 end;
 
@@ -436,24 +428,6 @@ begin
 //  PrecioCtaCteDBEdit.Field.AsFloat := 0;
 end;
 
-procedure TFProductos.RubroBitBtnClick(Sender: TObject);
-begin
-  //WinExec(PAnsiChar(AnsiString(Path + 'Rubro.exe')), SW_SHOWNORMAL);
-  { RubroForm:=RubroForm.Create(self);
-    try
-    RubroForm.ShowModal;
-    finally
-    If RubroForm.desc <> '' then
-    RubroDBLookupComboBox.KeyValue:= RubroForm.desc;
-    dm.tArticulo.FieldByName('Rubro').AsString:=RubroForm.desc;
-    RubroForm.Free;
-    end;
-    dm.tRubro.Close;
-    dm.tRubro.Open;
-    MarcaDBLookupComboBox.SetFocus;
-  }
-end;
-
 procedure TFProductos.RubroDBLookupComboBoxEnter(Sender: TObject);
 begin
   dm.tRubro.Close;
@@ -469,8 +443,10 @@ begin
     // guardar imagen
     if (Image1.Picture.Graphic <> nil) then Image1.Picture.SaveToFile(iip);
     if (tArticulo.State = dsEdit) or (tArticulo.State = dsInsert) then
-    if ((DescripcionDBEdit.Text<>'') and (CantidadDBEdit.Text<>'') and (CostoDBEdit.Text<>'') and (PrecioCtaCteDBEdit.Text<>'')) then
+    if ((DescripcionDBEdit.Text<>'') and (CantidadDBEdit.Text<>'') and (CostoDBEdit.Text<>'') and (NetoDBEdit.Text<>'')) then
      begin
+      if (ReservaDBComboBox.Text = '') then tArticulo.FieldByName('RESERVA').AsString := 'no';
+      tArticulo.FieldByName('INDIVIDUAL').AsInteger := IndividualCheckBox.Checked.ToInteger;
       tArticulo.Post;
       if (wpSync) then WooCommerceGeN(desc);
       if Dialogs.MessageDlg('Articulo grabado con éxito.  Salir?', mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
@@ -512,25 +488,61 @@ with dm do begin
 end;
 end;
 
+procedure TFProductos.CodigoBarraLabelClick(Sender: TObject);
+var
+  i: integer;
+begin
+with dm do begin
+  if dm.tArticulo.State = dsInsert then
+  begin
+    QTemp.Close;
+    QTemp.SQL.Text := 'SELECT max(CODIGO) FROM "Articulo"';
+    QTemp.Open;
+    i := 1000000000 + (QTemp.Fields.Fields[0].AsInteger + 1);
+    // agrego el codigo
+  end
+  else
+  begin
+    i := 1000000000 + StrToInt(CodigoDBEdit.Text);
+    IF (dm.tArticulo.State <> dsEdit) then
+      dm.tArticulo.Edit;
+  end;
+  // codigo de barras
+  CodigoBarraEdit.Text := '10' + IntToStr(i) + '2';
+  // lo incluyo en el codigo de barra
+  Codifica(CodigoBarraEdit.Text);
+  CodigoBarraEdit.SelStart := 0;
+  CodigoBarraEdit.SelLength := Length(CodigoBarraEdit.Text);
+  dm.tArticulo.FieldByName('CodigoBarra').AsString := CodigoBarraEdit.Text;
+end;
+end;
+
 procedure TFProductos.FormKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   IF Key = VK_F2 then
-    RubroBitBtn.Click;
+    //RubroBitBtn.Click;
   IF Key = VK_F3 then
-    MarcaBitBtn.Click;
+    //MarcaBitBtn.Click;
   IF Key = VK_F4 then
-    BitBtn13.Click;
+    //ProveedorLabel.Click;
   IF Key = VK_F5 then
     BitBtn4.Click;
   IF Key = VK_F6 then
-    CodigoBarraBitBtn.Click;
+    CodigoBarraLabelClick(Sender);
 end;
 
 procedure TFProductos.GanaciaDBEditExit(Sender: TObject);
 begin
   Calcular;
   SaveBitBtn.SetFocus;
+end;
+
+procedure TFProductos.GetArticulo;
+begin
+  GetImage;
+  GetIndividual;
+  Codifica(CodigoBarraEdit.Text);
 end;
 
 procedure TFProductos.GetImage;
@@ -541,7 +553,12 @@ begin
   if (FileExists(iip)) then Image1.Picture.LoadFromFile(iip);
 end;
 
-procedure TFProductos.PaintBox1Click(Sender: TObject);
+procedure TFProductos.GetIndividual;
+begin
+  IndividualCheckBox.Checked := (dm.tArticulo.FieldByName('INDIVIDUAL').AsInteger > 0);
+end;
+
+procedure TFProductos.CodigoBarraPaintBoxClick(Sender: TObject);
 begin
   OperacionDataModule := TOperacionDataModule.Create(Self);
   with OperacionDataModule do
@@ -556,42 +573,19 @@ begin
 //  IVADBEdit.SetFocus;
 end;
 
-procedure TFProductos.PrecioCtaCteDBEditExit(Sender: TObject);
+procedure TFProductos.NetoDBEditExit(Sender: TObject);
 begin
 //  c := StrToFloat(CostoDBEdit.Text);
 //  f := (c * (StrToFloat(FleteDBEdit.Text) / 100));
 //  c := c+f;
 //  p := StrToFloat(PrecioCtaCteDBEdit.Text);
 //  g := RoundTo(((p*100)/c)-100,-2);
-  GanaciaDBEdit.Text:=FloatToStr(DM.CalculaGanancia(StrToFloat(CostoDBEdit.Text),StrToFloat(FleteDBEdit.Text),StrToFloat(PrecioCtaCteDBEdit.Text)));
+  GanaciaDBEdit.Text:=FloatToStr(DM.CalculaGanancia(StrToFloat(CostoDBEdit.Text),StrToFloat(FleteDBEdit.Text),StrToFloat(NetoDBEdit.Text)));
   Calcular;
   SaveBitBtn.SetFocus;
 end;
 
 
-
-procedure TFProductos.CategoriaBitBtnClick(Sender: TObject);
-begin
-//  WinExec(PAnsiChar(AnsiString(Path + 'Categoria.exe')), SW_SHOWNORMAL);
-  {
-    FCategorias:=TFCategorias.Create(self);
-    try
-    FCategorias.ShowModal;
-    finally
-    If FCategorias.desc <> '' then
-    begin
-    CategoriaDBLookupComboBox.KeyValue:= FCategorias.desc;
-    dm.tArticulo.FieldByName('Categoria').AsString:=FCategorias.desc;
-    end;
-    FCategorias.Free;
-    end;
-
-    tCategoria.Close;
-    tCategoria.Open;
-    RubroDBLookupComboBox.SetFocus;
-  }
-
-end;
 
 procedure TFProductos.CategoriaDBLookupComboBoxEnter(Sender: TObject);
 begin
@@ -601,28 +595,6 @@ begin
     tCategoria.Open;
     tCategoria.Last;
   end;
-end;
-
-procedure TFProductos.MarcaBitBtnClick(Sender: TObject);
-begin
-  WinExec(PAnsiChar(AnsiString(Path + 'Marca.exe')), SW_SHOWNORMAL);
-  { MarcaForm:=TMarcaForm.Create(self);
-    try
-    MarcaForm.ShowModal;
-    finally
-    If MarcaForm.desc <> '' then
-    begin
-    MarcaDBLookupComboBox.KeyValue:= MarcaForm.desc;
-    If (dm.tArticulo.State <> dsEdit) and (dm.tArticulo.State <> dsInsert) then dm.tArticulo.Edit;
-    dm.tArticulo.FieldByName('Marca').AsString:=MarcaForm.desc;
-    end;
-    MarcaForm.Free;
-    end;
-    dm.tMarca.Close;
-    dm.tMarca.Open;
-    DBEdit9.SetFocus;
-  }
-
 end;
 
 procedure TFProductos.MarcaDBLookupComboBoxEnter(Sender: TObject);
@@ -645,7 +617,7 @@ begin
   SaveBitBtn.SetFocus;
 end;
 
-procedure TFProductos.DBLookupComboBox4Enter(Sender: TObject);
+procedure TFProductos.ProveedorDBLookupComboBoxEnter(Sender: TObject);
 begin
   dm.tProveedor.Close;
   dm.tProveedor.Open;
@@ -655,15 +627,15 @@ end;
 procedure TFProductos.DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
 begin
   case Button of
-    nbFirst : GetImage;
-    nbPrior : GetImage;
-    nbNext : GetImage;
-    nbLast : GetImage;
+    nbFirst : GetArticulo;
+    nbPrior : GetArticulo;
+    nbNext : GetArticulo;
+    nbLast : GetArticulo;
     nbInsert : nuevo;
 //    nbDelete : nuevo;
 //    nbEdit : BtnName := 'nbEdit';
 //    nbPost : Save;
-    nbCancel : GetImage;
+    nbCancel : GetArticulo;
 //    nbRefresh: GetImage;
   end;
 end;
@@ -698,11 +670,6 @@ begin
   Close;
 end;
 
-procedure TFProductos.BitBtn13Click(Sender: TObject);
-begin
-//  WinExec(PAnsiChar(AnsiString(Path + 'Proveedor.exe')), SW_SHOWNORMAL);
-end;
-
 procedure TFProductos.Calcular;
 var
   costo, neto, flete: Double;
@@ -716,17 +683,17 @@ begin
   with DM do
   begin
    if GanaciaDBEdit.Text = '0' then
-     PrecioCtaCteDBEdit.Text := FloatToStr(RoundTo((costo * PrecioCtaCte),-2))
+     NetoDBEdit.Text := FloatToStr(RoundTo((costo * PrecioCtaCte),-2))
    else
-    PrecioCtaCteDBEdit.Text := FloatToStr( RoundTo((costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),-2));
+    NetoDBEdit.Text := FloatToStr( RoundTo((costo * (StrToFloat(GanaciaDBEdit.Text) / 100 + 1)),-2));
    Precio1DBEdit.Text := FloatToStr(RoundTo((costo * Precio1),-2));
    Precio2DBEdit.Text := FloatToStr(RoundTo((costo * Precio2),-2));
    Precio3DBEdit.Text := FloatToStr(RoundTo((costo * Precio3),-2));
    Precio4DBEdit.Text := FloatToStr(RoundTo((costo * Precio4),-2));
    Precio5DBEdit.Text := FloatToStr(RoundTo((costo * Precio5),-2));
    Precio6DBEdit.Text := FloatToStr(RoundTo((costo * Precio6),-2));
-   DBText1.Caption := FloatToStr(RoundTo(( costo ),-2));
-   neto:=RoundTo((StrToFloat(PrecioCtaCteDBEdit.Text)),-2);
+   CostoFleteDBText.Caption := FloatToStr(RoundTo(( costo ),-2));
+   neto:=RoundTo((StrToFloat(NetoDBEdit.Text)),-2);
    tasa:=RoundTo((StrToFloat(dm.TraerValor('Iva', 'TASA', VarToStr(IVADBComboBox.KeyValue)))),-2);
    IVADBText.Caption := FloatToStr(RoundTo((CalcularIVA(neto,tasa)),-2));
   end;

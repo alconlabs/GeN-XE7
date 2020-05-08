@@ -36,18 +36,17 @@ type
     i: integer;
     IIBB, cmv: Double;
     jsResponse: TJSONValue;
-    function ProcVTA
-     (pvta, com,
-      let, cod, fech, ven, cui, ctan: string; pre, pgr, impr: Boolean;
+    function ProcVTA(pvta, com,
+      let, cod, fech, ven, cui, ctan, notas: string; pre, pgr, impr: Boolean;
       cost, comv, env, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
       int, n10, n21, i10, i21, deud, ulc,
       n3, i3, exc, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib
      : Double):Boolean;
-    Procedure ProcOPER(tipo, let, cod, fech, ven, cui, ctan: string;
+    Procedure ProcOPER(tipo, let, cod, fech, ven, cui, ctan, notas: string;
       pre, pgr, impr: Boolean; cost, comv, env, impu, cheq, ch3q, cont, tot, sbt, des,
       tarj, otr, sal, pag, int, n10, n21, i10, i21, deud, ulc,
       noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib: Double);
-    Procedure ProcCompra(pvta, let, cod, fech, ven, cui, com, ctan: string; pgr: Boolean;
+    Procedure ProcCompra(pvta, let, cod, fech, ven, cui, com, ctan, notas: string; pgr: Boolean;
       cost, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag, n10,
       n21, n3, i10, i21, i3, exc, deud , noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib
       : Double);
@@ -55,7 +54,7 @@ type
       fecha: TDateTime; pre, pgr: Boolean; cost, comv, env, impu, cheq, ch3q, cont,
       tot, sbt, des, tarj, otr, sal, pag, inte, n10, n21, i10, i21, deud,
       ulc: Double);
-    Procedure ProcPresup(let, cod, fec, ven, cui, cno: string;
+    Procedure ProcPresup(let, cod, fec, ven, cui, cno, notas: string;
       pre, pgr: Boolean; cost, comv, env, impu, che, ch3q, cont, tot, sbt, des, tarj,
       otr, sal, pag, int, n10, n21, i10, i21, deud, ulc: Double);
     Procedure AnularVTA(nro: string);
@@ -67,7 +66,7 @@ type
       ched, chedi, tarj, tarn, tarimp, otri, mone, meim, metc, sald, paga, fech,
       ch3q, ch3i, ch3n, ch3d, ch3di: string);
     Function ArtNuevo(prec, desc: string): string;
-    procedure FactRem(codRem,let, cod, fech, ven, cui, ctan: string; pre, pgr,impr: Boolean;
+    procedure FactRem(codRem,let, cod, fech, ven, cui, ctan, notas: string; pre, pgr,impr: Boolean;
       cost, comv, env, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
       int, n10, n21, i10, i21, deud, ulc,
 //      noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib: Double);
@@ -819,12 +818,12 @@ with dm do begin
   // INSERTA EN LA TABLA PRESUPUESTO
   qQ.sql.Text := 'Insert Into "Presupuesto" (CODIGO, LETRA, CLIENTE, ' +
     ' SUBTOTAL, DESCUENTO, FECHA,' + ' IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
-    ' TARJETA, OTROS, SALDO, PAGADO, ALICIVA, ENVIO) Values ' + '( ' + (nro) + ', ' +
+    ' TARJETA, OTROS, SALDO, PAGADO, ALICIVA, ENVIO, NOTAS) Values ' + '( ' + (nro) + ', ' +
     quotedstr(let) + ', ' + cod + ', ' + ' ' + floattostr(sbt) + ', ' +
     floattostr(des) + ', ' + quotedstr(fec) + ', ' + floattostr(impu) + ', ' +
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(che) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
-    floattostr(pag)+', '+IntToStr(aIva)+', '+floattostr(env)+')';
+    floattostr(pag)+', '+IntToStr(aIva)+', '+floattostr(env)+ ', ' + quotedstr(notas)+')';
   qQ.ExecSQL;
   // Insertar en la tabla de PRESUPUESTOITEM
   for i := 1 to High(mat[0]) do
@@ -907,7 +906,7 @@ with dm do begin
     ' TARJETA, OTROS, SALDO,'+
     ' PAGADO, PAGARE, COSTO,'+
     ' DEUDA, COMISION, DESCRIPCION,'+
-    ' ALICIVA, ENVIO'+
+    ' ALICIVA, ENVIO, NOTAS'+
     ') Values ('+
     QuotedStr(comp)+', '+QuotedStr(vto)+', '+(nro)+', '+QuotedStr(let)+', '+cod+', '+
     floattostr(sbt)+', '+floattostr(des)+', '+QuotedStr(fech)+', '+
@@ -916,7 +915,7 @@ with dm do begin
     floattostr(tarj)+', '+floattostr(otr)+', '+floattostr(sal)+', '+
     floattostr(pag)+', '+QuotedStr(pagare)+', '+floattostr(cmv)+', '+
     floattostr(deud)+', '+floattostr(comv)+', '+QuotedStr(cae)+', '+
-    IntToStr(aIva)+', '+floattostr(env)+
+    IntToStr(aIva)+', '+floattostr(env)+ ', ' + quotedstr(notas)+
     ')';
   qQ.ExecSQL;
   // Insertar en la tabla de VENTAITEM
@@ -1048,7 +1047,7 @@ with dm do begin
     ' IMPUESTO, IVA1, IVA2,'+
     ' TOTAL, CONTADO, CHEQUE' +
     ', TARJETA, OTROS, SALDO, PAGADO, PAGARE, COSTO'+
-    ', DEUDA, COMISION, ALICIVA, ENVIO'+
+    ', DEUDA, COMISION, ALICIVA, ENVIO, NOTAS'+
     ') Values ' + '(' + IntToStr(nro) + ', ' + quotedstr(tipo) + ', ' +
     quotedstr(let) + ', ' + cod + ', ' + ven + ', ' + ' ' +
     floattostr(sbt) + ', ' +floattostr(des) + ', ' + quotedstr(fech) + ', ' +
@@ -1056,7 +1055,7 @@ with dm do begin
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
     floattostr(pag) + ',' + quotedstr(pagare) + ',' + floattostr(cmv) + ',' +
-    floattostr(deud) + ',' + floattostr(comv)+', '+IntToStr(aIva)+', '+floattostr(env)+')';
+    floattostr(deud) + ',' + floattostr(comv)+', '+IntToStr(aIva)+', '+floattostr(env)+ ', ' + quotedstr(notas)+')';
   qQ.ExecSQL;
   // Insertar en la tabla de OPERACIONITEM
   for i := 1 to High(mat[0]) do
@@ -1160,14 +1159,14 @@ with dm do begin
     ' IMPUESTO, TOTAL, CONTADO, CHEQUE,' +
     ' TARJETA, OTROS, SALDO, '+
     ' PAGADO, COMPROBANTE, ALICIVA'+
-    ', TERMINOS, IIBB, MINIMP'+
+    ', TERMINOS, IIBB, MINIMP, NOTAS'+
     ') Values (' +
     (nro) + ', ' + quotedstr(let) + ', ' + cod + ', ' + ' ' + floattostr(sbt) + ', ' +
     floattostr(des) + ', ' + quotedstr(fech) + ', ' + floattostr(impu) + ', ' +
     floattostr(tot) + ', ' + floattostr(cont) + ', ' + floattostr(cheq) + ', ' +
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
     floattostr(pag) + ', ' + quotedstr(com) +', '+IntToStr(aIva)
-    + ', ' +pvta+ ', ' +FloatToStr(per)+ ', ' +FloatToStr(ret)
+    + ', ' +pvta+ ', ' +FloatToStr(per)+ ', ' +FloatToStr(ret)+ ', ' + quotedstr(notas)
   + ')';
   qQ.ExecSQL;
   // Insertar en la tabla de COMPRAITEM
@@ -1917,7 +1916,7 @@ with dm do begin
     ', TARJETA, OTROS, SALDO'+
     ', PAGADO, PAGARE, COSTO'+
     ', DEUDA, COMISION, DESCRIPCION'+
-    ', ALICIVA, ENVIO'+
+    ', ALICIVA, ENVIO, NOTAS'+
     ') Values ' + '('+QuotedStr(comp)+', '+QuotedStr(codRem)+', '+QuotedStr(vto)+
     ', '+IntToStr(nro)+', '+quotedstr(let) + ', ' + cod + ', ' +
     floattostr(sbt) + ', ' + floattostr(des) + ', ' + quotedstr(fech) + ', ' +
@@ -1926,7 +1925,7 @@ with dm do begin
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
     floattostr(pag) + ', ' + quotedstr(pagare) + ', ' + floattostr(cmv) + ', ' +
     floattostr(deud) + ',' + floattostr(comv) + ', ' + QuotedStr(cae) +
-    ', '+IntToStr(aIva)+', '+floattostr(env)+
+    ', '+IntToStr(aIva)+', '+floattostr(env)+ ', ' + quotedstr(notas)+
     ')';
   qQ.ExecSQL;
   // Insertar en la tabla de VENTAITEM
