@@ -39,11 +39,12 @@ type
     procedure TipoRadioGroupClick(Sender: TObject);
     procedure EnviarEmailCheckBoxClick(Sender: TObject);
   private
+    procedure TraerPedidos;
     { Private declarations }
   public
     { Public declarations }
     Codigo, CodProve, Tipo: String;
-    salir, Cancela, anular, esCompra, esNotaCredito: boolean;
+    salir, Cancela, anular, esCompra, esNotaCredito, esPedido: boolean;
   end;
 
 var
@@ -120,7 +121,8 @@ begin
     Image1.Visible := False;
   end;
   if esCompra then TipoRadioGroup.ItemIndex:=3
-  else if esNotaCredito then TipoRadioGroup.ItemIndex:=4;
+  else if esNotaCredito then TipoRadioGroup.ItemIndex:=4
+  else if (esPedido) then TipoRadioGroup.ItemIndex := 1;
   todoBitBtn.Click;
 end;
 
@@ -165,12 +167,14 @@ end;
 
 procedure TBuscarOperacionForm.TipoRadioGroupClick(Sender: TObject);
 begin
-  if (TipoRadioGroup.ItemIndex=1) then
-  begin
-    if (wpSync) then dm.WooCommerceGeN('GetOrders');
-    FacturarBitBtn.Visible := True;
-  end;
+  if (TipoRadioGroup.ItemIndex=1) then TraerPedidos;
   todoBitBtn.Click;
+end;
+
+procedure TBuscarOperacionForm.TraerPedidos;
+begin
+    if (wpSync) then dm.WooCommerceGeN('GetOrders','');
+    FacturarBitBtn.Visible := True;
 end;
 
 procedure TBuscarOperacionForm.todoBitBtnClick(Sender: TObject);

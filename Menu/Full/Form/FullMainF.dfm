@@ -292,7 +292,6 @@ object FullMainForm: TFullMainForm
       end
       object Pedido1: TMenuItem
         Caption = 'PEDIDOS'
-        Visible = False
         OnClick = Pedido1Click
       end
       object ListadePrecios1: TMenuItem

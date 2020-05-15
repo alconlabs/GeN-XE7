@@ -958,13 +958,16 @@ end;
 
 procedure TFullMainForm.Pedido1Click(Sender: TObject);
 begin
-  // WinExec(PAnsiChar(AnsiString(path + 'PedidoL.exe')), SW_SHOWNORMAL);
-//  PedidoLForm := TPedidoLForm.Create(self);
-//  try
-//    PedidoLForm.ShowModal;
-//  finally
-//    PedidoLForm.Free;
-//  end;
+  BuscarOperacionForm := TBuscarOperacionForm.Create(self);
+  with BuscarOperacionForm do
+  begin
+    esPedido := True;
+    try
+      ShowModal;
+    finally
+      Free;
+    end;
+  end;
 end;
 
 procedure TFullMainForm.PLANES1Click(Sender: TObject);

@@ -5,7 +5,7 @@ object FProductos: TFProductos
   BorderStyle = bsSingle
   Caption = 'Altas, Bajas y Modificaciones de Articulos'
   ClientHeight = 468
-  ClientWidth = 401
+  ClientWidth = 425
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,7 +24,7 @@ object FProductos: TFProductos
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 326
+    Width = 350
     Height = 427
     ActivePage = TabSheet1
     Align = alClient
@@ -42,7 +42,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Nombre'
@@ -58,7 +58,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 95
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Cantidad'
@@ -68,7 +68,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 49
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Proveedor'
@@ -78,7 +78,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 233
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Tasa de IVA'
@@ -89,7 +89,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 187
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Flete'
@@ -99,7 +99,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 141
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Costo'
@@ -110,7 +110,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 325
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Neto'
@@ -127,7 +127,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 279
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Ganancia'
@@ -138,10 +138,10 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 22
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
-        BiDiMode = bdRightToLeft
+        BiDiMode = bdLeftToRight
         DataField = 'Descripcion'
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
@@ -151,10 +151,10 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 114
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
-        BiDiMode = bdRightToLeft
+        BiDiMode = bdLeftToRight
         DataField = 'Disponible'
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
@@ -164,7 +164,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 68
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
         BiDiMode = bdLeftToRight
@@ -182,10 +182,10 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 206
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
-        BiDiMode = bdRightToLeft
+        BiDiMode = bdLeftToRight
         DataField = 'ImpOtros'
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
@@ -195,10 +195,10 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 160
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
-        BiDiMode = bdRightToLeft
+        BiDiMode = bdLeftToRight
         DataField = 'Costo'
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
@@ -208,10 +208,10 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 344
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
-        BiDiMode = bdRightToLeft
+        BiDiMode = bdLeftToRight
         DataField = 'PRECIO'
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
@@ -222,10 +222,10 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 298
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
-        BiDiMode = bdRightToLeft
+        BiDiMode = bdLeftToRight
         DataField = 'PORCENTAJE'
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
@@ -236,7 +236,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 252
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
         BiDiMode = bdLeftToRight
@@ -259,20 +259,20 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 312
+        Width = 336
         Height = 366
         Hint = 'DESCRIPCION LARGA'
         Align = alClient
         DataField = 'DESLARGA'
         DataSource = DM.dstArticulo
-        ScrollBars = ssBoth
+        ScrollBars = ssVertical
         TabOrder = 0
       end
       object NotasDBEdit: TDBEdit
         AlignWithMargins = True
         Left = 3
         Top = 375
-        Width = 312
+        Width = 336
         Height = 21
         Hint = 'DESCRIPCION CORTA'
         Align = alBottom
@@ -287,9 +287,9 @@ object FProductos: TFProductos
       Caption = 'OTROS'
       ImageIndex = 2
       object OtrosDerechoPanel: TPanel
-        Left = 209
+        Left = 217
         Top = 0
-        Width = 109
+        Width = 125
         Height = 399
         Align = alRight
         TabOrder = 0
@@ -297,7 +297,7 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 326
-          Width = 101
+          Width = 117
           Height = 13
           Align = alTop
           Caption = 'Reserva'
@@ -307,19 +307,18 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 280
-          Width = 101
+          Width = 117
           Height = 13
           Align = alTop
           Caption = 'Fecha Compra Ultimo'
           FocusControl = FechaCompUltDBEdit
-          ExplicitLeft = 12
-          ExplicitTop = 252
+          ExplicitWidth = 101
         end
         object StockVendidoLabel: TLabel
           AlignWithMargins = True
           Left = 4
           Top = 234
-          Width = 101
+          Width = 117
           Height = 13
           Align = alTop
           Caption = 'Stock Vendido'
@@ -331,7 +330,7 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 188
-          Width = 101
+          Width = 117
           Height = 13
           Align = alTop
           Caption = 'Stock M'#225'ximo'
@@ -343,7 +342,7 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 142
-          Width = 101
+          Width = 117
           Height = 13
           Align = alTop
           Caption = 'Stock M'#237'nimo'
@@ -354,7 +353,7 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 96
-          Width = 101
+          Width = 117
           Height = 13
           Align = alTop
           Caption = 'Procedencia'
@@ -365,7 +364,7 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 50
-          Width = 101
+          Width = 117
           Height = 13
           Align = alTop
           Caption = 'Ubicaci'#243'n'
@@ -376,7 +375,7 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 4
-          Width = 101
+          Width = 117
           Height = 13
           Align = alTop
           Caption = 'Unidad'
@@ -387,7 +386,7 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 345
-          Width = 101
+          Width = 117
           Height = 21
           Align = alTop
           DataField = 'RESERVA'
@@ -402,10 +401,10 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 299
-          Width = 101
+          Width = 117
           Height = 21
           Align = alTop
-          BiDiMode = bdRightToLeft
+          BiDiMode = bdLeftToRight
           DataField = 'FechaCompUlt'
           DataSource = DM.dstArticulo
           ParentBiDiMode = False
@@ -415,10 +414,10 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 253
-          Width = 101
+          Width = 117
           Height = 21
           Align = alTop
-          BiDiMode = bdRightToLeft
+          BiDiMode = bdLeftToRight
           DataField = 'StockVendido'
           DataSource = DM.dstArticulo
           ParentBiDiMode = False
@@ -429,10 +428,10 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 207
-          Width = 101
+          Width = 117
           Height = 21
           Align = alTop
-          BiDiMode = bdRightToLeft
+          BiDiMode = bdLeftToRight
           DataField = 'StockMaximo'
           DataSource = DM.dstArticulo
           ParentBiDiMode = False
@@ -443,10 +442,10 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 161
-          Width = 101
+          Width = 117
           Height = 21
           Align = alTop
-          BiDiMode = bdRightToLeft
+          BiDiMode = bdLeftToRight
           DataField = 'StockMinimo'
           DataSource = DM.dstArticulo
           ParentBiDiMode = False
@@ -457,10 +456,10 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 115
-          Width = 101
+          Width = 117
           Height = 21
           Align = alTop
-          BiDiMode = bdRightToLeft
+          BiDiMode = bdLeftToRight
           DataField = 'Procedencia'
           DataSource = DM.dstArticulo
           ParentBiDiMode = False
@@ -470,10 +469,10 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 69
-          Width = 101
+          Width = 117
           Height = 21
           Align = alTop
-          BiDiMode = bdRightToLeft
+          BiDiMode = bdLeftToRight
           DataField = 'Ubicacion'
           DataSource = DM.dstArticulo
           ParentBiDiMode = False
@@ -483,10 +482,10 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 23
-          Width = 101
+          Width = 117
           Height = 21
           Align = alTop
-          BiDiMode = bdRightToLeft
+          BiDiMode = bdLeftToRight
           DataField = 'Unidad'
           DataSource = DM.dstArticulo
           ParentBiDiMode = False
@@ -496,10 +495,10 @@ object FProductos: TFProductos
           AlignWithMargins = True
           Left = 4
           Top = 372
-          Width = 101
+          Width = 117
           Height = 17
           Align = alTop
-          BiDiMode = bdRightToLeft
+          BiDiMode = bdLeftToRight
           Caption = 'Individual'
           ParentBiDiMode = False
           TabOrder = 8
@@ -1672,7 +1671,7 @@ object FProductos: TFProductos
           Width = 195
           Height = 21
           Align = alTop
-          BiDiMode = bdRightToLeft
+          BiDiMode = bdLeftToRight
           DataField = 'STOCK'
           DataSource = DM.dstArticulo
           ParentBiDiMode = False
@@ -1686,7 +1685,7 @@ object FProductos: TFProductos
           Width = 195
           Height = 21
           Align = alTop
-          BiDiMode = bdRightToLeft
+          BiDiMode = bdLeftToRight
           DataField = 'CodigoBarra'
           DataSource = DM.dstArticulo
           ParentBiDiMode = False
@@ -1701,7 +1700,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 187
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Precio 5'
@@ -1712,7 +1711,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Precio 1'
@@ -1723,7 +1722,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 49
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Precio 2'
@@ -1734,7 +1733,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 233
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Precio 6'
@@ -1745,7 +1744,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 95
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Precio 3'
@@ -1756,7 +1755,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 141
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Precio 4'
@@ -1767,10 +1766,10 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 22
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
-        BiDiMode = bdRightToLeft
+        BiDiMode = bdLeftToRight
         DataField = 'Precio1'
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
@@ -1780,10 +1779,10 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 68
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
-        BiDiMode = bdRightToLeft
+        BiDiMode = bdLeftToRight
         DataField = 'Precio2'
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
@@ -1793,10 +1792,10 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 114
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
-        BiDiMode = bdRightToLeft
+        BiDiMode = bdLeftToRight
         DataField = 'Precio3'
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
@@ -1806,10 +1805,10 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 252
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
-        BiDiMode = bdRightToLeft
+        BiDiMode = bdLeftToRight
         DataField = 'Precio6'
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
@@ -1820,10 +1819,10 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 160
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
-        BiDiMode = bdRightToLeft
+        BiDiMode = bdLeftToRight
         DataField = 'Precio4'
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
@@ -1833,10 +1832,10 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 206
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
-        BiDiMode = bdRightToLeft
+        BiDiMode = bdLeftToRight
         DataField = 'Precio5'
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
@@ -1850,7 +1849,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Cuenta Contable Asociada a'
@@ -1866,7 +1865,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 141
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Orden'
@@ -1882,7 +1881,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 95
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Ingresos Brutos'
@@ -1898,7 +1897,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 49
-        Width = 312
+        Width = 336
         Height = 13
         Align = alTop
         Caption = 'Tipo'
@@ -1914,7 +1913,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 22
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
         BiDiMode = bdLeftToRight
@@ -1930,7 +1929,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 68
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
         BiDiMode = bdLeftToRight
@@ -1946,7 +1945,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 114
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
         BiDiMode = bdLeftToRight
@@ -1962,7 +1961,7 @@ object FProductos: TFProductos
         AlignWithMargins = True
         Left = 3
         Top = 160
-        Width = 312
+        Width = 336
         Height = 21
         Align = alTop
         BiDiMode = bdLeftToRight
@@ -1977,7 +1976,7 @@ object FProductos: TFProductos
     end
   end
   object Panel3: TPanel
-    Left = 326
+    Left = 350
     Top = 0
     Width = 75
     Height = 427
@@ -2239,13 +2238,30 @@ object FProductos: TFProductos
       Width = 73
       Height = 50
       Align = alBottom
+      Cancel = True
       Caption = 'No'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
-      Kind = bkNo
+      Glyph.Data = {
+        DE010000424DDE01000000000000760000002800000024000000120000000100
+        0400000000006801000000000000000000001000000000000000000000000000
+        80000080000000808000800000008000800080800000C0C0C000808080000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+        3333333333333FFFFF333333000033333388888833333333333F888888FFF333
+        000033338811111188333333338833FFF388FF33000033381119999111833333
+        38F338888F338FF30000339119933331111833338F388333383338F300003391
+        13333381111833338F8F3333833F38F3000039118333381119118338F38F3338
+        33F8F38F000039183333811193918338F8F333833F838F8F0000391833381119
+        33918338F8F33833F8338F8F000039183381119333918338F8F3833F83338F8F
+        000039183811193333918338F8F833F83333838F000039118111933339118338
+        F3833F83333833830000339111193333391833338F33F8333FF838F300003391
+        11833338111833338F338FFFF883F83300003339111888811183333338FF3888
+        83FF83330000333399111111993333333388FFFFFF8833330000333333999999
+        3333333333338888883333330000333333333333333333333333333333333333
+        0000}
       NumGlyphs = 2
       ParentFont = False
       TabOrder = 1
@@ -2307,17 +2323,17 @@ object FProductos: TFProductos
   object ButtonPanel: TPanel
     Left = 0
     Top = 427
-    Width = 401
+    Width = 425
     Height = 41
     Align = alBottom
     TabOrder = 2
     object DBNavigator1: TDBNavigator
       Left = 1
       Top = 1
-      Width = 399
+      Width = 423
       Height = 36
       DataSource = DM.dstArticulo
-      VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete, nbEdit, nbCancel]
+      VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete, nbEdit]
       Align = alTop
       Hints.Strings = (
         'Primer registro'

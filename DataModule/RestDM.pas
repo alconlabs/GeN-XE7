@@ -255,7 +255,7 @@ begin
   begin
     stream := streams.Get(i) as TJSONObject;
     id := stream.Get('id').JsonValue as TJSONString;
-    if OperacionDataModule.existeEnTabla(tabla,'CODIGO='+id.Value) then
+    if DM.ExisteEnTabla(tabla,'CODIGO='+id.Value) then
     begin
       result := id.Value;
       exit;
@@ -283,9 +283,9 @@ begin
         parent := FDMemTableCategories.FieldByName('parent').AsString;
     //    T.SQL.Text := 'SELECT * FROM "Rubro" WHERE CODIGO = ' + id;
     //    T.Open;
-        if not OperacionDataModule.existeEnTabla('Categoria','CODIGO='+id) then //    if T.RecordCount = 0 then
+        if not DM.existeEnTabla('Categoria','CODIGO='+id) then //    if T.RecordCount = 0 then
         begin
-          OperacionDataModule.insertarTabla2('Categoria',id,name);
+          DM.insertarTabla2('Categoria',id,name);
   //        D.SQL.Text := 'INSERT INTO "Categoria" (CODIGO,DESCRIPCION) VALUES ('
   //        + id + ',' + QuotedStr(name) + ')';
   //        D.ExecSQL;
@@ -309,20 +309,20 @@ begin
           id := FDMemTableCategories.FieldByName('id').AsString;
           name := FDMemTableCategories.FieldByName('name').AsString;
           parent := FDMemTableCategories.FieldByName('parent').AsString;
-          if OperacionDataModule.existeEnTabla('Categoria','CODIGO='+parent) then
+          if DM.existeEnTabla('Categoria','CODIGO='+parent) then
           begin
-            if not OperacionDataModule.existeEnTabla('SubCategoria','CODIGO='+id) then
+            if not DM.existeEnTabla('SubCategoria','CODIGO='+id) then
             begin
-              OperacionDataModule.insertarTabla2('SubCategoria',id,name);
+              DM.insertarTabla2('SubCategoria',id,name);
   //              D.SQL.Text := 'INSERT INTO "SubCategoria" (CODIGO,DESCRIPCION) VALUES ('
   //              + id + ',' + QuotedStr(name) + ')';
   //              D.ExecSQL;
             end;
           end
           else
-          if not OperacionDataModule.existeEnTabla('Rubro','CODIGO='+id) then
+          if not DM.existeEnTabla('Rubro','CODIGO='+id) then
           begin
-            OperacionDataModule.insertarTabla2('Rubro',id,name);
+            DM.insertarTabla2('Rubro',id,name);
   //           D.SQL.Text := 'INSERT INTO "Rubro" (CODIGO,DESCRIPCION) VALUES ('
   //           + id + ',' + QuotedStr(name) + ')';
   //           D.ExecSQL;

@@ -296,7 +296,8 @@ end;
 
 procedure TFProductos.NoBitBtnClick(Sender: TObject);
 begin
-  dm.tArticulo.Cancel;
+  with dm do
+    if (tArticulo.State = dsEdit) or (tArticulo.State = dsInsert) then tArticulo.Cancel;
   Close;
 end;
 
@@ -448,7 +449,7 @@ begin
       if (ReservaDBComboBox.Text = '') then tArticulo.FieldByName('RESERVA').AsString := 'no';
       tArticulo.FieldByName('INDIVIDUAL').AsInteger := IndividualCheckBox.Checked.ToInteger;
       tArticulo.Post;
-      if (wpSync) then WooCommerceGeN(desc);
+      if (wpSync) then WooCommerceGeN('UploadItems', desc);
       if Dialogs.MessageDlg('Articulo grabado con éxito.  Salir?', mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
         Close
       else
@@ -635,7 +636,7 @@ begin
 //    nbDelete : nuevo;
 //    nbEdit : BtnName := 'nbEdit';
 //    nbPost : Save;
-    nbCancel : GetArticulo;
+//    nbCancel : dm.tArticulo.Cancel;
 //    nbRefresh: GetImage;
   end;
 end;
@@ -665,6 +666,7 @@ begin
     tIVA.Active := False;
     tCuenta.Active:=False;
     ImportarCsv('Articulo');//ImportarTabla('Articulo');
+    if (wpSync) then WooCommerceGeN('UploadItems', '');
   end;
   ShowMessage('Importación Finalizada!');
   Close;

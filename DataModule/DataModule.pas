@@ -176,6 +176,7 @@ type
     procedure TerminarModificacionTabla;
     procedure ObtenerSO;
     function EjecutarYEsperar(sPrograma: String; Visibilidad: Integer): Integer;
+    function EmpiezaMayuscula(texto: string): string;
   public
   const
     NumThreads: Integer = 4;
@@ -200,6 +201,7 @@ type
     function TextoAfecha(StrDate : string):TDateTime;
     function ReadTextFile(FileName : String):string;
     function UltimoRegistro(T, c: String): integer;
+    function SiguienteCodigo(tabla :string): integer;
     function UltimoRegistroSdb(T, c: String): integer;
     { function Gratis(arch: String): boolean; }
     procedure FormatearFecha;
@@ -222,6 +224,7 @@ type
     function TraerAlicuota(tasa:string):string;
     function TraerTasaAlicuota(codigo:string):string;
     function TraerValorX(tabla, campo, codigo, valor: string):string;
+    function TraerCodigoInsertarDescripcion(tabla, valor: string):String;
     function CantidadAlicIva(codigo:string):string;
     function TraerCodLetra(letra:string):string;
     function ObtenerNroComp(tipo:string):string;
@@ -238,7 +241,7 @@ type
     function GenerarContraseña(Texto:string):string;
     procedure ImportarCsv(tabla: string);
     function GetImgItemPath(cod:string):string;
-    procedure WooCommerceGeN(id:string);
+    procedure WooCommerceGeN(tipo,codigo:string);
     function ExisteEnTabla(TB_NAME, FLD_NAME: string):Boolean;
     procedure ActualizarTabla(TB_NAME, FLD_NAME, TYP_NAME: string);
     procedure ConectarSDB;
@@ -248,6 +251,8 @@ type
     procedure ActualizarIVA(CODIGO, TASA: string);
     procedure ActualizarVersion;
     function EsVersion(_v1,_v2,_v3,_v4 :Word):Integer;
+    procedure InsertarTabla2(tabla,codigo,desc: string);
+    function ExisteValorEnTabla(tabla,codigo: string): Boolean;
   end;
 
 const
@@ -358,6 +363,9 @@ type
   end;
 
   PCompartido = ^TCompartido;
+
+type
+  Win1251String = type AnsiString(1251);
 
 var
   DM: TDM;
@@ -918,11 +926,12 @@ begin
     result := v+1;
 end;
 
-procedure TDM.WooCommerceGeN(id: string);
+procedure TDM.WooCommerceGeN;
 begin
   BaseDatosFB.Connected := False;
-  if(id<>'') then id := ' '+id;
-  if (EjecutarYEsperar( 'WooCommerceGeN.exe'+id, SW_SHOWNORMAL )=0) then
+  if(tipo<>'') then tipo := ' '+tipo;
+  if(codigo<>'') then codigo := ' '+codigo;
+  if (EjecutarYEsperar('WooCommerceGeN.exe'+tipo+codigo, SW_SHOWNORMAL)=0) then
     begin
       BaseDatosFB.Connected:=True;
       TraerConfig;
@@ -1357,6 +1366,20 @@ begin
  end;
 end;
 
+function TDM.TraerCodigoInsertarDescripcion;
+var cod, campo :string;
+begin
+  if (tabla='Proveedor') then campo := 'NOMBRE'
+  else campo := 'DESCRIPCION';
+  cod := TraerValorX(tabla, 'CODIGO', campo, QuotedStr(valor));
+  if (cod='') then
+  begin
+    cod := UltimoRegistro(tabla, 'CODIGO').ToString;
+    AgregarValor(tabla, 'CODIGO,'+campo, cod+','+QuotedStr(valor));
+  end;
+  result := cod;
+end;
+
 procedure TDM.AgregarCampoModificacionTabla;
 begin
   FDTable1.FieldDefs.Add(nombreCampo, tipo, tamaño, False);
@@ -1602,6 +1625,11 @@ begin
 //  if porcentaje = 105 then porcentaje := 10.5;
   if porcentaje<100 then porcentaje:=(porcentaje*10);
   Result := monto-monto/(porcentaje/1000+1);
+end;
+
+function TDM.SiguienteCodigo(tabla: string): integer;
+begin
+  result := UltimoRegistro(tabla,'CODIGO');
 end;
 
 procedure TDM.tArticuloAfterInsert(DataSet: TDataSet);
@@ -1885,7 +1913,6 @@ begin
 //    IBScript1.Transaction.CommitRetaining;
 end;
 
-
 procedure TDM.ExportarTabla;
 begin
     SaveDialog1.FileName := tabla+'.csv';
@@ -1929,13 +1956,20 @@ end;
 
 procedure TDM.ImportarCsv(tabla: string);
 var
-  i,id: integer;
+  i,id,c: integer;
   fDMemTable: TFDMemTable;
   fDBatchMove: TFDBatchMove;
+  blobF : TBlobField;
+  origen : Variant;
+  campo,valor :string;
+  QueryImportar :TFDQuery;
 begin
   OpenDialog1.Filter := 'Csv files (*.csv)|*.CSV';
   if (OpenDialog1.Execute) then
   begin
+    QueryImportar := TFDQuery.Create(Self);
+    QueryImportar.Connection := BaseDatosFB;
+    QueryImportar.Transaction := TransactionFB;
     fDMemTable := TFDMemTable.create(Self);
     fDBatchMove := TFDBatchMove.Create(Self);
     with TFDBatchMoveTextReader.Create(fDBatchMove)do
@@ -1944,14 +1978,14 @@ begin
       FileName := OpenDialog1.FileName;
       // Setup file format
       DataDef.Separator := ',';//edsepara.Text[1]; // ** indicamos separador de campos en este caso ';'
-      DataDef.FormatSettings.DecimalSeparator:=',';
-      DataDef.FormatSettings.ThousandSeparator:=#0;
+      DataDef.FormatSettings.DecimalSeparator:='.';
       DataDef.Delimiter := #0;//** opcional, para campos sin QUOTED VALUES "valor" que es la opción default del componente
       Datadef.RecordFormat := rfCustom; //**
-      for i := 0 to Datadef.Fields.Count-1         //  ** para evitar problemas con campos FLOAT paso todos los campos a String.
-              do  Datadef.Fields[i].DataType := atString;    // ** De no hacerlo he tenido errores [FireDAC][Comp][DM]-607. Bad text value [17,5] format for mapping item [->B]. '10,24' is not a valid integer value.
-      for i := 0 to Datadef.Fields.Count-1         //  debemos antes agregar los campos el FDMentable sino obtenemos un error de que no puede crear el dataset.
-              do  fDMemTable.FieldDefs.Add(Datadef.Fields[i].FieldName,ftString, 50, False);
+      DataDef.FormatSettings.ThousandSeparator:=#0;
+      for i := 0 to Datadef.Fields.Count-1 do //  ** para evitar problemas con campos FLOAT paso todos los campos a String.
+        Datadef.Fields[i].DataType := atString; // ** De no hacerlo he tenido errores [FireDAC][Comp][DM]-607. Bad text value [17,5] format for mapping item [->B]. '10,24' is not a valid integer value.
+      for i := 0 to Datadef.Fields.Count-1 do //  debemos antes agregar los campos el FDMentable sino obtenemos un error de que no puede crear el dataset.
+        fDMemTable.FieldDefs.Add(Datadef.Fields[i].FieldName,ftString, 255, False);
       DataDef.WithFieldNames := True; // setear si tiene los nombres de campo en primera linea
     end;
     // Create dataset writer and set FDBatchMode as owner. Then
@@ -1965,26 +1999,50 @@ begin
     // Analyze source text file structure
     fDBatchMove.GuessFormat;
     fDBatchMove.Analyze := ([ taDelimSep,taHeader,taFields]); // este comando crea la estructura de datos según adivina leyendo los primeros registros
-    fDBatchMove.AnalyzeSample := 50;  // El default es 10, con esto profundizamos el analisis para adivinar estructura de tabla y campos
+    fDBatchMove.AnalyzeSample := 300;  // El default es 10, con esto profundizamos el analisis para adivinar estructura de tabla y campos
     fDBatchMove.Execute;   // y Eureka!   Tenemos los datos en la tabla y visibles en el Dbgrid
   end;
   fDMemTable.first;
   while not fDMemTable.Eof do
   begin
-    with Query do
+    with QueryImportar do
     begin
       id := fdmemtable.Fields.Fields[0].AsInteger;
       Open('SELECT * FROM "'+tabla+'" WHERE CODIGO=:I',[id]);
-      if RecordCount>0 then
+      if (RecordCount>0) then
         Edit
       else
       begin
         Insert;
         Fields.Fields[0].AsInteger := id;
       end;
-      for i := 1 to (Fields.Count-1) do
+      c := fDMemTable.Fields.Count;
+      Fields.FieldByName('PROVEEDOR').AsString := '0';
+      Fields.FieldByName('IVA').AsString := '5';
+      Fields.FieldByName('TASA').AsString := '210';
+      Fields.FieldByName('COSTO').AsString := fDMemTable.Fields.FieldByName('PRECIO').AsString;
+      Fields.FieldByName('CTANOMBRE').AsString := '13';
+      Fields.FieldByName('CTATIPO').AsString := '13';
+      Fields.FieldByName('CTAANTICIPO').AsString := '13';
+      Fields.FieldByName('CTAIIBB').AsString := '66';
+      for i := 1 to (c-1) do
       begin
-        Fields.Fields[i].AsString := fDMemTable.Fields.Fields[i].AsString;
+        valor:='';
+        campo := fDMemTable.Fields.Fields[i].FieldName;
+        if (tabla='Articulo') then
+        begin
+          origen := fDMemTable.Fields.Fields[i].AsAnsiString;
+          if (origen<>null) then
+            //case IndexStr(campo, ['DESLARGA']) of
+              //0 :
+            if (campo='DESLARGA') then
+              Fields.FieldByName(campo).AsAnsiString := UTF8ToString(origen)
+            else
+              if ((campo='PROVEEDOR')or(campo='RUBRO')or(campo='MARCA')or(campo='CATEGORIA')or(campo='SUBCATEGORIA'))then
+                valor := DM.TraerCodigoInsertarDescripcion(EmpiezaMayuscula(campo),UTF8ToString(VarToStr(origen)))
+        end;
+        if (valor='') then valor := UTF8ToString(fDMemTable.Fields.Fields[i].AsString);
+        Fields.FieldByName(campo).AsString := valor;//Fields.Fields[i].AsString := UTF8ToString(fDMemTable.Fields.Fields[i].AsString);
       end;
       Post;
     end;
@@ -1992,9 +2050,8 @@ begin
   end;
   fDMemTable.free;//destruimos componentes para eliminar datos default y cargados anteriormente
   fDBatchMove.Free;//idem anterior
-  Query.Close;
+  QueryImportar.Close;
 end;
-
 
 procedure TDM.ImportarProveedor;
 var
@@ -2006,29 +2063,30 @@ begin
 //  opendialog1.InitialDir := GetCurrentDir;
   if OpenDialog1.Execute then
   begin
-  fDMemTable := TFDMemTable.create(Self); // creamos
-  fDBatchMove := TFDBatchMove.Create(Self);
-//          dataSource1.DataSet := fdmemtable1;   // vinculamos la tabla al datasource
-      //Create text reader and set FDBatchMode as owner. Then
-  // FDBatchMove will automatically manage the reader instance.
-  with TFDBatchMoveTextReader.Create(fDBatchMove)
-  do begin
+    fDMemTable := TFDMemTable.create(Self); // creamos
+    fDBatchMove := TFDBatchMove.Create(Self);
+    //dataSource1.DataSet := fdmemtable1;   // vinculamos la tabla al datasource
+    //Create text reader and set FDBatchMode as owner. Then
+    // FDBatchMove will automatically manage the reader instance.
+  with TFDBatchMoveTextReader.Create(fDBatchMove)do
+  begin
     // Set text data file name
     FileName := OpenDialog1.FileName;
     // Setup file format
-    DataDef.Separator := ',';//edsepara.Text[1]; // ** indicamos separador de campos en este caso ';'
+    DataDef.Separator := ';';//edsepara.Text[1]; // ** indicamos separador de campos en este caso ';'
     DataDef.Delimiter := #0;//** opcional, para campos sin QUOTED VALUES "valor" que es la opción default del componente
     Datadef.RecordFormat := rfCustom; //**
-     for i := 0 to Datadef.Fields.Count-1         //  ** para evitar problemas con campos FLOAT paso todos los campos a String.
-            do  Datadef.Fields[i].DataType := atString;    // ** De no hacerlo he tenido errores [FireDAC][Comp][DM]-607. Bad text value [17,5] format for mapping item [->B]. '10,24' is not a valid integer value.
+    for i := 0 to Datadef.Fields.Count-1         //  ** para evitar problemas con campos FLOAT paso todos los campos a String.
+      do  Datadef.Fields[i].DataType := atString;    // ** De no hacerlo he tenido errores [FireDAC][Comp][DM]-607. Bad text value [17,5] format for mapping item [->B]. '10,24' is not a valid integer value.
     for i := 0 to Datadef.Fields.Count-1         //  debemos antes agregar los campos el FDMentable sino obtenemos un error de que no puede crear el dataset.
-            do  fDMemTable.FieldDefs.Add(Datadef.Fields[i].FieldName,ftString, 50, False);
+      do  fDMemTable.FieldDefs.Add(Datadef.Fields[i].FieldName,ftString, 50, False);
     DataDef.WithFieldNames := True; // setear si tiene los nombres de campo en primera linea
   end;
 
   // Create dataset writer and set FDBatchMode as owner. Then
   // FDBatchMove will automatically manage the writer instance.
-  with TFDBatchMoveDataSetWriter.Create(fDBatchMove) do begin
+  with TFDBatchMoveDataSetWriter.Create(fDBatchMove) do
+  begin
     // Set destination dataset
     DataSet := fDMemTable;
     // Do not set Optimise to True, if dataset is attached to UI
@@ -2155,7 +2213,6 @@ begin
   end;
 end;
 
-
 function TDM.HayBase;
 begin
   result := FileExists(Path+'db\GeN.FDB');
@@ -2199,6 +2256,54 @@ begin
   CloseHandle( InformacionProceso.hProcess );
   Sleep(1000);
   Result := iResultado;
+end;
+
+procedure TDM.InsertarTabla2;
+begin
+  with dm do
+  begin
+    qQ.SQL.Text := 'INSERT INTO "'+tabla+'" (CODIGO,DESCRIPCION) VALUES ('
+    + codigo + ',' + QuotedStr(desc) + ')';
+    qQ.ExecSQL;
+    BaseDatosFB.CommitRetaining;
+  end;
+end;
+
+function TDM.ExisteValorEnTabla;
+begin
+  with dm do
+  begin
+  //    try
+  //      qT.sql.Text := 'SELECT * FROM "' + tabla + '" WHERE ' + codigo;
+  //      qT.open;
+  //      result := (qT.RecordCount<>0);
+  //    finally
+  //      result := false;
+  //    end;
+    try
+      qT.sql.Text := 'SELECT * FROM "' + tabla + '" WHERE ' + codigo;
+      qT.open;
+      try
+        result := (qT.RecordCount<>0);
+      finally
+      { Esta línea se ejecuta SIEMPRE, haya o no excepción. }
+        qT.Close ;
+      end;
+    except
+      on Error: EDatabaseError do
+  //      ShowMessage ('Error al cargar los datos: '+Error.Message);
+      result := false;
+  //    ON Error: Exception DO
+  //      ShowMessage ('Excepción: '+Error.Message);
+    end;
+  end;
+end;
+
+function TDM.EmpiezaMayuscula;
+begin
+  texto := LowerCase(texto);
+  texto := UpperCase(texto)[1]+Copy( texto, 2, texto.Length);;
+  result := texto;
 end;
 
 end.

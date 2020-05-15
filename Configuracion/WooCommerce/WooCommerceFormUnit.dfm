@@ -3,7 +3,7 @@ object WooCommerceForm: TWooCommerceForm
   Top = 0
   Caption = 'WooCommerce'
   ClientHeight = 341
-  ClientWidth = 445
+  ClientWidth = 489
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object WooCommerceForm: TWooCommerceForm
   object PanelClient: TPanel
     Left = 0
     Top = 0
-    Width = 352
+    Width = 396
     Height = 341
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
@@ -29,11 +29,12 @@ object WooCommerceForm: TWooCommerceForm
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    ExplicitWidth = 352
     object wpSiteLabel: TLabel
       AlignWithMargins = True
       Left = 4
       Top = 4
-      Width = 344
+      Width = 388
       Height = 21
       Align = alTop
       Caption = 'Site:'
@@ -49,7 +50,7 @@ object WooCommerceForm: TWooCommerceForm
       AlignWithMargins = True
       Left = 4
       Top = 66
-      Width = 344
+      Width = 388
       Height = 21
       Align = alTop
       Caption = 'WooCommerceKey:'
@@ -65,7 +66,7 @@ object WooCommerceForm: TWooCommerceForm
       AlignWithMargins = True
       Left = 4
       Top = 128
-      Width = 344
+      Width = 388
       Height = 21
       Align = alTop
       Caption = 'WooCommerceSecret:'
@@ -81,7 +82,7 @@ object WooCommerceForm: TWooCommerceForm
       AlignWithMargins = True
       Left = 4
       Top = 190
-      Width = 344
+      Width = 388
       Height = 21
       Align = alTop
       Caption = 'WPUsername:'
@@ -97,7 +98,7 @@ object WooCommerceForm: TWooCommerceForm
       AlignWithMargins = True
       Left = 4
       Top = 252
-      Width = 344
+      Width = 388
       Height = 21
       Align = alTop
       Caption = 'WPPassword:'
@@ -113,60 +114,82 @@ object WooCommerceForm: TWooCommerceForm
       AlignWithMargins = True
       Left = 4
       Top = 31
-      Width = 344
+      Width = 388
       Height = 29
       Align = alTop
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 0
+      Text = 'https://miempresa.com.ar/'
+      TextHint = 'https://miempresa.com.ar/'
+      ExplicitWidth = 344
     end
     object wooCommerceKeyEdit: TEdit
       AlignWithMargins = True
       Left = 4
       Top = 93
-      Width = 344
+      Width = 388
       Height = 29
       Align = alTop
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 1
+      Text = 'ck_'
+      TextHint = 'ck_***************************************'
+      ExplicitWidth = 344
     end
     object WooCommerceSecretEdit: TEdit
       AlignWithMargins = True
       Left = 4
       Top = 155
-      Width = 344
+      Width = 388
       Height = 29
       Align = alTop
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 2
+      Text = 'cs_'
+      TextHint = 'cs_***************************************'
+      ExplicitWidth = 344
     end
     object wPUsernameEdit: TEdit
       AlignWithMargins = True
       Left = 4
       Top = 217
-      Width = 344
+      Width = 388
       Height = 29
       Align = alTop
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 3
+      ExplicitWidth = 344
     end
     object wPPasswordEdit: TEdit
       AlignWithMargins = True
       Left = 4
       Top = 279
-      Width = 344
+      Width = 388
       Height = 29
       Align = alTop
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 4
+      ExplicitWidth = 344
     end
     object AutoSincronizarCheckBox: TCheckBox
       AlignWithMargins = True
       Left = 4
       Top = 320
-      Width = 344
+      Width = 388
       Height = 17
       Align = alBottom
       Caption = 'Auto Sincronizar'
       TabOrder = 5
+      ExplicitWidth = 344
     end
   end
   object PanelRight: TPanel
-    Left = 352
+    Left = 396
     Top = 0
     Width = 93
     Height = 341
@@ -179,6 +202,7 @@ object WooCommerceForm: TWooCommerceForm
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
+    ExplicitLeft = 352
     object SiBitBtn: TBitBtn
       AlignWithMargins = True
       Left = 4

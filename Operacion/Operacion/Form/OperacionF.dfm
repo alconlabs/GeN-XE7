@@ -529,7 +529,6 @@ object OperacionForm: TOperacionForm
     Align = alBottom
     ParentBackground = False
     TabOrder = 0
-    ExplicitTop = 415
     object ProcesarBitBtn: TBitBtn
       Left = 709
       Top = 1
@@ -549,9 +548,6 @@ object OperacionForm: TOperacionForm
       ShowHint = True
       TabOrder = 1
       OnClick = ProcesarBitBtnClick
-      ExplicitLeft = 708
-      ExplicitTop = 4
-      ExplicitHeight = 50
     end
     object ClienteBitBtn: TBitBtn
       Left = 1
@@ -560,7 +556,7 @@ object OperacionForm: TOperacionForm
       Height = 55
       Hint = 'F1 SELECCIONAR CLIENTE'
       Align = alLeft
-      Caption = 'cliente'
+      Caption = 'Cliente'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -579,7 +575,7 @@ object OperacionForm: TOperacionForm
       Height = 55
       Hint = 'F3 SELECCIONAR VENDEDOR'
       Align = alLeft
-      Caption = 'vend'
+      Caption = 'Vend'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -599,7 +595,7 @@ object OperacionForm: TOperacionForm
       Height = 55
       Hint = 'F5 - AGREGAR ARTICULO'
       Align = alLeft
-      Caption = '+articulo'
+      Caption = '+Articulo'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -618,7 +614,7 @@ object OperacionForm: TOperacionForm
       Height = 55
       Hint = 'F8 - CREAR ARTICULO'
       Align = alLeft
-      Caption = '*nuevo'
+      Caption = '*Nuevo'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -638,7 +634,7 @@ object OperacionForm: TOperacionForm
       Height = 55
       Hint = 'F6 - QUITAR ARTICULO'
       Align = alLeft
-      Caption = '-quitar'
+      Caption = '-Quitar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -649,7 +645,6 @@ object OperacionForm: TOperacionForm
       ShowHint = True
       TabOrder = 5
       OnClick = QuitarBitBtnClick
-      ExplicitLeft = 333
     end
     object CantidadBitBtn: TBitBtn
       Left = 359
@@ -658,7 +653,7 @@ object OperacionForm: TOperacionForm
       Height = 55
       Hint = 'F7 - AUMENTAR CANTIDAD DE ARTICULO'
       Align = alLeft
-      Caption = 'cantidad'
+      Caption = 'Cantidad'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -669,7 +664,6 @@ object OperacionForm: TOperacionForm
       ShowHint = True
       TabOrder = 6
       OnClick = CantidadBitBtnClick
-      ExplicitLeft = 406
     end
     object DescuentoBitBtn: TBitBtn
       Left = 433
@@ -678,7 +672,7 @@ object OperacionForm: TOperacionForm
       Height = 55
       Hint = 'F8 - DESCUENTO SOBRE ARTICULO'
       Align = alLeft
-      Caption = 'desc'
+      Caption = 'Desc'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -697,7 +691,7 @@ object OperacionForm: TOperacionForm
       Height = 55
       Hint = 'Retenciones y Percepciones'
       Align = alLeft
-      Caption = 'ret. y percep.'
+      Caption = 'Ret. y percep.'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -707,7 +701,6 @@ object OperacionForm: TOperacionForm
       TabOrder = 8
       WordWrap = True
       OnClick = bRetPerClick
-      ExplicitLeft = 137
     end
     object NotasBitBtn: TBitBtn
       Left = 486
@@ -715,7 +708,7 @@ object OperacionForm: TOperacionForm
       Width = 55
       Height = 55
       Align = alLeft
-      Caption = 'notas'
+      Caption = 'Notas'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -726,7 +719,6 @@ object OperacionForm: TOperacionForm
       ShowHint = True
       TabOrder = 9
       OnClick = NotasBitBtnClick
-      ExplicitLeft = 570
     end
   end
   object Panel2: TPanel

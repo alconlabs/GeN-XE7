@@ -33,9 +33,9 @@ implementation
 uses DataModule;
 
 procedure TActualizarBase.OnCreate;
-var _tbo : TArray<string>;
+var tbs : TArray<string>;
 begin
-  _tbo := TArray<string>.Create('Operacion', 'Venta', 'Compra', 'Presupuesto','CtaCte');
+  tbs := TArray<string>.Create('Operacion', 'Venta', 'Compra', 'Presupuesto','CtaCte');
   with DM do
   begin
     if (not ExisteEnTabla('Version', '')) then
@@ -66,11 +66,12 @@ begin
             CrearTablaCbteAsoc;
             ActualizarTriggerFecha;
           end;
-          AgregarCampoEnTablas(_tbo,'ENVIO','DOUBLE PRECISION DEFAULT 0');//AgregarEnvio;
+          AgregarCampoEnTablas(tbs,'ENVIO','DOUBLE PRECISION DEFAULT 0');//AgregarEnvio;
           Reportes;
       end;
       Articulo;
-      AgregarCampoEnTablas(_tbo,'NOTAS','BLOB');
+      AgregarCampoEnTablas(tbs,'NOTAS','BLOB');
+      AgregarCampoEnTablas(tbs,'WC','INTEGER');
     end;
     ActualizarVersion;
   end;

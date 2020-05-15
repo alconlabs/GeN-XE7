@@ -56,7 +56,8 @@ uses
   CancelOrderService in 'Operacion\CancelOrder\Services\CancelOrderService.pas',
   WebLoginF in 'Configuracion\WebLogin\WebLoginF.pas' {WebLoginForm},
   WooCommerceFormUnit in 'Configuracion\WooCommerce\WooCommerceFormUnit.pas' {WooCommerceForm},
-  ActualizarBase in 'Actualizar\ActualizarBase.pas';
+  ActualizarBase in 'Actualizar\ActualizarBase.pas',
+  NotasFormUnit in 'SubOperacion\Notas\NotasFormUnit.pas' {NotasForm};
 
 {$R *.res}
 

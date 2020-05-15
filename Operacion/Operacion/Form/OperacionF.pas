@@ -105,7 +105,7 @@ type
   public
   { Public declarations }
     OK, Proveedor, FPagoOK, Compra, Pedido: Boolean;
-    Cuenta, DiasCalculo, CuotasTotal, d, numfact, OrdTrans: Integer;
+    Cuenta, DiasCalculo, CuotasTotal, d, numfact, OrdTrans, wc: Integer;
      CMV, UltCosto, subtotal, Impuesto, NG21, IVA21, NG105, IVA105, NGO, IVAO,
      desc, costo, reparaciones, Total, IIBB, NGIIBB, Exento,
      ComisionVendedor, BalanceAnterior, Interes, BalanceTotal, Deuda, Saldo, Pagado,
@@ -139,7 +139,7 @@ implementation
 
 uses UFBuscaCliente, UFBuscaArticulos,
   AgregarCantidad, BuscarVendedor, UFBuscaProve, UFSelProdFact, DescuentoF,
-  ufRetPerc;
+  ufRetPerc, NotasFormUnit;
 {$R *.dfm}
 
 procedure TOperacionForm.QuitarArticulos;
@@ -156,7 +156,7 @@ var
 begin
   if Cuenta > 1 then SGFact.RowCount := SGFact.RowCount + 1;
   dm.qOperacion.Close;
-  dm.qOperacion.SQL.Text := 'SELECT * FROM "Articulo" ' + 'WHERE CODIGO = ' + codigoArticulo;
+  dm.qOperacion.SQL.Text := 'SELECT * FROM "Articulo" WHERE CODIGO = ' + codigoArticulo;
   if codigoArticulo <> '' then dm.qOperacion.Open;
   if dm.qOperacion.RecordCount < 1 then
     begin
@@ -236,6 +236,10 @@ begin
   LbSaldo.Caption:='0.00';
   envEmail:=False;
   EnviarEmailCheckBox.Checked:=False;
+  Comision := 0;
+  envio := 0;
+  notas := '';
+  wc := 0;
 end;
 
 procedure TOperacionForm.NuevoBitBtnClick(Sender: TObject);
@@ -732,7 +736,17 @@ end;
 
 procedure TOperacionForm.NotasBitBtnClick(Sender: TObject);
 begin
-  ShowMessage(notas);
+  NotasForm := TNotasForm.Create(self);
+  with NotasForm do
+  begin
+    NotasMemo.Text := notas;
+    try
+      ShowModal;
+    finally
+      if save then notas := NotasMemo.Text;
+      Free;
+    end;
+  end;
 end;
 
 procedure TOperacionForm.AgregarBitBtnClick(Sender: TObject);
@@ -889,7 +903,7 @@ begin
         subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
         Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Deuda, UltCosto,
         //noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib)
-        NGO , IVAO, Exento, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib)
+        NGO , IVAO, Exento, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib, wc)
       else
         ok := ProcVTA
         (PuntoVentaEdit.Text, ComprobanteEdit.Text,
@@ -900,7 +914,8 @@ begin
          StrToFloat(FECheque.Text), 0, StrToFloat(FEContado.Text), Total,
          subtotal, desc, StrToFloat(FETarjeta.Text), StrToFloat(FEOtro.Text),
          Saldo, Pagado, Interes, NG105, NG21, IVA105, IVA21, Total - Saldo, UltCosto
-         ,NGO , IVAO, Exento, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib)
+         ,NGO , IVAO, Exento, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib);
+      ActualizarArticulos;
     end;
     OperacionDataModule.Free;
     screen.Cursor := crDefault;
@@ -1145,11 +1160,12 @@ begin
   with dm do
   with qRemito do
   begin
-    Open('select CLIENTE, COMISION, ENVIO, NOTAS from "Operacion" where CODIGO = '+codigo);
+    Open('select CLIENTE, COMISION, ENVIO, NOTAS, WC from "Operacion" where CODIGO = '+codigo);
     ClienteEdit.Text := FieldByName('CLIENTE').AsString;
     Comision := FieldByName('COMISION').AsFloat;
     envio := FieldByName('ENVIO').AsFloat;
     notas := FieldByName('NOTAS').AsString;
+    wc := FieldByName('WC').AsInteger;
     TraeNombreCliente;
     Open('SELECT ARTICULO, PRECIO, CANTIDAD, COSTO FROM "OperacionItem"'+
     ' WHERE OPERACION = '+codigo);

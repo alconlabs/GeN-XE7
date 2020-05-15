@@ -37,11 +37,11 @@ type
     IIBB, cmv: Double;
     jsResponse: TJSONValue;
     function ProcVTA(pvta, com,
-      let, cod, fech, ven, cui, ctan, notas: string; pre, pgr, impr: Boolean;
+      let, cod, fech, ven, cui, ctan, notas :string; pre, pgr, impr :Boolean;
       cost, comv, env, impu, cheq, ch3q, cont, tot, sbt, des, tarj, otr, sal, pag,
       int, n10, n21, i10, i21, deud, ulc,
       n3, i3, exc, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib
-     : Double):Boolean;
+     :Double):Boolean;
     Procedure ProcOPER(tipo, let, cod, fech, ven, cui, ctan, notas: string;
       pre, pgr, impr: Boolean; cost, comv, env, impu, cheq, ch3q, cont, tot, sbt, des,
       tarj, otr, sal, pag, int, n10, n21, i10, i21, deud, ulc,
@@ -60,8 +60,6 @@ type
     Procedure AnularVTA(nro: string);
     Procedure CtaCte(tipo, cod, ctan: string; pag, cheq, ch3q, cont, tarj,
       sald: Double);
-    function existeEnTabla(tabla,codigo: string): Boolean;
-    procedure insertarTabla2(tabla,codigo,desc: string);
     Procedure FormaPago(desc, vta, comp, ctac, pago, cont, cheq, chei, chen,
       ched, chedi, tarj, tarn, tarimp, otri, mone, meim, metc, sald, paga, fech,
       ch3q, ch3i, ch3n, ch3d, ch3di: string);
@@ -71,7 +69,7 @@ type
       int, n10, n21, i10, i21, deud, ulc,
 //      noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib: Double);
       n3, i3, exc, noGra, pagCueIva, pagCueOtr, perIIBB, perImpMun, impInt, otrTrib
-     : Double);
+     : Double; wc :Integer);
     Procedure Asiento(ctan, nro, fech, det, d, h: string);
     Procedure LibroDiario(oper, nro, let, cod, fech: string; pgr: Boolean;
       tot, pag, cheq, ch3q, cont, tarj, impu, deud, cmv, comv: Double);
@@ -98,6 +96,7 @@ type
     function InsertarAlicIva:Integer;
     procedure AgregarAlicIva(cod,id: integer; bImp,imp: double);
     procedure ActualizarSiap(tipo,desde,hasta:string);
+    procedure ActualizarArticulos;
   end;
 
 var
@@ -915,7 +914,7 @@ with dm do begin
     floattostr(tarj)+', '+floattostr(otr)+', '+floattostr(sal)+', '+
     floattostr(pag)+', '+QuotedStr(pagare)+', '+floattostr(cmv)+', '+
     floattostr(deud)+', '+floattostr(comv)+', '+QuotedStr(cae)+', '+
-    IntToStr(aIva)+', '+floattostr(env)+ ', ' + quotedstr(notas)+
+    IntToStr(aIva)+', '+floattostr(env)+ ', ' + quotedstr(notas) +
     ')';
   qQ.ExecSQL;
   // Insertar en la tabla de VENTAITEM
@@ -1117,12 +1116,14 @@ with dm do begin
       + ' Where ' + ' "Articulo".CODIGO = ' + (mat[0, i]);
     qQ.ExecSQL;
   end;
-  dm.AgregarRetPer(tipo,nro,noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib);
   // CONTABILIDAD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // LIBRO IVA VENTAS
-  if (let = 'A') or (let = 'B') then
+  if ((tipo<>'PED') and ((let = 'A') or (let = 'B'))) then
+  begin
     LibroIVAvta(fech, IntToStr(nro), cod, cui, floattostr(n10), floattostr(n21),
       floattostr(i10), floattostr(i21), floattostr(tot)); // en blanco
+    AgregarRetPer(tipo,nro,noGra,pagCueIva,pagCueOtr,perIIBB,perImpMun,impInt,otrTrib);
+  end;
   // Insertar en la tabla LibroDiario
   LibroDiario(tipo, IntToStr(nro), let, cod, fech, pgr, tot, pag, cheq, ch3q, cont,
     tarj, impu, deud, cmv, comv);
@@ -1596,45 +1597,6 @@ begin
   ImprimirDataModule.Free;
 end;
 
-procedure TOperacionDataModule.insertarTabla2;
-begin
-with dm do begin
-  qQ.SQL.Text := 'INSERT INTO "'+tabla+'" (CODIGO,DESCRIPCION) VALUES ('
-  + codigo + ',' + QuotedStr(desc) + ')';
-  qQ.ExecSQL;
-  BaseDatosFB.CommitRetaining;
-end;
-end;
-
-function TOperacionDataModule.existeEnTabla;
-begin
-with dm do begin
-//    try
-//      qT.sql.Text := 'SELECT * FROM "' + tabla + '" WHERE ' + codigo;
-//      qT.open;
-//      result := (qT.RecordCount<>0);
-//    finally
-//      result := false;
-//    end;
-  TRY
-    qT.sql.Text := 'SELECT * FROM "' + tabla + '" WHERE ' + codigo;
-    qT.open;
-    TRY
-      result := (qT.RecordCount<>0);
-    FINALLY
-    { Esta línea se ejecuta SIEMPRE, haya o no excepción. }
-      qT.Close ;
-    END;
-  EXCEPT
-    On Error: EDatabaseError DO
-//      ShowMessage ('Error al cargar los datos: '+Error.Message);
-    result := false;
-//    ON Error: Exception DO
-//      ShowMessage ('Excepción: '+Error.Message);
-  END;
-end;
-end;
-
 procedure TOperacionDataModule.BorrarArticulos;
 begin
 with dm do begin
@@ -1787,16 +1749,17 @@ end;
 
 procedure TOperacionDataModule.ActualizarCantidadArticulo;
 begin
-with dm do begin
-  qQ.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE ' + cantidad
-    + ' Where "Articulo".CODIGO = ' + codigo;
-  qQ.ExecSQL;
-  if webUpd='True' then
-    with DMR do
-    begin
-      JAline_items.AddElement( Jline_items( codigo, cantidad ) );
-    end;
-end;
+  with dm do
+  begin
+    qQ.sql.Text := 'Update "Articulo" Set DISPONIBLE = DISPONIBLE ' + cantidad
+      + ' Where "Articulo".CODIGO = ' + codigo;
+    qQ.ExecSQL;
+    if webUpd='True' then
+      with DMR do
+      begin
+        JAline_items.AddElement( Jline_items( codigo, cantidad ) );
+      end;
+  end;
 end;
 
 procedure TOperacionDataModule.DataSetToCsv;
@@ -1806,37 +1769,38 @@ var
   vsLinea : String;
   vsBookMark : TBookmark;
 begin
-with dm do begin
-  vsBookMark := qQ.Bookmark;
-  voFichero := nil;
-  try
-    voFichero := TStringList.Create;
-    // Ponemos la cabecera
-    vsLinea := '';
-    for i := 0 to qQ.FieldCount - 1 do
-      if qQ.Fields[i].Visible then
-        vsLinea := vsLinea + '"' + qQ.Fields[i].DisplayName + '",';
-    voFichero.Add(vsLinea);
-    // Insertamos los registros
-    qQ.DisableControls;
-    qQ.First;
-    while not qQ.Eof do
-    begin
+  with dm do
+  begin
+    vsBookMark := qQ.Bookmark;
+    voFichero := nil;
+    try
+      voFichero := TStringList.Create;
+      // Ponemos la cabecera
       vsLinea := '';
       for i := 0 to qQ.FieldCount - 1 do
         if qQ.Fields[i].Visible then
-          vsLinea := vsLinea + '"' + qQ.Fields[i].AsString + '",';
+          vsLinea := vsLinea + '"' + qQ.Fields[i].DisplayName + '",';
       voFichero.Add(vsLinea);
-      qQ.Next;
+      // Insertamos los registros
+      qQ.DisableControls;
+      qQ.First;
+      while not qQ.Eof do
+      begin
+        vsLinea := '';
+        for i := 0 to qQ.FieldCount - 1 do
+          if qQ.Fields[i].Visible then
+            vsLinea := vsLinea + '"' + qQ.Fields[i].AsString + '",';
+        voFichero.Add(vsLinea);
+        qQ.Next;
+      end;
+      // Lo guardamos en disco
+      voFichero.SaveToFile(psRutaFichero);
+    finally
+      FreeAndNil(voFichero);
+      qQ.Bookmark := vsBookMark;
+      qQ.EnableControls;
     end;
-    // Lo guardamos en disco
-    voFichero.SaveToFile(psRutaFichero);
-  finally
-    FreeAndNil(voFichero);
-    qQ.Bookmark := vsBookMark;
-    qQ.EnableControls;
   end;
-end;
 end;
 
 procedure TOperacionDataModule.WSFE;
@@ -1916,7 +1880,7 @@ with dm do begin
     ', TARJETA, OTROS, SALDO'+
     ', PAGADO, PAGARE, COSTO'+
     ', DEUDA, COMISION, DESCRIPCION'+
-    ', ALICIVA, ENVIO, NOTAS'+
+    ', ALICIVA, ENVIO, NOTAS, WC'+
     ') Values ' + '('+QuotedStr(comp)+', '+QuotedStr(codRem)+', '+QuotedStr(vto)+
     ', '+IntToStr(nro)+', '+quotedstr(let) + ', ' + cod + ', ' +
     floattostr(sbt) + ', ' + floattostr(des) + ', ' + quotedstr(fech) + ', ' +
@@ -1925,7 +1889,7 @@ with dm do begin
     floattostr(tarj) + ', ' + floattostr(otr) + ', ' + floattostr(sal) + ', ' +
     floattostr(pag) + ', ' + quotedstr(pagare) + ', ' + floattostr(cmv) + ', ' +
     floattostr(deud) + ',' + floattostr(comv) + ', ' + QuotedStr(cae) +
-    ', '+IntToStr(aIva)+', '+floattostr(env)+ ', ' + quotedstr(notas)+
+    ', '+IntToStr(aIva)+', '+floattostr(env)+ ', ' + quotedstr(notas)+ ', ' + IntToStr(wc) +
     ')';
   qQ.ExecSQL;
   // Insertar en la tabla de VENTAITEM
@@ -2028,6 +1992,7 @@ with dm do begin
       Impr(vta(IntToStr(nro), let), let);
     ImprimirDataModule.Free;
   end;
+  if (wpSync) then WooCommerceGeN('CompleteOrder', IntToStr(wc));
 end;
 end;
 
@@ -2564,6 +2529,17 @@ begin
           Next;
         end;
         //VaciarMtIVA;
+      end;
+end;
+
+procedure TOperacionDataModule.ActualizarArticulos;
+var i :Integer;
+begin
+  if mat <> nil then
+    if (wpSync) then
+      for i := 1 to High(mat[0]) do
+      begin
+        DM.WooCommerceGeN('UploadItems',mat[0, i]);
       end;
 end;
 
