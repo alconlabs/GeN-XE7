@@ -77,7 +77,6 @@ type
     DBNavigator1: TDBNavigator;
     bImportar: TButton;
     bExportar: TButton;
-    OpenPictureDialog1: TOpenPictureDialog;
     NotasDBEdit: TDBEdit;
     CodigoBarraPaintBox: TImage;
     CostoFleteDBText: TDBText;
@@ -143,14 +142,12 @@ type
     procedure CodigoBarraLabelClick(Sender: TObject);
   private
     { Private declarations }
-    iip:string;
-    tasa: Double;
+    _imagen :string;
+    _tasa :Double;
     procedure Calcular;
-    procedure Save;
-    procedure GetImage;
-    procedure GetIndividual;
-    procedure GetArticulo;
-    procedure Load;
+    procedure Grabar;
+    procedure Obtener;
+    procedure Cargar;
   public
     desc: string;
     { Public declarations }
@@ -160,7 +157,7 @@ type
     procedure Dibujar(matrix: string);
     // procedimiento para validar-corregir los códigos
     procedure EANCorrecto(var num: string);
-    Procedure nuevo;
+    Procedure Nuevo;
   end;
 
 var
@@ -291,7 +288,7 @@ end;
 
 procedure TFProductos.SaveBitBtnClick(Sender: TObject);
 begin
-  Save;
+  Grabar;
 end;
 
 procedure TFProductos.NoBitBtnClick(Sender: TObject);
@@ -301,7 +298,7 @@ begin
   Close;
 end;
 
-procedure TFProductos.Load;
+procedure TFProductos.Cargar;
 begin
   with dm do
   begin
@@ -335,11 +332,12 @@ begin
     //tArticulo.Insert;
 //    nuevo;
   PageControl1.ActivePageIndex := 0;
+  Obtener;
 end;
 
 procedure TFProductos.FormCreate(Sender: TObject);
 begin
-  Load;
+  Cargar;
 end;
 
 procedure TFProductos.FormDestroy(Sender: TObject);
@@ -372,7 +370,7 @@ begin
       FBuscaArticulo.Free;
     end;
     dm.tArticulo.Edit;
-    GetArticulo;
+    Obtener;
   end;
 end;
 
@@ -387,8 +385,8 @@ end;
 
 procedure TFProductos.Image1Click(Sender: TObject);
 begin
-  OpenPictureDialog1.Execute();
-  if OpenPictureDialog1.FileName<>'' then Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+//  OpenPictureDialog1.Execute();if OpenPictureDialog1.FileName<>'' then Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+  Image1.Picture.LoadFromFile(DM.AbrirImagen)
 end;
 
 procedure TFProductos.IVADBComboBoxEnter(Sender: TObject);
@@ -410,39 +408,37 @@ begin
   with dm do begin
   //if IVADBComboBox.Text = '105' then tasa:=StrToFloat(IVADBComboBox.Text)/10
   //  else
-    if IVADBComboBox.Text='' then tasa:=21
-    else tasa:=StrToFloat(IVADBComboBox.Text);
+    if IVADBComboBox.Text='' then _tasa:=21
+    else _tasa:=StrToFloat(IVADBComboBox.Text);
 //    if tasa=10.5 then t:='105' else t:=FloatToStr(tasa);
-    if tasa<100 then t:=FloatToStr(tasa*10) else t:=FloatToStr(tasa);
+    if _tasa<100 then t:=FloatToStr(_tasa*10) else t:=FloatToStr(_tasa);
     tArticulo.FieldByName('IVA').AsInteger := StrToInt(t);
   end;
 end;
 
-Procedure TFProductos.nuevo;
+Procedure TFProductos.Nuevo;
 begin
-  iip := '';
-  Image1.Picture := nil;
-//  IVADBEdit.Field.AsFloat := 0;
-//  CodigoDBEdit.Text:=IntToStr(DM.UltimoRegistro('Articulo', 'CODIGO'));
-//  CostoDBEdit.Field.AsFloat := 0;
-//  FleteDBEdit.Field.AsFloat := 0;
-//  PrecioCtaCteDBEdit.Field.AsFloat := 0;
+  CodigoDBEdit.Text := IntToStr(DM.SiguienteCodigo('Articulo'));
+  Obtener;
 end;
 
 procedure TFProductos.RubroDBLookupComboBoxEnter(Sender: TObject);
 begin
-  dm.tRubro.Close;
-  dm.tRubro.Open;
-  dm.tRubro.Last;
+  with dm.tRubro do
+    begin
+      Close;
+      Open;
+      Last;
+    end;
 end;
 
-procedure TFProductos.Save;
+procedure TFProductos.Grabar;
 begin
   with dm do
   begin
     desc := CodigoDBEdit.Text;
     // guardar imagen
-    if (Image1.Picture.Graphic <> nil) then Image1.Picture.SaveToFile(iip);
+    if ((_imagen<>'') and (Image1.Picture.Graphic <> nil)) then Image1.Picture.SaveToFile(_imagen);
     if (tArticulo.State = dsEdit) or (tArticulo.State = dsInsert) then
     if ((DescripcionDBEdit.Text<>'') and (CantidadDBEdit.Text<>'') and (CostoDBEdit.Text<>'') and (NetoDBEdit.Text<>'')) then
      begin
@@ -453,7 +449,7 @@ begin
       if Dialogs.MessageDlg('Articulo grabado con éxito.  Salir?', mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
         Close
       else
-        Load;
+        Cargar;
       end
      else
       ShowMessage('COMPLETE TODOS LOS CAMPOS');
@@ -539,24 +535,17 @@ begin
   SaveBitBtn.SetFocus;
 end;
 
-procedure TFProductos.GetArticulo;
+procedure TFProductos.Obtener;
 begin
-  GetImage;
-  GetIndividual;
-  Codifica(CodigoBarraEdit.Text);
-end;
-
-procedure TFProductos.GetImage;
-begin
-  iip := '';
+  //imagen
+  _imagen := '';
   Image1.Picture := nil;
-  iip := DM.GetImgItemPath(CodigoDBEdit.Text);
-  if (FileExists(iip)) then Image1.Picture.LoadFromFile(iip);
-end;
-
-procedure TFProductos.GetIndividual;
-begin
+  _imagen := DM.ObtenerImagenDirectorio('Articulo',CodigoDBEdit.Text);
+  if (FileExists(_imagen)) then Image1.Picture.LoadFromFile(_imagen);
+  //individual
   IndividualCheckBox.Checked := (dm.tArticulo.FieldByName('INDIVIDUAL').AsInteger > 0);
+  //codigobarra
+  Codifica(CodigoBarraEdit.Text);
 end;
 
 procedure TFProductos.CodigoBarraPaintBoxClick(Sender: TObject);
@@ -628,11 +617,11 @@ end;
 procedure TFProductos.DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
 begin
   case Button of
-    nbFirst : GetArticulo;
-    nbPrior : GetArticulo;
-    nbNext : GetArticulo;
-    nbLast : GetArticulo;
-    nbInsert : nuevo;
+    nbFirst : Obtener;
+    nbPrior : Obtener;
+    nbNext : Obtener;
+    nbLast : Obtener;
+    nbInsert : Nuevo;
 //    nbDelete : nuevo;
 //    nbEdit : BtnName := 'nbEdit';
 //    nbPost : Save;
@@ -696,8 +685,8 @@ begin
    Precio6DBEdit.Text := FloatToStr(RoundTo((costo * Precio6),-2));
    CostoFleteDBText.Caption := FloatToStr(RoundTo(( costo ),-2));
    neto:=RoundTo((StrToFloat(NetoDBEdit.Text)),-2);
-   tasa:=RoundTo((StrToFloat(dm.TraerValor('Iva', 'TASA', VarToStr(IVADBComboBox.KeyValue)))),-2);
-   IVADBText.Caption := FloatToStr(RoundTo((CalcularIVA(neto,tasa)),-2));
+   _tasa:=RoundTo((StrToFloat(dm.TraerValor('Iva', 'TASA', VarToStr(IVADBComboBox.KeyValue)))),-2);
+   IVADBText.Caption := FloatToStr(RoundTo((CalcularIVA(neto,_tasa)),-2));
   end;
 end;
 

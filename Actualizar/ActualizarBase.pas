@@ -72,6 +72,28 @@ begin
       Articulo;
       AgregarCampoEnTablas(tbs,'NOTAS','BLOB');
       AgregarCampoEnTablas(tbs,'WC','INTEGER');
+
+      ActualizarTabla('Rubro', 'PADRE', 'INTEGER');
+      ActualizarTabla('Rubro', 'SLUG', 'VARCHAR(255)');
+      ActualizarTabla('Rubro', 'HTML', 'BLOB');
+      ActualizarTabla('Rubro', 'VIZUALIZAR', 'VARCHAR(50)');
+      ActualizarTabla('Rubro', 'IMAGEN', 'VARCHAR(255)');
+      ActualizarTabla('Rubro', 'ORDEN', 'INTEGER');
+
+      ActualizarTabla('Categoria', 'PADRE', 'INTEGER');
+      ActualizarTabla('Categoria', 'SLUG', 'VARCHAR(255)');
+      ActualizarTabla('Categoria', 'HTML', 'BLOB');
+      ActualizarTabla('Categoria', 'VIZUALIZAR', 'VARCHAR(50)');
+      ActualizarTabla('Categoria', 'IMAGEN', 'VARCHAR(255)');
+      ActualizarTabla('Categoria', 'ORDEN', 'INTEGER');
+
+      ActualizarTabla('SubCategoria', 'PADRE', 'INTEGER');
+      ActualizarTabla('SubCategoria', 'SLUG', 'VARCHAR(255)');
+      ActualizarTabla('SubCategoria', 'HTML', 'BLOB');
+      ActualizarTabla('SubCategoria', 'VIZUALIZAR', 'VARCHAR(50)');
+      ActualizarTabla('SubCategoria', 'IMAGEN', 'VARCHAR(255)');
+      ActualizarTabla('SubCategoria', 'ORDEN', 'INTEGER');
+
     end;
     ActualizarVersion;
   end;

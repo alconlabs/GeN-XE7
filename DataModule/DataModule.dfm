@@ -2862,4 +2862,27 @@ object DM: TDM
     Left = 24
     Top = 96
   end
+  object tablaFDTable: TFDTable
+    IndexFieldNames = 'CODIGO'
+    Connection = BaseDatosFB
+    Transaction = TransactionFB
+    Left = 480
+    Top = 65535
+  end
+  object tablaDataSource: TDataSource
+    DataSet = tablaFDTable
+    Left = 508
+    Top = 65535
+  end
+  object tabla1FDTable: TFDTable
+    Connection = BaseDatosFB
+    Transaction = TransactionFB
+    Left = 481
+    Top = 47
+  end
+  object tabla1DataSource: TDataSource
+    DataSet = tabla1FDTable
+    Left = 509
+    Top = 46
+  end
 end

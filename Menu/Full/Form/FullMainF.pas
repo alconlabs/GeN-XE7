@@ -424,12 +424,15 @@ end;
 
 procedure TFullMainForm.RubroClick(Sender: TObject);
 begin
-  // WinExec(PAnsiChar(AnsiString(path + 'Rubro.exe')), SW_SHOWNORMAL);
-  RubroForm := TRubroForm.Create(self);
-  try
-    RubroForm.ShowModal;
-  finally
-    RubroForm.Free;
+  FCategorias := TFCategorias.Create(self);
+  with FCategorias do
+  begin
+    try
+      tabla:='Rubro';
+      ShowModal;
+    finally
+      Free;
+    end;
   end;
 end;
 
@@ -457,12 +460,15 @@ end;
 
 procedure TFullMainForm.CategoriaClick(Sender: TObject);
 begin
-  // WinExec(PAnsiChar(AnsiString(path + 'Categoria.exe')), SW_SHOWNORMAL);
   FCategorias := TFCategorias.Create(self);
-  try
-    FCategorias.ShowModal;
-  finally
-    FCategorias.Free;
+  with FCategorias do
+  begin
+    try
+      tabla:='Categoria';
+      ShowModal;
+    finally
+      Free;
+    end;
   end;
 end;
 
@@ -1021,13 +1027,16 @@ end;
 
 procedure TFullMainForm.SubCategoriasClick(Sender: TObject);
 begin
-  // WinExec(PAnsiChar(AnsiString(path + 'SubCategoria.exe')), SW_SHOWNORMAL);
-//  FSubCategorias := TFSubCategorias.Create(self);
-//  try
-//    FSubCategorias.ShowModal;
-//  finally
-//    FSubCategorias.Free;
-//  end;
+  FCategorias := TFCategorias.Create(self);
+  with FCategorias do
+  begin
+    try
+      tabla:='SubCategoria';
+      ShowModal;
+    finally
+      Free;
+    end;
+  end;
 end;
 
 procedure TFullMainForm.VaciarBasedeDatos1Click(Sender: TObject);

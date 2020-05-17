@@ -108,6 +108,10 @@ type
     FDBatchMoveDataSetReader1: TFDBatchMoveDataSetReader;
     FDBatchMoveDataSetWriter1: TFDBatchMoveDataSetWriter;
     qRemito: TFDQuery;
+    tablaFDTable: TFDTable;
+    tablaDataSource: TDataSource;
+    tabla1FDTable: TFDTable;
+    tabla1DataSource: TDataSource;
 
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
@@ -177,6 +181,7 @@ type
     procedure ObtenerSO;
     function EjecutarYEsperar(sPrograma: String; Visibilidad: Integer): Integer;
     function EmpiezaMayuscula(texto: string): string;
+    function AbrirArchivo(filtro: string): string;
   public
   const
     NumThreads: Integer = 4;
@@ -240,7 +245,7 @@ type
     procedure ImportarProveedor;
     function GenerarContraseña(Texto:string):string;
     procedure ImportarCsv(tabla: string);
-    function GetImgItemPath(cod:string):string;
+    function ObtenerImagenDirectorio(tipo,cod: string): string;
     procedure WooCommerceGeN(tipo,codigo:string);
     function ExisteEnTabla(TB_NAME, FLD_NAME: string):Boolean;
     procedure ActualizarTabla(TB_NAME, FLD_NAME, TYP_NAME: string);
@@ -253,6 +258,8 @@ type
     function EsVersion(_v1,_v2,_v3,_v4 :Word):Integer;
     procedure InsertarTabla2(tabla,codigo,desc: string);
     function ExisteValorEnTabla(tabla,codigo: string): Boolean;
+    procedure RefrescarTabla1;
+    function AbrirImagen: string;
   end;
 
 const
@@ -904,6 +911,16 @@ begin
    end;
 end;
 
+procedure TDM.RefrescarTabla1;
+begin
+  with tabla1FDTable do
+    begin
+      Close;
+      Open;
+      Last;
+    end;
+end;
+
 procedure TDM.Ejecutar;
 begin
 //  ShellExecute(0, 'open', PChar(VarToStr( dir )), 'param1 param2', nil,  SW_HIDE);
@@ -1246,13 +1263,13 @@ begin
   FreeMem(VerInfo, VerInfoSize);
 end;
 
-function TDM.GetImgItemPath(cod: string): string;
-var dirName:string;
+function TDM.ObtenerImagenDirectorio;
+var dir :string;
 begin
-  dirName := path + 'img\item';
-  if (not directoryexists(dirName))then
-    CreateDir(dirName);
-  result := (dirName+'\[1]'+cod+'.jpg');
+  dir := path + 'img\'+tipo;
+  if (not directoryexists(dir))then
+    CreateDir(dir);
+  result := (dir+'\[1]'+cod+'.jpg');
 end;
 
 procedure TDM.ActualizarValor;
@@ -1371,10 +1388,16 @@ var cod, campo :string;
 begin
   if (tabla='Proveedor') then campo := 'NOMBRE'
   else campo := 'DESCRIPCION';
+  if (valor='') then valor := 'VARIOS';
   cod := TraerValorX(tabla, 'CODIGO', campo, QuotedStr(valor));
   if (cod='') then
   begin
     cod := UltimoRegistro(tabla, 'CODIGO').ToString;
+    if (valor='') then
+    begin
+      cod := '0';
+      valor := 'VARIOS';
+    end;
     AgregarValor(tabla, 'CODIGO,'+campo, cod+','+QuotedStr(valor));
   end;
   result := cod;
@@ -2018,8 +2041,8 @@ begin
       end;
       c := fDMemTable.Fields.Count;
       Fields.FieldByName('PROVEEDOR').AsString := '0';
-      Fields.FieldByName('IVA').AsString := '5';
-      Fields.FieldByName('TASA').AsString := '210';
+      Fields.FieldByName('IVA').AsString := '210';
+      Fields.FieldByName('TASA').AsString := '5';
       Fields.FieldByName('COSTO').AsString := fDMemTable.Fields.FieldByName('PRECIO').AsString;
       Fields.FieldByName('CTANOMBRE').AsString := '13';
       Fields.FieldByName('CTATIPO').AsString := '13';
@@ -2044,6 +2067,12 @@ begin
         if (valor='') then valor := UTF8ToString(fDMemTable.Fields.Fields[i].AsString);
         Fields.FieldByName(campo).AsString := valor;//Fields.Fields[i].AsString := UTF8ToString(fDMemTable.Fields.Fields[i].AsString);
       end;
+      valor := Fields.FieldByName('RUBRO').AsString;
+      campo := Fields.FieldByName('CATEGORIA').AsString;
+      if ((valor<>'') and (campo<>'')) then ActualizarValor('Categoria', 'PADRE', campo, valor);
+      valor := Fields.FieldByName('CATEGORIA').AsString;
+      campo := Fields.FieldByName('SUBCATEGORIA').AsString;
+      if ((valor<>'') and (campo<>'')) then ActualizarValor('SubCategoria', 'PADRE', campo, valor);
       Post;
     end;
     fDMemTable.Next
@@ -2304,6 +2333,21 @@ begin
   texto := LowerCase(texto);
   texto := UpperCase(texto)[1]+Copy( texto, 2, texto.Length);;
   result := texto;
+end;
+
+function TDM.AbrirArchivo;
+begin
+  with OpenDialog1 do
+  begin
+    Filter := filtro;
+    Execute();
+    if FileName<>'' then result := FileName;
+  end;
+end;
+
+function TDM.AbrirImagen;
+begin
+  result := AbrirArchivo('JPG (*.jpg)|*.jpg');
 end;
 
 end.
