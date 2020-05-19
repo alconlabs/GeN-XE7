@@ -92,7 +92,7 @@ procedure TWooCommerceForm.SincronizarBitBtnClick(Sender: TObject);
 begin
   with dm do
   begin
-    WooCommerceGeN('UploadItems','');
+    WooCommerceGeN('Articulo','');
     WooCommerceGeN('GetOrders','');
   end;
 end;

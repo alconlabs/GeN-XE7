@@ -26,7 +26,7 @@ object FProductos: TFProductos
     Top = 0
     Width = 357
     Height = 419
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -36,12 +36,8 @@ object FProductos: TFProductos
     ParentFont = False
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 350
-    ExplicitHeight = 427
     object TabSheet1: TTabSheet
       Caption = 'DETALLE'
-      ExplicitWidth = 342
-      ExplicitHeight = 399
       object DescripcionLabel: TLabel
         AlignWithMargins = True
         Left = 3
@@ -150,7 +146,6 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
         TabOrder = 0
-        ExplicitWidth = 336
       end
       object CantidadDBEdit: TDBEdit
         AlignWithMargins = True
@@ -164,7 +159,6 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
         TabOrder = 2
-        ExplicitWidth = 336
       end
       object ProveedorDBLookupComboBox: TDBLookupComboBox
         AlignWithMargins = True
@@ -183,7 +177,6 @@ object FProductos: TFProductos
         ParentBiDiMode = False
         TabOrder = 1
         OnEnter = ProveedorDBLookupComboBoxEnter
-        ExplicitWidth = 336
       end
       object FleteDBEdit: TDBEdit
         AlignWithMargins = True
@@ -197,7 +190,6 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
         TabOrder = 4
-        ExplicitWidth = 336
       end
       object CostoDBEdit: TDBEdit
         AlignWithMargins = True
@@ -211,7 +203,6 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
         TabOrder = 3
-        ExplicitWidth = 336
       end
       object NetoDBEdit: TDBEdit
         AlignWithMargins = True
@@ -226,7 +217,6 @@ object FProductos: TFProductos
         ParentBiDiMode = False
         TabOrder = 7
         OnExit = NetoDBEditExit
-        ExplicitWidth = 336
       end
       object GanaciaDBEdit: TDBEdit
         AlignWithMargins = True
@@ -241,7 +231,6 @@ object FProductos: TFProductos
         ParentBiDiMode = False
         TabOrder = 6
         OnExit = GanaciaDBEditExit
-        ExplicitWidth = 336
       end
       object IVADBComboBox: TDBLookupComboBox
         AlignWithMargins = True
@@ -261,14 +250,11 @@ object FProductos: TFProductos
         Visible = False
         OnEnter = IVADBComboBoxEnter
         OnExit = IVADBComboBoxExit
-        ExplicitWidth = 336
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'DESCRIPCION'
       ImageIndex = 2
-      ExplicitWidth = 342
-      ExplicitHeight = 399
       object DesLargaDBMemo: TDBMemo
         AlignWithMargins = True
         Left = 3
@@ -281,8 +267,6 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         ScrollBars = ssVertical
         TabOrder = 0
-        ExplicitWidth = 336
-        ExplicitHeight = 366
       end
       object NotasDBEdit: TDBEdit
         AlignWithMargins = True
@@ -297,15 +281,11 @@ object FProductos: TFProductos
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
-        ExplicitTop = 375
-        ExplicitWidth = 336
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'OTROS'
       ImageIndex = 2
-      ExplicitWidth = 342
-      ExplicitHeight = 399
       object OtrosDerechoPanel: TPanel
         Left = 224
         Top = 0
@@ -313,8 +293,6 @@ object FProductos: TFProductos
         Height = 391
         Align = alRight
         TabOrder = 0
-        ExplicitLeft = 217
-        ExplicitHeight = 399
         object ReservaLabel: TLabel
           AlignWithMargins = True
           Left = 4
@@ -533,7 +511,6 @@ object FProductos: TFProductos
         Height = 391
         Align = alLeft
         TabOrder = 1
-        ExplicitHeight = 399
         object RubroLabel: TLabel
           AlignWithMargins = True
           Left = 4
@@ -1719,8 +1696,6 @@ object FProductos: TFProductos
     object TabSheet4: TTabSheet
       Caption = 'PRECIO'
       ImageIndex = 3
-      ExplicitWidth = 342
-      ExplicitHeight = 399
       object Precio5Label: TLabel
         AlignWithMargins = True
         Left = 3
@@ -1799,7 +1774,6 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
         TabOrder = 0
-        ExplicitWidth = 336
       end
       object Precio2DBEdit: TDBEdit
         AlignWithMargins = True
@@ -1813,7 +1787,6 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
         TabOrder = 1
-        ExplicitWidth = 336
       end
       object Precio3DBEdit: TDBEdit
         AlignWithMargins = True
@@ -1827,7 +1800,6 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
         TabOrder = 2
-        ExplicitWidth = 336
       end
       object Precio6DBEdit: TDBEdit
         AlignWithMargins = True
@@ -1842,7 +1814,6 @@ object FProductos: TFProductos
         ParentBiDiMode = False
         TabOrder = 5
         OnExit = Precio6DBEditExit
-        ExplicitWidth = 336
       end
       object Precio4DBEdit: TDBEdit
         AlignWithMargins = True
@@ -1856,7 +1827,6 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
         TabOrder = 3
-        ExplicitWidth = 336
       end
       object Precio5DBEdit: TDBEdit
         AlignWithMargins = True
@@ -1870,14 +1840,11 @@ object FProductos: TFProductos
         DataSource = DM.dstArticulo
         ParentBiDiMode = False
         TabOrder = 4
-        ExplicitWidth = 336
       end
     end
     object TabSheet5: TTabSheet
       Caption = 'CONTABILIDAD'
       ImageIndex = 4
-      ExplicitWidth = 342
-      ExplicitHeight = 399
       object CuentaLabel: TLabel
         AlignWithMargins = True
         Left = 3
@@ -1957,7 +1924,6 @@ object FProductos: TFProductos
         ListSource = DM.dstCuenta
         ParentBiDiMode = False
         TabOrder = 0
-        ExplicitWidth = 336
       end
       object TipoDBLookupComboBox: TDBLookupComboBox
         AlignWithMargins = True
@@ -1974,7 +1940,6 @@ object FProductos: TFProductos
         ListSource = DM.dstCuenta
         ParentBiDiMode = False
         TabOrder = 1
-        ExplicitWidth = 336
       end
       object IIBBDBLookupComboBox: TDBLookupComboBox
         AlignWithMargins = True
@@ -1991,7 +1956,6 @@ object FProductos: TFProductos
         ListSource = DM.dstCuenta
         ParentBiDiMode = False
         TabOrder = 2
-        ExplicitWidth = 336
       end
       object AnticipoDBLookupComboBox: TDBLookupComboBox
         AlignWithMargins = True
@@ -2008,7 +1972,6 @@ object FProductos: TFProductos
         ListSource = DM.dstCuenta
         ParentBiDiMode = False
         TabOrder = 3
-        ExplicitWidth = 336
       end
     end
   end
@@ -2020,8 +1983,6 @@ object FProductos: TFProductos
     Align = alRight
     ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = 350
-    ExplicitHeight = 427
     object Label1: TLabel
       Left = 1
       Top = 76
@@ -2163,7 +2124,6 @@ object FProductos: TFProductos
       Stretch = True
       Visible = False
       OnClick = CodigoBarraPaintBoxClick
-      ExplicitTop = 257
       ExplicitWidth = 120
     end
     object CostoFleteDBText: TDBText
@@ -2271,7 +2231,6 @@ object FProductos: TFProductos
       ParentFont = False
       TabOrder = 0
       OnClick = SaveBitBtnClick
-      ExplicitTop = 326
     end
     object NoBitBtn: TBitBtn
       Left = 1
@@ -2307,7 +2266,6 @@ object FProductos: TFProductos
       ParentFont = False
       TabOrder = 1
       OnClick = NoBitBtnClick
-      ExplicitTop = 376
     end
     object CodigoDBEdit: TDBEdit
       Left = 1
@@ -2369,8 +2327,6 @@ object FProductos: TFProductos
     Height = 41
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 427
-    ExplicitWidth = 425
     object DBNavigator1: TDBNavigator
       Left = 1
       Top = 1
@@ -2394,7 +2350,6 @@ object FProductos: TFProductos
       ShowHint = True
       TabOrder = 0
       OnClick = DBNavigator1Click
-      ExplicitWidth = 423
     end
   end
 end

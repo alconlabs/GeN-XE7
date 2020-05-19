@@ -34,7 +34,7 @@ object WooCommerceForm: TWooCommerceForm
       AlignWithMargins = True
       Left = 4
       Top = 4
-      Width = 388
+      Width = 39
       Height = 21
       Align = alTop
       Caption = 'Site:'
@@ -44,13 +44,12 @@ object WooCommerceForm: TWooCommerceForm
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitWidth = 39
     end
     object wooCommerceKeyLabel: TLabel
       AlignWithMargins = True
       Left = 4
       Top = 66
-      Width = 388
+      Width = 167
       Height = 21
       Align = alTop
       Caption = 'WooCommerceKey:'
@@ -60,13 +59,12 @@ object WooCommerceForm: TWooCommerceForm
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitWidth = 167
     end
     object WooCommerceSecretLabel: TLabel
       AlignWithMargins = True
       Left = 4
       Top = 128
-      Width = 388
+      Width = 189
       Height = 21
       Align = alTop
       Caption = 'WooCommerceSecret:'
@@ -76,13 +74,12 @@ object WooCommerceForm: TWooCommerceForm
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitWidth = 189
     end
     object wPUsernameLabel: TLabel
       AlignWithMargins = True
       Left = 4
       Top = 190
-      Width = 388
+      Width = 120
       Height = 21
       Align = alTop
       Caption = 'WPUsername:'
@@ -92,13 +89,12 @@ object WooCommerceForm: TWooCommerceForm
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitWidth = 120
     end
     object WPPasswordLabel: TLabel
       AlignWithMargins = True
       Left = 4
       Top = 252
-      Width = 388
+      Width = 117
       Height = 21
       Align = alTop
       Caption = 'WPPassword:'
@@ -108,7 +104,6 @@ object WooCommerceForm: TWooCommerceForm
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitWidth = 117
     end
     object wpSiteEdit: TEdit
       AlignWithMargins = True

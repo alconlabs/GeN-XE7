@@ -11,7 +11,7 @@ uses
   Xml.xmldom, Xml.XMLIntf, Soap.InvokeRegistry, Soap.Rio, Soap.SOAPHTTPClient,
   Xml.Win.msxmldom, Xml.XMLDoc, ShellAPI, DateUtils, Winapi.Messages, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
-  Vcl.ExtDlgs, RestDM;
+  Vcl.ExtDlgs, RestDM, System.Net.URLClient;
 
 type
   TAfipDataModule = class(TDataModule)

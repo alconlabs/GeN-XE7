@@ -445,7 +445,7 @@ begin
       if (ReservaDBComboBox.Text = '') then tArticulo.FieldByName('RESERVA').AsString := 'no';
       tArticulo.FieldByName('INDIVIDUAL').AsInteger := IndividualCheckBox.Checked.ToInteger;
       tArticulo.Post;
-      if (wpSync) then WooCommerceGeN('UploadItems', desc);
+      if (wpSync) then WooCommerceGeN('Articulo', desc);
       if Dialogs.MessageDlg('Articulo grabado con éxito.  Salir?', mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
         Close
       else
@@ -655,7 +655,7 @@ begin
     tIVA.Active := False;
     tCuenta.Active:=False;
     ImportarCsv('Articulo');//ImportarTabla('Articulo');
-    if (wpSync) then WooCommerceGeN('UploadItems', '');
+    if (wpSync) then WooCommerceGeN('Articulo', '');
   end;
   ShowMessage('Importación Finalizada!');
   Close;

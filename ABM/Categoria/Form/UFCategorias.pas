@@ -127,14 +127,15 @@ procedure TFCategorias.Grabar;
 begin
   desc := DescripcionDBEdit.Text;
   if (desc <> '') then
-  with dm.tablaFDTable do
+  with DM do
+  with tablaFDTable do
     if (State = dsEdit) or (State = dsInsert) then
     begin
       // guardar imagen
       if ((_imagen<>'') and (Image1.Picture.Graphic <> nil)) then Image1.Picture.SaveToFile(_imagen);
       //
       Post;
-      //if (wpSync) then WooCommerceGeN('UploadCategories', desc);
+      if (wpSync) then WooCommerceGeN('Categoria', desc);
       if Dialogs.MessageDlg('Grabado con éxito.  Salir?', mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
         FCategorias.Close
       else

@@ -861,120 +861,121 @@ var
 //  jsResponse: TJSONValue;
   ctaCte : boolean;
 begin
-with dm do begin
-  BaseDatosFB.StartTransaction;
-  //  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
-  DM.FormatearFecha;
-  pagare := '0';
-  nro := IntToStr(DM.UltimoRegistro('Venta', 'CODIGO'));
-  comp:=dm.ObtenerNroComp(let);
-  if pgr then
-    pagare := 'S';
-  cmv := CostMercVend(ulc, cost);
- // CALCULAR IIBB
-  qQ.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + IngresosBrutos;
-  qQ.Open;
-  //  if tot - impu > qQ.FieldByName('MONTO').AsFloat then
-  //    IIBB := (tot - impu) * (qQ.FieldByName('COEF1').AsFloat *
-  //      qQ.FieldByName('COEF2').AsFloat * qQ.FieldByName('PORCENTAJE').AsFloat);
-  if let = 'C' then
-    begin
-//      tipocbte:='11';
-      IIBB := tot * (qQ.FieldByName('PORCENTAJE').AsFloat/100)
-    end
-  else
-    IIBB := (tot - impu) * (qQ.FieldByName('PORCENTAJE').AsFloat/100);
-  //AlicuotaIVA
-  aIva := InsertarAlicIva;
-  //Factura electronica
-  if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
+  with dm do
   begin
-    WSFE(fech, let, '1', '99', cui, comp,  FloatToStr(sbt), FloatToStr(impu),
-     FloatToStr(tot), '0', '0',
-//     FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21),
-     FloatToStr(exc));
-    if cae = '' then exit;
-  end;
-  //actualiza el nro de factura
-  if comp<>'' then dm.ActualizarNroComp(let,comp);
-  // INSERTA EN LA TABLA VENTA
-  qQ.SQL.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE,' +
-    ' SUBTOTAL, DESCUENTO, FECHA,'+
-    ' IMPUESTO, IVA1, IVA2,'+
-    ' IIBB, TOTAL, CONTADO, CHEQUE,' +
-    ' TARJETA, OTROS, SALDO,'+
-    ' PAGADO, PAGARE, COSTO,'+
-    ' DEUDA, COMISION, DESCRIPCION,'+
-    ' ALICIVA, ENVIO, NOTAS'+
-    ') Values ('+
-    QuotedStr(comp)+', '+QuotedStr(vto)+', '+(nro)+', '+QuotedStr(let)+', '+cod+', '+
-    floattostr(sbt)+', '+floattostr(des)+', '+QuotedStr(fech)+', '+
-    floattostr(impu)+', '+floattostr(i10)+', '+floattostr(i21)+', '+
-    floattostr(IIBB)+', '+floattostr(tot)+', '+floattostr(cont)+', '+floattostr(cheq)+', '+
-    floattostr(tarj)+', '+floattostr(otr)+', '+floattostr(sal)+', '+
-    floattostr(pag)+', '+QuotedStr(pagare)+', '+floattostr(cmv)+', '+
-    floattostr(deud)+', '+floattostr(comv)+', '+QuotedStr(cae)+', '+
-    IntToStr(aIva)+', '+floattostr(env)+ ', ' + quotedstr(notas) +
-    ')';
-  qQ.ExecSQL;
-  // Insertar en la tabla de VENTAITEM
-  if mat <> nil then
-    for i := 1 to High(mat[0]) do
-    begin
-      // CALCULAR IIBB
-  //    qQ.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + quotedstr(mat[9, i]);
-  //    qQ.Open;
-  //    if tot - impu > qQ.FieldByName('MONTO').AsFloat then
-  //      IIBB := (tot - impu) * (qQ.FieldByName('COEF1').AsFloat *
-  //        qQ.FieldByName('COEF2').AsFloat * qQ.FieldByName('PORCENTAJE').AsFloat);
-      if (mat[1, i]= 'Deuda CtaCte') then
-        ctaCte := True;
-      qQ.SQL.Text :=
-        'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, '+
-        'COSTO, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
-        +' ( ' +(nro)+ ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
-        (mat[7, i]) + ', ' +(mat[4, i]) + ', ' + mat[6, i] + ', ' + (nro) + ', ' +
-        quotedstr(mat[1, i]) + ');';
-      qQ.ExecSQL;
-    end;
-
-  if ctaCte then
-  begin
-    qQ.SQL.Text := 'Update "CtaCte" Set SALDO = ' + floattostr(sal) +
-        ', FECHA = ' + quotedstr(fech) + ' Where CLIENTE = ' + cod;
-    qQ.ExecSQL;
-  end;
-
-  // Insertar en la tabla de CtaCte
-  if (sal > 0.05) then
-  begin
-    qQ.SQL.Text := 'SELECT * FROM "CtaCte" WHERE CLIENTE = ' + cod;
+    BaseDatosFB.StartTransaction;
+    //  if webUpd='True' then RestDataModule := TRestDataModule.Create(self);
+    DM.FormatearFecha;
+    pagare := '0';
+    nro := IntToStr(DM.UltimoRegistro('Venta', 'CODIGO'));
+    comp:=dm.ObtenerNroComp(let);
+    if pgr then
+      pagare := 'S';
+    cmv := CostMercVend(ulc, cost);
+   // CALCULAR IIBB
+    qQ.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + IngresosBrutos;
     qQ.Open;
-    if (qQ.RecordCount > 0) and (sal < 0.05) then
-      qQ.SQL.Text := 'Update "CtaCte" Set SALDO = ' + floattostr(sal) +
-        ', FECHA = ' + quotedstr(fech) + ' Where CLIENTE = ' + cod
-    else
-      qQ.SQL.Text := 'Insert Into "CtaCte" (CLIENTE, SALDO, OPERACION,' +
-        ' DESCUENTO, INTERES, FECHA, RENDIDAS) Values (' + cod + ', ' +
-        floattostr(sal) + ', ' + (nro) + ', ' + floattostr(des) + ', ' +
-        floattostr(int) + ', ' + quotedstr(fech) + ', 0' + ')';
-      qQ.ExecSQL;
-    // Insertar en la tabla de CtaCte Item
-    if sal > 0.04 then
-    begin
-      For i := 1 to High(mat[0]) do
+    //  if tot - impu > qQ.FieldByName('MONTO').AsFloat then
+    //    IIBB := (tot - impu) * (qQ.FieldByName('COEF1').AsFloat *
+    //      qQ.FieldByName('COEF2').AsFloat * qQ.FieldByName('PORCENTAJE').AsFloat);
+    if let = 'C' then
       begin
-        if mat[0, i] <> '1' then
-          detalle := mat[1, i]
-        else
-          detalle := memo;
-        qQ.sql.Text := 'Insert Into "CtaCteItem" (OPERACION, CLIENTE,' +
-          ' DESCRIPCION, IMPORTE, ' + ' PAGADO) Values ' + '( '+(nro)+',' +
-          cod + ', ' + quotedstr(detalle) + ',' + (mat[5, i]) + ', 0)';
+  //      tipocbte:='11';
+        IIBB := tot * (qQ.FieldByName('PORCENTAJE').AsFloat/100)
+      end
+    else
+      IIBB := (tot - impu) * (qQ.FieldByName('PORCENTAJE').AsFloat/100);
+    //AlicuotaIVA
+    aIva := InsertarAlicIva;
+    //Factura electronica
+    if (reporte = 'FElectronica') or (reporte = 'TElectronica') then
+    begin
+      WSFE(fech, let, '1', '99', cui, comp,  FloatToStr(sbt), FloatToStr(impu),
+       FloatToStr(tot), '0', '0',
+  //     FloatToStr(n10), FloatToStr(n21), FloatToStr(i10), FloatToStr(i21),
+       FloatToStr(exc));
+      if cae = '' then exit;
+    end;
+    //actualiza el nro de factura
+    if comp<>'' then dm.ActualizarNroComp(let,comp);
+    // INSERTA EN LA TABLA VENTA
+    qQ.SQL.Text := 'Insert Into "Venta" (COMPROBANTE, TERMINOS, CODIGO, LETRA, CLIENTE,' +
+      ' SUBTOTAL, DESCUENTO, FECHA,'+
+      ' IMPUESTO, IVA1, IVA2,'+
+      ' IIBB, TOTAL, CONTADO, CHEQUE,' +
+      ' TARJETA, OTROS, SALDO,'+
+      ' PAGADO, PAGARE, COSTO,'+
+      ' DEUDA, COMISION, DESCRIPCION,'+
+      ' ALICIVA, ENVIO, NOTAS'+
+      ') Values ('+
+      QuotedStr(comp)+', '+QuotedStr(vto)+', '+(nro)+', '+QuotedStr(let)+', '+cod+', '+
+      floattostr(sbt)+', '+floattostr(des)+', '+QuotedStr(fech)+', '+
+      floattostr(impu)+', '+floattostr(i10)+', '+floattostr(i21)+', '+
+      floattostr(IIBB)+', '+floattostr(tot)+', '+floattostr(cont)+', '+floattostr(cheq)+', '+
+      floattostr(tarj)+', '+floattostr(otr)+', '+floattostr(sal)+', '+
+      floattostr(pag)+', '+QuotedStr(pagare)+', '+floattostr(cmv)+', '+
+      floattostr(deud)+', '+floattostr(comv)+', '+QuotedStr(cae)+', '+
+      IntToStr(aIva)+', '+floattostr(env)+ ', ' + quotedstr(notas) +
+      ')';
+    qQ.ExecSQL;
+    // Insertar en la tabla de VENTAITEM
+    if mat <> nil then
+      for i := 1 to High(mat[0]) do
+      begin
+        // CALCULAR IIBB
+    //    qQ.sql.Text := 'SELECT * FROM "IIBB" WHERE CODIGO=' + quotedstr(mat[9, i]);
+    //    qQ.Open;
+    //    if tot - impu > qQ.FieldByName('MONTO').AsFloat then
+    //      IIBB := (tot - impu) * (qQ.FieldByName('COEF1').AsFloat *
+    //        qQ.FieldByName('COEF2').AsFloat * qQ.FieldByName('PORCENTAJE').AsFloat);
+        if (mat[1, i]= 'Deuda CtaCte') then
+          ctaCte := True;
+        qQ.SQL.Text :=
+          'Insert Into "VentaItem" (OPERACION, ARTICULO, CANTIDAD, '+
+          'COSTO, PRECIO, IMPUESTO, SERVICIO, DESCRIPCION) Values'
+          +' ( ' +(nro)+ ', ' + (mat[0, i]) + ', ' + (mat[3, i]) + ', ' +
+          (mat[7, i]) + ', ' +(mat[4, i]) + ', ' + mat[6, i] + ', ' + (nro) + ', ' +
+          quotedstr(mat[1, i]) + ');';
         qQ.ExecSQL;
       end;
+
+    if ctaCte then
+    begin
+      qQ.SQL.Text := 'Update "CtaCte" Set SALDO = ' + floattostr(sal) +
+          ', FECHA = ' + quotedstr(fech) + ' Where CLIENTE = ' + cod;
+      qQ.ExecSQL;
     end;
-  end;
+
+    // Insertar en la tabla de CtaCte
+    if (sal > 0.05) then
+    begin
+      qQ.SQL.Text := 'SELECT * FROM "CtaCte" WHERE CLIENTE = ' + cod;
+      qQ.Open;
+      if (qQ.RecordCount > 0) and (sal < 0.05) then
+        qQ.SQL.Text := 'Update "CtaCte" Set SALDO = ' + floattostr(sal) +
+          ', FECHA = ' + quotedstr(fech) + ' Where CLIENTE = ' + cod
+      else
+        qQ.SQL.Text := 'Insert Into "CtaCte" (CLIENTE, SALDO, OPERACION,' +
+          ' DESCUENTO, INTERES, FECHA, RENDIDAS) Values (' + cod + ', ' +
+          floattostr(sal) + ', ' + (nro) + ', ' + floattostr(des) + ', ' +
+          floattostr(int) + ', ' + quotedstr(fech) + ', 0' + ')';
+        qQ.ExecSQL;
+      // Insertar en la tabla de CtaCte Item
+      if sal > 0.04 then
+      begin
+        For i := 1 to High(mat[0]) do
+        begin
+          if mat[0, i] <> '1' then
+            detalle := mat[1, i]
+          else
+            detalle := memo;
+          qQ.sql.Text := 'Insert Into "CtaCteItem" (OPERACION, CLIENTE,' +
+            ' DESCRIPCION, IMPORTE, ' + ' PAGADO) Values ' + '( '+(nro)+',' +
+            cod + ', ' + quotedstr(detalle) + ',' + (mat[5, i]) + ', 0)';
+          qQ.ExecSQL;
+        end;
+      end;
+    end;
   // Insertar en RendidoVendedor
   if ven <> '' then
   begin
@@ -2539,7 +2540,7 @@ begin
     if (wpSync) then
       for i := 1 to High(mat[0]) do
       begin
-        DM.WooCommerceGeN('UploadItems',mat[0, i]);
+        DM.WooCommerceGeN('Articulo',mat[0, i]);
       end;
 end;
 

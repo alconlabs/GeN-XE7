@@ -394,7 +394,7 @@ begin
 //    // Calcula el Ultimo Costo
 //    if (SGFact.Cells[11, i] = '') then SGFact.Cells[11, i] := '0';
 //    if SGFact.Cells[11, i] <> '0' then UltCosto := UltCosto + StrToFloat(SGFact.Cells[11, i]);
-    if not esC then dm.AgregarMtIva(TIVA,RoundTo(NG,-2),RoundTo(IVA,-2));
+    if (not esC) then dm.AgregarMtIva(TIVA,RoundTo(NG,-2),RoundTo(IVA,-2));
   // Calcula el monto para cobrar el impuesto de ventas
     if ((cbTipo.ItemIndex = 28) or (cbTipo.ItemIndex = 10)) then
     begin
@@ -434,6 +434,7 @@ begin
     NG := TOT-IVA;
     NG21 := NG21 + NG;
     IVA21 := IVA21 + IVA;
+    if (not esC) then dm.AgregarMtIva(TIVA,RoundTo(NG,-2),RoundTo(IVA,-2));
   end;
 
   if (envio>0) then
@@ -443,6 +444,7 @@ begin
     NG := TOT-IVA;
     NG21 := NG21 + NG;
     IVA21 := IVA21 + IVA;
+    if (not esC) then dm.AgregarMtIva(TIVA,RoundTo(NG,-2),RoundTo(IVA,-2));
   end;
 
   Exento := RoundTo(NE,-2);
