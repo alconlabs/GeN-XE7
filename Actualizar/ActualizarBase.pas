@@ -94,6 +94,19 @@ begin
       ActualizarTabla('SubCategoria', 'IMAGEN', 'VARCHAR(255)');
       ActualizarTabla('SubCategoria', 'ORDEN', 'INTEGER');
 
+//      CrearTabla('ZonaEnvio',
+//      'CODIGO integer not null primary key, DESCRIPCION varchar(255), ORDEN integer'
+//      ,'');
+//      CrearTabla('ZERegion',
+//      'ZONAENVIO integer, CODIGO integer not null primary key, DESCRIPCION varchar(255), Tipo varchar(50)'
+//      ,'');
+//      CrearTabla('ZEMetodo',
+//      'ZONAENVIO, CODIGO integer not null primary key, DESCRIPCION varchar(255), ORDEN	integer, ACTIVO	smallint, CONFIGURACION	integer, IMPUESTO varchar(50), COSTO double precision'
+//      ,'');
+//      CrearTabla('ZEMConfig',
+//      'ZEMETODO integer, CODIGO integer not null primary key, ETIQUETA varchar(50), DESCRIPCION varchar(255), TIPO varchar(50), VALOR varchar(255), PORDEFECTO varchar(255), AYUDA varchar(255), INSINUAR varchar(255)'
+//      ,'');
+
     end;
     ActualizarVersion;
   end;
@@ -434,7 +447,7 @@ end;
 //  end;
 //end;
 
-procedure TActualizarBase.AgregarCampoEnTablas(tablas : TArray<string>; nombre,tipo : string);
+procedure TActualizarBase.AgregarCampoEnTablas;
 var i: integer;
 begin
   with DM do

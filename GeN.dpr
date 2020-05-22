@@ -4,7 +4,7 @@ uses
   Vcl.Forms,
   UFFormaPago in 'SubOperacion\FormaPago\Form\UFFormaPago.pas' {FFormaPago},
   UFClientes in 'ABM\Cliente\Form\UFClientes.pas' {FClientes},
-  UFCategorias in 'ABM\Categoria\Form\UFCategorias.pas' {FCategorias},
+  CategoriaFomUnit in 'ABM\Categoria\Form\CategoriaFomUnit.pas' {CategoriaForm},
   UFBuscaProve in 'Buscar\Proveedor\Form\UFBuscaProve.pas' {FBuscaProve},
   UFBuscaCliente in 'Buscar\Cliente\Form\UFBuscaCliente.pas' {FBuscaCliente},
   AgregarCantidad in 'SubOperacion\AgregarCantidad\Form\AgregarCantidad.pas' {AgregarCantidadForm},
@@ -57,7 +57,8 @@ uses
   WebLoginF in 'Configuracion\WebLogin\WebLoginF.pas' {WebLoginForm},
   WooCommerceFormUnit in 'Configuracion\WooCommerce\WooCommerceFormUnit.pas' {WooCommerceForm},
   ActualizarBase in 'Actualizar\ActualizarBase.pas',
-  NotasFormUnit in 'SubOperacion\Notas\NotasFormUnit.pas' {NotasForm};
+  NotasFormUnit in 'SubOperacion\Notas\NotasFormUnit.pas' {NotasForm},
+  ZonaEnvioFormUnit in 'ABM\ZonaEnvio\Form\ZonaEnvioFormUnit.pas' {ZonaEnvioForm};
 
 {$R *.res}
 

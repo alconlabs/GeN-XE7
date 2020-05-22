@@ -183,8 +183,13 @@ begin
     'AND ("Rubro".DESCRIPCION like '+QuotedStr(RubroEdit.Text + '%')+')'+
     'AND ("Categoria".DESCRIPCION like '+QuotedStr(CategoriaEdit.Text + '%')+')'+
     'AND (upper("Proveedor".NOMBRE) Containing '+QuotedStr(UpperCase(ProveedorEdit.Text))+')';
-    if CodigoEdit.Text<>'' then qArticulo.SQL.Text := qArticulo.SQL.Text
-    + 'AND (CODIGOBARRA like ' + QuotedStr('%'+CodigoEdit.Text+'%') + ')';
+
+    if CodigoEdit.Text<>'' then
+      if (DM.ConfigQuery.FieldByName('CodigoBarra').AsString = 'SI') then
+        qArticulo.SQL.Text := qArticulo.SQL.Text + 'AND (CODIGOBARRA like ' + QuotedStr('%'+CodigoEdit.Text+'%') + ')'
+      else
+        qArticulo.SQL.Text := qArticulo.SQL.Text + 'AND ("Articulo".CODIGO like ' + QuotedStr('%'+CodigoEdit.Text+'%') + ')';
+
     if EnStockCheckBox.Checked then qArticulo.SQL.Text := qArticulo.SQL.Text+'AND ("Articulo".Disponible > 0)';
     qArticulo.SQL.Text := qArticulo.SQL.Text+ ' ORDER BY   "Articulo".DESCRIPCION';
     qArticulo.Open;

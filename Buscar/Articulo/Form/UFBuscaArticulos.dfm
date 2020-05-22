@@ -107,9 +107,9 @@ object FBuscaArticulo: TFBuscaArticulo
     object Label1: TLabel
       Left = 663
       Top = 8
-      Width = 124
+      Width = 66
       Height = 24
-      Caption = 'Codigo Barras:'
+      Caption = 'Codigo:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -19

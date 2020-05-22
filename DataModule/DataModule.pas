@@ -21,7 +21,6 @@ type
   TDM = class(TDataModule)
     Consulta1: TIBScript;
     OpenDialog1: TOpenDialog;
-    FDTable1: TFDTable;
     FDQuery1: TFDQuery;
     sdb: TFDConnection;
     tCbteTipo: TFDQuery;
@@ -108,10 +107,7 @@ type
     FDBatchMoveDataSetReader1: TFDBatchMoveDataSetReader;
     FDBatchMoveDataSetWriter1: TFDBatchMoveDataSetWriter;
     qRemito: TFDQuery;
-    tablaFDTable: TFDTable;
-    tablaDataSource: TDataSource;
-    tabla1FDTable: TFDTable;
-    tabla1DataSource: TDataSource;
+    FDTable1: TFDTable;
 
     procedure DataModuleCreate(Sender: TObject);
     function ObtenerConfig(campo:string):Variant;
@@ -166,9 +162,6 @@ type
     procedure tVendedorBeforeInsert(DataSet: TDataSet);
     procedure tVendedorBeforeEdit(DataSet: TDataSet);
     procedure tVendedorAfterPost(DataSet: TDataSet);
-    procedure FDTable1AfterPost(DataSet: TDataSet);
-    procedure FDTable1BeforeEdit(DataSet: TDataSet);
-    procedure FDTable1BeforeInsert(DataSet: TDataSet);
   private
     { Private declarations }
     bd : string;
@@ -258,12 +251,13 @@ type
     function EsVersion(_v1,_v2,_v3,_v4 :Word):Integer;
     procedure InsertarTabla2(tabla,codigo,desc: string);
     function ExisteValorEnTabla(tabla,codigo: string): Boolean;
-    procedure RefrescarTabla1;
+//    procedure RefrescarTabla1;
     function AbrirImagen: string;
+//    procedure ActivarTablas(tablas: TArray<string>);
   end;
 
 const
-  version='202005051302';
+  version='202005221714';
   v: array [0 .. 22] of string = ('MenuExpress', 'MenuStock', 'Articulos',
     'VaciarBase', 'Vender', 'Comprar', 'AnularVenta', 'RetiroCaja', 'Rubro',
     'Categoria', 'SubCategoria', 'Stock', 'CajaL', 'GananciaXvta', 'PreciosL',
@@ -911,15 +905,15 @@ begin
    end;
 end;
 
-procedure TDM.RefrescarTabla1;
-begin
-  with tabla1FDTable do
-    begin
-      Close;
-      Open;
-      Last;
-    end;
-end;
+//procedure TDM.RefrescarTabla1;
+//begin
+//  with FDTable1 do
+//    begin
+//      Close;
+//      Open;
+//      Last;
+//    end;
+//end;
 
 procedure TDM.Ejecutar;
 begin
@@ -953,21 +947,6 @@ begin
       BaseDatosFB.Connected:=True;
       TraerConfig;
     end;
-end;
-
-procedure TDM.FDTable1AfterPost(DataSet: TDataSet);
-begin
-  FDTable1.Transaction.CommitRetaining;
-end;
-
-procedure TDM.FDTable1BeforeEdit(DataSet: TDataSet);
-begin
-  FDTable1.Transaction.StartTransaction;
-end;
-
-procedure TDM.FDTable1BeforeInsert(DataSet: TDataSet);
-begin
-  FDTable1.Transaction.StartTransaction;
 end;
 
 procedure TDM.FormatearFecha;
@@ -1480,6 +1459,33 @@ procedure TDM.ObtenerSO;
 begin
   microsoftStore := (AnsiPos(trim('WindowsApps'),trim(ExtractFilePath(Application.ExeName)))<>0);
 end;
+
+//procedure TDM.ActivarTablas(tablas: TArray<string>);
+//var cant : Integer;
+//begin
+//  cant := High(tablas);
+//  if (cant>0) then
+//    with FDTable do
+//    begin
+//      if Active then Active := False;
+//      TableName := '"'+tablas[0]+'"';
+//      Active := True;
+//    end;
+//  if (cant>1) then
+//    with FDTable1 do
+//    begin
+//      if Active then Active := False;
+//      TableName := '"'+tablas[1]+'"';
+//      Active := True;
+//    end;
+//  if (cant>2) then
+//    with FDTable2 do
+//    begin
+//      if Active then Active := False;
+//      TableName := '"'+tablas[2]+'"';
+//      Active := True;
+//    end;
+//end;
 
 function TDM.Actualizar;
 var
@@ -2043,6 +2049,8 @@ begin
       Fields.FieldByName('PROVEEDOR').AsString := '0';
       Fields.FieldByName('IVA').AsString := '210';
       Fields.FieldByName('TASA').AsString := '5';
+      Fields.FieldByName('PORCENTAJE').AsString := '0';
+      Fields.FieldByName('IMPOTROS').AsString := '0';
       Fields.FieldByName('COSTO').AsString := fDMemTable.Fields.FieldByName('PRECIO').AsString;
       Fields.FieldByName('CTANOMBRE').AsString := '13';
       Fields.FieldByName('CTATIPO').AsString := '13';

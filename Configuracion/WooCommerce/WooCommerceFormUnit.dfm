@@ -29,12 +29,11 @@ object WooCommerceForm: TWooCommerceForm
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 352
     object wpSiteLabel: TLabel
       AlignWithMargins = True
       Left = 4
       Top = 4
-      Width = 39
+      Width = 388
       Height = 21
       Align = alTop
       Caption = 'Site:'
@@ -44,66 +43,71 @@ object WooCommerceForm: TWooCommerceForm
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 39
     end
     object wooCommerceKeyLabel: TLabel
       AlignWithMargins = True
       Left = 4
       Top = 66
-      Width = 167
+      Width = 388
       Height = 21
       Align = alTop
-      Caption = 'WooCommerceKey:'
+      Caption = 'Consumer Key:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -17
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 129
     end
     object WooCommerceSecretLabel: TLabel
       AlignWithMargins = True
       Left = 4
       Top = 128
-      Width = 189
+      Width = 388
       Height = 21
       Align = alTop
-      Caption = 'WooCommerceSecret:'
+      Caption = 'Consumer Secret:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -17
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 151
     end
     object wPUsernameLabel: TLabel
       AlignWithMargins = True
       Left = 4
       Top = 190
-      Width = 120
+      Width = 388
       Height = 21
       Align = alTop
-      Caption = 'WPUsername:'
+      Caption = 'User name:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -17
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 97
     end
     object WPPasswordLabel: TLabel
       AlignWithMargins = True
       Left = 4
       Top = 252
-      Width = 117
+      Width = 388
       Height = 21
       Align = alTop
-      Caption = 'WPPassword:'
+      Caption = 'Password:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -17
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      ExplicitWidth = 89
     end
     object wpSiteEdit: TEdit
       AlignWithMargins = True
@@ -117,7 +121,6 @@ object WooCommerceForm: TWooCommerceForm
       TabOrder = 0
       Text = 'https://miempresa.com.ar/'
       TextHint = 'https://miempresa.com.ar/'
-      ExplicitWidth = 344
     end
     object wooCommerceKeyEdit: TEdit
       AlignWithMargins = True
@@ -131,7 +134,6 @@ object WooCommerceForm: TWooCommerceForm
       TabOrder = 1
       Text = 'ck_'
       TextHint = 'ck_***************************************'
-      ExplicitWidth = 344
     end
     object WooCommerceSecretEdit: TEdit
       AlignWithMargins = True
@@ -145,7 +147,6 @@ object WooCommerceForm: TWooCommerceForm
       TabOrder = 2
       Text = 'cs_'
       TextHint = 'cs_***************************************'
-      ExplicitWidth = 344
     end
     object wPUsernameEdit: TEdit
       AlignWithMargins = True
@@ -157,7 +158,6 @@ object WooCommerceForm: TWooCommerceForm
       ParentShowHint = False
       ShowHint = True
       TabOrder = 3
-      ExplicitWidth = 344
     end
     object wPPasswordEdit: TEdit
       AlignWithMargins = True
@@ -169,7 +169,6 @@ object WooCommerceForm: TWooCommerceForm
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4
-      ExplicitWidth = 344
     end
     object AutoSincronizarCheckBox: TCheckBox
       AlignWithMargins = True
@@ -180,7 +179,6 @@ object WooCommerceForm: TWooCommerceForm
       Align = alBottom
       Caption = 'Auto Sincronizar'
       TabOrder = 5
-      ExplicitWidth = 344
     end
   end
   object PanelRight: TPanel
@@ -197,7 +195,6 @@ object WooCommerceForm: TWooCommerceForm
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
-    ExplicitLeft = 352
     object SiBitBtn: TBitBtn
       AlignWithMargins = True
       Left = 4

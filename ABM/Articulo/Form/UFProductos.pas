@@ -546,6 +546,7 @@ begin
   IndividualCheckBox.Checked := (dm.tArticulo.FieldByName('INDIVIDUAL').AsInteger > 0);
   //codigobarra
   Codifica(CodigoBarraEdit.Text);
+  Calcular;
 end;
 
 procedure TFProductos.CodigoBarraPaintBoxClick(Sender: TObject);

@@ -921,17 +921,6 @@ object DM: TDM
     Left = 160
     Top = 48
   end
-  object FDTable1: TFDTable
-    BeforeInsert = FDTable1BeforeInsert
-    BeforeEdit = FDTable1BeforeEdit
-    AfterPost = FDTable1AfterPost
-    Connection = BaseDatosFB
-    Transaction = TransactionFB
-    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 176
-    Top = 144
-  end
   object FDQuery1: TFDQuery
     Connection = BaseDatosFB
     Transaction = TransactionFB
@@ -2862,27 +2851,11 @@ object DM: TDM
     Left = 24
     Top = 96
   end
-  object tablaFDTable: TFDTable
+  object FDTable1: TFDTable
     IndexFieldNames = 'CODIGO'
     Connection = BaseDatosFB
     Transaction = TransactionFB
-    Left = 480
-    Top = 65535
-  end
-  object tablaDataSource: TDataSource
-    DataSet = tablaFDTable
-    Left = 508
-    Top = 65535
-  end
-  object tabla1FDTable: TFDTable
-    Connection = BaseDatosFB
-    Transaction = TransactionFB
-    Left = 481
-    Top = 47
-  end
-  object tabla1DataSource: TDataSource
-    DataSet = tabla1FDTable
-    Left = 509
-    Top = 46
+    Left = 176
+    Top = 143
   end
 end

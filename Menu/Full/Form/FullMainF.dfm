@@ -274,6 +274,10 @@ object FullMainForm: TFullMainForm
         Visible = False
         OnClick = IngresosBrutosClick
       end
+      object ENVIO1: TMenuItem
+        Caption = 'ENVIO'
+        OnClick = ENVIO1Click
+      end
     end
     object Listados1: TMenuItem
       Caption = 'LISTADO'
@@ -391,7 +395,7 @@ object FullMainForm: TFullMainForm
         OnClick = IniciarSesion1Click
       end
       object WooCommerce1: TMenuItem
-        Caption = 'WOOCOMMERCE'
+        Caption = 'TIENDA WEB'
         OnClick = WooCommerce1Click
       end
     end

@@ -2,8 +2,8 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2019/06/20 10:47:47.000.373,=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/06/20 10:48:32.000.179,I:\GitHub\GeN-XE7\Unit1.dfm=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
     <Transaction>2019/06/20 10:48:32.000.179,I:\GitHub\GeN-XE7\Unit1.pas=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/06/20 10:48:32.000.179,I:\GitHub\GeN-XE7\Unit1.dfm=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
     <Transaction>2019/06/20 10:48:57.000.355,I:\GitHub\GeN-XE7\GeN.dproj=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
     <Transaction>2019/06/20 10:51:02.000.353,=I:\GitHub\GeN-XE7\Menu\Full\Form\FullMainF.pas</Transaction>
     <Transaction>2019/06/20 10:52:00.000.122,=I:\GitHub\GeN-XE7\DataModule\DataModule.pas</Transaction>
@@ -53,11 +53,11 @@
     <Transaction>2019/06/20 11:08:40.000.700,=I:\GitHub\GeN-XE7\Buscar\Venta\Form\BuscaFactura.pas</Transaction>
     <Transaction>2019/06/20 11:10:26.000.121,=I:\GitHub\GeN-XE7\Configuracion\Afip\AfipUnit.pas</Transaction>
     <Transaction>2019/06/20 11:28:17.000.201,=I:\GitHub\GeN-XE7\DataModule\AfipDM.pas</Transaction>
+    <Transaction>2019/06/20 11:29:00.000.143,=I:\GitHub\GeN-XE7\DataModule\OperacionDM.pas</Transaction>
+    <Transaction>2019/06/20 11:29:00.000.266,=I:\GitHub\GeN-XE7\DataModule\RestDM.pas</Transaction>
     <Transaction>2019/06/20 11:29:00.000.061,=I:\GitHub\GeN-XE7\DataModule\LoginCms1.pas</Transaction>
     <Transaction>2019/06/20 11:29:00.000.285,=I:\GitHub\GeN-XE7\DataModule\service.pas</Transaction>
-    <Transaction>2019/06/20 11:29:00.000.266,=I:\GitHub\GeN-XE7\DataModule\RestDM.pas</Transaction>
     <Transaction>2019/06/20 11:29:00.000.045,=I:\GitHub\GeN-XE7\DataModule\ImprimirDM.pas</Transaction>
-    <Transaction>2019/06/20 11:29:00.000.143,=I:\GitHub\GeN-XE7\DataModule\OperacionDM.pas</Transaction>
     <Transaction>2019/07/03 14:40:34.000.545,=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
     <Transaction>2019/07/03 14:46:09.000.804,C:\GitHub\GeN-XE7\DataModule\udmMercadoLibre.pas=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
     <Transaction>2019/07/03 14:46:09.000.804,C:\GitHub\GeN-XE7\DataModule\udmMercadoLibre.dfm=C:\GitHub\GeN-XE7\Unit2.dfm</Transaction>
@@ -66,11 +66,11 @@
     <Transaction>2019/08/21 19:26:31.000.933,C:\GitHub\GeN-XE7\Listados\LibroIVAVentas\Form\LibroIVAVentasF.dfm=C:\GitHub\GeN-XE7\Listados\LibroIVAVentas\Form\CuentasF.dfm</Transaction>
     <Transaction>2019/08/21 19:29:17.000.887,C:\GitHub\GeN-XE7\Listados\LibroIVAVentas\Form\CuentasF.pas=C:\GitHub\GeN-XE7\Listados\Libros.pas</Transaction>
     <Transaction>2019/08/21 19:29:17.000.887,C:\GitHub\GeN-XE7\Listados\LibroIVAVentas\Form\CuentasF.dfm=C:\GitHub\GeN-XE7\Listados\Libros.dfm</Transaction>
-    <Transaction>2019/08/21 19:29:50.000.069,C:\GitHub\GeN-XE7\Listados\Libros.pas=C:\GitHub\GeN-XE7\Listados\Libros\LibrosF.pas</Transaction>
     <Transaction>2019/08/21 19:29:50.000.069,C:\GitHub\GeN-XE7\Listados\Libros.dfm=C:\GitHub\GeN-XE7\Listados\Libros\LibrosF.dfm</Transaction>
+    <Transaction>2019/08/21 19:29:50.000.069,C:\GitHub\GeN-XE7\Listados\Libros.pas=C:\GitHub\GeN-XE7\Listados\Libros\LibrosF.pas</Transaction>
     <Transaction>2019/08/22 21:52:08.000.154,=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
-    <Transaction>2019/08/22 21:53:51.000.785,C:\GitHub\GeN-XE7\Unit2.dfm=C:\GitHub\GeN-XE7\SubOperacion\RetencionesPercepciones\ufRetPerc.dfm</Transaction>
     <Transaction>2019/08/22 21:53:51.000.785,C:\GitHub\GeN-XE7\Unit2.pas=C:\GitHub\GeN-XE7\SubOperacion\RetencionesPercepciones\ufRetPerc.pas</Transaction>
+    <Transaction>2019/08/22 21:53:51.000.785,C:\GitHub\GeN-XE7\Unit2.dfm=C:\GitHub\GeN-XE7\SubOperacion\RetencionesPercepciones\ufRetPerc.dfm</Transaction>
     <Transaction>2019/08/28 01:13:34.000.877,C:\GitHub\GeN-XE7\ABM\ArticuloCelular\Form\ArticuloCelularF.pas=</Transaction>
     <Transaction>2019/08/28 01:16:26.000.496,C:\GitHub\GeN-XE7\ABM\Caja\Form\CajaF.pas=</Transaction>
     <Transaction>2019/08/28 01:16:43.000.068,C:\GitHub\GeN-XE7\ABM\Capitulo\Form\CapituloF.pas=</Transaction>
@@ -153,8 +153,8 @@
     <Transaction>2019/10/11 10:22:36.000.786,=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
     <Transaction>2019/10/11 10:24:15.000.550,C:\GitHub\GeN-XE7\Operacion\AnularOperacion\ViewModels\CancelOrderViewModel.pas=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
     <Transaction>2019/10/11 10:49:16.000.709,=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
-    <Transaction>2019/10/11 10:50:44.000.209,C:\GitHub\GeN-XE7\Operacion\CancelOrder\Views\CancelOrderView.dfm=C:\GitHub\GeN-XE7\Unit2.dfm</Transaction>
     <Transaction>2019/10/11 10:50:44.000.209,C:\GitHub\GeN-XE7\Operacion\CancelOrder\Views\CancelOrderView.pas=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
+    <Transaction>2019/10/11 10:50:44.000.209,C:\GitHub\GeN-XE7\Operacion\CancelOrder\Views\CancelOrderView.dfm=C:\GitHub\GeN-XE7\Unit2.dfm</Transaction>
     <Transaction>2019/10/11 10:50:54.000.661,C:\GitHub\GeN-XE7\Operacion\AnularOperacion\Models\CancelOrderModel.pas=</Transaction>
     <Transaction>2019/10/11 10:51:07.000.488,C:\GitHub\GeN-XE7\Operacion\AnularOperacion\ViewModels\CancelOrderViewModel.pas=</Transaction>
     <Transaction>2019/10/11 10:52:43.000.919,=C:\GitHub\GeN-XE7\Operacion\CancelOrder\Models\CancelOrderModel.pas</Transaction>
@@ -175,8 +175,13 @@
     <Transaction>2020/05/02 13:43:42.000.204,=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
     <Transaction>2020/05/02 13:44:36.000.118,C:\GitHub\GeN-XE7\Unit2.pas=C:\GitHub\GeN-XE7\Actualizar\ActualizarBase.pas</Transaction>
     <Transaction>2020/05/09 18:02:01.000.850,=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
-    <Transaction>2020/05/09 18:03:49.000.131,C:\GitHub\GeN-XE7\SubOperacion\Notas\NotasFormUnit.dfm=C:\GitHub\GeN-XE7\Unit2.dfm</Transaction>
     <Transaction>2020/05/09 18:03:49.000.131,C:\GitHub\GeN-XE7\SubOperacion\Notas\NotasFormUnit.pas=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
+    <Transaction>2020/05/09 18:03:49.000.131,C:\GitHub\GeN-XE7\SubOperacion\Notas\NotasFormUnit.dfm=C:\GitHub\GeN-XE7\Unit2.dfm</Transaction>
+    <Transaction>2020/05/20 16:31:44.000.983,=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
+    <Transaction>2020/05/20 16:33:53.000.949,C:\GitHub\GeN-XE7\ABM\ZonaEnvio\Form\ZonaEnvioFormUnit.dfm=C:\GitHub\GeN-XE7\Unit2.dfm</Transaction>
+    <Transaction>2020/05/20 16:33:53.000.949,C:\GitHub\GeN-XE7\ABM\ZonaEnvio\Form\ZonaEnvioFormUnit.pas=C:\GitHub\GeN-XE7\Unit2.pas</Transaction>
+    <Transaction>2020/05/21 15:58:35.000.569,C:\GitHub\GeN-XE7\ABM\Categoria\Form\UFCategorias.pas=C:\GitHub\GeN-XE7\ABM\Categoria\Form\CategoriaFomUnit.pas</Transaction>
+    <Transaction>2020/05/21 15:58:35.000.569,C:\GitHub\GeN-XE7\ABM\Categoria\Form\UFCategorias.dfm=C:\GitHub\GeN-XE7\ABM\Categoria\Form\CategoriaFomUnit.dfm</Transaction>
   </Transactions>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>

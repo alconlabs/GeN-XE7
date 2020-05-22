@@ -26,7 +26,7 @@ object FProductos: TFProductos
     Top = 0
     Width = 357
     Height = 419
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -2231,6 +2231,8 @@ object FProductos: TFProductos
       ParentFont = False
       TabOrder = 0
       OnClick = SaveBitBtnClick
+      ExplicitLeft = 2
+      ExplicitTop = 324
     end
     object NoBitBtn: TBitBtn
       Left = 1

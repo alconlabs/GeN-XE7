@@ -107,6 +107,7 @@ type
     BonificarCompra: TMenuItem;
     IniciarSesion1: TMenuItem;
     WooCommerce1: TMenuItem;
+    ENVIO1: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ProveedoresClick(Sender: TObject);
@@ -192,6 +193,7 @@ type
     procedure BonificarCompraClick(Sender: TObject);
     procedure IniciarSesion1Click(Sender: TObject);
     procedure WooCommerce1Click(Sender: TObject);
+    procedure ENVIO1Click(Sender: TObject);
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
@@ -208,10 +210,11 @@ implementation
 
 uses LoginF, BuscarOperacion, incremento, PagoIVAF, LibroDiarioF,
   UFProductos, ProveedorF, UFClientes, VendedorF, RubroF,
-  UFCategorias, UFBuscaArticulos, CajaLF,
+  CategoriaFomUnit, UFBuscaArticulos, CajaLF,
   GananciasL, Precios, ListadoClientes, BuscaCompra, EmpresaF, ConfiguracionF,
   VaciarBaseF, main, OperacionF,
-  LibrosF, PagoF, CancelOrderView, WebLoginF, RestDM, WooCommerceFormUnit;
+  LibrosF, PagoF, CancelOrderView, WebLoginF, RestDM, WooCommerceFormUnit,
+  ZonaEnvioFormUnit;
 
 {$R *.dfm}
 
@@ -424,8 +427,8 @@ end;
 
 procedure TFullMainForm.RubroClick(Sender: TObject);
 begin
-  FCategorias := TFCategorias.Create(self);
-  with FCategorias do
+  CategoriaForm := TCategoriaForm.Create(self);
+  with CategoriaForm do
   begin
     try
       tabla:='Rubro';
@@ -460,8 +463,8 @@ end;
 
 procedure TFullMainForm.CategoriaClick(Sender: TObject);
 begin
-  FCategorias := TFCategorias.Create(self);
-  with FCategorias do
+  CategoriaForm := TCategoriaForm.Create(self);
+  with CategoriaForm do
   begin
     try
       tabla:='Categoria';
@@ -817,6 +820,19 @@ begin
   // WinExec(PAnsiChar(AnsiString(path + 'Caja.exe')), SW_SHOWNORMAL);
 end;
 
+procedure TFullMainForm.ENVIO1Click(Sender: TObject);
+begin
+  ZonaEnvioForm := TZonaEnvioForm.Create(Self);
+  with ZonaEnvioForm do
+  begin
+    try
+      ShowModal;
+    finally
+      Free;
+    end;
+  end;
+end;
+
 procedure TFullMainForm.ESTADODECUENTA1Click(Sender: TObject);
 begin
   // WinExec(PAnsiChar(AnsiString(path + 'EstadoCuentaL.exe')), SW_SHOWNORMAL);
@@ -1027,8 +1043,8 @@ end;
 
 procedure TFullMainForm.SubCategoriasClick(Sender: TObject);
 begin
-  FCategorias := TFCategorias.Create(self);
-  with FCategorias do
+  CategoriaForm := TCategoriaForm.Create(self);
+  with CategoriaForm do
   begin
     try
       tabla:='SubCategoria';
