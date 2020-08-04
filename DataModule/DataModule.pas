@@ -175,6 +175,7 @@ type
     function EjecutarYEsperar(sPrograma: String; Visibilidad: Integer): Integer;
     function EmpiezaMayuscula(texto: string): string;
     function AbrirArchivo(filtro: string): string;
+    function EsNumero(valor: string): boolean;
   public
   const
     NumThreads: Integer = 4;
@@ -2069,8 +2070,9 @@ begin
             if (campo='DESLARGA') then
               Fields.FieldByName(campo).AsAnsiString := UTF8ToString(origen)
             else
-              if ((campo='PROVEEDOR')or(campo='RUBRO')or(campo='MARCA')or(campo='CATEGORIA')or(campo='SUBCATEGORIA'))then
-                valor := DM.TraerCodigoInsertarDescripcion(EmpiezaMayuscula(campo),UTF8ToString(VarToStr(origen)))
+              if ( (campo='PROVEEDOR')or(campo='RUBRO')or(campo='MARCA')or(campo='CATEGORIA')or(campo='SUBCATEGORIA'))then
+                if not EsNumero(origen) then
+                  valor := DM.TraerCodigoInsertarDescripcion(EmpiezaMayuscula(campo),UTF8ToString(VarToStr(origen)))
         end;
         if (valor='') then valor := UTF8ToString(fDMemTable.Fields.Fields[i].AsString);
         Fields.FieldByName(campo).AsString := valor;//Fields.Fields[i].AsString := UTF8ToString(fDMemTable.Fields.Fields[i].AsString);
@@ -2356,6 +2358,15 @@ end;
 function TDM.AbrirImagen;
 begin
   result := AbrirArchivo('JPG (*.jpg)|*.jpg');
+end;
+
+function TDM.EsNumero;
+var
+  I, Code: Integer;
+begin
+  Val(valor, I, Code);
+  { Possible error during conversion to integer }
+  result := (Code=0);
 end;
 
 end.

@@ -113,6 +113,8 @@ type
     CategoriaDBLookupComboBox: TDBLookupComboBox;
     StockDBEdit: TDBEdit;
     CodigoBarraEdit: TDBEdit;
+    VisibleLabel: TLabel;
+    VisibleDBComboBox: TDBComboBox;
     IndividualCheckBox: TCheckBox;
     procedure SaveBitBtnClick(Sender: TObject);
     procedure NoBitBtnClick(Sender: TObject);

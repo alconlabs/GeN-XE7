@@ -4,7 +4,7 @@ object FProductos: TFProductos
   BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
   BorderStyle = bsSingle
   Caption = 'Altas, Bajas y Modificaciones de Articulos'
-  ClientHeight = 460
+  ClientHeight = 486
   ClientWidth = 432
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -25,8 +25,8 @@ object FProductos: TFProductos
     Left = 0
     Top = 0
     Width = 357
-    Height = 419
-    ActivePage = TabSheet1
+    Height = 445
+    ActivePage = TabSheet2
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -260,7 +260,7 @@ object FProductos: TFProductos
         Left = 3
         Top = 3
         Width = 343
-        Height = 358
+        Height = 384
         Hint = 'DESCRIPCION LARGA'
         Align = alClient
         DataField = 'DESLARGA'
@@ -271,7 +271,7 @@ object FProductos: TFProductos
       object NotasDBEdit: TDBEdit
         AlignWithMargins = True
         Left = 3
-        Top = 367
+        Top = 393
         Width = 343
         Height = 21
         Hint = 'DESCRIPCION CORTA'
@@ -290,7 +290,7 @@ object FProductos: TFProductos
         Left = 224
         Top = 0
         Width = 125
-        Height = 391
+        Height = 417
         Align = alRight
         TabOrder = 0
         object ReservaLabel: TLabel
@@ -382,6 +382,16 @@ object FProductos: TFProductos
           FocusControl = UnidadDBEdit
           ExplicitWidth = 34
         end
+        object VisibleLabel: TLabel
+          AlignWithMargins = True
+          Left = 4
+          Top = 372
+          Width = 117
+          Height = 13
+          Align = alTop
+          Caption = 'Visible'
+          ExplicitWidth = 30
+        end
         object ReservaDBComboBox: TDBComboBox
           AlignWithMargins = True
           Left = 4
@@ -392,7 +402,7 @@ object FProductos: TFProductos
           DataField = 'RESERVA'
           DataSource = DM.dstArticulo
           Items.Strings = (
-            'no '
+            'no'
             'notify'
             'yes')
           TabOrder = 0
@@ -491,16 +501,20 @@ object FProductos: TFProductos
           ParentBiDiMode = False
           TabOrder = 7
         end
-        object IndividualCheckBox: TCheckBox
+        object VisibleDBComboBox: TDBComboBox
           AlignWithMargins = True
           Left = 4
-          Top = 372
+          Top = 391
           Width = 117
-          Height = 17
+          Height = 21
           Align = alTop
-          BiDiMode = bdLeftToRight
-          Caption = 'Individual'
-          ParentBiDiMode = False
+          DataField = 'VISIBLE'
+          DataSource = DM.dstArticulo
+          Items.Strings = (
+            'visible'
+            'catalog'
+            'search'
+            'hidden')
           TabOrder = 8
         end
       end
@@ -508,7 +522,7 @@ object FProductos: TFProductos
         Left = 0
         Top = 0
         Width = 203
-        Height = 391
+        Height = 417
         Align = alLeft
         TabOrder = 1
         object RubroLabel: TLabel
@@ -1691,6 +1705,18 @@ object FProductos: TFProductos
           ParentBiDiMode = False
           TabOrder = 4
         end
+        object IndividualCheckBox: TCheckBox
+          AlignWithMargins = True
+          Left = 4
+          Top = 420
+          Width = 195
+          Height = 17
+          Align = alTop
+          BiDiMode = bdLeftToRight
+          Caption = 'Individual'
+          ParentBiDiMode = False
+          TabOrder = 5
+        end
       end
     end
     object TabSheet4: TTabSheet
@@ -1979,7 +2005,7 @@ object FProductos: TFProductos
     Left = 357
     Top = 0
     Width = 75
-    Height = 419
+    Height = 445
     Align = alRight
     ParentBackground = False
     TabOrder = 1
@@ -2001,7 +2027,7 @@ object FProductos: TFProductos
     end
     object CodigoBarraPaintBox: TImage
       Left = 1
-      Top = 249
+      Top = 275
       Width = 73
       Height = 69
       Align = alBottom
@@ -2200,7 +2226,7 @@ object FProductos: TFProductos
     end
     object SaveBitBtn: TBitBtn
       Left = 1
-      Top = 318
+      Top = 344
       Width = 73
       Height = 50
       Align = alBottom
@@ -2231,12 +2257,10 @@ object FProductos: TFProductos
       ParentFont = False
       TabOrder = 0
       OnClick = SaveBitBtnClick
-      ExplicitLeft = 2
-      ExplicitTop = 324
     end
     object NoBitBtn: TBitBtn
       Left = 1
-      Top = 368
+      Top = 394
       Width = 73
       Height = 50
       Align = alBottom
@@ -2324,7 +2348,7 @@ object FProductos: TFProductos
   end
   object ButtonPanel: TPanel
     Left = 0
-    Top = 419
+    Top = 445
     Width = 432
     Height = 41
     Align = alBottom

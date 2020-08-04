@@ -1,4 +1,4 @@
-﻿# GeN - Sistema de Gestión para Comercios
+﻿# GeN - Sistema Gratuito de Gestión para Comercios
 
 Con el puedes comprar, vender, llevar stock, proveedores, pedidos, inventarios, ingresos brutos. 
 Y la mas variable y flexible forma de obtener reportes. 
@@ -53,9 +53,6 @@ OPCIONAL (costo adicional)
 
 Instalación
 http://civeloo.com
-
-Actualización
-https://sourceforge.net/projects/gen-xe7/files/ActualizarGeN.exe/download
 
 Microsoft Store
 https://www.microsoft.com/es-ar/p/civeloo-gen/9njsr4plfshh

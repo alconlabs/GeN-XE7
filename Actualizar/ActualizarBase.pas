@@ -52,6 +52,8 @@ begin
       ActualizarImprimir('TElectronica');
     end;
     // GetBuildInfo;
+    if (EsVersion(1, 0, 20, 0) < 0) then
+    begin
     if (EsVersion(1, 0, 19, 0) < 0) then
     begin
       if (EsVersion(1, 0, 18, 0) < 0) then
@@ -69,7 +71,6 @@ begin
           AgregarCampoEnTablas(tbs,'ENVIO','DOUBLE PRECISION DEFAULT 0');//AgregarEnvio;
           Reportes;
       end;
-      Articulo;
       AgregarCampoEnTablas(tbs,'NOTAS','BLOB');
       AgregarCampoEnTablas(tbs,'WC','INTEGER');
 
@@ -93,21 +94,21 @@ begin
       ActualizarTabla('SubCategoria', 'VIZUALIZAR', 'VARCHAR(50)');
       ActualizarTabla('SubCategoria', 'IMAGEN', 'VARCHAR(255)');
       ActualizarTabla('SubCategoria', 'ORDEN', 'INTEGER');
-
-//      CrearTabla('ZonaEnvio',
-//      'CODIGO integer not null primary key, DESCRIPCION varchar(255), ORDEN integer'
-//      ,'');
-//      CrearTabla('ZERegion',
-//      'ZONAENVIO integer, CODIGO integer not null primary key, DESCRIPCION varchar(255), Tipo varchar(50)'
-//      ,'');
-//      CrearTabla('ZEMetodo',
-//      'ZONAENVIO, CODIGO integer not null primary key, DESCRIPCION varchar(255), ORDEN	integer, ACTIVO	smallint, CONFIGURACION	integer, IMPUESTO varchar(50), COSTO double precision'
-//      ,'');
-//      CrearTabla('ZEMConfig',
-//      'ZEMETODO integer, CODIGO integer not null primary key, ETIQUETA varchar(50), DESCRIPCION varchar(255), TIPO varchar(50), VALOR varchar(255), PORDEFECTO varchar(255), AYUDA varchar(255), INSINUAR varchar(255)'
-//      ,'');
-
     end;
+      CrearTabla('ZonaEnvio',
+      'CODIGO integer not null primary key, DESCRIPCION varchar(255), ORDEN integer'
+      ,'');
+      CrearTabla('ZERegion',
+      'ZONAENVIO integer, CODIGO integer not null primary key, DESCRIPCION varchar(255), Tipo varchar(50), CONTINENTE varchar(50), PAIS varchar(50), PROVINCIA varchar(50), CIUDAD varchar(50)'
+      ,'');
+      CrearTabla('ZEMetodo',
+      'ZONAENVIO integer, CODIGO integer not null primary key, METODO varchar(50), DESCRIPCION varchar(255), ORDEN	integer, ACTIVO	smallint, CONFIGURACION	integer, IMPUESTO varchar(50), COSTO double precision'
+      ,'');
+      CrearTabla('ZEMConfig',
+      'ZEMETODO integer, CODIGO integer not null primary key, ID varchar(50), ETIQUETA varchar(50), DESCRIPCION varchar(255), TIPO varchar(50), VALOR varchar(255), PORDEFECTO varchar(255), AYUDA varchar(255), INSINUAR varchar(255), OPCION varchar(255)'
+      ,'');
+    end;
+    Articulo;
     ActualizarVersion;
   end;
 end;
@@ -499,6 +500,7 @@ begin
     ActualizarTabla(t, 'ATRIBUTO', 'INTEGER');
     ActualizarTabla(t, 'ATRIBUTOPORDEFECTO', 'INTEGER');
     ActualizarTabla(t, 'META', 'INTEGER');
+    ActualizarTabla(t, 'USD', 'DOUBLE PRECISION');
   end;
 end;
 

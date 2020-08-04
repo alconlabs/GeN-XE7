@@ -1172,8 +1172,6 @@ object CategoriaForm: TCategoriaForm
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitLeft = 2
-      ExplicitTop = 11
     end
   end
   object PageControl1: TPageControl

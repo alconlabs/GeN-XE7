@@ -70,6 +70,7 @@ object ZonaEnvioForm: TZonaEnvioForm
       NumGlyphs = 2
       ParentFont = False
       TabOrder = 0
+      OnClick = GrabarBitBtnClick
     end
     object NoBitBtn: TBitBtn
       Left = 1
@@ -104,6 +105,7 @@ object ZonaEnvioForm: TZonaEnvioForm
       NumGlyphs = 2
       ParentFont = False
       TabOrder = 1
+      OnClick = NoBitBtnClick
     end
     object ZonaCodigoDBEdit: TDBEdit
       Left = 1
@@ -161,7 +163,7 @@ object ZonaEnvioForm: TZonaEnvioForm
     Top = 0
     Width = 549
     Height = 442
-    ActivePage = ZonaTabSheet
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 1
     object ZonaTabSheet: TTabSheet
@@ -169,10 +171,10 @@ object ZonaEnvioForm: TZonaEnvioForm
       object ZonaDescripcionLabel: TLabel
         AlignWithMargins = True
         Left = 3
-        Top = 269
+        Top = 3
         Width = 535
         Height = 13
-        Align = alBottom
+        Align = alTop
         Caption = 'Nombre:'
         FocusControl = ZonaDescripcionDBEdit
         Font.Charset = DEFAULT_CHARSET
@@ -183,15 +185,14 @@ object ZonaEnvioForm: TZonaEnvioForm
         ParentFont = False
         ExplicitWidth = 48
       end
-      object OrdenLabel: TLabel
+      object ZonaOrdenLabel: TLabel
         AlignWithMargins = True
         Left = 3
-        Top = 315
+        Top = 49
         Width = 535
         Height = 13
-        Align = alBottom
+        Align = alTop
         Caption = 'Orden:'
-        FocusControl = ZonaOrdenDBComboBox
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -203,13 +204,13 @@ object ZonaEnvioForm: TZonaEnvioForm
       object ZonaDBGrid: TDBGrid
         AlignWithMargins = True
         Left = 3
-        Top = 3
+        Top = 95
         Width = 535
         Height = 260
         Align = alClient
         DataSource = ZonaEnvioDataSource
         ReadOnly = True
-        TabOrder = 2
+        TabOrder = 3
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
         TitleFont.Height = -11
@@ -244,34 +245,24 @@ object ZonaEnvioForm: TZonaEnvioForm
       object ZonaDescripcionDBEdit: TDBEdit
         AlignWithMargins = True
         Left = 3
-        Top = 288
+        Top = 22
         Width = 535
         Height = 21
-        Align = alBottom
+        Align = alTop
         DataField = 'DESCRIPCION'
         DataSource = ZonaEnvioDataSource
         TabOrder = 1
       end
-      object ZonaOrdenDBComboBox: TDBComboBox
+      object ZonaOrdenDBEdit: TDBEdit
         AlignWithMargins = True
         Left = 3
-        Top = 334
+        Top = 68
         Width = 535
         Height = 21
-        Align = alBottom
+        Align = alTop
         DataField = 'ORDEN'
         DataSource = ZonaEnvioDataSource
-        Items.Strings = (
-          '1'
-          '2'
-          '3'
-          '4'
-          '5'
-          '6'
-          '7'
-          '8'
-          '9')
-        TabOrder = 3
+        TabOrder = 2
       end
     end
     object TabSheet2: TTabSheet
@@ -280,10 +271,10 @@ object ZonaEnvioForm: TZonaEnvioForm
       object RegionTipoLabel: TLabel
         AlignWithMargins = True
         Left = 3
-        Top = 315
+        Top = 76
         Width = 535
         Height = 13
-        Align = alBottom
+        Align = alTop
         Caption = 'Tipo:'
         FocusControl = RegionTipoDBComboBox
         Font.Charset = DEFAULT_CHARSET
@@ -292,15 +283,16 @@ object ZonaEnvioForm: TZonaEnvioForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        Visible = False
         ExplicitWidth = 30
       end
       object RegionDescripcionLabel: TLabel
         AlignWithMargins = True
         Left = 3
-        Top = 269
+        Top = 30
         Width = 535
         Height = 13
-        Align = alBottom
+        Align = alTop
         Caption = 'Nombre:'
         FocusControl = RegionDescripcionDBEdit
         Font.Charset = DEFAULT_CHARSET
@@ -309,14 +301,84 @@ object ZonaEnvioForm: TZonaEnvioForm
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        Visible = False
         ExplicitWidth = 48
+      end
+      object RegionContinenteLabel: TLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 122
+        Width = 535
+        Height = 13
+        Align = alTop
+        Caption = 'Continente:'
+        FocusControl = RegionContinenteDBEdit
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 66
+      end
+      object RegionPaisLabel: TLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 168
+        Width = 535
+        Height = 13
+        Align = alTop
+        Caption = 'Pais:'
+        FocusControl = RegionPaisDBEdit
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 29
+      end
+      object RegionProvinciaLabel: TLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 214
+        Width = 535
+        Height = 13
+        Align = alTop
+        Caption = 'RegionProvincia:'
+        FocusControl = RegionProvinciaDBEdit
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 98
+      end
+      object RegionCiudadLabel: TLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 260
+        Width = 535
+        Height = 13
+        Align = alTop
+        Caption = 'RegionCiudad:'
+        FocusControl = RegionCiudadDBEdit
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Visible = False
+        ExplicitWidth = 84
       end
       object RegionDBGrid: TDBGrid
         AlignWithMargins = True
         Left = 3
-        Top = 3
+        Top = 306
         Width = 535
-        Height = 233
+        Height = 49
         Align = alClient
         DataSource = ZERegionDataSource
         ReadOnly = True
@@ -327,7 +389,7 @@ object ZonaEnvioForm: TZonaEnvioForm
         TitleFont.Name = 'Tahoma'
         TitleFont.Style = []
       end
-      object DBNavigator3: TDBNavigator
+      object RegionDBNavigator: TDBNavigator
         AlignWithMargins = True
         Left = 3
         Top = 361
@@ -349,61 +411,108 @@ object ZonaEnvioForm: TZonaEnvioForm
           'Refrescar datos')
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 1
+        TabOrder = 8
+        OnClick = RegionDBNavigatorClick
       end
       object RegionTipoDBComboBox: TDBComboBox
         AlignWithMargins = True
         Left = 3
-        Top = 334
+        Top = 95
         Width = 535
         Height = 21
-        Align = alBottom
+        Align = alTop
         DataField = 'TIPO'
         DataSource = ZERegionDataSource
         Items.Strings = (
-          'state')
-        TabOrder = 2
+          'codigo postal'
+          'provincia'
+          'pais'
+          'continente')
+        TabOrder = 3
+        Visible = False
       end
       object RegionDescripcionDBEdit: TDBEdit
         AlignWithMargins = True
         Left = 3
-        Top = 288
+        Top = 49
         Width = 535
         Height = 21
-        Align = alBottom
+        Align = alTop
         DataField = 'DESCRIPCION'
         DataSource = ZERegionDataSource
-        TabOrder = 3
+        TabOrder = 2
+        Visible = False
       end
       object RegionZonaEnvioDBEdit: TDBEdit
         AlignWithMargins = True
         Left = 3
-        Top = 242
+        Top = 3
         Width = 535
         Height = 21
-        Align = alBottom
+        Align = alTop
         DataField = 'ZONAENVIO'
         DataSource = ZERegionDataSource
+        TabOrder = 1
+        Visible = False
+      end
+      object RegionContinenteDBEdit: TDBEdit
+        AlignWithMargins = True
+        Left = 3
+        Top = 141
+        Width = 535
+        Height = 21
+        Align = alTop
+        DataField = 'CONTINENTE'
+        DataSource = ZERegionDataSource
         TabOrder = 4
+      end
+      object RegionPaisDBEdit: TDBEdit
+        AlignWithMargins = True
+        Left = 3
+        Top = 187
+        Width = 535
+        Height = 21
+        Align = alTop
+        DataField = 'PAIS'
+        DataSource = ZERegionDataSource
+        TabOrder = 5
+      end
+      object RegionProvinciaDBEdit: TDBEdit
+        AlignWithMargins = True
+        Left = 3
+        Top = 233
+        Width = 535
+        Height = 21
+        Align = alTop
+        DataField = 'PROVINCIA'
+        DataSource = ZERegionDataSource
+        TabOrder = 6
+      end
+      object RegionCiudadDBEdit: TDBEdit
+        AlignWithMargins = True
+        Left = 3
+        Top = 279
+        Width = 535
+        Height = 21
+        Align = alTop
+        DataField = 'CIUDAD'
+        DataSource = ZERegionDataSource
+        TabOrder = 7
         Visible = False
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Metodo'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object MetodoCostoLabel: TLabel
         AlignWithMargins = True
         Left = 3
-        Top = 315
+        Top = 214
         Width = 535
         Height = 13
-        Align = alBottom
+        Align = alTop
         Caption = 'Costo:'
-        FocusControl = MetodoDescripcionDBEdit
+        FocusControl = MetodoCostoDBEdit
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -415,12 +524,12 @@ object ZonaEnvioForm: TZonaEnvioForm
       object MetodoImpuestoLabel: TLabel
         AlignWithMargins = True
         Left = 3
-        Top = 269
+        Top = 168
         Width = 535
         Height = 13
-        Align = alBottom
+        Align = alTop
         Caption = 'Impuesto:'
-        FocusControl = MetodoOrdenDBComboBox
+        FocusControl = MetodoImpuestoDBComboBox
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -432,10 +541,10 @@ object ZonaEnvioForm: TZonaEnvioForm
       object MetodoDescripcionLabel: TLabel
         AlignWithMargins = True
         Left = 3
-        Top = 177
+        Top = 76
         Width = 535
         Height = 13
-        Align = alBottom
+        Align = alTop
         Caption = 'Nombre:'
         FocusControl = MetodoCostoDBEdit
         Font.Charset = DEFAULT_CHARSET
@@ -449,12 +558,11 @@ object ZonaEnvioForm: TZonaEnvioForm
       object MetodoOrdenLabel: TLabel
         AlignWithMargins = True
         Left = 3
-        Top = 223
+        Top = 122
         Width = 535
         Height = 13
-        Align = alBottom
+        Align = alTop
         Caption = 'Orden:'
-        FocusControl = MetodoImpuestoDBComboBox
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -462,6 +570,23 @@ object ZonaEnvioForm: TZonaEnvioForm
         Font.Style = [fsBold]
         ParentFont = False
         ExplicitWidth = 39
+      end
+      object MetodoLabel: TLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 30
+        Width = 535
+        Height = 13
+        Align = alTop
+        Caption = 'Metodo:'
+        FocusControl = MetodoDBComboBox
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 47
       end
       object MetodoDBNavigator: TDBNavigator
         AlignWithMargins = True
@@ -485,18 +610,18 @@ object ZonaEnvioForm: TZonaEnvioForm
           'Refrescar datos')
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 0
+        TabOrder = 7
       end
       object MetodoDBGrid: TDBGrid
         AlignWithMargins = True
         Left = 3
-        Top = 3
+        Top = 260
         Width = 535
-        Height = 141
+        Height = 95
         Align = alClient
         DataSource = ZEMetodoDataSource
         ReadOnly = True
-        TabOrder = 1
+        TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
         TitleFont.Height = -11
@@ -506,80 +631,76 @@ object ZonaEnvioForm: TZonaEnvioForm
       object MetodoDescripcionDBEdit: TDBEdit
         AlignWithMargins = True
         Left = 3
-        Top = 196
+        Top = 95
         Width = 535
         Height = 21
-        Align = alBottom
+        Align = alTop
         DataField = 'DESCRIPCION'
         DataSource = ZEMetodoDataSource
-        TabOrder = 2
-      end
-      object MetodoOrdenDBComboBox: TDBComboBox
-        AlignWithMargins = True
-        Left = 3
-        Top = 242
-        Width = 535
-        Height = 21
-        Align = alBottom
-        DataField = 'ORDEN'
-        DataSource = ZEMetodoDataSource
-        Items.Strings = (
-          '1'
-          '2'
-          '3'
-          '4'
-          '5'
-          '6'
-          '7'
-          '8'
-          '9')
         TabOrder = 3
       end
       object MetodoCostoDBEdit: TDBEdit
         AlignWithMargins = True
         Left = 3
-        Top = 334
+        Top = 233
         Width = 535
         Height = 21
-        Align = alBottom
+        Align = alTop
         DataField = 'DESCRIPCION'
         DataSource = ZEMetodoDataSource
-        TabOrder = 4
-      end
-      object MetodoImpuestoDBComboBox: TDBComboBox
-        AlignWithMargins = True
-        Left = 3
-        Top = 288
-        Width = 535
-        Height = 21
-        Align = alBottom
-        DataField = 'ORDEN'
-        DataSource = ZEMetodoDataSource
-        Items.Strings = (
-          '1'
-          '2'
-          '3'
-          '4'
-          '5'
-          '6'
-          '7'
-          '8'
-          '9')
-        TabOrder = 5
+        TabOrder = 6
       end
       object MetodoZonaEnvioDBEdit: TDBEdit
         AlignWithMargins = True
         Left = 3
-        Top = 150
+        Top = 3
         Width = 535
         Height = 21
-        Align = alBottom
+        Align = alTop
         DataField = 'ZONAENVIO'
         DataSource = ZERegionDataSource
-        TabOrder = 6
+        TabOrder = 1
         Visible = False
-        ExplicitLeft = 4
-        ExplicitTop = 123
+      end
+      object MetodoOrdenDBEdit: TDBEdit
+        AlignWithMargins = True
+        Left = 3
+        Top = 141
+        Width = 535
+        Height = 21
+        Align = alTop
+        DataField = 'DESCRIPCION'
+        DataSource = ZEMetodoDataSource
+        TabOrder = 4
+      end
+      object MetodoDBComboBox: TDBComboBox
+        AlignWithMargins = True
+        Left = 3
+        Top = 49
+        Width = 535
+        Height = 21
+        Align = alTop
+        DataField = 'METODO'
+        DataSource = ZEMetodoDataSource
+        Items.Strings = (
+          'precio fijo'
+          'envio gratuito'
+          'recogida local')
+        TabOrder = 2
+      end
+      object MetodoImpuestoDBComboBox: TDBComboBox
+        AlignWithMargins = True
+        Left = 3
+        Top = 187
+        Width = 535
+        Height = 21
+        Align = alTop
+        DataField = 'IMPUESTO'
+        DataSource = ZEMetodoDataSource
+        Items.Strings = (
+          'imponible'
+          'ninguno')
+        TabOrder = 5
       end
     end
   end
