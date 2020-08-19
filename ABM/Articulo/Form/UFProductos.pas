@@ -142,6 +142,7 @@ type
     procedure Image1Click(Sender: TObject);
     procedure DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
     procedure CodigoBarraLabelClick(Sender: TObject);
+    procedure CodigoDBEditExit(Sender: TObject);
   private
     { Private declarations }
     _imagen :string;
@@ -440,15 +441,19 @@ begin
   begin
     desc := CodigoDBEdit.Text;
     // guardar imagen
-    if ((_imagen<>'') and (Image1.Picture.Graphic <> nil)) then Image1.Picture.SaveToFile(_imagen);
+    if ((_imagen<>'') and (Image1.Picture.Graphic <> nil))
+      then Image1.Picture.SaveToFile(_imagen);
     if (tArticulo.State = dsEdit) or (tArticulo.State = dsInsert) then
-    if ((DescripcionDBEdit.Text<>'') and (CantidadDBEdit.Text<>'') and (CostoDBEdit.Text<>'') and (NetoDBEdit.Text<>'')) then
+    if ((DescripcionDBEdit.Text<>'') and (CantidadDBEdit.Text<>'') and
+    (CostoDBEdit.Text<>'') and (NetoDBEdit.Text<>'')) then
      begin
-      if (ReservaDBComboBox.Text = '') then tArticulo.FieldByName('RESERVA').AsString := 'no';
+      if (ReservaDBComboBox.Text = '') then
+        tArticulo.FieldByName('RESERVA').AsString := 'no';
       tArticulo.FieldByName('INDIVIDUAL').AsInteger := IndividualCheckBox.Checked.ToInteger;
       tArticulo.Post;
       if (wpSync) then WooCommerceGeN('Articulo', desc);
-      if Dialogs.MessageDlg('Articulo grabado con éxito.  Salir?', mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
+      if Dialogs.MessageDlg('Articulo grabado con éxito.  Salir?',
+      mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
         Close
       else
         Cargar;
@@ -559,6 +564,11 @@ begin
     CodigoBarra(CodigoBarraEdit.Text);
   end;
   OperacionDataModule.Free;
+end;
+
+procedure TFProductos.CodigoDBEditExit(Sender: TObject);
+begin
+  Obtener;
 end;
 
 procedure TFProductos.Precio6DBEditExit(Sender: TObject);

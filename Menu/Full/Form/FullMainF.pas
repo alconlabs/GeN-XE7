@@ -56,7 +56,6 @@ type
     CuentaCorriente1: TMenuItem;
     BACKUPCopiadeSeguridad1: TMenuItem;
     Login1: TMenuItem;
-    WebBrowser1: TWebBrowser;
     CREDITOS1: TMenuItem;
     CREARCREDITO1: TMenuItem;
     RENDICION2: TMenuItem;
@@ -108,6 +107,7 @@ type
     IniciarSesion1: TMenuItem;
     WooCommerce1: TMenuItem;
     ENVIO1: TMenuItem;
+    Image1: TImage;
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ProveedoresClick(Sender: TObject);
@@ -194,6 +194,7 @@ type
     procedure IniciarSesion1Click(Sender: TObject);
     procedure WooCommerce1Click(Sender: TObject);
     procedure ENVIO1Click(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
     // function WinExecAndWait32(FileName:String; Visibility:integer):integer;
   private
     { Private declarations }
@@ -258,8 +259,8 @@ begin
 //          Query.Transaction.Commit;
           LoginOk := True;
         end;
-      WebBrowser1.Navigate(path + 'hlp\index.htm');
-    //  ShellExecute(0,'open','https://www.gamerzone.com.ar/',nil,nil,SW_SHOWMINIMIZED);
+//      WebBrowser1.Navigate(path + 'hlp\index.htm');
+      ShellExecute(0,'open','https://www.gamerzone.com.ar/',nil,nil,SW_SHOWMINIMIZED);
       if LoginOk <> True then
       begin
         ShowMessage('el usuario no coincide con la clave...');
@@ -675,6 +676,11 @@ end;
 procedure TFullMainForm.Contable1Click(Sender: TObject);
 begin
   WinExec(PAnsiChar(AnsiString(path + 'MenuContable.exe')), SW_SHOWNORMAL);
+end;
+
+procedure TFullMainForm.Image1Click(Sender: TObject);
+begin
+  ShellExecute(0,'open','https://www.gamerzone.com.ar/',nil,nil,SW_SHOWMAXIMIZED);
 end;
 
 procedure TFullMainForm.IMPRIMIRCARTON1Click(Sender: TObject);

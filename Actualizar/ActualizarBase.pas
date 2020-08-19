@@ -68,9 +68,11 @@ begin
             CrearTablaCbteAsoc;
             ActualizarTriggerFecha;
           end;
-          AgregarCampoEnTablas(tbs,'ENVIO','DOUBLE PRECISION DEFAULT 0');//AgregarEnvio;
           Reportes;
       end;
+
+      AgregarCampoEnTablas(tbs,'ENVIO','DOUBLE PRECISION DEFAULT 0');//AgregarEnvio;
+      AgregarCampoEnTablas(tbs,'COMISION','DOUBLE PRECISION DEFAULT 0');//AgregarEnvio;
       AgregarCampoEnTablas(tbs,'NOTAS','BLOB');
       AgregarCampoEnTablas(tbs,'WC','INTEGER');
 
@@ -452,13 +454,8 @@ procedure TActualizarBase.AgregarCampoEnTablas;
 var i: integer;
 begin
   with DM do
-  begin
-    if (not ExisteEnTabla(tablas[0], nombre)) then
-    begin
-      for i := 0 to High(tablas) do
-        ActualizarTabla(tablas[i], nombre, tipo);
-    end;
-  end;
+    for i := 0 to High(tablas) do
+      ActualizarTabla(tablas[i], nombre, tipo);
 end;
 
 procedure TActualizarBase.Articulo;
